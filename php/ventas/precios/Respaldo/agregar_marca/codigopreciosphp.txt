@@ -1,0 +1,2 @@
+<h2><b><a href="adm/factores.php">Listas de precios</a></b></h2>
+<h2><b><a href="agregar_marca/Marcas_de_herramientas_opciones.php">Agregar Marca </a>

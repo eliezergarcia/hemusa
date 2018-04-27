@@ -1,0 +1,57 @@
+.fondo{
+	background: #FFFFFF;
+	color: #494949;
+}
+
+.linea-izquierda{
+	border-left: solid 3px #d9534f;	
+}
+
+.ocultar{
+	display: none;
+}
+
+.iconopdf{
+	background: rgb(255,65,54,0.8);
+	color: white;
+	margin-top: -.5px;
+	line-height: 21px;
+}
+
+.iconopdf:hover{
+	background: rgb(255,65,54);
+	color: white;
+}
+
+.iconoexcel{
+	background: rgb(46,204,64,0.8);
+	color: white;
+	margin-top: -.5px;
+	line-height: 21px;
+}
+
+.iconoexcel:hover{
+	background: rgb(46,204,64);
+	color: white;
+}
+
+.iconocsv{
+	background: rgb(0,116,217,0.8);
+	color: white;
+	margin-top: -.5px;
+	line-height: 21px;
+}
+
+.iconocsv:hover{
+	background: rgb(0,116,217);
+	color: white;
+}
+
+.titulo{
+	font-family: 'Open-Sans', sans-serif;
+	font-weight: 300;
+}
+
+.btnBuscar{
+	margin-top: 25px;
+}

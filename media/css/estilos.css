@@ -1,0 +1,133 @@
+:root{
+	--color-primario: #0074D9;
+	/*#333946;*/
+	--color-primarioh: rgb(0,116,217,0.8);
+	--color-fondo: #DDD;
+	--color-fblanco: #F2F2F2;
+	--color-grisc: #A4A28C;
+	--color-negro: #333333;
+	--color-celeste: #0399CC;
+	--color-menu: #E9E9E9;
+}
+
+*{
+	margin: 0;
+	padding: 0;
+	box-sizing: 0;
+	-webkit-box-sizing: border-box; 
+    -moz-box-sizing: border-box; 
+    box-sizing: border-box;
+}
+
+/* **************************************************************** 
+	
+	Botones
+
+******************************************************************* */
+
+.fondo{
+	background: #FFFFFF;
+	color: #494949;
+}
+
+.linea-izquierda{
+	border-left: solid 3px #d9534f;	
+}
+
+.ocultar{
+	display: none;
+}
+
+.iconopdf{
+	background: rgb(255,65,54,0.8);
+	color: white;
+	border: solid 1px rgb(255,65,54);
+}
+
+.iconopdf:hover{
+	background: rgb(255,65,54);
+	color: white;
+}
+
+.iconoexcel{
+	background: rgb(46,204,64,0.8);
+	color: white;
+	border: solid 1px rgb(46,204,64);
+}
+
+.iconoexcel:hover{
+	background: rgb(46,204,64);
+	color: white;
+}
+
+.iconocsv{
+	background: rgb(0,116,217,0.8);
+	color: white;
+	border: solid 1px rgb(0,116,217);
+}
+
+.iconocsv:hover{
+	background: rgb(0,116,217);
+	color: white;
+}
+
+.iconoimprimir{
+	background: rgb(255,133,27, 0.8);
+	color: white;
+	border: solid 1px rgb(255,133,27);
+}
+
+.iconoimprimir:hover{
+	background: rgb(255,133,27);
+	color: white;
+}
+
+.titulo{
+	font-family: 'Open-Sans', sans-serif;
+	font-weight: 300;
+}
+
+.buttons{
+	margin-bottom: 25px;
+}
+
+/* **************************************************************
+
+	Mediaqueries
+
+***************************************************************** */
+
+@media screen and (max-width: 1199px){
+	/*.contenedor-menu .menu{
+		display: none;
+	}*/
+
+	.encabezado-menu{
+		display: block;
+	}
+
+	.contenido-contactos .tabla-datos{
+		overflow-y: scroll;
+		overflow-x: hidden;
+	}
+
+	/*.contenedor-menu{
+		margin: 0;
+		width: 100%;
+		position: fixed;
+		top: 0;
+		z-index: 1000;
+	}
+
+	.contenedor-menu .menu{
+		display: none;
+		width: 40%;
+	}
+
+	.contenedor-principal{
+		padding-top: 56px;
+	}*/
+}
+
+
+
