@@ -2,6 +2,7 @@
   require_once('../conexion.php'); // Llamada a connect.php para establecer conexión con la BD
   require_once('../sesion.php'); // Llamada a sesion.php para validar si hay sesión inciada
   error_reporting(0);
+  echo "Hola";
 ?>
 
 <!DOCTYPE html>
