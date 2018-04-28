@@ -7,7 +7,7 @@
 	$user = "root";
 	$password = "";
 	$db = "hemusa2018";
-	$ruta = "http://localhost/hemusa/"; 
+	$ruta = "http://localhost/sistemahemusa/"; 
 	$database_conexion_usuarios = "hemusa2018";
 
 	// $conexion_usuarios = mysqli_connect("34.208.155.107", "hemusadb", "Hemusa@2017", "hemusa");
