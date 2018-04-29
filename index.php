@@ -71,30 +71,30 @@
         <div class="main-content container-fluid">
           <div class="splash-container">
             <div class="card card-border-color card-border-color-primary">
-              <div class="card-header"><img src="assets/img/logo-xx.png" alt="logo" width="102" height="27" class="logo-img"><span class="splash-description">Please enter your user information.</span></div>
+              <div class="card-header"><img src="media/images/logo_hemusa.png" alt="logo" width="200" height="90" class="logo-img"><span class="splash-description">Porfavor ingresa tu informacion.</span></div>
               <div class="card-body">
                 <form action="index.html" method="get">
                   <div class="form-group">
-                    <input id="username" type="text" placeholder="Username" autocomplete="off" class="form-control">
+                    <input id="user" type="text" placeholder="Usuario" autocomplete="off" class="form-control">
                   </div>
                   <div class="form-group">
-                    <input id="password" type="password" placeholder="Password" class="form-control">
+                    <input id="password" type="password" placeholder="Contraseña" class="form-control">
                   </div>
                   <div class="form-group row login-tools">
                     <div class="col-6 login-remember">
                       <label class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input"><span class="custom-control-label">Remember Me</span>
+                        <input type="checkbox" class="custom-control-input"><span class="custom-control-label">Recuerdame</span>
                       </label>
                     </div>
-                    <div class="col-6 login-forgot-password"><a href="pages-forgot-password.html">Forgot Password?</a></div>
+                    <div class="col-6 login-forgot-password"><a href="pages-forgot-password.html">Olvidaste tu contraseña?</a></div>
                   </div>
                   <div class="form-group login-submit">
-                    <button data-dismiss="modal" type="submit" class="btn btn-primary btn-xl">Sign me in</button>
+                    <button type="submit" name="Submit" class="btn btn-primary btn-xl">Ingresar</button>
                   </div>
                 </form>
               </div>
             </div>
-            <div class="splash-footer"><span>Don't have an account? <a href="pages-sign-up.html">Sign Up</a></span></div>
+            <div class="splash-footer"><span>No tienes una cuenta aún? <a href="pages-sign-up.html">Registrar</a></span></div>
           </div>
         </div>
       </div>
