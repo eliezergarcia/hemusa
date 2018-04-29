@@ -17,6 +17,10 @@
     <link rel="stylesheet" type="text/css" href="<?php echo $ruta; ?>assets/lib/jquery.vectormap/jquery-jvectormap-1.2.2.css"/>
     <link rel="stylesheet" type="text/css" href="<?php echo $ruta; ?>assets/lib/jqvmap/jqvmap.min.css"/>
     <link rel="stylesheet" type="text/css" href="<?php echo $ruta; ?>assets/lib/datetimepicker/css/bootstrap-datetimepicker.min.css"/>
+    <link rel="stylesheet" type="text/css" href="<?php echo $ruta; ?>assets/lib/jquery.fullcalendar/fullcalendar.min.css"/>
+    <link rel="stylesheet" type="text/css" href="<?php echo $ruta; ?>assets/lib/select2/css/select2.min.css"/>
+    <link rel="stylesheet" type="text/css" href="<?php echo $ruta; ?>assets/lib/bootstrap-slider/css/bootstrap-slider.min.css"/>
+    <link rel="stylesheet" type="text/css" href="<?php echo $ruta; ?>assets/lib/jquery.gritter/css/jquery.gritter.css"/>
     <link rel="stylesheet" href="<?php echo $ruta; ?>assets/css/app.css" type="text/css"/>
 
   <!--Javascript-->    
@@ -37,20 +41,26 @@
     <script src="<?php echo $ruta; ?>assets/lib/jqvmap/jquery.vmap.min.js" type="text/javascript"></script>
     <script src="<?php echo $ruta; ?>assets/lib/jqvmap/maps/jquery.vmap.world.js" type="text/javascript"></script>
     <script src="<?php echo $ruta; ?>assets/js/app-dashboard.js" type="text/javascript"></script>
+    <script src="<?php echo $ruta; ?>assets/lib/moment.js/min/moment.min.js" type="text/javascript"></script>
+    <script src="<?php echo $ruta; ?>assets/lib/jquery-ui/jquery-ui.min.js" type="text/javascript"></script>
+    <script src="<?php echo $ruta; ?>assets/lib/jquery.fullcalendar/fullcalendar.min.js" type="text/javascript"></script>
+    <script src="<?php echo $ruta; ?>assets/js/app-page-calendar.js" type="text/javascript"></script>
+    <script src="<?php echo $ruta; ?>assets/lib/jquery.nestable/jquery.nestable.js" type="text/javascript"></script>
+    <script src="<?php echo $ruta; ?>assets/lib/moment.js/min/moment.min.js" type="text/javascript"></script>
+    <script src="<?php echo $ruta; ?>assets/lib/datetimepicker/js/bootstrap-datetimepicker.min.js" type="text/javascript"></script>
+    <script src="<?php echo $ruta; ?>assets/lib/select2/js/select2.min.js" type="text/javascript"></script>
+    <script src="<?php echo $ruta; ?>assets/lib/select2/js/select2.full.min.js" type="text/javascript"></script>
+    <script src="<?php echo $ruta; ?>assets/lib/bootstrap-slider/bootstrap-slider.min.js" type="text/javascript"></script>
+    <script src="<?php echo $ruta; ?>assets/js/app-form-elements.js" type="text/javascript"></script>
+    <script src="<?php echo $ruta; ?>assets/lib/jquery.gritter/js/jquery.gritter.js" type="text/javascript"></script>
+    <script src="<?php echo $ruta; ?>assets/js/app-ui-notifications.js" type="text/javascript"></script>
     
 
   <!-- Librerias para Exportación de Botones -->
-    <script src="<?php echo $ruta; ?>php/js/jszip.min.js"></script>
+    <!-- <script src="<?php echo $ruta; ?>php/js/jszip.min.js"></script>
     <script src="<?php echo $ruta; ?>php/js/pdfmake.min.js"></script>
     <script src="<?php echo $ruta; ?>php/js/vfs_fonts.js"></script> 
     <script src="<?php echo $ruta; ?>php/js/buttons.html5.min.js"></script>  
     <script src="<?php echo $ruta; ?>php/js/buttons.print.min.js"></script>
     <script src="<?php echo $ruta; ?>php/js/buttons.colVis.min.js"></script>
-    <script src="<?php echo $ruta; ?>php/js/dataTables.buttons.min.js"></script>
-
-    <script type="text/javascript">
-      $(document).ready(function(){
-        //initialize the javascript
-        App.init();
-      });
-    </script>
+    <script src="<?php echo $ruta; ?>php/js/dataTables.buttons.min.js"></script> -->
