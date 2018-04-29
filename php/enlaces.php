@@ -28,6 +28,7 @@
     <script src="<?php echo $ruta; ?>assets/lib/perfect-scrollbar/js/perfect-scrollbar.jquery.min.js" type="text/javascript"></script>
     <script src="<?php echo $ruta; ?>assets/lib/bootstrap/dist/js/bootstrap.bundle.min.js" type="text/javascript"></script>
     <script src="<?php echo $ruta; ?>assets/js/app.js" type="text/javascript"></script>
+    <script src="<?php echo $ruta; ?>assets/lib/jquery.niftymodals/dist/jquery.niftymodals.js" type="text/javascript"></script>
     <script src="<?php echo $ruta; ?>assets/lib/jquery-flot/jquery.flot.js" type="text/javascript"></script>
     <script src="<?php echo $ruta; ?>assets/lib/jquery-flot/jquery.flot.pie.js" type="text/javascript"></script>
     <script src="<?php echo $ruta; ?>assets/lib/jquery-flot/jquery.flot.time.js" type="text/javascript"></script>
@@ -54,6 +55,7 @@
     <script src="<?php echo $ruta; ?>assets/js/app-form-elements.js" type="text/javascript"></script>
     <script src="<?php echo $ruta; ?>assets/lib/jquery.gritter/js/jquery.gritter.js" type="text/javascript"></script>
     <script src="<?php echo $ruta; ?>assets/js/app-ui-notifications.js" type="text/javascript"></script>
+    <script src="<?php echo $ruta; ?>assets/lib/prettify/prettify.js" type="text/javascript"></script>
     
 
   <!-- Librerias para Exportación de Botones -->

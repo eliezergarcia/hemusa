@@ -2,7 +2,7 @@
 <header class="be-wrapper be-fixed-sidebar be-color-header">
 	<nav class="navbar navbar-expand fixed-top be-top-header">
 	    <div class="container-fluid">
-	      <div class="be-navbar-header"><a href="<?php echo $ruta;?>php/inicio/inicio.php">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="<?php echo $ruta; ?>media/images/logo_hemusa.png" alt="logo" width="140" height="60" class="logo-img"></a>
+	      <div class="be-navbar-header"><a href="<?php echo $ruta;?>php/inicio/inicio.php">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="<?php echo $ruta; ?>media/images/logo_hemusa.png" alt="logo" width="150" height="60" class="logo-img"></a>
 	      </div>
 	      <div class="be-right-navbar">
 	        <ul class="nav navbar-nav float-right be-user-nav">

@@ -100,7 +100,15 @@ var App = (function () {
           url: 'http://google.com/',
           start: '2016-06-28'
         }
-      ]
+      ],
+      dayClick: function(date, jsEvent, view) {
+            $("#modalEvento").modal("show");
+            // var dia = date.format("DD/MM/YYYY");
+            // document.getElementById("dia").innerHTML = dia;  
+            // var dia = moment().format('YYYY-MM-DDThh:mm');
+            // console.log(dia);
+            // $("#fechainicio").val(dia);
+        }
     });
 
   };

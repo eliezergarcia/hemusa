@@ -35,6 +35,109 @@
 			</div>
 		</div>
 
+	<!-- Modal Evento Calendario -->
+    	<div id="modalEvento" tabindex="-1" role="dialog" class="modal fade colored-header colored-header-primary">
+	      	<div class="modal-dialog">
+	        	<div class="modal-content">
+	          		<div class="modal-header modal-header-colored">
+	            		<h3 class="modal-title">Calendario - Evento</h3>
+	            		<button type="button" data-dismiss="modal" aria-hidden="true" class="close md-close"><span class="mdi mdi-close">       </span></button>
+	          		</div>
+		          	<div class="modal-body">
+		              	<label><h4>Titulo</h4></label>
+		            	<div class="form-group">
+		              		<input type="titulo" class="form-control form-control-sm">
+		            	</div>
+		                <label><h4>Fecha</h4></label>
+		            	<div class="row no-margin-y">
+		              		<div class="col-6 col-sm-7 col-md-5 col-lg-4 col-xl-6">
+		                        <div data-min-view="2" data-date-format="dd-mm-yyyy" class="input-group date datetimepicker">
+		                          	<input size="16" type="text" value="<?php echo date("d-m-Y"); ?>" class="form-control form-control-sm">
+		                          	<div class="input-group-append">
+		                            	<button class="btn btn-primary"><i class="icon-th mdi mdi-calendar"></i></button>
+		                          	</div>
+		                        </div>
+		                    </div>
+		              		<div class="col-6 col-sm-7 col-md-5 col-lg-4 col-xl-6">
+		                        <div data-min-view="2" data-date-format="dd-mm-yyyy" class="input-group date datetimepicker">
+		                          	<input size="16" type="text" value="<?php echo date("d-m-Y"); ?>" class="form-control form-control-sm">
+		                          	<div class="input-group-append">
+		                            	<button class="btn btn-primary"><i class="icon-th mdi mdi-calendar"></i></button>
+		                          	</div>
+		                        </div>
+		                    </div>
+		            	</div>
+		            	<div class="form-group row">
+		                	<div class="col-12 col-sm-7 col-md-5 col-lg-4 col-xl-6">
+		                    	<div data-start-view="0" data-date="" data-date-format="HH:ii" data-link-field="dtp_input1" class="input-group date datetimepicker">
+		                      		<input size="16" type="text" value="00:00" readonly="" class="form-control form-control-sm">
+		                      		<div class="input-group-append">
+		                        		<button class="btn btn-primary"><i class="icon-th mdi mdi-calendar"></i></button>
+		                      		</div>
+		                    	</div>
+		                  	</div>
+		                  	<div class="col-12 col-sm-7 col-md-5 col-lg-4 col-xl-6">
+		                    	<div data-start-view="0" data-date="" data-date-format="HH:ii" data-link-field="dtp_input1" class="input-group date datetimepicker">
+		                      		<input size="16" type="text" value="00:00" readonly="" class="form-control form-control-sm">
+		                      		<div class="input-group-append">
+		                        		<button class="btn btn-primary"><i class="icon-th mdi mdi-calendar"></i></button>
+		                      		</div>
+		                    	</div>
+		                  	</div>
+		                </div>
+		                <div class="row">
+		              		<div class="form-group col-md-12">
+		                		<label class="custom-control custom-checkbox custom-control-inline">
+                          			<input type="checkbox" checked="" class="custom-control-input"><span class="custom-control-label custom-control-color">Todo el día</span>
+                        		</label>	
+		              		</div>
+		            	</div>
+		                <label><h4>Repetir</h4></label>
+		                <div class="form-group row">
+		                    <div class="col-12 col-sm-12 col-lg-12">
+		                        <select class="form-control form-control-sm select2">                          	
+		                            <option value="AK">No repetir</option>
+		                            <option value="HI">Diariamente</option>
+		                            <option value="HI">De Lunes a Viernes</option>
+		                            <option value="HI">Semanalmente</option>
+		                            <option value="HI">Mensualmente</option>
+		                            <option value="HI">Anualmente</option>
+		                        </select>
+		                    </div>
+		                </div>
+		                <label><h4>Recordatorio</h4></label>
+		                <div class="form-group row">
+		                    <div class="col-12 col-sm-8 col-lg-12">
+		                        <select class="form-control form-control-sm select2"> 
+		                        	<option value="">Añadir recordatorio..</option>                         	
+		                            <option value="AK">5 minutos</option>
+		                            <option value="HI">10 minutos</option>
+		                            <option value="HI">15 minutos</option>
+		                            <option value="HI">30 minutos</option>
+		                            <option value="HI">1 hora</option>
+		                            <option value="HI">1 día</option>
+		                            <option value="HI">2 días</option>
+		                            <option value="HI">3 días</option>
+		                            <option value="HI">1 semana</option>
+		                        </select>
+		                    </div>
+		                </div>
+                      	<label for="inputTextarea3"><h4>Notas</h4></label>
+		                <div class="form-group row">
+                      		<div class="col-12 col-sm-8 col-lg-12">
+                        		<textarea id="inputTextarea3" class="form-control"></textarea>
+                      		</div>
+                    	</div>
+		          	</div>
+		          	<div class="modal-footer">
+		            	<button type="button" data-dismiss="modal" class="btn btn-secondary md-close">Cancelar</button>
+		            	<button type="button" data-dismiss="modal" class="btn btn-primary md-close">Hecho</button>
+		          	</div>
+	        	</div>
+      		</div>
+    	</div>
+
+	<!-- Modal Tipo de Cambiio -->
 		<div id="modalTipoCambio" tabindex="-1" role="dialog" class="modal fade">
       		<div class="modal-dialog">
 		        <div class="modal-content">
@@ -46,14 +149,16 @@
 		            		<form action="#" method="POST">
 			              		<div class="text-warning"><span class="modal-main-icon mdi mdi-alert-triangle"></span></div>
 			              		<h2>Advertencia!</h2>
-			              		<h4>No se ha ingresado el tipo de cambio del día.<br>Puedes ingresar al siguiente link para obtenerlo: <a href="">Diario Oficial</a></h4>
+			              		<h4>No se ha ingresado el tipo de cambio del día.<br>Puedes ingresar al siguiente link para obtenerlo: 
+			              			<a href="http://dof.gob.mx/indicadores_detalle.php?cod_tipo_indicador=158&dfecha=29%2F04%2F2018&hfecha=29%2F04%2F2018">Diario Oficial</a>
+			              		</h4>
 			              		<br>
 			              		<div class="row justify-content-center">
 			              			<input id="opcion" name="opcion" type="hidden" value="tipocambio">
-			              			<input id="tipocambio" name="tipocambio" type="text" class="form-control col-lg-3" required>
+			              			<input id="tipocambio" name="tipocambio" type="text" class="form-control form-control-sm col-lg-3" required>
 			              		</div>
 			              		<div class="mt-8">
-			                		<button type="submit" class="btn btn-space btn-warning">Proceder</button>
+			                		<button type="submit" class="btn btn-space btn-warning">Guardar</button>
 			              		</div>
 			              	</form>
 		            	</div>
@@ -62,17 +167,26 @@
 		        </div>
       		</div>
     	</div>
+
 	</header>  	
 </body>
 </html>
 
 <script>
+	$.fn.niftyModal('setDefaults',{
+      	overlaySelector: '.modal-overlay',
+      	contentSelector: '.modal-content',
+      	closeSelector: '.modal-close',
+      	classAddAfterOpen: 'modal-show'
+    });
+
 	$(document).ready(function() {		
 		App.init();
         App.pageCalendar();	      
         App.formElements();
         App.uiNotifications();  
 		buscar_tipo_cambio();
+		listar_calendario();
 	});
 
 	var buscar_tipo_cambio = function(){
@@ -85,6 +199,7 @@
 			dataType: "json",
 			data: {"opcion": opcion},
 		}).done( function( info ){
+			console.log(info);
 			if (info.respuesta == "BIEN") {
 				guardar();
 				listar_calendario(usuario, departamento);
@@ -143,12 +258,14 @@
 					});
 		      	},
 			    dayClick: function(date, jsEvent, view) {
-			    	$("#modalCrearEvento").modal("show");
-			    	var dia = date.format("DD/MM/YYYY");
-			    	document.getElementById("dia").innerHTML = dia;	
-			    	var dia = moment().format('YYYY-MM-DDThh:mm');
-			    	console.log(dia);
-			    	$("#fechainicio").val(dia);
+			    	// $("#modalCrearEvento").modal("show");
+			    	// var dia = date.format("DD/MM/YYYY");
+			    	// document.getElementById("dia").innerHTML = dia;	
+			    	// var dia = moment().format('YYYY-MM-DDThh:mm');
+			    	// console.log(dia);
+			    	// $("#fechainicio").val(dia);
+			    	$('[data-toggle="popover"]').popover();
+			    	console.log("hola");
 				},
 		    });
 		});	
@@ -268,7 +385,7 @@
 	var mostrar_mensaje = function( informacion ){
 		if( informacion.respuesta == "BIEN" ){
 			$.gritter.add({
-	        	title: 'Correcto',
+	        	title: 'Correcto!',
 	        	text: 'El tipo de cambio de hoy se registro correctamente.',
 	        	class_name: 'color success'
 	      	});
