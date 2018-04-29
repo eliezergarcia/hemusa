@@ -14,12 +14,29 @@
     <![endif]-->
 
     <link rel="stylesheet" href="<?php echo $ruta; ?>assets/css/style.css" type="text/css">
+    <link rel="stylesheet" type="text/css" href="<?php echo $ruta; ?>assets/lib/jquery.vectormap/jquery-jvectormap-1.2.2.css"/>
+    <link rel="stylesheet" type="text/css" href="<?php echo $ruta; ?>assets/lib/jqvmap/jqvmap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="<?php echo $ruta; ?>assets/lib/datetimepicker/css/bootstrap-datetimepicker.min.css"/>
+    <link rel="stylesheet" href="<?php echo $ruta; ?>assets/css/app.css" type="text/css"/>
 
   <!--Javascript-->    
     <script src="<?php echo $ruta; ?>assets/lib/jquery/jquery.min.js" type="text/javascript"></script>              
     <script src="<?php echo $ruta; ?>assets/lib/perfect-scrollbar/js/perfect-scrollbar.jquery.min.js" type="text/javascript"></script>
     <script src="<?php echo $ruta; ?>assets/lib/bootstrap/dist/js/bootstrap.bundle.min.js" type="text/javascript"></script>
     <script src="<?php echo $ruta; ?>assets/js/app.js" type="text/javascript"></script>
+    <script src="<?php echo $ruta; ?>assets/lib/jquery-flot/jquery.flot.js" type="text/javascript"></script>
+    <script src="<?php echo $ruta; ?>assets/lib/jquery-flot/jquery.flot.pie.js" type="text/javascript"></script>
+    <script src="<?php echo $ruta; ?>assets/lib/jquery-flot/jquery.flot.time.js" type="text/javascript"></script>
+    <script src="<?php echo $ruta; ?>assets/lib/jquery-flot/jquery.flot.resize.js" type="text/javascript"></script>
+    <script src="<?php echo $ruta; ?>assets/lib/jquery-flot/plugins/jquery.flot.orderBars.js" type="text/javascript"></script>
+    <script src="<?php echo $ruta; ?>assets/lib/jquery-flot/plugins/curvedLines.js" type="text/javascript"></script>
+    <script src="<?php echo $ruta; ?>assets/lib/jquery-flot/plugins/jquery.flot.tooltip.js" type="text/javascript"></script>
+    <script src="<?php echo $ruta; ?>assets/lib/jquery.sparkline/jquery.sparkline.min.js" type="text/javascript"></script>
+    <script src="<?php echo $ruta; ?>assets/lib/countup/countUp.min.js" type="text/javascript"></script>
+    <script src="<?php echo $ruta; ?>assets/lib/jquery-ui/jquery-ui.min.js" type="text/javascript"></script>
+    <script src="<?php echo $ruta; ?>assets/lib/jqvmap/jquery.vmap.min.js" type="text/javascript"></script>
+    <script src="<?php echo $ruta; ?>assets/lib/jqvmap/maps/jquery.vmap.world.js" type="text/javascript"></script>
+    <script src="<?php echo $ruta; ?>assets/js/app-dashboard.js" type="text/javascript"></script>
     
 
   <!-- Librerias para Exportación de Botones -->

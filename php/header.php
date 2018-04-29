@@ -1,174 +1,80 @@
-
-	<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
-  		<header class="mdl-layout__header">
-    		<div class="mdl-layout__header-row">
-		    	<!-- Title -->
-		      	<img src="<?php echo $ruta; ?>imagenes/logo_hemusa.png" alt="Logo Hemusa" width="9%">
-		      	<!-- Add spacer, to align navigation to the right -->
-		      	<div class="mdl-layout-spacer"></div>
-		      	<!-- Navigation -->
-		      	<nav class="mdl-navigation mdl-layout--large-screen-only mdl-navigation__link">
-			        <i class="material-icons  mdl-list__item-avatar">person </i>
-      				<?php echo $usuario." ".$usuarioApellido ?>
-		      	</nav>
-				<!-- Barra de notificaciones -->
-					<?php 
-						if ($departamento_usuario == "Administracion" || $departamento_usuario == "Ventas" || $departamento_usuario == "Facturacion") {
-					?>
-						<div id="toolTipVerOCpendientes" data-toggle="modal" data-target="#modalOCPendientes">
-							<span id="ocpendientes" name="ocpendientes" class="mdl-badge" data-badge="0"><i id="verocpendientes" class="fa fa-shopping-cart fa-lg" aria-hidden="true"></i></span>
-						</div>
-					<?php
-						}
-					?>
-					<!-- <?php 
-						if ($departamento_usuario == "Administracion" || $departamento_usuario == "Facturacion") {
-					?>
-						<div id="toolTipVerFacturasPendientes" data-toggle="modal" data-target="#modalFacturasPendientes">
-							<span id="ocpendientes" class="mdl-badge" data-badge="0"><i id="verfacturaspendientes" class="fa fa-google-wallet" aria-hidden="true"></i></span>
-						</div>
-					<?php
-						}
-					?> -->				
-					<!-- <div id="toolTipVerNotificaciones">
-						<span id="notifpendientes" class="mdl-badge" data-badge="0"><i id="vernotificaciones" class="fa fa-bell" aria-hidden="true"></i></span>
-					</div> -->
-					<div class="mdl-tooltip" data-mdl-for="toolTipVerOCpendientes">
-						<strong>Ver OC pendientes</strong>
-					</div>
-					<div class="mdl-tooltip" data-mdl-for="toolTipVerNotificaciones">
-						<strong>Ver notificaciones</strong>
-					</div>
-					<!-- <div id="toolTipCerrarSesion">
-						<a href="<?php echo $logoutAction; ?>" class="mdl-navigation__link"><i id="cerrarSesion" class="fa fa-power-off" aria-hidden="true"></i></a>
-					</div> -->
-					<div class="dropdown">
-						<i class="fa fa-cog fa-lg mdl-navigation__link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" aria-hidden="true"></i>
-						<div class="dropdown-menu" aria-labelledby="dLabel">
-							<a href="<?php echo $logoutAction; ?>" class="dropdown-item" href="#"><i id="cerrarSesion" class="fa fa-power-off" aria-hidden="true"></i> Cerrar sesión</a>
-						</div>
-					</div>
-				<div class="mdl-tooltip" data-mdl-for="toolTipCerrarSesion">
-					<strong>Cerrar sesión</strong>
-				</div>
-		    </div>
- 		</header>
-  		<div class="mdl-layout__drawer">
-		    <span class="mdl-layout-title">Menú
-		   	</span>
-		    	<?php 
-		    		if($departamento_usuario == 'Creditos y Cobranza'){
-		    			echo '<h4>&nbsp;&nbsp;&nbsp;&nbsp;Créditos y Cobranza</h4>';
-		    		}
-
-		    		if($departamento_usuario == 'Administracion'){
-		    			echo '<h4>&nbsp;&nbsp;&nbsp;&nbsp;Administración</h4>';
-		    		}
-
-		    		if($departamento_usuario == 'Ventas'){
-		    			echo '<h4>&nbsp;&nbsp;&nbsp;&nbsp;Ventas</h4>';
-		    		}
-		    	?>
-		    <nav class="mdl-navigation">
-				<a class="list-group-item" href="<?php echo $ruta; ?>php/inicio/inicio.php"><i class="fa fa-home fa-fw" aria-hidden="true"></i>&nbsp; Inicio</a>
-
-				<!-- <a class="list-group-item" href="#"><i class="fa fa-line-chart fa-fw" aria-hidden="true"></i>&nbsp; Dashboard</a> -->
-				
-				<div class="dropdown">
-			        <a class="dropdown-toggle list-group-item" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-cc fa-fw" aria-hidden="true"></i>&nbsp; Ventas</a>
-			        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-			          	<a class="dropdown-item" href="<?php echo $ruta; ?>php/ventas/clientes/clientes.php">Clientes</a>
-			          	<div class="dropdown-divider"></div>
-			          	<a class="dropdown-item" href="<?php echo $ruta; ?>php/ventas/listadeprecios/listadeprecios.php">Lista de precios</a>
-			          	<div class="dropdown-divider"></div>
-			          	<a class="dropdown-item" href="<?php echo $ruta; ?>php/ventas/cotizaciones/cotizaciones.php">Cotizaciones</a>
-			          	<div class="dropdown-divider"></div>
-			          	<a class="dropdown-item" href="<?php echo $ruta; ?>php/ventas/pedidos/pedidos.php">Pedidos</a>
-			          	<!-- <div class="dropdown-divider"></div>
-			          	<a class="dropdown-item" href="<?php echo $ruta; ?>php/ventas/controldesalida/controldesalida.php">Control de Salida</a>
-			          	<div class="dropdown-divider"></div>
-			          	<a class="dropdown-item" href="#">Entregas</a>
-			          	<div class="dropdown-divider"></div>
-			          	<a class="dropdown-item" href="#">Garantías</a>
-			          	<div class="dropdown-divider"></div>
-			          	<a class="dropdown-item" href="<?php echo $ruta; ?>php/ventas/reportes/reportes.php">Reportes</a> -->
-			        </div>
-			    </div>
-		      	
-		      	<div class="dropdown">
-			        <a class="dropdown-toggle list-group-item" href="#" id="navbarDropdown2" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-cart-plus fa-fw" aria-hidden="true"></i>&nbsp; Compras</a>
-			        <div class="dropdown-menu" aria-labelledby="navbarDropdown2">
-			          	<a class="dropdown-item" href="<?php echo $ruta; ?>php/compras/proveedores/proveedores.php">Proveedores</a>
-			          	<div class="dropdown-divider"></div>
-			          	<a class="dropdown-item" href="<?php echo $ruta; ?>php/compras/ordenesdecompras/ordenesdecompras.php">Ordenes de compras</a>
-			          	<!-- <div class="dropdown-divider"></div>
-			          	<a class="dropdown-item" href="#">Backorder</a> -->
-			          	<div class="dropdown-divider"></div>
-			          	<a class="dropdown-item" href="<?php echo $ruta; ?>php/compras/pedimentos/pedimentos.php"">Pedimentos</a>
-			          	<!-- <div class="dropdown-divider"></div>
-			          	<a class="dropdown-item" href="#">Pago de facturas OC</a>
-			          	<div class="dropdown-divider"></div>
-			          	<a class="dropdown-item" href="#">Pedidos pendientes de OC</a>
-			          	<div class="dropdown-divider"></div>
-			          	<a class="dropdown-item" href="#">Herramientas sin entregar</a> -->
-			        </div>
-			    </div>
-				
-				<div class="dropdown">
-			        <a class="nav-link dropdown-toggle list-group-item" href="#" id="navbarDropdown3" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-usd fa-fw" aria-hidden="true"></i>&nbsp; Créditos y Cobranza</a>
-			        <div class="dropdown-menu" aria-labelledby="navbarDropdown3">
-			          	<a class="dropdown-item" href="<?php echo $ruta; ?>php/cobranza/pagos/pagos.php">Pagos cliente</a>
-			          	<div class="dropdown-divider"></div>
-			          	<a class="dropdown-item" href="<?php echo $ruta; ?>php/cobranza/pagos/pagosproveedor.php">Pagos proveedor</a>
-			          	<!-- <a class="dropdown-item" href="<?php echo $ruta; ?>php/cobranza/reportes/reportes.php">Reportes</a>
-			          	<div class="dropdown-divider"></div>
-			          	<a class="dropdown-item" href="#">Ventas</a>
-			          	<div class="dropdown-divider"></div>
-			          	<a class="dropdown-item" href="<?php echo $ruta; ?>php/cobranza/notadecredito/notadecredito.php">Notas de Crédito</a> -->
-			        </div>
-			    </div>
-		      	
-		      	<div class="dropdown">
-		        	<a class="dropdown-toggle list-group-item" href="#" id="navbarDropdown3" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-google-wallet fa-fw" aria-hidden="true"></i>&nbsp; Facturación</a>
-		        	<div class="dropdown-menu" aria-labelledby="navbarDropdown3">
-		          		<a class="dropdown-item" href="<?php echo $ruta; ?>php/ventas/remisiones/remisiones.php">Remisiones</a>
-			          	<div class="dropdown-divider"></div>
-			          	<a class="dropdown-item" href="<?php echo $ruta; ?>php/facturacion/facturas/facturas.php">Facturas</a>
-			          	<div class="dropdown-divider"></div>
-			          	<a class="dropdown-item" href="<?php echo $ruta; ?>php/ventas/embarques/embarques.php">Embarques</a>
-			          	<!-- <div class="dropdown-divider"></div>
-		          		<a class="dropdown-item" href="<?php echo $ruta; ?>php/facturacion/portales/portales.php">Portales clientes</a> -->
-		        	</div>
-		      	</div>
-		    <?php
-		      	if($departamento_usuario == "Administracion"){
-
-		    ?>
-		      	<div class="dropdown">
-		        	<a class="dropdown-toggle list-group-item" href="#" id="navbarDropdown4" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-lock fa-fw" aria-hidden="true"></i> &nbsp; Administración</a>
-		        	<div class="dropdown-menu" aria-labelledby="navbarDropdown4">
-		          		<a class="dropdown-item" href="<?php echo $ruta; ?>php/administracion/usuarios/usuarios.php">Usuarios</a>
-		          		<div class="dropdown-divider"></div>
-		          		<a class="dropdown-item" href="<?php echo $ruta; ?>php/administracion/marcas/marcas.php">Marcas</a>
-		          		<!-- <div class="dropdown-divider"></div>
-		          		<a class="dropdown-item" href="<?php echo $ruta; ?>php/administracion/reportes/reportes.php">Reportes</a>
-		          		<div class="dropdown-divider"></div>
-		          		<a class="dropdown-item" href="<?php echo $ruta; ?>php/administracion/movimientos/movimientos.php">Movimientos</a> -->
-		        	</div>
-		      	</div>
-		    <?php  	
-		    	}
-		    ?>
-		      	<!-- <div class="dropdown">
-		        	<a class="dropdown-toggle list-group-item" href="#" id="navbarDropdown5" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-external-link fa-fw" aria-hidden="true"></i>&nbsp; Links</a>
-		        	<div class="dropdown-menu" aria-labelledby="navbarDropdown5">
-		          		<a class="dropdown-item" href="#">Action</a>
-		          		<a class="dropdown-item" href="#">Another action</a>
-		          		<div class="dropdown-divider"></div>
-		          		<a class="dropdown-item" href="#">Something else here</a>
-		        	</div>
-		      	</div> -->
-		    </nav>
-  		</div>
-  			
-    	
+	
+<header class="mdl-layout__header">
+	<nav class="navbar navbar-expand fixed-top be-top-header">
+	    <div class="container-fluid">
+	      <div class="be-navbar-header"><a href="<?php echo $ruta;?>php/inicio/inicio.php" class=""><img src="<?php echo $ruta; ?>media/images/logo_hemusa.png" alt="logo" width="140" height="60" class="logo-img"></a>
+	      </div>
+	      <div class="be-right-navbar">
+	        <ul class="nav navbar-nav float-right be-user-nav">
+	          <li class="nav-item dropdown"><a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle"><img src="<?php echo $ruta; ?>assets/img/avatar.png" alt="Avatar"><span class="user-name"><?php echo $usuario." ".$usuarioApellido; ?></span></a>
+	            <div role="menu" class="dropdown-menu">     
+	              <div class="user-info">
+	                <div class="user-name"><?php echo $usuario." ".$usuarioApellido; ?></div>
+	                <div class="user-position online">Disponible</div>
+	              </div><a href="pages-profile.html" class="dropdown-item"><span class="icon mdi mdi-face"></span> Cuenta</a><a href="#" class="dropdown-item"><span class="icon mdi mdi-settings"></span> Configuración</a><a href="<?php echo $logoutGoTo; ?>" class="dropdown-item"><span class="icon mdi mdi-power"></span> Cerrar sesión</a>
+	            </div>
+	          </li>
+	        </ul>
+	        <!-- <div class="page-title"><span>Dashboard</span></div> -->
+	        <ul class="nav navbar-nav float-right be-icons-nav">
+	          <li class="nav-item dropdown"><a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle"><span class="icon mdi mdi-notifications"></span><span class="indicator"></span></a>
+	            <ul class="dropdown-menu be-notifications">
+	              <li>
+	                <div class="title">Notifications<span class="badge badge-pill">3</span></div>
+	                <div class="list">
+	                  <div class="be-scroller">
+	                    <div class="content">
+	                      <ul>
+	                        <li class="notification notification-unread"><a href="#">
+	                            <div class="image"><img src="<?php echo $ruta; ?>assets/img/avatar2.png" alt="Avatar"></div>
+	                            <div class="notification-info">
+	                              <div class="text"><span class="user-name">Jessica Caruso</span> accepted your invitation to join the team.</div><span class="date">2 min ago</span>
+	                            </div></a></li>
+	                        <li class="notification"><a href="#">
+	                            <div class="image"><img src="<?php echo $ruta; ?>assets/img/avatar3.png" alt="Avatar"></div>
+	                            <div class="notification-info">
+	                              <div class="text"><span class="user-name">Joel King</span> is now following you</div><span class="date">2 days ago</span>
+	                            </div></a></li>
+	                        <li class="notification"><a href="#">
+	                            <div class="image"><img src="<?php echo $ruta; ?>assets/img/avatar4.png" alt="Avatar"></div>
+	                            <div class="notification-info">
+	                              <div class="text"><span class="user-name">John Doe</span> is watching your main repository</div><span class="date">2 days ago</span>
+	                            </div></a></li>
+	                        <li class="notification"><a href="#">
+	                            <div class="image"><img src="<?php echo $ruta; ?>assets/img/avatar5.png" alt="Avatar"></div>
+	                            <div class="notification-info"><span class="text"><span class="user-name">Emily Carter</span> is now following you</span><span class="date">5 days ago</span></div></a></li>
+	                      </ul>
+	                    </div>
+	                  </div>
+	                </div>
+	                <div class="footer"> <a href="#">View all notifications</a></div>
+	              </li>
+	            </ul>
+	          </li>
+	          <li class="nav-item dropdown"><a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle"><span class="icon mdi mdi-apps"></span></a>
+	            <ul class="dropdown-menu be-connections">
+	              <li>
+	                <div class="list">
+	                  <div class="content">
+	                    <div class="row">
+	                      <div class="col"><a href="#" class="connection-item"><img src="<?php echo $ruta;?>assets/img/github.png" alt="Github"><span>GitHub</span></a></div>
+	                      <div class="col"><a href="#" class="connection-item"><img src="<?php echo $ruta;?>assets/img/bitbucket.png" alt="Bitbucket"><span>Bitbucket</span></a></div>
+	                      <div class="col"><a href="#" class="connection-item"><img src="<?php echo $ruta;?>assets/img/slack.png" alt="Slack"><span>Slack</span></a></div>
+	                    </div>
+	                    <div class="row">
+	                      <div class="col"><a href="#" class="connection-item"><img src="<?php echo $ruta;?>assets/img/dribbble.png" alt="Dribbble"><span>Dribbble</span></a></div>
+	                      <div class="col"><a href="#" class="connection-item"><img src="<?php echo $ruta;?>assets/img/mail_chimp.png" alt="Mail Chimp"><span>Mail Chimp</span></a></div>
+	                      <div class="col"><a href="#" class="connection-item"><img src="<?php echo $ruta;?>assets/img/dropbox.png" alt="Dropbox"><span>Dropbox</span></a></div>
+	                    </div>
+	                  </div>
+	                </div>
+	                <div class="footer"> <a href="#">More</a></div>
+	              </li>
+	            </ul>
+	          </li>
+	           <li class="nav-item dropdown"><a href="#" role="button" aria-expanded="false" class="nav-link be-toggle-right-sidebar"><span class="icon mdi mdi-settings"></span></a></li>
+	        </ul>
+	      </div>
+	    </div>
+	</nav>
+</header>  	

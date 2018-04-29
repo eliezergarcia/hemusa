@@ -57,7 +57,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="shortcut icon" href="assets/img/logo-fav.png">
-    <title>Beagle</title>
+    <title>HEMUSA S.A de C.V</title>
     <link rel="stylesheet" type="text/css" href="assets/lib/perfect-scrollbar/css/perfect-scrollbar.min.css"/>
     <link rel="stylesheet" type="text/css" href="assets/lib/material-design-icons/css/material-design-iconic-font.min.css"/><!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -73,12 +73,12 @@
             <div class="card card-border-color card-border-color-primary">
               <div class="card-header"><img src="media/images/logo_hemusa.png" alt="logo" width="200" height="90" class="logo-img"><span class="splash-description">Porfavor ingresa tu informacion.</span></div>
               <div class="card-body">
-                <form action="<?php echo $loginFormAction; ?>" method="POST">
+                <form class="" id="form_login" name="form_login" method="post" action="<?php echo $loginFormAction; ?>" >
                   <div class="form-group">
-                    <input id="user" type="text" placeholder="Usuario" autocomplete="off" class="form-control">
+                    <input id="user" name="user" type="text" placeholder="Usuario" autocomplete="off" class="form-control">
                   </div>
                   <div class="form-group">
-                    <input id="password" type="password" placeholder="Contraseña" class="form-control">
+                    <input id="password" name="password" type="password" placeholder="Contraseña" class="form-control">
                   </div>
                   <div class="form-group row login-tools">
                     <div class="col-6 login-remember">
@@ -89,7 +89,7 @@
                     <div class="col-6 login-forgot-password"><a href="pages-forgot-password.html">Olvidaste tu contraseña?</a></div>
                   </div>
                   <div class="form-group login-submit">
-                    <button type="submit" name="Submit" class="btn btn-primary btn-xl">Ingresar</button>
+                    <button type="submit" name="Submit" id="btn-submit" class="btn btn-primary btn-xl" value="Ingresar">Ingresar</button>
                   </div>
                 </form>
               </div>
