@@ -73,7 +73,7 @@
             <div class="card card-border-color card-border-color-primary">
               <div class="card-header"><img src="media/images/logo_hemusa.png" alt="logo" width="200" height="90" class="logo-img"><span class="splash-description">Porfavor ingresa tu informacion.</span></div>
               <div class="card-body">
-                <form action="index.html" method="get">
+                <form action="<?php echo $loginFormAction; ?>" method="POST">
                   <div class="form-group">
                     <input id="user" type="text" placeholder="Usuario" autocomplete="off" class="form-control">
                   </div>
