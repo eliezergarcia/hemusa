@@ -23,7 +23,7 @@
 	  	unset($_SESSION['MM_UserGroup']);
 	  	unset($_SESSION['PrevUrl']);
 	
-  		$logoutGoTo = "../../index.php";
+  		$logoutGoTo = $ruta."index.php";
   		if ($logoutGoTo) {
     		header("Location: $logoutGoTo");
     		exit;
