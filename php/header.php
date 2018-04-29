@@ -87,31 +87,17 @@
 	          <div class="left-sidebar-content">
 	            <ul class="sidebar-elements">
 	              <li class="divider">Menu</li>
-	              <li class="active"><a href="ind.html"><i class="icon mdi mdi-home"></i><span>Inicio</span></a>
+	              <li class="active"><a href="<?php echo $ruta; ?>php/inicio/inicio.php"><i class="icon mdi mdi-home"></i><span>Inicio</span></a>
 	              </li>
 	              <li class="parent"><a href="#"><i class="icon mdi mdi-money-box"></i><span>Ventas</span></a>
                     <ul class="sub-menu">
-                      <li><a href="ui-alerts.html">Alerts</a>
+                      <li><a href="<?php echo $ruta; ?>php/ventas/clientes/clientes.php">Clientes</a>
                       </li>
-                      <li><a href="ui-buttons.html">Buttons</a>
+                      <li><a href="ui-buttons.html">Lista de precios</a>
                       </li>
-                      <li><a href="ui-panels.html">Panels</a>
+                      <li><a href="ui-panels.html">Cotizaciones</a>
                       </li>
-                      <li><a href="ui-general.html">General</a>
-                      </li>
-                      <li><a href="ui-modals.html">Modals</a>
-                      </li>
-                      <li><a href="ui-notifications.html">Notifications</a>
-                      </li>
-                      <li><a href="ui-icons.html">Icons</a>
-                      </li>
-                      <li><a href="ui-grid.html">Grid</a>
-                      </li>
-                      <li><a href="ui-tabs-accordions.html">Tabs &amp; Accordions</a>
-                      </li>
-                      <li><a href="ui-nestable-lists.html">Nestable Lists</a>
-                      </li>
-                      <li><a href="ui-typography.html">Typography</a>
+                      <li><a href="ui-general.html">Pedidos</a>
                       </li>
                     </ul>
                   </li>

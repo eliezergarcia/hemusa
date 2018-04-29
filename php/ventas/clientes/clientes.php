@@ -7,31 +7,11 @@
 <html lang="es">
 <head>
   <title>Clientes</title>
-  <?php include('../../enlaces.php'); ?>
+  <?php include('../../enlacescss.php'); ?>
 </head>
 <body>
   <?php include('../../header.php'); ?>
     <main class="mdl-layout__content">
-
-      <!-- Breadcrumb -->
-        <nav aria-label="breadcrumb">
-          <ol class="breadcrumb">
-            <li class="breadcrumb-item">Ventas</li>
-            <li class="breadcrumb-item active">Clientes</li>
-          </ol>
-        </nav>
-
-      <!-- Encabezado -->
-        <div class="row fondo">
-          <div class="col-sm-12 col-md-12 col-lg-12">
-            <h1 class="text-center"><b>Clientes</b></h1><br>
-          </div>
-        </div>
-
-      <!-- Mensaje de actualizaciones -->
-        <div>
-          <center><h6 class="mensaje"></h6></center>
-        </div>
 
       <!-- Tabla de Clientes -->
         <table id="dt_clientes" class="table table-striped table-bordered table-hover compact" cellspacing="0" width="100%">
@@ -214,9 +194,7 @@
 				</div>
 
     </div>
-  </main>
-</body>
-</html>
+  <?php include('../enlacesjs.php'); ?>
   <script>
 
     $(document).on("ready", function(){
@@ -428,3 +406,5 @@
     }
   </script>
   <script src="<?php echo $ruta; ?>/php/js/notificaciones.js"></script>
+</body>
+</html>
