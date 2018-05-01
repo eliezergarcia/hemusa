@@ -130,8 +130,8 @@
 	                    	</div>
 			          	</div>
 			          	<div class="modal-footer">
-			            	<button type="button" data-dismiss="modal" class="btn btn-secondary md-close">Cancelar</button>
-			            	<button type="button" data-dismiss="modal" class="btn btn-primary md-close">Hecho</button>
+			            	<button type="button" data-dismiss="modal" class="btn btn-secondary btn-lg md-close">Cancelar</button>
+			            	<button type="button" data-dismiss="modal" class="btn btn-primary btn-lg md-close">Hecho</button>
 			          	</div>
 		        	</div>
 	      		</div>
@@ -164,7 +164,7 @@
 				              			<input id="tipocambio" name="tipocambio" type="text" class="form-control form-control-sm col-lg-3" required>
 				              		</div>
 				              		<div class="mt-8">
-				                		<button type="submit" class="btn btn-space btn-warning">Guardar</button>
+				                		<button type="submit" class="btn btn-space btn-warning btn-lg">Guardar</button>
 				              		</div>
 				              	</form>
 			            	</div>
@@ -176,7 +176,7 @@
 
 	</header>  
 	<?php include('../enlacesjs.php'); ?>
-	<script>
+	<script type="text/javascript">
 		$.fn.niftyModal('setDefaults',{
 	      	overlaySelector: '.modal-overlay',
 	      	contentSelector: '.modal-content',

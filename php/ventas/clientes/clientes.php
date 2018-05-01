@@ -11,43 +11,52 @@
 </head>
 <body>
   <?php include('../../header.php'); ?>
-    <main class="mdl-layout__content">
-
-      <!-- Tabla de Clientes -->
-        <table id="dt_clientes" class="table table-striped table-bordered table-hover compact" cellspacing="0" width="100%">
-          <thead>
-            <tr>
-              <th>Nombre empresa</th>
-              <th>Persona contacto</th>
-              <th>Teléfono #1</th>
-              <th>Fáx</th>
-              <th>Correo electrónico</th>
-              <th>Ver Cliente</th>
-              <th>Eliminar Cliente</th>
-            </tr>
-          </thead>
-          <tbody></tbody>
-          <tfoot>
-            <th>Nombre empresa</th>
-            <th>Persona contacto</th>
-            <th>Teléfono #1</th>
-            <th>Fáx</th>
-            <th>Correo electrónico</th>
-            <td></td>
-            <td></td>
-          </tfoot>
-        </table>
+    <div class="be-content">
+          <div class="page-head">
+              <h2 class="page-head-title">Clientes</h2>
+              <nav aria-label="breadcrumb" role="navigation">
+                <ol class="breadcrumb page-head-nav">
+                    <li class="breadcrumb-item"><a href="#">Ventas</a></li>
+                    <li class="breadcrumb-item"><a href="#">Clientes</a></li>
+                </ol>
+              </nav>
+          </div>
+          <div class="main-content container-fluid">
+              <div class="row full-calendar">
+                <div class="col-lg-12">
+                    <div class="card card-fullcalendar">
+                      <div class="card-body">
+                          <!-- Tabla de Clientes -->
+                            <table id="dt_clientes" class="table table-striped table-bordered table-hover compact" cellspacing="0" width="100%">
+                              <thead>
+                                <tr>
+                                  <th>Nombre empresa</th>
+                                  <th>Persona contacto</th>
+                                  <th>Teléfono #1</th>
+                                  <th>Fáx</th>
+                                  <th>Correo electrónico</th>
+                                  <th>Ver Cliente</th>
+                                  <th>Eliminar Cliente</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                              </tbody>
+                            </table>
+                      </div>
+                    </div>
+                </div>
+            </div>
+      </div>
+    </div>
 
       <!-- Modal Agregar Cliente -->
         <form action="#" method="POST">
           <input type="hidden" id="opcion" name="opcion" value="agregarcliente">
-          <input type="hidden" id="usuariologin" name="usuariologin">
-          <input type="hidden" id="dplogin" name="dplogin">
-          <div class="modal fade" id="modalAgregarCliente" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal fade colored-header colored-header-success" id="modalAgregarCliente" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg" role="document">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel">Agregar cliente</h5>
+                  <h5 class="modal-title" id="exampleModalLabel"><b>Registro de cliente</b></h5>
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                   </button>
@@ -55,83 +64,83 @@
                 <div class="modal-body">
                   <div class="row">
                     <div class="form-group col">
-                      <label for="nombreEmpresa">Nombre de empresa <font color="#FF4136">*</font></label>
-                      <input type="text" id="nombreEmpresa" name="nombreEmpresa" class="limpiar form-control" required>
+                      <label for="nombreEmpresa"><h4>Nombre de empresa <font color="#FF4136">*</h4></font></label>
+                      <input type="text" id="nombreEmpresa" name="nombreEmpresa" class="limpiar form-control form-control-sm" required>
                     </div>
                   </div>
                   <div class="row">
                     <div class="form-group col">
-                      <label for="rfc">RFC <font color="#FF4136">*</font></label>
-                      <input type="text" id="rfc" name="rfc" class="limpiar form-control" required>
+                      <label for="rfc"><h4>RFC <font color="#FF4136">*</h4></font></label>
+                      <input type="text" id="rfc" name="rfc" class="limpiar form-control form-control-sm" required>
                     </div>
                     <div class="form-group col">
-                      <label for="moneda">Moneda <font color="#FF4136">*</font></label>
-                      <select name="moneda" id="moneda" class="limpiar form-control" required>
+                      <label for="moneda"><h4>Moneda <font color="#FF4136">*</h4></font></label>
+                      <select name="moneda" id="moneda" class="limpiar form-control form-control-xs select2" required>
                         <option value="mxn">MXN</option>
                         <option value="usd">USD</option>
                       </select>
                     </div>
                     <div class="form-group col">
-                      <label for="calle">Calle <font color="#FF4136">*</font></label>
-                      <input type="text" id="calle" name="calle" class="limpiar form-control" required>
+                      <label for="calle"><h4>Calle <font color="#FF4136">*</h4></font></label>
+                      <input type="text" id="calle" name="calle" class="limpiar form-control form-control-sm" required>
                     </div>
                   </div>
                   <div class="row">
                     <div class="form-group col">
-                      <label for="numExterior">Num. Exterior <font color="#FF4136">*</font></label>
-                      <input type="text" id="numExterior" name="numExterior" class="limpiar form-control" required>
+                      <label for="numExterior"><h4>Num. Exterior <font color="#FF4136">*</h4></font></label>
+                      <input type="text" id="numExterior" name="numExterior" class="limpiar form-control form-control-sm" required>
                     </div>
                     <div class="form-group col">
-                      <label for="numInterior">Num. Interior</label>
-                      <input type="text" id="numInterior" name="numInterior" class="limpiar form-control" placeholder="Opcional">
+                      <label for="numInterior"><h4>Num. Interior <font color="#FF4136">*</h4></font></label>
+                      <input type="text" id="numInterior" name="numInterior" class="limpiar form-control form-control-sm" placeholder="Opcional">
                     </div>
                     <div class="form-group col">
-                      <label for="colonia">Colonia <font color="#FF4136">*</font></label>
-                      <input type="text" id="colonia" name="colonia" class="limpiar form-control" required>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="form-group col">
-                      <label for="cp">C.P. <font color="#FF4136">*</font></label>
-                      <input type="text" id="cp" name="cp" class="limpiar form-control" required>
-                    </div>
-                    <div class="form-group col">
-                      <label for="ciudad">Ciudad <font color="#FF4136">*</font></label>
-                      <input type="text" id="ciudad" name="ciudad" class="limpiar form-control" required>
-                    </div>
-                    <div class="form-group col">
-                      <label for="estado">Estado <font color="#FF4136">*</font></label>
-                      <input type="text" id="estado" name="estado" class="limpiar form-control" required>
+                      <label for="colonia"><h4>Colonia <font color="#FF4136">*</h4></font></label>
+                      <input type="text" id="colonia" name="colonia" class="limpiar form-control form-control-sm" required>
                     </div>
                   </div>
                   <div class="row">
                     <div class="form-group col">
-                      <label for="pais">Pais <font color="#FF4136">*</font></label>
-                      <input type="text" id="pais" name="pais" class="limpiar form-control" required>
+                      <label for="cp"><h4>C.P. <font color="#FF4136">*</h4></font></font></label>
+                      <input type="text" id="cp" name="cp" class="limpiar form-control form-control-sm" required>
                     </div>
                     <div class="form-group col">
-                      <label for="tlf1">Teléfono 1 <font color="#FF4136">*</font></label>
-                      <input type="text" id="tlf1" name="tlf1" class="limpiar form-control" required>
+                      <label for="ciudad"><h4>Ciudad <font color="#FF4136">*</h4></font></label>
+                      <input type="text" id="ciudad" name="ciudad" class="limpiar form-control form-control-sm" required>
                     </div>
                     <div class="form-group col">
-                      <label for="tlf2">Teléfono 2</label>
-                      <input type="text" id="tlf2" name="tlf2" class="limpiar form-control" placeholder="Opcional">
+                      <label for="estado"><h4>Estado <font color="#FF4136">*</h4></font></label>
+                      <input type="text" id="estado" name="estado" class="limpiar form-control form-control-sm" required>
                     </div>
                   </div>
                   <div class="row">
                     <div class="form-group col">
-                      <label for="paginaWeb">Página Web</label>
-                      <input type="text" id="paginaWeb" name="paginaWeb" class="limpiar form-control" placeholder="(Opcional)">
+                      <label for="pais"><h4>País <font color="#FF4136">*</h4></font></label>
+                      <input type="text" id="pais" name="pais" class="limpiar form-control form-control-sm" required>
                     </div>
                     <div class="form-group col">
-                      <label for="correoElectronico">Correo electrónico <font color="#FF4136">*</font></label>
-                      <input type="email" id="correoElectronico" name="correoElectronico" class="limpiar form-control" required>
+                      <label for="tlf1"><h4>Teléfono #1 <font color="#FF4136">*</h4></font></label>
+                      <input type="text" id="tlf1" name="tlf1" class="limpiar form-control form-control-sm" required>
+                    </div>
+                    <div class="form-group col">
+                      <label for="tlf2"><h4>Teléfono #2</h4></label>
+                      <input type="text" id="tlf2" name="tlf2" class="limpiar form-control form-control-sm" placeholder="Opcional">
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="form-group col">
+                      <label for="paginaWeb"><h4>Página Web </h4></label>
+                      <input type="text" id="paginaWeb" name="paginaWeb" class="limpiar form-control form-control-sm" placeholder="Opcional">
+                    </div>
+                    <div class="form-group col">
+                      <label for="correoElectronico"><h4>Correo electrónico <font color="#FF4136">*</h4></font></label>
+                      <input type="email" id="correoElectronico" name="correoElectronico" class="limpiar form-control form-control-sm" required>
                     </div>
                   </div>
                 </div>
                 <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                  <button type="submit" class="btn btn-success">Guardar</button>
+                  <button type="button" class="btn btn-secondary btn-lg" data-dismiss="modal">Cerrar</button>
+                  <button type="submit" class="btn btn-success btn-lg">Guardar</button>
                 </div>
               </div>
             </div>
@@ -144,23 +153,24 @@
           <input type="hidden" id="idcliente" name="idcliente" value="">
           <input type="hidden" id="usuariologin" name="usuariologin">
           <input type="hidden" id="dplogin" name="dplogin">
-          <div class="modal fade" id="modalEliminarCliente" tabindex="-1" role="dialog" aria-labelledby="modalEliminarLabel">
+          <div class="modal-full-color modal-full-color-danger modal fade" id="modalEliminarCliente" tabindex="-1" role="dialog">
             <div class="modal-dialog" role="document">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h4 class="modal-title" id="modalEliminarLabel">Eliminar Cliente</h4>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  <button type="button" data-dismiss="modal" aria-hidden="true" class="close"><span class="mdi mdi-close"></span></button>
                 </div>
                 <div class="modal-body">
-                  <div class="form-group">
-                    <label for="nombreEmpresa">¿Está seguro de eliminar el cliente?</label>
-                    <input type="text" class="disabled form-control col-12" id="nombreEmpresa" name="nombreEmpresa" disabled>
+                  <div class="text-center">
+                    <div class="text-center"><span class="modal-main-icon mdi mdi-close-circle-o"></span></div>
+                    <h4><b>¿Está seguro de eliminar el cliente?</b></h4>
+                    <div class="row justify-content-center"><input type="text" class="disabled form-control col-6 form-control form-control-sm" id="nombreEmpresa" name="nombreEmpresa"></div>
+                    <div class="mt-8">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                      <button type="submit" class="btn btn-danger">Eliminar</button>
+                    </div>
                   </div>
                 </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                  <button type="submit" class="btn btn-danger">Eliminar</button>
-                </div>
+                <div class="modal-footer"></div>
               </div>
             </div>
           </div>
@@ -193,37 +203,28 @@
 					</div>
 				</div>
 
-    </div>
-  <?php include('../enlacesjs.php'); ?>
-  <script>
+  </header>
+  <?php include('../../enlacesjs.php'); ?>
+  <script type="text/javascript">
+    $.fn.niftyModal('setDefaults',{
+        overlaySelector: '.modal-overlay',
+        contentSelector: '.modal-content',
+        closeSelector: '.modal-close',
+        classAddAfterOpen: 'modal-show'
+    });
 
-    $(document).on("ready", function(){
-      var idusuario = "<?php echo $idusuario; ?>";
-      console.log(idusuario);
-      buscar_oc_pendientes();
-		  setInterval(buscar_oc_pendientes, 3000);
+    $(document).ready(function(){
+      // buscar_oc_pendientes();
+		  // setInterval(buscar_oc_pendientes, 3000);
+      App.init();
+      App.pageCalendar();       
+      App.formElements();
+      App.uiNotifications();
       listar_clientes();
       guardar();
-      // var opcion = "datosusuario";
-      // $.ajax({ // Se obtienen los datos del usuario en sesion
-      //   method: "POST",
-      //   url: "buscar.php",
-      //   dataType: "json",
-      //   data: {"opcion": opcion, "idusuario": idusuario},
-      //   success: function ( data ){
-      //     console.log(data);
-      //     $("form #usuariologin").val(data.datosusuario.nombre + " " + data.datosusuario.apellidos);
-      //     $("form #dplogin").val(data.datosusuario.dp);
-      //   }
-      // });
     });
 
     var listar_clientes = function(){
-      $('#dt_clientes tfoot th').each( function () {
-        var title = $(this).text();
-        $(this).html( '<input class="form-control" type="text" placeholder="Buscar '+ title +'" />' );
-      });
-
       var opcion = "clientes";
       var table = $("#dt_clientes").DataTable({
         "destroy":"true",
@@ -239,58 +240,63 @@
           {"data": "tlf1"},
           {"data": "fax"},
           {"data": "correoElectronico"},
-          {"defaultContent": "<button class='editar btn btn-primary'><i class='fa fa-pencil-square-o' aria-hidden='true'></i></button>"},
-          {"defaultContent": "<button class='eliminar btn btn-danger' data-toggle='modal' data-target='#modalEliminarCliente'><i class='fa fa-trash-o' aria-hidden='true'></i></button>"}
+          {"defaultContent": "<button class='btn btn-space btn-primary btn-lg'><i class='icon icon-left mdi mdi-edit'></i></button>", "sortable": false},
+          {"defaultContent": "<button class='eliminar btn btn-space btn-danger btn-lg' data-toggle='modal' data-target='#modalEliminarCliente'><i class='icon icon-left mdi mdi-delete'></i></button>", "sortable": false}
+        ],
+        "columnDefs": [
+          { "width": "9%", "targets": 6 },
+          { "width": "9%", "targets": 5 },
         ],
         "order": [[0, "asc"]],
         "language": idioma_espanol,
         "dom":
-        "<'container row col-10 row align-items-center'<'row justify-content-center col-6 buttons'B><'row justify-content-end col-6 buttons'f>>" +
-					"<'container row col-10 row'<'justify-content-center col-12 buttons'tr>>" +
-					"<'container row col-10 row'<'row justify-content-center col-12 buttons'i><'row justify-content-center col-12 buttons'p>>",
+          "<'row be-datatable-header'<'col-sm-6'B><'col-sm-6 text-right'f>>" +
+          "<'row be-datatable-body'<'col-sm-12'tr>>" +
+          "<'row be-datatable-footer'<'col-sm-5'i><'col-sm-7'p>>",
         "buttons":[
           {
             extend:    'pdfHtml5',
-            text:      '<i class="fa fa-file-pdf-o"></i>',
+            text:      '<i class="icon mdi mdi-collection-pdf" style="color:white"></i>',
             titleAttr: 'Generar PDF',
-            "className": "btn iconopdf",
+            download: 'open',
+            "className": "btn btn-danger btn-big",
             exportOptions: {
               columns: [ 0, 1, 2, 3, 4 ]
             }
           },
           {
             extend:    'excelHtml5',
-            text:      '<i class="fa fa-file-excel-o"></i>',
+            text:      '<i class="icon icon-left mdi mdi-file" style="color:white"></i>',
             titleAttr: 'Generar Excel',
-            "className": "btn iconoexcel",
+            "className": "btn btn-success btn-big",
             exportOptions: {
               columns: [ 0, 1, 2, 3, 4 ]
             }
           },
           {
-            extend: 'csvHtml5',
-            text: '<i class="fa fa-file-text-o"></i>',
+            extend: 'csv',
+            text: '<i class="icon icon-left mdi mdi-file-text" style="color:white"></i>',
             titleAttr: 'Generar CSV',
-            "className": "btn iconocsv",
+            "className": "btn btn-primary btn-big",
             exportOptions: {
                     columns: [ 0, 1, 2, 3, 4 ]
             }
           },
           {
             extend: 'print',
-            text: '<i class="fa fa-print" aria-hidden="true"></i>',
+            text: '<i class="icon icon-left mdi mdi-print" style="color:white"></i>',
             titleAttr: 'Imprimir',
             header: 'false',
             exportOptions: {
                     columns: [ 0, 1, 2, 3, 4 ]
             },
-            "className": "btn iconoimprimir",
+            "className": "btn btn-warning btn-big",
             orientation: 'landscape',
             pageSize: 'LEGAL'
           },
           {
-            text: '<i class="fa fa-plus-circle" aria-hidden="true"></i> Cliente',
-            "className": "btn btn-success",
+            text: '<i class="icon icon-left mdi mdi-plus-circle" style="color:white"></i> Cliente',
+            "className": "btn btn-success btn-big",
             titleAttr: 'Agregar Cliente',
             action: function (e, dt, node, config){
               $("#modalAgregarCliente").modal("show");
@@ -299,12 +305,12 @@
         ]
       });
 
-      $("#dt_clientes tfoot input").on( 'keyup change', function () {
-        table
-            .column( $(this).parent().index()+':visible' )
-            .search( this.value )
-            .draw();
-      });
+      // $("#dt_clientes tfoot input").on( 'keyup change', function () {
+      //   table
+      //       .column( $(this).parent().index()+':visible' )
+      //       .search( this.value )
+      //       .draw();
+      // });
 
       obtener_data_ver_cliente("#dt_clientes tbody", table);
       obtener_id_eliminar("#dt_clientes tbody",table);
@@ -331,8 +337,7 @@
       $("form").on("submit", function(e){
         e.preventDefault();
         $("form .disabled").attr("disabled", false);
-        $("#modalAgregarCliente").modal("hide");
-        $("#modalEliminarCliente").modal("hide");
+        $(".modal").modal("hide");
         var frm = $(this).serialize();
         console.log(frm);
         $.ajax({
@@ -357,27 +362,36 @@
     var mostrar_mensaje = function( informacion ){
       var texto = "", color = "";
       if( informacion.respuesta == "BIEN" ){
-        texto = "<div class='alert alert-success'><strong>Bien!</strong> Se han guardado los cambios correctamente.</div>";
-        color = "#379911";
+        $.gritter.add({
+          title: 'Correcto!',
+          text: 'Se elimino el cliente correctamente.',
+          class_name: 'color success'
+        });
       }else if( informacion.respuesta == "ERROR"){
-        texto = "<div class='alert alert-danger'><strong>Error</strong>, no se ejecutó la consulta.</div>";
-        color = "#C9302C";
+        $.gritter.add({
+          title: 'Error!',
+          text: 'No se ejecuto la consulta.',
+          class_name: 'color danger'
+        });
       }else if( informacion.respuesta == "EXISTE" ){
-        texto = "<div class='alert alert-warning'><strong>Información!</strong> el RFC ya existe.</div>";
-        color = "#5b94c5";
+        $.gritter.add({
+          title: 'Información!',
+          text: 'No se pudo registrar el cliente, el RFC ingresado ya existe.',
+          class_name: 'color warning'
+        });
       }else if( informacion.respuesta == "VACIO" ){
-        texto = "<strong>Advertencia!</strong> debe llenar todos los campos solicitados.";
-        color = "#ddb11d";
+        $.gritter.add({
+          title: 'Advertencia!',
+          text: 'Debe de llenar todos los campos.',
+          class_name: 'color warning'
+        });
       }else if( informacion.respuesta == "OPCION_VACIA"){
-        texto = "<strong>Advertencia!</strong> la opción no existe o esta vacía, recargar la página. ";
-        color = "#DDB11D";
+        $.gritter.add({
+          title: 'Advertencia!',
+          text: 'La opción no existe o esta vacía.',
+          class_name: 'color warning'
+        });
       }
-
-      $(".mensaje").html( texto );
-      $(".mensaje").fadeOut(8000, function(){
-        $(this).html("");
-        $(this).fadeIn(8000);
-      });
     }
 
     var idioma_espanol = {

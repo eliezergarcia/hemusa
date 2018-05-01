@@ -71,7 +71,7 @@
         <div class="main-content container-fluid">
           <div class="splash-container">
             <div class="card card-border-color card-border-color-primary">
-              <div class="card-header"><img src="media/images/logo_hemusa.png" alt="logo" width="200" height="90" class="logo-img"><span class="splash-description">Porfavor ingresa tu informacion.</span></div>
+              <div class="card-header"><img src="media/images/logo_hemusa.png" alt="logo" width="230" height="90" class="logo-img"><span class="splash-description">Porfavor ingresa tu informacion.</span></div>
               <div class="card-body">
                 <form class="" id="form_login" name="form_login" method="post" action="<?php echo $loginFormAction; ?>" >
                   <div class="form-group">

@@ -1,5 +1,6 @@
 <?php 
 	include("../../conexion.php");
+	include("../../sesion.php");
 	
 	$opcion = $_POST["opcion"];
 	$informacion = [];

@@ -1,9 +1,8 @@
 <?php 
 	include ('../../conexion.php');
+	include ('../../sesion.php');
 	
 	$opcion = $_POST["opcion"];
-	$usuariologin = $_POST['usuariologin'];
-	$dplogin = $_POST['dplogin'];
 	$informacion = [];
 
 	switch ($opcion) {

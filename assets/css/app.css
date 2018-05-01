@@ -1524,12 +1524,12 @@ select.form-control:focus::-ms-value {
   line-height: 1.6;
   border-radius: 2px; }
 
-select.form-control-sm:not([size]):not([multiple]), .input-group-sm > select.form-control:not([size]):not([multiple]),
+/*select.form-control-sm:not([size]):not([multiple]), .input-group-sm > select.form-control:not([size]):not([multiple]),
 .input-group-sm > .input-group-prepend > select.input-group-text:not([size]):not([multiple]),
 .input-group-sm > .input-group-append > select.input-group-text:not([size]):not([multiple]),
 .input-group-sm > .input-group-prepend > select.btn:not([size]):not([multiple]),
 .input-group-sm > .input-group-append > select.btn:not([size]):not([multiple]) {
-  height: 4.385rem; }
+  height: 4.385rem; }*/
 
 .form-control-lg, .input-group-lg > .form-control,
 .input-group-lg > .input-group-prepend > .input-group-text,
@@ -1541,12 +1541,12 @@ select.form-control-sm:not([size]):not([multiple]), .input-group-sm > select.for
   line-height: 1.7;
   border-radius: 4px; }
 
-select.form-control-lg:not([size]):not([multiple]), .input-group-lg > select.form-control:not([size]):not([multiple]),
+/*select.form-control-lg:not([size]):not([multiple]), .input-group-lg > select.form-control:not([size]):not([multiple]),
 .input-group-lg > .input-group-prepend > select.input-group-text:not([size]):not([multiple]),
 .input-group-lg > .input-group-append > select.input-group-text:not([size]):not([multiple]),
 .input-group-lg > .input-group-prepend > select.btn:not([size]):not([multiple]),
 .input-group-lg > .input-group-append > select.btn:not([size]):not([multiple]) {
-  height: 2.846rem; }
+  height: 2.846rem; }*/
 
 .form-group {
   margin-bottom: 1.538rem; }
@@ -13671,7 +13671,7 @@ pre {
 .colored-header .modal-content .modal-header {
   background-color: #e6e5e5;
   color: #FFFFFF;
-  padding: 30px 20px;
+  padding: 20px 20px;
   border-top-left-radius: 0;
   border-top-right-radius: 0; }
   .colored-header .modal-content .modal-header .modal-title {
@@ -14382,7 +14382,8 @@ address {
   padding: 10px 12px;
   font-size: 1.1538rem;
   transition: none;
-  height: 3.692rem; }
+  height: 3.692rem; 
+  border-radius: .30rem; }
 
 .form-control[multiple] {
   padding: 0; }
@@ -14431,7 +14432,7 @@ label {
   font-size: 0.9231rem;
   padding: 6px 9px; }
 
-select.form-control-xs:not([size]):not([multiple]) {
+select.form-control-xs{
   height: 3.1384rem; }
 
 .form-control-sm, .input-group-sm > .form-control,
@@ -16027,14 +16028,14 @@ form.dropzone {
 */
 .select2-container--default .select2-selection--single, .select2-container--default .select2-selection--multiple {
   border: 0.07692rem solid #d5d8de;
-  border-radius: 2px; }
+  border-radius: 3.5px; }
 
 .select2-container--default .select2-selection--single {
-  height: 3.692rem; }
+  height: 37px; }
   .select2-container--default .select2-selection--single .select2-selection__rendered {
     padding: 0 15px;
-    height: 3.53816rem;
-    line-height: 3.53816rem;
+    height: 2.5rem;
+    line-height: 2.8rem;
     font-size: 1.077rem;
     color: #404040; }
     .select2-container--default .select2-selection--single .select2-selection__rendered .select2-selection__clear {
@@ -16055,7 +16056,7 @@ form.dropzone {
         font-family: "Material Icons";
         font-size: 1.923rem;
         font-weight: normal;
-        line-height: 3.5382rem;
+        line-height: 2.8rem;
         color: #404040; }
 
 .select2-container--default .select2-selection--multiple {

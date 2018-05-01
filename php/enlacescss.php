@@ -18,10 +18,12 @@
     <link rel="stylesheet" type="text/css" href="<?php echo $ruta; ?>assets/lib/jqvmap/jqvmap.min.css"/>
     <link rel="stylesheet" type="text/css" href="<?php echo $ruta; ?>assets/lib/datetimepicker/css/bootstrap-datetimepicker.min.css"/>
     <link rel="stylesheet" type="text/css" href="<?php echo $ruta; ?>assets/lib/jquery.fullcalendar/fullcalendar.min.css"/>
-    <link rel="stylesheet" type="text/css" href="<?php echo $ruta; ?>assets/lib/select2/css/select2.min.css"/>
+    <link rel="stylesheet" type="text/css" href="<?php echo $ruta; ?>assets/lib/select2/css/select2.css"/>
     <link rel="stylesheet" type="text/css" href="<?php echo $ruta; ?>assets/lib/bootstrap-slider/css/bootstrap-slider.min.css"/>
     <link rel="stylesheet" type="text/css" href="<?php echo $ruta; ?>assets/lib/jquery.gritter/css/jquery.gritter.css"/>
+    <link rel="stylesheet" type="text/css" href="<?php echo $ruta; ?>assets/lib/datatables/datatables.net-bs4/css/dataTables.bootstrap4.css"/>
     <link rel="stylesheet" href="<?php echo $ruta; ?>assets/css/app.css" type="text/css"/>
+    <link rel="stylesheet" href="<?php echo $ruta; ?>php/css/awesomplete.css" type="text/css"/>
 
   <!-- Librerias para Exportación de Botones -->
     <!-- <script src="<?php echo $ruta; ?>php/js/jszip.min.js"></script>
