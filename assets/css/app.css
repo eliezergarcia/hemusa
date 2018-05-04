@@ -3,6 +3,10 @@
  * Copyright 2018 Foxy Themes all rights reserved 
  */
 
+:root {
+    --color-primary: #3F51B5;
+}
+
 @media print {
   *,
   *::before,
@@ -63,6 +67,10 @@ html {
   -ms-text-size-adjust: 100%;
   -ms-overflow-style: scrollbar;
   -webkit-tap-highlight-color: transparent; }
+
+.color-blanco{
+  color: white;
+}
 
 @-ms-viewport {
   width: device-width; }
@@ -2507,7 +2515,7 @@ tbody.collapse.show {
 .btn-group > .btn:first-child {
   margin-left: 0; }
 
-.btn-group > .btn:not(:last-child):not(.dropdown-toggle),
+/*.btn-group > .btn:not(:last-child):not(.dropdown-toggle),
 .btn-group > .btn-group:not(:last-child) > .btn {
   border-top-right-radius: 0;
   border-bottom-right-radius: 0; }
@@ -2515,7 +2523,7 @@ tbody.collapse.show {
 .btn-group > .btn:not(:first-child),
 .btn-group > .btn-group:not(:first-child) > .btn {
   border-top-left-radius: 0;
-  border-bottom-left-radius: 0; }
+  border-bottom-left-radius: 0; }*/
 
 .dropdown-toggle-split {
   padding-right: 0.5625rem;
@@ -8007,8 +8015,8 @@ canvas {
       line-height: 25px;
       vertical-align: middle; }
   .be-color-header .be-top-header {
-    background-color: #4285f4;
-    border-bottom-color: #4285f4; }
+    background-color: var(--color-primary);
+    border-bottom-color: var(--color-primary) }
     .be-color-header .be-top-header .be-navbar-header .navbar-brand {
       background-image: url("../img/logo-white.png"); }
       @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
@@ -11193,9 +11201,9 @@ li.L9 {
       border-left-width: 0; } }
 
 .invoice-footer {
-  text-align: center; }
+  /*text-align: center;*/ }
   .invoice-footer .btn {
-    min-width: 96px;
+    min-width: 70px;
     font-size: 1.077rem; }
   @media print {
     .invoice-footer {

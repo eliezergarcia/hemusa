@@ -28,7 +28,7 @@
                     	<div class="card card-fullcalendar">
                       		<div class="card-body">
                           		<!-- Tabla de Usuarios -->
-									<table id="dt_usuarios" class="table table-striped table-hover table-bordered compact" cellspacing="0" width="100%">
+									<table id="dt_usuarios" class="table table-striped table-hover display compact" cellspacing="0" width="100%">
 										<thead>
 											<tr>
 												<th>Usuario</th>
@@ -39,16 +39,6 @@
 												<th>Eliminar</th>
 											</tr>
 										</thead>
-										<tfoot>
-											<tr>
-												<th>Usuario</th>
-												<th>Nombre</th>
-												<th>Apellidos</th>
-												<th>Departamento</th>
-												<td></td>
-												<td></td>
-											</tr>
-										</tfoot>
 									</table>
                       		</div>
                     	</div>
@@ -60,8 +50,6 @@
 		<!-- Modal Registrar Usuario -->
 			<form id="frmRegistrarUsuario" action="" method="POST">
 				<input type="hidden" id="opcion" name="opcion" value="registrar">
-				<input type="hidden" id="usuariologin" name="usuariologin">
-				<input type="hidden" id="dplogin" name="dplogin">
 				<div class="modal fade colored-header colored-header-success" id="modalRegistrarUsuario" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
 					<div class="modal-dialog modal-lg" role="document">
 						<div class="modal-content">
@@ -144,7 +132,7 @@
 									</div>
 								</div>
 							</div>
-							<div class="modal-footer">
+							<div class="modal-footer invoice-footer">
 								<button type="button" class="btn btn-secondary btn-lg" data-dismiss="modal">Cancelar</button>
 								<button type="submit" class="btn btn-success btn-lg">Registrar</button>
 							</div>
@@ -242,7 +230,7 @@
 									</div>
 								</div>
 							</div>
-							<div class="modal-footer">
+							<div class="modal-footer invoice-footer">
 								<button type="button" class="btn btn-secondary btn-lg" data-dismiss="modal">Cancelar</button>
 								<button type="submit" class="btn btn-primary btn-lg">Editar</button>
 							</div>
@@ -254,8 +242,6 @@
 		<!-- Modal Eliminar Usuario -->
 			<form id="frmEliminarUsuario" action="" method="POST">
 				<input type="hidden" id="idusuario" name="idusuario" value="">
-				<input type="hidden" id="usuariologin" name="usuariologin">
-				<input type="hidden" id="dplogin" name="dplogin">
 				<input type="hidden" id="opcion" name="opcion" value="eliminar">
 				<!-- Modal -->
 				<div class="modal-full-color modal-full-color-danger modal fade" id="modalEliminarUsuario" tabindex="-1" role="dialog" aria-labelledby="modalEliminarLabel">
@@ -269,11 +255,16 @@
                     				<div class="text-center"><span class="modal-main-icon mdi mdi-close-circle-o"></span></div>
                     				<h4><b>¿Está seguro de eliminar el usuario?</b></h4>
                     				<div class="row justify-content-center">
-                    					<input type="text" class="disabled form-control col-6 form-control form-control-sm" id="usuario" name="usuario" disabled>
+                    					<div class="form-group col-12 row justify-content-center">
+                    						<input type="text" class="disabled form-control col-6 form-control form-control-sm" id="nombre" name="nombre" disabled>
+                    					</div>
+                    					<div class="form-group col-12 row justify-content-center">
+                    						<input type="text" class="disabled form-control col-6 form-control form-control-sm" id="apellido" name="apellido" disabled>
+                    					</div>
                     				</div>
-                    				<div class="mt-8">
-                      					<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                      					<button type="submit" class="btn btn-danger">Eliminar</button>
+                    				<div class="mt-8 invoice-footer">
+                      					<button type="button" class="btn btn-lg btn-secondary" data-dismiss="modal">Cancelar</button>
+                      					<button type="submit" class="btn btn-lg btn-danger">Eliminar</button>
                     				</div>	
                   				</div>
                 			</div>
@@ -297,10 +288,10 @@
 		});
 
 		var  listar = function(data){ // DataTable de Usuarios
-			$('#dt_usuarios tfoot th').each( function () {
-	    		var title = $(this).text();
-	    		$(this).html( '<input class="form-control form-control-sm" type="text" placeholder="Buscar '+ title +'" />' );
-	  		});
+			// $('#dt_usuarios tfoot th').each( function () {
+	  //   		var title = $(this).text();
+	  //   		$(this).html( '<input class="form-control form-control-sm" type="text" placeholder="Buscar '+ title +'" />' );
+	  // 		});
 
 			var table = $("#dt_usuarios").DataTable({
 				"destroy": true,
@@ -314,8 +305,8 @@
 					{"data": "nombre"},
 					{"data": "apellidos"},
 					{"data": "dp"},
-					{"defaultContent": "<button data-toggle='modal' data-target='#modalEditarUsuario' class='editar btn btn-space btn-primary btn-lg'><i class='icon icon-left mdi mdi-edit' aria-hidden='true'></i></button>", "sortable": false},
-					{"defaultContent": "<button data-toggle='modal' data-target='#modalEliminarUsuario' class='eliminar btn btn-space btn-danger btn-lg'><i class='icon icon-left mdi mdi-delete' aria-hidden='true'></i></button>", "sortable": false}
+					{"defaultContent": "<div class='invoice-footer'><button data-toggle='modal' data-target='#modalEditarUsuario' class='editar btn btn-space btn-primary btn-lg'><i class='fas fa-edit fa-sm'></i></button></div>", "sortable": false},
+					{"defaultContent": "<div class='invoice-footer'><button data-toggle='modal' data-target='#modalEliminarUsuario' class='eliminar btn btn-space btn-danger btn-lg'><i class='fas fa-trash-alt fa-sm'></i></button></div>", "sortable": false}
 				],
 				"order":[[0, "asc"]],
 				"language": idioma_espanol,
@@ -325,49 +316,50 @@
           			"<'row be-datatable-footer'<'col-sm-5'i><'col-sm-7'p>>",
 				"buttons":[
 		          {
-		            extend:    'pdfHtml5',
-		            text:      '<i class="icon mdi mdi-collection-pdf" style="color:white"></i>',
-		            titleAttr: 'Generar PDF',
-		            download: 'open',
-		            "className": "btn btn-danger btn-big",
-		            exportOptions: {
-		              columns: [ 0, 1, 2, 3 ]
-		            }
-		          },
-		          {
-		            extend:    'excelHtml5',
-		            text:      '<i class="icon icon-left mdi mdi-file" style="color:white"></i>',
-		            titleAttr: 'Generar Excel',
-		            "className": "btn btn-success btn-big",
-		            exportOptions: {
-		              columns: [ 0, 1, 2, 3 ]
-		            }
-		          },
-		          {
-		            extend: 'csv',
-		            text: '<i class="icon icon-left mdi mdi-file-text" style="color:white"></i>',
-		            titleAttr: 'Generar CSV',
-		            "className": "btn btn-primary btn-big",
-		            exportOptions: {
+		            extend: 'collection',
+		            text: 'Exportar tabla',
+		            "className": "btn btn-lg btn-space btn-secondary",
+		            buttons: [
+		                {
+		                  extend:    'excelHtml5',
+		                  text:      '<i class="fas fa-file-excel fa-lg"></i> Excel',
+		                  // "className": "btn btn-lg btn-space btn-secondary",
+		                  exportOptions: {
 		                    columns: [ 0, 1, 2, 3 ]
-		            }
-		          },
-		          {
-		            extend: 'print',
-		            text: '<i class="icon icon-left mdi mdi-print" style="color:white"></i>',
-		            titleAttr: 'Imprimir',
-		            header: 'false',
-		            exportOptions: {
+		                  }
+		                },
+		                {
+		                  extend: 'csv',
+		                  text: '<i class="fas fa-file-alt fa-lg"></i> Csv',
+		                  // "className": "btn btn-lg btn-space btn-secondary",
+		                  exportOptions: {
+		                          columns: [ 0, 1, 2, 3 ]
+		                  }
+		                },
+		                {
+		                  extend:    'pdfHtml5',
+		                  text:      '<i class="fas fa-file-pdf fa-lg"></i> Pdf',
+		                  download: 'open',
+		                  // "className": "btn btn-lg btn-space btn-secondary",
+		                  exportOptions: {
 		                    columns: [ 0, 1, 2, 3 ]
-		            },
-		            "className": "btn btn-warning btn-big",
-		            orientation: 'landscape',
-		            pageSize: 'LEGAL'
+		                  }
+		                },
+		                {
+		                  extend: 'print',
+		                  text: '<i class="fas fa-print fa-lg"></i> Imprimir',
+		                  header: 'false',
+		                  exportOptions: {
+		                          columns: [ 0, 1, 2, 3 ]
+		                  },
+		                  orientation: 'landscape',
+		                  pageSize: 'LEGAL'
+		                }
+		            ]
 		          },
 		          {
-		            text: '<i class="icon icon-left mdi mdi-plus-circle" style="color:white"></i> Usuario',
-		            "className": "btn btn-success btn-big",
-		            titleAttr: 'Registrar usuario',
+		            text: 'Agregar usuario',
+		            "className": "btn btn-lg btn-space btn-success",
 		            action: function (e, dt, node, config){
 		              $("#modalRegistrarUsuario").modal("show");
 		            }
@@ -412,7 +404,8 @@
 			$(tbody).on("click", "button.eliminar", function(){
 				var data = table.row( $(this).parents("tr") ).data();
 				var idusuario = $("#frmEliminarUsuario #idusuario").val(data.id);
-				$("#frmEliminarUsuario #usuario").val(data.nombre + " " + data.apellidos);
+				$("#frmEliminarUsuario #nombre").val(data.nombre);
+				$("#frmEliminarUsuario #apellido").val(data.apellidos);
 			});
 		}
 
@@ -421,9 +414,7 @@
 				e.preventDefault();
 				$("form .disabled").attr("disabled", false);
 				var frm = $(this).serialize();
-				$("#modalRegistrarUsuario").modal("hide");
-				$("#modalEditarUsuario").modal("hide");
-				$("#modalEliminarUsuario").modal("hide");
+				$(".modal").modal("hide");
 				console.log(frm);
 				$.ajax({
 					method: "POST",
@@ -432,29 +423,8 @@
 				}).done( function( info ){
 					var json_info = JSON.parse( info );
 					mostrar_mensaje(json_info);
-					limpiar_datos();
 					listar();
 				});
-			});
-		}
-
-		var mostrar_mensaje = function( informacion ){ // Mensaje que muestra las actualizaciones de cambios
-			var texto = "", color = "";
-			if( informacion.respuesta == "BIEN" ){
-				texto = "<div class='alert alert-success'><strong>Bien!</strong> Se han guardado los cambios correctamente.</div>";
-				color = "#379911";
-			}else if( informacion.respuesta == "ERROR"){
-				texto = "<div class='alert alert-danger'><strong>Error</strong>, no se ejecutó la consulta.</div>";
-				color = "#C9302C";
-			}else if( informacion.respuesta == "EXISTE" ){
-				texto = "<div class='alert alert-warning'><strong>Información!</strong> el usuario ya existe.</div>";
-				color = "#5b94c5";
-			}
-
-			$(".mensaje").html( texto );
-			$(".mensaje").fadeOut(5000, function(){
-				$(this).html("");
-				$(this).fadeIn(5000);
 			});
 		}
 
@@ -502,5 +472,6 @@
 		    }
 		}
 	</script>
+	<script type="text/javascript" src="<?php echo $ruta; ?>php/js/mensajes_cambios.js"></script>
 </body>
 </html>

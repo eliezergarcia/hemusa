@@ -26,8 +26,17 @@
                 <div class="col-lg-12">
                     <div class="card card-fullcalendar">
                       <div class="card-body">
+                          <!-- <div class="row invoice-footer">
+                            <div class="col-lg-12">
+                              <button class="btn btn-lg btn-space btn-secondary"><i class="fas fa-file-pdf fa-lg"></i></button>
+                              <button class="btn btn-lg btn-space btn-secondary"><i class="fas fa-file-excel fa-lg"></i></button>
+                              <button class="btn btn-lg btn-space btn-secondary"><i class="fas fa-file-alt fa-lg"></i></button>
+                              <button class="btn btn-lg btn-space btn-secondary"><i class="fas fa-print fa-lg"></i></button>
+                              <button class="btn btn-lg btn-space btn-primary">Agregar cliente</button>
+                            </div>
+                          </div> -->
                           <!-- Tabla de Clientes -->
-                            <table id="dt_clientes" class="table table-striped table-bordered table-hover compact" cellspacing="0" width="100%">
+                            <table id="dt_clientes" class="table table-striped table-hover compact" cellspacing="0" width="100%">
                               <thead>
                                 <tr>
                                   <th>Nombre empresa</th>
@@ -42,6 +51,8 @@
                               <tbody>
                               </tbody>
                             </table>
+
+                          <br>
                       </div>
                     </div>
                 </div>
@@ -138,8 +149,8 @@
                     </div>
                   </div>
                 </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary btn-lg" data-dismiss="modal">Cerrar</button>
+                <div class="modal-footer invoice-footer">
+                  <button type="button" class="btn btn-secondary btn-lg" data-dismiss="modal">Cancelar</button>
                   <button type="submit" class="btn btn-success btn-lg">Guardar</button>
                 </div>
               </div>
@@ -164,9 +175,9 @@
                     <div class="text-center"><span class="modal-main-icon mdi mdi-close-circle-o"></span></div>
                     <h4><b>¿Está seguro de eliminar el cliente?</b></h4>
                     <div class="row justify-content-center"><input type="text" class="disabled form-control col-6 form-control form-control-sm" id="nombreEmpresa" name="nombreEmpresa"></div>
-                    <div class="mt-8">
-                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                      <button type="submit" class="btn btn-danger">Eliminar</button>
+                    <div class="mt-8 invoice-footer">
+                      <button type="button" class="btn btn-lg btn-secondary" data-dismiss="modal">Cancelar</button>
+                      <button type="submit" class="btn btn-lg btn-danger">Eliminar</button>
                     </div>
                   </div>
                 </div>
@@ -240,8 +251,8 @@
           {"data": "tlf1"},
           {"data": "fax"},
           {"data": "correoElectronico"},
-          {"defaultContent": "<button class='btn btn-space btn-primary btn-lg'><i class='icon icon-left mdi mdi-edit'></i></button>", "sortable": false},
-          {"defaultContent": "<button class='eliminar btn btn-space btn-danger btn-lg' data-toggle='modal' data-target='#modalEliminarCliente'><i class='icon icon-left mdi mdi-delete'></i></button>", "sortable": false}
+          {"defaultContent": "<div class='invoice-footer'><button class='editar btn btn-space btn-primary btn-lg'><i class='fas fa-edit fa-sm'></i></button></div>", "sortable": false},
+          {"defaultContent": "<div class='invoice-footer'><button class='eliminar btn btn-space btn-danger btn-lg' data-toggle='modal' data-target='#modalEliminarCliente'><i class='fas fa-trash-alt fa-sm'></i></button></div>", "sortable": false}
         ],
         "columnDefs": [
           { "width": "9%", "targets": 6 },
@@ -255,49 +266,50 @@
           "<'row be-datatable-footer'<'col-sm-5'i><'col-sm-7'p>>",
         "buttons":[
           {
-            extend:    'pdfHtml5',
-            text:      '<i class="icon mdi mdi-collection-pdf" style="color:white"></i>',
-            titleAttr: 'Generar PDF',
-            download: 'open',
-            "className": "btn btn-danger btn-big",
-            exportOptions: {
-              columns: [ 0, 1, 2, 3, 4 ]
-            }
-          },
-          {
-            extend:    'excelHtml5',
-            text:      '<i class="icon icon-left mdi mdi-file" style="color:white"></i>',
-            titleAttr: 'Generar Excel',
-            "className": "btn btn-success btn-big",
-            exportOptions: {
-              columns: [ 0, 1, 2, 3, 4 ]
-            }
-          },
-          {
-            extend: 'csv',
-            text: '<i class="icon icon-left mdi mdi-file-text" style="color:white"></i>',
-            titleAttr: 'Generar CSV',
-            "className": "btn btn-primary btn-big",
-            exportOptions: {
+            extend: 'collection',
+            text: 'Exportar tabla',
+            "className": "btn btn-lg btn-space btn-secondary",
+            buttons: [
+                {
+                  extend:    'excelHtml5',
+                  text:      '<i class="fas fa-file-excel fa-lg"></i> Excel',
+                  // "className": "btn btn-lg btn-space btn-secondary",
+                  exportOptions: {
                     columns: [ 0, 1, 2, 3, 4 ]
-            }
-          },
-          {
-            extend: 'print',
-            text: '<i class="icon icon-left mdi mdi-print" style="color:white"></i>',
-            titleAttr: 'Imprimir',
-            header: 'false',
-            exportOptions: {
+                  }
+                },
+                {
+                  extend: 'csv',
+                  text: '<i class="fas fa-file-alt fa-lg"></i> Csv',
+                  // "className": "btn btn-lg btn-space btn-secondary",
+                  exportOptions: {
+                          columns: [ 0, 1, 2, 3, 4 ]
+                  }
+                },
+                {
+                  extend:    'pdfHtml5',
+                  text:      '<i class="fas fa-file-pdf fa-lg"></i> Pdf',
+                  download: 'open',
+                  // "className": "btn btn-lg btn-space btn-secondary",
+                  exportOptions: {
                     columns: [ 0, 1, 2, 3, 4 ]
-            },
-            "className": "btn btn-warning btn-big",
-            orientation: 'landscape',
-            pageSize: 'LEGAL'
+                  }
+                },
+                {
+                  extend: 'print',
+                  text: '<i class="fas fa-print fa-lg"></i> Imprimir',
+                  header: 'false',
+                  exportOptions: {
+                          columns: [ 0, 1, 2, 3, 4 ]
+                  },
+                  orientation: 'landscape',
+                  pageSize: 'LEGAL'
+                }
+            ]
           },
           {
-            text: '<i class="icon icon-left mdi mdi-plus-circle" style="color:white"></i> Cliente',
-            "className": "btn btn-success btn-big",
-            titleAttr: 'Agregar Cliente',
+            text: 'Agregar cliente',
+            "className": "btn btn-lg btn-space btn-success",
             action: function (e, dt, node, config){
               $("#modalAgregarCliente").modal("show");
             }
@@ -348,7 +360,6 @@
           console.log(info);
           var json_info = JSON.parse( info );
           mostrar_mensaje(json_info);
-          limpiar_datos();
           listar_clientes();
         });
       });

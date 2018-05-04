@@ -23,7 +23,9 @@
     <link rel="stylesheet" type="text/css" href="<?php echo $ruta; ?>assets/lib/jquery.gritter/css/jquery.gritter.css"/>
     <link rel="stylesheet" type="text/css" href="<?php echo $ruta; ?>assets/lib/datatables/datatables.net-bs4/css/dataTables.bootstrap4.css"/>
     <link rel="stylesheet" href="<?php echo $ruta; ?>assets/css/app.css" type="text/css"/>
+    <!-- <link rel="stylesheet" href="<?php echo $ruta; ?>php/css/estilos.css" type="text/css"/ -->
     <link rel="stylesheet" href="<?php echo $ruta; ?>php/css/awesomplete.css" type="text/css"/>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.12/css/all.css" integrity="sha384-G0fIWCsCzJIMAVNQPfjH08cyYaUtMwjJwqiRKxxE/rx96Uroj1BtIQ6MLJuheaO9" crossorigin="anonymous">
 
   <!-- Librerias para Exportación de Botones -->
     <!-- <script src="<?php echo $ruta; ?>php/js/jszip.min.js"></script>

@@ -28,7 +28,18 @@
 <script src="<?php echo $ruta; ?>assets/lib/datatables/datatables.net-buttons/js/buttons.print.min.js" type="text/javascript"></script>
 <script src="<?php echo $ruta; ?>assets/lib/datatables/datatables.net-buttons/js/buttons.colVis.min.js" type="text/javascript"></script>
 <script src="<?php echo $ruta; ?>assets/lib/datatables/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js" type="text/javascript"></script>
+<script src="<?php echo $ruta; ?>assets/lib/jquery-flot/jquery.flot.js" type="text/javascript"></script>
+<script src="<?php echo $ruta; ?>assets/lib/jquery-flot/jquery.flot.pie.js" type="text/javascript"></script>
+<script src="<?php echo $ruta; ?>assets/lib/jquery-flot/jquery.flot.time.js" type="text/javascript"></script>
+<script src="<?php echo $ruta; ?>assets/lib/jquery-flot/jquery.flot.resize.js" type="text/javascript"></script>
+<script src="<?php echo $ruta; ?>assets/lib/jquery-flot/plugins/jquery.flot.orderBars.js" type="text/javascript"></script>
+<script src="<?php echo $ruta; ?>assets/lib/jquery-flot/plugins/curvedLines.js" type="text/javascript"></script>
+<script src="<?php echo $ruta; ?>assets/lib/jquery-flot/plugins/jquery.flot.tooltip.js" type="text/javascript"></script>
+<script src="<?php echo $ruta; ?>assets/lib/jquery-ui/jquery-ui.min.js" type="text/javascript"></script>
+<script src="<?php echo $ruta; ?>assets/js/app-page-profile.js" type="text/javascript"></script>
 <script src="<?php echo $ruta; ?>assets/js/app-tables-datatables.js" type="text/javascript"></script>
 <script src="<?php echo $ruta; ?>php/js/pdfmake.min.js"></script>
 <script src="<?php echo $ruta; ?>php/js/jszip.min.js"></script>
 <script src="<?php echo $ruta; ?>php/js/vfs_fonts.js"></script> 
+<script src="<?php echo $ruta; ?>php/js/jspdf.min.js"></script> 
+<script src="<?php echo $ruta; ?>php/js/jspdf.plugin.autotable.js"></script> 

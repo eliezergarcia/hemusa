@@ -1,8 +1,17 @@
-	
+<?php 
+	if ($tipomenu == 1) {	
+?>
 <header class="be-wrapper be-fixed-sidebar be-color-header">
+<?php
+	}else{
+?>
+<header class="be-wrapper be-collapsible-sidebar be-collapsible-sidebar-collapsed be-color-header">
+<?php		
+	}
+?>
 	<nav class="navbar navbar-expand fixed-top be-top-header">
 	    <div class="container-fluid">
-	      <div class="be-navbar-header"><a href="<?php echo $ruta;?>php/inicio/inicio.php">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="<?php echo $ruta; ?>media/images/logo_hemusa.png" alt="logo" width="150" height="60" class="logo-img"></a>
+	      <div class="be-navbar-header"><a href="<?php echo $ruta;?>php/inicio/inicio.php">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="<?php echo $ruta; ?>media/images/logo_hemusa.png" alt="logo" width="160" height="60" class="logo-img"></a>
 	      </div>
 	      <div class="be-right-navbar">
 	        <ul class="nav navbar-nav float-right be-user-nav">
@@ -12,7 +21,7 @@
 	                <div class="user-name"><?php echo $usuario." ".$usuarioApellido; ?></div>
 	                <div class="user-position online">Disponible</div>
 	              </div>
-	              	<a href="pages-profile.html" class="dropdown-item"><span class="icon mdi mdi-face"></span> Cuenta</a>
+	              	<a href="<?php echo $ruta;?>php/perfil.php" class="dropdown-item"><span class="icon mdi mdi-face"></span> Cuenta</a>
 	              	<a href="#" class="dropdown-item"><span class="icon mdi mdi-settings"></span> Configuración</a>
 	              	<a href="<?php echo $logoutGoTo; ?>" class="dropdown-item"><span class="icon mdi mdi-power"></span> Cerrar sesión</a>
 	            </div>

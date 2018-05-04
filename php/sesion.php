@@ -99,5 +99,6 @@
 	$departamento_usuario=$row_consulta_usuario['dp'];
 	$usuariologin = $row_consulta_usuario['nombre']." ".$row_consulta_usuario['apellidos'];
 	$dplogin = $row_consulta_usuario['dp'];
+	$tipomenu = $row_consulta_usuario['tipomenu'];
 
 ?>

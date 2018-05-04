@@ -121,7 +121,7 @@
 									</div>
 								</div>
 							</div>
-							<div class="modal-footer">
+							<div class="modal-footer invoice-footer">
 								<button type="button" class="btn btn-lg btn-secondary" data-dismiss="modal">Cancelar</button>
 								<button type="submit" class="btn btn-lg btn-success" name="crearCotizacion">Hecho</button>
 							</div>
@@ -173,7 +173,7 @@
 										<div class="form-group col">
 											<label for="estado">Estado</label>
 											<input type="text" id="estado" name="estado" class="form-control form-control-sm" placeholder="Opcional">
-										</div><font color="#FF4136">*</font>
+										</div>
 										<div class="form-group col">
 											<label for="cp">C.P.</label>
 											<input type="text" id="cp" name="cp" class="form-control form-control-sm" placeholder="Opcional">
@@ -199,7 +199,7 @@
 									</div>
 								</div>
 							</div>
-							<div class="modal-footer row center-xs">
+							<div class="modal-footer invoice-footer">
 								<button type="button" class="btn btn-lg btn-secondary" data-dismiss="modal">Cancelar</button>
 								<button type="submit" class="btn btn-lg btn-success" name="crearCotizacion">Agregar</button>
 							</div>
@@ -251,11 +251,8 @@
 			var opcion = "listarcotizaciones";
 			var table = $("#dt_cotizaciones").DataTable({
 				"destroy": true,
-				"autoWidth": true,
-				"processing": true,
 				"deferRender": true,
 				"scrollX": true,
-				"sPaginationType": "full_numbers",
 				"ajax":{
 					"url": "listar.php",
 					"type": "POST",
@@ -269,7 +266,7 @@
 					{"data": "fecha"},
 					{"data": "partidaCantidad"},
 					{"data": "precioTotal"},
-					{"defaultContent": "<button class='vercotizacion btn btn-lg btn-primary'><i class='icon icon-left mdi mdi-edit' aria-hidden='true'></i></button>"}
+					{"defaultContent": "<div class='invoice-footer'><button class='vercotizacion btn btn-space btn-lg btn-primary'><i class='fas fa-edit fa-sm' aria-hidden='true'></i></button></div>"}
 				],
 				"columnDefs": [
 					{ "width": "5%", "targets": 0 },
@@ -284,48 +281,50 @@
           			"<'row be-datatable-footer'<'col-sm-5'i><'col-sm-7'p>>",
 				"buttons":[
 					{
-		            extend:    'pdfHtml5',
-		            text:      '<i class="icon mdi mdi-collection-pdf" style="color:white"></i>',
-		            titleAttr: 'Generar PDF',
-		            download: 'open',
-		            "className": "btn btn-danger btn-big",
-		            exportOptions: {
-		              columns: [ 0, 1, 2, 3, 4, 5, 6 ]
-		            }
-		          },
-		          {
-		            extend:    'excelHtml5',
-		            text:      '<i class="icon icon-left mdi mdi-file" style="color:white"></i>',
-		            titleAttr: 'Generar Excel',
-		            "className": "btn btn-success btn-big",
-		            exportOptions: {
-		              columns: [ 0, 1, 2, 3, 4, 5, 6 ]
-		            }
-		          },
-		          {
-		            extend: 'csv',
-		            text: '<i class="icon icon-left mdi mdi-file-text" style="color:white"></i>',
-		            titleAttr: 'Generar CSV',
-		            "className": "btn btn-primary btn-big",
-		            exportOptions: {
-		                    columns: [ 0, 1, 2, 3, 4, 5, 6 ]
-		            }
-		          },
-		          {
-		            extend: 'print',
-		            text: '<i class="icon icon-left mdi mdi-print" style="color:white"></i>',
-		            titleAttr: 'Imprimir',
-		            header: 'false',
-		            exportOptions: {
-		                    columns: [ 0, 1, 2, 3, 4, 5, 6 ]
-		            },
-		            "className": "btn btn-warning btn-big",
-		            orientation: 'landscape',
-		            pageSize: 'LEGAL'
-		          },
+			            extend: 'collection',
+			            text: 'Exportar tabla',
+			            "className": "btn btn-lg btn-space btn-secondary",
+			            buttons: [
+			                {
+			                  extend:    'excelHtml5',
+			                  text:      '<i class="fas fa-file-excel fa-lg"></i> Excel',
+			                  // "className": "btn btn-lg btn-space btn-secondary",
+			                  exportOptions: {
+			                    columns: [ 0, 1, 2, 3, 4, 5, 6 ]
+			                  }
+			                },
+			                {
+			                  extend: 'csv',
+			                  text: '<i class="fas fa-file-alt fa-lg"></i> Csv',
+			                  // "className": "btn btn-lg btn-space btn-secondary",
+			                  exportOptions: {
+			                          columns: [ 0, 1, 2, 3, 4, 5, 6 ]
+			                  }
+			                },
+			                {
+			                  extend:    'pdfHtml5',
+			                  text:      '<i class="fas fa-file-pdf fa-lg"></i> Pdf',
+			                  download: 'open',
+			                  // "className": "btn btn-lg btn-space btn-secondary",
+			                  exportOptions: {
+			                    columns: [ 0, 1, 2, 3, 4, 5, 6 ]
+			                  }
+			                },
+			                {
+			                  extend: 'print',
+			                  text: '<i class="fas fa-print fa-lg"></i> Imprimir',
+			                  header: 'false',
+			                  exportOptions: {
+			                          columns: [ 0, 1, 2, 3, 4, 5, 6 ]
+			                  },
+			                  orientation: 'landscape',
+			                  pageSize: 'LEGAL'
+			                }
+			            ]
+			          },
 					{
-						text: '<i class="icon icon-left mdi mdi-plus-circle" style="color:white"></i> Cotización',
-						"className": "btn btn-big btn-success",
+						text: 'Agregar cotización',
+						"className": "btn btn-lg btn-space btn-success",
 						action: function (e, dt, node, config){
 							$('#modalNuevaCotizacion').modal('show');
 						}
@@ -460,6 +459,7 @@
 						mostrar_mensaje(json_info);
 						$('#modalNuevaCotizacion').modal('show');
 						buscarContactos(json_info.idcliente);
+						mostrar_mensaje(json_info);
 					}else{
 						if (json_info.respuesta == "BIEN") {
 							window.location= "verCotizacion.php?numero="+json_info.cotizacion;
@@ -472,46 +472,8 @@
 			});
 		}
 
-		var mostrar_mensaje = function( informacion ){
-			var texto = "";
-			if( informacion.respuesta == "BIEN" ){
-				texto = "<div class='alert alert-success'><strong>Bien!</strong> Se han guardado los cambios correctamente.</div>";
-			}else if( informacion.respuesta == "ERROR"){
-				texto = "<div class='alert alert-danger'><strong>Error</strong>, no se ejecutó la consulta.</div>";
-			}
-
-			$(".mensaje").html( texto );
-			$(".mensaje").fadeOut(5000, function(){
-				$(this).html("");
-				$(this).fadeIn(5000);
-			});
-		}
-
-		var idioma_espanol = {
-			"sProcessing":     "Procesando...",
-			"sLengthMenu":     "Mostrar _MENU_ registros",
-			"sZeroRecords":    "No se encontraron resultados",
-			"sEmptyTable":     "Ningún dato disponible en esta tabla",
-			"sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-			"sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
-			"sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
-			"sInfoPostFix":    "",
-			"sSearch":         "Buscar:",
-			"sUrl":            "",
-			"sInfoThousands":  ",",
-			"sLoadingRecords": "Cargando...",
-			"oPaginate": {
-				"sFirst":    "Primero",
-				"sLast":     "Último",
-				"sNext":     "Siguiente",
-				"sPrevious": "Anterior"
-			},
-			"oAria": {
-				"sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
-				"sSortDescending": ": Activar para ordenar la columna de manera descendente"
-			}
-		}
 	</script>
-	<!-- <script src="<?php echo $ruta; ?>/php/js/notificaciones.js"></script> -->
+	<script src="<?php echo $ruta; ?>/php/js/idioma_espanol.js"></script>
+	<script src="<?php echo $ruta; ?>/php/js/mensajes_cambios.js"></script>
 </body>
 </html>

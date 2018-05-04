@@ -45,10 +45,10 @@
 								<!-- Grupo de botones -->
 									<div class="row justify-content-center btn-toolbar">
 										<div role="group" class="btn-group btn-group-justified mb-2 col-6">
-											<a href="#" id="btnsinproveedor" class="btn btn-lg btn-primary" onclick="listar_sinproveedor()">SIN PROVEEDOR</a href="#">
-										  	<a href="#" id="btnnoentregado" class="btn btn-lg btn-primary" onclick="listar_noentregado()">NO ENTREGADO</a href="#">
-											<a href="#" id="btnnopagado" class="btn btn-lg btn-primary" onclick="listar_nopagado()">NO PAGADO</a href="#">
-											<a href="#" id="btnterminado" class="btn btn-lg btn-primary" onclick="listar_terminado()">TERMINADO</a href="#">
+											<a href="#" id="btnsinproveedor" class="btn btn-lg btn-primary btn-space" onclick="listar_sinproveedor()">SIN PROVEEDOR</a href="#">
+										  	<a href="#" id="btnnoentregado" class="btn btn-lg btn-primary btn-space" onclick="listar_noentregado()">NO ENTREGADO</a href="#">
+											<a href="#" id="btnnopagado" class="btn btn-lg btn-primary btn-space" onclick="listar_nopagado()">NO PAGADO</a href="#">
+											<a href="#" id="btnterminado" class="btn btn-lg btn-primary btn-space" onclick="listar_terminado()">TERMINADO</a href="#">
 										</div>
 									</div>
 								
@@ -211,7 +211,7 @@
 						{"data": "fecha"},
 						{"data": "partidas"},
 						{"data": "total"},
-						{"defaultContent": "<button class='verpedido btn btn-lg btn-primary'><i class='icon icon-left mdi mdi-edit' aria-hidden='true'></i></button>"}
+						{"defaultContent": "<div class='invoice-footer'><button class='verpedido btn btn-lg btn-primary'><i class='fas fa-edit fa-sm' aria-hidden='true'></i></button></div>"}
 					],
 					"order": [5, "desc"],
 			        "language": idioma_espanol,
@@ -221,45 +221,47 @@
 	          			"<'row be-datatable-footer'<'col-sm-5'i><'col-sm-7'p>>",
 					"buttons":[
 			            {
-				            extend:    'pdfHtml5',
-				            text:      '<i class="icon mdi mdi-collection-pdf" style="color:white"></i>',
-				            titleAttr: 'Generar PDF',
-				            download: 'open',
-				            "className": "btn btn-danger btn-big",
-				            exportOptions: {
-				              columns: [ 0, 1, 2, 3, 4, 5, 6, 7]
-				            }
+				            extend: 'collection',
+				            text: 'Exportar tabla',
+				            "className": "btn btn-lg btn-space btn-secondary",
+				            buttons: [
+				                {
+				                  extend:    'excelHtml5',
+				                  text:      '<i class="fas fa-file-excel fa-lg"></i> Excel',
+				                  // "className": "btn btn-lg btn-space btn-secondary",
+				                  exportOptions: {
+				                    columns: [ 0, 1, 2, 3, 4, 5, 6, 7 ]
+				                  }
+				                },
+				                {
+				                  extend: 'csv',
+				                  text: '<i class="fas fa-file-alt fa-lg"></i> Csv',
+				                  // "className": "btn btn-lg btn-space btn-secondary",
+				                  exportOptions: {
+				                          columns: [ 0, 1, 2, 3, 4, 5, 6, 7 ]
+				                  }
+				                },
+				                {
+				                  extend:    'pdfHtml5',
+				                  text:      '<i class="fas fa-file-pdf fa-lg"></i> Pdf',
+				                  download: 'open',
+				                  // "className": "btn btn-lg btn-space btn-secondary",
+				                  exportOptions: {
+				                    columns: [ 0, 1, 2, 3, 4, 5, 6, 7 ]
+				                  }
+				                },
+				                {
+				                  extend: 'print',
+				                  text: '<i class="fas fa-print fa-lg"></i> Imprimir',
+				                  header: 'false',
+				                  exportOptions: {
+				                          columns: [ 0, 1, 2, 3, 4, 5, 6, 7 ]
+				                  },
+				                  orientation: 'landscape',
+				                  pageSize: 'LEGAL'
+				                }
+				            ]
 				          },
-				          {
-				            extend:    'excelHtml5',
-				            text:      '<i class="icon icon-left mdi mdi-file" style="color:white"></i>',
-				            titleAttr: 'Generar Excel',
-				            "className": "btn btn-success btn-big",
-				            exportOptions: {
-				              columns: [ 0, 1, 2, 3, 4, 5, 6, 7]
-				            }
-				          },
-				          {
-				            extend: 'csv',
-				            text: '<i class="icon icon-left mdi mdi-file-text" style="color:white"></i>',
-				            titleAttr: 'Generar CSV',
-				            "className": "btn btn-primary btn-big",
-				            exportOptions: {
-				                    columns: [ 0, 1, 2, 3, 4, 5, 6, 7]
-				            }
-				          },
-				          {
-				            extend: 'print',
-				            text: '<i class="icon icon-left mdi mdi-print" style="color:white"></i>',
-				            titleAttr: 'Imprimir',
-				            header: 'false',
-				            exportOptions: {
-				                    columns: [ 0, 1, 2, 3, 4, 5, 6, 7]
-				            },
-				            "className": "btn btn-warning btn-big",
-				            orientation: 'landscape',
-				            pageSize: 'LEGAL'
-				          }
 					]
 				});
 			verpedido("#dt_sinproveedor tbody", table);
@@ -300,7 +302,7 @@
 						{"data": "fecha"},
 						{"data": "partidas"},
 						{"data": "total"},
-						{"defaultContent": "<button class='verpedido btn btn-lg btn-primary'><i class='icon icon-left mdi mdi-edit' aria-hidden='true'></i></button>"}
+						{"defaultContent": "<div class='invoice-footer'><button class='verpedido btn btn-lg btn-primary'><i class='fas fa-edit fa-sm' aria-hidden='true'></i></button></div>"}
 					],
 					"order": [5, "desc"],
 			        "language": idioma_espanol,
@@ -309,46 +311,48 @@
 	          			"<'row be-datatable-body'<'col-sm-12'tr>>" +
 	          			"<'row be-datatable-footer'<'col-sm-5'i><'col-sm-7'p>>",
 					"buttons":[
-			            	{
-				            extend:    'pdfHtml5',
-				            text:      '<i class="icon mdi mdi-collection-pdf" style="color:white"></i>',
-				            titleAttr: 'Generar PDF',
-				            download: 'open',
-				            "className": "btn btn-danger btn-big",
-				            exportOptions: {
-				              columns: [ 0, 1, 2, 3, 4, 5, 6, 7]
-				            }
+			            {
+				            extend: 'collection',
+				            text: 'Exportar tabla',
+				            "className": "btn btn-lg btn-space btn-secondary",
+				            buttons: [
+				                {
+				                  extend:    'excelHtml5',
+				                  text:      '<i class="fas fa-file-excel fa-lg"></i> Excel',
+				                  // "className": "btn btn-lg btn-space btn-secondary",
+				                  exportOptions: {
+				                    columns: [ 0, 1, 2, 3, 4, 5, 6, 7 ]
+				                  }
+				                },
+				                {
+				                  extend: 'csv',
+				                  text: '<i class="fas fa-file-alt fa-lg"></i> Csv',
+				                  // "className": "btn btn-lg btn-space btn-secondary",
+				                  exportOptions: {
+				                          columns: [ 0, 1, 2, 3, 4, 5, 6, 7 ]
+				                  }
+				                },
+				                {
+				                  extend:    'pdfHtml5',
+				                  text:      '<i class="fas fa-file-pdf fa-lg"></i> Pdf',
+				                  download: 'open',
+				                  // "className": "btn btn-lg btn-space btn-secondary",
+				                  exportOptions: {
+				                    columns: [ 0, 1, 2, 3, 4, 5, 6, 7 ]
+				                  }
+				                },
+				                {
+				                  extend: 'print',
+				                  text: '<i class="fas fa-print fa-lg"></i> Imprimir',
+				                  header: 'false',
+				                  exportOptions: {
+				                          columns: [ 0, 1, 2, 3, 4, 5, 6, 7 ]
+				                  },
+				                  orientation: 'landscape',
+				                  pageSize: 'LEGAL'
+				                }
+				            ]
 				          },
-				          {
-				            extend:    'excelHtml5',
-				            text:      '<i class="icon icon-left mdi mdi-file" style="color:white"></i>',
-				            titleAttr: 'Generar Excel',
-				            "className": "btn btn-success btn-big",
-				            exportOptions: {
-				              columns: [ 0, 1, 2, 3, 4, 5, 6, 7]
-				            }
-				          },
-				          {
-				            extend: 'csv',
-				            text: '<i class="icon icon-left mdi mdi-file-text" style="color:white"></i>',
-				            titleAttr: 'Generar CSV',
-				            "className": "btn btn-primary btn-big",
-				            exportOptions: {
-				                    columns: [ 0, 1, 2, 3, 4, 5, 6, 7]
-				            }
-				          },
-				          {
-				            extend: 'print',
-				            text: '<i class="icon icon-left mdi mdi-print" style="color:white"></i>',
-				            titleAttr: 'Imprimir',
-				            header: 'false',
-				            exportOptions: {
-				                    columns: [ 0, 1, 2, 3, 4, 5, 6, 7]
-				            },
-				            "className": "btn btn-warning btn-big",
-				            orientation: 'landscape',
-				            pageSize: 'LEGAL'
-				          }
 					]
 				});
 			verpedido("#dt_noentregado tbody", table);
@@ -389,7 +393,7 @@
 						{"data": "fecha"},
 						{"data": "partidas"},
 						{"data": "total"},
-						{"defaultContent": "<button class='verpedido btn btn-lg btn-primary'><i class='icon icon-left mdi mdi-edit' aria-hidden='true'></i></button>"}
+						{"defaultContent": "<div class='invoice-footer'><button class='verpedido btn btn-lg btn-primary'><i class='fas fa-edit fa-sm' aria-hidden='true'></i></button></div>"}
 					],
 					"order": [5, "desc"],
 			        "language": idioma_espanol,
@@ -399,45 +403,47 @@
 	          			"<'row be-datatable-footer'<'col-sm-5'i><'col-sm-7'p>>",
 					"buttons":[
 			            {
-				            extend:    'pdfHtml5',
-				            text:      '<i class="icon mdi mdi-collection-pdf" style="color:white"></i>',
-				            titleAttr: 'Generar PDF',
-				            download: 'open',
-				            "className": "btn btn-danger btn-big",
-				            exportOptions: {
-				              columns: [ 0, 1, 2, 3, 4, 5, 6, 7]
-				            }
+				            extend: 'collection',
+				            text: 'Exportar tabla',
+				            "className": "btn btn-lg btn-space btn-secondary",
+				            buttons: [
+				                {
+				                  extend:    'excelHtml5',
+				                  text:      '<i class="fas fa-file-excel fa-lg"></i> Excel',
+				                  // "className": "btn btn-lg btn-space btn-secondary",
+				                  exportOptions: {
+				                    columns: [ 0, 1, 2, 3, 4, 5, 6, 7 ]
+				                  }
+				                },
+				                {
+				                  extend: 'csv',
+				                  text: '<i class="fas fa-file-alt fa-lg"></i> Csv',
+				                  // "className": "btn btn-lg btn-space btn-secondary",
+				                  exportOptions: {
+				                          columns: [ 0, 1, 2, 3, 4, 5, 6, 7 ]
+				                  }
+				                },
+				                {
+				                  extend:    'pdfHtml5',
+				                  text:      '<i class="fas fa-file-pdf fa-lg"></i> Pdf',
+				                  download: 'open',
+				                  // "className": "btn btn-lg btn-space btn-secondary",
+				                  exportOptions: {
+				                    columns: [ 0, 1, 2, 3, 4, 5, 6, 7 ]
+				                  }
+				                },
+				                {
+				                  extend: 'print',
+				                  text: '<i class="fas fa-print fa-lg"></i> Imprimir',
+				                  header: 'false',
+				                  exportOptions: {
+				                          columns: [ 0, 1, 2, 3, 4, 5, 6, 7 ]
+				                  },
+				                  orientation: 'landscape',
+				                  pageSize: 'LEGAL'
+				                }
+				            ]
 				          },
-				          {
-				            extend:    'excelHtml5',
-				            text:      '<i class="icon icon-left mdi mdi-file" style="color:white"></i>',
-				            titleAttr: 'Generar Excel',
-				            "className": "btn btn-success btn-big",
-				            exportOptions: {
-				              columns: [ 0, 1, 2, 3, 4, 5, 6, 7]
-				            }
-				          },
-				          {
-				            extend: 'csv',
-				            text: '<i class="icon icon-left mdi mdi-file-text" style="color:white"></i>',
-				            titleAttr: 'Generar CSV',
-				            "className": "btn btn-primary btn-big",
-				            exportOptions: {
-				                    columns: [ 0, 1, 2, 3, 4, 5, 6, 7]
-				            }
-				          },
-				          {
-				            extend: 'print',
-				            text: '<i class="icon icon-left mdi mdi-print" style="color:white"></i>',
-				            titleAttr: 'Imprimir',
-				            header: 'false',
-				            exportOptions: {
-				                    columns: [ 0, 1, 2, 3, 4, 5, 6, 7]
-				            },
-				            "className": "btn btn-warning btn-big",
-				            orientation: 'landscape',
-				            pageSize: 'LEGAL'
-				          }
 					]
 				});
 			verpedido("#dt_nopagado tbody", table);
@@ -477,7 +483,7 @@
 						{"data": "fecha"},
 						{"data": "partidas"},
 						{"data": "total"},
-						{"defaultContent": "<button class='verpedido btn btn-lg btn-primary'><i class='icon icon-left mdi mdi-edit' aria-hidden='true'></i></button>"}
+						{"defaultContent": "<div class='invoice-footer'><button class='verpedido btn btn-lg btn-primary'><i class='fas fa-edit fa-sm' aria-hidden='true'></i></button></div>"}
 					],
 					"order": [5, "desc"],
 			        "language": idioma_espanol,
@@ -494,45 +500,47 @@
 	          			"<'row be-datatable-footer'<'col-sm-5'i><'col-sm-7'p>>",
 					"buttons":[
 			            {
-				            extend:    'pdfHtml5',
-				            text:      '<i class="icon mdi mdi-collection-pdf" style="color:white"></i>',
-				            titleAttr: 'Generar PDF',
-				            download: 'open',
-				            "className": "btn btn-danger btn-big",
-				            exportOptions: {
-				              columns: [ 0, 1, 2, 3, 4, 5, 6, 7]
-				            }
+				            extend: 'collection',
+				            text: 'Exportar tabla',
+				            "className": "btn btn-lg btn-space btn-secondary",
+				            buttons: [
+				                {
+				                  extend:    'excelHtml5',
+				                  text:      '<i class="fas fa-file-excel fa-lg"></i> Excel',
+				                  // "className": "btn btn-lg btn-space btn-secondary",
+				                  exportOptions: {
+				                    columns: [ 0, 1, 2, 3, 4, 5, 6, 7 ]
+				                  }
+				                },
+				                {
+				                  extend: 'csv',
+				                  text: '<i class="fas fa-file-alt fa-lg"></i> Csv',
+				                  // "className": "btn btn-lg btn-space btn-secondary",
+				                  exportOptions: {
+				                          columns: [ 0, 1, 2, 3, 4, 5, 6, 7 ]
+				                  }
+				                },
+				                {
+				                  extend:    'pdfHtml5',
+				                  text:      '<i class="fas fa-file-pdf fa-lg"></i> Pdf',
+				                  download: 'open',
+				                  // "className": "btn btn-lg btn-space btn-secondary",
+				                  exportOptions: {
+				                    columns: [ 0, 1, 2, 3, 4, 5, 6, 7 ]
+				                  }
+				                },
+				                {
+				                  extend: 'print',
+				                  text: '<i class="fas fa-print fa-lg"></i> Imprimir',
+				                  header: 'false',
+				                  exportOptions: {
+				                          columns: [ 0, 1, 2, 3, 4, 5, 6, 7 ]
+				                  },
+				                  orientation: 'landscape',
+				                  pageSize: 'LEGAL'
+				                }
+				            ]
 				          },
-				          {
-				            extend:    'excelHtml5',
-				            text:      '<i class="icon icon-left mdi mdi-file" style="color:white"></i>',
-				            titleAttr: 'Generar Excel',
-				            "className": "btn btn-success btn-big",
-				            exportOptions: {
-				              columns: [ 0, 1, 2, 3, 4, 5, 6, 7]
-				            }
-				          },
-				          {
-				            extend: 'csv',
-				            text: '<i class="icon icon-left mdi mdi-file-text" style="color:white"></i>',
-				            titleAttr: 'Generar CSV',
-				            "className": "btn btn-primary btn-big",
-				            exportOptions: {
-				                    columns: [ 0, 1, 2, 3, 4, 5, 6, 7]
-				            }
-				          },
-				          {
-				            extend: 'print',
-				            text: '<i class="icon icon-left mdi mdi-print" style="color:white"></i>',
-				            titleAttr: 'Imprimir',
-				            header: 'false',
-				            exportOptions: {
-				                    columns: [ 0, 1, 2, 3, 4, 5, 6, 7]
-				            },
-				            "className": "btn btn-warning btn-big",
-				            orientation: 'landscape',
-				            pageSize: 'LEGAL'
-				          }
 					]
 				});
 			verpedido("#dt_terminado tbody", table);

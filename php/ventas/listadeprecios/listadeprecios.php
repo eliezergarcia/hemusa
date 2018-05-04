@@ -55,7 +55,9 @@
 														?>
 													</datalist>
 												</div>
-											    <input id="btn_listar_precios" type="button" class="btn btn-lg btn-primary" value="Buscar">
+												<div class="invoice-footer">
+											    	<input id="btn_listar_precios" type="button" class="btn btn-lg btn-primary" value="Buscar">
+												</div>
 										    </div>
 										    <!-- <div class="form-group row justify-content-center col-5">
 										        <div class="col-2">
@@ -110,7 +112,7 @@
 						  	 		</div>
 							</div>
 				      	</div>
-				      	<div class="modal-footer">
+				      	<div class="modal-footer invoice-footer">
 				        	<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
 				        	<button type="submit" class="btn btn-primary">Subir</button>
 				      	</div>
@@ -160,7 +162,7 @@
 		        					<input type="text" class="form-control form-control-sm" name="descripcion" id="descripcion">
 		        				</div>
 			      			</div>
-			      			<div class="modal-footer">
+			      			<div class="modal-footer invoice-footer">
 			        			<button type="button" class="btn btn-lg btn-secondary" data-dismiss="modal">Cancelar</button>
 			        			<button type="submit" class="btn btn-lg btn-primary">Editar</button>
 			        			</form>
@@ -202,37 +204,9 @@
 				}).done( function( info ){
 					var json_info = JSON.parse( info );
 					mostrar_mensaje(json_info);
-					limpiar_datos();
 					listar();
 				});
 			});
-		}
-
-		var mostrar_mensaje = function( informacion ){
-			var texto = "", color = "";
-			if( informacion.respuesta == "BIEN" ){
-				texto = "<div class='alert alert-success'><strong>Bien!</strong> Se han guardado los cambios correctamente.</div>";
-				color = "#379911";
-			}else if( informacion.respuesta == "ERROR"){
-				texto = "<div class='alert alert-danger'><strong>Error</strong>, no se ejecut� la consulta.</div>";
-				color = "#C9302C";
-			}else if( informacion.respuesta == "EXISTE" ){
-				texto = "<strong>Informaci�n!</strong> el usuario ya existe.";
-				color = "#5b94c5";
-			}else if( informacion.respuesta == "VACIO" ){
-				texto = "<strong>Advertencia!</strong> debe llenar todos los campos solicitados.";
-				color = "#ddb11d";
-			}else if( informacion.respuesta == "OPCION_VACIA"){
-				texto = "<strong>Advertencia!</strong> la opci�n no existe o esta vac�a, recargar la p�gina. ";
-				color = "#DDB11D";
-			}
-
-			// $(".mensaje").alert();
-			$(".mensaje").html( texto );
-			$(".mensaje").fadeOut(5000, function(){
-				$(this).html("");
-				$(this).fadeIn(5000);
-			}); 
 		}
 
 		var limpiar_datos = function(){
@@ -278,7 +252,7 @@
 					{"data":"moneda"},
 					{"data":"clase"},
 					{"data":"igi"},
-					{"defaultContent": "<button class='editar btn btn-lg btn-primary' data-toggle='modal' data-target='#modalInformacion'><i class='icon icon-left mdi mdi-edit' aria-hidden='true'></i></button>"}
+					{"defaultContent": "<div class='invoice-footer'><button class='editar btn btn-space btn-lg btn-primary' data-toggle='modal' data-target='#modalInformacion'><i class='fas fa-edit fa-sm' aria-hidden='true'></i></button></div>"}
 				],
         		"lengthChange": false,
 				"language": idioma_espanol,
@@ -288,33 +262,47 @@
           			"<'row be-datatable-footer'<'col-sm-5'i><'col-sm-7'p>>",
 				"buttons":[
 		            {
-		            extend:    'pdfHtml5',
-		            text:      '<i class="icon mdi mdi-collection-pdf" style="color:white"></i>',
-		            titleAttr: 'Generar PDF',
-		            download: 'open',
-		            "className": "btn btn-danger btn-big"
-		          },
-		          {
-		            extend:    'excelHtml5',
-		            text:      '<i class="icon icon-left mdi mdi-file" style="color:white"></i>',
-		            titleAttr: 'Generar Excel',
-		            "className": "btn btn-success btn-big"
-		          },
-		          {
-		            extend: 'csv',
-		            text: '<i class="icon icon-left mdi mdi-file-text" style="color:white"></i>',
-		            titleAttr: 'Generar CSV',
-		            "className": "btn btn-primary btn-big"
-		          },
-		          {
-		            extend: 'print',
-		            text: '<i class="icon icon-left mdi mdi-print" style="color:white"></i>',
-		            titleAttr: 'Imprimir',
-		            header: 'false',
-		            "className": "btn btn-warning btn-big",
-		            orientation: 'landscape',
-		            pageSize: 'LEGAL'
-		          },
+		            extend: 'collection',
+		            text: 'Exportar tabla',
+		            "className": "btn btn-lg btn-space btn-secondary",
+		            buttons: [
+		                {
+		                  extend:    'excelHtml5',
+		                  text:      '<i class="fas fa-file-excel fa-lg"></i> Excel',
+		                  // "className": "btn btn-lg btn-space btn-secondary",
+		                  exportOptions: {
+		                    columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8 ]
+		                  }
+		                },
+		                {
+		                  extend: 'csv',
+		                  text: '<i class="fas fa-file-alt fa-lg"></i> Csv',
+		                  // "className": "btn btn-lg btn-space btn-secondary",
+		                  exportOptions: {
+		                          columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8 ]
+		                  }
+		                },
+		                {
+		                  extend:    'pdfHtml5',
+		                  text:      '<i class="fas fa-file-pdf fa-lg"></i> Pdf',
+		                  download: 'open',
+		                  // "className": "btn btn-lg btn-space btn-secondary",
+		                  exportOptions: {
+		                    columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8 ]
+		                  }
+		                },
+		                {
+		                  extend: 'print',
+		                  text: '<i class="fas fa-print fa-lg"></i> Imprimir',
+		                  header: 'false',
+		                  exportOptions: {
+		                          columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8 ]
+		                  },
+		                  orientation: 'landscape',
+		                  pageSize: 'LEGAL'
+		                }
+		            ]
+		          }
 				]
 			});
 
@@ -365,5 +353,6 @@
 		    }
 		}
 	</script>
+	<script type="text/javascript" src="<?php echo $ruta; ?>php/js/mensajes_cambios.js"></script>
 </body>
 </html>

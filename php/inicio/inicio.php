@@ -34,6 +34,7 @@
 	        	</div>
 			</div>
 		</div>
+		
 
 		<!-- Modal Evento Calendario -->
 	    	<div id="modalEvento" tabindex="-1" role="dialog" class="modal fade colored-header colored-header-primary">
@@ -409,7 +410,7 @@
 			}); 
 		}
 	</script>
-	<script src="<?php echo $ruta; ?>/php/js/notificaciones.js"></script>
+	<!-- <script src="<?php echo $ruta; ?>/php/js/notificaciones.js"></script> -->
 </body>
 </html>
 

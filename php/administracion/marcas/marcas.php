@@ -28,7 +28,7 @@
                     	<div class="card card-fullcalendar">
                       		<div class="card-body">
                       			<!-- Tabla de Marcas -->
-									<table id="dt_marcas" class="table table-striped table-bordered table-hover compact" cellspacing="0" width="100%">
+									<table id="dt_marcas" class="table table-striped table-hover compact" cellspacing="0" width="100%">
 										<thead>
 											<tr>
 												<th>Marca</th>
@@ -40,17 +40,6 @@
 												<th>Eliminar</th>
 											</tr>
 										</thead>
-										<tfoot>
-											<tr>
-												<th>Marca</th>
-												<th>Factor</th>
-												<th>Moneda</th>
-												<th>Tiempo de Entrega</th>
-												<th>Excepción de Marca</th>
-												<td></td>
-												<td></td>
-											</tr>
-										</tfoot>
 									</table>
                       		</div>
                     	</div>
@@ -99,18 +88,18 @@
 					        		<div class="form-group col">
 					        			<label for="excepcionmarca">Excepción de marca <font color="#FF4136">*</font></label>
 					        			<label class="custom-control custom-radio">
-				                          	<input type="radio" name="radio-stacked" checked="" class="custom-control-input" name="excepcionmarca" id="excepcionmarcasi" value="1">
+				                          	<input type="radio" class="custom-control-input" name="excepcionmarca" id="excepcionmarcasi" value="1">
 				                          	<span class="custom-control-label">Sí</span>
 				                        </label>
 				                        <label class="custom-control custom-radio">
-				                          	<input type="radio" name="radio-stacked" checked="" class="custom-control-input" name="excepcionmarca" id="excepcionmarcano" value="0">
+				                          	<input type="radio" class="custom-control-input" name="excepcionmarca" id="excepcionmarcano" value="0">
 				                          	<span class="custom-control-label">No</span>
 				                        </label>
 					        		</div>
 				        		</div>
 				      		</div>
-				      		<div class="modal-footer">
-				        		<button type="button" class="btn btn-lg btn-secondary" data-dismiss="modal">Cerrar</button>
+				      		<div class="modal-footer invoice-footer">
+				        		<button type="button" class="btn btn-lg btn-secondary" data-dismiss="modal">Cancelar</button>
 				        		<button type="submit" class="btn btn-lg btn-primary">Editar</button>
 				      		</div>
 				    	</div>
@@ -137,9 +126,9 @@
                     				<div class="row justify-content-center">
                     					<input type="text" id="marca" name="marca" class="disabled col-6 form-control form-control-sm" disabled>
                     				</div>
-                    				<div class="mt-8">
-                      					<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                      					<button type="submit" class="btn btn-danger">Eliminar</button>
+                    				<div class="mt-8 invoice-footer">
+                      					<button type="button" class="btn btn-lg btn-secondary" data-dismiss="modal">Cancelar</button>
+                      					<button type="submit" class="btn btn-lg btn-danger">Eliminar</button>
                     				</div>	
                   				</div>				        		
 				      		</div>
@@ -186,7 +175,7 @@
 					        		</div>
 										</div>
 				      		</div>
-				      		<div class="modal-footer">
+				      		<div class="modal-footer invoice-footer">
 				        		<button type="button" class="btn btn-lg btn-secondary" data-dismiss="modal">Cancelar</button>
 				        		<button type="submit" class="btn btn-lg btn-success">Agregar</button>
 				      		</div>
@@ -208,10 +197,10 @@
 		});
 
 		var  listar = function(){
-			$('#dt_marcas tfoot th').each( function () {
-    			var title = $(this).text();
-    			$(this).html( '<input class="form-control form-control-sm" type="text" placeholder="Buscar '+ title +'" />' );
-  			});
+			// $('#dt_marcas tfoot th').each( function () {
+   //  			var title = $(this).text();
+   //  			$(this).html( '<input class="form-control form-control-sm" type="text" placeholder="Buscar '+ title +'" />' );
+  	// 		});
 			var table = $("#dt_marcas").DataTable({
 				"destroy": true,
 				"scrollX": true,
@@ -234,8 +223,8 @@
 							}
 						},
 					},
-					{"defaultContent":"<button type='button' class='editar btn btn-primary btn-lg' data-toggle='modal' data-target='#modalEditarMarca'><i class='icon icon-left mdi mdi-edit'></i></button>", "sortable": false},
-					{"defaultContent":"<button type='button' class='eliminar btn btn-danger btn-lg' data-toggle='modal' data-target='#modalEliminarMarca' ><i class='icon icon-left mdi mdi-delete'></i></button>", "sortable": false}
+					{"defaultContent":"<div class='invoice-footer'><button type='button' class='editar btn btn-space btn-primary btn-lg' data-toggle='modal' data-target='#modalEditarMarca'><i class='fas fa-edit fa-sm'></i></button></div>", "sortable": false},
+					{"defaultContent":"<div class='invoice-footer'><button type='button' class='eliminar btn btn-space btn-danger btn-lg' data-toggle='modal' data-target='#modalEliminarMarca' ><i class='fas fa-trash-alt fa-sm'></i></button></div>", "sortable": false}
 				],
 				"language": idioma_espanol,
 				"dom":
@@ -244,48 +233,50 @@
           			"<'row be-datatable-footer'<'col-sm-5'i><'col-sm-7'p>>",
 				"buttons":[
 		            {
-		            extend:    'pdfHtml5',
-		            text:      '<i class="icon mdi mdi-collection-pdf" style="color:white"></i>',
-		            titleAttr: 'Generar PDF',
-		            download: 'open',
-		            "className": "btn btn-danger btn-big",
-		            exportOptions: {
-		              columns: [ 0, 1, 2, 3, 4 ]
-		            }
-		          },
-		          {
-		            extend:    'excelHtml5',
-		            text:      '<i class="icon icon-left mdi mdi-file" style="color:white"></i>',
-		            titleAttr: 'Generar Excel',
-		            "className": "btn btn-success btn-big",
-		            exportOptions: {
-		              columns: [ 0, 1, 2, 3, 4 ]
-		            }
-		          },
-		          {
-		            extend: 'csv',
-		            text: '<i class="icon icon-left mdi mdi-file-text" style="color:white"></i>',
-		            titleAttr: 'Generar CSV',
-		            "className": "btn btn-primary btn-big",
-		            exportOptions: {
-		                    columns: [ 0, 1, 2, 3, 4 ]
-		            }
-		          },
-		          {
-		            extend: 'print',
-		            text: '<i class="icon icon-left mdi mdi-print" style="color:white"></i>',
-		            titleAttr: 'Imprimir',
-		            header: 'false',
-		            exportOptions: {
-		                    columns: [ 0, 1, 2, 3, 4 ]
-		            },
-		            "className": "btn btn-warning btn-big",
-		            orientation: 'landscape',
-		            pageSize: 'LEGAL'
-		          },
+			            extend: 'collection',
+			            text: 'Exportar tabla',
+			            "className": "btn btn-lg btn-space btn-secondary",
+			            buttons: [
+			                {
+			                  extend:    'excelHtml5',
+			                  text:      '<i class="fas fa-file-excel fa-lg"></i> Excel',
+			                  // "className": "btn btn-lg btn-space btn-secondary",
+			                  exportOptions: {
+			                    columns: [ 0, 1, 2, 3, 4 ]
+			                  }
+			                },
+			                {
+			                  extend: 'csv',
+			                  text: '<i class="fas fa-file-alt fa-lg"></i> Csv',
+			                  // "className": "btn btn-lg btn-space btn-secondary",
+			                  exportOptions: {
+			                          columns: [ 0, 1, 2, 3, 4 ]
+			                  }
+			                },
+			                {
+			                  extend:    'pdfHtml5',
+			                  text:      '<i class="fas fa-file-pdf fa-lg"></i> Pdf',
+			                  download: 'open',
+			                  // "className": "btn btn-lg btn-space btn-secondary",
+			                  exportOptions: {
+			                    columns: [ 0, 1, 2, 3, 4 ]
+			                  }
+			                },
+			                {
+			                  extend: 'print',
+			                  text: '<i class="fas fa-print fa-lg"></i> Imprimir',
+			                  header: 'false',
+			                  exportOptions: {
+			                          columns: [ 0, 1, 2, 3, 4 ]
+			                  },
+			                  orientation: 'landscape',
+			                  pageSize: 'LEGAL'
+			                }
+			            ]
+			          },
 		            {
-		                text: '<i class="icon icon-left mdi mdi-plus-circle" style="color:white"></i> Marca',
-		                "className": "btn btn-big btn-success",
+		                text: 'Agregar marca',
+		                "className": "btn btn-lg btn-space btn-success",
 		                titleAttr: 'Agregar Marca',
 		                action: function ( e, dt, node, config ) {
 		                    $('#modalAgregarMarca').modal('show');
@@ -322,7 +313,6 @@
 					var json_info = JSON.parse( info );
 					mostrar_mensaje(json_info);
 					listar();
-					limpiar_datos();
 				});
 			});
 		}
@@ -351,33 +341,6 @@
 				console.log(data);
 				var idmarca = $("#frmEliminarMarca #idmarca").val(data.id);
 				var marca = $("#frmEliminarMarca #marca").val(data.marca);
-			});
-		}
-
-		var mostrar_mensaje = function( informacion ){
-			var texto = "", color = "";
-			if( informacion.respuesta == "BIEN" ){
-				texto = "<div class='alert alert-success'><strong>Bien!</strong> Se han guardado los cambios correctamente.</div>";
-				color = "#379911";
-			}else if( informacion.respuesta == "ERROR"){
-				texto = "<div class='alert alert-danger'><strong>Error</strong>, no se ejecutó la consulta.</div>";
-				color = "#C9302C";
-			}else if( informacion.respuesta == "EXISTE" ){
-				texto = "<div class='alert alert-warning'><strong>Información!</strong> la marca ya existe.</div>";
-				color = "#5b94c5";
-			}else if( informacion.respuesta == "VACIO" ){
-				texto = "<strong>Advertencia!</strong> debe llenar todos los campos solicitados.";
-				color = "#ddb11d";
-			}else if( informacion.respuesta == "OPCION_VACIA"){
-				texto = "<strong>Advertencia!</strong> la opción no existe o esta vacía, recargar la página. ";
-				color = "#DDB11D";
-			}
-
-			// $(".mensaje").alert();
-			$(".mensaje").html( texto );
-			$(".mensaje").fadeOut(5000, function(){
-				$(this).html("");
-				$(this).fadeIn(5000);
 			});
 		}
 
@@ -415,5 +378,6 @@
 		    }
 		}
 	</script>
+	<script src="<?php echo $ruta; ?>php/js/mensajes_cambios.js"></script> 
 </body>
 </html>
