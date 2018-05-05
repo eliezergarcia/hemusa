@@ -54,7 +54,7 @@
 					<div class="modal-dialog modal-lg" role="document">
 						<div class="modal-content">
 							<div class="modal-header">
-								<h4 class="modal-title" id="exampleModalLabel"><i class="icon icon-left mdi mdi-account-add" aria-hidden="true"></i><b> Registro de usuario</b></h4>
+								<h4 class="modal-title" id="exampleModalLabel"><i class="fas fa-user-plus fa-sm" aria-hidden="true"></i><b> Registro de usuario</b></h4>
 								<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 							</div>
 							<div class="modal-body">
@@ -134,7 +134,7 @@
 							</div>
 							<div class="modal-footer invoice-footer">
 								<button type="button" class="btn btn-secondary btn-lg" data-dismiss="modal">Cancelar</button>
-								<button type="submit" class="btn btn-success btn-lg">Registrar</button>
+								<button type="submit" class="btn btn-success btn-lg">Agregar</button>
 							</div>
 						</div>
 					</div>
@@ -152,7 +152,7 @@
 					<div class="modal-dialog modal-lg" role="document">
 						<div class="modal-content">
 							<div class="modal-header">
-								<h4 class="modal-title" id="modalEditarLabel"><b><i class="icon icon-left mdi mdi-edit" aria-hidden="true"></i> Información de usuario</b></h4>
+								<h4 class="modal-title" id="modalEditarLabel"><b><i class="fas fa-edit fa-sm" aria-hidden="true"></i> Información de usuario</b></h4>
 								<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 							</div>
 							<div class="modal-body">
@@ -232,7 +232,7 @@
 							</div>
 							<div class="modal-footer invoice-footer">
 								<button type="button" class="btn btn-secondary btn-lg" data-dismiss="modal">Cancelar</button>
-								<button type="submit" class="btn btn-primary btn-lg">Editar</button>
+								<button type="submit" class="btn btn-primary btn-lg">Guardar</button>
 							</div>
 						</div>
 					</div>
@@ -272,7 +272,6 @@
 						</div>
 					</div>
 				</div>
-				<!-- Modal -->
 			</form>
 
     <header>
@@ -358,7 +357,7 @@
 		            ]
 		          },
 		          {
-		            text: 'Agregar usuario',
+		            text: '<i class="fas fa-user-plus fa-sm"></i> Agregar usuario',
 		            "className": "btn btn-lg btn-space btn-success",
 		            action: function (e, dt, node, config){
 		              $("#modalRegistrarUsuario").modal("show");

@@ -29,6 +29,7 @@
                     	<div class="card card-fullcalendar">
                       		<div class="card-body">
                           		<!-- Form buscar en Lista de precios -->
+                          			<br>
 									<div>
 								        <h4>Buscar herramienta en lista</h4>								        	
 								      	<form action="#" method="POST">
@@ -56,20 +57,15 @@
 													</datalist>
 												</div>
 												<div class="invoice-footer">
-											    	<input id="btn_listar_precios" type="button" class="btn btn-lg btn-primary" value="Buscar">
+											    	<button id="btn_listar_precios" class="btn btn-lg btn-primary"><i class="fas fa-search fa-sm"></i> Buscar</button>
 												</div>
 										    </div>
-										    <!-- <div class="form-group row justify-content-center col-5">
-										        <div class="col-2">
-										            <input id="btn_listar_precios" type="button" class="btn btn-lg btn-primary" value="Buscar">
-										        </div>
-										    </div> -->
 								      	</form>
 								 	</div>
 								 	<br>
 
 								<!-- Tabla Lista de precios -->
-									<table id="dt_precios" class="table table-bordered table-striped table-hover display compact" cellspacing="0" width="100%">
+									<table id="dt_precios" class="table table-striped table-hover display compact" cellspacing="0" width="100%">
 										<thead>
 											<tr>								
 												<th>Marca</th>
@@ -127,7 +123,7 @@
 			  		<div class="modal-dialog modal-lg" role="document">
 			    		<div class="modal-content">
 			      			<div class="modal-header">
-			        			<h4 class="modal-title" id="exampleModalLabel"><b><i class="icon icon-left mdi mdi-edit" aria-hidden="true"></i> Informacion de herramienta</b></h4>
+			        			<h4 class="modal-title" id="exampleModalLabel"><b><i class="icon fas fa-edit" aria-hidden="true"></i> Información de herramienta</b></h4>
 			        			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 			          				<span aria-hidden="true">&times;</span>
 			        			</button>
@@ -136,35 +132,35 @@
 		        				<input type="hidden" class="form-control" name="idproducto" id="idproducto">
 								<input type="hidden" class="form-control" name="opcion" id="opcion" value="editarproducto">
 		        				<div class="form-group col-6">
-		        					<label for="">Marca</label>
+		        					<label for="">Marca <font color="#FF4136">*</font></label>
 		        					<fieldset disabled>
-		        						<input type="text" class="form-control form-control-sm" name="marca" id="marca">
+		        						<input type="text" class="form-control form-control-sm" name="marca" id="marca" required="">
 		        					</fieldset>
 		        				</div>
 		        				<div class="form-group col-6">
-		        					<label for="">Modelo</label>
+		        					<label for="">Modelo <font color="#FF4136">*</font></label>
 		        					<fieldset disabled>
-		        						<input type="text" class="form-control form-control-sm" name="modelo" id="modelo">
+		        						<input type="text" class="form-control form-control-sm" name="modelo" id="modelo" required="">
 		        					</fieldset>
 		        				</div>
 								<div class="form-group col-6">
-		        					<label for="">Costo</label>
+		        					<label for="">Costo <font color="#FF4136">*</font></label>
 									<fieldset disabled>
-		        						<input type="text" class="form-control form-control-sm" name="costo" id="costo">
+		        						<input type="text" class="form-control form-control-sm" name="costo" id="costo" required="">
 									</fieldset>
 		        				</div>
 		        				<div class="form-group col-6">
-		        					<label for="">IGI</label>
-		        					<input type="text" class="form-control form-control-sm" name="igi" id="igi">
+		        					<label for="">IGI <font color="#FF4136">*</font></label>
+		        					<input type="text" class="form-control form-control-sm" name="igi" id="igi" required="">
 		        				</div>
 		        				<div class="form-group col">
-		        					<label for="">Descripción</label>
-		        					<input type="text" class="form-control form-control-sm" name="descripcion" id="descripcion">
+		        					<label for="">Descripción <font color="#FF4136">*</font></label>
+		        					<input type="text" class="form-control form-control-sm" name="descripcion" id="descripcion" required="">
 		        				</div>
 			      			</div>
 			      			<div class="modal-footer invoice-footer">
 			        			<button type="button" class="btn btn-lg btn-secondary" data-dismiss="modal">Cancelar</button>
-			        			<button type="submit" class="btn btn-lg btn-primary">Editar</button>
+			        			<button type="submit" class="btn btn-lg btn-primary">Guardar</button>
 			        			</form>
 			      			</div>
 			    		</div>

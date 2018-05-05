@@ -35,7 +35,6 @@
 	<?php include('../../enlacescss.php'); ?>
 </head>
 <body>
-
 	<?php include('../../header.php'); ?>
 		<div class="be-content">
           	<div class="page-head">
@@ -54,51 +53,50 @@
                     	<div class="card card-fullcalendar">
                       		<div class="card-body">                        			
 								<!-- Encabezado -->
-									<!-- <div class="col-12"> -->
-										<div class="row align-items-start justify-content-around">
-											<div class="col-4 row justify-content-center">
-												<div class="col">
-												  	<h4><b>Cliente</b></h4>
-												  	<h5><?php echo $cliente; ?></h5>
-												  	<h5><?php echo $rfc; ?></h5>
-												  	<h5><?php echo $calle.", ".$colonia; ?></h5>
-												  	<h5><?php echo $ciudad.", ".$estado.", ".$cp; ?></h5><br><br>
-												</div>
-											</div>
-											<div class="col row justify-content-center">
-												<div class="col-4">
-													<h4><b>Contacto</b></h4>
-													<h5><?php echo $contacto; ?></h5>
-												</div>
-												<div class="col-4">
-												  	<h4><b>Número cotización</b></h4>
-													<h5><?php echo $numerocotizacion; ?></h5><br>
-												</div>
-												<div class="col-4">
-												  	<h4><b>Fecha</b></h4>
-													<h5><?php echo strftime("%d-%B-%Y", strtotime($fecha)); ?></h5><br>
-												</div>
-												<div class="col-4">
-												  	<h4><b>Vendedor</b></h4>
-													<h5><?php echo $vendedor; ?></h5>
-												</div>
-												<div class="col-4">
-													<h4><b>Condiciones de pago</b></h4>
-												  	<h5><?php echo $condicionespago." días"; ?></h5>
-												</div>
-												<div class="col-4">
-												  	<h4><b>Tiempo de entrega</b></h4>
-													<h5><?php echo $tiempoentrega." días"; ?></h5>
-												</div>
+									<br>
+									<div class="row align-items-start justify-content-around">
+										<div class="col-4 row justify-content-center">
+											<div class="col">
+											  	<h4><b>Cliente</b></h4>
+											  	<h5><?php echo $cliente; ?></h5>
+											  	<h5><?php echo $rfc; ?></h5>
+											  	<h5><?php echo $calle.", ".$colonia; ?></h5>
+											  	<h5><?php echo $ciudad.", ".$estado.", ".$cp; ?></h5><br><br>
 											</div>
 										</div>
-										<hr>
-									<!-- </div> -->
+										<div class="col row justify-content-center">
+											<div class="col-4">
+												<h4><b>Contacto</b></h4>
+												<h5><?php echo $contacto; ?></h5>
+											</div>
+											<div class="col-4">
+											  	<h4><b>Número cotización</b></h4>
+												<h5><?php echo $numerocotizacion; ?></h5><br>
+											</div>
+											<div class="col-4">
+											  	<h4><b>Fecha</b></h4>
+												<h5><?php echo strftime("%d-%B-%Y", strtotime($fecha)); ?></h5><br>
+											</div>
+											<div class="col-4">
+											  	<h4><b>Vendedor</b></h4>
+												<h5><?php echo $vendedor; ?></h5>
+											</div>
+											<div class="col-4">
+												<h4><b>Condiciones de pago</b></h4>
+											  	<h5><?php echo $condicionespago." días"; ?></h5>
+											</div>
+											<div class="col-4">
+											  	<h4><b>Tiempo de entrega</b></h4>
+												<h5><?php echo $tiempoentrega." días"; ?></h5>
+											</div>
+										</div>
+									</div>
+									<hr>						
 
 								<!-- Tabla Partidas de Cotizacion -->
 									<input id="numeroCotizacion" type="hidden" value="<?php echo $numero; ?>">
 									<br>
-									<table id="dt_cotizacion" class="table table-striped display compact" cellspacing="0" width="100%">
+									<table id="dt_cotizacion" class="table table-striped table-hover display compact" cellspacing="0" width="100%">
 										<thead>
 											<tr>
 												<th>#</th>
@@ -174,28 +172,29 @@
 				  	<div class="modal-dialog modal-lg" role="document">
 				    	<div class="modal-content">
 				      		<div class="modal-header">
-				        		<h5 class="modal-title" id="modalPedidoExample"><i class="icon icon-left mdi mdi-check-square" aria-hidden="true"></i><b> Crear pedido</b></h5>
+				        		<h5 class="modal-title" id="modalPedidoExample"><i class="fas fa-check-square fa-sm" aria-hidden="true"></i><b> Crear pedido</b></h5>
 				        		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
 				        		</button>
-				      		</div>		<!-- Modal Cambiar a Pedido -->
+				      		</div>	
 
 				      		<div class="modal-body">
 				      			<h4>Selecciona las partidas para cambiar a pedido e ingresa el pedido del cliente.</h4>
-				      			<br>
-				      			<table id="dt_cambiar_pedido" class="table table-bordered table-striped" cellspacing="0" width="100%">
-				      				<thead>
-				      					<tr>
-				      						<th>#</th>
-				      						<th>Marca</th>
-				      						<th>Modelo</th>
-				      						<th>Descripción</th>
-											<th>Cantidad</th>
-				      						<th>Precio Total</th>
-				      						<th><input type="checkbox" class="btn btn-outline-primary" name="sel" onclick="seleccionartodo()"></th>
-				      						<!-- <th><label class="custom-control custom-checkbox custom-control-inline"><input type="checkbox" class="custom-control-input" name="sel" onclick="seleccionartodo()"><span class="custom-control-label custom-control-color"></span></label></th> -->
-				      					</tr>
-				      				</thead>
-				      			</table>
+				      			<div class="col-12">
+					      			<table id="dt_cambiar_pedido" class="table table-striped table-hover display compact" cellspacing="0" width="100%">
+					      				<thead>
+					      					<tr>
+					      						<th>#</th>
+					      						<th>Marca</th>
+					      						<th>Modelo</th>
+					      						<th>Descripción</th>
+												<th>Cantidad</th>
+					      						<th>Precio Total</th>
+					      						<th><input type="checkbox" class="btn btn-outline-primary" name="sel" onclick="seleccionartodo()"></th>
+					      					</tr>
+					      				</thead>
+					      			</table>
+				      				
+				      			</div>
 				      			<br>
 				      			<div class="row justify-content-end">
 				      				<div class="form-group col-4">
@@ -204,9 +203,9 @@
 				      				</div>				      			
 				      			</div>
 			        		</div>
-				      		<div class="modal-footer">
+				      		<div class="modal-footer invoice-footer">
 				        		<button type="button" class="btn btn-lg btn-secondary" data-dismiss="modal">Cancelar</button>
-				        		<button id="cambiar-pedido" type="button" class="btn btn-lg btn-primary">Crear</button>
+				        		<button id="cambiar-pedido" type="button" class="btn btn-lg btn-primary">Hecho</button>
 				      		</div>
 				    	</div>
 				  	</div>
@@ -246,7 +245,7 @@
 				                    </div>
 								</div>
 				      		</div>
-				      		<div class="modal-footer">
+				      		<div class="modal-footer invoice-footer">
 				        		<button type="button" class="btn btn-lg btn-secondary" data-dismiss="modal">Cancelar</button>
 				        		<button id="btnAgregarClasCliente" type="button" class="btn btn-lg btn-success" data-dismiss="modal">Guardar</button>
 				      		</div>
@@ -261,7 +260,7 @@
 				  	<div class="modal-dialog" role="document">
 				    	<div class="modal-content">
 				      		<div class="modal-header">
-				        		<h5 class="modal-title" id="modalAgregarLabel"><i class="icon icon-left mdi mdi-truck" aria-hidden="true"></i><b> Agregar Flete</b></h5>
+				        		<h5 class="modal-title" id="modalAgregarLabel"><i class="fas fa-truck fa-sm" aria-hidden="true"></i><b> Agregar Flete</b></h5>
 				        		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
 				        		</button>
 				      		</div>
@@ -275,7 +274,7 @@
 					      			</div>
 				      			</div>
 				      		</div>
-				      		<div class="modal-footer">
+				      		<div class="modal-footer invoice-footer">
 				        		<button type="button" class="btn btn-secondary btn-lg" data-dismiss="modal">Cancelar</button>
 				        		<button id="agregar-flete" type="button" class="btn btn-success btn-lg" data-dismiss="modal">Agregar</button>
 				      		</div>
@@ -293,7 +292,7 @@
 				  	<div class="modal-dialog" role="document">
 				    	<div class="modal-content">
 				      		<div class="modal-header">
-				        		<h5 class="modal-title" id="modalAgregarLabel"><i class="icon icon-left mdi mdi-wrench" aria-hidden="true"></i> <b>Editar Flete</b></h5>
+				        		<h5 class="modal-title" id="modalAgregarLabel"><i class="fas fa-edit fa-sm" aria-hidden="true"></i> <b>Editar Flete</b></h5>
 				        		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
 				        		</button>
 				      		</div>
@@ -307,9 +306,9 @@
 					      			</div>
 				      			</div>
 				      		</div>
-				      		<div class="modal-footer">
+				      		<div class="modal-footer invoice-footer">
 				        		<button type="button" class="btn btn-lg btn-secondary" data-dismiss="modal">Cancelar</button>
-				        		<button id="editar-flete" type="button" class="btn btn-lg btn-info" data-dismiss="modal">Editar</button>
+				        		<button id="editar-flete" type="button" class="btn btn-lg btn-info" data-dismiss="modal">Guardar</button>
 				      		</div>
 				    	</div>
 				  	</div>
@@ -341,7 +340,7 @@
 							      			</div>
 						      			</fieldset>
 					      			</div>
-						      		<div class="mt-8">
+						      		<div class="mt-8 invoice-footer">
 						        		<button type="button" class="btn btn-lg btn-secondary" data-dismiss="modal">Cancelar</button>
 						        		<button id="eliminar-flete" type="button" class="btn btn-lg btn-danger" data-dismiss="modal">Eliminar</button>
 						      		</div>
@@ -360,7 +359,7 @@
 				  	<div class="modal-dialog modal-lg" role="document">
 				    	<div class="modal-content">
 				      		<div class="modal-header">
-				        		<h5 class="modal-title" id="exampleModalLabel"><i class="icon icon-left mdi mdi-wrench" aria-hidden="true"></i><b> Buscar Herramienta</b></h5>
+				        		<h5 class="modal-title" id="exampleModalLabel"><i class="fas fa-wrench fa-sm" aria-hidden="true"></i><b> Buscar Herramienta</b></h5>
 				        		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
 				        		</button>
 				      		</div>
@@ -454,7 +453,7 @@
 			        			<div class="row">
 								</div>
 				      		</div>
-				      		<div class="modal-footer">
+				      		<div class="modal-footer invoice-footer">
 				        		<button type="button" class="btn btn-lg btn-secondary" data-dismiss="modal">Cancelar</button>
 				        		<button type="submit" class="btn btn-lg btn-success">Agregar</button>
 				      		</div>
@@ -492,9 +491,9 @@
 				        					</fieldset>
 				        				</div>
                     				</div>
-                    				<div class="mt-8">
-                      					<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-				        				<button type="submit" class="btn btn-danger">Eliminar</button>
+                    				<div class="mt-8 invoice-footer">
+                      					<button type="button" class="btn btn-lg btn-secondary" data-dismiss="modal">Cancelar</button>
+				        				<button type="submit" class="btn btn-lg btn-danger">Eliminar</button>
                     				</div>
 				        		</div>
 				      		</div>
@@ -538,7 +537,7 @@
 				  	<div class="modal-dialog modal-lg" role="document">
 				    	<div class="modal-content">
 				      		<div class="modal-header">
-				        		<h5 class="modal-title" id="tituloEditarPartida"><i class="icon icon-left mdi mdi-edit" aria-hidden="true"></i><b> Editar Partida</b></h5>
+				        		<h5 class="modal-title" id="tituloEditarPartida"><i class="fas fa-edit fa-sm" aria-hidden="true"></i><b> Editar Partida</b></h5>
 				        		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
 				        		</button>
 				      		</div>
@@ -603,9 +602,9 @@
 			        				</div>
 			        			</div>
 				      		</div>
-				      		<div class="modal-footer">
+				      		<div class="modal-footer invoice-footer">
 				        		<button type="button" class="btn btn-lg btn-secondary" data-dismiss="modal">Cancelar</button>
-				        		<button type="submit" class="btn btn-lg btn-primary">Editar</button>
+				        		<button type="submit" class="btn btn-lg btn-primary">Guardar</button>
 				      		</div>
 				    	</div>
 				  	</div>
@@ -1176,43 +1175,22 @@
 							},
 						]
 					},
-					// {
-					// 	extend: 'collection',
-					// 	text: 'Imprimir',
-					// 	"className": "btn btn-lg btn-space btn-warning",
-					// 	buttons: [
-					// 		{
-					// 			text:      'Imprimir + T.E. + Stock',
-					// 			// "className": "btn btn-secondary btn-big",
-					// 			action: function ( e, dt, node, config ) {
-					// 				imprimirPDF();
-					// 			}
-					// 		},
-					// 		{
-					// 			text:      'Imprimir',
-					// 			// "className": "btn btn-secondary btn-big",
-					// 			action: function ( e, dt, node, config ) {
-					// 				imprimirPDF2();
-					// 			}
-					// 		},
-					// 	]
-					// },
 					{
-						text: '<i class="icon icon-left mdi mdi-truck" aria-hidden="true" style="color:white"></i> Agregar flete',
+						text: '<i class="fas fa-truck fa-sm" aria-hidden="true" style="color:white"></i> Agregar flete',
 						"className": "btn btn-success btn-lg btn-space",
 						action: function ( e, dt, node, config ) {
 							$('#modalAgregarFlete').modal('show');
 						}
 					},
 					{
-						text: '<i class="icon icon-left mdi mdi-wrench" aria-hidden="true" style="color:white"></i> Agregar partida',
+						text: '<i class="fas fa-wrench fa-sm" aria-hidden="true" style="color:white"></i> Agregar partida',
 						"className": "btn btn-success btn-lg btn-space",
 						action: function ( e, dt, node, config ) {
 							$('#modalAgregarPartida').modal('show');
 						}
 					},
 					{
-						text: '<i id="toolTipPedido" class="icon icon-left mdi mdi-check-square" aria-hidden="true" style="color:white"></i> Crear pedido',
+						text: '<i class="fas fa-check-square fa-sm" aria-hidden="true" style="color:white"></i> Crear pedido',
 						"className": "btn btn-primary btn-lg btn-space",
 						action: function ( e, dt, node, config ) {
 							$('#modalCambiarPedido').modal('show');
@@ -1798,8 +1776,8 @@
 				"columns":[
 					{"data": "proveedor"},
 					{"data": "costoFlete"},
-					{"defaultContent": "<button type='button' class='editar btn btn-lg btn-primary' data-toggle='modal' data-target='#modalEditarFlete'><i class='icon icon-left mdi mdi-edit' aria-hidden='true'></i></button>"},
-					{"defaultContent": "<button type='button' class='eliminar btn btn-lg btn-danger' data-toggle='modal' data-target='#modalEliminarFlete'><i class='eliminar icon icon-left mdi mdi-delete' aria-hidden='true'></i></button>"}
+					{"defaultContent": "<button type='button' class='editar btn btn-lg btn-primary' data-toggle='modal' data-target='#modalEditarFlete'><i class='fas fa-edit fa-sm' aria-hidden='true'></i></button>"},
+					{"defaultContent": "<button type='button' class='eliminar btn btn-lg btn-danger' data-toggle='modal' data-target='#modalEliminarFlete'><i class='fas fa-trash fa-sm' aria-hidden='true'></i></button>"}
 				],
 				"language": idioma_espanol,
 				"order": false,

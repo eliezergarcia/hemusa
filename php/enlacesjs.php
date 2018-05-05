@@ -22,6 +22,10 @@
 <script src="<?php echo $ruta; ?>assets/js/app-page-calendar.js" type="text/javascript"></script>
 <script src="<?php echo $ruta; ?>assets/lib/datatables/datatables.net/js/jquery.dataTables.js" type="text/javascript"></script>
 <script src="<?php echo $ruta; ?>assets/lib/datatables/datatables.net-bs4/js/dataTables.bootstrap4.js" type="text/javascript"></script>
+
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/dataTables.semanticui.min.js"></script>
+<!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.0/semantic.min.js"></script> -->
+
 <script src="<?php echo $ruta; ?>assets/lib/datatables/datatables.net-buttons/js/dataTables.buttons.min.js" type="text/javascript"></script>
 <script src="<?php echo $ruta; ?>assets/lib/datatables/datatables.net-buttons/js/buttons.html5.min.js" type="text/javascript"></script>
 <script src="<?php echo $ruta; ?>assets/lib/datatables/datatables.net-buttons/js/buttons.flash.min.js" type="text/javascript"></script>

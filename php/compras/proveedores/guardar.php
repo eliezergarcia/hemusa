@@ -26,6 +26,7 @@
 			$existe = existe_proveedor($rfc, $conexion_usuarios);
 			if($existe > 0 ){
 				$informacion["respuesta"] = "EXISTE";
+				$informacion["informacion"] = "No se pudo registrar la información porque el RFC '".$rfc."' ya existe!";
 				echo json_encode($informacion);
 			}else{
 				agregar_proveedor($nombreEmpresa, $rfc, $moneda, $calle, $numExterior, $numInterior, $colonia, $cp, $ciudad, $estado, $pais, $tlf1, $tlf2, $paginaWeb, $correoElectronico, $conexion_usuarios);
@@ -129,7 +130,7 @@
 
 
 	function existe_proveedor($rfc, $conexion_usuarios){
-		$query = "SELECT id FROM contactos WHERE RFC = '$rfc'";
+		$query = "SELECT id FROM contactos WHERE RFC = '$rfc' AND tipo = 'Proveedor'";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 		$existeproveedor = mysqli_num_rows( $resultado );
 		return $existeproveedor;
@@ -138,15 +139,35 @@
 	function agregar_proveedor($nombreEmpresa, $rfc, $moneda, $calle, $numExterior, $numInterior, $colonia, $cp, $ciudad, $estado, $pais, $tlf1, $tlf2, $paginaWeb, $correoElectronico, $conexion_usuarios){
 		$query = "INSERT INTO contactos (nombreEmpresa, calle, NumInt, NumExt, ciudad, estado, cp, pais, tlf1, tlf2, correoElectronico, paginaWeb, RFC, colonia, tipo, moneda) VALUES ('$nombreEmpresa', '$calle', '$numInterior', '$numExterior', '$ciudad', '$estado', '$cp', '$pais', '$tlf1', '$tlf2', '$correoElectronico', '$paginaWeb', '$rfc', '$colonia', 'Proveedor', '$moneda')";
 		$resultado = mysqli_query($conexion_usuarios, $query);
-		verificar_resultado($resultado);
+		if (!$resultado) {
+			$informacion["respuesta"] = "ERROR";
+			$informacion["informacion"] = "Ocurrió un problema al registrar la información del proveedor '".$nombreEmpresa."'!";
+		}else{
+			$informacion["respuesta"] = "BIEN";
+			$informacion["informacion"] = "La información del proveedor '".$nombreEmpresa."' se guardó correctamente!";
+		}
+		echo json_encode($informacion);
 		mysqli_close($conexion_usuarios);
 	}
 
 	function eliminarproveedor($idproveedor, $conexion_usuarios){
+		$query = "SELECT * FROM contactos WHERE id = '$idproveedor'";
+		$resultado = mysqli_query($conexion_usuarios, $query);
+		while($data = mysqli_fetch_assoc($resultado)){
+			$nombreEmpresa = $data['nombreEmpresa'];
+		}
+
 		$query = "DELETE FROM contactos WHERE id = $idproveedor";
 		$resultado = mysqli_query($conexion_usuarios, $query);
-		verificar_resultado($resultado);
-
+		if (!$resultado) {
+			$informacion["respuesta"] = "ERROR";
+			$informacion["informacion"] = "Ocurrió un problema al eliminar el proveedor '".$nombreEmpresa."'!";
+		}else{
+			$informacion["respuesta"] = "BIEN";
+			$informacion["informacion"] = "Se eliminó el proveedor '".$nombreEmpresa."' correctamente!";
+		}
+		echo json_encode($informacion);
+		mysqli_close($conexion_usuarios);
 	}
 
 	function quitarproveedor($id, $conexion_usuarios){

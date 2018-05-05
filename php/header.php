@@ -96,9 +96,9 @@
 	          <div class="left-sidebar-content">
 	            <ul class="sidebar-elements">
 	              <li class="divider">Menu</li>
-	              <li class=""><a href="<?php echo $ruta; ?>php/inicio/inicio.php"><i class="icon mdi mdi-home"></i><span>Inicio</span></a>
+	              <li class=""><a href="<?php echo $ruta; ?>php/inicio/inicio.php"><i class="icon fas fa-home"></i><span>Inicio</span></a>
 	              </li>
-	              <li class="parent"><a href="#"><i class="icon mdi mdi-money-box"></i><span>Ventas</span></a>
+	              <li class="parent"><a href="#"><i class="icon fas fa-dollar-sign"></i><span>Ventas</span></a>
                     <ul class="sub-menu">
                       <li><a href="<?php echo $ruta; ?>php/ventas/clientes/clientes.php">Clientes</a>
                       </li>
@@ -110,7 +110,17 @@
                       </li>
                     </ul>
                   </li>
-	              <li class="parent"><a href="#"><i class="icon mdi mdi-lock"></i><span>Administración</span></a>
+                  <li class="parent"><a href="#"><i class="icon fas fa-shopping-cart"></i><span>Compras</span></a>
+                    <ul class="sub-menu">
+                      <li><a href="<?php echo $ruta; ?>php/compras/proveedores/proveedores.php">Proveedores</a>
+                      </li>
+                      <li><a href="<?php echo $ruta; ?>php/compras/ordenesdecompras/ordenesdecompras.php">Ordenes de compras</a>
+                      </li>
+                      <li><a href="<?php echo $ruta; ?>php/compras/pedimentos/pedimentos.php">Pedimentos</a>
+                      </li>
+                    </ul>
+                  </li>
+	              <li class="parent"><a href="#"><i class="icon fas fa-unlock-alt"></i><span>Administración</span></a>
                     <ul class="sub-menu">
                       <li><a href="<?php echo $ruta; ?>php/administracion/usuarios/usuarios.php">Usuarios</a>
                       </li>
@@ -119,7 +129,7 @@
                     </ul>
                   </li>	              
 	              <li class="divider">Features</li>
-	              <li class="parent"><a href="#"><i class="icon mdi mdi-inbox"></i><span>Email</span></a>
+	              <li class="parent"><a href="#"><i class="icon fas fa-envelope"></i><span>Email</span></a>
 	                <ul class="sub-menu">
 	                  <li><a href="email-inbox.html">Inbox</a>
 	                  </li>
@@ -161,7 +171,7 @@
 	                  </li>
 	                </ul>
 	              </li>
-	              <li class="parent"><a href="#"><i class="icon mdi mdi-pin"></i><span>Maps</span></a>
+	              <li class="parent"><a href="#"><i class="icon fas fa-map"></i><span>Maps</span></a>
 	                <ul class="sub-menu">
 	                  <li><a href="maps-google.html">Google Maps</a>
 	                  </li>
@@ -169,7 +179,7 @@
 	                  </li>
 	                </ul>
 	              </li>
-	              <li class="parent"><a href="#"><i class="icon mdi mdi-folder"></i><span>Menu Levels</span></a>
+	              <li class="parent"><a href="#"><i class="icon fas fa-bars"></i><span>Menu Levels</span></a>
 	                <ul class="sub-menu">
 	                  <li class="parent"><a href="#"><i class="icon mdi mdi-undefined"></i><span>Level 1</span></a>
 	                    <ul class="sub-menu">

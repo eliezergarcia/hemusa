@@ -58,7 +58,7 @@
 				  	<div class="modal-dialog" role="document">
 				    	<div class="modal-content">
 				      		<div class="modal-header">
-				        		<h5 class="modal-title" id="exampleModalLabel"><b><i class="icon icon-left mdi mdi-edit" aria-hidden="true"></i> Información de marca</b></h5>
+				        		<h5 class="modal-title" id="exampleModalLabel"><b><i class="fas fa-edit fa-sm" aria-hidden="true"></i> Información de marca</b></h5>
 				        		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 				          			<span aria-hidden="true">&times;</span>
 				        		</button>
@@ -77,7 +77,11 @@
 				        		<div class="row">
 					        		<div class="form-group col">
 					        			<label for="moneda">Moneda <font color="#FF4136">*</font></label>
-					        			<input type="text" id="moneda" name="moneda" class="form-control form-control-sm" required>
+					        			<!-- <input type="text" id="moneda" name="moneda" class="form-control form-control-sm" required> -->
+					        			<select id="moneda" name="moneda" class="form-control form-control-sm select2">
+					        				<option value="mxn">MXN</option>
+					        				<option value="usd">USD</option>
+					        			</select>
 					        		</div>
 					        		<div class="form-group col">
 					        			<label for="tiempoEntrega">Tiempo de entrega <font color="#FF4136">*</font></label>
@@ -100,7 +104,7 @@
 				      		</div>
 				      		<div class="modal-footer invoice-footer">
 				        		<button type="button" class="btn btn-lg btn-secondary" data-dismiss="modal">Cancelar</button>
-				        		<button type="submit" class="btn btn-lg btn-primary">Editar</button>
+				        		<button type="submit" class="btn btn-lg btn-primary">Guardar</button>
 				      		</div>
 				    	</div>
 				  	</div>
@@ -148,7 +152,7 @@
 				  	<div class="modal-dialog" role="document">
 				    	<div class="modal-content">
 				      		<div class="modal-header">
-				        		<h5 class="modal-title" id="exampleModalLabel"><i class="icon icon-left mdi mdi-wrench" aria-hidden="true"></i><b> Registro de marca</b></h5>
+				        		<h5 class="modal-title" id="exampleModalLabel"><i class="fas fa-wrench fa-sm" aria-hidden="true"></i><b> Registro de marca</b></h5>
 				        		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 				          		<span aria-hidden="true">&times;</span>
 				        		</button>
@@ -167,7 +171,11 @@
 										<div class="row">
 					        		<div class="form-group col">
 					        			<label for="moneda">Moneda <font color="#FF4136">*</font></label>
-					        			<input type="text" id="moneda" name="moneda" class="form-control form-control-sm" required>
+					        			<!-- <input type="text" id="moneda" name="moneda" class="form-control form-control-sm" required> -->
+					        			<select id="moneda" name="moneda" class="form-control form-control-sm select2" required="">
+					        				<option value="mxn">MXN</option>
+					        				<option value="usd">USD</option>
+					        			</select>
 					        		</div>
 					        		<div class="form-group col">
 					        			<label for="tiempoEntrega">Tiempo de Entrega <font color="#FF4136">*</font></label>
@@ -275,7 +283,7 @@
 			            ]
 			          },
 		            {
-		                text: 'Agregar marca',
+		                text: '<i class="fas fa-wrench fa-sm"></i> Agregar marca',
 		                "className": "btn btn-lg btn-space btn-success",
 		                titleAttr: 'Agregar Marca',
 		                action: function ( e, dt, node, config ) {

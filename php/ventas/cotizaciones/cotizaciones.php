@@ -10,7 +10,6 @@
 <head>
 	<title>Cotizaciones</title>
 	<?php include('../../enlacescss.php'); ?>
-
 </head>
 <body>
 	<?php include('../../header.php'); ?>
@@ -30,7 +29,7 @@
                     	<div class="card card-fullcalendar">
                       		<div class="card-body">
                       			<!-- Tabla de Cotizaciones -->
-									<table id="dt_cotizaciones" class="table table-bordered table-striped table-hover display compact" cellspacing="0" width="100%">
+									<table id="dt_cotizaciones" class="table table-striped table-hover display compact" cellspacing="0" width="100%">
 										<thead>
 											<tr>
 												<th>Referencia</th>
@@ -62,7 +61,7 @@
 					<div class="modal-dialog modal-lg" role="document">
 						<div class="modal-content">
 							<div class="modal-header">
-								<h4 class="modal-title" id="modalNuevaCotizacionLabel"><b><i class="icon icon-left mdi mdi-file-plus" aria-hidden="true"></i> Nueva cotización</b></h4>
+								<h4 class="modal-title" id="modalNuevaCotizacionLabel"><b><i class="icon fas fa-file-alt" aria-hidden="true"></i> Nueva cotización</b></h4>
 								<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 							</div>
 							<div class="modal-body container">
@@ -323,7 +322,7 @@
 			            ]
 			          },
 					{
-						text: 'Agregar cotización',
+						text: '<i class="fas fa-file-alt fa-sm" aria-hidden="true"></i> Agregar cotización',
 						"className": "btn btn-lg btn-space btn-success",
 						action: function (e, dt, node, config){
 							$('#modalNuevaCotizacion').modal('show');

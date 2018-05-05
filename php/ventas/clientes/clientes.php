@@ -67,7 +67,7 @@
             <div class="modal-dialog modal-lg" role="document">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel"><b>Registro de cliente</b></h5>
+                  <h5 class="modal-title" id="exampleModalLabel"><i class="fas fa-address-card fa-sm"></i><b> Registro de cliente</b></h5>
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                   </button>
@@ -151,7 +151,7 @@
                 </div>
                 <div class="modal-footer invoice-footer">
                   <button type="button" class="btn btn-secondary btn-lg" data-dismiss="modal">Cancelar</button>
-                  <button type="submit" class="btn btn-success btn-lg">Guardar</button>
+                  <button type="submit" class="btn btn-success btn-lg">Agregar</button>
                 </div>
               </div>
             </div>
@@ -308,7 +308,7 @@
             ]
           },
           {
-            text: 'Agregar cliente',
+            text: '<i class="fas fa-address-card fa-sm"></i> Agregar cliente',
             "className": "btn btn-lg btn-space btn-success",
             action: function (e, dt, node, config){
               $("#modalAgregarCliente").modal("show");

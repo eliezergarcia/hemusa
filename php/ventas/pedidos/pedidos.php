@@ -3,14 +3,9 @@
 	require_once('../../sesion.php'); // Llamada a sesion.php para validar si hay sesi�n inciada
 	error_reporting(0);
 
-	$noEntregado = $_REQUEST["noEntregado"];
-	$noPagado = $_REQUEST["noPagado"];
-	$Terminado = $_REQUEST["Terminado"];
-	$busca = $_REQUEST["busca"];
-
 ?>
 <!DOCTYPE html>
-</html>
+</html lang="es">
 <head>
 	<title>Pedidos</title>
 	<?php include("../../enlacescss.php"); ?>
@@ -54,8 +49,9 @@
 								
 								<!-- Tabla de No entregado -->
 									<div id="noentregado">
+										<br>
 										<center><h4><b>Pedidos con herramienta sin entregar</b></h4></center><br>
-										<table id="dt_noentregado" class="table table-striped table-bordered display compact" cellspacing="0" width="100%">
+										<table id="dt_noentregado" class="table table-striped display compact" cellspacing="0" width="100%">
 											<thead>
 												<tr>
 													<th>Cotizacion</th>
@@ -73,10 +69,10 @@
 									</div>
 								
 								<!-- Tabla de sin proveedor -->
-									<br>
 									<div id="sinproveedor">
+										<br>
 										<center><h4><b>Pedidos con herramienta sin proveedor</b></h4></center><br>
-										<table id="dt_sinproveedor" class="table table-striped table-bordered display compact" cellspacing="0" width="100%">
+										<table id="dt_sinproveedor" class="table table-striped display compact" cellspacing="0" width="100%">
 											<thead>
 												<tr>
 													<th>Cotizacion</th>
@@ -95,8 +91,9 @@
 								
 								<!-- Tabla de nopagado -->
 									<div id="nopagado">
+										<br>
 										<center><h4><b>Pedidos no pagados</b></h4></center><br>
-										<table id="dt_nopagado" class="table table-striped table-bordered display compact" cellspacing="0" width="100%">
+										<table id="dt_nopagado" class="table table-striped display compact" cellspacing="0" width="100%">
 											<thead>
 												<tr>
 													<th>Cotizacion</th>
@@ -115,8 +112,9 @@
 
 								<!-- Tabla de terminado -->
 									<div id="terminado">
+										<br>
 										<center><h4><b>Pedidos terminados</b></h4></center><br>
-										<table id="dt_terminado" class="table table-striped table-bordered display compact" cellspacing="0" width="100%">
+										<table id="dt_terminado" class="table table-striped display compact" cellspacing="0" width="100%">
 											<thead>
 												<tr>
 													<th>Cotizacion</th>

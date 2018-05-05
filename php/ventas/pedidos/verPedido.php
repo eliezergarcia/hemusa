@@ -24,7 +24,7 @@
 	<?php include('../../header.php'); ?>
 		<div class="be-content">
           	<div class="page-head">
-              	<h2 class="page-head-title">Cotización</h2>
+              	<h2 class="page-head-title">Pedido</h2>
               	<nav aria-label="breadcrumb" role="navigation">
 				  	<ol class="breadcrumb">				    	
 				    	<li class="breadcrumb-item">Ventas</li>
@@ -44,8 +44,8 @@
 								<!-- Botones de informacion -->
 									<div class="row justify-content-center btn-toolbar">
 										<div role="group" class="btn-group btn-group-justified mb-2 col-3" data-toggle="buttons">
-											<a href="#" id="btnsinproveedor" class="btn btn-lg btn-secondary" data-toggle="collapse" data-target="#informacioncliente"><i class="icon icon-left mdi mdi-info-outline" aria-hidden="true"></i> Cliente</a href="#">
-										  	<a href="#" id="btnnoentregado" class="btn btn-lg btn-secondary" data-toggle="collapse" data-target="#informacionpedido"><i class="icon icon-left mdi mdi-info-outline" aria-hidden="true"></i> Pedido</a href="#">
+											<a href="#" id="btnsinproveedor" class="btn btn-lg btn-secondary" data-toggle="collapse" data-target="#informacioncliente"><i class="fas fa-address-card fa-sm" aria-hidden="true"></i> Cliente</a href="#">
+										  	<a href="#" id="btnnoentregado" class="btn btn-lg btn-secondary" data-toggle="collapse" data-target="#informacionpedido"><i class="fas fa-file-alt fa-sm" aria-hidden="true"></i> Pedido</a href="#">
 										</div>
 									</div>
 									
@@ -156,7 +156,7 @@
 									      		<div class="input-group mb-3">
 										      		<input type="text" id="numeroGuia" class="form-control form-control-sm">
 	                          						<div class="input-group-append">
-	                            						<button id="cambiarng" type="button" class="btn btn-primary"><i class="icon icon-left mdi mdi-edit" aria-hidden="true"></i></button>
+	                            						<button id="cambiarng" type="button" class="btn btn-primary"><i class="fas fa-pencil-alt fa-sm" aria-hidden="true"></i></button>
 	                          						</div>
 	                          					</div>
 									    	</div>
@@ -178,7 +178,7 @@
 									      		<div class="input-group mb-3">
 										      		<input type="text" id="cantidadg" class="form-control form-control-sm">
 	                          						<div class="input-group-append">
-	                            						<button id="cambiarcantidadg" type="button" class="btn btn-primary"><i class="icon icon-left mdi mdi-edit" aria-hidden="true"></i></button>
+	                            						<button id="cambiarcantidadg" type="button" class="btn btn-primary"><i class="fas fa-pencil-alt fa-sm" aria-hidden="true"></i></button>
 	                          						</div>
 	                          					</div>
 									    	</div>
@@ -243,26 +243,53 @@
 
 				    			<!-- Tabla de partidas -->
 				    				<br><br><br> 
-				    				<div class="card-body">
-					    				<table id="dt_pedido" class="table table-striped table-hover table-fw-widget" width="100%">
-											<thead>
-												<tr>
-													<th>Marca</th>
-													<th>Modelo</th>
-													<th>Descripcion</th>
-													<th>No. Serie</th>
-													<th>Precio Unidad</th>
-													<th>Cantidad</th>
-													<th>Precio Total</th>
-													<th>Fecha Compromiso</th>
-													<th>Proveedor</th>
-													<th>Almacen</th>
-													<th>Entregado <input type="checkbox" class="btn btn-outline-primary" name="sel" onclick="seleccionartodo()"></th>
-													<th>Editar</th>
-												</tr>
-											</thead>
-										</table>						
-				    				</div>   				
+				    				<table id="dt_pedido" class="table table-striped table-hover table-fw-widget" width="100%">
+										<thead>
+											<tr>
+												<th>Marca</th>
+												<th>Modelo</th>
+												<th>Descripcion</th>
+												<th>No. Serie</th>
+												<th>Precio Unidad</th>
+												<th>Cantidad</th>
+												<th>Precio Total</th>
+												<th>Fecha Compromiso</th>
+												<th>Proveedor</th>
+												<th>Almacen</th>
+												<th>Entregado <input type="checkbox" class="btn btn-outline-primary" name="sel" onclick="seleccionartodo()"></th>
+												<th>Editar</th>
+											</tr>
+										</thead>
+									</table>						
+								
+				    			<!-- Tabla de totales -->
+				    				<br>
+				    				<div class="col-12 row justify-content-end align-items-start">
+										<div class="col row justify-content-start">
+											
+										</div>
+										<div class="col-3">
+											<div class="row justify-content-center">
+												<table class="table table-bordered table-striped">
+													<tbody>
+														<tr>
+															<th><h6><b>SUB-TOTAL:</b></h6></th>
+															<th><h6><label id="subtotal"></h6></label></th>
+														</tr>
+														<tr>
+															<th><h6><b>IVA (16%):</b></h6></th>
+															<th><h6><label id="iva"></label></h6></th>
+														</tr>
+														<tr>
+															<th><h6><b>TOTAL:</b></h6></th>
+															<th><h6><label id="total"></label></h6></th>
+														</tr>
+													</tbody>
+												</table>
+											</div>
+										</div>
+									</div>
+									<br><br>
 							</div>
 						</div>
 					</div>
@@ -275,13 +302,13 @@
 				<div class="modal-dialog modal-lg" role="document">
 					<div class="modal-content">
 						<div class="modal-header">
-							<h5 class="modal-title" id="exampleModalLabel"><i class="icon icon-left mdi mdi-view-list" aria-hidden="true"></i><b> Packing List</b></h5>
+							<h5 class="modal-title" id="exampleModalLabel"><i class="fas fa-list fa-sm" aria-hidden="true"></i><b> Packing List</b></h5>
 							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 								<span aria-hidden="true">&times;</span>
 							</button>
 						</div>
 						<div class="modal-body">						      		
-							<table id="dt_packing_list" class="table table-bordered table-striped display compact" cellspacing="0" width="100%">
+							<table id="dt_packing_list" class="table table-hover table-striped display compact" cellspacing="0" width="100%">
 								<thead>
 									<tr>
 										<th>#</th>
@@ -310,44 +337,44 @@
 				  	<div class="modal-dialog" role="document">
 				    	<div class="modal-content">
 				      		<div class="modal-header">
-				        		<h5 class="modal-title" id="exampleModalLabel"><i class="icon icon-left mdi mdi-edit" aria-hidden="true"></i> <b>Editar partida</b></h5>
+				        		<h5 class="modal-title" id="exampleModalLabel"><i class="fas fa-edit fa-sm" aria-hidden="true"></i> <b>Editar partida</b></h5>
 				        		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 				          			<span aria-hidden="true">&times;</span>
 				        		</button>
 				      		</div>
 					      	<div class="modal-body">
-							  <div class="form-group row">
+							  	<div class="form-group row">
 					      			<label for="claveSat" class="control-label col-4">Clave SAT</label>
-					      			<input type="text" class="form-control form-control-sm col-8" name="claveSat" id="claveSat">
+					      			<input type="text" class="form-control form-control-sm col-7" name="claveSat" id="claveSat">
 					      		</div>
 					      		<div class="form-group row">
 					      			<label for="noserie" class="control-label col-4">No. Serie</label>
-					      			<input type="text" class="form-control form-control-sm col-8" name="noserie" id="noserie">
+					      			<input type="text" class="form-control form-control-sm col-7" name="noserie" id="noserie">
 					      		</div>
 					      		<div class="form-group row">
 					      			<label for="cantidad" class="control-label col-4">Cantidad</label>
-					      			<input type="text" class="form-control form-control-sm col-8" name="cantidad" id="cantidad">
+					      			<input type="text" class="form-control form-control-sm col-7" name="cantidad" id="cantidad">
 					      		</div>
 					      		<div class="form-group row">
 					      			<label for="fechacompromiso" class="control-label col-4">Fecha compromiso</label>
-					      			<input type="date" class="form-control form-control-sm col-8" name="fechacompromiso" id="fechacompromiso">
+					      			<input type="date" class="form-control form-control-sm col-7" name="fechacompromiso" id="fechacompromiso">
 					      		</div>
 					      		<div class="form-group row">
 					      			<label for="proveedor" class="control-label col-4">Proveedor</label>
-					      			<select name="proveedor" id="proveedor" class="form-control form-control-sm col-8"></select>
+					      			<select name="proveedor" id="proveedor" class="form-control form-control-sm col-7"></select>
 					      		</div>
 					      		<div class="form-group row">
 					      			<label for="split" class="control-label col-4">Split</label>
-					      			<input type="text" class="form-control form-control-sm col-8" name="split" id="split">
+					      			<input type="text" class="form-control form-control-sm col-7" name="split" id="split">
 					      		</div>
 								<div class="form-group row">
 					      			<label for="entregado" class="control-label col-4">Entregado</label>
-					      			<input type="date" class="form-control form-control-sm col-8" name="entregado" id="entregado">
+					      			<input type="date" class="form-control form-control-sm col-7" name="entregado" id="entregado">
 					      		</div>
 					      	</div>
 					      	<div class="modal-footer invoice-footer">
 					        	<button type="button" class="btn btn-lg btn-secondary" data-dismiss="modal">Cancelar</button>
-					        	<button id="editar-partida" type="button" class="btn btn-lg btn-primary">Editar</button>
+					        	<button id="editar-partida" type="button" class="btn btn-lg btn-primary">Guardar</button>
 					      	</div>
 				    	</div>
 				  	</div>
@@ -505,7 +532,6 @@
 				</div>
 			</div>
     		
-		
 	</header>
 	<?php include('../../enlacesjs.php'); ?>
 	<script>
@@ -639,7 +665,7 @@
 		}
 
 		var listar_partidas = function(refCotizacion, numeroPedido, RFC){
-			$("#dt_pedido").append('<tfoot><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th></tfoot>');
+			// $("#dt_pedido").append('<tfoot><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th></tfoot>');
 				var opcion = "listarpartidas"; 
 				var table = $("#dt_pedido").DataTable({
 					"destroy":"true",
@@ -686,9 +712,13 @@
 			                    return intVal(a) + intVal(b);
 			                }, 0 );
 
-			            $( api.column( 6 ).footer() ).html('SubTotal $ ' + subtotal.toFixed(2));
-			            $( api.column( 7 ).footer() ).html('IVA $ ' + (subtotal * .16).toFixed(2));
-			            $( api.column( 8 ).footer() ).html('Total $ ' + (subtotal + subtotal*.16).toFixed(2));
+			            $("#subtotal").text("$ "+ subtotal.toFixed(2));
+						$("#iva").text("$ "+ (subtotal * .16).toFixed(2));
+						$("#total").text("$ "+ (subtotal + subtotal*.16).toFixed(2));
+
+			            // $( api.column( 6 ).footer() ).html('SubTotal $ ' + subtotal.toFixed(2));
+			            // $( api.column( 7 ).footer() ).html('IVA $ ' + (subtotal * .16).toFixed(2));
+			            // $( api.column( 8 ).footer() ).html('Total $ ' + (subtotal + subtotal*.16).toFixed(2));
 			        },
 			        "dom":
           				"<'row be-datatable-header'<'col-sm-6'B><'col-sm-6 text-right'f>>" +
@@ -733,21 +763,21 @@
 			            //     }
 			            // },
 			            {
-			                text: '<i class="icon icon-left mdi mdi-file-text" aria-hidden="true" style="color:white"></i> Generar Factura',
+			                text: '<i class="fas fa-file-alt fa-sm" aria-hidden="true" style="color:white"></i> Generar Factura',
 			                "className": "btn btn-lg btn-space btn-primary",
 			                action: function ( e, dt, node, config ) {
 			                	generar_factura(RFC, numeroPedido, refCotizacion);
 			                }
 			            },
 			            {
-			                text: '<i class="icon icon-left mdi mdi-view-list" aria-hidden="true" style="color:white"></i> Packing list',
+			                text: '<i class="fas fa-list fa-sm" aria-hidden="true" style="color:white"></i> Packing list',
 			                "className": "btn btn-lg btn-space btn-primary",
 			                action: function ( e, dt, node, config ) {
 			                	$('#modalPackingList').modal('show');
 			                }
 			            },
 						{
-			                text: '<i class="icon icon-left mdi mdi-check-circle" aria-hidden="true" style="color:white"></i> Entregado',
+			                text: '<i class="fas fa-check-circle fa-sm" aria-hidden="true" style="color:white"></i> Entregado',
 			                "className": "btn btn-lg btn-space btn-primary",
 			                action: function ( e, dt, node, config ) {
 			                	entregado(refCotizacion, numeroPedido, RFC);
@@ -787,7 +817,7 @@
 				}).done( function( data ){
 					console.log(data);									
 					mostrar_mensaje(data);
-					listar_partidas(refCotizacion, numeroPedido);
+					listar_partidas(refCotizacion, numeroPedido, RFC);
 				});
 			}
 		}

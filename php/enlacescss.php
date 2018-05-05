@@ -5,7 +5,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="shortcut icon" href="assets/img/logo-fav.png">
-  <!--CSS-->    
+
     <link rel="stylesheet" type="text/css" href="<?php echo $ruta; ?>assets/lib/material-design-icons/css/material-design-iconic-font.min.css">
     <link rel="stylesheet" type="text/css" href="<?php echo $ruta; ?>assets/lib/perfect-scrollbar/css/perfect-scrollbar.min.css">
     <!--[if lt IE 9]>
@@ -13,7 +13,6 @@
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 
-    <link rel="stylesheet" href="<?php echo $ruta; ?>assets/css/style.css" type="text/css">
     <link rel="stylesheet" type="text/css" href="<?php echo $ruta; ?>assets/lib/jquery.vectormap/jquery-jvectormap-1.2.2.css"/>
     <link rel="stylesheet" type="text/css" href="<?php echo $ruta; ?>assets/lib/jqvmap/jqvmap.min.css"/>
     <link rel="stylesheet" type="text/css" href="<?php echo $ruta; ?>assets/lib/datetimepicker/css/bootstrap-datetimepicker.min.css"/>
@@ -22,16 +21,9 @@
     <link rel="stylesheet" type="text/css" href="<?php echo $ruta; ?>assets/lib/bootstrap-slider/css/bootstrap-slider.min.css"/>
     <link rel="stylesheet" type="text/css" href="<?php echo $ruta; ?>assets/lib/jquery.gritter/css/jquery.gritter.css"/>
     <link rel="stylesheet" type="text/css" href="<?php echo $ruta; ?>assets/lib/datatables/datatables.net-bs4/css/dataTables.bootstrap4.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.0/semantic.min.css">
     <link rel="stylesheet" href="<?php echo $ruta; ?>assets/css/app.css" type="text/css"/>
     <!-- <link rel="stylesheet" href="<?php echo $ruta; ?>php/css/estilos.css" type="text/css"/ -->
     <link rel="stylesheet" href="<?php echo $ruta; ?>php/css/awesomplete.css" type="text/css"/>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.12/css/all.css" integrity="sha384-G0fIWCsCzJIMAVNQPfjH08cyYaUtMwjJwqiRKxxE/rx96Uroj1BtIQ6MLJuheaO9" crossorigin="anonymous">
-
-  <!-- Librerias para Exportación de Botones -->
-    <!-- <script src="<?php echo $ruta; ?>php/js/jszip.min.js"></script>
-    <script src="<?php echo $ruta; ?>php/js/pdfmake.min.js"></script>
-    <script src="<?php echo $ruta; ?>php/js/vfs_fonts.js"></script> 
-    <script src="<?php echo $ruta; ?>php/js/buttons.html5.min.js"></script>  
-    <script src="<?php echo $ruta; ?>php/js/buttons.print.min.js"></script>
-    <script src="<?php echo $ruta; ?>php/js/buttons.colVis.min.js"></script>
-    <script src="<?php echo $ruta; ?>php/js/dataTables.buttons.min.js"></script> -->
+    <link rel="stylesheet" href="<?php echo $ruta; ?>assets/css/style.css" type="text/css">

@@ -124,7 +124,7 @@
 	}
 
 	function existe_cliente($rfc, $conexion_usuarios){
-		$query = "SELECT id FROM contactos WHERE RFC = '$rfc'";
+		$query = "SELECT id FROM contactos WHERE RFC = '$rfc' AND tipo = 'Cliente'";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 		$existecliente = mysqli_num_rows( $resultado );
 		return $existecliente;
