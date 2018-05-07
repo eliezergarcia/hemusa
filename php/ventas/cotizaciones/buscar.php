@@ -285,7 +285,7 @@
 			$vencimiento = $data['fecha'];
 			$vencimiento = strtotime($vencimiento."+ 30 days"); 
 			$vencimiento = date("Y-m-d",$vencimiento);
-			$informacion['vencimiento'] = $vencimiento;
+			$informacion['vencimiento'] = strftime("%d-%B-%Y", strtotime($vencimiento));
 		}
 
 		$query = "SELECT * FROM cotizacionherramientas WHERE cotizacionRef = '$numeroCotizacion'";
@@ -313,6 +313,7 @@
 				'stock' => $stock
 			);
 		}
+		
 		$informacion['numeropartidas'] = mysqli_num_rows($resultado);
 
 		$query = "SELECT * FROM contactos WHERE id = '$idcliente'";

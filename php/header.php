@@ -1,17 +1,23 @@
 <?php 
 	if ($tipomenu == 1) {	
-?>
-<header class="be-wrapper be-fixed-sidebar be-color-header">
-<?php
-	}else{
-?>
-<header class="be-wrapper be-collapsible-sidebar be-collapsible-sidebar-collapsed be-color-header">
-<?php		
+		echo '<header id="header-menu" class="be-wrapper be-fixed-sidebar be-color-header">';
+		echo '<nav id="nav-menu" class="navbar navbar-expand fixed-top be-top-header">';
+	}else if ($tipomenu == 2) {
+		echo '<header id="header-menu" class="be-wrapper be-collapsible-sidebar be-collapsible-sidebar-collapsed be-color-header">';	
+		echo '<nav id="nav-menu" class="navbar navbar-expand fixed-top be-top-header">';
+	}else if ($tipomenu == 3){
+		echo '<div class="be-wrapper be-offcanvas-menu be-fixed-sidebar be-color-header">';
+		echo '<nav class="navbar navbar-expand navbar-default fixed-top be-top-header">';
 	}
 ?>
-	<nav class="navbar navbar-expand fixed-top be-top-header">
 	    <div class="container-fluid">
-	      <div class="be-navbar-header"><a href="<?php echo $ruta;?>php/inicio/inicio.php">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="<?php echo $ruta; ?>media/images/logo_hemusa.png" alt="logo" width="160" height="60" class="logo-img"></a>
+	      <div class="be-navbar-header">
+	      <?php
+	      	if ($tipomenu == 3) {	
+	      		echo '<a href="#" class="nav-link be-toggle-left-sidebar"><span class="icon mdi mdi-menu" style="color: white;"></span></a>';
+	      	}
+	      ?>
+	      	<a href="<?php echo $ruta;?>php/inicio/inicio.php">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="<?php echo $ruta; ?>media/images/logo_hemusa.png" alt="logo" width="160" height="60" class="logo-img"></a>
 	      </div>
 	      <div class="be-right-navbar">
 	        <ul class="nav navbar-nav float-right be-user-nav">
@@ -27,7 +33,6 @@
 	            </div>
 	          </li>
 	        </ul>
-	        <!-- <div class="page-title"><span>Dashboard</span></div> -->
 	        <ul class="nav navbar-nav float-right be-icons-nav">
 	          <li class="nav-item dropdown"><a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle"><span class="icon mdi mdi-notifications"></span><span class="indicator"></span></a>
 	            <ul class="dropdown-menu be-notifications">

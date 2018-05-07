@@ -40,10 +40,10 @@
 								<!-- Grupo de botones -->
 									<div class="row justify-content-center btn-toolbar">
 										<div role="group" class="btn-group btn-group-justified mb-2 col-6">
-											<a href="#" id="btnsinproveedor" class="btn btn-lg btn-primary btn-space" onclick="listar_sinproveedor()">SIN PROVEEDOR</a href="#">
-										  	<a href="#" id="btnnoentregado" class="btn btn-lg btn-primary btn-space" onclick="listar_noentregado()">NO ENTREGADO</a href="#">
-											<a href="#" id="btnnopagado" class="btn btn-lg btn-primary btn-space" onclick="listar_nopagado()">NO PAGADO</a href="#">
-											<a href="#" id="btnterminado" class="btn btn-lg btn-primary btn-space" onclick="listar_terminado()">TERMINADO</a href="#">
+											<a href="#" id="btnsinproveedor" class="btn btn-primary btn-space" onclick="listar_sinproveedor()">SIN PROVEEDOR</a href="#">
+										  	<a href="#" id="btnnoentregado" class="btn btn-primary btn-space" onclick="listar_noentregado()">NO ENTREGADO</a href="#">
+											<a href="#" id="btnnopagado" class="btn btn-primary btn-space" onclick="listar_nopagado()">NO PAGADO</a href="#">
+											<a href="#" id="btnterminado" class="btn btn-primary btn-space" onclick="listar_terminado()">TERMINADO</a href="#">
 										</div>
 									</div>
 								

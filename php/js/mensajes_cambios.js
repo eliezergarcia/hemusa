@@ -5,7 +5,6 @@ var mostrar_mensaje = function( mensaje ){
     	text: mensaje.informacion,
     	class_name: 'color success'
   	});
-    limpiar_datos();
 	}else if( mensaje.respuesta == "ERROR"){
 		$.gritter.add({
       title: 'Error!',

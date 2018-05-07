@@ -200,3 +200,19 @@ div.table-responsive > div.dataTables_wrapper > div.row > div[class^="col-"]:fir
 div.table-responsive > div.dataTables_wrapper > div.row > div[class^="col-"]:last-child {
   padding-right: 0;  
 }
+
+table thead tr:first-child{
+  border-left: 1px solid #dee2e6;
+}
+
+table thead tr:last-child{
+  border-right: 1px solid #dee2e6;
+}
+
+table tbody td:first-child{
+  border-left: 1px solid #dee2e6;
+}
+
+table tbody td:last-child{
+  border-right: 1px solid #dee2e6;
+}

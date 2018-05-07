@@ -10,7 +10,7 @@
   	<title>Inicio</title>
   	<?php include('../enlacescss.php'); ?>
 </head>
-<body>	
+<body id="body-menu" class="">	
   	<?php include('../header.php'); ?> 
 	  	<div class="be-content">
 	        <div class="page-head">
@@ -22,6 +22,13 @@
 		            </ol>
 	          	</nav>
 	        </div>
+	        <!-- <div class="col-2">
+		        <select id="menu" name="menu" class="form-control form-control-sm select2">
+		        	<option value="1">Barra completa</option>
+		        	<option value="2">Barra lateral plegable</option>
+		        	<option value="3">Barra oculta</option>
+		        </select>
+	        </div> -->
 	        <div class="main-content container-fluid">
 	          	<div class="row full-calendar">
 	            	<div class="col-lg-12">
@@ -132,7 +139,7 @@
 			          	</div>
 			          	<div class="modal-footer">
 			            	<button type="button" data-dismiss="modal" class="btn btn-secondary btn-lg md-close">Cancelar</button>
-			            	<button type="button" data-dismiss="modal" class="btn btn-primary btn-lg md-close">Hecho</button>
+			            	<button type="button" class="btn btn-primary btn-lg md-close">Guardar</button>
 			          	</div>
 		        	</div>
 	      		</div>
@@ -193,6 +200,28 @@
 			buscar_tipo_cambio();
 			listar_calendario();
 		});
+
+		// $("#menu").on("change", function(){			
+		// 	if ($("#menu").val() == 1){
+		// 		$("#header-menu").removeClass("be-offcanvas-menu");
+		// 		$("#header-menu").addClass("be-fixed-sidebar");
+
+		// 		$("#nav-menu").removeClass("navbar-default");
+		// 		$("#nav-menu").addClass("");
+		// 	}else if($("#menu").val() == 2){
+		// 		// $("#header-menu").removeClass("");
+		// 		// $("#header-menu").addClass("be-wrapper be-collapsible-sidebar be-collapsible-sidebar-collapsed be-color-header");
+
+		// 		// $("#nav-menu").removeClass("");
+		// 		// $("#nav-menu").addClass("navbar navbar-expand fixed-top be-top-header");
+		// 	}else if ($("#menu").val() == 3){
+		// 		$("#header-menu").removeClass("be-fixed-sidebar");
+		// 		$("#header-menu").addClass("be-offcanvas-menu");
+
+		// 		$("#nav-menu").removeClass("");
+		// 		$("#nav-menu").addClass("navbar-default");
+		// 	}
+		// });
 
 
 		var buscar_tipo_cambio = function(){

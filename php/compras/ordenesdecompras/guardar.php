@@ -1,5 +1,6 @@
 <?php 
 	include('../../conexion.php');
+	error_reporting(0);
 
 	$opcion = $_POST['opcion'];
 
@@ -178,7 +179,15 @@
 	function flete($flete, $ordencompra, $conexion_usuarios){
 		$query = "UPDATE ordendecompras SET flete = '$flete' WHERE noDePedido = '$ordencompra'";
 		$resultado = mysqli_query($conexion_usuarios, $query);
-		verificar_resultado($resultado);
+
+		if (!$resultado) {
+			$informacion["respuesta"] = "ERROR";
+			$informacion["informacion"] = "Ocurrió un problema al guardar la información del flete!";
+		}else{
+			$informacion["respuesta"] = "BIEN";
+			$informacion["informacion"] = "El flete se guardó correctamente!";
+		}
+		echo json_encode($informacion);
 		mysqli_close($conexion_usuarios);
 	}
 
@@ -193,7 +202,15 @@
 		$query = "UPDATE utilidad_pedido SET Pedimento = '$pedimento', folio = '$folio', factura_proveedor = '$facturaproveedor', entrada = '$entrada' WHERE orden_compra = '$ordencompra'";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 
-		verificar_resultado($resultado);
+		if (!$resultado) {
+			$informacion["respuesta"] = "ERROR";
+			$informacion["informacion"] = "Ocurrió un problema al intentar guardar la información del pedido!";
+		}else{
+			$informacion["respuesta"] = "BIEN";
+			$informacion["informacion"] = "la información se guardo correctamente!";
+		}
+		echo json_encode($informacion);
+		mysqli_close($conexion_usuarios);
 	}
 
 	function editar_partida_descripcion($idpartida, $ordencompra, $pedimento, $folio, $facturaproveedor, $entrada, $conexion_usuarios){
@@ -212,7 +229,15 @@
 		$query = "UPDATE utilidad_pedido SET Pedimento = '$pedimento', folio = '$folio', factura_proveedor = '$facturaproveedor', entrada = '$entrada' WHERE id = '$idpartida'";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 
-		verificar_resultado($resultado);
+		if (!$resultado) {
+			$informacion["respuesta"] = "ERROR";
+			$informacion["informacion"] = "Ocurrió un problema al intentar modificar la información de la partida!";
+		}else{
+			$informacion["respuesta"] = "BIEN";
+			$informacion["informacion"] = "la información de la partida se modificó correctamente!";
+		}
+		echo json_encode($informacion);
+		mysqli_close($conexion_usuarios);
 	}
 
 	function editar_partida($idherramienta, $precioUnitario, $fechaCompromiso, $conexion_usuarios){
@@ -244,7 +269,16 @@
 		$query = "UPDATE utilidad_pedido SET costo_mn = '$costomxn', costo_usd = '$costousd' WHERE id ='$idherramienta'";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 
-		verificar_resultado($resultado);
+		if (!$resultado) {
+			$informacion["respuesta"] = "ERROR";
+			$informacion["informacion"] = "Ocurrió un problema al modificar la información de la partida!";
+		}else{
+			$informacion["respuesta"] = "BIEN";
+			$informacion["informacion"] = "La información de la partida se modificó correctamente!";
+		}
+
+		echo json_encode($informacion);
+		mysqli_close($conexion_usuarios);
 	}
 
 	function verificar_resultado($resultado){

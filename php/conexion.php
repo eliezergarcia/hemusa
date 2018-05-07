@@ -2,7 +2,7 @@
 	$server = "127.0.0.1";
 	$user = "root";
 	$password = "1234";
-	$db = "hemusa2018";
+	$db = "hemusa";
 	$ruta = "http://".$server."/sistemahemusa/"; 
 	$database_conexion_usuarios = "hemusa2018";
 

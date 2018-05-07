@@ -7741,7 +7741,7 @@ canvas {
       text-align: center;
       line-height: 60px;
       float: right;
-      padding: 0 15px; }
+      padding: 0 10px; }
       .be-top-header .be-navbar-header .be-toggle-left-sidebar .icon {
         font-size: 1.615rem;
         color: #5a5959;
@@ -8220,8 +8220,8 @@ canvas {
         .navbar-expand .be-user-nav > li.dropdown > a {
           padding-left: 10px; } }
     .be-user-nav > li.dropdown > a img {
-      max-width: 32px;
-      max-height: 32px;
+      max-width: 45px;
+      max-height: 45px;
       border-radius: 50%; }
     .be-user-nav > li.dropdown > a .user-name {
       margin-left: 8px;
