@@ -259,7 +259,7 @@
 				                  pageSize: 'LEGAL'
 				                }
 				            ]
-				          },
+				        },
 					]
 				});
 			verpedido("#dt_sinproveedor tbody", table);

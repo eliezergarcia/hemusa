@@ -52,8 +52,7 @@
 		case 'eliminar':
 			$idusuario = $_POST['idusuario'];
 			$nombre = $_POST['nombre'];
-			$apellido = $_POST['apellido'];
-			eliminar($usuariologin, $dplogin, $nombre, $apellido, $idusuario, $conexion_usuarios);
+			eliminar($usuariologin, $dplogin, $nombre, $idusuario, $conexion_usuarios);
 			break;
 		
 		default:
@@ -107,19 +106,19 @@
 		cerrar($conexion_usuarios);
 	}
 
-	function eliminar($usuariologin, $dplogin, $nombre, $apellido, $idusuario, $conexion_usuarios){
+	function eliminar($usuariologin, $dplogin, $nombre, $idusuario, $conexion_usuarios){
 		$query = "DELETE FROM usuarios WHERE id =$idusuario";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 		if (!$resultado) {
 			$informacion["respuesta"] = "ERROR";
 			$informacion["informacion"] = "Ocurrió un error al eliminar al usuario '".$nombre." ".$apellido."'!";
 		}else{
-			$descripcion = "Se elimino el usuario ".$nombre." ".$apellido;
+			$descripcion = "Se elimino el usuario ".$nombre;
 			$fechahora = date("Y-m-d G:i:s");
 			$query = "INSERT INTO movimientosusuarios (departamento, usuario, tipomovimiento, descripcion, fechahora) VALUES ('$dplogin', '$usuariologin', 'Eliminacion', '$descripcion', '$fechahora')";
 			$resultado = mysqli_query($conexion_usuarios, $query);
 			$informacion["respuesta"] = "BIEN";
-			$informacion["informacion"] = "El usuario '".$nombre." ".$apellido."' se elimino correctamente!";
+			$informacion["informacion"] = "El usuario '".$nombre."' se elimino correctamente!";
 		}
 		
 		echo json_encode($informacion);

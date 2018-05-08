@@ -45,3 +45,4 @@
 <script src="<?php echo $ruta; ?>php/js/vfs_fonts.js"></script> 
 <script src="<?php echo $ruta; ?>php/js/jspdf.min.js"></script> 
 <script src="<?php echo $ruta; ?>php/js/jspdf.plugin.autotable.js"></script> 
+<script src="<?php echo $ruta; ?>php/js/app-chat.js"></script> 

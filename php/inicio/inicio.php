@@ -1,7 +1,7 @@
-<?php 
+<?php
   require_once('../conexion.php'); // Llamada a connect.php para establecer conexión con la BD
   require_once('../sesion.php'); // Llamada a sesion.php para validar si hay sesión inciada
-  error_reporting(0);  
+  error_reporting(0);
 ?>
 
 <!DOCTYPE html>
@@ -10,8 +10,8 @@
   	<title>Inicio</title>
   	<?php include('../enlacescss.php'); ?>
 </head>
-<body id="body-menu" class="">	
-  	<?php include('../header.php'); ?> 
+<body id="body-menu" class="">
+  	<?php include('../header.php'); ?>
 	  	<div class="be-content">
 	        <div class="page-head">
 	          	<h2 class="page-head-title">Calendario</h2>
@@ -41,7 +41,7 @@
 	        	</div>
 			</div>
 		</div>
-		
+
 
 		<!-- Modal Evento Calendario -->
 	    	<div id="modalEvento" tabindex="-1" role="dialog" class="modal fade colored-header colored-header-primary">
@@ -97,13 +97,13 @@
 			              		<div class="form-group col-md-12">
 			                		<label class="custom-control custom-checkbox custom-control-inline">
 	                          			<input type="checkbox" checked="" class="custom-control-input"><span class="custom-control-label custom-control-color">Todo el día</span>
-	                        		</label>	
+	                        		</label>
 			              		</div>
 			            	</div>
 			                <label><h4><b>Repetir</b></h4></label>
 			                <div class="form-group row">
 			                    <div class="col-12 col-sm-12 col-lg-12">
-			                        <select class="form-control form-control-sm select2">                          	
+			                        <select class="form-control form-control-sm select2">
 			                            <option value="AK">No repetir</option>
 			                            <option value="HI">Diariamente</option>
 			                            <option value="HI">De Lunes a Viernes</option>
@@ -116,8 +116,8 @@
 			                <label><h4><b>Recordatorio</b></h4></label>
 			                <div class="form-group row">
 			                    <div class="col-12 col-sm-8 col-lg-12">
-			                        <select class="form-control form-control-sm select2"> 
-			                        	<option value="">Añadir recordatorio..</option>                         	
+			                        <select class="form-control form-control-sm select2">
+			                        	<option value="">Añadir recordatorio..</option>
 			                            <option value="AK">5 minutos</option>
 			                            <option value="HI">10 minutos</option>
 			                            <option value="HI">15 minutos</option>
@@ -146,18 +146,17 @@
 	    	</div>
 
 		<!-- Modal Tipo de Cambiio -->
-			<div id="modalTipoCambio" tabindex="-1" role="dialog" class="modal fade">
+			<div id="modalTipoCambio" tabindex="-1" role="dialog" class="modal fade" data-backdrop="static" data-keyboard="false">
 	      		<div class="modal-dialog">
 			        <div class="modal-content">
 			          	<div class="modal-header">
-			            	<button type="button" data-dismiss="modal" aria-hidden="true" class="close"></button>
 			          	</div>
 			          	<div class="modal-body">
 			            	<div class="text-center">
 			            		<form action="#" method="POST">
 				              		<div class="text-warning"><span class="modal-main-icon mdi mdi-alert-triangle"></span></div>
 				              		<h2>Advertencia!</h2>
-				              		<h4>No se ha ingresado el tipo de cambio del día.<br>Puedes ingresar al siguiente link para obtenerlo: 
+				              		<h4>No se ha ingresado el tipo de cambio del día.<br>Puedes ingresar al siguiente link para obtenerlo:
 				              			<?php
 											$dia = date("d");
 											$mes = date("m");
@@ -182,7 +181,7 @@
 	      		</div>
 	    	</div>
 
-	</header>  
+	</header>
 	<?php include('../enlacesjs.php'); ?>
 	<script type="text/javascript">
 		$.fn.niftyModal('setDefaults',{
@@ -192,16 +191,16 @@
 	      	classAddAfterOpen: 'modal-show'
 	    });
 
-		$(document).ready(function() {		
+		$(document).ready(function() {
 			App.init();
-	        App.pageCalendar();	      
-	        App.formElements();
-	        App.uiNotifications();  
+      App.pageCalendar();
+      App.formElements();
+      App.uiNotifications();
 			buscar_tipo_cambio();
 			listar_calendario();
 		});
 
-		// $("#menu").on("change", function(){			
+		// $("#menu").on("change", function(){
 		// 	if ($("#menu").val() == 1){
 		// 		$("#header-menu").removeClass("be-offcanvas-menu");
 		// 		$("#header-menu").addClass("be-fixed-sidebar");
@@ -226,7 +225,7 @@
 
 		var buscar_tipo_cambio = function(){
 			var usuario = "<?php echo $usuario.' '.$usuarioApellido; ?>";
-			var departamento = "<?php echo $departamento_usuario; ?>";	
+			var departamento = "<?php echo $departamento_usuario; ?>";
 			var opcion = "tipocambio";
 			$.ajax({
 				method: "POST",
@@ -249,7 +248,7 @@
 					guardar();
 					$("#modalTipoCambio").modal("show");
 				}
-				
+
 			});
 		}
 
@@ -271,7 +270,7 @@
 			      	defaultDate: new Date(),
 			      	navLinks: true, // can click day/week names to navigate views
 			      	editable: true,
-			      	eventLimit: true, // allow "more" link when too many events		      	
+			      	eventLimit: true, // allow "more" link when too many events
 			      	events: data,
 			      	eventClick: function(calEvent, jsEvent, view){
 			      		var id = calEvent.id;
@@ -295,7 +294,7 @@
 				    dayClick: function(date, jsEvent, view) {
 				    	// $("#modalCrearEvento").modal("show");
 				    	// var dia = date.format("DD/MM/YYYY");
-				    	// document.getElementById("dia").innerHTML = dia;	
+				    	// document.getElementById("dia").innerHTML = dia;
 				    	// var dia = moment().format('YYYY-MM-DDThh:mm');
 				    	// console.log(dia);
 				    	// $("#fechainicio").val(dia);
@@ -303,7 +302,7 @@
 				    	console.log("hola");
 					},
 			    });
-			});	
+			});
 		}
 
 		var buscar_pendientes = function(){
@@ -318,7 +317,7 @@
 				console.log(data.respuesta);
 				notifpendientes = document.getElementById('notifpendientes');
 		        notifpendientes.setAttribute('data-badge', data.respuesta);
-			});	
+			});
 		}
 
 		var guardar_notificacion = function(usuario){
@@ -347,7 +346,7 @@
 						});
 					}
 				}
-			});	
+			});
 		}
 
 		$("#agregarnotificacion").on("click", function(){
@@ -358,7 +357,7 @@
 				document.getElementById("diasnotificacion").disabled = true;
 				document.getElementById("horanotificacion").disabled = true;
 			}
-		});	
+		});
 
 		function buscar_notificaciones(){
 			var usuario = "<?php echo $user; ?>";
@@ -378,8 +377,8 @@
 				}else{
 					console.log("No hay notificaciones pendientes");
 				}
-				
-			});	
+
+			});
 		}
 
 		function buscartipo(){
@@ -393,7 +392,7 @@
 				console.log(data);
 				$('#asignado').empty();
 				var asignado = document.getElementById("asignado");
-				for(var i=0;i<data.length;i++){ 
+				for(var i=0;i<data.length;i++){
 	       	 		$("#asignado").append("<option>" + data[i] + "</option>");
 				};
 			});
@@ -436,11 +435,9 @@
 			$(".mensaje").fadeOut(5000, function(){
 				$(this).html("");
 				$(this).fadeIn(5000);
-			}); 
+			});
 		}
 	</script>
 	<!-- <script src="<?php echo $ruta; ?>/php/js/notificaciones.js"></script> -->
 </body>
 </html>
-
-

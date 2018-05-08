@@ -111,21 +111,21 @@
 										<label for="direccion">Dirección</label>
 										<input type="text" id="direccion" name="direccion" class="form-control form-control-sm" placeholder="Opcional">
 									</div>
-								</div>
-								<div class="row">
 									<div class="col-3 form-group">
 										<label for="tlfCasa">Teléfono Casa</label>
 										<input type="text" id="tlfCasa" name="tlfCasa" class="form-control form-control-sm" placeholder="Opcional">
 									</div>
+								</div>
+								<div class="row">
 									<div class="col-3 form-group">
 										<label for="movil">Móvil</label>
 										<input type="text" id="movil" name="movil" class="form-control form-control-sm" placeholder="Opcional">
 									</div>
-									<div class="col-4 form-group">
+									<div class="col form-group">
 										<label for="correoPersonal">Correo electrónico</label>
 										<input type="email" id="correoPersonal" name="correoPersonal" class="form-control form-control-sm" placeholder="Opcional">
 									</div>
-									<div class="col-2 form-group">
+									<div class="col-3 form-group">
 										<label for="tipoSangre">Tipo Sangre</label>
 										<input type="text" id="tipoSangre" name="tipoSangre" class="form-control form-control-sm" placeholder="Opcional">
 									</div>
@@ -209,21 +209,21 @@
 										<label for="direccion">Dirección</label>
 										<input type="text" id="direccion" name="direccion" class="form-control form-control-sm" placeholder="Opcional">
 									</div>
-								</div>
-								<div class="row">
 									<div class="col-3 form-group">
 										<label for="tlfCasa">Teléfono Casa</label>
 										<input type="text" id="tlfCasa" name="tlfCasa" class="form-control form-control-sm" placeholder="Opcional">
 									</div>
+								</div>
+								<div class="row">
 									<div class="col-3 form-group">
 										<label for="movil">Móvil</label>
 										<input type="text" id="movil" name="movil" class="form-control form-control-sm" placeholder="Opcional">
 									</div>
-									<div class="col-4 form-group">
+									<div class="col form-group">
 										<label for="correoPersonal">Correo electrónico</label>
 										<input type="text" id="correoPersonal" name="correoPersonal" class="form-control form-control-sm" placeholder="Opcional">
 									</div>
-									<div class="col-2 form-group">
+									<div class="col-3 form-group">
 										<label for="tipoSangre">Tipo Sangre</label>
 										<input type="text" id="tipoSangre" name="tipoSangre" class="form-control form-control-sm" placeholder="Opcional">
 									</div>
@@ -262,13 +262,10 @@
 			                <div class="modal-body">
                   				<div class="text-center">
                     				<div class="text-center"><span class="modal-main-icon mdi mdi-close-circle-o"></span></div>
-                    				<h4><b>¿Está seguro de eliminar el usuario?</b></h4>
+                    				<h4><b>¿Estás seguro(a) de eliminar el usuario?</b></h4>
                     				<div class="row justify-content-center">
                     					<div class="form-group col-12 row justify-content-center">
                     						<input type="text" class="disabled form-control col-6 form-control form-control-sm" id="nombre" name="nombre" disabled>
-                    					</div>
-                    					<div class="form-group col-12 row justify-content-center">
-                    						<input type="text" class="disabled form-control col-6 form-control form-control-sm" id="apellido" name="apellido" disabled>
                     					</div>
                     				</div>
                     				<div class="mt-8 invoice-footer">
@@ -426,8 +423,7 @@
 			$(tbody).on("click", "button.eliminar", function(){
 				var data = table.row( $(this).parents("tr") ).data();
 				var idusuario = $("#frmEliminarUsuario #idusuario").val(data.id);
-				$("#frmEliminarUsuario #nombre").val(data.nombre);
-				$("#frmEliminarUsuario #apellido").val(data.apellidos);
+				$("#frmEliminarUsuario #nombre").val(data.nombre + " " + data.apellidos);
 			});
 		}
 

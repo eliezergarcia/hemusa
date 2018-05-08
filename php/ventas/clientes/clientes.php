@@ -26,15 +26,6 @@
                 <div class="col-lg-12">
                     <div class="card card-fullcalendar">
                       <div class="card-body">
-                          <!-- <div class="row invoice-footer">
-                            <div class="col-lg-12">
-                              <button class="btn btn-lg btn-space btn-secondary"><i class="fas fa-file-pdf fa-lg"></i></button>
-                              <button class="btn btn-lg btn-space btn-secondary"><i class="fas fa-file-excel fa-lg"></i></button>
-                              <button class="btn btn-lg btn-space btn-secondary"><i class="fas fa-file-alt fa-lg"></i></button>
-                              <button class="btn btn-lg btn-space btn-secondary"><i class="fas fa-print fa-lg"></i></button>
-                              <button class="btn btn-lg btn-space btn-primary">Agregar cliente</button>
-                            </div>
-                          </div> -->
                           <!-- Tabla de Clientes -->
                             <table id="dt_clientes" class="table table-striped table-hover compact" cellspacing="0" width="100%">
                               <thead>
@@ -50,6 +41,17 @@
                               </thead>
                               <tbody>
                               </tbody>
+                              <tfoot>
+                                <tr>
+                                  <th>Nombre empresa</th>
+                                  <th>Persona contacto</th>
+                                  <th>Teléfono #1</th>
+                                  <th>Fáx</th>
+                                  <th>Correo electrónico</th>
+                                  <td></td>   
+                                  <td></td>
+                                </tr>
+                              </tfoot>
                             </table>
 
                           <br>
@@ -60,159 +62,159 @@
       </div>
     </div>
 
-      <!-- Modal Agregar Cliente -->
-        <form action="#" method="POST">
-          <input type="hidden" id="opcion" name="opcion" value="agregarcliente">
-          <div class="modal fade colored-header colored-header-success" id="modalAgregarCliente" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel"><i class="fas fa-address-card fa-sm"></i><b> Registro de cliente</b></h5>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <div class="modal-body">
-                  <div class="row">
-                    <div class="form-group col">
-                      <label for="nombreEmpresa"><h4>Nombre de empresa <font color="#FF4136">*</h4></font></label>
-                      <input type="text" id="nombreEmpresa" name="nombreEmpresa" class="limpiar form-control form-control-sm" required>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="form-group col">
-                      <label for="rfc"><h4>RFC <font color="#FF4136">*</h4></font></label>
-                      <input type="text" id="rfc" name="rfc" class="limpiar form-control form-control-sm" required>
-                    </div>
-                    <div class="form-group col">
-                      <label for="moneda"><h4>Moneda <font color="#FF4136">*</h4></font></label>
-                      <select name="moneda" id="moneda" class="limpiar form-control form-control-xs select2" required>
-                        <option value="mxn">MXN</option>
-                        <option value="usd">USD</option>
-                      </select>
-                    </div>
-                    <div class="form-group col">
-                      <label for="calle"><h4>Calle <font color="#FF4136">*</h4></font></label>
-                      <input type="text" id="calle" name="calle" class="limpiar form-control form-control-sm" required>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="form-group col">
-                      <label for="numExterior"><h4>Num. Exterior <font color="#FF4136">*</h4></font></label>
-                      <input type="text" id="numExterior" name="numExterior" class="limpiar form-control form-control-sm" required>
-                    </div>
-                    <div class="form-group col">
-                      <label for="numInterior"><h4>Num. Interior <font color="#FF4136">*</h4></font></label>
-                      <input type="text" id="numInterior" name="numInterior" class="limpiar form-control form-control-sm" placeholder="Opcional">
-                    </div>
-                    <div class="form-group col">
-                      <label for="colonia"><h4>Colonia <font color="#FF4136">*</h4></font></label>
-                      <input type="text" id="colonia" name="colonia" class="limpiar form-control form-control-sm" required>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="form-group col">
-                      <label for="cp"><h4>C.P. <font color="#FF4136">*</h4></font></font></label>
-                      <input type="text" id="cp" name="cp" class="limpiar form-control form-control-sm" required>
-                    </div>
-                    <div class="form-group col">
-                      <label for="ciudad"><h4>Ciudad <font color="#FF4136">*</h4></font></label>
-                      <input type="text" id="ciudad" name="ciudad" class="limpiar form-control form-control-sm" required>
-                    </div>
-                    <div class="form-group col">
-                      <label for="estado"><h4>Estado <font color="#FF4136">*</h4></font></label>
-                      <input type="text" id="estado" name="estado" class="limpiar form-control form-control-sm" required>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="form-group col">
-                      <label for="pais"><h4>País <font color="#FF4136">*</h4></font></label>
-                      <input type="text" id="pais" name="pais" class="limpiar form-control form-control-sm" required>
-                    </div>
-                    <div class="form-group col">
-                      <label for="tlf1"><h4>Teléfono #1 <font color="#FF4136">*</h4></font></label>
-                      <input type="text" id="tlf1" name="tlf1" class="limpiar form-control form-control-sm" required>
-                    </div>
-                    <div class="form-group col">
-                      <label for="tlf2"><h4>Teléfono #2</h4></label>
-                      <input type="text" id="tlf2" name="tlf2" class="limpiar form-control form-control-sm" placeholder="Opcional">
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="form-group col">
-                      <label for="paginaWeb"><h4>Página Web </h4></label>
-                      <input type="text" id="paginaWeb" name="paginaWeb" class="limpiar form-control form-control-sm" placeholder="Opcional">
-                    </div>
-                    <div class="form-group col">
-                      <label for="correoElectronico"><h4>Correo electrónico <font color="#FF4136">*</h4></font></label>
-                      <input type="email" id="correoElectronico" name="correoElectronico" class="limpiar form-control form-control-sm" required>
-                    </div>
+    <!-- Modal Agregar Cliente -->
+      <form action="#" method="POST">
+        <input type="hidden" id="opcion" name="opcion" value="agregarcliente">
+        <div class="modal fade colored-header colored-header-success" id="modalAgregarCliente" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"><i class="fas fa-address-card fa-sm"></i><b> Registro de cliente</b></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <div class="row">
+                  <div class="form-group col">
+                    <label for="nombreEmpresa">Nombre de empresa <font color="#FF4136">*</font></label>
+                    <input type="text" id="nombreEmpresa" name="nombreEmpresa" class="limpiar form-control form-control-sm" required>
                   </div>
                 </div>
-                <div class="modal-footer invoice-footer">
-                  <button type="button" class="btn btn-secondary btn-lg" data-dismiss="modal">Cancelar</button>
-                  <button type="submit" class="btn btn-success btn-lg">Agregar</button>
+                <div class="row">
+                  <div class="form-group col">
+                    <label for="rfc">RFC <font color="#FF4136">*</font></label>
+                    <input type="text" id="rfc" name="rfc" class="limpiar form-control form-control-sm" required>
+                  </div>
+                  <div class="form-group col">
+                    <label for="moneda">Moneda <font color="#FF4136">*</font></label>
+                    <select name="moneda" id="moneda" class="limpiar form-control form-control-xs select2" required>
+                      <option value="mxn">MXN</option>
+                      <option value="usd">USD</option>
+                    </select>
+                  </div>
+                  <div class="form-group col">
+                    <label for="calle">Calle <font color="#FF4136">*</font></label>
+                    <input type="text" id="calle" name="calle" class="limpiar form-control form-control-sm" required>
+                  </div>
                 </div>
+                <div class="row">
+                  <div class="form-group col">
+                    <label for="numExterior">Num. Exterior <font color="#FF4136">*</font></label>
+                    <input type="text" id="numExterior" name="numExterior" class="limpiar form-control form-control-sm" required>
+                  </div>
+                  <div class="form-group col">
+                    <label for="numInterior">Num. Interior <font color="#FF4136">*</font></label>
+                    <input type="text" id="numInterior" name="numInterior" class="limpiar form-control form-control-sm" placeholder="Opcional">
+                  </div>
+                  <div class="form-group col">
+                    <label for="colonia">Colonia <font color="#FF4136">*</font></label>
+                    <input type="text" id="colonia" name="colonia" class="limpiar form-control form-control-sm" required>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="form-group col">
+                    <label for="cp">C.P. <font color="#FF4136">*</font></font></label>
+                    <input type="text" id="cp" name="cp" class="limpiar form-control form-control-sm" required>
+                  </div>
+                  <div class="form-group col">
+                    <label for="ciudad">Ciudad <font color="#FF4136">*</font></label>
+                    <input type="text" id="ciudad" name="ciudad" class="limpiar form-control form-control-sm" required>
+                  </div>
+                  <div class="form-group col">
+                    <label for="estado">Estado <font color="#FF4136">*</font></label>
+                    <input type="text" id="estado" name="estado" class="limpiar form-control form-control-sm" required>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="form-group col">
+                    <label for="pais">País <font color="#FF4136">*</font></label>
+                    <input type="text" id="pais" name="pais" class="limpiar form-control form-control-sm" required>
+                  </div>
+                  <div class="form-group col">
+                    <label for="tlf1">Teléfono #1 <font color="#FF4136">*</font></label>
+                    <input type="text" id="tlf1" name="tlf1" class="limpiar form-control form-control-sm" required>
+                  </div>
+                  <div class="form-group col">
+                    <label for="tlf2">Teléfono #2</label>
+                    <input type="text" id="tlf2" name="tlf2" class="limpiar form-control form-control-sm" placeholder="Opcional">
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="form-group col">
+                    <label for="paginaWeb">Página Web </label>
+                    <input type="text" id="paginaWeb" name="paginaWeb" class="limpiar form-control form-control-sm" placeholder="Opcional">
+                  </div>
+                  <div class="form-group col">
+                    <label for="correoElectronico">Correo electrónico <font color="#FF4136">*</font></label>
+                    <input type="email" id="correoElectronico" name="correoElectronico" class="limpiar form-control form-control-sm" required>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer invoice-footer">
+                <button type="button" class="btn btn-secondary btn-lg" data-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-success btn-lg">Agregar</button>
               </div>
             </div>
           </div>
-        </form>
+        </div>
+      </form>
 
-      <!-- Modal Eliminar Cliente -->
-        <form id="frmEliminarCliente" action="" method="POST">
-          <input type="hidden" id="opcion" name="opcion" value="eliminarcliente">
-          <input type="hidden" id="idcliente" name="idcliente" value="">
-          <input type="hidden" id="usuariologin" name="usuariologin">
-          <input type="hidden" id="dplogin" name="dplogin">
-          <div class="modal-full-color modal-full-color-danger modal fade" id="modalEliminarCliente" tabindex="-1" role="dialog">
-            <div class="modal-dialog" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <button type="button" data-dismiss="modal" aria-hidden="true" class="close"><span class="mdi mdi-close"></span></button>
-                </div>
-                <div class="modal-body">
-                  <div class="text-center">
-                    <div class="text-center"><span class="modal-main-icon mdi mdi-close-circle-o"></span></div>
-                    <h4><b>¿Está seguro de eliminar el cliente?</b></h4>
-                    <div class="row justify-content-center"><input type="text" class="disabled form-control col-6 form-control form-control-sm" id="nombreEmpresa" name="nombreEmpresa"></div>
-                    <div class="mt-8 invoice-footer">
-                      <button type="button" class="btn btn-lg btn-secondary" data-dismiss="modal">Cancelar</button>
-                      <button type="submit" class="btn btn-lg btn-danger">Eliminar</button>
-                    </div>
+    <!-- Modal Eliminar Cliente -->
+      <form id="frmEliminarCliente" action="" method="POST">
+        <input type="hidden" id="opcion" name="opcion" value="eliminarcliente">
+        <input type="hidden" id="idcliente" name="idcliente" value="">
+        <input type="hidden" id="usuariologin" name="usuariologin">
+        <input type="hidden" id="dplogin" name="dplogin">
+        <div class="modal-full-color modal-full-color-danger modal fade" id="modalEliminarCliente" tabindex="-1" role="dialog">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" data-dismiss="modal" aria-hidden="true" class="close"><span class="mdi mdi-close"></span></button>
+              </div>
+              <div class="modal-body">
+                <div class="text-center">
+                  <div class="text-center"><span class="modal-main-icon mdi mdi-close-circle-o"></span></div>
+                  <h4><b>¿Está seguro de eliminar el cliente?</b></h4>
+                  <div class="row justify-content-center"><input type="text" class="disabled form-control col-6 form-control form-control-sm" id="nombreEmpresa" name="nombreEmpresa"></div>
+                  <div class="mt-8 invoice-footer">
+                    <button type="button" class="btn btn-lg btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-lg btn-danger">Eliminar</button>
                   </div>
                 </div>
-                <div class="modal-footer"></div>
               </div>
+              <div class="modal-footer"></div>
             </div>
           </div>
-        </form>
+        </div>
+      </form>
 
-      <!-- Modal OC Pendientes -->
-				<div class="modal fade" id="modalOCPendientes" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-					<div class="modal-dialog" role="document">
-						<div class="modal-content">
-							<div class="modal-header">
-								<h5 class="modal-title" id="exampleModalLabel"><i class="fa fa-calendar btn-outline-primary" aria-hidden="true"></i></h5>
-								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-									<span aria-hidden="true">&times;</span>
-								</button>
-							</div>
-							<div class="modal-body">
-								<div class="col-12 row justify-content-center">
-									<div class="form-group row justify-content-center col-12">
-										<label class="control-label">Proveedores con herramienta sin entregar y sin crear OC</label>
-									</div>
-									<div class="form-group row justify-content-center col-12">
-										<select name="proveedoressinoc" id="proveedoressinoc" class="form-control col-6" onchange="verproveedor2()"></select>
-									</div>
+    <!-- Modal OC Pendientes -->
+			<div class="modal fade" id="modalOCPendientes" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="exampleModalLabel"><i class="fa fa-calendar btn-outline-primary" aria-hidden="true"></i></h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+							<div class="col-12 row justify-content-center">
+								<div class="form-group row justify-content-center col-12">
+									<label class="control-label">Proveedores con herramienta sin entregar y sin crear OC</label>
+								</div>
+								<div class="form-group row justify-content-center col-12">
+									<select name="proveedoressinoc" id="proveedoressinoc" class="form-control col-6" onchange="verproveedor2()"></select>
 								</div>
 							</div>
-							<div class="modal-footer">
-								<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
 						</div>
 					</div>
 				</div>
+			</div>
 
   </header>
   <?php include('../../enlacesjs.php'); ?>
@@ -236,6 +238,11 @@
     });
 
     var listar_clientes = function(){
+      $('#dt_clientes tfoot th').each( function () {
+          var title = $(this).text();
+          $(this).html( '<input class="form-control form-control-xs" type="text" placeholder="Buscar '+ title +'" />' );
+        });
+
       var opcion = "clientes";
       var table = $("#dt_clientes").DataTable({
         "destroy":"true",
@@ -317,12 +324,12 @@
         ]
       });
 
-      // $("#dt_clientes tfoot input").on( 'keyup change', function () {
-      //   table
-      //       .column( $(this).parent().index()+':visible' )
-      //       .search( this.value )
-      //       .draw();
-      // });
+      $("#dt_clientes tfoot input").on( 'keyup change', function () {
+        table
+            .column( $(this).parent().index()+':visible' )
+            .search( this.value )
+            .draw();
+      });
 
       obtener_data_ver_cliente("#dt_clientes tbody", table);
       obtener_id_eliminar("#dt_clientes tbody",table);

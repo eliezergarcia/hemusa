@@ -40,6 +40,17 @@
 												<th>Eliminar</th>
 											</tr>
 										</thead>
+										<tfoot>
+											<tr>
+												<th>Marca</th>
+												<th>Factor</th>
+												<th>Moneda</th>
+												<th>Tiempo de Entrega</th>
+												<th>Excepción de Marca</th>
+												<td></td>
+												<td></td>
+											</tr>
+										</tfoot>
 									</table>
                       		</div>
                     	</div>
@@ -48,102 +59,7 @@
       		</div>
     	</div>
 
-		<!-- Modal Editar Marca -->
-			<form id="frmEditarMarca" action="" method="POST">
-				<input type="hidden" id="idmarca" name="idmarca">
-				<input type="hidden" id="opcion" name="opcion" value="editar">
-				<input type="hidden" id="usuariologin" name="usuariologin">
-				<input type="hidden" id="dplogin" name="dplogin">
-				<div class="modal fade colored-header colored-header-primary" id="modalEditarMarca" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-				  	<div class="modal-dialog" role="document">
-				    	<div class="modal-content">
-				      		<div class="modal-header">
-				        		<h5 class="modal-title" id="exampleModalLabel"><b><i class="fas fa-edit fa-sm" aria-hidden="true"></i> Información de marca</b></h5>
-				        		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-				          			<span aria-hidden="true">&times;</span>
-				        		</button>
-				      		</div>
-				      		<div class="modal-body">
-				      			<div class="row">
-					        		<div class="form-group col">
-					        			<label for="marca">Marca <font color="#FF4136">*</font></label>
-					        			<input type="text" id="marca" name="marca" class="form-control form-control-sm" required>
-					        		</div>
-					        		<div class="form-group col">
-					        			<label for="factor">Factor <font color="#FF4136">*</font></label>
-					        			<input type="text" id="factor" name="factor" class="form-control form-control-sm" required>
-					        		</div>
-				        		</div>
-				        		<div class="row">
-					        		<div class="form-group col">
-					        			<label for="moneda">Moneda <font color="#FF4136">*</font></label>
-					        			<!-- <input type="text" id="moneda" name="moneda" class="form-control form-control-sm" required> -->
-					        			<select id="moneda" name="moneda" class="form-control form-control-sm select2">
-					        				<option value="mxn">MXN</option>
-					        				<option value="usd">USD</option>
-					        			</select>
-					        		</div>
-					        		<div class="form-group col">
-					        			<label for="tiempoEntrega">Tiempo de entrega <font color="#FF4136">*</font></label>
-					        			<input type="text" id="tiempoEntrega" name="tiempoEntrega" class="form-control form-control-sm" required>
-					        		</div>
-				        		</div>
-				        		<div class="row">
-					        		<div class="form-group col">
-					        			<label for="excepcionmarca">Excepción de marca <font color="#FF4136">*</font></label>
-					        			<label class="custom-control custom-radio">
-				                          	<input type="radio" class="custom-control-input" name="excepcionmarca" id="excepcionmarcasi" value="1">
-				                          	<span class="custom-control-label">Sí</span>
-				                        </label>
-				                        <label class="custom-control custom-radio">
-				                          	<input type="radio" class="custom-control-input" name="excepcionmarca" id="excepcionmarcano" value="0">
-				                          	<span class="custom-control-label">No</span>
-				                        </label>
-					        		</div>
-				        		</div>
-				      		</div>
-				      		<div class="modal-footer invoice-footer">
-				        		<button type="button" class="btn btn-lg btn-secondary" data-dismiss="modal">Cancelar</button>
-				        		<button type="submit" class="btn btn-lg btn-primary">Guardar</button>
-				      		</div>
-				    	</div>
-				  	</div>
-				</div>
-			</form>
-
-		<!-- Modal Eliminar Marca -->
-			<form id="frmEliminarMarca" action="" method="POST">
-				<input type="hidden" id="idmarca" name="idmarca">
-				<input type="hidden" id="opcion" name="opcion" value="eliminar">
-				<input type="hidden" id="usuariologin" name="usuariologin">
-				<input type="hidden" id="dplogin" name="dplogin">
-				<div class="modal-full-color modal-full-color-danger modal fade" id="modalEliminarMarca" tabindex="-1" role="dialog" aria-labelledby="modalEliminarLabel">
-				  	<div class="modal-dialog" role="document">
-				    	<div class="modal-content">
-				      		<div class="modal-header">
-			                  	<button type="button" data-dismiss="modal" aria-hidden="true" class="close"><span class="mdi mdi-close"></span></button>
-			                </div>
-				      		<div class="modal-body">
-				      			<div class="text-center">
-                    				<div class="text-center"><span class="modal-main-icon mdi mdi-close-circle-o"></span></div>
-                    				<h4><b>¿Está seguro de eliminar la marca?</b></h4>
-                    				<div class="row justify-content-center">
-                    					<input type="text" id="marca" name="marca" class="disabled col-6 form-control form-control-sm" disabled>
-                    				</div>
-                    				<div class="mt-8 invoice-footer">
-                      					<button type="button" class="btn btn-lg btn-secondary" data-dismiss="modal">Cancelar</button>
-                      					<button type="submit" class="btn btn-lg btn-danger">Eliminar</button>
-                    				</div>	
-                  				</div>				        		
-				      		</div>
-				      		<div class="modal-footer">
-				      		</div>
-				    	</div>
-				  	</div>
-				</div>
-			</form>
-
-		<!-- Modal Agregar Marca -->
+    	<!-- Modal Agregar Marca -->
 			<form id="frmAgregarMarca" action="" method="POST">
 				<input type="hidden" id="opcion" name="opcion" value="agregar">
 				<input type="hidden" id="usuariologin" name="usuariologin">
@@ -191,6 +107,101 @@
 				  	</div>
 				</div>
 			</form>
+				
+		<!-- Modal Editar Marca -->
+			<form id="frmEditarMarca" action="" method="POST">
+				<input type="hidden" id="idmarca" name="idmarca">
+				<input type="hidden" id="opcion" name="opcion" value="editar">
+				<input type="hidden" id="usuariologin" name="usuariologin">
+				<input type="hidden" id="dplogin" name="dplogin">
+				<div class="modal fade colored-header colored-header-primary" id="modalEditarMarca" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				  	<div class="modal-dialog" role="document">
+				    	<div class="modal-content">
+				      		<div class="modal-header">
+				        		<h5 class="modal-title" id="exampleModalLabel"><b><i class="fas fa-edit fa-sm" aria-hidden="true"></i> Información de marca</b></h5>
+				        		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				          			<span aria-hidden="true">&times;</span>
+				        		</button>
+				      		</div>
+				      		<div class="modal-body">
+				      			<div class="row">
+					        		<div class="form-group col">
+					        			<label for="marca">Marca <font color="#FF4136">*</font></label>
+					        			<input type="text" id="marca" name="marca" class="form-control form-control-sm" required>
+					        		</div>
+					        		<div class="form-group col">
+					        			<label for="factor">Factor <font color="#FF4136">*</font></label>
+					        			<input type="text" id="factor" name="factor" class="form-control form-control-sm" required>
+					        		</div>
+				        		</div>
+				        		<div class="row">
+					        		<div class="form-group col">
+					        			<label for="moneda">Moneda <font color="#FF4136">*</font></label>
+					        			<!-- <input type="text" id="moneda" name="moneda" class="form-control form-control-sm" required> -->
+					        			<select id="moneda" name="moneda" class="form-control form-control-sm select2">
+					        				<option value="mxn">MXN</option>
+					        				<option value="usd">USD</option>
+					        			</select>
+					        		</div>
+					        		<div class="form-group col">
+					        			<label for="tiempoEntrega">Tiempo de entrega <font color="#FF4136">*</font></label>
+					        			<input type="text" id="tiempoEntrega" name="tiempoEntrega" class="form-control form-control-sm" required>
+					        		</div>
+				        		</div>
+				        		<div class="row">
+					        		<div class="form-group col">
+					        			<label for="excepcionmarca">Excepción de marca <font color="#FF4136">*</font>&nbsp;&nbsp;&nbsp;</label>
+					        			<label class="custom-control custom-radio custom-control-inline">
+				                          	<input type="radio" class="custom-control-input" name="excepcionmarca" id="excepcionmarcasi" value="1">
+				                          	<span class="custom-control-label">Sí</span>
+				                        </label>
+				                        <label class="custom-control custom-radio custom-control-inline">
+				                          	<input type="radio" class="custom-control-input" name="excepcionmarca" id="excepcionmarcano" value="0">
+				                          	<span class="custom-control-label">No</span>
+				                        </label>
+					        		</div>
+				        		</div>
+				      		</div>
+				      		<div class="modal-footer invoice-footer">
+				        		<button type="button" class="btn btn-lg btn-secondary" data-dismiss="modal">Cancelar</button>
+				        		<button type="submit" class="btn btn-lg btn-primary">Guardar</button>
+				      		</div>
+				    	</div>
+				  	</div>
+				</div>
+			</form>
+
+		<!-- Modal Eliminar Marca -->
+			<form id="frmEliminarMarca" action="" method="POST">
+				<input type="hidden" id="idmarca" name="idmarca">
+				<input type="hidden" id="opcion" name="opcion" value="eliminar">
+				<input type="hidden" id="usuariologin" name="usuariologin">
+				<input type="hidden" id="dplogin" name="dplogin">
+				<div class="modal-full-color modal-full-color-danger modal fade" id="modalEliminarMarca" tabindex="-1" role="dialog" aria-labelledby="modalEliminarLabel">
+				  	<div class="modal-dialog" role="document">
+				    	<div class="modal-content">
+				      		<div class="modal-header">
+			                  	<button type="button" data-dismiss="modal" aria-hidden="true" class="close"><span class="mdi mdi-close"></span></button>
+			                </div>
+				      		<div class="modal-body">
+				      			<div class="text-center">
+                    				<div class="text-center"><span class="modal-main-icon mdi mdi-close-circle-o"></span></div>
+                    				<h4><b>¿Está seguro de eliminar la marca?</b></h4>
+                    				<div class="row justify-content-center">
+                    					<input type="text" id="marca" name="marca" class="disabled col-6 form-control form-control-sm" disabled>
+                    				</div>
+                    				<div class="mt-8 invoice-footer">
+                      					<button type="button" class="btn btn-lg btn-secondary" data-dismiss="modal">Cancelar</button>
+                      					<button type="submit" class="btn btn-lg btn-danger">Eliminar</button>
+                    				</div>	
+                  				</div>				        		
+				      		</div>
+				      		<div class="modal-footer">
+				      		</div>
+				    	</div>
+				  	</div>
+				</div>
+			</form>
 
 	</header>
 	<?php include('../../enlacesjs.php'); ?>
@@ -205,10 +216,11 @@
 		});
 
 		var  listar = function(){
-			// $('#dt_marcas tfoot th').each( function () {
-   //  			var title = $(this).text();
-   //  			$(this).html( '<input class="form-control form-control-sm" type="text" placeholder="Buscar '+ title +'" />' );
-  	// 		});
+			$('#dt_marcas tfoot th').each( function () {
+    			var title = $(this).text();
+    			$(this).html( '<input class="form-control form-control-xs" type="text" placeholder="Buscar '+ title +'" />' );
+  			});
+
 			var table = $("#dt_marcas").DataTable({
 				"destroy": true,
 				"scrollX": true,

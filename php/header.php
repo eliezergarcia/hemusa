@@ -68,6 +68,7 @@
 	              </li>
 	            </ul>
 	          </li>
+	           <li class="nav-item dropdown"><a href="#" role="button" aria-expanded="false" class="nav-link be-toggle-right-sidebar"><span class="icon mdi mdi-comments"></span></a></li>
 	          <li class="nav-item dropdown"><a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle"><span class="icon mdi mdi-apps"></span></a>
 	            <ul class="dropdown-menu be-connections">
 	              <li>
@@ -89,7 +90,6 @@
 	              </li>
 	            </ul>
 	          </li>
-	           <li class="nav-item dropdown"><a href="#" role="button" aria-expanded="false" class="nav-link be-toggle-right-sidebar"><span class="icon mdi mdi-settings"></span></a></li>
 	        </ul>
 	      </div>
 	    </div>
@@ -105,49 +105,49 @@
 	              </li>
 	              <li class="parent"><a href="#"><i class="icon fas fa-dollar-sign"></i><span>Ventas</span></a>
                     <ul class="sub-menu">
-                      <li><a href="<?php echo $ruta; ?>php/ventas/clientes/clientes.php">Clientes</a>
+                      <li><a href="<?php echo $ruta; ?>php/ventas/clientes/clientes.php"><i class="fas fa-address-book"></i> Clientes</a>
                       </li>
-                      <li><a href="<?php echo $ruta; ?>php/ventas/listadeprecios/listadeprecios.php">Lista de precios</a>
+                      <li><a href="<?php echo $ruta; ?>php/ventas/listadeprecios/listadeprecios.php"><i class="fas fa-list-alt"></i> Lista de precios</a>
                       </li>
-                      <li><a href="<?php echo $ruta; ?>php/ventas/cotizaciones/cotizaciones.php">Cotizaciones</a>
+                      <li><a href="<?php echo $ruta; ?>php/ventas/cotizaciones/cotizaciones.php"><i class="fas fa-file-alt"></i> Cotizaciones</a>
                       </li>
-                      <li><a href="<?php echo $ruta; ?>php/ventas/pedidos/pedidos.php">Pedidos</a>
+                      <li><a href="<?php echo $ruta; ?>php/ventas/pedidos/pedidos.php"><i class="far fa-file-alt"></i> Pedidos</a>
                       </li>
                     </ul>
                   </li>
                   <li class="parent"><a href="#"><i class="icon fas fa-shopping-cart"></i><span>Compras</span></a>
                     <ul class="sub-menu">
-                      <li><a href="<?php echo $ruta; ?>php/compras/proveedores/proveedores.php">Proveedores</a>
+                      <li><a href="<?php echo $ruta; ?>php/compras/proveedores/proveedores.php"><i class="fas fa-address-book"></i> Proveedores</a>
                       </li>
-                      <li><a href="<?php echo $ruta; ?>php/compras/ordenesdecompras/ordenesdecompras.php">Ordenes de compras</a>
+                      <li><a href="<?php echo $ruta; ?>php/compras/ordenesdecompras/ordenesdecompras.php"><i class="fas fa-cart-arrow-down"></i> Ordenes de compras</a>
                       </li>
-                      <li><a href="<?php echo $ruta; ?>php/compras/pedimentos/pedimentos.php">Pedimentos</a>
+                      <li><a href="<?php echo $ruta; ?>php/compras/pedimentos/pedimentos.php"><i class="fas fa-warehouse"></i> Pedimentos</a>
                       </li>
                     </ul>
                   </li>
 					<li class="parent"><a href="#"><i class="icon far fa-credit-card"></i><span>Créditos y cobranza</span></a>
 						<ul class="sub-menu">
-							<li><a href="<?php echo $ruta; ?>php/cobranza/pagos/pagos.php">Pagos de cliente</a>
+							<li><a href="<?php echo $ruta; ?>php/cobranza/pagos/pagos.php"><i class="fab fa-cc-amazon-pay"></i> Pagos de cliente</a>
 							</li>
-							<li><a href="<?php echo $ruta; ?>php/cobranza/pagos/pagosproveedor.php">Pagos de proveedor</a>
+							<li><a href="<?php echo $ruta; ?>php/cobranza/pagos/pagosproveedor.php"><i class="fab fa-cc-amazon-pay"></i> Pagos de proveedor</a>
 							</li>
 						</ul>
 					</li>
 					<li class="parent"><a href="#"><i class="icon far fa-file-alt"></i><span>Facturación</span></a>
 						<ul class="sub-menu">
-							<li><a href="<?php echo $ruta; ?>php/ventas/remisiones/remisiones.php">Remisiones</a>
+							<li><a href="<?php echo $ruta; ?>php/ventas/remisiones/remisiones.php"><i class="fas fa-file"></i> Remisiones</a>
 							</li>
-							<li><a href="<?php echo $ruta; ?>php/ventas/embarques/embarques.php">Embarques</a>
+							<li><a href="<?php echo $ruta; ?>php/ventas/embarques/embarques.php"><i class="fas fa-dolly"></i> Embarques</a>
 							</li>
-							<li><a href="<?php echo $ruta; ?>php/facturacion/facturas/facturas.php">Facturas</a>
+							<li><a href="<?php echo $ruta; ?>php/facturacion/facturas/facturas.php"><i class="fas fa-file-alt"></i> Facturas</a>
 							</li>
 						</ul>
 					</li>
 	              <li class="parent"><a href="#"><i class="icon fas fa-unlock-alt"></i><span>Administración</span></a>
                     <ul class="sub-menu">
-                      <li><a href="<?php echo $ruta; ?>php/administracion/usuarios/usuarios.php">Usuarios</a>
+                      <li><a href="<?php echo $ruta; ?>php/administracion/usuarios/usuarios.php"><i class="fas fa-users-cog"></i> Usuarios</a>
                       </li>
-                      <li><a href="<?php echo $ruta; ?>php/administracion/marcas/marcas.php">Marcas</a>
+                      <li><a href="<?php echo $ruta; ?>php/administracion/marcas/marcas.php"><i class="fas fa-wrench"></i> Marcas</a>
                       </li>
                     </ul>
                   </li>
@@ -246,3 +246,200 @@
 	      </div>
 	    </div>
     </div>
+    <nav class="be-right-sidebar">
+      <div class="sb-content">
+        <div class="tab-navigation">
+          <ul role="tablist" class="nav nav-tabs nav-justified">
+            <li role="presentation" class="nav-item"><a href="#tab1" aria-controls="tab1" role="tab" data-toggle="tab" class="nav-link active">Chat</a></li>
+            <!-- <li role="presentation" class="nav-item"><a href="#tab2" aria-controls="tab2" role="tab" data-toggle="tab" class="nav-link">Todo</a></li> -->
+            <li role="presentation" class="nav-item"><a href="#tab3" aria-controls="tab3" role="tab" data-toggle="tab" class="nav-link">Configuración</a></li>
+          </ul>
+        </div>
+        <div class="tab-panel">
+          <div class="tab-content">
+            <div id="tab1" role="tabpanel" class="tab-pane tab-chat active">
+              <div class="chat-contacts">
+                <div class="chat-sections">
+                  <div class="be-scroller">
+                    <div class="content">
+                      <h2>Nuevos mensajes</h2>
+                      <div class="contact-list contact-list-recent">
+                        <div class="user"><a href="#"><img src="<?php echo $ruta; ?>assets/img/avatar1.png" alt="Avatar">
+                            <div class="user-data"><span class="status away"></span><span class="name">Claire Sassu</span><span class="message">Can you share the...</span></div></a></div>
+                        <div class="user"><a href="#"><img src="<?php echo $ruta; ?>assets/img/avatar2.png" alt="Avatar">
+                            <div class="user-data"><span class="status"></span><span class="name">Maggie jackson</span><span class="message">I confirmed the info.</span></div></a></div>
+                        <div class="user"><a href="#"><img src="<?php echo $ruta; ?>assets/img/avatar3.png" alt="Avatar">
+                            <div class="user-data"><span class="status offline"></span><span class="name">Joel King		</span><span class="message">Ready for the meeti...</span></div></a></div>
+                      </div>
+                      <h2>Contactos</h2>
+                      <div class="contact-list">
+                        <?php 
+                            $query = "SELECT * FROM usuarios";
+                            $resultado = mysqli_query($conexion_usuarios, $query);
+                            while($data = mysqli_fetch_assoc($resultado)){
+                        ?>
+                            <div class="user"><a href="#"><img src="<?php echo $ruta; ?>assets/img/avatar4.png" alt="Avatar">
+                            <div class="user-data2"><span class="status"></span><span class="name"><?php echo $data['nombre']." ".$data["apellidos"]; ?></span></div></a></div> 
+                        <?php
+                            }
+                        ?>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="bottom-input">
+                  <input type="text" placeholder="Search..." name="q"><span class="mdi mdi-search"></span>
+                </div>
+              </div>
+              <div class="chat-window">
+                <div class="title">
+                  <div class="user"><img src="assets/img/avatar2.png" alt="Avatar">
+                    <h2>Maggie jackson</h2><span>Active 1h ago</span>
+                  </div><span class="icon return mdi mdi-chevron-left"></span>
+                </div>
+                <div class="chat-messages">
+                  <div class="be-scroller">
+                    <div class="content">
+                      <ul>
+                        <li class="friend">
+                          <div class="msg">Hello</div>
+                        </li>
+                        <li class="self">
+                          <div class="msg">Hi, how are you?</div>
+                        </li>
+                        <li class="friend">
+                          <div class="msg">Good, I'll need support with my pc</div>
+                        </li>
+                        <li class="self">
+                          <div class="msg">Sure, just tell me what is going on with your computer?</div>
+                        </li>
+                        <li class="friend">
+                          <div class="msg">I don't know it just turns off suddenly</div>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <div class="chat-input">
+                  <div class="input-wrapper"><span class="photo mdi mdi-camera"></span>
+                    <input type="text" placeholder="Message..." name="q" autocomplete="off"><span class="send-msg mdi mdi-mail-send"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div id="tab2" role="tabpanel" class="tab-pane tab-todo">
+              <div class="todo-container">
+                <div class="todo-wrapper">
+                  <div class="be-scroller">
+                    <div class="todo-content"><span class="category-title">Today</span>
+                      <ul class="todo-list">
+                        <li>
+                          <label class="custom-checkbox custom-control custom-control-sm"><span class="delete mdi mdi-delete"></span>
+                            <input type="checkbox" checked="" class="custom-control-input"><span class="custom-control-label">Initialize the project</span>
+                          </label>
+                        </li>
+                        <li>
+                          <label class="custom-checkbox custom-control custom-control-sm"><span class="delete mdi mdi-delete"></span>
+                            <input type="checkbox" class="custom-control-input"><span class="custom-control-label">Create the main structure							</span>
+                          </label>
+                        </li>
+                        <li>
+                          <label class="custom-checkbox custom-control custom-control-sm"><span class="delete mdi mdi-delete"></span>
+                            <input type="checkbox" class="custom-control-input"><span class="custom-control-label">Updates changes to GitHub							</span>
+                          </label>
+                        </li>
+                      </ul><span class="category-title">Tomorrow</span>
+                      <ul class="todo-list">
+                        <li>
+                          <label class="custom-checkbox custom-control custom-control-sm"><span class="delete mdi mdi-delete"></span>
+                            <input type="checkbox" class="custom-control-input"><span class="custom-control-label">Initialize the project							</span>
+                          </label>
+                        </li>
+                        <li>
+                          <label class="custom-checkbox custom-control custom-control-sm"><span class="delete mdi mdi-delete"></span>
+                            <input type="checkbox" class="custom-control-input"><span class="custom-control-label">Create the main structure							</span>
+                          </label>
+                        </li>
+                        <li>
+                          <label class="custom-checkbox custom-control custom-control-sm"><span class="delete mdi mdi-delete"></span>
+                            <input type="checkbox" class="custom-control-input"><span class="custom-control-label">Updates changes to GitHub							</span>
+                          </label>
+                        </li>
+                        <li>
+                          <label class="custom-checkbox custom-control custom-control-sm"><span class="delete mdi mdi-delete"></span>
+                            <input type="checkbox" class="custom-control-input"><span title="This task is too long to be displayed in a normal space!" class="custom-control-label">This task is too long to be displayed in a normal space!							</span>
+                          </label>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <div class="bottom-input">
+                  <input type="text" placeholder="Create new task..." name="q"><span class="mdi mdi-plus"></span>
+                </div>
+              </div>
+            </div>
+            <div id="tab3" role="tabpanel" class="tab-pane tab-settings">
+              <div class="settings-wrapper">
+                <div class="be-scroller"><span class="category-title">General</span>
+                  <ul class="settings-list">
+                    <li>
+                      <div class="switch-button switch-button-sm">
+                        <input type="checkbox" checked="" name="st1" id="st1"><span>
+                          <label for="st1"></label></span>
+                      </div><span class="name">Disponible</span>
+                    </li>
+                    <li>
+                      <div class="switch-button switch-button-sm">
+                        <input type="checkbox" checked="" name="st2" id="st2"><span>
+                          <label for="st2"></label></span>
+                      </div><span class="name">Habilitar notificaciones</span>
+                    </li>
+                    <li>
+                      <div class="switch-button switch-button-sm">
+                        <input type="checkbox" checked="" name="st3" id="st3"><span>
+                          <label for="st3"></label></span>
+                      </div><span class="name">Login con Facebook</span>
+                    </li>
+                  </ul><span class="category-title">Notificaciones</span>
+                  <ul class="settings-list">
+                    <li>
+                      <div class="switch-button switch-button-sm">
+                        <input type="checkbox" name="st4" id="st4"><span>
+                          <label for="st4"></label></span>
+                      </div><span class="name">Notificaciones de email</span>
+                    </li>
+                    <li>
+                      <div class="switch-button switch-button-sm">
+                        <input type="checkbox" checked="" name="st5" id="st5"><span>
+                          <label for="st5"></label></span>
+                      </div><span class="name">Actualizaciones de proyectp</span>
+                    </li>
+                    <li>
+                      <div class="switch-button switch-button-sm">
+                        <input type="checkbox" checked="" name="st6" id="st6"><span>
+                          <label for="st6"></label></span>
+                      </div><span class="name">Nuevos comentarios</span>
+                    </li>
+                    <li>
+                      <div class="switch-button switch-button-sm">
+                        <input type="checkbox" name="st7" id="st7"><span>
+                          <label for="st7"></label></span>
+                      </div><span class="name">Mensajes de chat</span>
+                    </li>
+                  </ul><span class="category-title">Flujo de trabajo</span>
+                  <ul class="settings-list">
+                    <li>
+                      <div class="switch-button switch-button-sm">
+                        <input type="checkbox" name="st8" id="st8"><span>
+                          <label for="st8"></label></span>
+                      </div><span class="name">Implementar en commit</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
