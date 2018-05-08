@@ -315,13 +315,15 @@
 		$query = "UPDATE cotizacionherramientas SET ClaveProductoSAT='$claveSat', NoSerie='$noserie', cantidad='$cantidad', fechacompromiso='$fechacompromiso', Proveedor='$proveedor', proveedorFecha='$fecha', Entregado = '$entregado' WHERE id =$id";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 		if (!$resultado) {
-			verificar_resultado($resultado);
+			$informacion["respuesta"] = "ERROR";
+			$informacion["informacion"] = "Ocurrió un problema al modificar los datos de la partida!";
 		}else{
 			if ($split > 0) {
 				$query = "SELECT * FROM cotizacionherramientas WHERE id=$id";
 				$resultado = mysqli_query($conexion_usuarios, $query);
 				if (!$resultado) {
-					verificar_resultado($resultado);
+					$informacion["respuesta"] = "ERROR";
+					$informacion["informacion"] = "Ocurrió un problema al buscar los datos de la partida!";
 				}else{
 					while($data = mysqli_fetch_assoc($resultado)){
 						$cliente = $data['cliente'];

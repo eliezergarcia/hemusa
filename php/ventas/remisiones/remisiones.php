@@ -6,123 +6,124 @@
 <!DOCTYPE html>
 <head>
   <title>Remisiones</title>
-  <?php include('../../enlaces.php'); ?>
+  <?php include('../../enlacescss.php'); ?>
 </head>
 <body>
 	<?php include('../../header.php'); ?>
-    	<main class="mdl-layout__content">
-			<!-- Breadcrumb -->
-				<nav aria-label="breadcrumb">
-					<ol class="breadcrumb">
-						<li class="breadcrumb-item">Facturación</li>
-						<li class="breadcrumb-item active">Remisiones</li>
-					</ol>
-				</nav>
+    	<div class="be-content">
+          	<div class="page-head">
+              	<h2 class="page-head-title">Remisiones</h2>
+              	<nav aria-label="breadcrumb" role="navigation">
+	                <ol class="breadcrumb page-head-nav">
+	                    <li class="breadcrumb-item"><a href="#">Facturación</a></li>
+	                    <li class="breadcrumb-item"><a href="#">Remisiones</a></li>
+	                </ol>
+              	</nav>
+          	</div>
+          	<div class="main-content container-fluid">
+              	<div class="row full-calendar">
+                	<div class="col-lg-12">
+                    	<div class="card card-fullcalendar">
+                      		<div class="card-body">
+								<!-- Tabla de remisiones -->
+									<table id="dt_remisiones" class="table table-striped table-hover display compact" cellspacing="0" width="100%">
+										<thead>
+											<tr>
+												<th>#</th>
+												<th>Remision</th>
+												<th>Cliente</th>
+												<th>Contacto</th>
+												<th>Fecha</th>
+												<th>Cantidad</th>
+												<th>Suma</th>
+												<th>Factura(s)</th>
+												<th>Ver</th>
+											</tr>
+										</thead>
+									</table>
+                      		</div>
+                    	</div>
+                	</div>
+            	</div>
+      		</div>
+    	</div>
 
-
-		  	<!-- Encabezado -->
-			  	<div id="encabezado" class="row fondo">
-					<div class="col-sm-12">
-						<br><h1 class="text-center"><b>Remisiones</b></h1><br>
-					</div>
-				</div>
-
-			<!-- Tabla de remisiones -->
-				<div>
-					<table id="dt_remisiones" class="table table-striped table-hover display compact" cellspacing="0" width="100%">
-						<thead>
-							<tr>
-								<th>#</th>
-								<th>Remision</th>
-								<th>Cliente</th>
-								<th>Contacto</th>
-								<th>Fecha</th>
-								<th>Cantidad</th>
-								<th>Suma</th>
-								<th>Factura(s)</th>
-								<th>Ver</th>
-							</tr>
-						</thead>
-					</table>
-				</div>
-
-			<!-- Modal Nueva Remisión -->
-				<form name="agregarRemision" action="#" method="POST">
-					<input type="hidden" id="opcion" name="opcion" value="nuevaremision">
-					<div class="modal fade" id="modalNuevaRemision" tabindex="-1" role="dialog" aria-labelledby="modalNuevaCotizacionLabel" aria-hidden="true"  data-backdrop="static" data-keyboard="false">
-						<div class="modal-dialog modal-lg" role="document">
-							<div class="modal-content">
-								<div class="modal-header">
-									<h4 class="modal-title" id="modalNuevaCotizacionLabel">Nueva Remisión</h4>
-									<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	<!-- Modal Nueva Remisión -->
+		<form name="agregarRemision" action="#" method="POST">
+			<input type="hidden" id="opcion" name="opcion" value="nuevaremision">
+			<div class="modal fade colored-header colored-header-success" id="modalNuevaRemision" tabindex="-1" role="dialog" aria-labelledby="modalNuevaCotizacionLabel" aria-hidden="true"  data-backdrop="static" data-keyboard="false">
+				<div class="modal-dialog modal-lg" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h4 class="modal-title" id="modalNuevaCotizacionLabel"><i class="fas fa-file fa-sm"></i><b> Nueva remisión</b></h4>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						</div>
+						<div class="modal-body container">
+							<div class="row">
+								<div class="col form-group">
+									<label for="numeroCotizacion">Referencia <font color="#FF4136">*</font></label>
+									<input type="text" id="numeroCotizacion" name="numeroCotizacion" class="disabled form-control form-control-sm" disabled>
 								</div>
-								<div class="modal-body container">
-									<div class="row">
-										<div class="col form-group">
-											<label for="numeroCotizacion">Número cotización <font color="#FF4136">*</font></label>
-											<input type="text" id="numeroCotizacion" name="numeroCotizacion" class="disabled form-control" disabled>
-										</div>
-										<div class="col form-group">
-											<label for="remision">Remision <font color="#FF4136">*</font></label>
-											<input type="text" id="remision" name="remision" class="disabled form-control" disabled>
-										</div>
-										<div class="col form-group">
-											<label for="fechaCotizacion">Fecha <font color="#FF4136">*</font></label>
-											<input type="text" id="fechaCotizacion" name="fechaCotizacion" class="disabled form-control" value="<?php echo date("Y-m-d"); ?>" disabled>
-										</div>
-										<div class="col form-group">
-											<label for="vendedor">Vendedor <font color="#FF4136">*</font></label>
-											<input type="text" id="vendedor" name="vendedor" class="disabled form-control" value="<?php echo $usuario." ".$usuarioApellido; ?>" disabled>
-										</div>
-									</div>
-									<div class="row">
-											<div class="col-8 form-group">
-												<label for="cliente" class="col-12">Cliente <font color="#FF4136">*</font></label>
-												<input placeholder="Busca un cliente" class="form-control col-12" data-min-length="1" list="clientes" id="cliente" name="cliente" type="text" onchange="buscarDatosCliente()"  required >
-												<!-- <datalist id="clientes">
-												</datalist> -->
-											</div>
-											<div class="col form-group">
-												<label for="contactoCliente">Contacto <font color="#FF4136">*</font></label>
-												<select name="contactoCliente" id="contactoCliente" class="form-control" onchange="agregarcontacto()" required>
-													<option value="">Selecciona</option>
-												</select>
-											</div>
-									</div>
-									<div class="row">
-											<div class="col-2 form-group">
-												<label for="moneda" class="col-12">Moneda <font color="#FF4136">*</font></label>
-												<select id="moneda" name="moneda" class="form-control" required>
-													<option>
-														<option value="mxn" selected>MXN</option>
-														<option value="usd">USD</option>
-													</option>
-												</select>
-											</div>
-											<div class="col form-group">
-												<label for="comentarios" class="col-12">Comentarios</label>
-												<textarea name="comentarios" id="comentarios" class="form-control" cols="30" rows="3" placeholder="Opcional"></textarea>
-											</div>
-									</div>
-									<!-- <div class="row">
-									</div> -->
+								<div class="col form-group">
+									<label for="remision">Remision <font color="#FF4136">*</font></label>
+									<input type="text" id="remision" name="remision" class="disabled form-control form-control-sm" disabled>
 								</div>
-								<div class="modal-footer row center-xs">
-									<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-									<button type="submit" class="btn btn-success">Crear</button>
+								<div class="col form-group">
+									<label for="fechaCotizacion">Fecha <font color="#FF4136">*</font></label>
+									<input type="text" id="fechaCotizacion" name="fechaCotizacion" class="disabled form-control form-control-sm" value="<?php echo date("Y-m-d"); ?>" disabled>
+								</div>
+								<div class="col form-group">
+									<label for="vendedor">Vendedor <font color="#FF4136">*</font></label>
+									<input type="text" id="vendedor" name="vendedor" class="disabled form-control form-control-sm" value="<?php echo $usuario." ".$usuarioApellido; ?>" disabled>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-8 form-group">
+									<label for="cliente">Cliente <font color="#FF4136">*</font></label>
+									<input placeholder="Busca un cliente" class="form-control form-control-sm col-12" data-min-length="1" list="clientes" id="cliente" name="cliente" type="text" onchange="buscarDatosCliente()"  required >
+									<!-- <datalist id="clientes">
+									</datalist> -->
+								</div>
+								<div class="col form-group">
+									<label for="contactoCliente">Contacto <font color="#FF4136">*</font></label>
+									<select name="contactoCliente" id="contactoCliente" class="form-control form-control-sm select2" onchange="agregarcontacto()" required>
+										<option value="">Selecciona</option>
+									</select>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-3 form-group">
+									<label for="moneda">Moneda <font color="#FF4136">*</font></label>
+									<select id="moneda" name="moneda" class="form-control form-control-sm select2" required>
+										<option>
+											<option value="mxn" selected>MXN</option>
+											<option value="usd">USD</option>
+										</option>
+									</select>
+								</div>
+								<div class="col form-group">
+									<label for="comentarios">Comentarios</label>
+									<textarea name="comentarios" id="comentarios" class="form-control form-control-sm" cols="30" rows="3" placeholder="Opcional"></textarea>
 								</div>
 							</div>
 						</div>
+						<div class="modal-footer invoice-footer">
+							<button type="button" class="btn btn-lg btn-secondary" data-dismiss="modal">Cancelar</button>
+							<button type="submit" class="btn btn-lg btn-success">Hecho</button>
+						</div>
 					</div>
-				</form>
+				</div>
+			</div>
+		</form>
 
-		</main>
-	</div>
-</body>
-</html>
-
+	</header>
+	<?php include('../../enlacesjs.php'); ?>
 	<script>
-		$(document).on("ready", function(){
+		$(document).ready(function(){
+			App.init();
+	      	App.pageCalendar();
+	      	App.formElements();
+	      	App.uiNotifications();
 			listar();
 			guardar();
 			// eliminar();
@@ -144,56 +145,59 @@
 					{"data": "cantidad"},
 					{"data": "suma"},
 					{"data": "facturas"},
-					{"defaultContent": "<button class='verRemision btn btn-primary'><i class='fa fa-pencil-square-o' aria-hidden='true'></i></button>"}
+					{"defaultContent": "<div class='invoice-footer'><button class='verRemision btn btn-lg btn-primary'><i class='fas fa-edit fa-sm' aria-hidden='true'></i></button></div>"}
 				],
 				"language": idioma_espanol,
 				"dom":
-					"<'container-fluid row'<'row justify-content-center col-sm-4 buttons'B><'row justify-content-end col-sm-8 buttons'f>>" +
-					"<'container-fluid row'<'row justify-content-center col-sm-12 buttons'tr>>" +
-					"<'container-fluid row'<'row justify-content-center col-4 buttons'i><'row justify-content-end col-8 buttons'p>>",
+	    			"<'row be-datatable-header'<'col-sm-6'B><'col-sm-6 text-right'f>>" +
+	    			"<'row be-datatable-body'<'col-sm-12'tr>>" +
+	    			"<'row be-datatable-footer'<'col-sm-5'i><'col-sm-7'p>>",
 				"buttons":[
 		            {
-		                extend:    'pdfHtml5',
-		                text:      '<i class="fa fa-file-pdf-o"></i>',
-		                titleAttr: 'PDF',
-		                "className": "btn iconopdf",
-		                exportOptions: {
-                    			columns: [ 0, 1, 2, 3, 4, 5 ]
-            			},
-		            },
+			            extend: 'collection',
+			            text: 'Exportar tabla',
+			            "className": "btn btn-lg btn-space btn-secondary",
+			            buttons: [
+				                {
+				                  extend:    'excelHtml5',
+				                  text:      '<i class="fas fa-file-excel fa-lg"></i> Excel',
+				                  // "className": "btn btn-lg btn-space btn-secondary",
+				                  exportOptions: {
+				                    columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8 ]
+				                  }
+				                },
+				                {
+				                  extend: 'csv',
+				                  text: '<i class="fas fa-file-alt fa-lg"></i> Csv',
+				                  // "className": "btn btn-lg btn-space btn-secondary",
+				                  exportOptions: {
+				                          columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8 ]
+				                  }
+				                },
+				                {
+				                  extend:    'pdfHtml5',
+				                  text:      '<i class="fas fa-file-pdf fa-lg"></i> Pdf',
+				                  download: 'open',
+				                  // "className": "btn btn-lg btn-space btn-secondary",
+				                  exportOptions: {
+				                    columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8 ]
+				                  }
+				                },
+				                {
+				                  extend: 'print',
+				                  text: '<i class="fas fa-print fa-lg"></i> Imprimir',
+				                  header: 'false',
+				                  exportOptions: {
+				                          columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8 ]
+				                  },
+				                  orientation: 'landscape',
+				                  pageSize: 'LEGAL'
+				                }
+			            	]
+		          	},
 					{
-		                extend:    'excelHtml5',
-		                text:      '<i class="fa fa-file-excel-o"></i>',
-		                titleAttr: 'Excel',
-		                "className": "btn iconoexcel",
-		                exportOptions: {
-                    			columns: [ 0, 1, 2, 3, 4, 5 ]
-            			},
-		            },
-		            {
-		            	extend: 'csvHtml5',
-		            	text: '<i class="fa fa-file-text-o"></i>',
-		            	titleAttr: 'CSV',
-		            	"className": "btn iconocsv",
-		            	exportOptions: {
-                    			columns: [ 0, 1, 2, 3, 4, 5 ]
-            			},
-		            },
-		            {
-		            	extend: 'print',
-		            	text: '<i class="fa fa-print" aria-hidden="true"></i>',
-		            	titleAttr: 'Imprimir',
-		            	header: 'false',
-		            	exportOptions: {
-                    			columns: [ 0, 1, 2, 3, 4, 5 ]
-            			},
-            			"className": "btn iconoimprimir",
-            			orientation: 'landscape',
-            			pageSize: 'LEGAL'
-		            },
-					{
-						text: '<i id="toolTipNuevaCotizacion" class="fa fa-plus-circle" aria-hidden="true"></i> Remision',
-						"className": "btn btn-success btnNuevaCotizacion",
+						text: '<i class="fas fa-file fa-sm" aria-hidden="true"></i> Nueva remisión',
+						"className": "btn btn-lg btn-space btn-success",
 						action: function (e, dt, node, config){
 							$('#modalNuevaRemision').modal('show');
 						}
@@ -399,5 +403,7 @@
 		    }
 		}
 	</script>
+	<script type="text/javascript" src="<?php echo $ruta; ?>php/js/idioma_espanol.js"></script>
+	<script type="text/javascript" src="<?php echo $ruta; ?>php/js/mensajes_cambios.js"></script>
 </body>
 </html>

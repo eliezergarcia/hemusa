@@ -1,6 +1,6 @@
 /*!
  * beagle v1.4.0-prerelease (https://foxythemes.net)
- * Copyright 2018 Foxy Themes all rights reserved 
+ * Copyright 2018 Foxy Themes all rights reserved
  */
 
 :root {
@@ -7049,9 +7049,9 @@ a.text-grey:hover, a.text-grey:focus {
   visibility: hidden !important; }
 
 /* General styles for the modal */
-/* 
+/*
 Styles for the html/body for special modal where we want 3d effects
-Note that we need a container wrapping all content on the page for the 
+Note that we need a container wrapping all content on the page for the
 perspective effects (not including the modals and the overlay).
 */
 .modal-open {
@@ -14390,7 +14390,7 @@ address {
   padding: 10px 12px;
   font-size: 1.1538rem;
   transition: none;
-  height: 3.692rem; 
+  height: 3.692rem;
   border-radius: .30rem; }
 
 .form-control[multiple] {
@@ -14412,7 +14412,7 @@ textarea.form-control, select[multiple], select[size] {
 
 label {
   font-weight: 400;
-  font-size: 1rem;
+  font-size: 1.1rem;
   margin-bottom: 8px;
   color: #666666; }
 

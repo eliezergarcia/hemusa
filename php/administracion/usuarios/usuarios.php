@@ -5,7 +5,6 @@
 ?>
 <!DOCTYPE html>
 <html lang="es">
-<html>
 <head>
 	<title>Usuarios</title>
 	<?php include('../../enlacescss.php'); // Archivo en donde se encuentran los CSS y JS ?>
@@ -39,6 +38,16 @@
 												<th>Eliminar</th>
 											</tr>
 										</thead>
+										<tfoot>
+											<tr>
+												<th>Usuario</th>
+												<th>Nombre</th>
+												<th>Apellidos</th>
+												<th>Departamento</th>
+												<td></td>
+												<td></td>
+											</tr>
+										</tfoot>
 									</table>
                       		</div>
                     	</div>
@@ -51,7 +60,7 @@
 			<form id="frmRegistrarUsuario" action="" method="POST">
 				<input type="hidden" id="opcion" name="opcion" value="registrar">
 				<div class="modal fade colored-header colored-header-success" id="modalRegistrarUsuario" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
-					<div class="modal-dialog modal-lg" role="document">
+					<div class="modal-dialog" role="document">
 						<div class="modal-content">
 							<div class="modal-header">
 								<h4 class="modal-title" id="exampleModalLabel"><i class="fas fa-user-plus fa-sm" aria-hidden="true"></i><b> Registro de usuario</b></h4>
@@ -265,7 +274,7 @@
                     				<div class="mt-8 invoice-footer">
                       					<button type="button" class="btn btn-lg btn-secondary" data-dismiss="modal">Cancelar</button>
                       					<button type="submit" class="btn btn-lg btn-danger">Eliminar</button>
-                    				</div>	
+                    				</div>
                   				</div>
                 			</div>
 							<div class="modal-footer"></div>
@@ -279,18 +288,32 @@
 	<script>
 		$(document).ready(function(){
 			App.init();
-      		App.pageCalendar();       
-      		App.formElements();
-      		App.uiNotifications();
+	      	App.pageCalendar();
+	      	App.formElements();
+	      	App.uiNotifications();
 			listar(); // Función para listar la tabla de usuarios
 			guardar(); // Función para registrar, modificar y eliminar
 		});
 
+		$("#modalRegistrarUsuario").on("show.bs.modal", function(){
+			var opcion = "departamentos";
+			$.ajax({
+				method: "POST",
+				url: "buscar.php",
+				dataType: "json",
+				data: {"opcion": opcion},
+			}).done( function( data ){
+				var input = document.getElementById("departamento");
+				var awesomplete = new Awesomplete(input);
+				awesomplete.list = data.departamentos;
+			});
+		});
+
 		var  listar = function(data){ // DataTable de Usuarios
-			// $('#dt_usuarios tfoot th').each( function () {
-	  //   		var title = $(this).text();
-	  //   		$(this).html( '<input class="form-control form-control-sm" type="text" placeholder="Buscar '+ title +'" />' );
-	  // 		});
+			$('#dt_usuarios tfoot th').each( function () {
+	    		var title = $(this).text();
+	    		$(this).html( '<input class="form-control form-control-xs" type="text" placeholder="Buscar '+ title +'" />' );
+	  		});
 
 			var table = $("#dt_usuarios").DataTable({
 				"destroy": true,
@@ -310,9 +333,9 @@
 				"order":[[0, "asc"]],
 				"language": idioma_espanol,
 				"dom":
-          			"<'row be-datatable-header'<'col-sm-6'B><'col-sm-6 text-right'f>>" +
-          			"<'row be-datatable-body'<'col-sm-12'tr>>" +
-          			"<'row be-datatable-footer'<'col-sm-5'i><'col-sm-7'p>>",
+	    			"<'row be-datatable-header'<'col-sm-6 col-xs-12'B><'col-sm-6 col-xs-12 text-right'f>>" +
+	    			"<'row be-datatable-body'<'col-sm-12'tr>>" +
+	    			"<'row be-datatable-footer'<'col-sm-5 col-xs-12'i><'col-sm-7 col-xs-12'p>>",
 				"buttons":[
 		          {
 		            extend: 'collection',
@@ -446,31 +469,8 @@
 			$("form .disabled").attr("disabled", true);
 		}
 
-		var idioma_espanol = { // Se cambia el idioma del DT
-			"sProcessing":     "Procesando...",
-			"sLengthMenu":     "Mostrar _MENU_ registros",
-			"sZeroRecords":    "No se encontraron resultados",
-			"sEmptyTable":     "Ningún dato disponible en esta tabla",
-			"sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-			"sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
-			"sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
-			"sInfoPostFix":    "",
-			"sSearch":         "Buscar:",
-			"sUrl":            "",
-			"sInfoThousands":  ",",
-			"sLoadingRecords": "Cargando...",
-		    "oPaginate": {
-		        "sFirst":    "Primero",
-		        "sLast":     "Último",
-		        "sNext":     "Siguiente",
-		        "sPrevious": "Anterior"
-		    },
-		    "oAria": {
-		        "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
-		        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
-		    }
-		}
 	</script>
+	<script type="text/javascript" src="<?php echo $ruta; ?>php/js/idioma_espanol.js"></script>
 	<script type="text/javascript" src="<?php echo $ruta; ?>php/js/mensajes_cambios.js"></script>
 </body>
 </html>

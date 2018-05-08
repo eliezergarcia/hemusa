@@ -6,114 +6,115 @@
 <!DOCTYPE html>
 <head>
   <title>Embarques</title>
-  <?php include('../../enlaces.php'); ?>
+  <?php include('../../enlacescss.php'); ?>
 </head>
 <body>
 	<?php include('../../header.php'); ?>
-		<div class="page-content">
-			<!-- Breadcrumb -->
-				<nav aria-label="breadcrumb">
-					<ol class="breadcrumb">
-						<li class="breadcrumb-item">Facturación</li>
-						<li class="breadcrumb-item active">Embarques</li>
-					</ol>
-				</nav>
-
-			<!-- Encabezado -->
-				<div id="encabezado" class="row fondo">
-					<div class="col-sm-12">
-						<br><h1 class="text-center"><b>Lista de embarques</b></h1><br>
-					</div>
-				</div>
-
-			<!-- Mensaje actualizaciones-->
-				<div>
-					<center><h6 class="mensaje"></h6></center>
-				</div>
-
-			<!-- Tabla de embarques -->
-				<div class="">
-					<table id="dt_embarques" class="table table-bordered table-striped table-hover display compact" cellspacing="0" width="100%">
-						<thead>
-							<tr>
-								<th>Folio</th>
-								<th>Nombre cliente</th>
-								<th>Fecha</th>
-								<th>Contacto hemusa</th>
-								<th>Ver</th>
-							</tr>
-						</thead>
-					</table>
-				</div>
-
-			<!-- Modal Packing List -->
-				<form action="" method="POST">
-					<input type="hidden" name="opcion" id="opcion" value="crearembarque">
-					<input type="hidden" name="usuario" id="usuario" value="<?php echo $usuario." ".$usuarioApellido; ?>">
-					<div class="modal fade" id="modalNuevoEmbarque" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-						<div class="modal-dialog modal-lg" role="document">
-							<div class="modal-content">
-								<div class="modal-header">
-									<h5 class="modal-title" id="exampleModalLabel">Crear Embarque</h5>
-									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-										<span aria-hidden="true">&times;</span>
-									</button>
-								</div>
-								<div class="modal-body">
-									<div class="row">
-										<div class="col form-group">
-											<label for="folio">Folio <font color="#FF4136">*</font></label>
-											<input name="folio" id="folio" class="disabled form-control" disabled required>
-										</div>
-										<div class="col-6 form-group">
-											<label for="cliente" class="col-12">Cliente <font color="#FF4136">*</font></label>
-											<select placeholder="Busca un cliente" class="form-control col-12" data-min-length="1" list="clientes" id="cliente" name="cliente" type="text" onchange="partidasnuevoembarque()"  required >
-											</select>
-										</div>
-										<div class="col form-group">
-											<label for="peso">Peso <font color="#FF4136">*</font></label>
-											<input name="peso" id="peso" class="form-control" required>
-										</div>
-										<div class="col form-group">
-											<label for="dimensiones">Dimensiones <font color="#FF4136">*</font></label>
-											<input name="dimensiones" id="dimensiones" class="form-control" required>
-										</div>
+		<div class="be-content">
+          	<div class="page-head">
+              	<h2 class="page-head-title">Embarques</h2>
+              	<nav aria-label="breadcrumb" role="navigation">
+	                <ol class="breadcrumb page-head-nav">
+	                    <li class="breadcrumb-item"><a href="#">Facturación</a></li>
+	                    <li class="breadcrumb-item"><a href="#">Embarques</a></li>
+	                </ol>
+              	</nav>
+          	</div>
+          	<div class="main-content container-fluid">
+              	<div class="row full-calendar">
+                	<div class="col-lg-12">
+                    	<div class="card card-fullcalendar">
+                      		<div class="card-body">
+                          		<!-- Tabla de embarques -->
+									<div class="">
+										<table id="dt_embarques" class="table table-striped table-hover display compact" cellspacing="0" width="100%">
+											<thead>
+												<tr>
+													<th>Folio</th>
+													<th>Nombre cliente</th>
+													<th>Fecha</th>
+													<th>Contacto hemusa</th>
+													<th>Ver</th>
+												</tr>
+											</thead>
+										</table>
 									</div>
-									<div class="row">
-										<div class="col form-group">
-											<label for="observaciones">Observaciones</label>
-											<textarea name="observaciones" id="observaciones" class="form-control"></textarea>
-										</div>
+                      		</div>
+                    	</div>
+                	</div>
+            	</div>
+      		</div>
+    	</div>
+			
+		<!-- Modal Packing List -->
+			<form action="" method="POST">
+				<input type="hidden" name="opcion" id="opcion" value="crearembarque">
+				<input type="hidden" name="usuario" id="usuario" value="<?php echo $usuario." ".$usuarioApellido; ?>">
+				<div class="modal fade colored-header colored-header-success" id="modalNuevoEmbarque" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+					<div class="modal-dialog modal-lg" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="exampleModalLabel"><i class="fas fa-box"></i><b> Nuevo embarque</b></h5>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body">
+								<div class="row">
+									<div class="col form-group">
+										<label for="folio">Folio <font color="#FF4136">*</font></label>
+										<input name="folio" id="folio" class="disabled form-control form-control-sm" disabled required>
 									</div>
-									<table id="dt_crear_embarque" class="table table-bordered table-striped table-responsive display compact" cellspacing="0" width="100%">
-										<thead>
-											<tr>
-												<th>#</th>
-												<th>Marca</th>
-												<th>Modelo</th>
-												<th>Cantidad</th>
-												<th>Descripción</th>
-												<th>Quitar</th>
-											</tr>
-										</thead>
-									</table>
+									<div class="col-6 form-group">
+										<label for="cliente" class="col-12">Cliente <font color="#FF4136">*</font></label>
+										<select placeholder="Busca un cliente" class="form-control form-control-sm select2 col-12" data-min-length="1" list="clientes" id="cliente" name="cliente" type="text" onchange="partidasnuevoembarque()"  required >
+										</select>
+									</div>
+									<div class="col form-group">
+										<label for="peso">Peso <font color="#FF4136">*</font></label>
+										<input name="peso" id="peso" class="form-control form-control-sm" required>
+									</div>
+									<div class="col form-group">
+										<label for="dimensiones">Dimensiones <font color="#FF4136">*</font></label>
+										<input name="dimensiones" id="dimensiones" class="form-control form-control-sm" required>
+									</div>
 								</div>
-								<div class="modal-footer">
-									<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-									<button type="submit" class="btn btn-primary">Crear</button>
+								<div class="row">
+									<div class="col form-group">
+										<label for="observaciones">Observaciones</label>
+										<textarea name="observaciones" id="observaciones" class="form-control form-control-sm"></textarea>
+									</div>
 								</div>
+								<table id="dt_crear_embarque" class="table table-bordered table-striped table-responsive display compact" cellspacing="0" width="100%">
+									<thead>
+										<tr>
+											<th>#</th>
+											<th>Marca</th>
+											<th>Modelo</th>
+											<th>Cantidad</th>
+											<th>Descripción</th>
+											<th>Quitar</th>
+										</tr>
+									</thead>
+								</table>
+							</div>
+							<div class="modal-footer invoice-footer">
+								<button type="button" class="btn btn-lg btn-secondary" data-dismiss="modal">Cancelar</button>
+								<button type="submit" class="btn btn-lg btn-success">Hecho</button>
 							</div>
 						</div>
 					</div>
-				</form>
+				</div>
+			</form>
 
-		</main>
-	</div>
-</body>
-</html>
-
+	</header>
+	<?php include('../../enlacesjs.php'); ?>
 	<script>
-		$(document).on("ready", function(){
+		$(document).ready(function(){
+			App.init();
+	      	App.pageCalendar();
+	      	App.formElements();
+	      	App.uiNotifications();
 			listar();
 			guardar();
 		});
@@ -135,58 +136,60 @@
 					{"data":"nombreCliente"},
 					{"data":"fecha"},
 					{"data":"contactoHemusa"},
-					{"defaultContent": "<button class='verembarque btn btn-primary'><i class='fa fa-pencil-square-o' aria-hidden='true'></i></button>"}
+					{"defaultContent": "<div class='invoice-footer'><button class='verembarque btn btn-lg btn-primary'><i class='fas fa-edit' aria-hidden='true'></i></button></div>"}
 				],
 				"order": [[2, "desc"]],
 				"language": idioma_espanol,
 				"dom":
-					"<'container row col-10 row align-items-center'<'row justify-content-center col-6 buttons'B><'row justify-content-end col-6 buttons'f>>" +
-					"<'container row col-10 row'<'justify-content-center col-12 buttons'tr>>" +
-					"<'container row col-10 row'<'row justify-content-center col-12 buttons'i><'row justify-content-center col-12 buttons'p>>",
+	    			"<'row be-datatable-header'<'col-sm-6'B><'col-sm-6 text-right'f>>" +
+	    			"<'row be-datatable-body'<'col-sm-12'tr>>" +
+	    			"<'row be-datatable-footer'<'col-sm-5'i><'col-sm-7'p>>",
 				"buttons":[
 		            {
-		                extend:    'pdfHtml5',
-		                text:      '<i class="fa fa-file-pdf-o"></i>',
-		                titleAttr: 'PDF',
-		                download: 'open',
-		                "className": "btn iconopdf",
-		                exportOptions: {
-                    			columns: [ 0, 1, 2, 3 ]
-            			},
-		            },
-					{
-		                extend:    'excelHtml5',
-		                text:      '<i class="fa fa-file-excel-o"></i>',
-		                titleAttr: 'Excel',
-		                "className": "btn iconoexcel",
-		                exportOptions: {
-                    			columns: [ 0, 1, 2, 3 ]
-            			},
-		            },
-		            {
-		            	extend: 'csvHtml5',
-		            	text: '<i class="fa fa-file-text-o"></i>',
-		            	titleAttr: 'CSV',
-		            	"className": "btn iconocsv",
-		            	exportOptions: {
-                    			columns: [ 0, 1, 2, 3 ]
-            			},
-		            },
-		            {
-		            	extend: 'print',
-		            	text: '<i class="fa fa-print" aria-hidden="true"></i>',
-		            	titleAttr: 'Imprimir',
-		            	header: 'false',
-		            	exportOptions: {
-                    			columns: [ 0, 1, 2, 3 ]
-            			},
-            			"className": "btn iconoimprimir",
-            			orientation: 'landscape',
-            			pageSize: 'LEGAL'
-		            },
+			            extend: 'collection',
+			            text: 'Exportar tabla',
+			            "className": "btn btn-lg btn-space btn-secondary",
+			            buttons: [
+			                {
+			                  extend:    'excelHtml5',
+			                  text:      '<i class="fas fa-file-excel fa-lg"></i> Excel',
+			                  // "className": "btn btn-lg btn-space btn-secondary",
+			                  exportOptions: {
+			                    columns: [ 0, 1, 2, 3 ]
+			                  }
+			                },
+			                {
+			                  extend: 'csv',
+			                  text: '<i class="fas fa-file-alt fa-lg"></i> Csv',
+			                  // "className": "btn btn-lg btn-space btn-secondary",
+			                  exportOptions: {
+			                          columns: [ 0, 1, 2, 3 ]
+			                  }
+			                },
+			                {
+			                  extend:    'pdfHtml5',
+			                  text:      '<i class="fas fa-file-pdf fa-lg"></i> Pdf',
+			                  download: 'open',
+			                  // "className": "btn btn-lg btn-space btn-secondary",
+			                  exportOptions: {
+			                    columns: [ 0, 1, 2, 3 ]
+			                  }
+			                },
+			                {
+			                  extend: 'print',
+			                  text: '<i class="fas fa-print fa-lg"></i> Imprimir',
+			                  header: 'false',
+			                  exportOptions: {
+			                          columns: [ 0, 1, 2, 3 ]
+			                  },
+			                  orientation: 'landscape',
+			                  pageSize: 'LEGAL'
+			                }
+			            ]
+			          },
 					      {
-		                text: '<i id="toolTipNuevaCotizacion" class="fa fa-plus-circle" aria-hidden="true"></i> Embarque',
-		                "className": "btn btn-success btnNuevaCotizacion",
+		                text: '<i id="toolTipNuevaCotizacion" class="fas fa-box fa-sm" aria-hidden="true"></i> Nuevo embarque',
+		                "className": "btn btn-lg btn-space btn-success",
 		                action: function ( e, dt, node, config ) {
 		                	$('#modalNuevoEmbarque').modal('show');
 		                }
@@ -247,7 +250,7 @@
 					{"data": "modelo"},
 					{"data": "cantidad"},
 					{"data": "descripcion"},
-					{"defaultContent": "<button class='quitar btn btn-danger'><i class='fa fa-times' aria-hidden='true'></i></button>"}
+					{"defaultContent": "<div class='invoice-footer'><button class='quitar btn btn-lg btn-danger'><i class='fas fa-times fa-sm' aria-hidden='true'></i></button></div>"}
 				],
 				"order": false,
 		        "lengthChange": false,
@@ -256,9 +259,9 @@
 		        "ordering": false,
 		        "language": idioma_espanol,
 		        "dom":
-					"<'container row col-10 row'<'row justify-content-end col-12 buttons'f>>" +
-					"<'container row col-10 row'<'justify-content-center col-12 buttons'tr>>" +
-					"<'container row col-10 row'<'row justify-content-center col-4 buttons'i><'row justify-content-end col-8 buttons'p>>"
+	    			"<'row be-datatable-header'<'col-sm-6'B><'col-sm-6 text-right'f>>" +
+	    			"<'row be-datatable-body'<'col-sm-12'tr>>" +
+	    			"<'row be-datatable-footer'<'col-sm-5'i><'col-sm-7'p>>"
 			});
 
 			obtener_id_quitar("#dt_crear_embarque tbody", table, idcliente);
@@ -314,54 +317,8 @@
 			});
 		}
 
-		var mostrar_mensaje = function( informacion ){
-			var texto = "", color = "";
-			if( informacion.respuesta == "BIEN" ){
-				texto = "<strong>Bien!</strong> Se han guardado los cambios correctamente.";
-				color = "#379911";
-			}else if( informacion.respuesta == "ERROR"){
-				texto = "<strong>Error</strong>, no se ejecutó la consulta.";
-				color = "#C9302C";
-			}else if( informacion.respuesta == "EXISTE" ){
-				texto = "<strong>Información!</strong> el usuario ya existe.";
-				color = "#5b94c5";
-			}else if( informacion.respuesta == "VACIO" ){
-				texto = "<strong>Advertencia!</strong> debe llenar todos los campos solicitados.";
-				color = "#ddb11d";
-			}else if( informacion.respuesta == "OPCION_VACIA"){
-				texto = "<strong>Adbertencia!</strong> la opción no existe o esta vacía, recargar la página. ";
-				color = "#DDB11D";
-			}
-
-			$(".mensaje").html( texto ).css({"color": color });
-			$(".mensaje").fadeOut(3000, function(){
-			$(this).html("");
-			$(this).fadeIn(3000);
-			});
-		}
-
-		var idioma_espanol = {
-			"sProcessing":     "Procesando...",
-   			"sLengthMenu":     "Mostrar _MENU_ registros",
-    		"sZeroRecords":    "No se encontraron resultados",
-    		"sEmptyTable":     "Ningún dato disponible en esta tabla",
-    		"sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-    		"sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
-    		"sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
-    		"sInfoPostFix":    "",
-    		"sSearch":         "Buscar:",
-    		"sUrl":            "",
-    		"sInfoThousands":  ",",
-    		"sLoadingRecords": "Cargando...",
-		    "oPaginate": {
-		        "sFirst":    "Primero",
-		        "sLast":     "Último",
-		        "sNext":     "Siguiente",
-		        "sPrevious": "Anterior"
-		    },
-		    "oAria": {
-		        "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
-		        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
-		    }
-		}
 	</script>
+	<script type="text/javascript" src="<?php echo $ruta; ?>php/js/idioma_espanol.js"></script>
+	<script type="text/javascript" src="<?php echo $ruta; ?>php/js/mensajes_cambios.js"></script>
+</body>
+</html>

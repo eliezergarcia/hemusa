@@ -216,3 +216,35 @@ table tbody td:first-child{
 table tbody td:last-child{
   border-right: 1px solid #dee2e6;
 }
+
+table tbody tr:last-child{
+  border-bottom: 1px solid #dee2e6;
+}
+
+table tfoot th:first-child{
+  border-left: 1px solid #dee2e6;
+}
+
+table tfoot th:last-child{
+  border-right: 1px solid #dee2e6;
+}
+
+table tfoot td:nth-last-child(1n){
+  border-top: 0px;
+}
+
+table tfoot td:nth-last-child(2n){
+  border-top: 0px;
+}
+
+table tfoot td:last-child{
+  border-top: 0;
+  border-right: 1px solid #dee2e6;
+}
+
+.be-datatable-footer{
+  border-top: 0;
+  border-left: 1px solid #dee2e6;
+  border-right: 1px solid #dee2e6;
+  border-bottom: 1px solid #dee2e6;
+}

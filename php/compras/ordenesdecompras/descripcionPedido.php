@@ -1,7 +1,7 @@
-<?php 
+<?php
   require_once('../../conexion.php'); // Llamada a connect.php para establecer conexión con la BD
   require_once('../../sesion.php'); // Llamada a sesion.php para validar si hay sesión inciada
-  error_reporting(0);  
+  error_reporting(0);
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -15,13 +15,13 @@
       <div class="page-head">
           <h2 class="page-head-title">Descripción de pedido</h2>
           <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">             
+            <ol class="breadcrumb">
               <li class="breadcrumb-item">Compras</li>
               <li class="breadcrumb-item"><a id="toolTipVerCotizaciones" href="ordenesdecompras.php">Ordenes de compras</a></li>
               <li id="breadcrumb" class="breadcrumb-item" aria-current="page">
                 Orden de compra: <a id="toolTipVerCliente" href="<?php echo $ruta; ?>php/compras/ordenesdecompras/verOrdenCompra.php?ordenCompra="><?php echo $_REQUEST['ordenCompra']; ?></a>
               </li>
-              <li id="breadcrumb" class="breadcrumb-item active" aria-current="page">Descripción de Pedido</li>
+              <li id="breadcrumb" class="breadcrumb-item active" aria-current="page">Descripción de pedido</li>
             </ol>
           </nav>
       </div>
@@ -67,7 +67,7 @@
                               </tr>
                             </thead>
                           </table>
-                       
+
                         <!-- Tabla de Total -->
                           <br>
                           <table id="dt_totales_oc" class="table table-striped table-hover display compact" cellspacing="0" width="100%">
@@ -79,14 +79,14 @@
                                 <th>Utilidad</th>
                               </tr>
                             </thead>
-                          </table>                          
+                          </table>
                     </div>
                 </div>
             </div>
         </div>
       </div>
     </div>
-    
+
     <!-- Modal Editar Partida -->
       <form action="" method="POST" id="frmEditarPartida">
         <div class="modal fade colored-header colored-header-primary" id="modalEditarPartida" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -119,7 +119,7 @@
                     <div class="col row form-group justify-content-center">
                       <label for="entrada" class="col">Entrada:</label>
                       <input type="text" class="form-control form-control-sm col" name="entrada" id="entrada">
-                    </div>                    
+                    </div>
                   </div>
                 </div>
               </div>
@@ -130,7 +130,7 @@
             </div>
           </div>
         </div>
-      </form> 
+      </form>
 
     <!-- Modal Actualizar Datos -->
       <form action="" method="POST" id="frmActualizarDatos">
@@ -163,7 +163,7 @@
                     <div class="col row form-group justify-content-center">
                       <label for="entrada" class="col">Entrada:</label>
                       <input type="text" class="form-control form-control-sm col" name="entrada" id="entrada">
-                    </div>                    
+                    </div>
                   </div>
                 </div>
               </div>
@@ -174,33 +174,33 @@
             </div>
           </div>
         </div>
-      </form>               
-    
+      </form>
+
   </header>
   <?php include('../../enlacesjs.php'); ?>
   <script>
     $(document).ready(function(){
       App.init();
-      App.pageCalendar();       
+      App.pageCalendar();
       App.formElements();
       App.uiNotifications();
       var ordencompra = "<?php echo $_REQUEST['ordenCompra']; ?>";
       var opcion = "datosordencompra";
       listar_partidas(ordencompra);
-      listar_totales(ordencompra);     
-      guardar(ordencompra);     
+      listar_totales(ordencompra);
+      guardar(ordencompra);
     });
 
     var listar_partidas = function(ordencompra){
       var opcion = "partidasocdescripcion";
       var table = $("#dt_partidas_oc_descripcion").DataTable({
         "destroy":"true",
-        "bDeferRender": true, 
-        "scrollX": true,    
+        "bDeferRender": true,
+        "scrollX": true,
         "ajax":{
           "method":"POST",
           "url":"listar.php",
-          "data": {"opcion": opcion, "ordencompra": ordencompra} 
+          "data": {"opcion": opcion, "ordencompra": ordencompra}
         },
         "columns":[
           {"data":'indice'},
@@ -249,7 +249,7 @@
             "className": "btn btn-success btn-lg",
             action: function (e, dt, node, config){
               $("#modalActualizarDatos").modal("show");
-            }   
+            }
           }
         ]
       });
@@ -262,25 +262,26 @@
       console.log(ordencompra);
       var table = $("#dt_totales_oc").DataTable({
         "destroy":"true",
-        "bDeferRender": true,     
+        "bDeferRender": true,
         "ajax":{
           "method":"POST",
           "url":"listar.php",
-          "data": {"opcion": opcion, "ordencompra": ordencompra} 
+          "data": {"opcion": opcion, "ordencompra": ordencompra}
         },
         "columns":[
           {"data":"costo"},
           {"data":"flete"},
-          {"data":"venta"},        
+          {"data":"venta"},
           {"data":"utilidad"}
         ],
         "dom":
+          // "<'row be-datatable-header'<'col-sm-4'>>" +
           "<'row be-datatable-body'<'col-sm-4'tr>>",
         "searching": false,
         "info": false,
         "paging": false,
         "ordering": false
-      });      
+      });
     }
 
     var guardar = function(ordencompra){
@@ -302,7 +303,7 @@
             mostrar_mensaje(json_info);
             listar_partidas(ordencompra);
           });
-        }  
+        }
       });
     }
 

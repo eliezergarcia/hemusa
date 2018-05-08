@@ -1,9 +1,9 @@
-<?php 
-	if ($tipomenu == 1) {	
+<?php
+	if ($tipomenu == 1) {
 		echo '<header id="header-menu" class="be-wrapper be-fixed-sidebar be-color-header">';
 		echo '<nav id="nav-menu" class="navbar navbar-expand fixed-top be-top-header">';
 	}else if ($tipomenu == 2) {
-		echo '<header id="header-menu" class="be-wrapper be-collapsible-sidebar be-collapsible-sidebar-collapsed be-color-header">';	
+		echo '<header id="header-menu" class="be-wrapper be-collapsible-sidebar be-collapsible-sidebar-collapsed be-color-header">';
 		echo '<nav id="nav-menu" class="navbar navbar-expand fixed-top be-top-header">';
 	}else if ($tipomenu == 3){
 		echo '<div class="be-wrapper be-offcanvas-menu be-fixed-sidebar be-color-header">';
@@ -13,7 +13,7 @@
 	    <div class="container-fluid">
 	      <div class="be-navbar-header">
 	      <?php
-	      	if ($tipomenu == 3) {	
+	      	if ($tipomenu == 3) {
 	      		echo '<a href="#" class="nav-link be-toggle-left-sidebar"><span class="icon mdi mdi-menu" style="color: white;"></span></a>';
 	      	}
 	      ?>
@@ -22,7 +22,7 @@
 	      <div class="be-right-navbar">
 	        <ul class="nav navbar-nav float-right be-user-nav">
 	          <li class="nav-item dropdown"><a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle"><img src="<?php echo $ruta; ?>assets/img/eliezerhernandez.jpg" alt="Avatar"><span class="user-name"><?php echo $usuario." ".$usuarioApellido; ?></span></a>
-	            <div role="menu" class="dropdown-menu">     
+	            <div role="menu" class="dropdown-menu">
 	              <div class="user-info">
 	                <div class="user-name"><?php echo $usuario." ".$usuarioApellido; ?></div>
 	                <div class="user-position online">Disponible</div>
@@ -125,6 +125,24 @@
                       </li>
                     </ul>
                   </li>
+					<li class="parent"><a href="#"><i class="icon far fa-credit-card"></i><span>Créditos y cobranza</span></a>
+						<ul class="sub-menu">
+							<li><a href="<?php echo $ruta; ?>php/cobranza/pagos/pagos.php">Pagos de cliente</a>
+							</li>
+							<li><a href="<?php echo $ruta; ?>php/cobranza/pagos/pagosproveedor.php">Pagos de proveedor</a>
+							</li>
+						</ul>
+					</li>
+					<li class="parent"><a href="#"><i class="icon far fa-file-alt"></i><span>Facturación</span></a>
+						<ul class="sub-menu">
+							<li><a href="<?php echo $ruta; ?>php/ventas/remisiones/remisiones.php">Remisiones</a>
+							</li>
+							<li><a href="<?php echo $ruta; ?>php/ventas/embarques/embarques.php">Embarques</a>
+							</li>
+							<li><a href="<?php echo $ruta; ?>php/facturacion/facturas/facturas.php">Facturas</a>
+							</li>
+						</ul>
+					</li>
 	              <li class="parent"><a href="#"><i class="icon fas fa-unlock-alt"></i><span>Administración</span></a>
                     <ul class="sub-menu">
                       <li><a href="<?php echo $ruta; ?>php/administracion/usuarios/usuarios.php">Usuarios</a>
@@ -132,7 +150,7 @@
                       <li><a href="<?php echo $ruta; ?>php/administracion/marcas/marcas.php">Marcas</a>
                       </li>
                     </ul>
-                  </li>	              
+                  </li>
 	              <li class="divider">Features</li>
 	              <li class="parent"><a href="#"><i class="icon fas fa-envelope"></i><span>Email</span></a>
 	                <ul class="sub-menu">
