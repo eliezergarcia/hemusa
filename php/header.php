@@ -17,7 +17,7 @@
 	      		echo '<a href="#" class="nav-link be-toggle-left-sidebar"><span class="icon mdi mdi-menu" style="color: white;"></span></a>';
 	      	}
 	      ?>
-	      	<a href="<?php echo $ruta;?>php/inicio/inicio.php">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="<?php echo $ruta; ?>media/images/logo_hemusa.png" alt="logo" width="160" height="60" class="logo-img"></a>
+	      	<a href="<?php echo $ruta;?>php/inicio/calendario/inicio.php">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="<?php echo $ruta; ?>media/images/logo_hemusa.png" alt="logo" width="160" height="60" class="logo-img"></a>
 	      </div>
 	      <div class="be-right-navbar">
 	        <ul class="nav navbar-nav float-right be-user-nav">
@@ -68,7 +68,7 @@
 	              </li>
 	            </ul>
 	          </li>
-	           <li class="nav-item dropdown"><a href="#" role="button" aria-expanded="false" class="nav-link be-toggle-right-sidebar"><span class="icon mdi mdi-comments"></span></a></li>
+	           <li class="nav-item dropdown"><a href="#" role="button" aria-expanded="false" class="nav-link be-toggle-right-sidebar"><span id='listar-contactos-chat' class="icon mdi mdi-comments"></span></a></li>
 	          <li class="nav-item dropdown"><a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle"><span class="icon mdi mdi-apps"></span></a>
 	            <ul class="dropdown-menu be-connections">
 	              <li>
@@ -101,7 +101,7 @@
 	          <div class="left-sidebar-content">
 	            <ul class="sidebar-elements">
 	              <li class="divider">Menu</li>
-	              <li class=""><a href="<?php echo $ruta; ?>php/inicio/inicio.php"><i class="icon fas fa-home"></i><span>Inicio</span></a>
+	              <li class=""><a href="<?php echo $ruta; ?>php/inicio/calendario/inicio.php"><i class="icon fas fa-home"></i><span>Inicio</span></a>
 	              </li>
 	              <li class="parent"><a href="#"><i class="icon fas fa-dollar-sign"></i><span>Ventas</span></a>
                     <ul class="sub-menu">
@@ -263,45 +263,46 @@
                   <div class="be-scroller">
                     <div class="content">
                       <h2>Nuevos mensajes</h2>
-                      <div class="contact-list contact-list-recent">
-                        <div class="user"><a href="#"><img src="<?php echo $ruta; ?>assets/img/avatar1.png" alt="Avatar">
+                      <div id="lista-reciente" class="contact-list contact-list-recent">
+                        <!-- <div class="user"><a href="#"><img src="<?php echo $ruta; ?>assets/img/avatar1.png" alt="Avatar">
                             <div class="user-data"><span class="status away"></span><span class="name">Claire Sassu</span><span class="message">Can you share the...</span></div></a></div>
                         <div class="user"><a href="#"><img src="<?php echo $ruta; ?>assets/img/avatar2.png" alt="Avatar">
                             <div class="user-data"><span class="status"></span><span class="name">Maggie jackson</span><span class="message">I confirmed the info.</span></div></a></div>
                         <div class="user"><a href="#"><img src="<?php echo $ruta; ?>assets/img/avatar3.png" alt="Avatar">
-                            <div class="user-data"><span class="status offline"></span><span class="name">Joel King		</span><span class="message">Ready for the meeti...</span></div></a></div>
+                            <div class="user-data"><span class="status offline"></span><span class="name">Joel King		</span><span class="message">Ready for the meeti...</span></div></a></div> -->
                       </div>
                       <h2>Contactos</h2>
-                      <div class="contact-list">
-                        <?php 
+                      <div id="lista-contactos" class="contact-list">
+                        <!-- <?php
                             $query = "SELECT * FROM usuarios";
                             $resultado = mysqli_query($conexion_usuarios, $query);
                             while($data = mysqli_fetch_assoc($resultado)){
                         ?>
                             <div class="user"><a href="#"><img src="<?php echo $ruta; ?>assets/img/avatar4.png" alt="Avatar">
-                            <div class="user-data2"><span class="status"></span><span class="name"><?php echo $data['nombre']." ".$data["apellidos"]; ?></span></div></a></div> 
+                            <div class="user-data2"><span class="status"></span><span class="name"><?php echo $data['nombre']." ".$data["apellidos"]; ?></span></div></a></div>
                         <?php
                             }
-                        ?>
+                        ?> -->
                       </div>
                     </div>
                   </div>
                 </div>
                 <div class="bottom-input">
+									<input type="hidden" name="idcontacto" id="idcontacto" value="">
                   <input type="text" placeholder="Search..." name="q"><span class="mdi mdi-search"></span>
                 </div>
               </div>
               <div class="chat-window">
-                <div class="title">
-                  <div class="user"><img src="assets/img/avatar2.png" alt="Avatar">
+                <div id="contacto-title" class="title">
+                  <!-- <div class="user"><img src="assets/img/avatar2.png" alt="Avatar">
                     <h2>Maggie jackson</h2><span>Active 1h ago</span>
-                  </div><span class="icon return mdi mdi-chevron-left"></span>
+                  </div><span class="icon return mdi mdi-chevron-left"></span> -->
                 </div>
                 <div class="chat-messages">
                   <div class="be-scroller">
                     <div class="content">
-                      <ul>
-                        <li class="friend">
+                      <ul id="mensajes-chat">
+                        <!-- <li class="friend">
                           <div class="msg">Hello</div>
                         </li>
                         <li class="self">
@@ -315,16 +316,20 @@
                         </li>
                         <li class="friend">
                           <div class="msg">I don't know it just turns off suddenly</div>
-                        </li>
+                        </li> -->
                       </ul>
                     </div>
                   </div>
                 </div>
+								<form class="frmEnviarMensaje" action="#" method="post">
                 <div class="chat-input">
-                  <div class="input-wrapper"><span class="photo mdi mdi-camera"></span>
-                    <input type="text" placeholder="Message..." name="q" autocomplete="off"><span class="send-msg mdi mdi-mail-send"></span>
+                  <div class="input-wrapper">
+											<span class="photo mdi mdi-camera"></span>
+											<input type="text" placeholder="Mensaje..." name="mensajeusuario" id="mensajeusuario">
+											<span id="enviarmensaje" class="mdi mdi-mail-send"></span>
                   </div>
                 </div>
+							</form>
               </div>
             </div>
             <div id="tab2" role="tabpanel" class="tab-pane tab-todo">

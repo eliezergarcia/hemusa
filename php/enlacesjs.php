@@ -1,5 +1,5 @@
 <script src="<?php echo $ruta; ?>assets/lib/jquery/jquery.js" type="text/javascript"></script>
-<script src="<?php echo $ruta; ?>php/js/awesomplete.min.js" type="text/javascript" async></script> 
+<script src="<?php echo $ruta; ?>php/js/awesomplete.min.js" type="text/javascript" async></script>
 <script src="<?php echo $ruta; ?>assets/lib/jquery-ui/jquery-ui.min.js" type="text/javascript"></script>
 <script src="<?php echo $ruta; ?>assets/lib/perfect-scrollbar/js/perfect-scrollbar.jquery.min.js" type="text/javascript"></script>
 <script src="<?php echo $ruta; ?>assets/lib/bootstrap/dist/js/bootstrap.bundle.min.js" type="text/javascript"></script>
@@ -42,7 +42,7 @@
 <script src="<?php echo $ruta; ?>assets/js/app-tables-datatables.js" type="text/javascript"></script>
 <script src="<?php echo $ruta; ?>php/js/pdfmake.min.js"></script>
 <script src="<?php echo $ruta; ?>php/js/jszip.min.js"></script>
-<script src="<?php echo $ruta; ?>php/js/vfs_fonts.js"></script> 
-<script src="<?php echo $ruta; ?>php/js/jspdf.min.js"></script> 
-<script src="<?php echo $ruta; ?>php/js/jspdf.plugin.autotable.js"></script> 
-<script src="<?php echo $ruta; ?>php/js/app-chat.js"></script> 
+<script src="<?php echo $ruta; ?>php/js/vfs_fonts.js"></script>
+<script src="<?php echo $ruta; ?>php/js/jspdf.min.js"></script>
+<script src="<?php echo $ruta; ?>php/js/jspdf.plugin.autotable.js"></script>
+<script src="<?php echo $ruta; ?>assets/js/app-chat.js"></script> 

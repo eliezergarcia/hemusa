@@ -1,5 +1,5 @@
-<?php 
-  require_once('php/conexion.php');   
+<?php
+  require_once('php/conexion.php');
 
   if (!isset($_SESSION)) {
     session_start();
@@ -15,29 +15,29 @@
     $loginUsername = $_POST['user'];
     $password = $_POST['password'];
     $MM_fldUserAuthorization = "";
-    $MM_redirectLoginSuccess = "php/inicio/inicio.php";
+    $MM_redirectLoginSuccess = "php/inicio/calendario/inicio.php";
     $MM_redirectLoginFailed = "index.php";
     $MM_redirecttoReferrer = false;
 
     mysqli_select_db($conexion_usuarios, $database_conexion_usuarios);
-  
-    $LoginRS__query=sprintf("SELECT user, password FROM usuarios WHERE user='%s' AND password='%s'", get_magic_quotes_gpc() ? 
-      $loginUsername : addslashes($loginUsername), get_magic_quotes_gpc() ? $password : addslashes($password)); 
-   
+
+    $LoginRS__query=sprintf("SELECT user, password FROM usuarios WHERE user='%s' AND password='%s'", get_magic_quotes_gpc() ?
+      $loginUsername : addslashes($loginUsername), get_magic_quotes_gpc() ? $password : addslashes($password));
+
     $LoginRS = mysqli_query($conexion_usuarios, $LoginRS__query) or die(mysqli_error());
 
     $loginFoundUser = mysqli_num_rows($LoginRS);
 
     if ($loginFoundUser) {
       $loginStrGroup = "";
-      
+
       //declare two session variables and assign them
       $_SESSION['MM_Username'] = $loginUsername;
-      $_SESSION['MM_UserGroup'] = $loginStrGroup;       
+      $_SESSION['MM_UserGroup'] = $loginStrGroup;
 
       if (isset($_SESSION['PrevUrl']) && false) {
 
-        $MM_redirectLoginSuccess = $_SESSION['PrevUrl'];  
+        $MM_redirectLoginSuccess = $_SESSION['PrevUrl'];
       }
 
       header("Location: " . $MM_redirectLoginSuccess );
@@ -108,8 +108,7 @@
         //initialize the javascript
         App.init();
       });
-      
+
     </script>
   </body>
 </html>
-

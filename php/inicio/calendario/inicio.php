@@ -1,6 +1,6 @@
 <?php
-  require_once('../conexion.php'); // Llamada a connect.php para establecer conexión con la BD
-  require_once('../sesion.php'); // Llamada a sesion.php para validar si hay sesión inciada
+  require_once('../../conexion.php'); // Llamada a connect.php para establecer conexión con la BD
+  require_once('../../sesion.php'); // Llamada a sesion.php para validar si hay sesión inciada
   error_reporting(0);
 ?>
 
@@ -8,10 +8,10 @@
 <html lang="es">
 <head>
   	<title>Inicio</title>
-  	<?php include('../enlacescss.php'); ?>
+  	<?php include('../../enlacescss.php'); ?>
 </head>
 <body id="body-menu" class="">
-  	<?php include('../header.php'); ?>
+  	<?php include('../../header.php'); ?>
 	  	<div class="be-content">
 	        <div class="page-head">
 	          	<h2 class="page-head-title">Calendario</h2>
@@ -182,7 +182,7 @@
 	    	</div>
 
 	</header>
-	<?php include('../enlacesjs.php'); ?>
+	<?php include('../../enlacesjs.php'); ?>
 	<script type="text/javascript">
 		$.fn.niftyModal('setDefaults',{
 	      	overlaySelector: '.modal-overlay',
@@ -196,6 +196,7 @@
       App.pageCalendar();
       App.formElements();
       App.uiNotifications();
+      App.chat();
 			buscar_tipo_cambio();
 			listar_calendario();
 		});

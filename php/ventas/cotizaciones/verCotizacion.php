@@ -51,7 +51,7 @@
               	<div class="row full-calendar">
                 	<div class="col-lg-12">
                     	<div class="card card-fullcalendar">
-                      		<div class="card-body">                        			
+                      		<div class="card-body">
 								<!-- Encabezado -->
 									<br>
 									<div class="row align-items-start justify-content-around">
@@ -91,7 +91,7 @@
 											</div>
 										</div>
 									</div>
-									<hr>						
+									<hr>
 
 								<!-- Tabla Partidas de Cotizacion -->
 									<input id="numeroCotizacion" type="hidden" value="<?php echo $numero; ?>">
@@ -175,7 +175,7 @@
 				        		<h5 class="modal-title" id="modalPedidoExample"><i class="fas fa-check-square fa-sm" aria-hidden="true"></i><b> Crear pedido</b></h5>
 				        		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
 				        		</button>
-				      		</div>	
+				      		</div>
 
 				      		<div class="modal-body">
 				      			<h4>Selecciona las partidas para cambiar a pedido e ingresa el pedido del cliente.</h4>
@@ -193,14 +193,14 @@
 					      					</tr>
 					      				</thead>
 					      			</table>
-				      				
+
 				      			</div>
 				      			<br>
 				      			<div class="row justify-content-end">
 				      				<div class="form-group col-4">
 				      					<label for="">No. de Pedido</label>
 				      					<input type="text" id="numeroPedido" name="numeroPedido" class="form-control form-control-sm">
-				      				</div>				      			
+				      				</div>
 				      			</div>
 			        		</div>
 				      		<div class="modal-footer invoice-footer">
@@ -617,9 +617,9 @@
 
 		$(document).ready(function(){
 			App.init();
-      		App.pageCalendar();       
-      		App.formElements();
-      		App.uiNotifications();	
+  		App.pageCalendar();
+  		App.formElements();
+  		App.uiNotifications();
 			var refCotizacion = "<?php echo $_REQUEST['numero']; ?>";
 			guardar();
 			buscarClasCliente(refCotizacion);
@@ -2004,7 +2004,7 @@
 	        document.getElementById("valorAmericano").disabled = true;
 	        document.getElementById("valorOtro").disabled = false;
 	        document.getElementById("valorNinguno").disabled = true;
-		}	
+		}
 	</script>
 	<script src="<?php echo $ruta; ?>/php/js/idioma_espanol.js"></script>
 	<script src="<?php echo $ruta; ?>/php/js/mensajes_cambios.js"></script>
