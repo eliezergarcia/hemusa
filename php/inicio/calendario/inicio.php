@@ -13,7 +13,7 @@
 <body id="body-menu" class="">
   	<?php include('../../header.php'); ?>
 	  	<div class="be-content">
-	        <div class="page-head">
+	        <!-- <div class="page-head">
 	          	<h2 class="page-head-title">Calendario</h2>
 	          	<nav aria-label="breadcrumb" role="navigation">
 		            <ol class="breadcrumb page-head-nav">
@@ -21,7 +21,7 @@
 		              	<li class="breadcrumb-item"><a href="#">Calendario</a></li>
 		            </ol>
 	          	</nav>
-	        </div>
+	        </div> -->
 	        <!-- <div class="col-2">
 		        <select id="menu" name="menu" class="form-control form-control-sm select2">
 		        	<option value="1">Barra completa</option>
@@ -146,57 +146,49 @@
 	    	</div>
 
 		<!-- Modal Tipo de Cambiio -->
-			<div id="modalTipoCambio" tabindex="-1" role="dialog" class="modal fade" data-backdrop="static" data-keyboard="false">
-	      		<div class="modal-dialog">
+			<div id="modalTipoCambio" class="modal fade" data-backdrop="static" data-keyboard="false">
+	      		<div class="modal-dialog modal-full-color modal-full-color-warning">
 			        <div class="modal-content">
-			          	<div class="modal-header">
-			          	</div>
+                  <div class="modal-header">
+                  </div>
 			          	<div class="modal-body">
 			            	<div class="text-center">
-			            		<form action="#" method="POST">
-				              		<div class="text-warning"><span class="modal-main-icon mdi mdi-alert-triangle"></span></div>
-				              		<h2>Advertencia!</h2>
+                      <div class="text-center"><span class="modal-main-icon mdi mdi-alert-triangle"></span>
+				              		<h2><b>Aviso!</b></h2>
 				              		<h4>No se ha ingresado el tipo de cambio del día.<br>Puedes ingresar al siguiente link para obtenerlo:
 				              			<?php
-											$dia = date("d");
-											$mes = date("m");
-											$año = date("Y");
-											$diario = "http://dof.gob.mx/indicadores_detalle.php?cod_tipo_indicador=158&dfecha=".$dia."%2F".$mes."%2F".$año."&hfecha=".$dia."%2F".$mes."%2F".$año;
-										?>
-				              			<a href="<?php echo $diario; ?>" target="_blank">Diario Oficial</a>
+        											$dia = date("d");
+        											$mes = date("m");
+        											$año = date("Y");
+        											$diario = "http://dof.gob.mx/indicadores_detalle.php?cod_tipo_indicador=158&dfecha=".$dia."%2F".$mes."%2F".$año."&hfecha=".$dia."%2F".$mes."%2F".$año;
+        										?>
+				              			<a href="<?php echo $diario; ?>" target="_blank" style="color: white; text-decoration: underline;">'Diario Oficial'</a>
 				              		</h4>
 				              		<br>
+                          <form action="#" method="POST">
 				              		<div class="row justify-content-center">
 				              			<input id="opcion" name="opcion" type="hidden" value="tipocambio">
 				              			<input id="tipocambio" name="tipocambio" type="text" class="form-control form-control-sm col-lg-3" required>
 				              		</div>
 				              		<div class="mt-8">
 				                		<button type="submit" class="btn btn-space btn-warning btn-lg">Guardar</button>
+                            </form>
 				              		</div>
-				              	</form>
 			            	</div>
 			          	</div>
 			        <div class="modal-footer"></div>
 			        </div>
 	      		</div>
 	    	</div>
-
 	</header>
 	<?php include('../../enlacesjs.php'); ?>
 	<script type="text/javascript">
-		$.fn.niftyModal('setDefaults',{
-	      	overlaySelector: '.modal-overlay',
-	      	contentSelector: '.modal-content',
-	      	closeSelector: '.modal-close',
-	      	classAddAfterOpen: 'modal-show'
-	    });
-
 		$(document).ready(function() {
-			App.init();
       App.pageCalendar();
       App.formElements();
       App.uiNotifications();
       App.chat();
+      App.init();
 			buscar_tipo_cambio();
 			listar_calendario();
 		});
@@ -225,8 +217,6 @@
 
 
 		var buscar_tipo_cambio = function(){
-			var usuario = "<?php echo $usuario.' '.$usuarioApellido; ?>";
-			var departamento = "<?php echo $departamento_usuario; ?>";
 			var opcion = "tipocambio";
 			$.ajax({
 				method: "POST",
@@ -238,18 +228,10 @@
 				if (info.respuesta == "BIEN") {
 					guardar();
 					listar_calendario(usuario, departamento);
-					// buscar_pendientes();
-					// buscar_notificaciones();
-					// guardar_notificacion();
-					// buscar_oc_pendientes();
-					// setInterval(buscar_oc_pendientes, 3000);
-					// setInterval(buscar_pendientes, 60000);
-					// setInterval(buscar_notificaciones, 60000);
 				}else{
 					guardar();
 					$("#modalTipoCambio").modal("show");
 				}
-
 			});
 		}
 
@@ -439,6 +421,5 @@
 			});
 		}
 	</script>
-	<!-- <script src="<?php echo $ruta; ?>/php/js/notificaciones.js"></script> -->
 </body>
 </html>

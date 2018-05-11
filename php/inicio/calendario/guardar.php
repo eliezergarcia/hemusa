@@ -1,5 +1,5 @@
-<?php 	
-	include("../conexion.php");
+<?php
+	include("../../conexion.php");
 
 	$opcion = $_POST['opcion'];
 

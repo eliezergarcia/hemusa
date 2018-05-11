@@ -15,7 +15,6 @@
 <script src="<?php echo $ruta; ?>assets/lib/select2/js/select2.min.js" type="text/javascript"></script>
 <script src="<?php echo $ruta; ?>assets/lib/select2/js/select2.full.min.js" type="text/javascript"></script>
 <script src="<?php echo $ruta; ?>assets/js/app-icons.js" type="text/javascript"></script>
-<script src="<?php echo $ruta; ?>assets/lib/jquery.niftymodals/dist/jquery.niftymodals.js" type="text/javascript"></script>
 <script src="<?php echo $ruta; ?>assets/lib/jquery.gritter/js/jquery.gritter.js" type="text/javascript"></script>
 <script src="<?php echo $ruta; ?>assets/js/app-ui-notifications.js" type="text/javascript"></script>
 <script src="<?php echo $ruta; ?>assets/lib/jquery.fullcalendar/fullcalendar.min.js" type="text/javascript"></script>
@@ -45,4 +44,5 @@
 <script src="<?php echo $ruta; ?>php/js/vfs_fonts.js"></script>
 <script src="<?php echo $ruta; ?>php/js/jspdf.min.js"></script>
 <script src="<?php echo $ruta; ?>php/js/jspdf.plugin.autotable.js"></script>
-<script src="<?php echo $ruta; ?>assets/js/app-chat.js"></script> 
+<script src="<?php echo $ruta; ?>assets/js/app-chat.js"></script>
+<script src="<?php echo $ruta; ?>assets/lib/jquery.niftymodals/dist/jquery.niftymodals.js" type="text/javascript"></script>

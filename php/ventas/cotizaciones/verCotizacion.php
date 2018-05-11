@@ -172,7 +172,7 @@
 				  	<div class="modal-dialog modal-lg" role="document">
 				    	<div class="modal-content">
 				      		<div class="modal-header">
-				        		<h5 class="modal-title" id="modalPedidoExample"><i class="fas fa-check-square fa-sm" aria-hidden="true"></i><b> Crear pedido</b></h5>
+				        		<h4 class="modal-title" id="modalPedidoExample"><i class="fas fa-check-square fa-sm" aria-hidden="true"></i> Creación de pedido</h4>
 				        		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
 				        		</button>
 				      		</div>
@@ -220,7 +220,7 @@
 				  	<div class="modal-dialog" role="document">
 				    	<div class="modal-content">
 				      		<div class="modal-header">
-				        		<h5 class="modal-title" id="tituloEditarPartida"><b>Clasificación de cliente</b></h5>
+				        		<h4 class="modal-title" id="tituloEditarPartida">Clasificación de cliente</h4>
 				        		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
 				        		</button>
 				      		</div>
@@ -260,7 +260,7 @@
 				  	<div class="modal-dialog" role="document">
 				    	<div class="modal-content">
 				      		<div class="modal-header">
-				        		<h5 class="modal-title" id="modalAgregarLabel"><i class="fas fa-truck fa-sm" aria-hidden="true"></i><b> Agregar Flete</b></h5>
+				        		<h4 class="modal-title" id="modalAgregarLabel"><i class="fas fa-truck fa-sm" aria-hidden="true"></i> Agregar Flete</h4>
 				        		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
 				        		</button>
 				      		</div>
@@ -292,7 +292,7 @@
 				  	<div class="modal-dialog" role="document">
 				    	<div class="modal-content">
 				      		<div class="modal-header">
-				        		<h5 class="modal-title" id="modalAgregarLabel"><i class="fas fa-edit fa-sm" aria-hidden="true"></i> <b>Editar Flete</b></h5>
+				        		<h4 class="modal-title" id="modalAgregarLabel"><i class="fas fa-edit fa-sm" aria-hidden="true"></i> Información de flete</h4>
 				        		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
 				        		</button>
 				      		</div>
@@ -328,7 +328,7 @@
 				      		<div class="modal-body">
 				      			<div class="text-center">
 				      				<div class="text-center"><span class="modal-main-icon mdi mdi-close-circle-o"></span></div>
-                    				<h4><b>¿Está seguro de eliminar el flete?</b></h4>
+                    				<h4>¿Está seguro de eliminar el flete?</h4>
                     				<br>
                     				<div class="row justify-content-center">
 						      			<fieldset disabled>
@@ -359,7 +359,7 @@
 				  	<div class="modal-dialog modal-lg" role="document">
 				    	<div class="modal-content">
 				      		<div class="modal-header">
-				        		<h5 class="modal-title" id="exampleModalLabel"><i class="fas fa-wrench fa-sm" aria-hidden="true"></i><b> Buscar Herramienta</b></h5>
+				        		<h4 class="modal-title" id="exampleModalLabel"><i class="fas fa-wrench fa-sm" aria-hidden="true"></i> Buscar Herramienta</h4>
 				        		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
 				        		</button>
 				      		</div>
@@ -476,7 +476,7 @@
 				      		<div class="modal-body">
 				      			<div class="text-center">
 				      				<div class="text-center"><span class="modal-main-icon mdi mdi-close-circle-o"></span></div>
-                    				<h4><b>¿Está seguro de eliminar la partida?</b></h4>
+                    				<h4>¿Está seguro de eliminar la partida?</h4>
                     				<div class="row justify-content-center">
                     					<div class="form-group col-6">
 				        					<label style="color: white;">Marca</label>
@@ -537,7 +537,7 @@
 				  	<div class="modal-dialog modal-lg" role="document">
 				    	<div class="modal-content">
 				      		<div class="modal-header">
-				        		<h5 class="modal-title" id="tituloEditarPartida"><i class="fas fa-edit fa-sm" aria-hidden="true"></i><b> Editar Partida</b></h5>
+				        		<h4 class="modal-title" id="tituloEditarPartida"><i class="fas fa-edit fa-sm" aria-hidden="true"></i> Información de partida</h4>
 				        		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
 				        		</button>
 				      		</div>
@@ -1142,32 +1142,32 @@
 				"buttons":[
 					{
 						extend: 'collection',
-						text: 'Exportar cotización',
+						text: '<i class="fas fa-file-alt fa-sm"></i> Exportar cotización',
 						"className": "btn btn-lg btn-space btn-secondary",
 						buttons: [
 							{
-								text:      'PDF',
+								text:      '<i class="fas fa-file-pdf fa-sm"></i> PDF',
 								// "className": "btn btn-secondary btn-big color-blanco",
 								action: function ( e, dt, node, config ) {
 									genPDF2();
 								}
 							},
 							{
-								text:      'Imprimir',
+								text: '<i class="fas fa-print fa-sm"></i> Imprimir',
 								// "className": "btn btn-secondary btn-big",
 								action: function ( e, dt, node, config ) {
 									imprimirPDF2();
 								}
 							},
 							{
-								text:      'PDF Completo',
+								text:      '<i class="fas fa-file-pdf fa-sm"></i> PDF Completo',
 								// "className": "btn btn-secondary btn-big color-blanco",
 								action: function ( e, dt, node, config ) {
 									genPDF();
 								}
 							},
 							{
-								text:      'Imprimir Completo',
+								text:      '<i class="fas fa-print fa-sm"></i> Imprimir Completo',
 								// "className": "btn btn-secondary btn-big",
 								action: function ( e, dt, node, config ) {
 									imprimirPDF();
@@ -1176,21 +1176,21 @@
 						]
 					},
 					{
-						text: '<i class="fas fa-truck fa-sm" aria-hidden="true" style="color:white"></i> Agregar flete',
-						"className": "btn btn-success btn-lg btn-space",
+						text: '<i class="fas fa-truck fa-sm" aria-hidden="true"></i> Agregar flete',
+						"className": "btn btn-secondary btn-lg btn-space",
 						action: function ( e, dt, node, config ) {
 							$('#modalAgregarFlete').modal('show');
 						}
 					},
 					{
-						text: '<i class="fas fa-wrench fa-sm" aria-hidden="true" style="color:white"></i> Agregar partida',
-						"className": "btn btn-success btn-lg btn-space",
+						text: '<i class="fas fa-wrench fa-sm" aria-hidden="true"></i> Agregar partida',
+						"className": "btn btn-secondary btn-lg btn-space",
 						action: function ( e, dt, node, config ) {
 							$('#modalAgregarPartida').modal('show');
 						}
 					},
 					{
-						text: '<i class="fas fa-check-square fa-sm" aria-hidden="true" style="color:white"></i> Crear pedido',
+						text: '<i class="fas fa-check-square fa-sm" aria-hidden="true"></i> Generar pedido',
 						"className": "btn btn-primary btn-lg btn-space",
 						action: function ( e, dt, node, config ) {
 							$('#modalCambiarPedido').modal('show');

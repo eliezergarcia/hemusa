@@ -115,7 +115,7 @@
           <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel"><i class="icon fas fa-shopping-cart"></i> <b>Nueva orden de compra</b></h5>
+                  <h4 class="modal-title" id="exampleModalLabel"><i class="icon fas fa-shopping-cart"></i> Nueva orden de compra</h4>
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                       <span aria-hidden="true">&times;</span>
                   </button>
@@ -190,9 +190,9 @@
     //   buscar_oc_pendientes();
 		  // setInterval(buscar_oc_pendientes, 3000);
       App.init();
-      App.pageCalendar();       
+      App.pageCalendar();
       App.formElements();
-      App.uiNotifications(); 
+      App.uiNotifications();
       guardar();
       listar_ordenesdecompras();
     });
@@ -238,7 +238,7 @@
         "buttons":[
           {
             extend: 'collection',
-            text: 'Exportar tabla',
+            text: '<i class="fas fa-table fa-sm"></i> Exportar tabla',
             "className": "btn btn-lg btn-space btn-secondary",
             buttons: [
                 {
@@ -280,7 +280,7 @@
           },
           {
             text: '<i class="fas fa-shopping-cart fa-sm" aria-hidden="true"></i> Nueva OC',
-            "className": "btn btn-lg btn-space btn-success",
+            "className": "btn btn-lg btn-space btn-secondary",
             action: function (e, dt, node, config){
             $("#modalCrearOC").modal("show");
             var opcion = "direccionenvio";
@@ -368,7 +368,7 @@
         "buttons":[
           {
             extend: 'collection',
-            text: 'Exportar tabla',
+            text: '<i class="fas fa-table fa-sm"></i> Exportar tabla',
             "className": "btn btn-lg btn-space btn-secondary",
             buttons: [
                 {
@@ -451,7 +451,7 @@
         "buttons":[
           {
             extend: 'collection',
-            text: 'Exportar tabla',
+            text: '<i class="fas fa-table fa-sm"></i> Exportar tabla',
             "className": "btn btn-lg btn-space btn-secondary",
             buttons: [
                 {

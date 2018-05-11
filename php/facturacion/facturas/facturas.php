@@ -1,7 +1,7 @@
 <?php
 	require_once('../../conexion.php'); // Llamada para establecer conexión con la BD
 	require_once('../../sesion.php'); // Llamada para validar si hay sesión inciada
-	error_reporting(0); // Eliminamos los mensajes de error de 
+	error_reporting(0); // Eliminamos los mensajes de error de
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -29,7 +29,7 @@
                           		<!-- Tabla de Facturas -->
 									<table id="dt_facturas" class="table table-striped table-hover display compact" cellspacing="0" width="100%" >
 										<thead>
-											<tr>								
+											<tr>
 												<th>Folio</th>
 												<th>Orden/Pedido</th>
 												<th>Total</th>
@@ -42,20 +42,6 @@
 												<th></th>
 											</tr>
 										</thead>
-										<tfoot>
-											<tr>								
-												<th>Folio</th>
-												<th>Orden/Pedido</th>
-												<th>Total</th>
-												<th>Pagado</th>
-												<th>Status</th>
-												<th>Fecha de creación</th>
-												<th>Cliente</th>
-												<td></td>
-												<td></td>
-												<td></td>
-											</tr>
-										</tfoot>
 									</table>
 								</div>
                     	</div>
@@ -74,13 +60,7 @@
 			listar_facturas();
 		});
 
-		var listar_facturas = function(){      
-
-			$('#dt_facturas tfoot th').each( function () {
-	        var title = $(this).text();
-	        $(this).html( '<input class="form-control" type="text" placeholder="Buscar '+ title +'" />' );
-	      });
-
+		var listar_facturas = function(){
 	      var table = $("#dt_facturas").DataTable({
 	        "destroy": true,
 	        "scrollX": true,
@@ -107,13 +87,13 @@
 	        "order": [[0, "asc"]],
 	        "language": idioma_espanol,
 	        "dom":
-	    		"<'row be-datatable-header'<'col-sm-6'B><'col-sm-6 text-right'f>>" +
-	    		"<'row be-datatable-body'<'col-sm-12'tr>>" +
-	    		"<'row be-datatable-footer'<'col-sm-5'i><'col-sm-7'p>>",
+		    		"<'row be-datatable-header'<'col-sm-6'B><'col-sm-6 text-right'f>>" +
+		    		"<'row be-datatable-body'<'col-sm-12'tr>>" +
+		    		"<'row be-datatable-footer'<'col-sm-5'i><'col-sm-7'p>>",
 	        "buttons":[
 	        	{
 		            extend: 'collection',
-		            text: 'Exportar tabla',
+		            text: '<i class="fas fa-table fa-sm"></i> Exportar tabla',
 		            "className": "btn btn-lg btn-space btn-secondary",
 		            buttons: [
 		                {
@@ -152,31 +132,24 @@
 		                  pageSize: 'LEGAL'
 		                }
 		            ]
-		        },  
+		        },
 	          // {
 	          //   text: '<i class="fa fa-plus-circle" aria-hidden="true"></i> <i class="fa fa-address-card-o" aria-hidden="true"></i>',
 	          //   "className": "btn btn-success",
 	          //   titleAttr: 'Agregar Cliente',
 	          //   action: function (e, dt, node, config){
 	          //     $("#modalAgregarCliente").modal("show");
-	          //   }   
+	          //   }
 	          // }
 	        ]
 	      });
-
-	      	 $("#dt_facturas tfoot input").on( 'keyup change', function () {
-		        table
-		            .column( $(this).parent().index()+':visible' )
-		            .search( this.value )
-		            .draw();    
-		      });
 
 	      	obtener_pdf_factura("#dt_facturas tbody", table);
 	      	obtener_xml_factura("#dt_facturas tbody", table);
 	      	obtener_cancelar_factura("#dt_facturas tbody", table);
 
 	    }
-		
+
 		var obtener_pdf_factura = function(tbody, table){
 	      $(tbody).on("click", "button.pdf", function(){
 	        var data = table.row( $(this).parents("tr") ).data();
@@ -198,7 +171,7 @@
 			request.onreadystatechange = function () {
 			  if (this.readyState === 4) {
 			    var data = JSON.parse(this.responseText);
-			    console.log(data);	
+			    console.log(data);
 			    // console.log(ordenpedido);
 			    var totalfacturas = data.total;
 			    for (var i = 0; i < totalfacturas; i++) {
@@ -219,8 +192,8 @@
 							request.setRequestHeader('Allow-Control-Allow-Origin', '*');
 							request.setRequestHeader('Access-Control-Allow-Credentials', 'true');
 							request.responseType = 'blob';
-							// header('Content-Type: application/pdf');    
-							// header("Content-Transfer-Encoding: Binary");    
+							// header('Content-Type: application/pdf');
+							// header("Content-Transfer-Encoding: Binary");
 							// header("Content-disposition: attachment; filename=F2222.pdf");
 
 							request.onreadystatechange = function () {
@@ -240,8 +213,8 @@
 
 						}
 			    	}
-			    }					   
-			}		
+			    }
+			}
 
 			request.send();
 	      });
@@ -265,7 +238,7 @@
 			request.onreadystatechange = function () {
 			  if (this.readyState === 4) {
 			    var data = JSON.parse(this.responseText);
-			    console.log(data);	
+			    console.log(data);
 			    // console.log(ordenpedido);
 			    var totalfacturas = data.total;
 			    for (var i = 0; i < totalfacturas; i++) {
@@ -279,7 +252,7 @@
 
 							// request.setRequestHeader('Content-Type', 'application/json');
 							request.setRequestHeader('Content-type', '"text/xml"; charset="utf8"');
-							request.setRequestHeader('Content-disposition', 'attachment; filename="F2222.xml"');    
+							request.setRequestHeader('Content-disposition', 'attachment; filename="F2222.xml"');
 							request.setRequestHeader('F-API-KEY', 'JDJ5JDEwJHJWelRXTWlJMEd4OS9kS3hRZTJNZy5neFAwV2dzdGttLjVleTcueDIyUHlMOEE0VEY5dUFL');
 							request.setRequestHeader('F-SECRET-KEY', 'JDJ5JDEwJDd3bXhpWENGRXJFMkNvOE1Hblo5Y2VPV3J5WXJxZmJoVEJhQjR0OE1Xa0hrV1lmRXhCWkFt');
 
@@ -300,8 +273,8 @@
 
 						}
 			    	}
-			    }					   
-			}		
+			    }
+			}
 
 			request.send();
 	      });
@@ -325,7 +298,7 @@
 			request.onreadystatechange = function () {
 			  if (this.readyState === 4) {
 			    var data = JSON.parse(this.responseText);
-			    console.log(data);	
+			    console.log(data);
 			    console.log(ordenpedido);
 			    var totalfacturas = data.total;
 			    for (var i = 0; i < totalfacturas; i++) {
@@ -380,8 +353,8 @@
 
 						}
 			    	}
-			    }					   
-			}		
+			    }
+			}
 
 			request.send();
 	      });
@@ -408,7 +381,7 @@
 		// 	request.onreadystatechange = function () {
 		// 	  if (this.readyState === 4) {
 		// 	    var data = JSON.parse(this.responseText);
-		// 	    console.log(data);	
+		// 	    console.log(data);
 		// 	    // console.log(ordenpedido);
 		// 	    var totalfacturas = data.total;
 		// 	    for (var i = 0; i < totalfacturas; i++) {
@@ -429,8 +402,8 @@
 		// 					request.setRequestHeader('Allow-Control-Allow-Origin', '*');
 		// 					request.setRequestHeader('Access-Control-Allow-Credentials', 'true');
 		// 					request.responseType = 'blob';
-		// 					// header('Content-Type: application/pdf');    
-		// 					// header("Content-Transfer-Encoding: Binary");    
+		// 					// header('Content-Type: application/pdf');
+		// 					// header("Content-Transfer-Encoding: Binary");
 		// 					// header("Content-disposition: attachment; filename=F2222.pdf");
 
 		// 					request.onreadystatechange = function () {
@@ -450,8 +423,8 @@
 
 		// 				}
 		// 	    	}
-		// 	    }					   
-		// 	}		
+		// 	    }
+		// 	}
 
 		// 	request.send();
 	  //     });
@@ -475,7 +448,7 @@
 		// 	request.onreadystatechange = function () {
 		// 	  if (this.readyState === 4) {
 		// 	    var data = JSON.parse(this.responseText);
-		// 	    console.log(data);	
+		// 	    console.log(data);
 		// 	    // console.log(ordenpedido);
 		// 	    var totalfacturas = data.total;
 		// 	    for (var i = 0; i < totalfacturas; i++) {
@@ -489,7 +462,7 @@
 
 		// 					// request.setRequestHeader('Content-Type', 'application/json');
 		// 					request.setRequestHeader('Content-type', '"text/xml"; charset="utf8"');
-		// 					request.setRequestHeader('Content-disposition', 'attachment; filename="F2222.xml"');    
+		// 					request.setRequestHeader('Content-disposition', 'attachment; filename="F2222.xml"');
 		// 					request.setRequestHeader('F-API-KEY', 'JDJ5JDEwJDNtc1I3Z2JySG5pcUs0VWtQTlVxbmVsaFdyWUl6Ym5kQ1FKcmE2UGNIMG1WeGs5aEtXU3dp');
 		// 					request.setRequestHeader('F-SECRET-KEY', 'JDJ5JDEwJERYUXBSWGo5R0VINzE4UlRiY25oc09SUWhnMU9vRWdYSTQwOWJuTDZXUlhYR1E0Vmp5ZUFX');
 
@@ -510,8 +483,8 @@
 
 		// 				}
 		// 	    	}
-		// 	    }					   
-		// 	}		
+		// 	    }
+		// 	}
 
 		// 	request.send();
 	  //     });
@@ -535,7 +508,7 @@
 		// 	request.onreadystatechange = function () {
 		// 	  if (this.readyState === 4) {
 		// 	    var data = JSON.parse(this.responseText);
-		// 	    console.log(data);	
+		// 	    console.log(data);
 		// 	    console.log(ordenpedido);
 		// 	    var totalfacturas = data.total;
 		// 	    for (var i = 0; i < totalfacturas; i++) {
@@ -590,8 +563,8 @@
 
 		// 				}
 		// 	    	}
-		// 	    }					   
-		// 	}		
+		// 	    }
+		// 	}
 
 		// 	request.send();
 	  //     });

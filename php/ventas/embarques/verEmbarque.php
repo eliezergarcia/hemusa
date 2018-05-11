@@ -1,4 +1,4 @@
-<?php 
+<?php
   	require_once('../../conexion.php'); // Llamada a connect.php para establecer conexión con la BD
   	require_once('../../sesion.php'); // Llamada a sesion.php para validar si hay sesión inciada
 	error_reporting(0);
@@ -14,7 +14,7 @@
           	<div class="page-head">
               	<h2 class="page-head-title">Embarque</h2>
               	<nav aria-label="breadcrumb">
-					<ol class="breadcrumb">				    	
+					<ol class="breadcrumb">
 						<li class="breadcrumb-item">Facturación</li>
 						<li class="breadcrumb-item"><a href="embarques.php">Embarques</a></li>
 						<li class="breadcrumb-item active">Folio: <?php echo $_REQUEST['embarque']; ?></li>
@@ -29,8 +29,8 @@
                           		<!-- Tabla de partidas -->
 									<table id="dt_partidas_embarque" class="table table-striped table-bordered table-hover display compact" cellspacing="0" width="100%">
 										<thead>
-											<tr class="text-center">	
-												<th>N°</th>							
+											<tr class="text-center">
+												<th>N°</th>
 												<th>Marca</th>
 												<th>Modelo</th>
 												<th>Descripción</th>
@@ -49,7 +49,7 @@
             	</div>
       		</div>
     	</div>
-	</header>				
+	</header>
 	<?php include('../../enlacesjs.php'); ?>
 	<script>
 		$(document).ready(function(){
@@ -94,7 +94,7 @@
 				"buttons":[
 					{
 			            extend: 'collection',
-			            text: 'Exportar embarque',
+			            text: '<i class="fas fa-box fa-sm"></i> Exportar embarque',
 			            "className": "btn btn-lg btn-space btn-secondary",
 			            buttons: [
 							{
@@ -102,20 +102,20 @@
 								// "className": "btn btn-danger",
 								action: function (e, dt, node, config){
 									genPDF(folio);
-								},   
+								},
 							},
 							{
 								text: '<i class="fas fa-print fa-lg" aria-hidden="true"></i> Imprimir',
 								// "className": "btn btn-warning",
 								action: function (e, dt, node, config){
 									imprimirPDF(folio);
-								},   
+								},
 							},
 			            ]
 			        },
 					{
 			            extend: 'collection',
-			            text: 'Exportar tabla',
+			            text: '<i class="fas fa-table fa-sm"></i> Exportar tabla',
 			            "className": "btn btn-lg btn-space btn-secondary",
 			            buttons: [
 			                {
@@ -167,17 +167,17 @@
 	        dataType: "json",
 	        data: {"folio": folio},
 	      }).done( function( data ){
-	        console.log(data);  
+	        console.log(data);
 	        var columns = [
-	            {title: "#", dataKey: "indice"}, 
+	            {title: "#", dataKey: "indice"},
 	            {title: "Marca", dataKey: "marca"},
-	            {title: "Modelo", dataKey: "modelo"}, 
-	            {title: "Descripción", dataKey: "descripcion"}, 
-	            {title: "Cantidad", dataKey: "cantidad"}, 
-	            {title: "Factura", dataKey: "factura"}, 
-	            {title: "Orden de compra", dataKey: "ordencompra"}, 
-				{title: "Paqueteria", dataKey: "paquteria"}, 
-				{title: "# guía", dataKey: "guia"}, 
+	            {title: "Modelo", dataKey: "modelo"},
+	            {title: "Descripción", dataKey: "descripcion"},
+	            {title: "Cantidad", dataKey: "cantidad"},
+	            {title: "Factura", dataKey: "factura"},
+	            {title: "Orden de compra", dataKey: "ordencompra"},
+				{title: "Paqueteria", dataKey: "paquteria"},
+				{title: "# guía", dataKey: "guia"},
 	        ];
 
 	        var rows = data.partidas;
@@ -254,10 +254,10 @@
 	          	tableWidth: 'auto',
 	          	styles: {overflow: 'linebreak', cellPadding: 2, fontSize: 7, rowHeight: 15},
 	        });
-			
+
 			doc.setFontSize(8);
 	        doc.text("REVISÓ _________________________________ CONFIRMÓ _________________________________ PESO "+data.embarque.peso+" KG, DIMENSIONES "+data.embarque.dimensiones+" CM" , 55, doc.autoTable.previous.finalY  + 25);
-	        
+
 	        doc.save('embarque.pdf');
 	      });
 	    }
@@ -269,17 +269,17 @@
 	        dataType: "json",
 	        data: {"folio": folio},
 	      }).done( function( data ){
-	        console.log(data);  
+	        console.log(data);
 	        var columns = [
-	            {title: "#", dataKey: "indice"}, 
+	            {title: "#", dataKey: "indice"},
 	            {title: "Marca", dataKey: "marca"},
-	            {title: "Modelo", dataKey: "modelo"}, 
-	            {title: "Descripción", dataKey: "descripcion"}, 
-	            {title: "Cantidad", dataKey: "cantidad"}, 
-	            {title: "Factura", dataKey: "factura"}, 
-	            {title: "Orden de compra", dataKey: "ordencompra"}, 
-				{title: "Paqueteria", dataKey: "paquteria"}, 
-				{title: "# guía", dataKey: "guia"}, 
+	            {title: "Modelo", dataKey: "modelo"},
+	            {title: "Descripción", dataKey: "descripcion"},
+	            {title: "Cantidad", dataKey: "cantidad"},
+	            {title: "Factura", dataKey: "factura"},
+	            {title: "Orden de compra", dataKey: "ordencompra"},
+				{title: "Paqueteria", dataKey: "paquteria"},
+				{title: "# guía", dataKey: "guia"},
 	        ];
 
 	        var rows = data.partidas;
@@ -356,7 +356,7 @@
 	          	tableWidth: 'auto',
 	          	styles: {overflow: 'linebreak', cellPadding: 2, fontSize: 7, rowHeight: 15},
 	        });
-			
+
 			doc.setFontSize(8);
 	        doc.text("REVISÓ _________________________________ CONFIRMÓ _________________________________ PESO "+data.embarque.peso+" KG, DIMENSIONES "+data.embarque.dimensiones+" CM" , 55, doc.autoTable.previous.finalY  + 25);
 	        doc.autoPrint();

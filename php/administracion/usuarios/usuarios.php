@@ -26,29 +26,19 @@
                 	<div class="col-lg-12">
                     	<div class="card card-fullcalendar">
                       		<div class="card-body">
-                          		<!-- Tabla de Usuarios -->
-									<table id="dt_usuarios" class="table table-striped table-hover display compact" cellspacing="0" width="100%">
-										<thead>
-											<tr>
-												<th>Usuario</th>
-												<th>Nombre</th>
-												<th>Apellidos</th>
-												<th>Departamento</th>
-												<th>Ver y Editar</th>
-												<th>Eliminar</th>
-											</tr>
-										</thead>
-										<tfoot>
-											<tr>
-												<th>Usuario</th>
-												<th>Nombre</th>
-												<th>Apellidos</th>
-												<th>Departamento</th>
-												<td></td>
-												<td></td>
-											</tr>
-										</tfoot>
-									</table>
+                          	<!-- Tabla de Usuarios -->
+															<table id="dt_usuarios" class="table table-striped table-hover display compact" cellspacing="0" width="100%">
+																<thead>
+																	<tr>
+																		<th>Usuario</th>
+																		<th>Nombre</th>
+																		<th>Apellidos</th>
+																		<th>Departamento</th>
+																		<th>Ver y Editar</th>
+																		<th>Eliminar</th>
+																	</tr>
+																</thead>
+															</table>
                       		</div>
                     	</div>
                 	</div>
@@ -63,13 +53,13 @@
 					<div class="modal-dialog" role="document">
 						<div class="modal-content">
 							<div class="modal-header">
-								<h4 class="modal-title" id="exampleModalLabel"><i class="fas fa-user-plus fa-sm" aria-hidden="true"></i><b> Registro de usuario</b></h4>
+								<h4 class="modal-title" id="exampleModalLabel"><i class="fas fa-user-plus fa-sm" aria-hidden="true"></i> Registro de usuario</h4>
 								<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 							</div>
 							<div class="modal-body">
 								<div class="row ">
 									<div class="col form-group">
-										<h3><b>Datos Hemusa</b></h3>
+										<h4>Datos Hemusa</h4>
 									</div>
 								</div>
 								<div class="row">
@@ -103,7 +93,7 @@
 								<hr>
 								<div class="row ">
 									<div class="col form-group">
-										<h3><b>Datos Personales</b></h3>
+										<h4>Datos Personales</h4>
 									</div>
 								</div>
 								<div class="row">
@@ -161,13 +151,13 @@
 					<div class="modal-dialog modal-lg" role="document">
 						<div class="modal-content">
 							<div class="modal-header">
-								<h4 class="modal-title" id="modalEditarLabel"><b><i class="fas fa-edit fa-sm" aria-hidden="true"></i> Información de usuario</b></h4>
+								<h4 class="modal-title" id="modalEditarLabel"><i class="fas fa-edit fa-sm" aria-hidden="true"></i> Información de usuario</h4>
 								<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 							</div>
 							<div class="modal-body">
 								<div class="row ">
 									<div class="col form-group">
-										<h3><b>Datos Hemusa</b></h3>
+										<h4>Datos Hemusa</h4>
 									</div>
 								</div>
 								<div class="row">
@@ -201,7 +191,7 @@
 								<hr>
 								<div class="row ">
 									<div class="col form-group">
-										<h3><b>Datos Personales</b></h3>
+										<h4>Datos Personales</h4>
 									</div>
 								</div>
 								<div class="row">
@@ -262,7 +252,7 @@
 			                <div class="modal-body">
                   				<div class="text-center">
                     				<div class="text-center"><span class="modal-main-icon mdi mdi-close-circle-o"></span></div>
-                    				<h4><b>¿Estás seguro(a) de eliminar el usuario?</b></h4>
+                    				<h4>¿Estás seguro(a) de eliminar el usuario?</h4>
                     				<div class="row justify-content-center">
                     					<div class="form-group col-12 row justify-content-center">
                     						<input type="text" class="disabled form-control col-6 form-control form-control-sm" id="nombre" name="nombre" disabled>
@@ -307,11 +297,6 @@
 		});
 
 		var  listar = function(data){ // DataTable de Usuarios
-			$('#dt_usuarios tfoot th').each( function () {
-	    		var title = $(this).text();
-	    		$(this).html( '<input class="form-control form-control-xs" type="text" placeholder="Buscar '+ title +'" />' );
-	  		});
-
 			var table = $("#dt_usuarios").DataTable({
 				"destroy": true,
 				"scrollX": true,
@@ -336,7 +321,7 @@
 				"buttons":[
 		          {
 		            extend: 'collection',
-		            text: 'Exportar tabla',
+		            text: '<i class="fas fa-table fa-sm"></i> Exportar tabla',
 		            "className": "btn btn-lg btn-space btn-secondary",
 		            buttons: [
 		                {
@@ -378,19 +363,12 @@
 		          },
 		          {
 		            text: '<i class="fas fa-user-plus fa-sm"></i> Agregar usuario',
-		            "className": "btn btn-lg btn-space btn-success",
+		            "className": "btn btn-lg btn-space btn-secondary",
 		            action: function (e, dt, node, config){
 		              $("#modalRegistrarUsuario").modal("show");
 		            }
 		          }
 		        ]
-			});
-
-			$("#dt_usuarios tfoot input").on( 'keyup change', function () {
-	    		table
-	        		.column( $(this).parent().index()+':visible' )
-	        		.search( this.value )
-	        		.draw();
 			});
 
 			obtener_data_editar("#dt_usuarios tbody", table);

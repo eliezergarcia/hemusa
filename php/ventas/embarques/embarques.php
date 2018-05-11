@@ -45,7 +45,7 @@
             	</div>
       		</div>
     	</div>
-			
+
 		<!-- Modal Packing List -->
 			<form action="" method="POST">
 				<input type="hidden" name="opcion" id="opcion" value="crearembarque">
@@ -54,7 +54,7 @@
 					<div class="modal-dialog modal-lg" role="document">
 						<div class="modal-content">
 							<div class="modal-header">
-								<h5 class="modal-title" id="exampleModalLabel"><i class="fas fa-box"></i><b> Nuevo embarque</b></h5>
+								<h4 class="modal-title" id="exampleModalLabel"><i class="fas fa-box"></i> Nuevo embarque</h4>
 								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 									<span aria-hidden="true">&times;</span>
 								</button>
@@ -147,7 +147,7 @@
 				"buttons":[
 		            {
 			            extend: 'collection',
-			            text: 'Exportar tabla',
+			            text: '<i class="fas fa-table fa-sm"></i> Exportar tabla',
 			            "className": "btn btn-lg btn-space btn-secondary",
 			            buttons: [
 			                {
@@ -188,8 +188,8 @@
 			            ]
 			          },
 					      {
-		                text: '<i id="toolTipNuevaCotizacion" class="fas fa-box fa-sm" aria-hidden="true"></i> Nuevo embarque',
-		                "className": "btn btn-lg btn-space btn-success",
+		                text: '<i class="fas fa-box fa-sm" aria-hidden="true"></i> Nuevo embarque',
+		                "className": "btn btn-lg btn-space btn-secondary",
 		                action: function ( e, dt, node, config ) {
 		                	$('#modalNuevoEmbarque').modal('show');
 		                }

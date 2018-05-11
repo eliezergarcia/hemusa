@@ -51,7 +51,7 @@
             	</div>
       		</div>
     	</div>
-				
+
 		<!-- Modal Nueva Cotizacion -->
 		 	<form name="agregarCotizacion" action="#" method="POST">
 		 		<input type="hidden" id="opcion" name="opcion" value="agregarcotizacion">
@@ -61,7 +61,7 @@
 					<div class="modal-dialog modal-lg" role="document">
 						<div class="modal-content">
 							<div class="modal-header">
-								<h4 class="modal-title" id="modalNuevaCotizacionLabel"><b><i class="icon fas fa-file-alt" aria-hidden="true"></i> Nueva cotización</b></h4>
+								<h4 class="modal-title" id="modalNuevaCotizacionLabel"><i class="icon fas fa-file-alt" aria-hidden="true"></i> Nueva cotización</h4>
 								<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 							</div>
 							<div class="modal-body container">
@@ -139,7 +139,7 @@
 					<div class="modal-dialog modal-lg" role="document">
 						<div class="modal-content">
 							<div class="modal-header">
-								<h4 class="modal-title" id="modalNuevaCotizacionLabel"><b><i class="icon icon-left mdi mdi-account-calendar" aria-hidden="true"></i> Registro de contacto</b></h4>
+								<h4 class="modal-title" id="modalNuevaCotizacionLabel"><i class="icon icon-left mdi mdi-account-calendar" aria-hidden="true"></i> Registro de contacto</h4>
 								<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 							</div>
 							<div class="modal-body container">
@@ -237,11 +237,11 @@
 	</header>
 	<?php include('../../enlacesjs.php'); ?>
 	<script>
-		$(document).ready(function(){	
+		$(document).ready(function(){
 			App.init();
-      		App.pageCalendar();       
+      		App.pageCalendar();
       		App.formElements();
-      		App.uiNotifications();					
+      		App.uiNotifications();
 			listar_cotizaciones();
 			guardar();
 		});
@@ -281,7 +281,7 @@
 				"buttons":[
 					{
 			            extend: 'collection',
-			            text: 'Exportar tabla',
+			            text: '<i class="fas fa-table fa-sm"></i> Exportar tabla',
 			            "className": "btn btn-lg btn-space btn-secondary",
 			            buttons: [
 			                {
@@ -323,7 +323,7 @@
 			          },
 					{
 						text: '<i class="fas fa-file-alt fa-sm" aria-hidden="true"></i> Agregar cotización',
-						"className": "btn btn-lg btn-space btn-success",
+						"className": "btn btn-lg btn-space btn-secondary",
 						action: function (e, dt, node, config){
 							$('#modalNuevaCotizacion').modal('show');
 						}

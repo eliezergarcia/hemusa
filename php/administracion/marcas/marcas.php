@@ -59,7 +59,7 @@
       		</div>
     	</div>
 
-    	<!-- Modal Agregar Marca -->
+    <!-- Modal Agregar Marca -->
 			<form id="frmAgregarMarca" action="" method="POST">
 				<input type="hidden" id="opcion" name="opcion" value="agregar">
 				<input type="hidden" id="usuariologin" name="usuariologin">
@@ -68,7 +68,7 @@
 				  	<div class="modal-dialog" role="document">
 				    	<div class="modal-content">
 				      		<div class="modal-header">
-				        		<h5 class="modal-title" id="exampleModalLabel"><i class="fas fa-wrench fa-sm" aria-hidden="true"></i><b> Registro de marca</b></h5>
+				        		<h4 class="modal-title" id="exampleModalLabel"><i class="fas fa-wrench fa-sm" aria-hidden="true"></i> Registro de marca</h4>
 				        		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 				          		<span aria-hidden="true">&times;</span>
 				        		</button>
@@ -107,7 +107,7 @@
 				  	</div>
 				</div>
 			</form>
-				
+
 		<!-- Modal Editar Marca -->
 			<form id="frmEditarMarca" action="" method="POST">
 				<input type="hidden" id="idmarca" name="idmarca">
@@ -118,7 +118,7 @@
 				  	<div class="modal-dialog" role="document">
 				    	<div class="modal-content">
 				      		<div class="modal-header">
-				        		<h5 class="modal-title" id="exampleModalLabel"><b><i class="fas fa-edit fa-sm" aria-hidden="true"></i> Información de marca</b></h5>
+				        		<h4 class="modal-title" id="exampleModalLabel"><i class="fas fa-edit fa-sm" aria-hidden="true"></i> Información de marca</h4>
 				        		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 				          			<span aria-hidden="true">&times;</span>
 				        		</button>
@@ -185,16 +185,16 @@
 			                </div>
 				      		<div class="modal-body">
 				      			<div class="text-center">
-                    				<div class="text-center"><span class="modal-main-icon mdi mdi-close-circle-o"></span></div>
-                    				<h4><b>¿Está seguro de eliminar la marca?</b></h4>
-                    				<div class="row justify-content-center">
-                    					<input type="text" id="marca" name="marca" class="disabled col-6 form-control form-control-sm" disabled>
-                    				</div>
-                    				<div class="mt-8 invoice-footer">
-                      					<button type="button" class="btn btn-lg btn-secondary" data-dismiss="modal">Cancelar</button>
-                      					<button type="submit" class="btn btn-lg btn-danger">Eliminar</button>
-                    				</div>	
-                  				</div>				        		
+              				<div class="text-center"><span class="modal-main-icon mdi mdi-close-circle-o"></span></div>
+              				<h4>¿Está seguro de eliminar la marca?</h4>
+              				<div class="row justify-content-center">
+              					<input type="text" id="marca" name="marca" class="disabled col-6 form-control form-control-sm" disabled>
+              				</div>
+              				<div class="mt-8 invoice-footer">
+                					<button type="button" class="btn btn-lg btn-secondary" data-dismiss="modal">Cancelar</button>
+                					<button type="submit" class="btn btn-lg btn-danger">Eliminar</button>
+              				</div>
+            				</div>
 				      		</div>
 				      		<div class="modal-footer">
 				      		</div>
@@ -208,7 +208,7 @@
 	<script>
 		$(document).ready(function(){
 			App.init();
-      		App.pageCalendar();       
+      		App.pageCalendar();
       		App.formElements();
       		App.uiNotifications();
 			listar();
@@ -254,7 +254,7 @@
 				"buttons":[
 		            {
 			            extend: 'collection',
-			            text: 'Exportar tabla',
+			            text: '<i class="fas fa-table fa-sm"></i> Exportar tabla',
 			            "className": "btn btn-lg btn-space btn-secondary",
 			            buttons: [
 			                {
@@ -296,7 +296,7 @@
 			          },
 		            {
 		                text: '<i class="fas fa-wrench fa-sm"></i> Agregar marca',
-		                "className": "btn btn-lg btn-space btn-success",
+		                "className": "btn btn-lg btn-space btn-secondary",
 		                titleAttr: 'Agregar Marca',
 		                action: function ( e, dt, node, config ) {
 		                    $('#modalAgregarMarca').modal('show');
@@ -398,6 +398,6 @@
 		    }
 		}
 	</script>
-	<script src="<?php echo $ruta; ?>php/js/mensajes_cambios.js"></script> 
+	<script src="<?php echo $ruta; ?>php/js/mensajes_cambios.js"></script>
 </body>
 </html>

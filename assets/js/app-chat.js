@@ -35,6 +35,8 @@ var App = (function () {
         console.log(data);
         var mensajes = data.mensajes;
         console.log(mensajes);
+        $("#lista_contactos").empty();
+        $("#lista-reciente").empty();
         $("#contacto-title").empty();
         $("#contacto-title").append("<div class='user'><img src='../../../assets/img/avatar2.png' alt='Avatar'><h2>"+ data.contacto[0].nombre + " " + data.contacto[0].apellidos +"</h2><span>Active 1h ago</span></div><span class='icon return mdi mdi-chevron-left'></span>");
 
@@ -148,6 +150,8 @@ var App = (function () {
       }).done( function( data ){
         console.log(data);
         var usuarios = data.usuarios;
+        $("#lista_contactos").empty();
+        $("#lista-reciente").empty();
         for(var i=0;i<usuarios.length;i = i+1){
           if (usuarios[i].reciente == "no") {
             $("#lista-contactos").append("<div class='user' id='"+ usuarios[i].id +"'><a href='#'><img src='../../../assets/img/avatar4.png' alt='Avatar'><div class='user-data2'><span class='status'></span><span class='name contacto-chat'>"+ usuarios[i].nombre + " " + usuarios[i].apellidos +"</span></div></a></div>");

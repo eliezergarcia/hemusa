@@ -1,5 +1,5 @@
-<?php 	
-	include("../conexion.php");
+<?php
+	include("../../conexion.php");
 
 	$opcion = $_POST['opcion'];
 
@@ -11,7 +11,7 @@
 		case 'departamento':
 			buscardepartamentos($conexion_usuarios);
 			break;
-		
+
 		case 'usuario':
 			buscarusuarios($conexion_usuarios);
 			break;
@@ -33,7 +33,7 @@
 		}else{
 			$informacion['respuesta'] = "ERROR";
 		}
-		
+
 		echo json_encode($informacion);
 	}
 

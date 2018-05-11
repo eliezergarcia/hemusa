@@ -1,4 +1,4 @@
-<?php 
+<?php
 	require_once('../../conexion.php'); // Llamada a connect.php para establecer conexi�n con la BD
 	require_once('../../sesion.php'); // Llamada a sesion.php para validar si hay sesi�n inciada
 	error_reporting(0);
@@ -16,7 +16,7 @@
 <html lang="es">
 <head>
 	<title>Contacto cliente</title>
-  	<?php include('../../enlacescss.php'); ?>  
+  	<?php include('../../enlacescss.php'); ?>
 </head>
 <body>
 	<?php include('../../header.php'); ?>
@@ -24,7 +24,7 @@
 			<div class="page-head">
 			  	<h2 class="page-head-title">Información de cliente</h2>
 			  	<nav aria-label="breadcrumb">
-	              	<ol class="breadcrumb">             
+	              	<ol class="breadcrumb">
 	                	<li class="breadcrumb-item">Ventas</li>
 	                	<li class="breadcrumb-item"><a href="clientes.php">Clientes</a></li>
 	                	<li class="breadcrumb-item active">Cliente: <?php echo $nombreContacto; ?></li>
@@ -40,7 +40,7 @@
 								<div class="container-fluid col-12 row justify-content-start align-items-center">
 									<div>
 										<span class="mdl-chip mdl-chip--contact">
-						    				<h2><b><span class="mdl-chip__text"><?php echo $nombreContacto; ?></span></b></h2>
+						    				<h2><span class="mdl-chip__text"><?php echo $nombreContacto; ?></span></h2>
 										</span>
 									</div>
 									<div class="col dropdown row justify-content-end align-items-center">
@@ -62,7 +62,7 @@
 										<input type="text" class="form-control form-control-sm col-2" name="buscar" id="buscar" placeholder="Buscar">
 									</div>
 								</form>
-							
+
 							<!-- Grupo de botones -->
 								<div class="row justify-content-center btn-toolbar">
 									<div role="group" class="btn-group btn-group-justified mb-2 col-6">
@@ -72,7 +72,7 @@
 										<a href="#" id="btncotizaciones" class="btn btn-primary btn-space" onclick="listar_cotizaciones()">COTIZACIONES</a href="#">
 									</div>
 								</div>
-						
+
 							<!-- Listar sin entregar -->
 								<div id="listar_sinentregar">
 									<br>
@@ -91,7 +91,7 @@
 												<th>Enviado</th>
 												<th>Recibido</th>
 											</tr>
-										</thead>						
+										</thead>
 									</table>
 								</div>
 
@@ -108,10 +108,10 @@
 												<th>Cantidad</th>
 												<th>Suma</th>
 											</tr>
-										</thead>						
+										</thead>
 									</table>
 								</div>
-							
+
 							<!-- Listar remisiones -->
 								<div id="listar_remisiones">
 									<br>
@@ -128,10 +128,10 @@
 												<th>Suma</th>
 												<th>Moneda</th>
 											</tr>
-										</thead>						
+										</thead>
 									</table>
 								</div>
-							
+
 							<!-- Listar cotizaciones -->
 								<div id="listar_cotizaciones">
 									<br>
@@ -146,16 +146,16 @@
 												<th>Fecha</th>
 												<th>Ver</th>
 											</tr>
-										</thead>						
+										</thead>
 									</table>
-								</div>									 
+								</div>
 						</div>
 			        </div>
 			    </div>
 			</div>
       	</div>
     </div>
-			
+
 	<!-- Modal Agregar Clasificacion -->
 		<form action="#" method="POST">
 			<input type="hidden" id="opcion" name="opcion" value="agregarclas">
@@ -167,7 +167,7 @@
 			  	<div class="modal-dialog" role="document">
 			    	<div class="modal-content">
 			      		<div class="modal-header">
-			        		<h5 class="modal-title" id="tituloEditarPartida"><b> Clasificación de cliente</b></h5>
+			        		<h4 class="modal-title" id="tituloEditarPartida"> Clasificación de cliente</h4>
 			        		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
 			        		</button>
 			      		</div>
@@ -211,7 +211,7 @@
 				<div class="modal-dialog" role="document">
 					<div class="modal-content">
 						<div class="modal-header">
-							<h4 class="modal-title" id="modalNuevaCotizacionLabel"><b>Información de cliente</b></h4>
+							<h4 class="modal-title" id="modalNuevaCotizacionLabel"><i class="fas fa-edit"></i> Información de cliente</h4>
 							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 						</div>
 						<div class="modal-body container">
@@ -294,7 +294,7 @@
 							<div class="row form-group">
 								<label for="contactohemusa" class="col-4">Contacto Hemusa</label>
 								<input type="text" id="contactohemusa" name="contactohemusa" class="limpiar form-control form-control-sm col-7">
-							</div>							
+							</div>
 							<div class="row form-group">
 								<label for="moneda" class="col-4">Moneda</label>
 								<select type="text" id="moneda" name="moneda" class="limpiar form-control form-control-sm col-7">
@@ -360,7 +360,7 @@
 					</div>
 				</div>
 			</div>
-		</form>	
+		</form>
 
 	<!-- Modal Nueva Cotizacion -->
 	 	<form action="#" method="POST">
@@ -372,7 +372,7 @@
 				<div class="modal-dialog modal-lg" role="document">
 					<div class="modal-content">
 						<div class="modal-header">
-							<h4 class="modal-title" id="modalNuevaCotizacionLabel"><i class="fas fa-file-alt"></i><b> Nueva cotización</b></h4>
+							<h4 class="modal-title" id="modalNuevaCotizacionLabel"><i class="fas fa-file-alt"></i> Nueva cotización</h4>
 							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 						</div>
 						<div class="modal-body container">
@@ -398,7 +398,7 @@
 								<div class="col form-group">
 									<label for="contactocliente">Contacto <font color="#FF4136">*</font></label>
 									<select name="contactocliente" id="contactocliente" class="form-control form-control-sm select2" onchange="agregarcontacto()" required>
-										
+
 									</select>
 								</div>
 							</div>
@@ -435,8 +435,8 @@
 					</div>
 				</div>
 			</div>
-		</form>	    
-	
+		</form>
+
 	<!-- Modal Agregar Contacto -->
 	 	<form action="#" method="POST">
 	 		<input type="hidden" id="opcion" name="opcion" value="agregarcontacto">
@@ -447,7 +447,7 @@
 				<div class="modal-dialog modal-lg" role="document">
 					<div class="modal-content">
 						<div class="modal-header">
-							<h4 class="modal-title" id="modalNuevaCotizacionLabel"><b>Agregar contacto</b></h4>
+							<h4 class="modal-title" id="modalNuevaCotizacionLabel">Agregar contacto</h4>
 							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 						</div>
 						<div class="modal-body container">
@@ -460,7 +460,7 @@
 									<div class="form-group col">
 										<label for="puesto">Puesto <font color="#FF4136">*</font></label>
 										<input type="text" id="puesto" name="puesto" class="form-control form-control-sm" required>
-									</div>	
+									</div>
 								</div>
 								<div class="row">
 									<div class="form-group col">
@@ -474,7 +474,7 @@
 									<div class="form-group col">
 										<label for="ciudad">Ciudad</label>
 										<input type="text" id="ciudad" name="ciudad" class="form-control form-control-sm" placeholder="Opcional">
-									</div>		
+									</div>
 								</div>
 								<div class="row">
 									<div class="form-group col">
@@ -488,7 +488,7 @@
 									<div class="form-group col">
 										<label for="pais">Pais</label>
 										<input type="text" id="pais" name="pais" class="form-control form-control-sm" placeholder="Opcional">
-									</div>		
+									</div>
 								</div>
 								<div class="row">
 									<div class="form-group col">
@@ -502,7 +502,7 @@
 									<div class="form-group col">
 										<label for="correoElectronico">Correo electronico <font color="#FF4136">*</font></label>
 										<input type="text" id="correoElectronico" name="correoElectronico" class="form-control form-control-sm">
-									</div>		
+									</div>
 								</div>
 							</div>
 						</div>
@@ -513,7 +513,7 @@
 					</div>
 				</div>
 			</div>
-		</form>	  
+		</form>
 
 	<!-- Modal Nueva Remisión -->
 		<form name="agregarRemision" action="#" method="POST">
@@ -522,7 +522,7 @@
 				<div class="modal-dialog modal-lg" role="document">
 					<div class="modal-content">
 						<div class="modal-header">
-							<h4 class="modal-title" id="modalNuevaCotizacionLabel"><i class="fas fa-file"></i><b> Nueva remisión</b></h4>
+							<h4 class="modal-title" id="modalNuevaCotizacionLabel"><i class="fas fa-file"></i> Nueva remisión</h4>
 							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 						</div>
 						<div class="modal-body container">
@@ -585,7 +585,7 @@
 			</div>
 		</form>
 
-	<!-- Modal OC Pendientes -->		
+	<!-- Modal OC Pendientes -->
 		<div class="modal fade" id="modalOCPendientes" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
@@ -603,21 +603,21 @@
 							<div class="form-group row justify-content-center col-12">
 								<select name="proveedoressinoc" id="proveedoressinoc" class="form-control col-6" onchange="verproveedor2()"></select>
 							</div>
-						</div>				      		
+						</div>
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
 					</div>
 				</div>
 			</div>
-		</div> 
-		  			
+		</div>
+
 	</header>
-	<?php include('../../enlacesjs.php'); ?>  
+	<?php include('../../enlacesjs.php'); ?>
 	<script>
 		$(document).ready(function(){
 			App.init();
-      		App.pageCalendar();       
+      		App.pageCalendar();
       		App.formElements();
       		App.uiNotifications();
 			var idcliente = "<?php echo $_REQUEST['id']; ?>";
@@ -632,7 +632,7 @@
 				url: "buscar.php",
 				dataType: "json",
 				data: {"opcion": opcion, "idusuario": idusuario},
-				success: function ( data ){		
+				success: function ( data ){
 					console.log(data);
 					$("form #usuariologin").val(data.datosusuario.nombre + " " + data.datosusuario.apellidos);
 					$("form #dplogin").val(data.datosusuario.dp);
@@ -686,7 +686,7 @@
 				"buttons":[
 		            {
 			            extend: 'collection',
-			            text: 'Exportar tabla',
+			            text: '<i class="fas fa-table fa-sm"></i> Exportar tabla',
 			            "className": "btn btn-lg btn-space btn-secondary",
 			            buttons: [
 			                {
@@ -768,7 +768,7 @@
 				"buttons":[
 		            {
 			            extend: 'collection',
-			            text: 'Exportar tabla',
+			            text: '<i class="fas fa-table fa-sm"></i> Exportar tabla',
 			            "className": "btn btn-lg btn-space btn-secondary",
 			            buttons: [
 			                {
@@ -853,7 +853,7 @@
 				"buttons":[
 		            {
 			            extend: 'collection',
-			            text: 'Exportar tabla',
+			            text: '<i class="fas fa-table fa-sm"></i> Exportar tabla',
 			            "className": "btn btn-lg btn-space btn-secondary",
 			            buttons: [
 			                {
@@ -892,7 +892,7 @@
 			                  pageSize: 'LEGAL'
 			                }
 			            ]
-			        },	
+			        },
 				]
 		    });
 		}
@@ -936,7 +936,7 @@
 					"buttons":[
 			            {
 			            extend: 'collection',
-			            text: 'Exportar tabla',
+			            text: '<i class="fas fa-table fa-sm"></i> Exportar tabla',
 			            "className": "btn btn-lg btn-space btn-secondary",
 			            buttons: [
 			                {
@@ -975,13 +975,13 @@
 			                  pageSize: 'LEGAL'
 			                }
 			            ]
-			        },	
+			        },
 					]
 		    });
 			obtener_data_ver_cotizacion("#dt_listar_cotizaciones tbody", table);
 		}
 
-		var obtener_data_ver_cotizacion = function(tbody, table){ // se obtiene el id del usuario para eliminar del DT Usuarios 
+		var obtener_data_ver_cotizacion = function(tbody, table){ // se obtiene el id del usuario para eliminar del DT Usuarios
 			$(tbody).on("click", "button.vercotizacion", function(){
 				var data = table.row( $(this).parents("tr") ).data();
 				var cotizacion = data.cotizacion;
@@ -990,7 +990,7 @@
 		}
 
 		function buscardatoscliente(idcliente){
-			var opcion = "datoscliente";	
+			var opcion = "datoscliente";
 			$.ajax({
 				method: "POST",
 				url: "buscar.php",
@@ -1037,22 +1037,22 @@
 					if (data.respuesta == "Ninguno") {
 						$("form #contactocliente").empty();
 						$("form #contactocliente").append("<option>Ninguno</option>");
-						$("form #contactocliente").append("<option>- Agregar contacto -</option>");	
+						$("form #contactocliente").append("<option>- Agregar contacto -</option>");
 					}else{
 						var contactos = data;
 						$('#contactocliente').empty();
 						var contacto = document.getElementById("contactocliente");
-						for(var i=0;i<contactos.length;i++){ 
+						for(var i=0;i<contactos.length;i++){
 		           	 		$("#contactocliente").append("<option>" + contactos[i] + "</option>");
 		 				};
 		 				$("form #contactocliente").append("<option>- Agregar contacto -</option>");
 					}
 	   			}
-			});	
+			});
 		})
 
 		$('#modalNuevaRemision').on('show.bs.modal', function (e) {
-			var idcontacto = "<?php echo $_REQUEST['id']; ?>";	
+			var idcontacto = "<?php echo $_REQUEST['id']; ?>";
 			var opcion = "nuevaremision";
 			console.log(opcion);
 			$.ajax({
@@ -1081,20 +1081,20 @@
 					if (data.respuesta == "Ninguno") {
 						$("form #contactoCliente").empty();
 						$("form #contactoCliente").append("<option>Ninguno</option>");
-						$("form #contactoCliente").append("<option>- Agregar contacto -</option>");	
+						$("form #contactoCliente").append("<option>- Agregar contacto -</option>");
 						$("#frmagregarcontacto #idcliente").val(data.idcliente);
 					}else{
 						var contactos = data;
 						$('#contactoCliente').empty();
 						var contacto = document.getElementById("contactoCliente");
-						for(var i=0;i<contactos.length;i++){ 
+						for(var i=0;i<contactos.length;i++){
 							$("#contactoCliente").append("<option>" + contactos[i] + "</option>");
 						};
 						$("form #contactoCliente").append("<option>- Agregar contacto -</option>");
 					}
 				}
-			});	
-		})		
+			});
+		})
 
 		function seleccionartodo(){
 			$("input[name=hremision]").each(function (index) {
@@ -1147,8 +1147,8 @@
 				$("#formapago").val(data.contacto.IdFormaPago);
 				$("#metodopago").val(data.contacto.IdMetodoPago);
 				$("#cfdi").val(data.contacto.IdUsoCFDI);
-			});		
-		})	
+			});
+		})
 
 		var guardar = function(){
 			$("form").on("submit", function(e){

@@ -1,4 +1,4 @@
-<?php 
+<?php
 	require_once('../../conexion.php'); // Llamada a connect.php para establecer conexi�n con la BD
 	require_once('../../sesion.php'); // Llamada a sesion.php para validar si hay sesi�n inciada
 	error_reporting(0);
@@ -36,7 +36,7 @@
 											<input class="btn btn-primary" type="submit" value="Buscar" />
 										</div> -->
 									</form>
-								
+
 								<!-- Grupo de botones -->
 									<div class="row justify-content-center btn-toolbar">
 										<div role="group" class="btn-group btn-group-justified mb-2 col-6">
@@ -46,7 +46,7 @@
 											<a href="#" id="btnterminado" class="btn btn-primary btn-space" onclick="listar_terminado()">TERMINADO</a href="#">
 										</div>
 									</div>
-								
+
 								<!-- Tabla de No entregado -->
 									<div id="noentregado">
 										<br>
@@ -67,7 +67,7 @@
 											</thead>
 										</table>
 									</div>
-								
+
 								<!-- Tabla de sin proveedor -->
 									<div id="sinproveedor">
 										<br>
@@ -88,7 +88,7 @@
 											</thead>
 										</table>
 									</div>
-								
+
 								<!-- Tabla de nopagado -->
 									<div id="nopagado">
 										<br>
@@ -129,15 +129,15 @@
 												</tr>
 											</thead>
 										</table>
-									</div>	
+									</div>
                       		</div>
                     	</div>
                 	</div>
             	</div>
       		</div>
     	</div>
-		
-		<!-- Modal OC Pendientes -->		
+
+		<!-- Modal OC Pendientes -->
 				<div class="modal fade" id="modalOCPendientes" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 					<div class="modal-dialog" role="document">
 						<div class="modal-content">
@@ -155,7 +155,7 @@
 									<div class="form-group row justify-content-center col-12">
 										<select name="proveedoressinoc" id="proveedoressinoc" class="form-control col-6" onchange="verproveedor2()"></select>
 									</div>
-								</div>				      		
+								</div>
 							</div>
 							<div class="modal-footer">
 								<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
@@ -166,11 +166,11 @@
 	</header>
 	<?php include("../../enlacesjs.php"); ?>
 	<script>
-		$(document).ready(function(){	
+		$(document).ready(function(){
 			App.init();
-      		App.pageCalendar();       
+      		App.pageCalendar();
       		App.formElements();
-      		App.uiNotifications();	
+      		App.uiNotifications();
 			listar_sinproveedor();
 		});
 
@@ -220,7 +220,7 @@
 					"buttons":[
 			            {
 				            extend: 'collection',
-				            text: 'Exportar tabla',
+				            text: '<i class="fas fa-table fa-sm"></i> Exportar tabla',
 				            "className": "btn btn-lg btn-space btn-secondary",
 				            buttons: [
 				                {
@@ -278,7 +278,7 @@
 			$("#btnnopagado").addClass("btn-secondary");
 			$("#btnterminado").removeClass("btn-primary");
 			$("#btnterminado").addClass("btn-secondary");
-			var buscar = $("#buscar").val();		
+			var buscar = $("#buscar").val();
 			var opcion = "noentregado";
 			console.log(buscar);
 			console.log(opcion);
@@ -311,7 +311,7 @@
 					"buttons":[
 			            {
 				            extend: 'collection',
-				            text: 'Exportar tabla',
+				            text: '<i class="fas fa-table fa-sm"></i> Exportar tabla',
 				            "className": "btn btn-lg btn-space btn-secondary",
 				            buttons: [
 				                {
@@ -402,7 +402,7 @@
 					"buttons":[
 			            {
 				            extend: 'collection',
-				            text: 'Exportar tabla',
+				            text: '<i class="fas fa-table fa-sm"></i> Exportar tabla',
 				            "className": "btn btn-lg btn-space btn-secondary",
 				            buttons: [
 				                {
@@ -499,7 +499,7 @@
 					"buttons":[
 			            {
 				            extend: 'collection',
-				            text: 'Exportar tabla',
+				            text: '<i class="fas fa-table fa-sm"></i> Exportar tabla',
 				            "className": "btn btn-lg btn-space btn-secondary",
 				            buttons: [
 				                {
@@ -548,7 +548,7 @@
 			$(tbody).on("click", "button.verpedido", function(){
 				var data = table.row( $(this).parents("tr") ).data();
 				console.log(data);
-				window.location=("verPedido.php?refCotizacion="+data.cotizacionRef+"&numeroPedido="+data.numeroPedido);	
+				window.location=("verPedido.php?refCotizacion="+data.cotizacionRef+"&numeroPedido="+data.numeroPedido);
 			});
 		}
 

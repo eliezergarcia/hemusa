@@ -27,7 +27,7 @@
 	                <div class="user-name"><?php echo $usuario." ".$usuarioApellido; ?></div>
 	                <div class="user-position online">Disponible</div>
 	              </div>
-	              	<a href="<?php echo $ruta;?>php/perfil.php" class="dropdown-item"><span class="icon mdi mdi-face"></span> Cuenta</a>
+	              	<a href="<?php echo $ruta;?>php/inicio/perfil/perfil.php" class="dropdown-item"><span class="icon mdi mdi-face"></span> Cuenta</a>
 	              	<a href="#" class="dropdown-item"><span class="icon mdi mdi-settings"></span> Configuración</a>
 	              	<a href="<?php echo $logoutGoTo; ?>" class="dropdown-item"><span class="icon mdi mdi-power"></span> Cerrar sesión</a>
 	            </div>
@@ -400,45 +400,19 @@
                           <label for="st2"></label></span>
                       </div><span class="name">Habilitar notificaciones</span>
                     </li>
-                    <li>
-                      <div class="switch-button switch-button-sm">
-                        <input type="checkbox" checked="" name="st3" id="st3"><span>
-                          <label for="st3"></label></span>
-                      </div><span class="name">Login con Facebook</span>
-                    </li>
                   </ul><span class="category-title">Notificaciones</span>
                   <ul class="settings-list">
                     <li>
                       <div class="switch-button switch-button-sm">
                         <input type="checkbox" name="st4" id="st4"><span>
                           <label for="st4"></label></span>
-                      </div><span class="name">Notificaciones de email</span>
+                      </div><span class="name">Nuevos email</span>
                     </li>
-                    <li>
-                      <div class="switch-button switch-button-sm">
-                        <input type="checkbox" checked="" name="st5" id="st5"><span>
-                          <label for="st5"></label></span>
-                      </div><span class="name">Actualizaciones de proyectp</span>
-                    </li>
-                    <li>
-                      <div class="switch-button switch-button-sm">
-                        <input type="checkbox" checked="" name="st6" id="st6"><span>
-                          <label for="st6"></label></span>
-                      </div><span class="name">Nuevos comentarios</span>
-                    </li>
-                    <li>
+										<li>
                       <div class="switch-button switch-button-sm">
                         <input type="checkbox" name="st7" id="st7"><span>
                           <label for="st7"></label></span>
                       </div><span class="name">Mensajes de chat</span>
-                    </li>
-                  </ul><span class="category-title">Flujo de trabajo</span>
-                  <ul class="settings-list">
-                    <li>
-                      <div class="switch-button switch-button-sm">
-                        <input type="checkbox" name="st8" id="st8"><span>
-                          <label for="st8"></label></span>
-                      </div><span class="name">Implementar en commit</span>
                     </li>
                   </ul>
                 </div>

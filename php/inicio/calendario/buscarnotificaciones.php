@@ -1,5 +1,5 @@
-<?php 	
-	include("../conexion.php");
+<?php
+	include("../../conexion.php");
 
 	$opcion = $_POST['opcion'];
 
@@ -8,11 +8,11 @@
 			$id = $_POST['id'];
 			buscarevento($id, $conexion_usuarios);
 			break;
-        
+
         case 'buscarocpendientes':
             buscar_oc_pendientes($conexion_usuarios);
             break;
-        
+
         case 'proveedoressinoc':
 			proveedoressinoc($conexion_usuarios);
 		    break;
@@ -32,7 +32,7 @@
 		echo json_encode($informacion);
 		mysqli_close($conexion_usuarios);
     }
-    
+
     function buscar_oc_pendientes($conexion_usuarios){
         $query = "SELECT DISTINCT Proveedor FROM cotizacionherramientas WHERE Pedido = 'si' AND noDePedido = ''";
         $resultado = mysqli_query($conexion_usuarios, $query);
@@ -77,8 +77,8 @@
 					}
 					$proveedores[] = utf8_encode($idproveedor);
 					$proveedores[] = utf8_encode($proveedor);
-				}	
-			}			
+				}
+			}
 		}
 		echo json_encode($proveedores);
 	}

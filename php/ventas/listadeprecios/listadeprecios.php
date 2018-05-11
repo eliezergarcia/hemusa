@@ -1,4 +1,4 @@
-<?php 
+<?php
 	require_once('../../conexion.php'); // Llamada a connect.php para establecer conexión con la BD
 	require_once('../../sesion.php'); // Llamada a sesion.php para validar si hay sesión inciada
 	error_reporting(0);
@@ -11,7 +11,7 @@
 	<?php include('../../enlacescss.php'); ?>
 </head>
 <body>
-	
+
 	<?php include('../../header.php'); ?>
 		<div class="be-content">
           	<div class="page-head">
@@ -31,7 +31,7 @@
                           		<!-- Form buscar en Lista de precios -->
                           			<br>
 									<div>
-								        <h4>Buscar herramienta en lista</h4>								        	
+								        <h4>Buscar herramienta en lista</h4>
 								      	<form action="#" method="POST">
 								        	<div class="form-group row">
 								          		<label for="palabraBusca" class="col-1 col-form-label">Busca Producto</label>
@@ -67,14 +67,14 @@
 								<!-- Tabla Lista de precios -->
 									<table id="dt_precios" class="table table-striped table-hover display compact" cellspacing="0" width="100%">
 										<thead>
-											<tr>								
+											<tr>
 												<th>Marca</th>
 												<th>Modelo</th>
-												<th>Descripción</th>											
+												<th>Descripción</th>
 												<th>Precio de lista</th>
 												<th>Precio con IVA</th>
 												<th>Almacen</th>
-												<th>Moneda</th>	
+												<th>Moneda</th>
 												<th>Clase</th>
 												<th>IGI</th>
 												<th>Ver y Editar</th>
@@ -116,14 +116,14 @@
 			    	</div>
 			  	</div>
 			</div>
-		
+
 		<!-- Modal Informacion Herramienta -->
 			<form action="" method="POST">
 				<div class="modal fade colored-header colored-header-primary" id="modalInformacion" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
 			  		<div class="modal-dialog modal-lg" role="document">
 			    		<div class="modal-content">
 			      			<div class="modal-header">
-			        			<h4 class="modal-title" id="exampleModalLabel"><b><i class="icon fas fa-edit" aria-hidden="true"></i> Información de herramienta</b></h4>
+			        			<h4 class="modal-title" id="exampleModalLabel"><i class="icon fas fa-edit" aria-hidden="true"></i> Información de herramienta</h4>
 			        			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 			          				<span aria-hidden="true">&times;</span>
 			        			</button>
@@ -167,15 +167,15 @@
 			  		</div>
 				</div>
 			</form>
-				
+
 	<header>
 	<?php include('../../enlacesjs.php'); ?>
 	<script>
 		$(document).ready(function(){
 			App.init();
-      		App.pageCalendar();       
-      		App.formElements();
-      		App.uiNotifications();
+  		App.pageCalendar();
+  		App.formElements();
+  		App.uiNotifications();
 			guardar();
 		});
 
@@ -234,7 +234,7 @@
 					"method":"POST",
 					"url":"listar_precios.php",
 					"data": {
-						"palabraBusca": palabraBusca, 
+						"palabraBusca": palabraBusca,
 						"marcaBuscar": marcaBuscar
 					}
 				},
@@ -259,7 +259,7 @@
 				"buttons":[
 		            {
 		            extend: 'collection',
-		            text: 'Exportar tabla',
+		            text: '<i class="fas fa-table fa-sm"></i> Exportar tabla',
 		            "className": "btn btn-lg btn-space btn-secondary",
 		            buttons: [
 		                {

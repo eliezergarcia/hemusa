@@ -39,19 +39,6 @@
                                   <th>Eliminar Cliente</th>
                                 </tr>
                               </thead>
-                              <tbody>
-                              </tbody>
-                              <tfoot>
-                                <tr>
-                                  <th>Nombre empresa</th>
-                                  <th>Persona contacto</th>
-                                  <th>Teléfono #1</th>
-                                  <th>Fáx</th>
-                                  <th>Correo electrónico</th>
-                                  <td></td>   
-                                  <td></td>
-                                </tr>
-                              </tfoot>
                             </table>
 
                           <br>
@@ -69,7 +56,7 @@
           <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel"><i class="fas fa-address-card fa-sm"></i><b> Registro de cliente</b></h5>
+                <h4 class="modal-title" id="exampleModalLabel"><i class="fas fa-address-card fa-sm"></i> Registro de cliente</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
@@ -175,7 +162,7 @@
               <div class="modal-body">
                 <div class="text-center">
                   <div class="text-center"><span class="modal-main-icon mdi mdi-close-circle-o"></span></div>
-                  <h4><b>¿Está seguro de eliminar el cliente?</b></h4>
+                  <h4>¿Está seguro de eliminar el cliente?</h4>
                   <div class="row justify-content-center"><input type="text" class="disabled form-control col-6 form-control form-control-sm" id="nombreEmpresa" name="nombreEmpresa"></div>
                   <div class="mt-8 invoice-footer">
                     <button type="button" class="btn btn-lg btn-secondary" data-dismiss="modal">Cancelar</button>
@@ -219,18 +206,9 @@
   </header>
   <?php include('../../enlacesjs.php'); ?>
   <script type="text/javascript">
-    $.fn.niftyModal('setDefaults',{
-        overlaySelector: '.modal-overlay',
-        contentSelector: '.modal-content',
-        closeSelector: '.modal-close',
-        classAddAfterOpen: 'modal-show'
-    });
-
     $(document).ready(function(){
-      // buscar_oc_pendientes();
-		  // setInterval(buscar_oc_pendientes, 3000);
       App.init();
-      App.pageCalendar();       
+      App.pageCalendar();
       App.formElements();
       App.uiNotifications();
       listar_clientes();
@@ -238,11 +216,6 @@
     });
 
     var listar_clientes = function(){
-      $('#dt_clientes tfoot th').each( function () {
-          var title = $(this).text();
-          $(this).html( '<input class="form-control form-control-xs" type="text" placeholder="Buscar '+ title +'" />' );
-        });
-
       var opcion = "clientes";
       var table = $("#dt_clientes").DataTable({
         "destroy":"true",
@@ -274,7 +247,7 @@
         "buttons":[
           {
             extend: 'collection',
-            text: 'Exportar tabla',
+            text: '<i class="fas fa-table fa-sm"></i> Exportar tabla',
             "className": "btn btn-lg btn-space btn-secondary",
             buttons: [
                 {
@@ -316,7 +289,7 @@
           },
           {
             text: '<i class="fas fa-address-card fa-sm"></i> Agregar cliente',
-            "className": "btn btn-lg btn-space btn-success",
+            "className": "btn btn-lg btn-space btn-secondary",
             action: function (e, dt, node, config){
               $("#modalAgregarCliente").modal("show");
             }

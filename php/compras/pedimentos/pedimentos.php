@@ -24,7 +24,7 @@
               <div class="row full-calendar">
                 <div class="col-lg-12">
                     <div class="card card-fullcalendar">
-                        <div class="card-body">                             
+                        <div class="card-body">
                            <!-- Form buscar pedimentos -->
                             <div class="col-12">
                               <div class="row justify-content-center">
@@ -41,7 +41,7 @@
                                     <button class="btn btn-lg btn-primary" onclick="listar()"><i class="fas fa-search fa-sm"></i> Buscar</button>
                                   </div>
                                   <div class="row justify-content-center form-group">
-                                    <button class="btn btn-lg btn-success" data-toggle="modal" data-target="#modalAgregarPedimento"><i class="far fa-file-alt fa-sm"></i> Agregar pedimento</button>
+                                    <button class="btn btn-lg btn-secondary" data-toggle="modal" data-target="#modalAgregarPedimento"><i class="far fa-file-alt fa-sm"></i> Agregar pedimento</button>
                                   </div>
                                 </div>
                               </div>
@@ -75,7 +75,7 @@
           <div class="modal-dialog" role="document">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel"><i class="far fa-file-alt fa-sm"></i><b> Registro de pedimento</b></h5>
+                <h4 class="modal-title" id="exampleModalLabel"><i class="far fa-file-alt fa-sm"></i> Registro de pedimento</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
@@ -135,7 +135,7 @@
           <div class="modal-dialog" role="document">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel"><i class="icon fas fa-edit fa-sm"></i><b> Información de pedimento</b></h5>
+                <h4 class="modal-title" id="exampleModalLabel"><i class="icon fas fa-edit fa-sm"></i> Información de pedimento</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
@@ -185,15 +185,15 @@
             </div>
           </div>
         </div>
-      </form>    
+      </form>
   </head>
   <?php include('../../enlacesjs.php'); ?>
   <script>
     $(document).ready(function(){
       App.init();
-      App.pageCalendar();       
+      App.pageCalendar();
       App.formElements();
-      App.uiNotifications();  
+      App.uiNotifications();
       guardar();
     });
 
@@ -319,7 +319,7 @@
         "buttons":[
           {
             extend: 'collection',
-            text: 'Exportar tabla',
+            text: '<i class="fas fa-table fa-sm"></i> Exportar tabla',
             "className": "btn btn-lg btn-space btn-secondary",
             buttons: [
                 {

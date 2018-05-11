@@ -25,7 +25,7 @@
               <div class="row full-calendar">
                 <div class="col-lg-12">
                     <div class="card card-fullcalendar">
-                        <div class="card-body">                             
+                        <div class="card-body">
                            <!-- Tabla de proveedores -->
                             <br>
                             <table id="dt_proveedores" class="table table-striped table-hover compact" cellspacing="0" width="100%">
@@ -56,7 +56,7 @@
           <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel"><i class="icon fas fa-address-card"></i> <b>Agregar Proveedor</b></h5>
+                <h4 class="modal-title" id="exampleModalLabel"><i class="icon fas fa-address-card"></i> Agregar Proveedor</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
@@ -160,7 +160,7 @@
               <div class="modal-body">
                 <div class="text-center">
                     <div class="text-center"><span class="modal-main-icon mdi mdi-close-circle-o"></span></div>
-                    <h4><b>¿Está seguro de eliminar el proveedor?</b></h4>
+                    <h4>¿Está seguro de eliminar el proveedor?</h4>
                     <div class="row justify-content-center">
                       <input type="text" class="disabled form-control form-control-sm col-6" id="nombreEmpresa" name="nombreEmpresa" disabled>
                     </div>
@@ -209,9 +209,9 @@
   <script>
     $(document).ready(function(){
       App.init();
-      App.pageCalendar();       
+      App.pageCalendar();
       App.formElements();
-      App.uiNotifications();  
+      App.uiNotifications();
     //   buscar_oc_pendientes();
 		  // setInterval(buscar_oc_pendientes, 3000);
       listar_proveedores();
@@ -249,7 +249,7 @@
         "buttons":[
           {
             extend: 'collection',
-            text: 'Exportar tabla',
+            text: '<i class="fas fa-table fa-sm"></i> Exportar tabla',
             "className": "btn btn-lg btn-space btn-secondary",
             buttons: [
                 {
@@ -291,7 +291,7 @@
           },
           {
             text: '<i class="fas fa-address-card fa-sm" aria-hidden="true"></i> Agregar proveedor',
-            "className": "btn btn-lg btn-space btn-success",
+            "className": "btn btn-lg btn-space btn-secondary",
             titleAttr: 'Agregar Proveedor',
             action: function (e, dt, node, config){
               $("#modalAgregarProveedor").modal("show");

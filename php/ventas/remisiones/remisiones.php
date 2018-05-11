@@ -55,7 +55,7 @@
 				<div class="modal-dialog modal-lg" role="document">
 					<div class="modal-content">
 						<div class="modal-header">
-							<h4 class="modal-title" id="modalNuevaCotizacionLabel"><i class="fas fa-file fa-sm"></i><b> Nueva remisión</b></h4>
+							<h4 class="modal-title" id="modalNuevaCotizacionLabel"><i class="fas fa-file fa-sm"></i> Nueva remisión</h4>
 							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 						</div>
 						<div class="modal-body container">
@@ -155,7 +155,7 @@
 				"buttons":[
 		            {
 			            extend: 'collection',
-			            text: 'Exportar tabla',
+			            text: '<i class="fas fa-table fa-sm"></i> Exportar tabla',
 			            "className": "btn btn-lg btn-space btn-secondary",
 			            buttons: [
 				                {
@@ -197,7 +197,7 @@
 		          	},
 					{
 						text: '<i class="fas fa-file fa-sm" aria-hidden="true"></i> Nueva remisión',
-						"className": "btn btn-lg btn-space btn-success",
+						"className": "btn btn-lg btn-space btn-secondary",
 						action: function (e, dt, node, config){
 							$('#modalNuevaRemision').modal('show');
 						}
