@@ -50,7 +50,7 @@
                     </div>
                     <div class="col row">
                       <input type="text" name="" class="form-control form-control-sm col-10 input2" value="">
-                      <i class="fas fa-pencil-alt fa-lg" style="margin-top: 15px; padding-left: 30px;"></i>
+                      <a href="#"><a href="#"><i class="fas fa-pencil-alt fa-lg" style="margin-top: 15px; padding-left: 30px;"></i></a></a>
                     </div>
                   </div>
                   <div class="form-group row">
@@ -60,7 +60,7 @@
                     </div>
                     <div class="col row">
                       <input type="text" name="" class="form-control form-control-sm col-10 input2" value="">
-                      <i class="fas fa-pencil-alt fa-lg" style="margin-top: 15px; padding-left: 30px;"></i>
+                      <a href="#"><i class="fas fa-pencil-alt fa-lg" style="margin-top: 15px; padding-left: 30px;"></i></a>
                     </div>
                   </div>
                   <div class="form-group row">
@@ -70,7 +70,7 @@
                     </div>
                     <div class="col row">
                       <input type="text" name="" class="form-control form-control-sm col-10 input2" value="">
-                      <i class="fas fa-pencil-alt fa-lg" style="margin-top: 15px; padding-left: 30px;"></i>
+                      <a href="#"><i class="fas fa-pencil-alt fa-lg" style="margin-top: 15px; padding-left: 30px;"></i></a>
                     </div>
                   </div>
                   <div class="form-group row">
@@ -80,7 +80,7 @@
                     </div>
                     <div class="col row">
                       <input type="text" name="" class="form-control form-control-sm col-10 input2" value="">
-                      <i class="fas fa-pencil-alt fa-lg" style="margin-top: 15px; padding-left: 30px;"></i>
+                      <a href="#"><i class="fas fa-pencil-alt fa-lg" style="margin-top: 15px; padding-left: 30px;"></i></a>
                     </div>
                   </div>
                   <div class="form-group row">
@@ -90,7 +90,7 @@
                     </div>
                     <div class="col row">
                       <input type="text" name="" class="form-control form-control-sm col-10 input2" value="">
-                      <i class="fas fa-pencil-alt fa-lg" style="margin-top: 15px; padding-left: 30px;"></i>
+                      <a href="#"><i class="fas fa-pencil-alt fa-lg" style="margin-top: 15px; padding-left: 30px;"></i></a>
                     </div>
                   </div>
                   <div class="form-group row">
@@ -100,7 +100,7 @@
                     </div>
                     <div class="col row">
                       <input type="text" name="" class="form-control form-control-sm col-10 input2" value="">
-                      <i class="fas fa-pencil-alt fa-lg" style="margin-top: 15px; padding-left: 30px;"></i>
+                      <a href="#"><i class="fas fa-pencil-alt fa-lg" style="margin-top: 15px; padding-left: 30px;"></i></a>
                     </div>
                   </div>
                   <div class="form-group row">
@@ -110,7 +110,7 @@
                     </div>
                     <div class="col row">
                       <input type="text" name="" class="form-control form-control-sm col-10 input2" value="">
-                      <i class="fas fa-pencil-alt fa-lg" style="margin-top: 15px; padding-left: 30px;"></i>
+                      <a href="#"><i class="fas fa-pencil-alt fa-lg" style="margin-top: 15px; padding-left: 30px;"></i></a>
                     </div>
                   </div>
                   <div class="form-group row">
@@ -120,7 +120,7 @@
                     </div>
                     <div class="col row">
                       <input type="text" name="" class="form-control form-control-sm col-10 input2" value="">
-                      <i class="fas fa-pencil-alt fa-lg" style="margin-top: 15px; padding-left: 30px;"></i>
+                      <a href="#"><i class="fas fa-pencil-alt fa-lg" style="margin-top: 15px; padding-left: 30px;"></i></a>
                     </div>
                   </div>
                   <div class="form-group row">
@@ -130,7 +130,7 @@
                     </div>
                     <div class="col row">
                       <input type="text" name="" class="form-control form-control-sm col-10 input2" value="">
-                      <i class="fas fa-pencil-alt fa-lg" style="margin-top: 15px; padding-left: 30px;"></i>
+                      <a href="#"><i class="fas fa-pencil-alt fa-lg" style="margin-top: 15px; padding-left: 30px;"></i></a>
                     </div>
                   </div>
                 </div>

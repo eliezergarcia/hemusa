@@ -152,96 +152,10 @@
                     </ul>
                   </li>
 	              <li class="divider">Features</li>
-	              <li class="parent"><a href="#"><i class="icon fas fa-envelope"></i><span>Email</span></a>
-	                <ul class="sub-menu">
-	                  <li><a href="email-inbox.html">Inbox</a>
-	                  </li>
-	                  <li><a href="email-read.html">Email Detail</a>
-	                  </li>
-	                  <li><a href="email-compose.html">Email Compose</a>
-	                  </li>
-	                </ul>
-	              </li>
-	              <li class="parent"><a href="#"><i class="icon mdi mdi-view-web"></i><span>Layouts</span></a>
-	                <ul class="sub-menu">
-	                  <li><a href="layouts-primary-header.html">Primary Header</a>
-	                  </li>
-	                  <li><a href="layouts-success-header.html">Success Header</a>
-	                  </li>
-	                  <li><a href="layouts-warning-header.html">Warning Header</a>
-	                  </li>
-	                  <li><a href="layouts-danger-header.html">Danger Header</a>
-	                  </li>
-	                  <li><a href="layouts-search-input.html"><span class="badge badge-primary float-right">New</span>Search Input</a>
-	                  </li>
-	                  <li><a href="layouts-offcanvas-menu.html"><span class="badge badge-primary float-right">New</span>Off Canvas Menu</a>
-	                  </li>
-	                  <li><a href="layouts-nosidebar-left.html">Without Left Sidebar</a>
-	                  </li>
-	                  <li><a href="layouts-nosidebar-right.html">Without Right Sidebar</a>
-	                  </li>
-	                  <li><a href="layouts-nosidebars.html">Without Both Sidebars</a>
-	                  </li>
-	                  <li><a href="layouts-fixed-sidebar.html">Fixed Left Sidebar</a>
-	                  </li>
-	                  <li><a href="layouts-boxed-layout.html"><span class="badge badge-primary float-right">New</span>Boxed Layout</a>
-	                  </li>
-	                  <li><a href="pages-blank-aside.html">Page Aside</a>
-	                  </li>
-	                  <li><a href="layouts-collapsible-sidebar.html">Collapsible Sidebar</a>
-	                  </li>
-	                  <li><a href="layouts-sub-navigation.html"><span class="badge badge-primary float-right">New</span>Sub Navigation</a>
-	                  </li>
-	                </ul>
-	              </li>
-	              <li class="parent"><a href="#"><i class="icon fas fa-map"></i><span>Maps</span></a>
-	                <ul class="sub-menu">
-	                  <li><a href="maps-google.html">Google Maps</a>
-	                  </li>
-	                  <li><a href="maps-vector.html">Vector Maps</a>
-	                  </li>
-	                </ul>
-	              </li>
-	              <li class="parent"><a href="#"><i class="icon fas fa-bars"></i><span>Menu Levels</span></a>
-	                <ul class="sub-menu">
-	                  <li class="parent"><a href="#"><i class="icon mdi mdi-undefined"></i><span>Level 1</span></a>
-	                    <ul class="sub-menu">
-	                      <li><a href="#"><i class="icon mdi mdi-undefined"></i><span>Level 2</span></a>
-	                      </li>
-	                      <li class="parent"><a href="#"><i class="icon mdi mdi-undefined"></i><span>Level 2</span></a>
-	                        <ul class="sub-menu">
-	                          <li><a href="#"><i class="icon mdi mdi-undefined"></i><span>Level 3</span></a>
-	                          </li>
-	                          <li><a href="#"><i class="icon mdi mdi-undefined"></i><span>Level 3</span></a>
-	                          </li>
-	                        </ul>
-	                      </li>
-	                    </ul>
-	                  </li>
-	                  <li class="parent"><a href="#"><i class="icon mdi mdi-undefined"></i><span>Level 1</span></a>
-	                    <ul class="sub-menu">
-	                      <li><a href="#"><i class="icon mdi mdi-undefined"></i><span>Level 2</span></a>
-	                      </li>
-	                      <li class="parent"><a href="#"><i class="icon mdi mdi-undefined"></i><span>Level 2</span></a>
-	                        <ul class="sub-menu">
-	                          <li><a href="#"><i class="icon mdi mdi-undefined"></i><span>Level 3</span></a>
-	                          </li>
-	                          <li><a href="#"><i class="icon mdi mdi-undefined"></i><span>Level 3</span></a>
-	                          </li>
-	                        </ul>
-	                      </li>
-	                    </ul>
-	                  </li>
-	                </ul>
-	              </li>
+	              <li><a href="#"><i class="icon fas fa-envelope"></i><span>Email</span></a></li>
+								<li><a href="#"><i class="icon fas fa-images"></i><span>Galería</span></a></li>
 	            </ul>
 	          </div>
-	        </div>
-	      </div>
-	      <div class="progress-widget">
-	        <div class="progress-data"><span class="progress-value">60%</span><span class="name">Current Project</span></div>
-	        <div class="progress">
-	          <div style="width: 60%;" class="progress-bar progress-bar-primary"></div>
 	        </div>
 	      </div>
 	    </div>
