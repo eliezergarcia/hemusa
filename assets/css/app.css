@@ -16815,7 +16815,7 @@ form.dropzone {
   border-radius: 2px;
   background-color: #FFFFFF; }
   .user-display-bg {
-    max-height: 250px;
+    max-height: 200px;
     overflow: hidden; }
     .user-display-bg img {
       width: 100%;

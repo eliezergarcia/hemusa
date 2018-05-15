@@ -1,6 +1,6 @@
 var App = (function () {
   'use strict';
-  
+
   App.pageCalendar = function( ){
 
 
@@ -104,7 +104,7 @@ var App = (function () {
       dayClick: function(date, jsEvent, view) {
             $("#modalEvento").modal("show");
             // var dia = date.format("DD/MM/YYYY");
-            // document.getElementById("dia").innerHTML = dia;  
+            // document.getElementById("dia").innerHTML = dia;
             // var dia = moment().format('YYYY-MM-DDThh:mm');
             // console.log(dia);
             // $("#fechainicio").val(dia);

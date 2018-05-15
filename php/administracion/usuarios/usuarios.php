@@ -275,9 +275,9 @@
 	<script>
 		$(document).ready(function(){
 			App.init();
-	      	App.pageCalendar();
-	      	App.formElements();
-	      	App.uiNotifications();
+    	App.pageCalendar();
+    	App.formElements();
+    	App.uiNotifications();
 			listar(); // Función para listar la tabla de usuarios
 			guardar(); // Función para registrar, modificar y eliminar
 		});
@@ -296,7 +296,7 @@
 			});
 		});
 
-		var  listar = function(data){ // DataTable de Usuarios
+		var listar = function(){ // DataTable de Usuarios
 			var table = $("#dt_usuarios").DataTable({
 				"destroy": true,
 				"scrollX": true,
@@ -415,10 +415,10 @@
 				$.ajax({
 					method: "POST",
 					url: "guardar.php",
+					dataType: "json",
 					data: frm,
 				}).done( function( info ){
-					var json_info = JSON.parse( info );
-					mostrar_mensaje(json_info);
+					mostrar_mensaje(info);
 					listar();
 				});
 			});

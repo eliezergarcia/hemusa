@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <title>Cotizaciones</title>
+  <title>Perfil de usuario</title>
   <?php include('../../enlacescss.php'); ?>
 </head>
 <body>
@@ -15,125 +15,143 @@
       <div class="main-content container-fluid">
         <div class="user-profile">
           <div class="row">
-            <!-- <div class="col-lg-12"> -->
-              <div class="user-display">
-                <div class="user-display-bg"><img src="../../../assets/img/gallery/img-1.png" alt="Profile Background" style="margin-top: -300px;"></div>
-                <div class="user-display-bottom">
-                  <div class="user-display-avatar"><img src="../../../assets/img/eliezerhernandez.jpg" alt="Avatar"></div>
-                  <div class="user-display-info">
-                    <div class="name" style="font-size: 20px;"><?php echo $usuariologin; ?></div>
-                    <div class="nick"><span class="mdi mdi-account"></span> <?php echo $user; ?></div>
-                  </div>
-                  <!-- <div class="row user-display-details justify-content-between">
-                    <div class="col">
-                      <div class="title">Issues</div>
-                      <div class="counter">26</div>
-                    </div>
-                    <div class="col">
-                      <div class="title">Commits</div>
-                      <div class="counter">26</div>
-                    </div>
-                    <div class="col">
-                      <div class="title">Followers</div>
-                      <div class="counter">26</div>
-                    </div>
-                  </div> -->
+            <div class="user-display">
+              <div class="user-display-bg"><img src="../../../assets/img/gallery/img-1.png" alt="Profile Background" style="margin-top: -300px;"></div>
+              <div class="user-display-bottom">
+                <a href="" data-toggle="tooltip" data-placement="left" title="Cambiar foto de perfil"><div class="user-display-avatar"><img src="../../../assets/img/eliezerhernandez.jpg" alt="Avatar"></div></a>
+                <div class="user-display-info">
+                  <div class="name" style="font-size: 20px;"><?php echo $usuariologin; ?></div>
+                  <div class="nick"><span class="mdi mdi-account"></span> <?php echo $user; ?></div>
                 </div>
               </div>
+            </div>
             <div class="user-info-list card col-7">
-              <div class="card-header card-header-divider">Información de usuario<span class="card-subtitle">I am a web developer and designer based in Montreal - Canada, I like read books, good music and nature.</span></div>
+              <br>
+              <div class="row align-items-center card-header-divider">
+                <div class="col-6"><h4>Información de usuario</h4>
+                  <span class="card-subtitle">Modifique la Información y presione el botón de editar para guardar.</span>
+                </div>
+                <div class="col-6">
+                  <button id="editarInfo" class="btn btn-space btn-lg btn-secondary" style="margin-left: 310px; margin-top: 20px">Editar <i class="fas fa-pencil-alt fa-sm"></i></button>
+                </div>
+              </div>
+              <form id="frmInfoUsuario" method="post">
+                <input type="hidden" name="opcion" value="editarInfo">
                 <div class="card-body" style="padding: 0px 20px;">
                   <div class="form-group row">
                     <div class="col row">
-                      <i class="fas fa-id-card fa-2x col-2"> </i>
+                      <i class="fas fa-user col-2" style="font-size: 23px;"> </i>
+                      <h4 style="margin-top: 5px; padding-left: 10px;">Usuario</h4>
+                    </div>
+                    <div class="col row">
+                      <input style="font-size: 16px;" type="text" name="usuario" id="usuario" class="form-control form-control-sm col-12 input2" value="">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <div class="col row">
+                      <i class="fas fa-id-card col-2" style="font-size: 23px;"> </i>
                       <h4 style="margin-top: 5px; padding-left: 10px;">Nombre completo</h4>
                     </div>
                     <div class="col row">
-                      <input type="text" name="" class="form-control form-control-sm col-10 input2" value="">
-                      <a href="#"><a href="#"><i class="fas fa-pencil-alt fa-lg" style="margin-top: 15px; padding-left: 30px;"></i></a></a>
+                      <input style="font-size: 16px;" type="text" name="nombreCompleto" id="nombreCompleto" class="form-control form-control-sm col-12 input2" value="">
                     </div>
                   </div>
                   <div class="form-group row">
                     <div class="col row">
-                      <i class="fas fa-briefcase fa-2x col-2"> </i>
+                      <i class="fas fa-briefcase col-2" style="font-size: 23px;"> </i>
                       <h4 style="margin-top: 5px; padding-left: 10px;">Departamento</h4>
                     </div>
                     <div class="col row">
-                      <input type="text" name="" class="form-control form-control-sm col-10 input2" value="">
-                      <a href="#"><i class="fas fa-pencil-alt fa-lg" style="margin-top: 15px; padding-left: 30px;"></i></a>
+                      <input style="font-size: 16px;" type="text" name="departamento" id="departamento" class="form-control form-control-sm col-12 input2" value="">
                     </div>
                   </div>
                   <div class="form-group row">
                     <div class="col row">
-                      <i class="fas fa-envelope fa-2x col-2"> </i>
-                      <h4 style="margin-top: 5px; padding-left: 10px;">E-mail</h4>
+                      <i class="fas fa-envelope col-2" style="font-size: 23px;"> </i>
+                      <h4 style="margin-top: 5px; padding-left: 10px;">E-mail de Hemusa</h4>
                     </div>
                     <div class="col row">
-                      <input type="text" name="" class="form-control form-control-sm col-10 input2" value="">
-                      <a href="#"><i class="fas fa-pencil-alt fa-lg" style="margin-top: 15px; padding-left: 30px;"></i></a>
+                      <input style="font-size: 16px;" type="text" name="emailHemusa" id="emailHemusa" class="form-control form-control-sm col-12 input2" value="">
                     </div>
                   </div>
                   <div class="form-group row">
                     <div class="col row">
-                      <i class="fas fa-mobile-alt fa-2x col-2"> </i>
+                      <i class="fas fa-envelope col-2" style="font-size: 23px;"> </i>
+                      <h4 style="margin-top: 5px; padding-left: 10px;">E-mail personal</h4>
+                    </div>
+                    <div class="col row">
+                      <input style="font-size: 16px;" type="text" name="emailPersonal" id="emailPersonal" class="form-control form-control-sm col-12 input2" value="">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <div class="col row">
+                      <i class="fas fa-mobile-alt col-2" style="font-size: 23px;"> </i>
                       <h4 style="margin-top: 5px; padding-left: 10px;">Celular</h4>
                     </div>
                     <div class="col row">
-                      <input type="text" name="" class="form-control form-control-sm col-10 input2" value="">
-                      <a href="#"><i class="fas fa-pencil-alt fa-lg" style="margin-top: 15px; padding-left: 30px;"></i></a>
+                      <input style="font-size: 16px;" type="text" name="celular" id="celular" class="form-control form-control-sm col-12 input2" value="">
                     </div>
                   </div>
                   <div class="form-group row">
                     <div class="col row">
-                      <i class="fas fa-globe fa-2x col-2"> </i>
+                      <i class="fas fa-globe col-2" style="font-size: 23px;"> </i>
                       <h4 style="margin-top: 5px; padding-left: 10px;">Ubicación</h4>
                     </div>
                     <div class="col row">
-                      <input type="text" name="" class="form-control form-control-sm col-10 input2" value="">
-                      <a href="#"><i class="fas fa-pencil-alt fa-lg" style="margin-top: 15px; padding-left: 30px;"></i></a>
+                      <input style="font-size: 16px;" type="text" name="ubicacion" id="ubicacion" class="form-control form-control-sm col-12 input2" value="">
                     </div>
                   </div>
                   <div class="form-group row">
                     <div class="col row">
-                      <i class="fas fa-hospital fa-2x col-2"> </i>
+                      <i class="fas fa-hospital col-2" style="font-size: 23px;"> </i>
                       <h4 style="margin-top: 5px; padding-left: 10px;">IMSS</h4>
                     </div>
                     <div class="col row">
-                      <input type="text" name="" class="form-control form-control-sm col-10 input2" value="">
-                      <a href="#"><i class="fas fa-pencil-alt fa-lg" style="margin-top: 15px; padding-left: 30px;"></i></a>
+                      <input style="font-size: 16px;" type="text" name="imss" id="imss" class="form-control form-control-sm col-12 input2" value="">
                     </div>
                   </div>
                   <div class="form-group row">
                     <div class="col row">
-                      <i class="fas fa-heart fa-2x col-2"> </i>
+                      <i class="fas fa-heart col-2" style="font-size: 23px;"> </i>
                       <h4 style="margin-top: 5px; padding-left: 10px;">Tipo de sangre</h4>
                     </div>
                     <div class="col row">
-                      <input type="text" name="" class="form-control form-control-sm col-10 input2" value="">
-                      <a href="#"><i class="fas fa-pencil-alt fa-lg" style="margin-top: 15px; padding-left: 30px;"></i></a>
+                      <select style="font-size: 16px;" type="text" name="tipoSangre" id="tipoSangre" class="form-control form-control-sm col-12 select2 input2" value="">
+                        <option value="O negativo">O negativo</option>
+                        <option value="O positivo">O positivo</option>
+                        <option value="A negativo">A negativo</option>
+                        <option value="A positivo">A positivo</option>
+                        <option value="B negativo">B negativo</option>
+                        <option value="B positivo">B positivo</option>
+                        <option value="AB negativo">AB negativo</option>
+                        <option value="AB positivo">AB positivo</option>
+                      </select>
                     </div>
                   </div>
                   <div class="form-group row">
                     <div class="col row">
-                      <i class="fas fa-birthday-cake fa-2x col-2"> </i>
+                      <i class="fas fa-birthday-cake col-2" style="font-size: 23px;"> </i>
                       <h4 style="margin-top: 5px; padding-left: 10px;">Cumpleaños</h4>
                     </div>
                     <div class="col row">
-                      <input type="text" name="" class="form-control form-control-sm col-10 input2" value="">
-                      <a href="#"><i class="fas fa-pencil-alt fa-lg" style="margin-top: 15px; padding-left: 30px;"></i></a>
+                      <input style="font-size: 16px;" type="date" name="cumple" id="cumple" class="form-control form-control-sm col-12 input2" value="">
                     </div>
                   </div>
                   <div class="form-group row">
                     <div class="col row">
-                      <i class="fas fa-mars-double fa-2x col-2"> </i>
+                      <i class="fas fa-mars-double col-2" style="font-size: 23px;"> </i>
                       <h4 style="margin-top: 5px; padding-left: 10px;">Género</h4>
                     </div>
                     <div class="col row">
-                      <input type="text" name="" class="form-control form-control-sm col-10 input2" value="">
-                      <a href="#"><i class="fas fa-pencil-alt fa-lg" style="margin-top: 15px; padding-left: 30px;"></i></a>
+                      <select style="font-size: 16px;" type="text" name="genero" id="genero" class="form-control form-control-sm col-10 select2 input2">
+                        <option value="M">Masculino</option>
+                        <option value="F">Femenino</option>
+
+                      </select>
                     </div>
                   </div>
                 </div>
+              </form>
             </div>
             <div class="col-lg-5">
               <div class="widget widget-fullwidth widget-small">
@@ -194,88 +212,6 @@
                 </div>
               </div>
             </div>
-          <!-- </div> -->
-          <!-- </div> -->
-          <!-- <div class="row">
-            <div class="col-lg-6">
-              <div class="card">
-                <div class="card-header card-header-divider">Current Progress<span class="card-subtitle">This is the user current progress widget</span></div>
-                <div class="card-body">
-                  <div class="row user-progress">
-                    <div class="col-10"><span class="title">Bootstrap Admin</span>
-                      <div class="progress">
-                        <div style="width: 78%" class="progress-bar bg-primary"></div>
-                      </div>
-                    </div>
-                    <div class="col-2 pl-0 pl-sm-3"><span class="value">78%</span></div>
-                  </div>
-                  <div class="row user-progress">
-                    <div class="col-10"><span class="title">Custom Work</span>
-                      <div class="progress">
-                        <div style="width: 57%" class="progress-bar bg-primary"></div>
-                      </div>
-                    </div>
-                    <div class="col-2 pl-0 pl-sm-3"><span class="value">57%</span></div>
-                  </div>
-                  <div class="row user-progress">
-                    <div class="col-10"><span class="title">Clients Module</span>
-                      <div class="progress">
-                        <div style="width: 45%" class="progress-bar bg-primary"></div>
-                      </div>
-                    </div>
-                    <div class="col-2 pl-0 pl-sm-3"><span class="value">45%</span></div>
-                  </div>
-                  <div class="row user-progress">
-                    <div class="col-10"><span class="title">Email Templates</span>
-                      <div class="progress">
-                        <div style="width: 36%" class="progress-bar bg-danger"></div>
-                      </div>
-                    </div>
-                    <div class="col-2 pl-0 pl-sm-3"><span class="value">36%</span></div>
-                  </div>
-                  <div class="row user-progress">
-                    <div class="col-10"><span class="title">Plans Module</span>
-                      <div class="progress">
-                        <div style="width: 30%" class="progress-bar bg-danger"></div>
-                      </div>
-                    </div>
-                    <div class="col-2 pl-0 pl-sm-3"><span class="value">30%</span></div>
-                  </div>
-                  <div class="row user-progress">
-                    <div class="col-10"><span class="title">User Managemenet System</span>
-                      <div class="progress">
-                        <div style="width: 21%" class="progress-bar bg-danger"></div>
-                      </div>
-                    </div>
-                    <div class="col-2 pl-0 pl-sm-3"><span class="value">21%</span></div>
-                  </div>
-                </div>
-              </div>
-            </div> -->
-            <!-- <div class="col-lg-6">
-              <div class="card">
-                <div class="card-header card-header-divider">Latest Activity<span class="card-subtitle">This is a custom timeline widget</span></div>
-                <div class="card-body">
-                  <ul class="user-timeline">
-                    <li class="latest">
-                      <div class="user-timeline-date">Just Now</div>
-                      <div class="user-timeline-title">Create New Page</div>
-                      <div class="user-timeline-description">Quisque sed est felis. Vestibulum lectus nulla, maximus in eros non, tristique consectetur lorem. Nulla molestie sem quis imperdiet facilisis</div>
-                    </li>
-                    <li>
-                      <div class="user-timeline-date">Today - 15:35</div>
-                      <div class="user-timeline-title">Back Up Theme</div>
-                      <div class="user-timeline-description">Quisque sed est felis. Vestibulum lectus nulla, maximus in eros non, tristique consectetur lorem. Nulla molestie sem quis imperdiet facilisis</div>
-                    </li>
-                    <li>
-                      <div class="user-timeline-date">Yesterday - 10:41</div>
-                      <div class="user-timeline-title">Changes In The Structure</div>
-                      <div class="user-timeline-description">Quisque sed est felis. Vestibulum lectus nulla, maximus in eros non, tristique consectetur lorem. Nulla molestie sem quis imperdiet facilisis</div>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div> -->
           </div>
         </div>
       </div>
@@ -284,10 +220,51 @@
     <?php include('../../enlacesjs.php'); ?>
     <script type="text/javascript">
       $(document).ready(function(){
-      	App.init();
-      	App.pageProfile();
-        App.chat();
-      });
+      	App.init()
+        App.formElements()
+      	App.pageProfile()
+        App.chat()
+        buscarDatosUsuario()
+      })
+
+      function buscarDatosUsuario () {
+        $.ajax({
+          method: "POST",
+          url: "buscar.php",
+          dataType: "json",
+          data: {"opcion": opcion = "buscarDatosUsuario"},
+        }).done(function (data) {
+          $("#usuario").val(data.data.user)
+          $("#nombreCompleto").val(data.data.nombre + " " + data.data.apellidos)
+          $("#departamento").val(data.data.dp)
+          $("#emailHemusa").val(data.data.correoHemusa)
+          $("#emailPersonal").val(data.data.correoPersonal)
+          $("#celular").val(data.data.movil)
+          $("#ubicacion").val(data.data.direccion)
+          $("#imss").val(data.data.imss)
+          $("#tipoSangre").val(data.data.tipoSangre).change()
+          $("#cumple").val(data.data.fechaNacimiento)
+          $("#genero").val(data.data.genero).change()
+        }).fail(function (data) {
+          console.log("Error al buscar los datos de usuario!")
+        })
+      }
+
+      $("#editarInfo").on("click", function() {
+        var frm = $("#frmInfoUsuario").serialize()
+        $.ajax({
+          method: "POST",
+          url: "guardar.php",
+          dataType: "json",
+          data: frm,
+        }).done(function ( info ) {
+            mostrar_mensaje(info)
+          }).fail(function (info) {
+            mostrar_mensaje(info)
+          })
+      })
+
     </script>
+    <script src="<?php echo $ruta; ?>/php/js/mensajes_cambios.js"></script>
   </body>
 </html>
