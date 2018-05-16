@@ -1,6 +1,8 @@
 <?php
   require_once('php/conexion.php');
 
+  // sleep(5);
+
   if (!isset($_SESSION)) {
     session_start();
   }
@@ -64,6 +66,30 @@
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
     <link rel="stylesheet" href="assets/css/app.css" type="text/css"/>
+    <style>
+    bg-bubbles li:nth-child(3) {
+      left: 25%;
+      -webkit-animation-delay: 4s;
+              animation-delay: 4s;
+      }
+      .bg-bubbles li:nth-child(7) {
+      left: 32%;
+      width: 160px;
+      height: 160px;
+      -webkit-animation-delay: 7s;
+              animation-delay: 7s;
+      }
+      .bg-bubbles li:nth-child(16) {
+      left: 75%;
+      width: 20px;
+      height: 20px;
+      -webkit-animation-delay: 1s;
+              animation-delay: 1s;
+      -webkit-animation-duration: 25s;
+              animation-duration: 25s;
+      background-color: rgba(255, 255, 255, 0.3);
+      }
+    </style>
   </head>
   <body class="be-splash-screen">
     <div class="be-wrapper be-login">
@@ -86,15 +112,15 @@
                         <input type="checkbox" class="custom-control-input"><span class="custom-control-label">Recuerdame</span>
                       </label>
                     </div>
-                    <div class="col-6 login-forgot-password"><a href="pages-forgot-password.html">Olvidaste tu contraseña?</a></div>
+                    <div class="col-6 login-forgot-password"><a href="pages-forgot-password.html" style="color: var(--color-primario-entorno);">Olvidaste tu contraseña?</a></div>
                   </div>
                   <div class="form-group login-submit">
-                    <button type="submit" name="Submit" id="btn-submit" class="btn btn-primary btn-xl" value="Ingresar">Ingresar</button>
+                    <button type="submit" name="Submit" id="btn-submit" class="btn btn-xl" style="background-color: var(--color-primario-entorno); color: white;" value="Ingresar">Ingresar</button>
                   </div>
                 </form>
               </div>
             </div>
-            <div class="splash-footer"><span>Copyright © Todos los Derechos Reservados</span></div>
+            <div class="splash-footer"><span>Copyright 2018 © Todos los Derechos Reservados</span></div>
           </div>
         </div>
       </div>
@@ -106,6 +132,10 @@
     <script type="text/javascript">
       $(document).ready(function(){
         App.init();
+      });
+
+      $("#btn-submit").click(function(){
+        $('.splash-container').fadeOut(500);
       });
     </script>
   </body>
