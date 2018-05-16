@@ -78,8 +78,8 @@
                 <div class="card-header card-header-divider row align-items-end justify-content-between">
                   <p style="font-size: 20px;">Colores principales</p>
                   <form id="frmColoresEntorno">
-                    <button id="btnDefaultColoresEntorno" type="button" name="button" class="btn btn-secondary btn-space btn-lg">Colores default</button>
-                    <button type="button" name="button" class="btn btn-secondary btn-space btn-lg">Editar <i class="fas fa-pencil-alt fa-sm"></i></button>
+                    <button id="btnDefaultColoresPrincipales" type="button" name="button" class="btn btn-secondary btn-space btn-lg">Colores default</button>
+                    <button id="btnColoresPrincipales" type="button" name="button" class="btn btn-secondary btn-space btn-lg">Editar <i class="fas fa-pencil-alt fa-sm"></i></button>
                 </div>
                 <div class="card-body colores">
                   <div class="row justify-content-between align-items-center">
@@ -203,7 +203,7 @@
           method: "POST",
           url: "buscar.php",
           dataType: "json",
-          data: {"opcion": opcion = "defaultColoresEntorno"},
+          data: {"opcion": opcion = "defaultColores"},
         }).done( function ( data ) {
           $("#color-primario-entorno").val(data.data.headerPrincipal)
           $("#color-menu-lateral").val(data.data.menuLateral)
@@ -234,6 +234,34 @@
         })
       })
 
+      $("#btnDefaultColoresPrincipales").on("click", function () {
+        $.ajax({
+          method: "POST",
+          url: "buscar.php",
+          dataType: "json",
+          data: {"opcion": opcion = "defaultColores"},
+        }).done( function ( data ) {
+          $("#color-primario").val(data.data.primario)
+          $("#color-hover-primario").val(data.data.hoverPrimario)
+          $("#color-borde-primario").val(data.data.bordePrimario)
+          $("#color-success").val(data.data.success)
+          $("#color-hover-success").val(data.data.hoverSuccess)
+          $("#color-borde-success").val(data.data.bordeSuccess)
+          $("#color-warning").val(data.data.warning)
+          $("#color-hover-warning").val(data.data.hoverWarning)
+          $("#color-borde-warning").val(data.data.bordeWarning)
+          $("#color-danger").val(data.data.danger)
+          $("#color-hover-danger").val(data.data.hoverDanger)
+          $("#color-borde-danger").val(data.data.bordeDanger)
+        }).fail( function ( info ) {
+          $.gritter.add({
+	        	title: 'Error!',
+	        	text: 'Ocurrió un error al cargar los colores principales default.',
+	        	class_name: 'color danger'
+	      	});
+        })
+      })
+
       $("#btnColoresEntorno").on("click", function () {
         var headerPrincipal = $("#color-primario-entorno").val()
         var menuLateral = $("#color-menu-lateral").val()
@@ -255,6 +283,33 @@
           mostrar_mensaje(info)
         })
       })
+
+      $("#btnColoresPrincipales").on("click", function () {
+        var primario = $("#color-primario").val()
+        var hoverPrimario = $("#color-hover-primario").val()
+        var bordePrimario = $("#color-borde-primario").val()
+        var success = $("#color-success").val()
+        var hoverSuccess = $("#color-hover-success").val()
+        var bordeSuccess = $("#color-borde-success").val()
+        var warning = $("#color-warning").val()
+        var hoverWarning = $("#color-hover-warning").val()
+        var bordeWarning = $("#color-borde-warning").val()
+        var danger = $("#color-danger").val()
+        var hoverDanger = $("#color-hover-danger").val()
+        var bordeDanger = $("#color-borde-danger").val()
+        var opcion = "editarColoresPrincipales"
+        $.ajax({
+          method: "POST",
+          url: "guardar.php",
+          dataType: "json",
+          data: {"opcion": opcion, "primario": primario, "hoverPrimario": hoverPrimario, "bordePrimario": bordePrimario, "success": success, "hoverSuccess": hoverSuccess, "bordeSuccess": bordeSuccess, "warning": warning, "hoverWarning": hoverWarning, "bordeWarning": bordeWarning, "danger": danger, "hoverDanger": hoverDanger, "bordeDanger": bordeDanger}
+        }).done( function ( info ) {
+          mostrar_mensaje(info)
+        }).fail( function ( info ) {
+          mostrar_mensaje(info)
+        })
+      })
+
 
     </script>
     <script src="<?php echo $ruta; ?>/php/js/mensajes_cambios.js"></script>

@@ -9,8 +9,8 @@
 			buscar_configuracion($idusuario, $conexion_usuarios);
 			break;
 
-		case 'defaultColoresEntorno':
-			default_colores_entorno($conexion_usuarios);
+		case 'defaultColores':
+			default_colores($conexion_usuarios);
 			break;
 	}
 
@@ -31,7 +31,7 @@
     mysqli_close($conexion_usuarios);
   }
 
-	function default_colores_entorno ($conexion_usuarios) {
+	function default_colores ($conexion_usuarios) {
     $query = "SELECT * FROM colores WHERE usuario = 'default'";
     $resultado = mysqli_query($conexion_usuarios, $query);
 

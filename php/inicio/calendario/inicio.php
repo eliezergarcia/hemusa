@@ -1,9 +1,8 @@
 <?php
   require_once('../../conexion.php'); // Llamada a connect.php para establecer conexión con la BD
   require_once('../../sesion.php'); // Llamada a sesion.php para validar si hay sesión inciada
-  error_reporting(0);
+  // error_reporting(0);
 ?>
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -147,13 +146,13 @@
 
 		<!-- Modal Tipo de Cambiio -->
 			<div id="modalTipoCambio" class="modal fade" data-backdrop="static" data-keyboard="false">
-	      		<div class="modal-dialog modal-full-color modal-full-color-warning">
+	      		<div class="modal-dialog">
 			        <div class="modal-content">
                   <div class="modal-header">
                   </div>
 			          	<div class="modal-body">
 			            	<div class="text-center">
-                      <div class="text-center"><span class="modal-main-icon mdi mdi-alert-triangle"></span>
+                      <div class="text-warning"><span class="modal-main-icon mdi mdi-alert-triangle"></span></div>
 				              		<h2><b>Aviso!</b></h2>
 				              		<h4>No se ha ingresado el tipo de cambio del día.<br>Puedes ingresar al siguiente link para obtenerlo:
 				              			<?php
@@ -162,7 +161,7 @@
         											$año = date("Y");
         											$diario = "http://dof.gob.mx/indicadores_detalle.php?cod_tipo_indicador=158&dfecha=".$dia."%2F".$mes."%2F".$año."&hfecha=".$dia."%2F".$mes."%2F".$año;
         										?>
-				              			<a href="<?php echo $diario; ?>" target="_blank" style="color: white; text-decoration: underline;">'Diario Oficial'</a>
+				              			<a href="<?php echo $diario; ?>" target="_blank" style="color: var(--color-warning); text-decoration: underline;">'Diario Oficial'</a>
 				              		</h4>
 				              		<br>
                           <form action="#" method="POST">
