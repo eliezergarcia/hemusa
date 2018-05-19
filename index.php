@@ -24,7 +24,7 @@
     mysqli_select_db($conexion_usuarios, $database_conexion_usuarios);
 
     $LoginRS__query=sprintf("SELECT user, password FROM usuarios WHERE user='%s' AND password='%s'", get_magic_quotes_gpc() ?
-      $loginUsername : addslashes($loginUsername), get_magic_quotes_gpc() ? $password : addslashes($password));
+    $loginUsername : addslashes($loginUsername), get_magic_quotes_gpc() ? $password : addslashes($password));
 
     $LoginRS = mysqli_query($conexion_usuarios, $LoginRS__query) or die(mysqli_error());
 
@@ -32,22 +32,20 @@
 
     if ($loginFoundUser) {
       $loginStrGroup = "";
-
-      //declare two session variables and assign them
       $_SESSION['MM_Username'] = $loginUsername;
       $_SESSION['MM_UserGroup'] = $loginStrGroup;
 
       if (isset($_SESSION['PrevUrl']) && false) {
-
         $MM_redirectLoginSuccess = $_SESSION['PrevUrl'];
       }
 
+      // sleep(3);
       header("Location: " . $MM_redirectLoginSuccess );
 
-      }else{
+    }else{
         header("Location: ". $MM_redirectLoginFailed );
-    }
   }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -66,30 +64,6 @@
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
     <link rel="stylesheet" href="assets/css/app.css" type="text/css"/>
-    <style>
-    bg-bubbles li:nth-child(3) {
-      left: 25%;
-      -webkit-animation-delay: 4s;
-              animation-delay: 4s;
-      }
-      .bg-bubbles li:nth-child(7) {
-      left: 32%;
-      width: 160px;
-      height: 160px;
-      -webkit-animation-delay: 7s;
-              animation-delay: 7s;
-      }
-      .bg-bubbles li:nth-child(16) {
-      left: 75%;
-      width: 20px;
-      height: 20px;
-      -webkit-animation-delay: 1s;
-              animation-delay: 1s;
-      -webkit-animation-duration: 25s;
-              animation-duration: 25s;
-      background-color: rgba(255, 255, 255, 0.3);
-      }
-    </style>
   </head>
   <body class="be-splash-screen">
     <div class="be-wrapper be-login">
@@ -97,7 +71,8 @@
         <div class="main-content container-fluid">
           <div class="splash-container">
             <div class="card card-border-color card-border-color-primary">
-              <div class="card-header"><img src="media/images/logo_hemusa.png" alt="logo" width="230" height="90" class="logo-img"><span class="splash-description">Porfavor ingresa tu informacion.</span></div>
+              <div class="card-header"><img src="media/images/logo_hemusa.png" alt="logo" width="230" height="90" class="logo-img"></div>
+              <span class="splash-description">Porfavor ingresa tu informacion.</span>
               <div class="card-body">
                 <form class="" id="form_login" name="form_login" method="post" action="<?php echo $loginFormAction; ?>" >
                   <div class="form-group">
@@ -109,7 +84,7 @@
                   <div class="form-group row login-tools">
                     <div class="col-6 login-remember">
                       <label class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input"><span class="custom-control-label">Recuerdame</span>
+                        <input type="checkbox" class="custom-control-input"><span class="custom-control-label">Recuérdame</span>
                       </label>
                     </div>
                     <div class="col-6 login-forgot-password"><a href="pages-forgot-password.html" style="color: var(--color-primario-entorno);">Olvidaste tu contraseña?</a></div>

@@ -22,10 +22,71 @@
               <div class="user-display">
                 <div class="user-display-bg"><img src="../../../assets/img/gallery/img-1.png" alt="Profile Background" style="margin-top: -300px;"></div>
                 <div class="user-display-bottom">
-                  <div class="name" style="font-size: 23px;">Configuración del sistema</div>
+                  <div class="name" style="font-size: 22px;">Configuración del sistema</div>
                 </div>
               </div>
             </div>
+            <div class="col-lg-6 col-sm-12">
+              <div class="card">
+                <div class="card-header card-header-divider row align-items-end justify-content-between">
+                  <p style="font-size: 20px;"></p>
+                  <form id="frmColoresEntorno">
+                    <button id="btnDefaultColoresEntorno" type="button" name="button" class="btn btn-secondary btn-space btn-lg">Colores default</button>
+                    <button id="btnColoresEntorno" type="button" name="button" class="btn btn-secondary btn-space btn-lg">Editar <i class="fas fa-pencil-alt fa-sm"></i></button>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6 col-sm-12">
+              <div class="card">
+                <div class="card-header card-header-divider row align-items-start justify-content-between">
+                  <p style="font-size: 20px;">Notificaciones</p>
+                  <form id="frmColoresEntorno">
+                </div>
+                <div class="card-body colores">
+                  <div class="row justify-content-between align-items-center">
+                    <div class="form-group col-lg-12 col-sm-12">
+                      <label class="col-6">Habilitar notificaciones </label>
+                      <div class="switch-button switch-button-yesno">
+                        <input type="checkbox" checked="" name="swt8" id="swt8"><span>
+                          <label for="swt8"></label></span>
+                      </div>
+                    </div>
+                    <div class="form-group col-lg-12 col-sm-12">
+                      <label class="col-6">Mensajes de chat </label>
+                      <div class="switch-button switch-button-yesno">
+                        <input type="checkbox" checked="" name="swt9" id="swt9"><span>
+                          <label for="swt9"></label></span>
+                      </div>
+                    </div>
+                    <div class="form-group col-lg-12 col-sm-12">
+                      <label class="col-6">Ordenes de compra pendientes </label>
+                      <div class="switch-button switch-button-yesno">
+                        <input type="checkbox" checked="" name="swt9" id="swt9"><span>
+                          <label for="swt9"></label></span>
+                      </div>
+                    </div>
+                    <div class="card-header card-header-divider row align-items-end justify-content-between">
+                      <p style="font-size: 17px;">Sonidos</p>
+                    </div>
+                    <div class="form-group col-lg-12 col-sm-12">
+                      <label class="col-7">Reproducir sonido al recibir mensajes de chat</label>
+                      <div class="switch-button switch-button-yesno">
+                        <input type="checkbox" checked="" name="swt10" id="swt10"><span>
+                          <label for="swt10"></label></span>
+                      </div>
+                    </div>
+                    <div class="form-group col-lg-12 col-sm-12">
+                      <label class="col-7">Reproducir sonido al recibir notificaciones nuevas</label>
+                      <div class="switch-button switch-button-yesno">
+                        <input type="checkbox" checked="" name="swt11" id="swt11"><span>
+                          <label for="swt11"></label></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
             <div class="col-lg-5 col-sm-12">
               <div class="card">
                 <div class="card-header card-header-divider row align-items-end justify-content-between">

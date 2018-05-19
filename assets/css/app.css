@@ -9471,7 +9471,7 @@ canvas {
     margin-top: 6px;
     font-weight: 300;
     letter-spacing: -1px;
-    font-size: 2.154rem;
+    font-size: 1.8rem;
     color: #6b6b6b;
     line-height: 36px; }
   .page-head-description {
@@ -9962,7 +9962,7 @@ canvas {
   .switch-button.switch-button-yesno label:before {
     content: "NO"; }
   .switch-button.switch-button-yesno input[type="checkbox"]:checked + span label:before {
-    content: "YES"; }
+    content: "SI"; }
   .switch-button.switch-button-xs {
     height: 20px;
     width: 53px;

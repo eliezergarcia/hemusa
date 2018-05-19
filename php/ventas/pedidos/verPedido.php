@@ -964,58 +964,33 @@
 					cambiarproveedorgeneral(refCotizacion, numeroPedido, RFC);
 					cambiarcantidadgeneral(refCotizacion, numeroPedido, RFC);
 
-					// var request = new XMLHttpRequest();
-
-					// request.open('GET', 'http://devfactura.in/api/v3/cfdi33/list');
-
-					// request.setRequestHeader("Access-Control-Allow-Origin", "*");
-					// request.setRequestHeader('Access-Control-Allow-Headers', '*');
-					// request.setRequestHeader('Access-Control-Allow-Credentials', 'true');
-					// request.setRequestHeader('Content-Type', 'application/json');
-					// request.setRequestHeader('F-API-KEY', 'JDJ5JDEwJDNtc1I3Z2JySG5pcUs0VWtQTlVxbmVsaFdyWUl6Ym5kQ1FKcmE2UGNIMG1WeGs5aEtXU3dp');
-					// request.setRequestHeader('F-SECRET-KEY', 'JDJ5JDEwJERYUXBSWGo5R0VINzE4UlRiY25oc09SUWhnMU9vRWdYSTQwOWJuTDZXUlhYR1E0Vmp5ZUFX');
-
-					// request.onreadystatechange = function () {
-					//   if (this.readyState === 4) {
-					// 	console.log('Status:', this.status);
-					// 	console.log('Headers:', this.getAllResponseHeaders());
-					//     var data = JSON.parse(this.responseText);
-					// 	console.log(data);
-					//     var total = data.total;
-					//     for (var i = 0; i < total; i++) {
-					//     	if (numeroPedido == data.data[i].NumOrder){
-					//     		$("#factura").val(data.data[i].Folio);
-					//     	}
-					//     }
-					//   }
-					// };
-
-					// request.send();
+					var apiConfig = {
+							enlace: "http://devfactura.in/",
+							apiKey: "JDJ5JDEwJDNtc1I3Z2JySG5pcUs0VWtQTlVxbmVsaFdyWUl6Ym5kQ1FKcmE2UGNIMG1WeGs5aEtXU3dp",
+							secretKey: "JDJ5JDEwJERYUXBSWGo5R0VINzE4UlRiY25oc09SUWhnMU9vRWdYSTQwOWJuTDZXUlhYR1E0Vmp5ZUFX"
+					}
 
 					var request = new XMLHttpRequest();
 
-					request.open('GET', 'http://factura.com/api/v3/cfdi33/list');
+					request.open('GET', apiConfig.enlace + 'api/v3/cfdi33/list');
 
-					request.setRequestHeader("Access-Control-Allow-Origin", "*");
-					request.setRequestHeader('Access-Control-Allow-Headers', '*');
-					request.setRequestHeader('Access-Control-Allow-Credentials', 'true');
 					request.setRequestHeader('Content-Type', 'application/json');
-					request.setRequestHeader('F-API-KEY', 'JDJ5JDEwJHJWelRXTWlJMEd4OS9kS3hRZTJNZy5neFAwV2dzdGttLjVleTcueDIyUHlMOEE0VEY5dUFL');
-					request.setRequestHeader('F-SECRET-KEY', 'JDJ5JDEwJDd3bXhpWENGRXJFMkNvOE1Hblo5Y2VPV3J5WXJxZmJoVEJhQjR0OE1Xa0hrV1lmRXhCWkFt');
+					request.setRequestHeader('F-API-KEY', apiConfig.apiKey);
+					request.setRequestHeader('F-SECRET-KEY', apiConfig.secretKey);
 
 					request.onreadystatechange = function () {
-					if (this.readyState === 4) {
-						console.log('Status:', this.status);
-						console.log('Headers:', this.getAllResponseHeaders());
-						var data = JSON.parse(this.responseText);
-						console.log(data);
-						var total = data.total;
-						for (var i = 0; i < total; i++) {
-							if (numeroPedido == data.data[i].NumOrder){
-								$("#factura").val(data.data[i].Folio);
+						if (this.readyState === 4) {
+							console.log('Status:', this.status);
+							console.log('Headers:', this.getAllResponseHeaders());
+							var data = JSON.parse(this.responseText);
+							console.log(data);
+							var total = data.total;
+							for (var i = 0; i < total; i++) {
+								if (numeroPedido == data.data[i].NumOrder){
+									$("#factura").val(data.data[i].Folio);
+								}
 							}
 						}
-					}
 					};
 
 					request.send();
@@ -1229,206 +1204,13 @@
 		}
 
 		var generar_factura = function(RFC, numeroPedido, refCotizacion){
-			// var request = new XMLHttpRequest();
-
-			// request.open('GET', 'http://devfactura.in/api/v1/clients/'+RFC);
-
-			// request.setRequestHeader('Content-Type', 'application/json');
-			// request.setRequestHeader('F-API-KEY', 'JDJ5JDEwJDNtc1I3Z2JySG5pcUs0VWtQTlVxbmVsaFdyWUl6Ym5kQ1FKcmE2UGNIMG1WeGs5aEtXU3dp');
-			// request.setRequestHeader('F-SECRET-KEY', 'JDJ5JDEwJERYUXBSWGo5R0VINzE4UlRiY25oc09SUWhnMU9vRWdYSTQwOWJuTDZXUlhYR1E0Vmp5ZUFX');
-			// request.setRequestHeader('Access-Control-Allow-origin', 'true');
-			// request.setRequestHeader("Access-Control-Allow-Origin", "*");
-
-			// request.onreadystatechange = function () {
-			// 	if (this.readyState === 4) {
-			//     	console.log('Status:', this.status);
-			//     	console.log('Headers:', this.getAllResponseHeaders());
-			//     	console.log('Body:', this.responseText);
-			//     	var data = JSON.parse(this.responseText);
-			// 	    if (data.status == "error"){
-			// 	    	texto = "<div class='alert alert-danger alert-dismissible fade show' role='alert'><strong>Error</strong>, "+ data.message + "<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></i></div>";
-			// 						color = "#C9302C";
-
-			// 			$(".mensaje").html( texto );
-
-
-			// 	    	var opcion = "datosRFC";
-			// 	    	$.ajax({
-			// 				method: "POST",
-			// 				url: "buscar.php",
-			// 				dataType: "json",
-			// 				data: {"opcion": opcion, "rfc": RFC},
-			// 			}).done( function( data ){
-			// 				console.log(data.datos);
-			// 				$("#modalRegistrarClientePortal #email").val(data.datos.correoElectronico);
-			// 				$("#modalRegistrarClientePortal #telefono").val(data.datos.tlf1);
-			// 				$("#modalRegistrarClientePortal #razons").val(data.datos.nombreEmpresa);
-			// 				$("#modalRegistrarClientePortal #rfc").val(data.datos.RFC);
-			// 				$("#modalRegistrarClientePortal #numero_exterior").val(data.datos.NumExt);
-			// 				$("#modalRegistrarClientePortal #numero_interior").val(data.datos.NumInt);
-			// 				$("#modalRegistrarClientePortal #codpos").val(data.datos.cp);
-			// 				$("#modalRegistrarClientePortal #calle").val(data.datos.calle);
-			// 				$("#modalRegistrarClientePortal #colonia").val(data.datos.colonia);
-			// 				$("#modalRegistrarClientePortal #estado").val(data.datos.estado);
-			// 				$("#modalRegistrarClientePortal #ciudad").val(data.datos.ciudad);
-			// 				$("#modalRegistrarClientePortal #delegacion").val(data.datos.pais);
-			// 				alert("El cliente no esta registrado en portal de Factura.com\n\n Registrarlo a continuación");
-			// 	    		$("#modalRegistrarClientePortal").modal("show");
-			// 			});
-			// 	    }else{
-			// 			var request = new XMLHttpRequest();
-
-			// 			request.open('POST', 'http://devfactura.in/api/v3/cfdi33/create');
-
-			// 			request.setRequestHeader('Content-Type', 'application/json');
-			// 			request.setRequestHeader('F-API-KEY', 'JDJ5JDEwJDNtc1I3Z2JySG5pcUs0VWtQTlVxbmVsaFdyWUl6Ym5kQ1FKcmE2UGNIMG1WeGs5aEtXU3dp');
-			// 			request.setRequestHeader('F-SECRET-KEY', 'JDJ5JDEwJERYUXBSWGo5R0VINzE4UlRiY25oc09SUWhnMU9vRWdYSTQwOWJuTDZXUlhYR1E0Vmp5ZUFX');
-
-			// 			request.onreadystatechange = function () {
-			// 				if (this.readyState === 4) {
-			// 					console.log('Status:', this.status);
-			// 				    console.log('Headers:', this.getAllResponseHeaders());
-			// 				    console.log('Body:', this.responseText);
-			// 				    var data = JSON.parse(this.responseText);
-
-			// 				    if (data.response == "error" && data.message) {
-			// 				    	texto = "<div class='alert alert-warning alert-dismissible fade show' role='alert'><strong>Error!</strong> "+ data.message + "<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></i></div>";
-			// 						color = "#C9302C";
-
-			// 						$(".mensaje").html( texto );
-			// 				    }
-
-			// 				    if (data.response == "error" && data.message.message) {
-			// 				    	texto = "<div class='alert alert-danger alert-dismissible fade show' role='alert'><strong>Error!</strong> "+ data.message.message + "<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></i></div>";
-			// 						color = "#C9302C";
-
-			// 						$(".mensaje").html( texto );
-			// 				    }else if(data.response = "success"){
-			// 				    	texto = "<div class='alert alert-success alert-dismissible fade show' role='alert'><strong>Bien!</strong> "+ data.message + "<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></i></div>";
-			// 						color = "#379911";
-
-			// 						$(".mensaje").html( texto );
-
-			// 						var request = new XMLHttpRequest();
-
-			// 						request.open('GEt', 'http://devfactura.in/api/v3/cfdi33/list');
-
-			// 						request.setRequestHeader('Content-Type', 'application/json');
-			// 						request.setRequestHeader('F-API-KEY', 'JDJ5JDEwJDNtc1I3Z2JySG5pcUs0VWtQTlVxbmVsaFdyWUl6Ym5kQ1FKcmE2UGNIMG1WeGs5aEtXU3dp');
-			// 						request.setRequestHeader('F-SECRET-KEY', 'JDJ5JDEwJERYUXBSWGo5R0VINzE4UlRiY25oc09SUWhnMU9vRWdYSTQwOWJuTDZXUlhYR1E0Vmp5ZUFX');
-
-			// 						request.onreadystatechange = function () {
-			// 						  if (this.readyState === 4) {
-			// 						    var data = JSON.parse(this.responseText);
-			// 						    console.log(data);
-			// 						    var totalfacturas = data.total;
-			// 						    for (var i = 0; i < totalfacturas; i++) {
-			// 						    	if (numeroPedido == data.data[i].NumOrder){
-			// 						    		var folio = data.data[i].Folio;
-			// 						    		var ordenpedido = data.data[i].NumOrder;
-			// 						    		var total = data.data[i].Total;
-			// 						    		var status = data.data[i].Status;
-			// 						    		var fecha = data.data[i].FechaTimbrado;
-			// 						    		var cliente = data.data[i].RazonSocialReceptor;
-			// 						    		var opcion = "guardarfactura";
-			// 						    		console.log(folio);
-			// 						    		console.log(ordenpedido);
-			// 						    		console.log(total);
-			// 						    		console.log(status);
-			// 						    		console.log(fecha);
-			// 						    		console.log(cliente);
-			// 						    		console.log(opcion);
-			// 						    		$.ajax({
-			// 										method: "POST",
-			// 										url: "guardar.php",
-			// 										dataType: "json",
-			// 										data: {"opcion": opcion, "folio": folio, "ordenpedido": ordenpedido, "total": total, "status": status, "fecha": fecha, "cliente": cliente}
-			// 									}).done( function( data ){
-			// 										console.log(data);
-			// 										mostrar_mensaje(data);
-			// 									});
-			// 									var request = new XMLHttpRequest();
-
-			// 									request.open('GET', 'http://devfactura.in/api/v3/cfdi33/'+data.data[i].UID+'/pdf');
-
-			// 									request.setRequestHeader('F-API-KEY', 'JDJ5JDEwJDNtc1I3Z2JySG5pcUs0VWtQTlVxbmVsaFdyWUl6Ym5kQ1FKcmE2UGNIMG1WeGs5aEtXU3dp');
-			// 									request.setRequestHeader('F-SECRET-KEY', 'JDJ5JDEwJERYUXBSWGo5R0VINzE4UlRiY25oc09SUWhnMU9vRWdYSTQwOWJuTDZXUlhYR1E0Vmp5ZUFX');
-			// 									request.setRequestHeader('Content-Type', 'application/pdf');
-			// 									request.setRequestHeader('Content-Transfer-Encoding', 'Binary');
-			// 									request.setRequestHeader('Content-Disposition', 'attachment: filename=F2222.pdf');
-			// 									request.responseType = 'blob';
-
-			// 									request.onreadystatechange = function () {
-			// 										if (this.readyState === 4) {
-			// 											console.log('Status:', this.status);
-			// 											console.log('Headers:', this.getAllResponseHeaders());
-			// 											console.log('Body:', this.response);
-			// 											var blob = new Blob([this.response], {type: 'application/pdf'});
-			// 											var link = document.createElement('a');
-			// 											link.href = window.URL.createObjectURL(blob);
-			// 											link.download = "factura.pdf";
-			// 											link.click();
-			// 										}
-			// 									};
-
-			// 									request.send();
-			// 						    	}
-			// 						    }
-			// 						  }
-			// 						};
-
-			// 						request.send();
-			// 				    }
-			// 				}
-			// 			};
-
-			// 			var opcion = "buscarpartidasfacturar";
-			// 			$.ajax({
-			// 				method: "POST",
-			// 				url: "buscar.php",
-			// 				dataType: "json",
-			// 				data: {"opcion": opcion, "numeroPedido": numeroPedido, "refCotizacion": refCotizacion}
-			// 			}).done( function( conceptos ){
-			// 				console.log(conceptos);
-			// 				var fecha = "<?php echo date("Y-m-d")."T".date("H:i:s"); ?>";
-			// 				console.log(fecha);
-			// 				var body = {
-			// 				    'Receptor': {
-			// 				        'UID': data.Data.UID,
-			// 				        'ResidenciaFiscal': '',
-			// 				    },
-			// 				    'TipoDocumento':'factura',
-			// 				    'Conceptos': conceptos.data,
-			// 				    'UsoCFDI': conceptos.cfdi,
-			// 				    'Serie':'1194',
-			// 				    'FormaPago': conceptos.formapago,
-			// 				    'MetodoPago': conceptos.metodopago,
-			// 				    'CondicionesDePago': conceptos.condpago,
-			// 				    'Moneda': conceptos.moneda,
-			// 				    'TipoCambio': conceptos.tipocambio,
-			// 				    'NumOrder': numeroPedido,
-			// 				    'FechaFromAPI': fecha,
-			// 				    // 'Comentarios': 'Comentarios para agregar a la factura PDF',
-			// 				    'EnviarCorreo': false
-			// 				};
-
-			// 				console.log(JSON.stringify(body));
-			// 				request.send(JSON.stringify(body));
-			// 			});
-
-
-			// 		}
-			// 	}
-			// };
-			// request.send();
-
 			var request = new XMLHttpRequest();
 
 			request.open('GET', 'http://factura.com/api/v1/clients/'+RFC);
 
 			request.setRequestHeader('Content-Type', 'application/json');
-			request.setRequestHeader('F-API-KEY', 'JDJ5JDEwJHJWelRXTWlJMEd4OS9kS3hRZTJNZy5neFAwV2dzdGttLjVleTcueDIyUHlMOEE0VEY5dUFL');
-			request.setRequestHeader('F-SECRET-KEY', 'JDJ5JDEwJDd3bXhpWENGRXJFMkNvOE1Hblo5Y2VPV3J5WXJxZmJoVEJhQjR0OE1Xa0hrV1lmRXhCWkFt');
+			request.setRequestHeader('F-API-KEY', 'JDJ5JDEwJDNtc1I3Z2JySG5pcUs0VWtQTlVxbmVsaFdyWUl6Ym5kQ1FKcmE2UGNIMG1WeGs5aEtXU3dp');
+			request.setRequestHeader('F-SECRET-KEY', 'JDJ5JDEwJERYUXBSWGo5R0VINzE4UlRiY25oc09SUWhnMU9vRWdYSTQwOWJuTDZXUlhYR1E0Vmp5ZUFX');
 			request.setRequestHeader('Access-Control-Allow-origin', 'true');
 			request.setRequestHeader("Access-Control-Allow-Origin", "*");
 

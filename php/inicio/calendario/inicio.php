@@ -2,6 +2,7 @@
   require_once('../../conexion.php'); // Llamada a connect.php para establecer conexión con la BD
   require_once('../../sesion.php'); // Llamada a sesion.php para validar si hay sesión inciada
   // error_reporting(0);
+  // echo "<embed loop='false' src='../../../assets/whatsapp-apple.mp3' hidden='true' autoplay='true'>";
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -181,6 +182,7 @@
 	    	</div>
 	</header>
 	<?php include('../../enlacesjs.php'); ?>
+  <script src="https://www.gstatic.com/firebasejs/5.0.1/firebase.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function() {
       App.pageCalendar();
@@ -191,6 +193,18 @@
 			buscar_tipo_cambio();
 			listar_calendario();
 		});
+
+    var config = {
+      apiKey: "AIzaSyDe92NNoooohCjs30aiW3INmdBtZChCDls ",
+      authDomain: "hemusa-194306.firebaseapp.com",
+      databaseURL: "https://hemusa-194306.firebaseio.com",
+    };
+
+    firebase.initializeApp(config);
+    const preObject = document.getElementById('object')
+    const dbRefObject = firebase.database().ref().child('object')
+    dbRefObject.on('value', snap => console.log(snap.val()))
+
 
 		// $("#menu").on("change", function(){
 		// 	if ($("#menu").val() == 1){

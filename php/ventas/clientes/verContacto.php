@@ -211,7 +211,7 @@
 				<div class="modal-dialog" role="document">
 					<div class="modal-content">
 						<div class="modal-header">
-							<h4 class="modal-title" id="modalNuevaCotizacionLabel"><i class="fas fa-edit"></i> Información de cliente</h4>
+							<h4 class="modal-title" id="modalNuevaCotizacionLabel">Información de cliente</h4>
 							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 						</div>
 						<div class="modal-body container">
@@ -372,7 +372,7 @@
 				<div class="modal-dialog modal-lg" role="document">
 					<div class="modal-content">
 						<div class="modal-header">
-							<h4 class="modal-title" id="modalNuevaCotizacionLabel"><i class="fas fa-file-alt"></i> Nueva cotización</h4>
+							<h4 class="modal-title" id="modalNuevaCotizacionLabel">Nueva cotización</h4>
 							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 						</div>
 						<div class="modal-body container">
@@ -518,11 +518,11 @@
 	<!-- Modal Nueva Remisión -->
 		<form name="agregarRemision" action="#" method="POST">
 			<input type="hidden" id="opcion" name="opcion" value="nuevaremision">
-			<div class="modal fade colored-header colored-header-success" id="modalNuevaRemision" tabindex="-1" role="dialog" aria-labelledby="modalNuevaCotizacionLabel" aria-hidden="true"  data-backdrop="static" data-keyboard="false">
+			<div class="modal fade colored-header colored-header-success" id="modalNuevaRemision" tabindex="-1" role="dialog" aria-labelledby="modalNuevaCotizacionLabel" aria-hidden="true">
 				<div class="modal-dialog modal-lg" role="document">
 					<div class="modal-content">
 						<div class="modal-header">
-							<h4 class="modal-title" id="modalNuevaCotizacionLabel"><i class="fas fa-file"></i> Nueva remisión</h4>
+							<h4 class="modal-title" id="modalNuevaCotizacionLabel">Nueva remisión</h4>
 							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 						</div>
 						<div class="modal-body container">

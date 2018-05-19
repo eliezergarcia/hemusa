@@ -29,22 +29,22 @@
                     	<div class="card card-fullcalendar">
                       		<div class="card-body">
                       			<!-- Tabla de Cotizaciones -->
-									<table id="dt_cotizaciones" class="table table-striped table-hover display compact" cellspacing="0" width="100%">
-										<thead>
-											<tr>
-												<th>Referencia</th>
-												<th>Cliente</th>
-												<th>Vendedor</th>
-												<th>Contacto</th>
-												<th>Fecha</th>
-												<th>Partidas</th>
-												<th>Total (Sin IVA)</th>
-												<th>Ver</th>
-											</tr>
-										</thead>
-										<tbody>
-										</tbody>
-									</table>
+															<table id="dt_cotizaciones" class="table table-striped table-hover display compact" cellspacing="0" width="100%">
+																<thead>
+																	<tr>
+																		<th>Referencia</th>
+																		<th>Cliente</th>
+																		<th>Vendedor</th>
+																		<th>Contacto</th>
+																		<th>Fecha</th>
+																		<th>Partidas</th>
+																		<th>Total (Sin IVA)</th>
+																		<th>Ver</th>
+																	</tr>
+																</thead>
+																<tbody>
+																</tbody>
+															</table>
                       		</div>
                     	</div>
                 	</div>
@@ -57,11 +57,11 @@
 		 		<input type="hidden" id="opcion" name="opcion" value="agregarcotizacion">
 		 		<input type="hidden" id="usuariologin" name="usuariologin">
 		 		<input type="hidden" id="dplogin" name="dplogin">
-				<div class="modal fade colored-header colored-header-success" id="modalNuevaCotizacion" tabindex="-1" role="dialog" aria-labelledby="modalNuevaCotizacionLabel" aria-hidden="true"  data-backdrop="static" data-keyboard="false">
+				<div class="modal fade colored-header colored-header-success" id="modalNuevaCotizacion" tabindex="-1" role="dialog" aria-labelledby="modalNuevaCotizacionLabel" aria-hidden="true">
 					<div class="modal-dialog modal-lg" role="document">
 						<div class="modal-content">
 							<div class="modal-header">
-								<h4 class="modal-title" id="modalNuevaCotizacionLabel"><i class="icon fas fa-file-alt" aria-hidden="true"></i> Nueva cotización</h4>
+								<h4 class="modal-title" id="modalNuevaCotizacionLabel">Nueva cotización</h4>
 								<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 							</div>
 							<div class="modal-body container">
@@ -97,12 +97,9 @@
 									<div class="col-3 form-group">
 										<label for="moneda">Moneda <font color="#FF4136">*</font></label>
 										<select id="moneda" name="moneda" class="form-control form-control-sm select2" required>
-											<option>
-												<option value="mxn" selected>MXN</option>
-												<option value="usd">USD</option>
-											</option>
+											<option value="mxn">MXN</option>
+											<option value="usd">USD</option>
 										</select>
-
 									</div>
 									<div class="col-4 form-group">
 										<label for="tiempoEntrega">Tiempo de entrega <font color="#FF4136">*</font></label>
@@ -139,7 +136,7 @@
 					<div class="modal-dialog modal-lg" role="document">
 						<div class="modal-content">
 							<div class="modal-header">
-								<h4 class="modal-title" id="modalNuevaCotizacionLabel"><i class="icon icon-left mdi mdi-account-calendar" aria-hidden="true"></i> Registro de contacto</h4>
+								<h4 class="modal-title" id="modalNuevaCotizacionLabel">Registro de contacto</h4>
 								<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 							</div>
 							<div class="modal-body container">
@@ -399,15 +396,16 @@
 				success : function(data) {
 					var idcliente = data.data.id
 					buscarContactos(idcliente);
-					if (data.data.moneda == "mxn" ) {
-						$("form #moneda").empty();
-						$("form #moneda").append("<option value='mxn' selected>MXN</option>");
-						$("form #moneda").append("<option value='usd'>USD</option>");
-					}else{
-						$("form #moneda").empty();
-						$("form #moneda").append("<option value='usd' selected>USD</option>");
-						$("form #moneda").append("<option value='mxn'>MXN</option>");
-					}
+					// if (data.data.moneda == "mxn" ) {
+					// 	$("form #moneda").empty();
+					// 	$("form #moneda").append("<option value='mxn' selected>MXN</option>");
+					// 	$("form #moneda").append("<option value='usd'>USD</option>");
+					// }else{
+					// 	$("form #moneda").empty();
+					// 	$("form #moneda").append("<option value='usd' selected>USD</option>");
+					// 	$("form #moneda").append("<option value='mxn'>MXN</option>");
+					// }
+					$("form #moneda").val(data.data.moneda).change();
 					$("form #condicionesPago").val(data.data.CondPago);
 				}
 			});

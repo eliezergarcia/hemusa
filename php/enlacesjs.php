@@ -1,3 +1,4 @@
+<!-- <script src="<?php echo $ruta; ?>assets/lib/jquery/jquery.js" type="text/javascript"></script> -->
 <script src="<?php echo $ruta; ?>php/js/awesomplete.min.js" type="text/javascript" async></script>
 <script src="<?php echo $ruta; ?>assets/lib/jquery-ui/jquery-ui.min.js" type="text/javascript"></script>
 <script src="<?php echo $ruta; ?>assets/lib/perfect-scrollbar/js/perfect-scrollbar.jquery.min.js" type="text/javascript"></script>

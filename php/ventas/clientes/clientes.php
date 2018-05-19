@@ -13,7 +13,7 @@
   <?php include('../../header.php'); ?>
     <div class="be-content">
           <div class="page-head">
-              <h2 class="page-head-title">Clientes</h2>
+              <p class="page-head-title">Clientes</p>
               <nav aria-label="breadcrumb" role="navigation">
                 <ol class="breadcrumb page-head-nav">
                     <li class="breadcrumb-item"><a href="#">Ventas</a></li>
@@ -56,7 +56,7 @@
           <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
               <div class="modal-header">
-                <h4 class="modal-title" id="exampleModalLabel"><i class="fas fa-address-card fa-sm"></i> Registro de cliente</h4>
+                <h4 class="modal-title" id="exampleModalLabel">Registro de cliente</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
@@ -153,7 +153,7 @@
         <input type="hidden" id="idcliente" name="idcliente" value="">
         <input type="hidden" id="usuariologin" name="usuariologin">
         <input type="hidden" id="dplogin" name="dplogin">
-        <div class="modal-full-color modal-full-color-danger modal fade" id="modalEliminarCliente" tabindex="-1" role="dialog">
+        <div class="modal fade" id="modalEliminarCliente" tabindex="-1" role="dialog">
           <div class="modal-dialog" role="document">
             <div class="modal-content">
               <div class="modal-header">
@@ -161,7 +161,7 @@
               </div>
               <div class="modal-body">
                 <div class="text-center">
-                  <div class="text-center"><span class="modal-main-icon mdi mdi-close-circle-o"></span></div>
+                  <div class="text-danger"><span class="modal-main-icon mdi mdi-close-circle-o"></span></div>
                   <h4>¿Está seguro de eliminar el cliente?</h4>
                   <div class="row justify-content-center"><input type="text" class="disabled form-control col-6 form-control form-control-sm" id="nombreEmpresa" name="nombreEmpresa"></div>
                   <div class="mt-8 invoice-footer">

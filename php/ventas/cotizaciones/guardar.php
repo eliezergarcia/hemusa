@@ -1,10 +1,10 @@
-<?php 
-	include('../../conexion.php');	
-	include('../../sesion.php');	
-	
+<?php
+	include('../../conexion.php');
+	include('../../sesion.php');
+
 	// error_reporting(0);
 
-	$opcion = $_POST["opcion"];	
+	$opcion = $_POST["opcion"];
 	$informacion = [];
 
 	switch ($opcion) {
@@ -83,7 +83,7 @@
 			$proveedorFlete = $_POST['proveedorFlete'];
 			editar($refCotizacion, $descripcion, $precioUnitario, $cantidad, $claveSat, $tedias, $refInterna, $cotizadoEn, $proveedorFlete, $idherramienta, $conexion_usuarios);
 			break;
-		
+
 		case 'eliminar':
 			$idherramienta = $_POST["idherramienta"];
 			$refCotizacion = $_POST['refCotizacion'];
@@ -157,7 +157,7 @@
 		}
 
 		echo json_encode($informacion);
-		cerrar($conexion_usuarios);		
+		cerrar($conexion_usuarios);
 	}
 
 	function agregar_contacto($usuariologin, $dplogin, $idcliente, $contacto, $puesto, $calle, $colonia, $ciudad, $estado, $cp, $pais, $tlf, $movil, $correoElectronico, $conexion_usuarios){
@@ -166,7 +166,7 @@
 		if (!$resultado) {
 			$informacion["respuesta"] = "ERROR";
 			$informacion["informacion"] = "Ocurrió un problema al registrar el contacto '".$contacto."'!";
-		}else{	
+		}else{
 			$informacion["guardar"] = "contacto";
 			$informacion["idcliente"] = $idcliente;
 			$informacion["respuesta"] = "BIEN";
@@ -183,7 +183,7 @@
 			$query = "INSERT INTO movimientosusuarios (departamento, usuario, tipomovimiento, descripcion, fechahora) VALUES ('$dplogin', '$usuariologin', 'Registro', '$descripcion', '$fechahora')";
 			$resultado = mysqli_query($conexion_usuarios, $query);
 		}
-		
+
 		echo json_encode($informacion);
 		mysqli_close($conexion_usuarios);
 	}
@@ -197,11 +197,11 @@
 			case 'clas2':
 				$clas = 1.25;
 				break;
-			
+
 			case 'clas3':
 				$clas = 1.33;
 				break;
-			
+
 			case 'clas4':
 				$clas = 1.42;
 				break;
@@ -318,16 +318,16 @@
 											if(!$resultado){
 												$informacion["respuesta"] = "ERROR";
 												$informacion["informacion"] = "Ocurrió un problema al actualizar los datos del producto!";
-												echo json_encode($informacion);									
+												echo json_encode($informacion);
 											}else{
 												$informacion["respuesta"] = "BIEN";
 												$informacion["informacion"] = "Los datos de la partida se guardaron correctamente y se actualizaron los datos del producto!";
-												echo json_encode($informacion);	
+												echo json_encode($informacion);
 											}
 										}else{
 											$informacion["respuesta"] = "BIEN";
 											$informacion["informacion"] = "Los datos de la partida se guardaron correctamente!";
-											echo json_encode($informacion);	
+											echo json_encode($informacion);
 										}
 									}
 								}
@@ -338,16 +338,16 @@
 									if(!$resultado){
 										$informacion["respuesta"] = "ERROR";
 										$informacion["informacion"] = "Ocurrió un problema al actualizar los datos del producto!";
-										echo json_encode($informacion);	
+										echo json_encode($informacion);
 									}else{
 										$informacion["respuesta"] = "BIEN";
 										$informacion["informacion"] = "Los datos de la partida se guardaron correctamente y se actualizaron los datos del producto!";
-										echo json_encode($informacion);	
+										echo json_encode($informacion);
 									}
 								}else{
 									$informacion["respuesta"] = "BIEN";
 									$informacion["informacion"] = "Los datos de la partida se guardaron correctamente!";
-									echo json_encode($informacion);	
+									echo json_encode($informacion);
 								}
 							}
 						}
@@ -372,14 +372,14 @@
 		if (!$resultado) {
 			$informacion["respuesta"] = "ERROR";
 			$informacion["informacion"] = "Ocurrió un problema al actualizar los datos de la partida!";
-			echo json_encode($informacion);	
+			echo json_encode($informacion);
 		}else{
 			$query = "SELECT precioLista, flete, cantidad FROM cotizacionherramientas WHERE cotizacionRef = '$refCotizacion'";
 			$resultado = mysqli_query($conexion_usuarios, $query);
 			if (!$resultado) {
 				$informacion["respuesta"] = "ERROR";
 				$informacion["informacion"] = "Ocurrió un problema al buscar los datos de la partida!";
-				echo json_encode($informacion);	
+				echo json_encode($informacion);
 			}else{
 				$precioTotal = 0;
 				while ($data = mysqli_fetch_array($resultado)) {
@@ -390,7 +390,7 @@
 				if(!$resultado){
 					$informacion["respuesta"] = "ERROR";
 					$informacion["informacion"] = "Ocurrió un problema al actualizar los datos de la cotización!";
-					echo json_encode($informacion);	
+					echo json_encode($informacion);
 				}else{
 					if($proveedorFlete == "Ninguno" || $proveedorFlete == "ninguno"){
 						// $query = "UPDATE cotizacionherramientas SET flete = 0.0000 WHERE id='".$idherramienta."'";
@@ -467,7 +467,7 @@
 						if (!$resultado) {
 							$informacion["respuesta"] = "ERROR";
 							$informacion["informacion"] = "Ocurrió un problema al buscar los datos de la partida 2!";
-							echo json_encode($informacion);	
+							echo json_encode($informacion);
 						}else{
 							$costoTotal = 0;
 							while($data = mysqli_fetch_array($resultado)){
@@ -485,7 +485,7 @@
 							if (!$resultado) {
 								$informacion["respuesta"] = "ERROR";
 								$informacion["informacion"] = "Ocurrió un problema al buscar los datos de la partida 3!";
-								echo json_encode($informacion);	
+								echo json_encode($informacion);
 							}else{
 								$flete = 0;
 								$costoTotal = 0;
@@ -508,13 +508,13 @@
 								}
 								// $informacion["respuesta"] = "BIEN";
 								// $informacion["informacion"] = "Los datos de la partida se modificaron correctamente!";
-								// echo json_encode($informacion);	
+								// echo json_encode($informacion);
 							}
 						}
 					}
 					$informacion["respuesta"] = "BIEN";
 					$informacion["informacion"] = "Los datos de la partida se modificaron correctamente!";
-					echo json_encode($informacion);	
+					echo json_encode($informacion);
 				}
 			}
 		}
@@ -535,14 +535,14 @@
 		if (!$resultado) {
 			$informacion["respuesta"] = "ERROR";
 			$informacion["informacion"] = "Ocurrió un problema al intentar eliminar la partida!";
-			echo json_encode($informacion);	
+			echo json_encode($informacion);
 		}else{
 			$query = "SELECT DISTINCT partidaCantidad FROM cotizacion WHERE ref='".$refCotizacion."'";
 			$resultado = mysqli_query($conexion_usuarios, $query);
 			if(!$resultado){
 				$informacion["respuesta"] = "ERROR";
 				$informacion["informacion"] = "Ocurrió un problema al buscar número de partidas!";
-				echo json_encode($informacion);		
+				echo json_encode($informacion);
 			}else{
 				while($data = mysqli_fetch_array($resultado)){
 					$numPartidas = $data['partidaCantidad'];
@@ -553,14 +553,14 @@
 				if (!$resultado) {
 					$informacion["respuesta"] = "ERROR";
 					$informacion["informacion"] = "Ocurrió un problema al actualizar número de partidas!";
-					echo json_encode($informacion);	
+					echo json_encode($informacion);
 				}else{
 					$query = "SELECT precioLista,cantidad FROM cotizacionherramientas WHERE cotizacionRef = '".$refCotizacion."'";
 					$resultado = mysqli_query($conexion_usuarios, $query);
 					if (!$resultado) {
 						$informacion["respuesta"] = "ERROR";
 						$informacion["informacion"] = "Ocurrió un problema al buscar datos de partida!";
-						echo json_encode($informacion);	
+						echo json_encode($informacion);
 					}else{
 						$precioTotal = 0;
 						while ($data = mysqli_fetch_array($resultado)) {
@@ -572,11 +572,11 @@
 						if (!$resultado) {
 							$informacion["respuesta"] = "ERROR";
 							$informacion["informacion"] = "Ocurrió un problema al actualizar precio total de la cotización!";
-							echo json_encode($informacion);							
+							echo json_encode($informacion);
 						}else{
 							$informacion["respuesta"] = "BIEN";
 							$informacion["informacion"] = "La partida se eliminó y se actualizó la información correctamente!";
-							echo json_encode($informacion);	
+							echo json_encode($informacion);
 						}
 					}
 				}
@@ -591,11 +591,11 @@
 		if (!$resultado) {
 			$informacion["respuesta"] = "ERROR";
 			$informacion["informacion"] = "Ocurrió un problema al agregar el flete!";
-			echo json_encode($informacion);	
+			echo json_encode($informacion);
 		}else{
 			$informacion["respuesta"] = "BIEN";
 			$informacion["informacion"] = "Se agregó el flete correctamente!";
-			echo json_encode($informacion);	
+			echo json_encode($informacion);
 		}
 		cerrar($conexion_usuarios);
 	}
@@ -606,11 +606,11 @@
 		if (!$resultado) {
 			$informacion["respuesta"] = "ERROR";
 			$informacion["informacion"] = "Ocurrió un problema al eliminar el flete!";
-			echo json_encode($informacion);	
+			echo json_encode($informacion);
 		}else{
 			$informacion["respuesta"] = "BIEN";
 			$informacion["informacion"] = "Se eliminó el flete correctamente!";
-			echo json_encode($informacion);	
+			echo json_encode($informacion);
 		}
 		cerrar($conexion_usuarios);
 	}
@@ -687,7 +687,7 @@
 		$query = "SELECT * FROM cotizacion WHERE ref='$refCotizacion'";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 		if (!$resultado) {
-			$respuesta['respuesta'] = "ERROR 1";
+			$respuesta['respuesta'] = "Error al buscar información de la cotización";
 		}else{
 			while($datos = mysqli_fetch_assoc($resultado)){
 				$idcliente = $datos['cliente'];
@@ -704,7 +704,7 @@
 				while($precio = mysqli_fetch_assoc($resultado)){
 					$total = $total + (($precio['precioLista'] + $precio['flete']) * $precio['cantidad']);
 				}
-			}	
+			}
 
 			foreach ($data as &$valor) {
 				$id = $valor;
@@ -713,8 +713,8 @@
 				$resultado = mysqli_query($conexion_usuarios, $query);
 			}
 
-			if (!$resultado) {	
-				$respuesta['respuesta'] = "ERROR 2";			
+			if (!$resultado) {
+				$respuesta['respuesta'] = "ERROR 2";
 			}else{
 				$query = "UPDATE cotizacion SET Pedido = '$fecha', NoPedClient = '$numeroPedido' WHERE ref='$refCotizacion'";
 				$resultado = mysqli_query($conexion_usuarios, $query);
@@ -732,14 +732,13 @@
 				}
 			}
 		}
-		
 		echo json_encode($respuesta);
 	}
 
 	function verificar_resultado($resultado){
 		if(!$resultado){
 			$informacion["respuesta"] = "ERROR";
-		}else{ 
+		}else{
 			$informacion["respuesta"] = "BIEN";
 		}
 		echo json_encode($informacion);
