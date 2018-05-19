@@ -23,7 +23,7 @@
 	  	unset($_SESSION['MM_UserGroup']);
 	  	unset($_SESSION['PrevUrl']);
 	
-  		$logoutGoTo = "../../index.php";
+  		$logoutGoTo = $ruta."index.php";
   		if ($logoutGoTo) {
     		header("Location: $logoutGoTo");
     		exit;
@@ -97,5 +97,7 @@
 	$usuarioApellido=$row_consulta_usuario['apellidos'];
 	$nivel_usuario=$row_consulta_usuario['nivel'];
 	$departamento_usuario=$row_consulta_usuario['dp'];
-
+	$usuariologin = $row_consulta_usuario['nombre']." ".$row_consulta_usuario['apellidos'];
+	$dplogin = $row_consulta_usuario['dp'];
+	$tipomenu = $row_consulta_usuario['tipomenu'];
 ?>

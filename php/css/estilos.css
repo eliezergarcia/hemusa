@@ -28,7 +28,7 @@ i{
 }
 
 td.highlight {
-        font-weight: bold;
+        /*font*/-weight: bold;
         color: blue;
     }
 
@@ -45,9 +45,9 @@ td.highlight {
     position: relative;
     padding: 12px 30px;
     margin: 0.3125rem 1px;
-    font-size: .90rem;
-    font-weight: 400;
-    font-family: 'Open-Sans', sans-serif;
+    /*font*/-size: .90rem;
+    /*font*/-weight: 400;
+    /*font*/-family: 'Open-Sans', sans-serif;
     line-height: 1.428571;
     text-decoration: none;
     text-transform: uppercase;
@@ -1899,7 +1899,7 @@ fieldset[disabled][disabled] .btn-group-raised .btn,
 .btn-group-lg>.btn,
 .btn-group-lg .btn {
     padding: 1.125rem 2.25rem;
-    font-size: 0.875rem;
+    /*font*/-size: 0.875rem;
     line-height: 1.333333;
     border-radius: 0.2rem;
 }
@@ -1908,7 +1908,7 @@ fieldset[disabled][disabled] .btn-group-raised .btn,
 .btn-group-sm>.btn,
 .btn-group-sm .btn {
     padding: 0.40625rem 1.25rem;
-    font-size: 0.6875rem;
+    /*font*/-size: 0.6875rem;
     line-height: 1.5;
     border-radius: 0.2rem;
 }
@@ -1919,7 +1919,7 @@ fieldset[disabled][disabled] .btn-group-raised .btn,
 
 .btn.btn-fab,
 .btn.btn-just-icon {
-    font-size: 24px;
+    /*font*/-size: 24px;
     height: 41px;
     min-width: 41px;
     width: 41px;
@@ -1963,7 +1963,7 @@ fieldset[disabled][disabled] .btn-group-raised .btn,
 .btn-group-sm>.btn.btn-just-icon .fa,
 .btn.btn-just-icon.btn-fab-mini .material-icons,
 .btn.btn-just-icon.btn-fab-mini .fa {
-    font-size: 17px;
+    /*font*/-size: 17px;
     line-height: 29px;
 }
 
@@ -1991,7 +1991,7 @@ fieldset[disabled][disabled] .btn-group-raised .btn,
 .btn-group-lg>.btn.btn-just-icon .material-icons,
 .btn.btn-just-icon.btn-lg .fa,
 .btn-group-lg>.btn.btn-just-icon .fa {
-    font-size: 32px;
+    /*font*/-size: 32px;
     line-height: 56px;
 }
 
@@ -2007,12 +2007,12 @@ fieldset[disabled][disabled] .btn-group-raised .btn,
     top: 0;
     height: 100%;
     line-height: 41px;
-    font-size: 20px;
+    /*font*/-size: 20px;
 }
 
 .btn-just-icon.btn-lg,
 .btn-group-lg>.btn-just-icon.btn {
-    font-size: 24px;
+    /*font*/-size: 24px;
     height: 41px;
     min-width: 41px;
     width: 41px;
@@ -2029,7 +2029,7 @@ fieldset[disabled][disabled] .btn-group-raised .btn,
     top: 0;
     margin-top: -1em;
     margin-bottom: -1em;
-    font-size: 1.1rem;
+    /*font*/-size: 1.1rem;
     vertical-align: middle;
 }
 
@@ -2130,8 +2130,8 @@ fieldset[disabled][disabled] .btn-group-raised .btn,
 }
 
 .titulo{
-	font-family: 'Open-Sans', sans-serif;
-	font-weight: 300;
+	/*font*/-family: 'Open-Sans', sans-serif;
+	/*font*/-weight: 300;
 }
 
 .buttons{
@@ -2147,7 +2147,7 @@ fieldset[disabled][disabled] .btn-group-raised .btn,
 }
 
 .icono{
-	font-size: 40px;
+	/*font*/-size: 40px;
 	vertical-align: bottom;
 	color: #0074D9;
 }
@@ -2170,7 +2170,7 @@ fieldset[disabled][disabled] .btn-group-raised .btn,
 }
 
 .alert-link {
-    font-weight: 500;
+    /*font*/-weight: 500;
 }
 
 .alert-dismissible .close {
@@ -2301,9 +2301,9 @@ fieldset[disabled][disabled] .btn-group-raised .btn,
 }
 
 .alert b {
-    font-weight: 500;
+    /*font*/-weight: 500;
     text-transform: uppercase;
-    font-size: 12px;
+    /*font*/-size: 12px;
 }
 
 .alert,
@@ -2420,7 +2420,7 @@ fieldset[disabled][disabled] .btn-group-raised .btn,
 }
 
 .alert .close i {
-    font-size: 20px;
+    /*font*/-size: 20px;
 }
 
 .alert .close:hover,
@@ -2429,5 +2429,5 @@ fieldset[disabled][disabled] .btn-group-raised .btn,
 }
 
 body{
-	font-family: 'Open Sans', sans-serif;
+	/*font*/-family: 'Open Sans', sans-serif;
 }

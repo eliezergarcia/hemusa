@@ -19,12 +19,13 @@
 <html lang="es">
 <head>
   <title>Orden de Compra</title>
-  <?php include('../../enlaces.php'); ?>
+  <?php include('../../enlacescss.php'); ?>
 </head>
 <body>
   <?php include('../../header.php'); ?>
-    <main class="mdl-layout__content">
-      <!-- Breadcrumb -->
+    <div class="be-content">
+      <div class="page-head">
+          <h2 class="page-head-title">Orden de compra</h2>
           <nav aria-label="breadcrumb">
             <ol class="breadcrumb">             
               <li class="breadcrumb-item">Compras</li>
@@ -34,152 +35,147 @@
               </li>
             </ol>
           </nav>
-
-      <!-- Encabezado -->
-        <div>
-          <br>
-          <center><h1><b>Orden de Compra</h1><h3><label><?php echo $_REQUEST['ordenCompra']; ?></label></h3></b></center>
-        </div>
-
-      <!-- Mensaje actualizaciones-->
-          <div>
-            <center><h6 class="mensaje"></h6></center>
-          </div>
-    
-      <!-- Botón administrador-->
-        <!-- <?php if ($departamento_usuario == "Administracion" || $departamento_usuario == "Logistica") { ?>
-            <div class="col-12 row justify-content-end">
-              <a href=""><button class="btn btn-primary form-control col-3">Pantalla administrador</button></a>
+      </div>
+      <div class="main-content container-fluid">
+          <div class="row full-calendar">
+            <div class="col-lg-12">
+                <div class="card card-fullcalendar">
+                    <div class="card-body">
+                        <!-- Tabla de Partidas -->
+                          <br>
+                          <table id="dt_partidas_oc" class="table table-hover table-striped display compact" cellspacing="0" width="100%">
+                            <thead>
+                              <tr>
+                                <th>#</th>
+                                <th>Marca</th>
+                                <th>Modelo</th>
+                                <th>Descripcion</th>
+                                <th>Precio Unitario</th>
+                                <th>Cantidad</th>
+                                <th>Precio Total</th>
+                                <th>Almacen</th>
+                                <th>Fecha Compromiso</th>
+                                <th>Utilidad</th>
+                                <th>Ver y Editar</th>
+                              </tr>
+                            </thead>
+                          </table>
+                        
+                        <!-- Tabla de Total   -->
+                          <br>
+                          <table id="dt_totales_oc" class="table table-striped table-hover display compact" cellspacing="0" width="100%">
+                            <thead>
+                              <tr>
+                                <th>Subtotal</th>
+                                <th>Flete</th>
+                                <th>Iva</th>
+                                <th>Total</th>
+                                <th>Utilidad Total</th>
+                              </tr>
+                            </thead>
+                          </table>
+                    </div>
+                </div>
             </div>
-
-        <?php } ?> -->
-
-      <!-- Tabla de Partidas -->
-        <br>
-        <table id="dt_partidas_oc" class="table table-bordered table-striped compact" cellspacing="0" width="100%">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Marca</th>
-              <th>Modelo</th>
-              <th>Descripcion</th>
-              <th>Precio Unitario</th>
-              <th>Cantidad</th>
-              <th>Precio Total</th>
-              <th>Almacen</th>
-              <th>Fecha Compromiso</th>
-              <th>Utilidad</th>
-              <th>Ver y Editar</th>
-            </tr>
-          </thead>
-        </table>
-      
-      <!-- Tabla de Total   -->
-        <div class="col-12 row justify-content-start">
-            <table id="dt_totales_oc" class="table table-striped table-bordered display compact" cellspacing="0" width="100%">
-              <thead>
-                <tr>
-                  <th>Subtotal</th>
-                  <th>Flete</th>
-                  <th>Iva</th>
-                  <th>Total</th>
-                  <th>Utilidad Total</th>
-                </tr>
-              </thead>
-            </table>
         </div>
+      </div>
+    </div>
 
-      <!-- Modal Flete -->
-        <div class="modal fade" id="modalFlete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <!-- Modal Flete -->
+      <div class="modal fade colored-header colored-header-success" id="modalFlete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel"><i class="fas fa-truck fa-sm"></i><b> Agregar flete</b></h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="row justify-content-center">
+                <label for="flete" class="col-12 row justify-content-center">Ingresa el costo del flete</label>
+                <input type="text" id="flete" name="flete" class="form-control form-control-sm col-4">                  
+              </div>
+            </div>
+            <div class="modal-footer invoice-footer">
+              <button type="button" class="btn btn-lg btn-secondary" data-dismiss="modal">Cancelar</button>
+              <button id="agregar-flete" type="button" class="btn btn-lg btn-success" data-dismiss="modal">Agregar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+    <!-- Modal Editar Partida -->
+      <form action="" method="POST" id="frmEditarPartida">
+        <input type="hidden" name="opcion" id="opcion" value="editarpartida">
+        <input type="hidden" name="idherramienta" id="idherramienta">
+        <div class="modal fade colored-header colored-header-primary" id="modalEditar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
           <div class="modal-dialog" role="document">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Agregar Flete</h5>
+                <h5 class="modal-title" id="exampleModalLabel"><i class="fas fa-edit fa-sm"></i><b> Información de partida</b></h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
               <div class="modal-body">
-                <div class="row justify-content-center">
-                  <label for="flete" class="col-12 row justify-content-center">Ingresa el costo del flete</label>
-                  <input type="text" id="flete" name="flete" class="form-control col-4">                  
+                <div class="row justify-content-center form-group">
+                  <label for="precioUnitario" class="col-12 row justify-content-center">Precio Unitario</label>
+                  <input type="text" id="precioUnitario" name="precioUnitario" class="form-control form-control-sm col-5">                  
+                </div>
+                <div class="row justify-content-center form-group">
+                  <label for="fechaCompromiso" class="col-12 row justify-content-center">Fecha compromiso</label>
+                  <input type="date" id="fechaCompromiso" name="fechaCompromiso" class="form-control form-control-sm col-5">                  
                 </div>
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                <button id="agregar-flete" type="button" class="btn btn-success" data-dismiss="modal">Guardar</button>
+                <button type="button" class="btn btn-lg btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-lg btn-primary">Guardar</button>
               </div>
             </div>
           </div>
         </div>
-      
-      <!-- Modal Editar Partida -->
-        <form action="" method="POST" id="frmEditarPartida">
-          <input type="hidden" name="opcion" id="opcion" value="editarpartida">
-          <input type="hidden" name="idherramienta" id="idherramienta">
-          <div class="modal fade" id="modalEditar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel">Editar Partida</h5>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <div class="modal-body">
-                  <div class="row justify-content-center form-group">
-                    <label for="precioUnitario" class="col-12 row justify-content-center">Precio Unitario</label>
-                    <input type="text" id="precioUnitario" name="precioUnitario" class="form-control col-5">                  
-                  </div>
-                  <div class="row justify-content-center form-group">
-                    <label for="fechaCompromiso" class="col-12 row justify-content-center">Fecha compromiso</label>
-                    <input type="date" id="fechaCompromiso" name="fechaCompromiso" class="form-control col-5">                  
-                  </div>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                  <button type="submit" class="btn btn-success">Guardar</button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </form>
-      <!-- Modal OC Pendientes -->		
-				<div class="modal fade" id="modalOCPendientes" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-					<div class="modal-dialog" role="document">
-						<div class="modal-content">
-							<div class="modal-header">
-								<h5 class="modal-title" id="exampleModalLabel"><i class="fa fa-calendar btn-outline-primary" aria-hidden="true"></i></h5>
-								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-									<span aria-hidden="true">&times;</span>
-								</button>
-							</div>
-							<div class="modal-body">
-								<div class="col-12 row justify-content-center">
-									<div class="form-group row justify-content-center col-12">
-										<label class="control-label">Proveedores con herramienta sin entregar y sin crear OC</label>
-									</div>
-									<div class="form-group row justify-content-center col-12">
-										<select name="proveedoressinoc" id="proveedoressinoc" class="form-control col-6" onchange="verproveedor2()"></select>
-									</div>
-								</div>				      		
-							</div>
-							<div class="modal-footer">
-								<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-							</div>
+      </form>
+    
+    <!-- Modal OC Pendientes -->		
+			<div class="modal fade" id="modalOCPendientes" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="exampleModalLabel"><i class="fa fa-calendar btn-outline-primary" aria-hidden="true"></i></h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+							<div class="col-12 row justify-content-center">
+								<div class="form-group row justify-content-center col-12">
+									<label class="control-label">Proveedores con herramienta sin entregar y sin crear OC</label>
+								</div>
+								<div class="form-group row justify-content-center col-12">
+									<select name="proveedoressinoc" id="proveedoressinoc" class="form-control col-6" onchange="verproveedor2()"></select>
+								</div>
+							</div>				      		
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
 						</div>
 					</div>
 				</div>
-    </main>
-  </div>
-</body>
-</html>
+			</div>
+    
+  </header>
+  <?php include('../../enlacesjs.php'); ?>
   <script>
-    $(document).on("ready", function(){
+    $(document).ready(function(){
       var ordencompra = "<?php echo $_REQUEST['ordenCompra']; ?>";
       var opcion = "datosordencompra";
-      buscar_oc_pendientes();
-		  setInterval(buscar_oc_pendientes, 3000);
+    //   buscar_oc_pendientes();
+		  // setInterval(buscar_oc_pendientes, 3000);
+      App.init();
+      App.pageCalendar();       
+      App.formElements();
+      App.uiNotifications();
       $.ajax({
         method: "POST",
         url: "buscar.php",
@@ -216,7 +212,7 @@
           {"data":'almacen'},
           {"data":'fechaCompromiso'},
           {"data":'utilidad'},
-          {"defaultContent":'<button class="editar btn btn-primary" data-toggle="modal" data-target="#modalEditar"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>'}
+          {"defaultContent":'<div class="invoice-footer"><button class="editar btn btn-lg btn-primary" data-toggle="modal" data-target="#modalEditar"><i class="fas fa-edit fa-sm" aria-hidden="true"></i></button></div>'}
         ],
         "order":[[3, "desc"]],
         "searching": false,
@@ -224,39 +220,42 @@
         "paging": false,
         "ordering": false,
         "language": idioma_espanol,
-        "dom":  
-          "<'container-fluid row col-12 row'<'row justify-content-end col-11 buttons'B>>" +
-          "<'container-fluid row col-12 row'<'justify-content-center col-12 buttons'tr>>" +
-          "<'container-fluid row col-12 row'<'row justify-content-center col-4 buttons'i><'row justify-content-end col-8 buttons'p>>",
+        "dom":
+          "<'row be-datatable-header'<'col-sm-6'B><'col-sm-6 text-right'f>>" +
+          "<'row be-datatable-body'<'col-sm-12'tr>>" +
+          "<'row be-datatable-footer'<'col-sm-5'i><'col-sm-7'p>>",
         "buttons":[
           {
-            text: '<i class="fa fa-file-pdf-o"></i>',
-            titleAttr: 'Generar PDF',
-            "className": "btn btn-danger",
-            action: function (e, dt, node, config){
-              genPDF();
-            },   
+            extend: 'collection',
+            text: 'Exportar OC',
+            "className": "btn btn-lg btn-space btn-secondary",
+            buttons: [
+              {
+                text: '<i class="fas fa-file-pdf fa-lg"></i> Pdf',
+                // "className": "btn btn-danger",
+                action: function (e, dt, node, config){
+                  genPDF();
+                },   
+              },
+              {
+                text: '<i class="fas fa-print fa-lg" aria-hidden="true"></i> Imprimir',
+                // "className": "btn btn-warning",
+                action: function (e, dt, node, config){
+                  imprimirPDF();
+                },   
+              }
+            ]
           },
           {
-            text: '<i class="fa fa-print" aria-hidden="true"></i>',
-            titleAttr: 'Imprimir Orden de Compra',
-            "className": "btn btn-warning",
-            action: function (e, dt, node, config){
-              imprimirPDF();
-            },   
-          },
-          {
-            text: '<i class="fa fa-plus" aria-hidden="true"></i> <i class="fa fa-truck" aria-hidden="true"></i>',
-            titleAttr: 'Agregar flete',
-            "className": "btn btn-success",
+            text: '<i class="fas fa-truck fa-sm" aria-hidden="true"></i> Agregar flete',
+            "className": "btn btn-lg btn-space btn-success",
             action: function (e, dt, node, config){
               $('#modalFlete').modal('show');
             },   
           },
           {
-            text: 'Descripcion Pedido',
-            titleAttr: 'Agregar flete',
-            "className": "btn btn-primary",
+            text: '<i class="fas fa-align-justify fa-sm" aria-hidden="true"></i> Ver descripcion de pedido',
+            "className": "btn btn-lg btn-space btn-primary",
             action: function (e, dt, node, config){
               window.location= "descripcionPedido.php?ordenCompra="+data.ordendecompra.noDePedido;
               console.log(data.ordendecompra.noDePedido);
@@ -578,6 +577,10 @@
           {"data":'total'},
           {"data":'utilidad'}
         ],
+        "dom":
+          // "<'row be-datatable-header'<'col-sm-6'B><'col-sm-6 text-right'f>>" +
+          "<'row be-datatable-body'<'col-sm-4'tr>>",
+          // "<'row be-datatable-footer'<'col-sm-5'i><'col-sm-7'p>>",
         "searching": false,
         "info": false,
         "paging": false,
@@ -640,58 +643,8 @@
         });
       });
     }
-
-    var mostrar_mensaje = function( informacion ){
-      var texto = "", color = "";
-      if( informacion.respuesta == "BIEN" ){
-        texto = "<div class='alert alert-success'><strong>Bien!</strong> Se han guardado los cambios correctamente.</div>";
-        color = "#379911";
-      }else if( informacion.respuesta == "ERROR"){
-        texto = "<div class='alert alert-danger'><strong>Error</strong>, no se ejecutó la consulta.</div>";
-        color = "#C9302C";
-      }else if( informacion.respuesta == "EXISTE" ){
-        texto = "<strong>Información!</strong> el usuario ya existe.";
-        color = "#5b94c5";
-      }else if( informacion.respuesta == "VACIO" ){
-        texto = "<strong>Advertencia!</strong> debe llenar todos los campos solicitados.";
-        color = "#ddb11d";
-      }else if( informacion.respuesta == "OPCION_VACIA"){
-        texto = "<strong>Advertencia!</strong> la opción no existe o esta vacía, recargar la página. ";
-        color = "#DDB11D";
-      }
-
-      $(".mensaje").html( texto );
-      $(".mensaje").fadeOut(5000, function(){
-        $(this).html("");
-        $(this).fadeIn(5000);
-      }); 
-  }
-
-
-    var idioma_espanol = {
-      "sProcessing":     "Procesando...",
-        "sLengthMenu":     "Mostrar _MENU_ registros",
-        "sZeroRecords":    "No se encontraron resultados",
-        "sEmptyTable":     "Ningún dato disponible en esta tabla",
-        "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-        "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
-        "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
-        "sInfoPostFix":    "",
-        "sSearch":         "Buscar:",
-        "sUrl":            "",
-        "sInfoThousands":  ",",
-        "sLoadingRecords": "Cargando...",
-        "oPaginate": {
-            "sFirst":    "Primero",
-            "sLast":     "Último",
-            "sNext":     "Siguiente",
-            "sPrevious": "Anterior"
-        },
-        "oAria": {
-            "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
-            "sSortDescending": ": Activar para ordenar la columna de manera descendente"
-        }
-    }
-
   </script>
-<script src="<?php echo $ruta; ?>/php/js/notificaciones.js"></script>
+  <script src="<?php echo $ruta; ?>/php/js/idioma_espanol.js"></script>
+  <script src="<?php echo $ruta; ?>/php/js/mensajes_cambios.js"></script>
+</body>
+</html>

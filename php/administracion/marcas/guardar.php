@@ -1,9 +1,8 @@
 <?php 
 	include ('../../conexion.php');
+	include ('../../sesion.php');
 	
 	$opcion = $_POST["opcion"];
-	$usuariologin = $_POST['usuariologin'];
-	$dplogin = $_POST['dplogin'];
 	$informacion = [];
 
 	switch ($opcion) {
@@ -15,6 +14,7 @@
 			$existe = existe_marca($marca, $conexion_usuarios);
 			if($existe > 0){
 				$informacion["respuesta"] = "EXISTE";
+				$informacion["informacion"] = "No se pudo registrar la información porque la marca '".$marca."' ya existe!";
 				echo json_encode($informacion);
 			}else{
 				agregar($usuariologin, $dplogin, $marca, $factor, $moneda, $tiempoEntrega, $conexion_usuarios);
@@ -52,14 +52,18 @@
 		$query = "INSERT INTO marcadeherramientas (marca,factor,moneda,TiempoEntrega) VALUES('$marca', '$factor', '$moneda', '$tiempoEntrega');";
 		$resultado = mysqli_query($conexion_usuarios, $query);		
 		if (!$resultado) {
-			verificar_resultado($resultado);
+			$informacion["respuesta"] = "ERROR";
+			$informacion["informacion"] = "Ocurrió un problema al guardar la información de la marca '".$marca."'!";	
 		}else{		
 			$descripcion = "Se registro la marca ".$marca;
 			$fechahora = date("Y-m-d G:i:s");
 			$query = "INSERT INTO movimientosusuarios (departamento, usuario, tipomovimiento, descripcion, fechahora) VALUES ('$dplogin', '$usuariologin', 'Registro', '$descripcion', '$fechahora')";
 			$resultado = mysqli_query($conexion_usuarios, $query);
-			verificar_resultado($resultado);
+			$informacion["respuesta"] = "BIEN";
+			$informacion["informacion"] = "La información de la marca '".$marca."' se guardo correctamente!";
 		}
+
+		echo json_encode($informacion);
 		cerrar($conexion_usuarios);
 	}
 
@@ -67,14 +71,18 @@
 		$query ="UPDATE marcadeherramientas SET factor='$factor', moneda='$moneda', TiempoEntrega='$tiempoEntrega', excepcion='$excepcionmarca' WHERE id=$idmarca";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 		if (!$resultado) {
-			verificar_resultado($resultado);
+			$informacion["respuesta"] = "ERROR";
+			$informacion["informacion"] = "Ocurrió un error al modificar la información de la marca '".$marca."'!";
 		}else{		
-			// $descripcion = "Se editaron los datos de la marca ".$marca;
-			// $fechahora = date("Y-m-d G:i:s");
-			// $query = "INSERT INTO movimientosusuarios (departamento, usuario, tipomovimiento, descripcion, fechahora) VALUES ('$dplogin', '$usuariologin', 'Modificacion', '$descripcion', '$fechahora')";
-			// $resultado = mysqli_query($conexion_usuarios, $query);
-			verificar_resultado($resultado);
+			$descripcion = "Se editaron los datos de la marca ".$marca;
+			$fechahora = date("Y-m-d G:i:s");
+			$query = "INSERT INTO movimientosusuarios (departamento, usuario, tipomovimiento, descripcion, fechahora) VALUES ('$dplogin', '$usuariologin', 'Modificacion', '$descripcion', '$fechahora')";
+			$resultado = mysqli_query($conexion_usuarios, $query);
+			$informacion["respuesta"] = "BIEN";
+			$informacion["informacion"] = "Se modificó la información de la marca '".$marca."' correctamente!";
 		}
+
+		echo json_encode($informacion);
 		cerrar($conexion_usuarios);
 	}
 
@@ -82,14 +90,18 @@
 		$query = "DELETE FROM marcadeherramientas WHERE id =$idmarca";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 		if (!$resultado) {
-			verificar_resultado($resultado);
+			$informacion["respuesta"] = "ERROR";
+			$informacion["informacion"] = "Ocurrió un error al eliminar la marca '".$marca."'!";
 		}else{		
 			$descripcion = "Se elimino la marca ".$marca;
 			$fechahora = date("Y-m-d G:i:s");
 			$query = "INSERT INTO movimientosusuarios (departamento, usuario, tipomovimiento, descripcion, fechahora) VALUES ('$dplogin', '$usuariologin', 'Eliminacion', '$descripcion', '$fechahora')";
 			$resultado = mysqli_query($conexion_usuarios, $query);
-			verificar_resultado($resultado);
+			$informacion["respuesta"] = "BIEN";
+			$informacion["informacion"] = "La marca '".$marca."' se eliminó correctamente!";
 		}
+
+		echo json_encode($informacion);
 		cerrar($conexion_usuarios);
 	}
 

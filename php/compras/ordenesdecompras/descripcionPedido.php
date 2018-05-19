@@ -1,207 +1,206 @@
-<?php 
+<?php
   require_once('../../conexion.php'); // Llamada a connect.php para establecer conexión con la BD
   require_once('../../sesion.php'); // Llamada a sesion.php para validar si hay sesión inciada
-  error_reporting(0);  
+  error_reporting(0);
 ?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <title>Descripcion de Pedido</title>
-  <?php include('../../enlaces.php'); ?>
+  <?php include('../../enlacescss.php'); ?>
 </head>
 <body>
   <?php include('../../header.php'); ?>
-    <main class="mdl-layout__content">
-      
-      <!-- Breadcrumb -->
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">             
+    <div class="be-content">
+      <div class="page-head">
+          <h2 class="page-head-title">Descripción de pedido</h2>
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
               <li class="breadcrumb-item">Compras</li>
               <li class="breadcrumb-item"><a id="toolTipVerCotizaciones" href="ordenesdecompras.php">Ordenes de compras</a></li>
               <li id="breadcrumb" class="breadcrumb-item" aria-current="page">
                 Orden de compra: <a id="toolTipVerCliente" href="<?php echo $ruta; ?>php/compras/ordenesdecompras/verOrdenCompra.php?ordenCompra="><?php echo $_REQUEST['ordenCompra']; ?></a>
               </li>
-              <li id="breadcrumb" class="breadcrumb-item active" aria-current="page">Descripción de Pedido</li>
+              <li id="breadcrumb" class="breadcrumb-item active" aria-current="page">Descripción de pedido</li>
             </ol>
-        </nav>
+          </nav>
+      </div>
+      <div class="main-content container-fluid">
+          <div class="row full-calendar">
+            <div class="col-lg-12">
+                <div class="card card-fullcalendar">
+                    <div class="card-body">
+                         <!-- Tabla de Partidas -->
+                          <br>
+                          <table id="dt_partidas_oc_descripcion" class="table table-hover table-striped compact" cellspacing="0" width="100%">
+                            <thead>
+                              <tr>
+                                <th>#</th>
+                                <th>Enviado</th>
+                                <th>Recibido</th>
+                                <th>Marca</th>
+                                <th>Modelo</th>
+                                <th>Cantidad</th>
+                                <th>Descripcion</th>
+                                <th>Proveedor</th>
+                                <th>Entrada</th>
+                                <th>Cliente</th>
+                                <th>Pedido</th>
+                                <th>Fecha</th>
+                                <th>Tipo cambio</th>
+                                <th>Costo MXN</th>
+                                <th>Costo USD</th>
+                                <th>Costo Total (MXN)</th>
+                                <th>Costo Total (USD)</th>
+                                <th>Factura Proveedor</th>
+                                <th>Factura Hemusa</th>
+                                <th>Remision</th>
+                                <th>Venta MXN</th>
+                                <th>Venta USD</th>
+                                <th>Total Venta MXN</th>
+                                <th>Total Venta USD</th>
+                                <th>Moneda</th>
+                                <th>Utilidad</th>
+                                <th>Folio</th>
+                                <th>Pedimento</th>
+                                <th>Editar</th>
+                              </tr>
+                            </thead>
+                          </table>
 
-      <!-- Encabezado -->
-        <div>
-          <br>
-          <center><h1><b>Descripcion de Pedido</b></h1></center>
-          <br>
-        </div>
-
-      <!-- Mensaje actualizaciones-->
-          <div>
-            <center><h6 class="mensaje"></h6></center>
-          </div>
-
-      <!-- Tabla de Partidas -->
-        <br>
-        <table id="dt_partidas_oc_descripcion" class="table table-bordered table-striped compact" cellspacing="0" width="100%">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Enviado</th>
-              <th>Recibido</th>
-              <th>Marca</th>
-              <th>Modelo</th>
-              <th>Cantidad</th>
-              <th>Descripcion</th>
-              <th>Proveedor</th>
-              <th>Entrada</th>
-              <th>Cliente</th>
-              <th>Pedido</th>
-              <th>Fecha</th>
-              <th>Tipo cambio</th>
-              <th>Costo MXN</th>
-              <th>Costo USD</th>
-              <th>Costo Total (MXN)</th>
-              <th>Costo Total (USD)</th>
-              <th>Factura Proveedor</th>
-              <th>Factura Hemusa</th>
-              <th>Remision</th>
-              <th>Venta MXN</th>
-              <th>Venta USD</th>
-              <th>Total Venta MXN</th>
-              <th>Total Venta USD</th>
-              <th>Moneda</th>
-              <th>Utilidad</th>
-              <th>Folio</th>
-              <th>Pedimento</th>
-              <th>Editar</th>
-            </tr>
-          </thead>
-        </table>
-     
-      <!-- Tabla de Total   -->
-        <div class="col-12 row justify-content-start">
-            <table id="dt_totales_oc" class="table table-bordered" cellspacing="0" width="100%">
-              <thead>
-                <tr>
-                  <th>Costo</th>
-                  <th>Flete</th>
-                  <th>Venta</th>
-                  <th>Utilidad</th>
-                </tr>
-              </thead>
-            </table>
-        </div>
-      
-      <!-- Modal Editar Partida -->
-        <form action="" method="POST" id="frmEditarPartida">
-          <div class="modal fade" id="modalEditarPartida" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel">Editar partida</h5>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
+                        <!-- Tabla de Total -->
+                          <br>
+                          <table id="dt_totales_oc" class="table table-striped table-hover display compact" cellspacing="0" width="100%">
+                            <thead>
+                              <tr>
+                                <th>Costo</th>
+                                <th>Flete</th>
+                                <th>Venta</th>
+                                <th>Utilidad</th>
+                              </tr>
+                            </thead>
+                          </table>
+                    </div>
                 </div>
-                <div class="modal-body">
-                  <div class="row justify-content-center">
-                    <input type="hidden" name="opcion" id="opcion" value="editarpartidadescripcion">
-                    <input type="hidden" name="idpartida" id="idpartida" value="">
-                    <input type="hidden" name="ordencompra" id="ordencompra">
-                    <div class="col-12 justify-content-center align-items-end">
-                      <div class="col row form-group justify-content-center">
-                        <label for="pedimento" class="col">Pedimento:</label>
-                        <input type="text" class="form-control col" name="pedimento" id="pedimento">
-                      </div>
-                      <div class="col row form-group justify-content-center">
-                        <label for="folio" class="col">Folio:</label>
-                        <input type="text" class="form-control col" name="folio" id="folio">
-                      </div>
-                      <div class="col row form-group justify-content-center">
-                        <label for="facturaproveedor" class="col">Factura proveedor:</label>
-                        <input type="text" class="form-control col" name="facturaproveedor" id="facturaproveedor">
-                      </div>
-                      <div class="col row form-group justify-content-center">
-                        <label for="entrada" class="col">Entrada:</label>
-                        <input type="text" class="form-control col" name="entrada" id="entrada">
-                      </div>                    
+            </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal Editar Partida -->
+      <form action="" method="POST" id="frmEditarPartida">
+        <div class="modal fade colored-header colored-header-primary" id="modalEditarPartida" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"><i class="fas fa-edit fa-sm"></i><b> Información de partida</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <div class="row justify-content-center">
+                  <input type="hidden" name="opcion" id="opcion" value="editarpartidadescripcion">
+                  <input type="hidden" name="idpartida" id="idpartida" value="">
+                  <input type="hidden" name="ordencompra" id="ordencompra">
+                  <div class="col-12 justify-content-center align-items-end">
+                    <div class="col row form-group justify-content-center">
+                      <label for="pedimento" class="col">Pedimento:</label>
+                      <input type="text" class="form-control form-control-sm col" name="pedimento" id="pedimento">
+                    </div>
+                    <div class="col row form-group justify-content-center">
+                      <label for="folio" class="col">Folio:</label>
+                      <input type="text" class="form-control form-control-sm col" name="folio" id="folio">
+                    </div>
+                    <div class="col row form-group justify-content-center">
+                      <label for="facturaproveedor" class="col">Factura proveedor:</label>
+                      <input type="text" class="form-control form-control-sm col" name="facturaproveedor" id="facturaproveedor">
+                    </div>
+                    <div class="col row form-group justify-content-center">
+                      <label for="entrada" class="col">Entrada:</label>
+                      <input type="text" class="form-control form-control-sm col" name="entrada" id="entrada">
                     </div>
                   </div>
                 </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                  <button type="submit" class="btn btn-primary">Editar</button>
-                </div>
+              </div>
+              <div class="modal-footer invoice-footer">
+                <button type="button" class="btn btn-lg btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-lg btn-primary">Guardar</button>
               </div>
             </div>
           </div>
-        </form> 
+        </div>
+      </form>
 
-      <!-- Modal Actualizar Datos -->
-        <form action="" method="POST" id="frmActualizarDatos">
-          <div class="modal fade" id="modalActualizarDatos" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel">Actualizar datos</h5>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <div class="modal-body">
-                  <div class="row justify-content-center">
-                    <input type="hidden" name="opcion" id="opcion" value="actualizar">
-                    <input type="hidden" name="ordencompra" id="ordencompra">
-                    <div class="col-12 justify-content-center align-items-end">
-                      <div class="col row form-group justify-content-center">
-                        <label for="pedimento" class="col">Pedimento:</label>
-                        <input type="text" class="form-control col" name="pedimento" id="pedimento">
-                      </div>
-                      <div class="col row form-group justify-content-center">
-                        <label for="folio" class="col">Folio:</label>
-                        <input type="text" class="form-control col" name="folio" id="folio">
-                      </div>
-                      <div class="col row form-group justify-content-center">
-                        <label for="facturaproveedor" class="col">Factura proveedor:</label>
-                        <input type="text" class="form-control col" name="facturaproveedor" id="facturaproveedor">
-                      </div>
-                      <div class="col row form-group justify-content-center">
-                        <label for="entrada" class="col">Entrada:</label>
-                        <input type="text" class="form-control col" name="entrada" id="entrada">
-                      </div>                    
+    <!-- Modal Actualizar Datos -->
+      <form action="" method="POST" id="frmActualizarDatos">
+        <div class="modal fade colored-header colored-header-success" id="modalActualizarDatos" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"><b>Actualizar datos</b></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <div class="row justify-content-center">
+                  <input type="hidden" name="opcion" id="opcion" value="actualizar">
+                  <input type="hidden" name="ordencompra" id="ordencompra">
+                  <div class="col-12 justify-content-center align-items-end">
+                    <div class="col row form-group justify-content-center">
+                      <label for="pedimento" class="col">Pedimento:</label>
+                      <input type="text" class="form-control form-control-sm col" name="pedimento" id="pedimento">
+                    </div>
+                    <div class="col row form-group justify-content-center">
+                      <label for="folio" class="col">Folio:</label>
+                      <input type="text" class="form-control form-control-sm col" name="folio" id="folio">
+                    </div>
+                    <div class="col row form-group justify-content-center">
+                      <label for="facturaproveedor" class="col">Factura proveedor:</label>
+                      <input type="text" class="form-control form-control-sm col" name="facturaproveedor" id="facturaproveedor">
+                    </div>
+                    <div class="col row form-group justify-content-center">
+                      <label for="entrada" class="col">Entrada:</label>
+                      <input type="text" class="form-control form-control-sm col" name="entrada" id="entrada">
                     </div>
                   </div>
                 </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                  <button type="submit" class="btn btn-success">Guardar</button>
-                </div>
+              </div>
+              <div class="modal-footer invoice-footer">
+                <button type="button" class="btn btn-lg btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-lg btn-success">Agregar</button>
               </div>
             </div>
           </div>
-        </form>               
-    
-    </main>
-  </div>
-</body>
-</html>
+        </div>
+      </form>
+
+  </header>
+  <?php include('../../enlacesjs.php'); ?>
   <script>
-    $(document).on("ready", function(){
+    $(document).ready(function(){
+      App.init();
+      App.pageCalendar();
+      App.formElements();
+      App.uiNotifications();
       var ordencompra = "<?php echo $_REQUEST['ordenCompra']; ?>";
       var opcion = "datosordencompra";
-      console.log(ordencompra);
       listar_partidas(ordencompra);
-      listar_totales(ordencompra);     
-      guardar(ordencompra);     
+      listar_totales(ordencompra);
+      guardar(ordencompra);
     });
 
     var listar_partidas = function(ordencompra){
       var opcion = "partidasocdescripcion";
       var table = $("#dt_partidas_oc_descripcion").DataTable({
         "destroy":"true",
-        "bDeferRender": true, 
-        "scrollX": true,    
+        "bDeferRender": true,
+        "scrollX": true,
         "ajax":{
           "method":"POST",
           "url":"listar.php",
-          "data": {"opcion": opcion, "ordencompra": ordencompra} 
+          "data": {"opcion": opcion, "ordencompra": ordencompra}
         },
         "columns":[
           {"data":'indice'},
@@ -232,7 +231,7 @@
           {"data":'utilidad'},
           {"data":'folio'},
           {"data":'pedimento'},
-          {"defaultContent":'<button class="editar btn btn-primary" data-toggle="modal" data-target="#modalEditarPartida"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>'}
+          {"defaultContent":'<div class="invoice-footer"><button class="editar btn btn-lg btn-primary" data-toggle="modal" data-target="#modalEditarPartida"><i class="fas fa-edit fa-sm" aria-hidden="true"></i></button></div>'}
         ],
         "order":[[3, "desc"]],
         "searching": false,
@@ -241,16 +240,16 @@
         "ordering": false,
         "language": idioma_espanol,
         "dom":
-          "<'col-11 row'<'justify-content-center col-11 buttons'B>>" +  
-          "<'container-fluid row col-12 row'<'justify-content-center col-12 buttons'tr>>",
+          "<'row be-datatable-header'<'col-sm-6'B><'col-sm-6 text-right'f>>" +
+          "<'row be-datatable-body'<'col-sm-12'tr>>" +
+          "<'row be-datatable-footer'<'col-sm-5'i><'col-sm-7'p>>",
         "buttons": [
           {
-            text: 'Actualizar Datos',
-            "className": "btn btn-success",
-            titleAttr: 'Agregar Cliente',
+            text: 'Actualizar datos',
+            "className": "btn btn-success btn-lg",
             action: function (e, dt, node, config){
               $("#modalActualizarDatos").modal("show");
-            }   
+            }
           }
         ]
       });
@@ -263,23 +262,26 @@
       console.log(ordencompra);
       var table = $("#dt_totales_oc").DataTable({
         "destroy":"true",
-        "bDeferRender": true,     
+        "bDeferRender": true,
         "ajax":{
           "method":"POST",
           "url":"listar.php",
-          "data": {"opcion": opcion, "ordencompra": ordencompra} 
+          "data": {"opcion": opcion, "ordencompra": ordencompra}
         },
         "columns":[
           {"data":"costo"},
           {"data":"flete"},
-          {"data":"venta"},        
+          {"data":"venta"},
           {"data":"utilidad"}
         ],
+        "dom":
+          // "<'row be-datatable-header'<'col-sm-4'>>" +
+          "<'row be-datatable-body'<'col-sm-4'tr>>",
         "searching": false,
         "info": false,
         "paging": false,
         "ordering": false
-      });      
+      });
     }
 
     var guardar = function(ordencompra){
@@ -301,7 +303,7 @@
             mostrar_mensaje(json_info);
             listar_partidas(ordencompra);
           });
-        }  
+        }
       });
     }
 
@@ -318,58 +320,8 @@
       });
     }
 
-    var mostrar_mensaje = function( informacion ){
-      var texto = "", color = "";
-      if( informacion.respuesta == "BIEN" ){
-        texto = "<div class='alert alert-success'><strong>Bien!</strong> Se han guardado los cambios correctamente.</div>";
-        color = "#379911";
-      }else if( informacion.respuesta == "ERROR"){
-        texto = "<div class='alert alert-danger'><strong>Error</strong>, no se ejecutó la consulta.</div>";
-        color = "#C9302C";
-      }else if( informacion.respuesta == "EXISTE" ){
-        texto = "<strong>Información!</strong> el usuario ya existe.";
-        color = "#5b94c5";
-      }else if( informacion.respuesta == "VACIO" ){
-        texto = "<strong>Advertencia!</strong> debe llenar todos los campos solicitados.";
-        color = "#ddb11d";
-      }else if( informacion.respuesta == "OPCION_VACIA"){
-        texto = "<strong>Advertencia!</strong> la opción no existe o esta vacía, recargar la página. ";
-        color = "#DDB11D";
-      }
-
-      $(".mensaje").html( texto );
-      $(".mensaje").fadeOut(5000, function(){
-        $(this).html("");
-        $(this).fadeIn(5000);
-      }); 
-  }
-
-
-    var idioma_espanol = {
-      "sProcessing":     "Procesando...",
-        "sLengthMenu":     "Mostrar _MENU_ registros",
-        "sZeroRecords":    "No se encontraron resultados",
-        "sEmptyTable":     "Ningún dato disponible en esta tabla",
-        "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-        "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
-        "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
-        "sInfoPostFix":    "",
-        "sSearch":         "Buscar:",
-        "sUrl":            "",
-        "sInfoThousands":  ",",
-        "sLoadingRecords": "Cargando...",
-        "oPaginate": {
-            "sFirst":    "Primero",
-            "sLast":     "Último",
-            "sNext":     "Siguiente",
-            "sPrevious": "Anterior"
-        },
-        "oAria": {
-            "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
-            "sSortDescending": ": Activar para ordenar la columna de manera descendente"
-        }
-    }
-
   </script>
+  <script src="<?php echo $ruta; ?>/php/js/idioma_espanol.js"></script>
+  <script src="<?php echo $ruta; ?>/php/js/mensajes_cambios.js"></script>
 </body>
 </html>

@@ -1,16 +1,17 @@
-<?php 
+<?php
 	include('../../conexion.php');
-	
+	error_reporting(0);
+
 	if(!$conexion_usuarios){
 		die('Error de conexión: ' . mysqli_connect_errno());
 	}
-	
+
 	$opcion = $_POST["opcion"];
 	$informacion = [];
 
 	switch ($opcion) {
 		case 'datosusuario':
-			$idusuario = $_POST['idusuario'];			
+			$idusuario = $_POST['idusuario'];
 			datos_usuario($idusuario, $conexion_usuarios);
 			break;
 
@@ -76,18 +77,18 @@
      	$numero = substr(date("y"), 1).date("m").date("d").$n;
 	   	$query = "SELECT ref FROM cotizacion ORDER BY id DESC LIMIT 100";
      	$resultado = mysqli_query($conexion_usuarios, $query);
-     	
+
      	while($data = mysqli_fetch_array($resultado)){
      		$ultimaCotizacion = str_replace("HMU", "", $data['ref']);
 	     	while ($numero <= $ultimaCotizacion) {
 	     		$n++;
 	     		$numero = substr(date("y"), 1).date("m").date("d").$n;
-			}
+				}
      	}
-		 
+
 		$numeroCotizacion = "HMU".substr(date("y"), 1).date("m").date("d").$n;
 
-     	$arreglo['resultado'] = "ok";
+    $arreglo['resultado'] = "ok";
 		$arreglo['numeroCotizacion'] = $numeroCotizacion;
 		echo json_encode($arreglo);
 		cerrar($conexion_usuarios);
@@ -189,7 +190,7 @@
 
 	function buscar_datos_producto($modelo, $marca, $idcliente, $refCotizacion, $conexion_usuarios){
 		$query = "SELECT * FROM productos WHERE ref ='$modelo' AND marca = '$marca'";
-		$resultado = mysqli_query($conexion_usuarios, $query);	
+		$resultado = mysqli_query($conexion_usuarios, $query);
 		while($data = mysqli_fetch_assoc($resultado)){
 			$arreglo['data'] = array_map("utf8_encode", $data);
 			if($data['igi'] == 0){
@@ -281,11 +282,11 @@
 
 		while($data = mysqli_fetch_assoc($resultado)){
 			$idcliente = $data['cliente'];
-			$informacion['cotizacion'] = $data;		
+			$informacion['cotizacion'] = $data;
 			$vencimiento = $data['fecha'];
-			$vencimiento = strtotime($vencimiento."+ 30 days"); 
+			$vencimiento = strtotime($vencimiento."+ 30 days");
 			$vencimiento = date("Y-m-d",$vencimiento);
-			$informacion['vencimiento'] = $vencimiento;
+			$informacion['vencimiento'] = strftime("%d-%B-%Y", strtotime($vencimiento));
 		}
 
 		$query = "SELECT * FROM cotizacionherramientas WHERE cotizacionRef = '$numeroCotizacion'";
@@ -313,6 +314,7 @@
 				'stock' => $stock
 			);
 		}
+
 		$informacion['numeropartidas'] = mysqli_num_rows($resultado);
 
 		$query = "SELECT * FROM contactos WHERE id = '$idcliente'";

@@ -6,193 +6,194 @@
 <html lang="es">
 <head>
   <title>Ordenes de Compras</title>
-  <?php include('../../enlaces.php'); ?>
+  <?php include('../../enlacescss.php'); ?>
 </head>
 <body>
   <?php include('../../header.php'); ?>
-    <main class="mdl-layout__content">
-      <!-- Breadcrumb -->
-        <nav aria-label="breadcrumb">
-          <ol class="breadcrumb">
-            <li class="breadcrumb-item">Compras</li>
-            <li class="breadcrumb-item active">Pedimentos</li>
-          </ol>
-        </nav>
+    <div class="be-content">
+          <div class="page-head">
+              <h2 class="page-head-title">Pedimentos</h2>
+              <nav aria-label="breadcrumb" role="navigation">
+                <ol class="breadcrumb page-head-nav">
+                    <li class="breadcrumb-item"><a href="#">Compras</a></li>
+                    <li class="breadcrumb-item"><a href="#">Pedimentos</a></li>
+                </ol>
+              </nav>
+          </div>
+          <div class="main-content container-fluid">
+              <div class="row full-calendar">
+                <div class="col-lg-12">
+                    <div class="card card-fullcalendar">
+                        <div class="card-body">
+                           <!-- Form buscar pedimentos -->
+                            <div class="col-12">
+                              <div class="row justify-content-center">
+                                <div>
+                                  <div class="row justify-content-center form-group">
+                                    <label for="fechaInicio">Fecha Inicio:</label>
+                                    <input type="date" class="form-control form-control-sm row justify-content-center" name="fechaInicio" id="fechaInicio">
+                                  </div>
+                                  <div class="row justify-content-center form-group">
+                                    <label for="fechaInicio">Fecha Fin:</label>
+                                    <input type="date" class="form-control form-control-sm" name="fechaFin" id="fechaFin">
+                                  </div>
+                                  <div class="row justify-content-center form-group">
+                                    <button class="btn btn-lg btn-primary" onclick="listar()"><i class="fas fa-search fa-sm"></i> Buscar</button>
+                                  </div>
+                                  <div class="row justify-content-center form-group">
+                                    <button class="btn btn-lg btn-secondary" data-toggle="modal" data-target="#modalAgregarPedimento"><i class="far fa-file-alt fa-sm"></i> Agregar pedimento</button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
 
-      <!-- Encabezado -->
-        <div>
-          <br>
-          <center><h1><b>Pedimentos</b></h1></center>
+                          <!-- Tabla de pedimentos -->
+                            <table id="dt_pedimentos" class="table table-bordered table-striped display compact" cellspacing="0" width="100%">
+                              <thead>
+                                <th>Fecha</th>
+                                <th>Número</th>
+                                <th>Valor</th>
+                                <th>CNT</th>
+                                <th>DTA</th>
+                                <th>PRV</th>
+                                <th>IGI</th>
+                                <th>IVA</th>
+                                <th>Editar</th>
+                              </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+          </div>
         </div>
-
-      <!-- Mensaje de actualizaciones-->
-          <div>
-            <center><h6 class="mensaje"></h6></center>
-          </div>
-
-
-      <!-- Form buscar pedimentos -->
-        <div class="col-12">
-          <div class="row justify-content-center">
-            <div>
-              <div class="row justify-content-center form-group">
-                <label for="fechaInicio">Fecha Inicio:</label>
-                <input type="date" class="form-control row justify-content-center" name="fechaInicio" id="fechaInicio">
-              </div>
-              <div class="row justify-content-center form-group">
-                <label for="fechaInicio">Fecha Fin:</label>
-                <input type="date" class="form-control" name="fechaFin" id="fechaFin">
-              </div>
-              <div class="row justify-content-center form-group">
-                <button class="btn btn-primary" onclick="listar()">Buscar</button>
-              </div>
-              <div class="row justify-content-center form-group">
-                <button class="btn btn-success" data-toggle="modal" data-target="#modalAgregarPedimento">Agregar Pedimento</button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-      <!-- Tabla de pedimentos -->
-        <table id="dt_pedimentos" class="table table-bordered table-striped display compact" cellspacing="0" width="100%">
-          <thead>
-            <th>Fecha</th>
-            <th>Número</th>
-            <th>Valor</th>
-            <th>CNT</th>
-            <th>DTA</th>
-            <th>PRV</th>
-            <th>IGI</th>
-            <th>IVA</th>
-            <th>Editar</th>
-          </thead>
-        </table>
-
-      <!-- Modal Agregar Pedimento -->
-        <form action="" method="POST">
-          <input type="hidden" name="opcion" id="opcion" value="agregarpedimento">
-          <div class="modal fade" id="modalAgregarPedimento" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel">Agregar Pedimento</h5>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <div class="modal-body row justify-content-center">
-                  <div class="row justify-content-center form-group col-12">
-                    <label for="fechaPedimento" class="col">Fecha pedimento: <font color="#FF4136">*</font></label>
-                    <input type="date" class="form-control row justify-content-center col" name="fechaPedimento" id="fechaPedimento" value="<?php echo date("Y-m-d"); ?>" required>
-                  </div>
-                  <div class="row justify-content-center form-group col-12">
-                    <label for="numeroPedimento" class="col">Número pedimento: <font color="#FF4136">*</font></label>
-                    <input type="text" class="form-control col" name="numeroPedimento" id="numeroPedimento" required>
-                  </div>
-                  <div class="row justify-content-center form-group col-12">
-                    <label for="aduana" class="col">Aduana: <font color="#FF4136">*</font></label>
-                    <input type="text" class="form-control col" name="aduana" id="aduana" value="Nuevo Laredo">
-                  </div>
-                  <div class="row justify-content-center form-group col-12">
-                    <label for="valorAduana" class="col">Valor aduana: <font color="#FF4136">*</font></label>
-                    <input type="text" class="form-control col" name="valorAduana" id="valorAduana" value="" required>
-                  </div>
-                  <div class="row justify-content-center form-group col-12">
-                    <label for="cnt" class="col">CNT: <font color="#FF4136">*</font></label>
-                    <input type="text" class="form-control col" name="cnt" id="cnt" value="" required>
-                  </div>
-                  <div class="row justify-content-center form-group col-12">
-                    <label for="dta" class="col">DTA: <font color="#FF4136">*</font></label>
-                    <input type="text" class="form-control col" name="dta" id="dta" value="" required>
-                  </div>
-                  <div class="row justify-content-center form-group col-12">
-                    <label for="prv" class="col">PRV: <font color="#FF4136">*</font></label>
-                    <input type="text" class="form-control col" name="prv" id="prv" value="" required>
-                  </div>
-                  <div class="row justify-content-center form-group col-12">
-                    <label for="igi" class="col">IGI: <font color="#FF4136">*</font></label>
-                    <input type="text" class="form-control col" name="igi" id="igi" value="" required>
-                  </div>
-                  <div class="row justify-content-center form-group col-12">
-                    <label for="iva" class="col">IVA: <font color="#FF4136">*</font></label>
-                    <input type="text" class="form-control col" name="iva" id="iva" value="" required>
-                  </div>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                  <button type="submit" class="btn btn-success">Guardar</button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </form>
-
-      <!-- Modal Editar Pedimento -->
-        <form action="" method="POST" id="frmEditarPedimento">
-          <input type="hidden" name="opcion" id="opcion" value="editarpedimento">
-          <input type="hidden" name="idpedimento" id="idpedimento">
-          <div class="modal fade" id="modalEditarPedimento" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel">Editar Pedimento</h5>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <div class="modal-body row justify-content-center">
-                  <div class="row justify-content-center form-group col-12">
-                    <label for="fechaPedimento" class="col">Fecha pedimento:</label>
-                    <input type="date" class="form-control row justify-content-center col" name="fechaPedimento" id="fechaPedimento" value="<?php echo date("Y-m-d"); ?>" required>
-                  </div>
-                  <div class="row justify-content-center form-group col-12">
-                    <label for="numeroPedimento" class="col">Número pedimento:</label>
-                    <input type="text" class="form-control col" name="numeroPedimento" id="numeroPedimento" required>
-                  </div>
-                  <div class="row justify-content-center form-group col-12">
-                    <label for="aduana" class="col">Aduana:</label>
-                    <input type="text" class="form-control col" name="aduana" id="aduana" value="Nuevo Laredo">
-                  </div>
-                  <div class="row justify-content-center form-group col-12">
-                    <label for="valorAduana" class="col">Valor aduana:</label>
-                    <input type="text" class="form-control col" name="valorAduana" id="valorAduana" value="" required>
-                  </div>
-                  <div class="row justify-content-center form-group col-12">
-                    <label for="cnt" class="col">CNT</label>
-                    <input type="text" class="form-control col" name="cnt" id="cnt" value="" required>
-                  </div>
-                  <div class="row justify-content-center form-group col-12">
-                    <label for="dta" class="col">DTA</label>
-                    <input type="text" class="form-control col" name="dta" id="dta" value="" required>
-                  </div>
-                  <div class="row justify-content-center form-group col-12">
-                    <label for="prv" class="col">PRV</label>
-                    <input type="text" class="form-control col" name="prv" id="prv" value="" required>
-                  </div>
-                  <div class="row justify-content-center form-group col-12">
-                    <label for="igi" class="col">IGI</label>
-                    <input type="text" class="form-control col" name="igi" id="igi" value="" required>
-                  </div>
-                  <div class="row justify-content-center form-group col-12">
-                    <label for="iva" class="col">IVA</label>
-                    <input type="text" class="form-control col" name="iva" id="iva" value="" required>
-                  </div>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                  <button type="submit" class="btn btn-primary">Editar</button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </form>
-
-    </main>
     </div>
-  </body>
-</html>
+
+    <!-- Modal Agregar Pedimento -->
+      <form action="" method="POST">
+        <input type="hidden" name="opcion" id="opcion" value="agregarpedimento">
+        <div class="modal fade colored-header colored-header-success" id="modalAgregarPedimento" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h4 class="modal-title" id="exampleModalLabel"><i class="far fa-file-alt fa-sm"></i> Registro de pedimento</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body row justify-content-center">
+                <div class="row justify-content-center form-group col-12">
+                  <label for="fechaPedimento" class="col-4">Fecha pedimento: <font color="#FF4136">*</font></label>
+                  <input type="date" class="form-control form-control-sm col-6" name="fechaPedimento" id="fechaPedimento" value="<?php echo date("Y-m-d"); ?>" required>
+                </div>
+                <div class="row justify-content-center form-group col-12">
+                  <label for="numeroPedimento" class="col-4">Número pedimento: <font color="#FF4136">*</font></label>
+                  <input type="text" class="form-control form-control-sm col-6" name="numeroPedimento" id="numeroPedimento" required>
+                </div>
+                <div class="row justify-content-center form-group col-12">
+                  <label for="aduana" class="col-4">Aduana: <font color="#FF4136">*</font></label>
+                  <input type="text" class="form-control form-control-sm col-6" name="aduana" id="aduana" value="Nuevo Laredo">
+                </div>
+                <div class="row justify-content-center form-group col-12">
+                  <label for="valorAduana" class="col-4">Valor aduana: <font color="#FF4136">*</font></label>
+                  <input type="text" class="form-control form-control-sm col-6" name="valorAduana" id="valorAduana" value="" required>
+                </div>
+                <div class="row justify-content-center form-group col-12">
+                  <label for="cnt" class="col-4">CNT: <font color="#FF4136">*</font></label>
+                  <input type="text" class="form-control form-control-sm col-6" name="cnt" id="cnt" value="" required>
+                </div>
+                <div class="row justify-content-center form-group col-12">
+                  <label for="dta" class="col-4">DTA: <font color="#FF4136">*</font></label>
+                  <input type="text" class="form-control form-control-sm col-6" name="dta" id="dta" value="" required>
+                </div>
+                <div class="row justify-content-center form-group col-12">
+                  <label for="prv" class="col-4">PRV: <font color="#FF4136">*</font></label>
+                  <input type="text" class="form-control form-control-sm col-6" name="prv" id="prv" value="" required>
+                </div>
+                <div class="row justify-content-center form-group col-12">
+                  <label for="igi" class="col-4">IGI: <font color="#FF4136">*</font></label>
+                  <input type="text" class="form-control form-control-sm col-6" name="igi" id="igi" value="" required>
+                </div>
+                <div class="row justify-content-center form-group col-12">
+                  <label for="iva" class="col-4">IVA: <font color="#FF4136">*</font></label>
+                  <input type="text" class="form-control form-control-sm col-6" name="iva" id="iva" value="" required>
+                </div>
+              </div>
+              <div class="modal-footer invoice-footer">
+                <button type="button" class="btn btn-lg btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-lg btn-success">Agregar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+
+    <!-- Modal Editar Pedimento -->
+      <form action="" method="POST" id="frmEditarPedimento">
+        <input type="hidden" name="opcion" id="opcion" value="editarpedimento">
+        <input type="hidden" name="idpedimento" id="idpedimento">
+        <div class="modal fade colored-header colored-header-primary" id="modalEditarPedimento" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h4 class="modal-title" id="exampleModalLabel"><i class="icon fas fa-edit fa-sm"></i> Información de pedimento</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body row justify-content-center">
+                <div class="row justify-content-center form-group col-12">
+                  <label for="fechaPedimento" class="col-4">Fecha pedimento:</label>
+                  <input type="date" class="form-control form-control-sm col-6" name="fechaPedimento" id="fechaPedimento" value="<?php echo date("Y-m-d"); ?>" required>
+                </div>
+                <div class="row justify-content-center form-group col-12">
+                  <label for="numeroPedimento" class="col-4">Número pedimento:</label>
+                  <input type="text" class="form-control form-control-sm col-6" name="numeroPedimento" id="numeroPedimento" required>
+                </div>
+                <div class="row justify-content-center form-group col-12">
+                  <label for="aduana" class="col-4">Aduana:</label>
+                  <input type="text" class="form-control form-control-sm col-6" name="aduana" id="aduana" value="Nuevo Laredo">
+                </div>
+                <div class="row justify-content-center form-group col-12">
+                  <label for="valorAduana" class="col-4">Valor aduana:</label>
+                  <input type="text" class="form-control form-control-sm col-6" name="valorAduana" id="valorAduana" value="" required>
+                </div>
+                <div class="row justify-content-center form-group col-12">
+                  <label for="cnt" class="col-4">CNT</label>
+                  <input type="text" class="form-control form-control-sm col-6" name="cnt" id="cnt" value="" required>
+                </div>
+                <div class="row justify-content-center form-group col-12">
+                  <label for="dta" class="col-4">DTA</label>
+                  <input type="text" class="form-control form-control-sm col-6" name="dta" id="dta" value="" required>
+                </div>
+                <div class="row justify-content-center form-group col-12">
+                  <label for="prv" class="col-4">PRV</label>
+                  <input type="text" class="form-control form-control-sm col-6" name="prv" id="prv" value="" required>
+                </div>
+                <div class="row justify-content-center form-group col-12">
+                  <label for="igi" class="col-4">IGI</label>
+                  <input type="text" class="form-control form-control-sm col-6" name="igi" id="igi" value="" required>
+                </div>
+                <div class="row justify-content-center form-group col-12">
+                  <label for="iva" class="col-4">IVA</label>
+                  <input type="text" class="form-control form-control-sm col-6" name="iva" id="iva" value="" required>
+                </div>
+              </div>
+              <div class="modal-footer invoice-footer">
+                <button type="button" class="btn btn-lg btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-lg btn-primary">Guardar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+  </head>
+  <?php include('../../enlacesjs.php'); ?>
   <script>
-    $(document).on("ready", function(){
+    $(document).ready(function(){
+      App.init();
+      App.pageCalendar();
+      App.formElements();
+      App.uiNotifications();
       guardar();
     });
 
@@ -247,7 +248,7 @@
               return "$ " + iva;
             }
           },
-          {"defaultContent":"<button type='button' class='editar btn btn-primary' data-toggle='modal' data-target='#modalEditarPedimento'><i class='fa fa-pencil-square-o'></i></button>", "sortable": false}
+          {"defaultContent":"<div class='invoice-footer'><button type='button' class='editar btn btn-lg btn-primary' data-toggle='modal' data-target='#modalEditarPedimento'><i class='fas fa-edit fa-sm'></i></button></div>", "sortable": false}
         ],
         "footerCallback": function ( row, data, start, end, display ) {
             var api = this.api();
@@ -312,37 +313,51 @@
         "order": [[ 0, "desc" ]],
         "language": idioma_espanol,
         "dom":
-          "<'container-fluid row'<'row justify-content-center col-sm-4 buttons'B><'row justify-content-end col-sm-8 buttons'f>>" +
-          "<'container-fluid row'<'row justify-content-center col-sm-12 buttons'tr>>" +
-          "<'container-fluid row'<'row justify-content-center col-12 buttons'i>>"+
-          "<'container-fluid row'<'row justify-content-center col-12 buttons'p>>",
+          "<'row be-datatable-header'<'col-sm-6'B><'col-sm-6 text-right'f>>" +
+          "<'row be-datatable-body'<'col-sm-12'tr>>" +
+          "<'row be-datatable-footer'<'col-sm-5'i><'col-sm-7'p>>",
         "buttons":[
           {
-            extend:    'pdfHtml5',
-            text:      '<i class="fa fa-file-pdf-o"></i>',
-            titleAttr: 'PDF',
-            "className": "btn iconopdf"
-          },
-          {
-            extend:    'excelHtml5',
-            text:      '<i class="fa fa-file-excel-o"></i>',
-            titleAttr: 'Excel',
-            "className": "btn iconoexcel"
-          },
-          {
-            extend: 'csvHtml5',
-            text: '<i class="fa fa-file-text-o"></i>',
-            titleAttr: 'CSV',
-            "className": "btn iconocsv"
-          },
-          {
-            extend: 'print',
-            text: '<i class="fa fa-print" aria-hidden="true"></i>',
-            titleAttr: 'Imprimir',
-            header: 'false',
-            "className": "btn iconoimprimir",
-            orientation: 'landscape',
-            pageSize: 'LEGAL'
+            extend: 'collection',
+            text: '<i class="fas fa-table fa-sm"></i> Exportar tabla',
+            "className": "btn btn-lg btn-space btn-secondary",
+            buttons: [
+                {
+                  extend:    'excelHtml5',
+                  text:      '<i class="fas fa-file-excel fa-lg"></i> Excel',
+                  // "className": "btn btn-lg btn-space btn-secondary",
+                  exportOptions: {
+                    columns: [ 0, 1, 2, 3, 4, 5, 6, 7 ]
+                  }
+                },
+                {
+                  extend: 'csv',
+                  text: '<i class="fas fa-file-alt fa-lg"></i> Csv',
+                  // "className": "btn btn-lg btn-space btn-secondary",
+                  exportOptions: {
+                          columns: [ 0, 1, 2, 3, 4, 5, 6, 7 ]
+                  }
+                },
+                {
+                  extend:    'pdfHtml5',
+                  text:      '<i class="fas fa-file-pdf fa-lg"></i> Pdf',
+                  download: 'open',
+                  // "className": "btn btn-lg btn-space btn-secondary",
+                  exportOptions: {
+                    columns: [ 0, 1, 2, 3, 4, 5, 6, 7 ]
+                  }
+                },
+                {
+                  extend: 'print',
+                  text: '<i class="fas fa-print fa-lg"></i> Imprimir',
+                  header: 'false',
+                  exportOptions: {
+                          columns: [ 0, 1, 2, 3, 4, 5, 6, 7 ]
+                  },
+                  orientation: 'landscape',
+                  pageSize: 'LEGAL'
+                }
+            ]
           },
         ]
       });
@@ -353,7 +368,7 @@
       $("form").on("submit", function(e){
         e.preventDefault();
         if ($("#numeroPedimento").val().length != 0 && $("#numeroPedimento").val().length != 21 ) {
-            alert("El número de pedimento es inválido!\nVerifica que tiene la siguiente estructura\nEjemplo: XX--XX--XXXX--XXXXXXX");
+            alert("El número de pedimento es inválido!\nVerifica que tenga la siguiente estructura\nEjemplo: XX--XX--XXXX--XXXXXXX");
         }else{
           $(".modal").modal("hide");
           var frm = $(this).serialize();
@@ -368,33 +383,6 @@
             listar();
           });
         }
-      });
-    }
-
-    var mostrar_mensaje = function( informacion ){
-      var texto = "", color = "";
-      if( informacion.respuesta == "BIEN" ){
-        texto = "<div class='alert alert-success'><strong>Bien!</strong> Se han guardado los cambios correctamente.</div>";
-        color = "#379911";
-      }else if( informacion.respuesta == "ERROR"){
-        texto = "<div class='alert alert-danger'><strong>Error</strong>, no se ejecutó la consulta.</div>";
-        color = "#C9302C";
-      }else if( informacion.respuesta == "EXISTE" ){
-        texto = "<strong>Información!</strong> el usuario ya existe.";
-        color = "#5b94c5";
-      }else if( informacion.respuesta == "VACIO" ){
-        texto = "<strong>Advertencia!</strong> debe llenar todos los campos solicitados.";
-        color = "#ddb11d";
-      }else if( informacion.respuesta == "OPCION_VACIA"){
-        texto = "<strong>Advertencia!</strong> la opción no existe o esta vacía, recargar la página. ";
-        color = "#DDB11D";
-      }
-
-      // $(".mensaje").alert();
-      $(".mensaje").html( texto );
-      $(".mensaje").fadeOut(5000, function(){
-        $(this).html("");
-        $(this).fadeIn(5000);
       });
     }
 
@@ -434,30 +422,8 @@
       });
     }
 
-    var idioma_espanol = {
-      "sProcessing":     "Procesando...",
-        "sLengthMenu":     "Mostrar _MENU_ registros",
-        "sZeroRecords":    "No se encontraron resultados",
-        "sEmptyTable":     "Ningún dato disponible en esta tabla",
-        "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-        "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
-        "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
-        "sInfoPostFix":    "",
-        "sSearch":         "Buscar:",
-        "sUrl":            "",
-        "sInfoThousands":  ",",
-        "sLoadingRecords": "Cargando...",
-        "oPaginate": {
-            "sFirst":    "Primero",
-            "sLast":     "Último",
-            "sNext":     "Siguiente",
-            "sPrevious": "Anterior"
-        },
-        "oAria": {
-            "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
-            "sSortDescending": ": Activar para ordenar la columna de manera descendente"
-        }
-    }
   </script>
+  <script src="<?php echo $ruta; ?>/php/js/idioma_espanol.js"></script>
+  <script src="<?php echo $ruta; ?>/php/js/mensajes_cambios.js"></script>
 </body>
 </html>

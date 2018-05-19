@@ -76,29 +76,33 @@
 	}
 
 	function sinproveedor($buscar, $conexion_usuarios){
-		$query = "SELECT DISTINCT cotizacionRef FROM cotizacionherramientas WHERE  Pedido = 'si' AND pedidoFecha != '0000-00-00' AND Proveedor = 'None' AND pedidoFecha >= '2017-01-01' ORDER BY pedidoFecha DESC LIMIT 999";
+		$query = "SELECT DISTINCT cotizacionRef FROM cotizacionherramientas WHERE Pedido = 'si' AND pedidoFecha != '0000-00-00' AND Proveedor = 'None' AND pedidoFecha >= '2017-01-01' LIMIT 999";
 		$resultado = mysqli_query($conexion_usuarios, $query);
-		while($data1 = mysqli_fetch_assoc($resultado)){
-			$cotizacionRef = $data1['cotizacionRef'];
-			
-			$querycotizacion = "SELECT cotizacion.*, contactos.nombreEmpresa FROM cotizacion INNER JOIN contactos ON contactos.id = cotizacion.cliente WHERE (cotizacion.ref LIKE '%$buscar%' OR NoPedClient LIKE '%$buscar%' OR nombreEmpresa LIKE '%$buscar%' OR contacto LIKE '%$buscar%' OR vendedor LIKE '%$buscar%' OR Pedido LIKE '%$buscar%') AND cotizacion.ref = '$cotizacionRef'";
-			$rescotizacion = mysqli_query($conexion_usuarios, $querycotizacion);
+		if (!$resultado) {
+			verificar_resultado($resultado);
+		}else{
+			while($data1 = mysqli_fetch_assoc($resultado)){
+				$cotizacionRef = $data1['cotizacionRef'];
+				
+				$querycotizacion = "SELECT cotizacion.*, contactos.nombreEmpresa FROM cotizacion INNER JOIN contactos ON contactos.id = cotizacion.cliente WHERE (cotizacion.ref LIKE '%$buscar%' OR NoPedClient LIKE '%$buscar%' OR nombreEmpresa LIKE '%$buscar%' OR contacto LIKE '%$buscar%' OR vendedor LIKE '%$buscar%' OR Pedido LIKE '%$buscar%') AND cotizacion.ref = '$cotizacionRef'";
+				$rescotizacion = mysqli_query($conexion_usuarios, $querycotizacion);
 
-			while($data = mysqli_fetch_assoc($rescotizacion)){
-				$arreglo['data'][] = array(
-					'cotizacionRef' => $data['ref'],
-					'numeroPedido' => $data['NoPedClient'],
-					'nombreEmpresa' => $data['nombreEmpresa'],
-					'contacto' => $data['contacto'],
-					'vendedor' => $data['vendedor'],
-					'fecha' => $data['Pedido'],
-					'partidas' => $data['partidaCantidad'],
-					'total' => "$ ".$data['precioTotal']
-				);
+				while($data = mysqli_fetch_assoc($rescotizacion)){
+					$arreglo['data'][] = array(
+						'cotizacionRef' => $data['ref'],
+						'numeroPedido' => $data['NoPedClient'],
+						'nombreEmpresa' => $data['nombreEmpresa'],
+						'contacto' => $data['contacto'],
+						'vendedor' => $data['vendedor'],
+						'fecha' => $data['Pedido'],
+						'partidas' => $data['partidaCantidad'],
+						'total' => "$ ".$data['precioTotal']
+					);
+				}
 			}
-		}
 
-		echo json_encode($arreglo, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_PARTIAL_OUTPUT_ON_ERROR);	
+			echo json_encode($arreglo, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_PARTIAL_OUTPUT_ON_ERROR);	
+		}
 		mysqli_close($conexion_usuarios);
 	}
 
@@ -358,6 +362,14 @@
 		echo utf8_encode('{"data":['.$tabla.']}');
 		mysqli_free_result($resultado);
 		mysqli_close($conexion_usuarios);
+	}
+
+	function verificar_resultado($resultado){
+		if (!$resultado) {
+			echo json_encode("ERROR");
+		}else{
+			echo json_encode("BIEN");
+		}
 	}
 
  ?>
