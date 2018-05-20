@@ -46,3 +46,4 @@
 <script src="<?php echo $ruta; ?>php/js/jspdf.plugin.autotable.js"></script>
 <script src="<?php echo $ruta; ?>assets/js/app-chat.js"></script>
 <script src="<?php echo $ruta; ?>assets/lib/jquery.niftymodals/dist/jquery.niftymodals.js" type="text/javascript"></script>
+<script src="<?php echo $ruta; ?>assets/js/app-api-factura.js" type="text/javascript"></script>

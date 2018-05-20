@@ -1,5 +1,5 @@
-<?php 
-	
+<?php
+
 	include("../../conexion.php");
 
 	$opcion = $_POST['opcion'];
@@ -10,25 +10,25 @@
 			$refCotizacion = $_POST['refCotizacion'];
 			$numeroPedido = $_POST['numeroPedido'];
 			buscardatos($refCotizacion, $numeroPedido, $conexion_usuarios);
-			break;	
+			break;
 
 		case 'paqueterias':
 			$paqueteria = $_POST['paqueteria'];
 			paqueterias($paqueteria, $conexion_usuarios);
 			break;
 
-		case 'proveedores':		
+		case 'proveedores':
 			proveedores($conexion_usuarios);
 			break;
 
 		case 'datosRFC':
-			$rfc = $_POST['rfc'];		
+			$rfc = $_POST['rfc'];
 			datosrfc($rfc, $conexion_usuarios);
 			break;
 
 		case 'buscarpartidasfacturar':
-			$numeroPedido = $_POST['numeroPedido'];	
-			$cotizacionRef = $_POST['refCotizacion'];	
+			$numeroPedido = $_POST['numeroPedido'];
+			$cotizacionRef = $_POST['refCotizacion'];
 			buscarpartidasfacturar($numeroPedido, $cotizacionRef, $conexion_usuarios);
 			break;
 
@@ -89,7 +89,7 @@
 			}
 		}
 
-		echo json_encode($informacion, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_PARTIAL_OUTPUT_ON_ERROR);	
+		echo json_encode($informacion, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_PARTIAL_OUTPUT_ON_ERROR);
 	}
 
 	function paqueterias($paqueteria, $conexion_usuarios){
@@ -126,6 +126,9 @@
 	}
 
 	function buscarpartidasfacturar($numeroPedido, $cotizacionRef, $conexion_usuarios){
+		if ($numeroPedido == "") {
+			$numeroPedido = "null";
+		}
 		$query = "SELECT * FROM cotizacionherramientas WHERE numeroPedido = '$numeroPedido'";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 
@@ -152,7 +155,7 @@
 				// 	'TipoFactor' => "Tasa",
 				// 	'TasaOCuota' => 0.16,
 				// 	'Importe' => ($data['precioLista'] * $data['cantidad']) + ($data['precioLista'] * $data['cantidad'] * 0.16)
-				// );	
+				// );
 				if ($data['Pedimento'] != '') {
 					$Partes = "{}";
 					$arreglo['data'][] = array(
@@ -166,7 +169,7 @@
 						'Descuento' => 0,
 						'Impuestos' => $traslados,
 						'Aduana' => $data['Pedimento']
-					);		
+					);
 				}else{
 					$arreglo['data'][] = array(
 						'ClaveProdServ' => $data['ClaveProductoSAT'],
@@ -179,8 +182,8 @@
 						'Descuento' => 0,
 						'Impuestos' => $traslados
 					);
-				}		
-	
+				}
+
 			}
 		}else{
 			$query = "SELECT * FROM cotizacionherramientas WHERE cotizacionRef = '$cotizacionRef'";
@@ -207,7 +210,7 @@
 				// 	'TipoFactor' => "Tasa",
 				// 	'TasaOCuota' => 0.16,
 				// 	'Importe' => ($data['precioLista'] * $data['cantidad']) + ($data['precioLista'] * $data['cantidad'] * 0.16)
-				// );	
+				// );
 				if ($data['Pedimento'] != '') {
 					$Partes = "{}";
 					$arreglo['data'][] = array(
@@ -221,7 +224,7 @@
 						'Descuento' => 0,
 						'Impuestos' => $traslados,
 						'Aduana' => $data['Pedimento']
-					);		
+					);
 				}else{
 					$arreglo['data'][] = array(
 						'ClaveProdServ' => $data['ClaveProductoSAT'],
@@ -234,8 +237,8 @@
 						'Descuento' => 0,
 						'Impuestos' => $traslados
 					);
-				}	
-				unset($traslados);	
+				}
+				unset($traslados);
 			}
 		}
 
@@ -291,7 +294,7 @@
 			$arreglo['tipocambio'] = $data['tipocambio'];
 		}
 
-		echo json_encode($arreglo, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_PARTIAL_OUTPUT_ON_ERROR);	
+		echo json_encode($arreglo, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_PARTIAL_OUTPUT_ON_ERROR);
 	}
 
 	function proveedoressinoc($conexion_usuarios){

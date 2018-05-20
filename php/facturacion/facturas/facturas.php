@@ -76,9 +76,9 @@
 	          {"data": "status"},
 	          {"data": "fecha"},
 	          {"data": "cliente"},
-	          {"defaultContent": "<div class='invoice-footer'><button class='pdf btn btn-lg btn-primary'><i class='fas fa-file-pdf fa-sm' aria-hidden='true'></i> Descargar Pdf</button></div>"},
-	          {"defaultContent": "<div class='invoice-footer'><button class='xml btn btn-lg btn-primary'><i class='fas fa-file-alt fa-sm' aria-hidden='true'></i> Descargar Xml</button></div>"},
-	          {"defaultContent": "<div class='invoice-footer'><button class='cancelar btn btn-lg btn-danger'><i class='fas fa-trash fa-sm' aria-hidden='true'></i> Cancelar Factura</button></div>"}
+	          {"defaultContent": "<div class='invoice-footer'><button class='pdf btn btn-lg btn-primary'><i class='fas fa-file-pdf fa-sm' aria-hidden='true'></i> Descargar PDF</button></div>"},
+	          {"defaultContent": "<div class='invoice-footer'><button class='xml btn btn-lg btn-primary'><i class='fas fa-file-alt fa-sm' aria-hidden='true'></i> Descargar XML</button></div>"},
+	          {"defaultContent": "<div class='invoice-footer'><button class='cancelar btn btn-lg btn-danger'><i class='fas fa-times-circle fa-sm' aria-hidden='true'></i> Cancelar Factura</button></div>"}
 	        ],
 					"columnDefs": [
 						{ "width": "3%", "targets": 0 },
@@ -159,14 +159,11 @@
 
 	        var request = new XMLHttpRequest();
 
-			request.open('GET', 'http://factura.com/api/v3/cfdi33/list');
+			request.open('GET', apiConfig.enlace+'api/v3/cfdi33/list');
 
 			request.setRequestHeader('Content-Type', 'application/json');
-			request.setRequestHeader('F-API-KEY', 'JDJ5JDEwJHJWelRXTWlJMEd4OS9kS3hRZTJNZy5neFAwV2dzdGttLjVleTcueDIyUHlMOEE0VEY5dUFL');
-			request.setRequestHeader('F-SECRET-KEY', 'JDJ5JDEwJDd3bXhpWENGRXJFMkNvOE1Hblo5Y2VPV3J5WXJxZmJoVEJhQjR0OE1Xa0hrV1lmRXhCWkFt');
-			request.setRequestHeader('Access-Control-Allow-Headers', '*');
-			request.setRequestHeader('Allow-Control-Allow-Origin', '*');
-			request.setRequestHeader('Access-Control-Allow-Credentials', 'true');
+			request.setRequestHeader('F-API-KEY', apiConfig.apiKey);
+			request.setRequestHeader('F-SECRET-KEY', apiConfig.secretKey);
 
 			request.onreadystatechange = function () {
 			  if (this.readyState === 4) {
@@ -181,10 +178,10 @@
 
 			    		var request = new XMLHttpRequest();
 
-						request.open('GET', 'http://factura.com/api/v3/cfdi33/'+UIDfactura+'/pdf');
+						request.open('GET', apiConfig.enlace+'api/v3/cfdi33/'+UIDfactura+'/pdf');
 
-							request.setRequestHeader('F-API-KEY', 'JDJ5JDEwJHJWelRXTWlJMEd4OS9kS3hRZTJNZy5neFAwV2dzdGttLjVleTcueDIyUHlMOEE0VEY5dUFL');
-							request.setRequestHeader('F-SECRET-KEY', 'JDJ5JDEwJDd3bXhpWENGRXJFMkNvOE1Hblo5Y2VPV3J5WXJxZmJoVEJhQjR0OE1Xa0hrV1lmRXhCWkFt');
+							request.setRequestHeader('F-API-KEY', apiConfig.apiKey);
+							request.setRequestHeader('F-SECRET-KEY', apiConfig.secretKey);
 							request.setRequestHeader('Content-Type', 'application/pdf');
 							request.setRequestHeader('Content-Transfer-Encoding', 'Binary');
 							request.setRequestHeader('Content-Disposition', 'attachment: filename=F2222.pdf');
@@ -212,8 +209,8 @@
 							request.send();
 
 						}
-			    	}
 			    }
+			  }
 			}
 
 			request.send();
@@ -229,11 +226,11 @@
 
 	        var request = new XMLHttpRequest();
 
-			request.open('GEt', 'http://factura.com/api/v3/cfdi33/list');
+			request.open('GEt', apiConfig.enlace+'api/v3/cfdi33/list');
 
 			request.setRequestHeader('Content-Type', 'application/json');
-			request.setRequestHeader('F-API-KEY', 'JDJ5JDEwJHJWelRXTWlJMEd4OS9kS3hRZTJNZy5neFAwV2dzdGttLjVleTcueDIyUHlMOEE0VEY5dUFL');
-			request.setRequestHeader('F-SECRET-KEY', 'JDJ5JDEwJDd3bXhpWENGRXJFMkNvOE1Hblo5Y2VPV3J5WXJxZmJoVEJhQjR0OE1Xa0hrV1lmRXhCWkFt');
+			request.setRequestHeader('F-API-KEY', apiConfig.apiKey);
+			request.setRequestHeader('F-SECRET-KEY', apiConfig.secretKey);
 
 			request.onreadystatechange = function () {
 			  if (this.readyState === 4) {
@@ -248,13 +245,13 @@
 
 			    		var request = new XMLHttpRequest();
 
-						request.open('GET', 'http://factura.com/api/v3/cfdi33/'+UIDfactura+'/xml');
+						request.open('GET', apiConfig.enlace+'api/v3/cfdi33/'+UIDfactura+'/xml');
 
 							// request.setRequestHeader('Content-Type', 'application/json');
 							request.setRequestHeader('Content-type', '"text/xml"; charset="utf8"');
 							request.setRequestHeader('Content-disposition', 'attachment; filename="F2222.xml"');
-							request.setRequestHeader('F-API-KEY', 'JDJ5JDEwJHJWelRXTWlJMEd4OS9kS3hRZTJNZy5neFAwV2dzdGttLjVleTcueDIyUHlMOEE0VEY5dUFL');
-							request.setRequestHeader('F-SECRET-KEY', 'JDJ5JDEwJDd3bXhpWENGRXJFMkNvOE1Hblo5Y2VPV3J5WXJxZmJoVEJhQjR0OE1Xa0hrV1lmRXhCWkFt');
+							request.setRequestHeader('F-API-KEY', apiConfig.apiKey);
+							request.setRequestHeader('F-SECRET-KEY', apiConfig.secretKey);
 
 							request.onreadystatechange = function () {
 							  if (this.readyState === 4) {
@@ -268,12 +265,10 @@
 						        link.click();
 							  }
 							};
-
 							request.send();
-
 						}
-			    	}
 			    }
+			  }
 			}
 
 			request.send();
@@ -289,11 +284,11 @@
 
 	        var request = new XMLHttpRequest();
 
-			request.open('GEt', 'http://factura.com/api/v3/cfdi33/list');
+			request.open('GEt', apiConfig.enlace+'api/v3/cfdi33/list');
 
 			request.setRequestHeader('Content-Type', 'application/json');
-			request.setRequestHeader('F-API-KEY', 'JDJ5JDEwJHJWelRXTWlJMEd4OS9kS3hRZTJNZy5neFAwV2dzdGttLjVleTcueDIyUHlMOEE0VEY5dUFL');
-			request.setRequestHeader('F-SECRET-KEY', 'JDJ5JDEwJDd3bXhpWENGRXJFMkNvOE1Hblo5Y2VPV3J5WXJxZmJoVEJhQjR0OE1Xa0hrV1lmRXhCWkFt');
+			request.setRequestHeader('F-API-KEY', apiConfig.apiKey);
+			request.setRequestHeader('F-SECRET-KEY', apiConfig.secretKey);
 
 			request.onreadystatechange = function () {
 			  if (this.readyState === 4) {
@@ -309,11 +304,11 @@
 
 			    		var request = new XMLHttpRequest();
 
-						request.open('GET', 'http://factura.com/api/v3/cfdi33/'+UIDfactura+'/cancel');
+						request.open('GET', apiConfig.enlace+'api/v3/cfdi33/'+UIDfactura+'/cancel');
 
 							request.setRequestHeader('Content-Type', 'application/json');
-							request.setRequestHeader('F-API-KEY', 'JDJ5JDEwJHJWelRXTWlJMEd4OS9kS3hRZTJNZy5neFAwV2dzdGttLjVleTcueDIyUHlMOEE0VEY5dUFL');
-							request.setRequestHeader('F-SECRET-KEY', 'JDJ5JDEwJDd3bXhpWENGRXJFMkNvOE1Hblo5Y2VPV3J5WXJxZmJoVEJhQjR0OE1Xa0hrV1lmRXhCWkFt');
+							request.setRequestHeader('F-API-KEY', apiConfig.apiKey);
+							request.setRequestHeader('F-SECRET-KEY', apiConfig.secretKey);
 
 							request.onreadystatechange = function () {
 							  if (this.readyState === 4) {
@@ -323,16 +318,17 @@
 							    var data = JSON.parse(this.responseText);
 
 							    if (data.response == "error") {
-							    	texto = "<div class='alert alert-danger alert-dismissible fade show' role='alert'><strong>Error!</strong> "+ data.message + "<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></i></div>";
-									color = "#C9302C";
-
-									$(".mensaje").html( texto );
-
+										$.gritter.add({
+						        	title: 'Error!',
+						        	text: data.message,
+						        	class_name: 'color danger'
+						      	});
 							    }else if(data.response = "success"){
-							    	texto = "<div class='alert alert-success alert-dismissible fade show' role='alert'><strong>Bien!</strong> "+ data.message + "<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></i></div>";
-									color = "#379911";
-
-									$(".mensaje").html( texto );
+										$.gritter.add({
+						        	title: 'Error!',
+						        	text: data.message,
+						        	class_name: 'color success'
+						      	});
 
 									var opcion = "cancelarfactura";
 									$.ajax({

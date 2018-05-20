@@ -1,5 +1,5 @@
-<?php 
-	
+<?php
+
 	include("../../conexion.php");
 
 	$opcion = $_POST['opcion'];
@@ -19,7 +19,7 @@
 			$numeroPedido = $_POST['numeroPedido'];
 			paqueteria($paqueteria, $refCotizacion, $numeroPedido, $conexion_usuarios);
 			break;
-							
+
 		case 'formapago':
 			$formapago = $_POST['formapago'];
 			$refCotizacion = $_POST['refCotizacion'];
@@ -65,7 +65,8 @@
 				$split = 0;
 			}
 			$entregado = $_POST['entregado'];
-			editarpartida($id, $claveSat, $noserie, $cantidad, $fechacompromiso, $proveedor, $split, $entregado, $conexion_usuarios);			
+			$pedimento = $_POST['pedimento'];
+			editarpartida($id, $claveSat, $noserie, $cantidad, $fechacompromiso, $proveedor, $split, $entregado, $pedimento, $conexion_usuarios);
 			break;
 
 		case 'guardarfactura':
@@ -95,7 +96,7 @@
 			$query = "UPDATE cotizacionherramientas SET embarque='pendiente' WHERE id=$id";
 			$resultado = mysqli_query($conexion_usuarios, $query);
 		}
-		
+
 		if (!$resultado) {
 			$informacion["respuesta"] = "ERROR";
 			$informacion["informacion"] = "Ocurrió un problema al agregar las partidas al packing list!";
@@ -117,7 +118,7 @@
 			$query = "UPDATE cotizacionherramientas SET Entregado='$fecha' WHERE id=$id";
 			$resultado = mysqli_query($conexion_usuarios, $query);
 		}
-		
+
 		if (!$resultado) {
 			$informacion["respuesta"] = "ERROR";
 			$informacion["informacion"] = "Ocurrió un problema al modificar el estado a 'Entregado' de las partidas!";
@@ -182,7 +183,7 @@
 		}
 
 		$query = "UPDATE contactos SET IdFormaPago='$formapago' WHERE id='$idcliente'";
-		$resultado = mysqli_query($conexion_usuarios, $query);	
+		$resultado = mysqli_query($conexion_usuarios, $query);
 		if (!$resultado) {
 			$informacion["respuesta"] = "ERROR";
 			$informacion["informacion"] = "Ocurrió un problema al actualizar la forma de pago!";
@@ -218,7 +219,7 @@
 			$informacion["respuesta"] = "BIEN";
 			$informacion["informacion"] = "El método de pago se actualizó correctamente!";
 		}
-		echo json_encode($informacion);	
+		echo json_encode($informacion);
 		mysqli_close($conexion_usuarios);
 	}
 
@@ -238,7 +239,7 @@
 		}
 
 		$query = "UPDATE contactos SET IdUsoCFDI='$cfdi' WHERE id='$idcliente'";
-		$resultado = mysqli_query($conexion_usuarios, $query);	
+		$resultado = mysqli_query($conexion_usuarios, $query);
 		if (!$resultado) {
 			$informacion["respuesta"] = "ERROR";
 			$informacion["informacion"] = "Ocurrió un problema al actualizar el uso de CFDI!";
@@ -260,7 +261,7 @@
 			while($data = mysqli_fetch_array($resultado)){
 				$id = $data['id'];
 				if($proveedor == "None"){
-					$fecha = "0000-00-00";	
+					$fecha = "0000-00-00";
 				}else{
 					$fecha = date("Y-m-d");
 				}
@@ -303,16 +304,16 @@
 		mysqli_close($conexion_usuarios);
 	}
 
-	function editarpartida($id, $claveSat, $noserie, $cantidad, $fechacompromiso, $proveedor, $split, $entregado, $conexion_usuarios){
+	function editarpartida($id, $claveSat, $noserie, $cantidad, $fechacompromiso, $proveedor, $split, $entregado, $pedimento, $conexion_usuarios){
 		if($proveedor == "None"){
-			$fecha = "0000-00-00";	
+			$fecha = "0000-00-00";
 		}else{
 			$fecha = date("Y-m-d");
 		}
-		$query = "UPDATE utilidad_pedido SET fecha_entregado = '$entregado' WHERE id_cotizacion_herramientas =$id";
+		$query = "UPDATE utilidad_pedido SET fecha_entregado = '$entregado', Pedimento = '$pedimento' WHERE id_cotizacion_herramientas =$id";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 
-		$query = "UPDATE cotizacionherramientas SET ClaveProductoSAT='$claveSat', NoSerie='$noserie', cantidad='$cantidad', fechacompromiso='$fechacompromiso', Proveedor='$proveedor', proveedorFecha='$fecha', Entregado = '$entregado' WHERE id =$id";
+		$query = "UPDATE cotizacionherramientas SET ClaveProductoSAT='$claveSat', NoSerie='$noserie', cantidad='$cantidad', fechacompromiso='$fechacompromiso', Proveedor='$proveedor', proveedorFecha='$fecha', Entregado = '$entregado', Pedimento = '$pedimento' WHERE id =$id";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 		if (!$resultado) {
 			$informacion["respuesta"] = "ERROR";
@@ -380,7 +381,7 @@
 	function guardar_factura($folio, $ordenpedido, $total, $status, $fecha, $cliente, $conexion_usuarios){
 		$query = "SELECT * FROM facturas WHERE folio = '$folio'";
 		$resultado = mysqli_query($conexion_usuarios, $query);
-		if(mysqli_num_rows($resultado) == 0){	
+		if(mysqli_num_rows($resultado) == 0){
 			$query = "INSERT INTO facturas (folio, ordenpedido, total, status, fecha, cliente) VALUES ('$folio', '$ordenpedido', '$total', '$status', '$fecha', '$cliente')";
 			$resultado = mysqli_query($conexion_usuarios, $query);
 			$fecha = date("Y-m-d");
@@ -399,7 +400,7 @@
 		}
 		echo json_encode($informacion);
 		mysqli_close($conexion_usuarios);
-	}	
+	}
 
 	function verificar_resultado($resultado){
 		if (!$resultado) {
@@ -412,4 +413,3 @@
 	}
 
 ?>
-

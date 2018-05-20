@@ -1,8 +1,8 @@
-<?php 
-	
+<?php
+
 	include("../../conexion.php");
 
-	$opcion = $_POST['opcion'];	
+	$opcion = $_POST['opcion'];
 	$informacion[] = "";
 
 	switch ($opcion) {
@@ -12,7 +12,7 @@
 			break;
 
 		case 'sinproveedor':
-			$buscar = $_POST['buscar'];	
+			$buscar = $_POST['buscar'];
 			sinproveedor($buscar, $conexion_usuarios);
 			break;
 
@@ -20,7 +20,7 @@
 			$buscar = $_POST['buscar'];
 			nopagado($buscar, $conexion_usuarios);
 			break;
-		
+
 		case 'terminado':
 			$buscar = $_POST['buscar'];
 			terminado($buscar, $conexion_usuarios);
@@ -41,7 +41,7 @@
 	function noentregado($buscar, $conexion_usuarios){
 		$query = "SELECT cotizacion.*, contactos.nombreEmpresa FROM cotizacion INNER JOIN contactos ON contactos.id = cotizacion.cliente WHERE (cotizacion.ref LIKE '%$buscar%' OR NoPedClient LIKE '%$buscar%' OR nombreEmpresa LIKE '%$buscar%' OR contacto LIKE '%$buscar%' OR vendedor LIKE '%$buscar%' OR Pedido LIKE '%$buscar%') AND NoPedClient != '' AND fechaEntregado = '0000-00-00' AND fecha >= '2017-01-01' ORDER BY Pedido LIMIT 500";
 		$resultado = mysqli_query($conexion_usuarios, $query);
-		while($data = mysqli_fetch_assoc($resultado)){				
+		while($data = mysqli_fetch_assoc($resultado)){
 
 			$arreglo['data'][] = array(
 				'cotizacionRef' => $data['ref'],
@@ -70,8 +70,8 @@
 				'total' => "$ ".$data['total']
 			);
 		}
-		
-		echo json_encode($arreglo, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_PARTIAL_OUTPUT_ON_ERROR);	
+
+		echo json_encode($arreglo, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_PARTIAL_OUTPUT_ON_ERROR);
 		mysqli_close($conexion_usuarios);
 	}
 
@@ -83,7 +83,7 @@
 		}else{
 			while($data1 = mysqli_fetch_assoc($resultado)){
 				$cotizacionRef = $data1['cotizacionRef'];
-				
+
 				$querycotizacion = "SELECT cotizacion.*, contactos.nombreEmpresa FROM cotizacion INNER JOIN contactos ON contactos.id = cotizacion.cliente WHERE (cotizacion.ref LIKE '%$buscar%' OR NoPedClient LIKE '%$buscar%' OR nombreEmpresa LIKE '%$buscar%' OR contacto LIKE '%$buscar%' OR vendedor LIKE '%$buscar%' OR Pedido LIKE '%$buscar%') AND cotizacion.ref = '$cotizacionRef'";
 				$rescotizacion = mysqli_query($conexion_usuarios, $querycotizacion);
 
@@ -101,7 +101,7 @@
 				}
 			}
 
-			echo json_encode($arreglo, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_PARTIAL_OUTPUT_ON_ERROR);	
+			echo json_encode($arreglo, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_PARTIAL_OUTPUT_ON_ERROR);
 		}
 		mysqli_close($conexion_usuarios);
 	}
@@ -109,7 +109,7 @@
 	function nopagado($buscar, $conexion_usuarios){
 		$query = "SELECT cotizacion.*, contactos.nombreEmpresa FROM cotizacion INNER JOIN contactos ON contactos.id = cotizacion.cliente WHERE (cotizacion.ref LIKE '%$buscar%' OR NoPedClient LIKE '%$buscar%' OR nombreEmpresa LIKE '%$buscar%' OR contacto LIKE '%$buscar%' OR vendedor LIKE '%$buscar%' OR Pedido LIKE '%$buscar%') AND factura!=0 AND NoPedClient != '0' AND Pagado < 1.14 * precioTotal AND fecha >= '2017-01-01' ORDER BY facturaFecha ASC";
 		$resultado = mysqli_query($conexion_usuarios, $query);
-		
+
 		while($data = mysqli_fetch_assoc($resultado)){
 			$arreglo['data'][] = array(
 				'cotizacionRef' => $data['ref'],
@@ -125,7 +125,7 @@
 
 		$query = "SELECT pedidos.*, contactos.nombreEmpresa FROM pedidos INNER JOIN contactos ON contactos.id = pedidos.cliente WHERE (cotizacionRef LIKE '%$buscar%' OR numeroPedido LIKE '%$buscar%' OR nombreEmpresa LIKE '%$buscar%' OR contacto LIKE '%$buscar%' OR vendedor LIKE '%$buscar%' OR fecha LIKE '%$buscar%') AND factura!= '' AND numeroPedido != '' AND pagado < 1.14 * total AND fecha >= '2017-01-01' ORDER BY facturaFecha ASC";
 		$resultado = mysqli_query($conexion_usuarios, $query);
-		
+
 		while($data = mysqli_fetch_assoc($resultado)){
 			$arreglo['data'][] = array(
 				'cotizacionRef' => $data['cotizacionRef'],
@@ -139,14 +139,14 @@
 			);
 		}
 
-		echo json_encode($arreglo, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_PARTIAL_OUTPUT_ON_ERROR);	
+		echo json_encode($arreglo, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_PARTIAL_OUTPUT_ON_ERROR);
 		mysqli_close($conexion_usuarios);
 	}
 
 	function terminado($buscar, $conexion_usuarios){
 		$query = "SELECT cotizacion.*, contactos.nombreEmpresa FROM cotizacion INNER JOIN contactos ON contactos.id = cotizacion.cliente WHERE (cotizacion.ref LIKE '%$buscar%' OR NoPedClient LIKE '%$buscar%' OR nombreEmpresa LIKE '%$buscar%' OR contacto LIKE '%$buscar%' OR vendedor LIKE '%$buscar%' OR Pedido LIKE '%$buscar%') AND fechaEntregado != '0000-00-00' AND Pagado > 1.14 * precioTotal ORDER BY facturaFecha DESC LIMIT 500";
 		$resultado = mysqli_query($conexion_usuarios, $query);
-		
+
 		while($data = mysqli_fetch_assoc($resultado)){
 			$arreglo['data'][] = array(
 				'cotizacionRef' => $data['ref'],
@@ -162,7 +162,7 @@
 
 		$query = "SELECT pedidos.*, contactos.nombreEmpresa FROM pedidos INNER JOIN contactos ON contactos.id = pedidos.cliente WHERE (cotizacionRef LIKE '%$buscar%' OR numeroPedido LIKE '%$buscar%' OR nombreEmpresa LIKE '%$buscar%' OR contacto LIKE '%$buscar%' OR vendedor LIKE '%$buscar%' OR fecha LIKE '%$buscar%') AND entregado != '0000-00-00' AND pagado > 1.14 * total ORDER BY facturaFecha DESC LIMIT 499";
 		$resultado = mysqli_query($conexion_usuarios, $query);
-		
+
 		while($data = mysqli_fetch_assoc($resultado)){
 			$arreglo['data'][] = array(
 				'cotizacionRef' => $data['cotizacionRef'],
@@ -176,11 +176,11 @@
 			);
 		}
 
-		echo json_encode($arreglo, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_PARTIAL_OUTPUT_ON_ERROR);	
+		echo json_encode($arreglo, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_PARTIAL_OUTPUT_ON_ERROR);
 		mysqli_close($conexion_usuarios);
 	}
 
-	function partidas($refCotizacion, $numeroPedido, $conexion_usuarios){	
+	function partidas($refCotizacion, $numeroPedido, $conexion_usuarios){
 		$query = "SELECT * FROM cotizacionherramientas WHERE cotizacionRef ='$refCotizacion' AND numeroPedido='$numeroPedido'";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 		$tabla = "";
@@ -190,13 +190,13 @@
 				die('Error al buscar partidas! 1');
 			}else{
 				$i=1;
-				while($data = mysqli_fetch_assoc($resultado)){				
+				while($data = mysqli_fetch_assoc($resultado)){
 					$modelo = $data['modelo'];
 					$marca = $data['marca'];
 
 					$query2 = "SELECT enReserva FROM productos WHERE ref = '$modelo' AND marca ='".$marca."'";
 					$resultado2 = mysqli_query($conexion_usuarios, $query2);
-					
+
 					if(mysqli_num_rows($resultado2) > 0){
 						while($dataAlmacen = mysqli_fetch_array($resultado2)){
 							$almacen = $dataAlmacen['enReserva'];
@@ -211,19 +211,19 @@
 						while($dataFC = mysqli_fetch_array($resultado3)){
 							if($data['fechaCompromiso'] == '0000-00-00'){
 								if($data['Tiempo_Entrega'] == ''){
-									$fechacompromiso = "Sin fecha de compromiso"; 
+									$fechacompromiso = "Sin fecha de compromiso";
 								}else{
 									$dias = $data['Tiempo_Entrega'];
 									$fechacompromiso = $dataFC['fecha'];
-									$fechacompromiso = strtotime($fechacompromiso."+".$dias."days"); 
+									$fechacompromiso = strtotime($fechacompromiso."+".$dias."days");
 									$fechacompromiso = date("Y-m-d",$fechacompromiso);
 								}
 							}else{
-								$fechacompromiso = $data['fechaCompromiso']; 
+								$fechacompromiso = $data['fechaCompromiso'];
 							}
 						}
 					}else{
-						$fechacompromiso = "Sin fecha de compromiso"; 	
+						$fechacompromiso = "Sin fecha de compromiso";
 					}
 					$check = '<input type="checkbox" class="btn btn-outline-primary" name="hpacking" value="'.$data['id'].'">';
 
@@ -231,13 +231,14 @@
 						$entregado = '<input type="checkbox" class="btn btn-outline-primary" name="hentregado" value="'.$data['id'].'">';
 					}else{
 						$entregado = $data['Entregado'];
-					}	
+					}
 
 					$arreglo["data"][]=array(
 						  'id' => $data['id'],
 						  'indice' => $i,
 						  'check' => $check,
 						  'claveSat' => $data['ClaveProductoSAT'],
+							'pedimento' => $data['Pedimento'],
 						  'enviado' => $data['enviadoFecha'],
 						  'recibido' => $data['recibidoFecha'],
 						  'entregado' => $entregado,
@@ -250,8 +251,8 @@
 						  'cantidad' => $data['cantidad'],
 						  'preciototal' => "$ ".($data['precioLista'] + $data['flete']) * $data['cantidad'],
 						  'fechacompromiso' => $fechacompromiso,
-						  'almacen' => $almacen					
-					);		
+						  'almacen' => $almacen
+					);
 					$i++;
 				}
 			}
@@ -270,7 +271,7 @@
 					$query2 = "SELECT enReserva FROM productos WHERE ref = '$modelo' AND marca ='".$marca."'";
 					$resultado2 = mysqli_query($conexion_usuarios, $query2);
 
-					if (mysqli_num_rows($resultado2) > 0) {						
+					if (mysqli_num_rows($resultado2) > 0) {
 						while($dataAlmacen = mysqli_fetch_array($resultado2)){
 							$almacen = $dataAlmacen['enReserva'];
 						}
@@ -285,28 +286,28 @@
 						while($dataFC = mysqli_fetch_array($resultado3)){
 							if($data['fechaCompromiso'] == '0000-00-00'){
 								if($data['Tiempo_Entrega'] == ""){
-									$fechacompromiso = "Sin fecha de compromiso"; 
+									$fechacompromiso = "Sin fecha de compromiso";
 								}else{
 									$dias = $data['Tiempo_Entrega'];
 									$fechacompromiso = $dataFC['fecha'];
-									$fechacompromiso = strtotime($fechacompromiso."+".$dias."days"); 
+									$fechacompromiso = strtotime($fechacompromiso."+".$dias."days");
 									$fechacompromiso = date("Y-m-d",$fechacompromiso);
 								}
 							}else{
-								$fechacompromiso = $data['fechaCompromiso']; 
+								$fechacompromiso = $data['fechaCompromiso'];
 							}
 						}
 					}else{
-						$fechacompromiso = "Sin fecha de compromiso"; 	
+						$fechacompromiso = "Sin fecha de compromiso";
 					}
-					
+
 					$check = '<input type="checkbox" class="btn btn-outline-primary" name="hpacking" value="'.$data['id'].'">';
-					
+
 					if($data['Entregado'] == "0000-00-00"){
 						$entregado = '<input type="checkbox" class="btn btn-outline-primary" name="hentregado" value="'.$data['id'].'">';
 					}else{
 						$entregado = $data['Entregado'];
-					}	
+					}
 
 					$arreglo["data"][]=array(
 						'id' => $data['id'],
@@ -326,13 +327,13 @@
 						'preciototal' => "$ ".($data['precioLista'] + $data['flete']) * $data['cantidad'],
 						'fechacompromiso' => $fechacompromiso,
 						'almacen' => $almacen
-				  );		
+				  );
 					$i++;
 				}
 			}
 		}
-		
-		echo json_encode($arreglo, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_PARTIAL_OUTPUT_ON_ERROR);	
+
+		echo json_encode($arreglo, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_PARTIAL_OUTPUT_ON_ERROR);
 		mysqli_free_result($resultado);
 		mysqli_close($conexion_usuarios);
 	}

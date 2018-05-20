@@ -367,9 +367,13 @@
 					      			<label for="split" class="control-label col-4">Split</label>
 					      			<input type="text" class="form-control form-control-sm col-7" name="split" id="split">
 					      		</div>
-								<div class="form-group row">
+										<div class="form-group row">
 					      			<label for="entregado" class="control-label col-4">Entregado</label>
 					      			<input type="date" class="form-control form-control-sm col-7" name="entregado" id="entregado">
+					      		</div>
+										<div class="form-group row">
+					      			<label for="pedimento" class="control-label col-4">Pedimento</label>
+					      			<input type="text" class="form-control form-control-sm col-7" name="pedimento" id="pedimento">
 					      		</div>
 					      	</div>
 					      	<div class="modal-footer invoice-footer">
@@ -418,7 +422,7 @@
 			</form>
 
 		<!-- Modal Registrar Cliente en Portal -->
-			<div class="modal fade" id="modalRegistrarClientePortal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal fade colored-header colored-header-success" id="modalRegistrarClientePortal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 			  	<div class="modal-dialog modal-lg" role="document">
 			    	<div class="modal-content">
 			      		<div class="modal-header">
@@ -428,78 +432,79 @@
 			        		</button>
 			      		</div>
 				      	<div class="modal-body">
+									<h4>Por favor verifique los datos a continuación:</h4>
 				        	<form id="frmRegistrarClientePortal" action="" method="POST">
 			        			<div class="row form-group">
 			        				<div class="col">
 			        					<label for="nombre">Nombre</label>
-			        					<input type="text" id="nombre" name="nombre" class="form-control" placeholder="(Opcional)">
+			        					<input type="text" id="nombre" name="nombre" class="form-control form-control-sm" placeholder="Opcional">
 			        				</div>
 			        				<div class="col">
 			        					<label for="apellidos">Apellidos</label>
-			        					<input type="text" id="apellidos" name="apellidos" class="form-control" placeholder="(Opcional)">
+			        					<input type="text" id="apellidos" name="apellidos" class="form-control form-control-sm" placeholder="Opcional">
 			        				</div>
 			        			</div>
 			        			<div class="row form-group">
 			        				<div class="col">
 			        					<label for="email">Correo electronico <font color="#FF4136">*</font></label>
-			        					<input type="text" id="email" name="email" class="form-control">
+			        					<input type="text" id="email" name="email" class="form-control form-control-sm">
 			        				</div>
 			        				<div class="col">
 			        					<label for="telefono">Teléfono</label>
-			        					<input type="text" id="telefono" name="telefono" class="form-control" placeholder="(Opcional)">
+			        					<input type="text" id="telefono" name="telefono" class="form-control form-control-sm" placeholder="Opcional">
 			        				</div>
 			        			</div>
 			        			<div class="row form-group">
 			        				<div class="col">
 			        					<label for="razons">Razón Social <font color="#FF4136">*</font></label>
-			        					<input type="text" id="razons" name="razons" class="form-control">
+			        					<input type="text" id="razons" name="razons" class="form-control form-control-sm">
 			        				</div>
 			        				<div class="col">
 			        					<label for="rfc">RFC <font color="#FF4136">*</font></label>
-			        					<input type="text" id="rfc" name="rfc" class="form-control">
+			        					<input type="text" id="rfc" name="rfc" class="form-control form-control-sm">
 			        				</div>
 			        			</div>
 			        			<div class="row form-group">
 			        				<div class="col">
 			        					<label for="numero_exterior">Número exterior <font color="#FF4136">*</font></label>
-			        					<input type="text" id="numero_exterior" name="numero_exterior" class="form-control">
+			        					<input type="text" id="numero_exterior" name="numero_exterior" class="form-control form-control-sm">
 			        				</div>
 			        				<div class="col">
 			        					<label for="numero_interior">Número interior</label>
-			        					<input type="text" id="numero_interior" name="numero_interior" class="form-control" placeholder="(Opcional)">
+			        					<input type="text" id="numero_interior" name="numero_interior" class="form-control form-control-sm" placeholder="Opcional">
 			        				</div>
 			        				<div class="col">
 			        					<label for="codpos">Código Postal <font color="#FF4136">*</font></label>
-			        					<input type="text" id="codpos" name="codpos" class="form-control">
+			        					<input type="text" id="codpos" name="codpos" class="form-control form-control-sm">
 			        				</div>
 			        				<div class="col">
 			        					<label for="calle">Calle <font color="#FF4136">*</font></label>
-			        					<input type="text" id="calle" name="calle" class="form-control">
+			        					<input type="text" id="calle" name="calle" class="form-control form-control-sm">
 			        				</div>
 			        			</div>
 			        			<div class="row form-group">
 			        				<div class="col">
 			        					<label for="colonia">Colonia <font color="#FF4136">*</font></label>
-			        					<input type="text" id="colonia" name="colonia" class="form-control">
+			        					<input type="text" id="colonia" name="colonia" class="form-control form-control-sm">
 			        				</div>
 			        				<div class="col">
 			        					<label for="estado">Estado <font color="#FF4136">*</font></label>
-			        					<input type="text" id="estado" name="estado" class="form-control">
+			        					<input type="text" id="estado" name="estado" class="form-control form-control-sm">
 			        				</div>
 			        				<div class="col">
 			        					<label for="ciudad">Ciudad <font color="#FF4136">*</font></label>
-			        					<input type="text" id="ciudad" name="ciudad" class="form-control">
+			        					<input type="text" id="ciudad" name="ciudad" class="form-control form-control-sm">
 			        				</div>
 			        				<div class="col">
 			        					<label for="delegacion">Delegación <font color="#FF4136">*</font></label>
-			        					<input type="text" id="delegacion" name="delegacion" class="form-control">
+			        					<input type="text" id="delegacion" name="delegacion" class="form-control form-control-sm">
 			        				</div>
 			        			</div>
 				        	</form>
 				      	</div>
-				      	<div class="modal-footer">
-				        	<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-				        	<button type="button" id="registrar-cliente-portal" class="btn btn-success">Registrar</button>
+				      	<div class="modal-footer invoice-footer">
+				        	<button type="button" class="btn btn-lg btn-secondary" data-dismiss="modal">Cancelar</button>
+				        	<button type="button" id="registrar-cliente-portal" class="btn btn-lg btn-success">Agregar</button>
 				      	</div>
 			    	</div>
 			  	</div>
@@ -840,6 +845,7 @@
 					document.getElementById("split").disabled = true;
 				}
 				$("#frmEditar #entregado").val(data.entregado);
+				$("#frmEditar #pedimento").val(data.pedimento);
 			});
 		}
 
@@ -964,12 +970,6 @@
 					cambiarproveedorgeneral(refCotizacion, numeroPedido, RFC);
 					cambiarcantidadgeneral(refCotizacion, numeroPedido, RFC);
 
-					var apiConfig = {
-							enlace: "http://devfactura.in/",
-							apiKey: "JDJ5JDEwJDNtc1I3Z2JySG5pcUs0VWtQTlVxbmVsaFdyWUl6Ym5kQ1FKcmE2UGNIMG1WeGs5aEtXU3dp",
-							secretKey: "JDJ5JDEwJERYUXBSWGo5R0VINzE4UlRiY25oc09SUWhnMU9vRWdYSTQwOWJuTDZXUlhYR1E0Vmp5ZUFX"
-					}
-
 					var request = new XMLHttpRequest();
 
 					request.open('GET', apiConfig.enlace + 'api/v3/cfdi33/list');
@@ -994,7 +994,7 @@
 					};
 
 					request.send();
-	   			}
+	   		}
 			});
 		}
 
@@ -1206,154 +1206,59 @@
 		var generar_factura = function(RFC, numeroPedido, refCotizacion){
 			var request = new XMLHttpRequest();
 
-			request.open('GET', 'http://factura.com/api/v1/clients/'+RFC);
+			request.open('GET', apiConfig.enlace+'api/v1/clients/'+RFC);
 
 			request.setRequestHeader('Content-Type', 'application/json');
-			request.setRequestHeader('F-API-KEY', 'JDJ5JDEwJDNtc1I3Z2JySG5pcUs0VWtQTlVxbmVsaFdyWUl6Ym5kQ1FKcmE2UGNIMG1WeGs5aEtXU3dp');
-			request.setRequestHeader('F-SECRET-KEY', 'JDJ5JDEwJERYUXBSWGo5R0VINzE4UlRiY25oc09SUWhnMU9vRWdYSTQwOWJuTDZXUlhYR1E0Vmp5ZUFX');
-			request.setRequestHeader('Access-Control-Allow-origin', 'true');
-			request.setRequestHeader("Access-Control-Allow-Origin", "*");
+			request.setRequestHeader('F-API-KEY', apiConfig.apiKey);
+			request.setRequestHeader('F-SECRET-KEY', apiConfig.secretKey);
 
 			request.onreadystatechange = function () {
 				if (this.readyState === 4) {
-			    	console.log('Status:', this.status);
-			    	console.log('Headers:', this.getAllResponseHeaders());
-			    	console.log('Body:', this.responseText);
-			    	var data = JSON.parse(this.responseText);
-				    if (data.status == "error"){
-				    	texto = "<div class='alert alert-danger alert-dismissible fade show' role='alert'><strong>Error</strong>, "+ data.message + "<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></i></div>";
-									color = "#C9302C";
-
-						$(".mensaje").html( texto );
-
-
-				    	var opcion = "datosRFC";
-				    	$.ajax({
-							method: "POST",
-							url: "buscar.php",
-							dataType: "json",
-							data: {"opcion": opcion, "rfc": RFC},
-						}).done( function( data ){
-							console.log(data.datos);
-							$("#modalRegistrarClientePortal #email").val(data.datos.correoElectronico);
-							$("#modalRegistrarClientePortal #telefono").val(data.datos.tlf1);
-							$("#modalRegistrarClientePortal #razons").val(data.datos.nombreEmpresa);
-							$("#modalRegistrarClientePortal #rfc").val(data.datos.RFC);
-							$("#modalRegistrarClientePortal #numero_exterior").val(data.datos.NumExt);
-							$("#modalRegistrarClientePortal #numero_interior").val(data.datos.NumInt);
-							$("#modalRegistrarClientePortal #codpos").val(data.datos.cp);
-							$("#modalRegistrarClientePortal #calle").val(data.datos.calle);
-							$("#modalRegistrarClientePortal #colonia").val(data.datos.colonia);
-							$("#modalRegistrarClientePortal #estado").val(data.datos.estado);
-							$("#modalRegistrarClientePortal #ciudad").val(data.datos.ciudad);
-							$("#modalRegistrarClientePortal #delegacion").val(data.datos.pais);
-							alert("El cliente no esta registrado en portal de Factura.com\n\n Registrarlo a continuación");
-				    		$("#modalRegistrarClientePortal").modal("show");
-						});
-				    }else{
+			    console.log('Status:', this.status);
+		    	console.log('Headers:', this.getAllResponseHeaders());
+		    	console.log('Body:', this.responseText);
+		    	var data = JSON.parse(this.responseText);
+			    if (data.status == "error"){
+						$.gritter.add({
+		        	title: 'Error!',
+		        	text: data.message,
+		        	class_name: 'color danger'
+		      	});
+						buscarDatosCliente();
+			    }else{
 						var request = new XMLHttpRequest();
 
-						request.open('POST', 'http://factura.com/api/v3/cfdi33/create');
-
+						request.open('POST', apiConfig.enlace+'api/v3/cfdi33/create');
 						request.setRequestHeader('Content-Type', 'application/json');
-						request.setRequestHeader('F-API-KEY', 'JDJ5JDEwJHJWelRXTWlJMEd4OS9kS3hRZTJNZy5neFAwV2dzdGttLjVleTcueDIyUHlMOEE0VEY5dUFL');
-						request.setRequestHeader('F-SECRET-KEY', 'JDJ5JDEwJDd3bXhpWENGRXJFMkNvOE1Hblo5Y2VPV3J5WXJxZmJoVEJhQjR0OE1Xa0hrV1lmRXhCWkFt');
+						request.setRequestHeader('F-API-KEY', apiConfig.apiKey);
+						request.setRequestHeader('F-SECRET-KEY', apiConfig.secretKey);
 
 						request.onreadystatechange = function () {
 							if (this.readyState === 4) {
 								console.log('Status:', this.status);
-							    console.log('Headers:', this.getAllResponseHeaders());
-							    console.log('Body:', this.responseText);
-							    var data = JSON.parse(this.responseText);
-
-							    if (data.response == "error" && data.message) {
-							    	texto = "<div class='alert alert-warning alert-dismissible fade show' role='alert'><strong>Error!</strong> "+ data.message + "<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></i></div>";
-									color = "#C9302C";
-
-									$(".mensaje").html( texto );
-							    }
-
-							    if (data.response == "error" && data.message.message) {
-							    	texto = "<div class='alert alert-danger alert-dismissible fade show' role='alert'><strong>Error!</strong> "+ data.message.message + "<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></i></div>";
-									color = "#C9302C";
-
-									$(".mensaje").html( texto );
-							    }else if(data.response = "success"){
-							    	texto = "<div class='alert alert-success alert-dismissible fade show' role='alert'><strong>Bien!</strong> "+ data.message + "<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></i></div>";
-									color = "#379911";
-
-									$(".mensaje").html( texto );
-
-									var request = new XMLHttpRequest();
-
-									request.open('GEt', 'http://factura.com/api/v3/cfdi33/list');
-
-									request.setRequestHeader('Content-Type', 'application/json');
-									request.setRequestHeader('F-API-KEY', 'JDJ5JDEwJHJWelRXTWlJMEd4OS9kS3hRZTJNZy5neFAwV2dzdGttLjVleTcueDIyUHlMOEE0VEY5dUFL');
-									request.setRequestHeader('F-SECRET-KEY', 'JDJ5JDEwJDd3bXhpWENGRXJFMkNvOE1Hblo5Y2VPV3J5WXJxZmJoVEJhQjR0OE1Xa0hrV1lmRXhCWkFt');
-
-									request.onreadystatechange = function () {
-									  if (this.readyState === 4) {
-									    var data = JSON.parse(this.responseText);
-									    console.log(data);
-									    var totalfacturas = data.total;
-									    for (var i = 0; i < totalfacturas; i++) {
-									    	if (numeroPedido == data.data[i].NumOrder){
-									    		var folio = data.data[i].Folio;
-									    		var ordenpedido = data.data[i].NumOrder;
-									    		var total = data.data[i].Total;
-									    		var status = data.data[i].Status;
-									    		var fecha = data.data[i].FechaTimbrado;
-									    		var cliente = data.data[i].RazonSocialReceptor;
-									    		var opcion = "guardarfactura";
-									    		console.log(folio);
-									    		console.log(ordenpedido);
-									    		console.log(total);
-									    		console.log(status);
-									    		console.log(fecha);
-									    		console.log(cliente);
-									    		console.log(opcion);
-									    		$.ajax({
-													method: "POST",
-													url: "guardar.php",
-													dataType: "json",
-													data: {"opcion": opcion, "folio": folio, "ordenpedido": ordenpedido, "total": total, "status": status, "fecha": fecha, "cliente": cliente}
-												}).done( function( data ){
-													console.log(data);
-													mostrar_mensaje(data);
-												});
-												var request = new XMLHttpRequest();
-
-												request.open('GET', 'http://factura.com/api/v3/cfdi33/'+data.data[i].UID+'/pdf');
-
-												request.setRequestHeader('F-API-KEY', 'JDJ5JDEwJHJWelRXTWlJMEd4OS9kS3hRZTJNZy5neFAwV2dzdGttLjVleTcueDIyUHlMOEE0VEY5dUFL');
-												request.setRequestHeader('F-SECRET-KEY', 'JDJ5JDEwJDd3bXhpWENGRXJFMkNvOE1Hblo5Y2VPV3J5WXJxZmJoVEJhQjR0OE1Xa0hrV1lmRXhCWkFt');
-												request.setRequestHeader('Content-Type', 'application/pdf');
-												request.setRequestHeader('Content-Transfer-Encoding', 'Binary');
-												request.setRequestHeader('Content-Disposition', 'attachment: filename=F2222.pdf');
-												request.responseType = 'blob';
-
-												request.onreadystatechange = function () {
-													if (this.readyState === 4) {
-														console.log('Status:', this.status);
-														console.log('Headers:', this.getAllResponseHeaders());
-														console.log('Body:', this.response);
-														var blob = new Blob([this.response], {type: 'application/pdf'});
-														var link = document.createElement('a');
-														link.href = window.URL.createObjectURL(blob);
-														link.download = "factura.pdf";
-														link.click();
-													}
-												};
-
-												request.send();
-									    	}
-									    }
-									  }
-									};
-
-									request.send();
-							    }
+						    console.log('Headers:', this.getAllResponseHeaders());
+						    console.log('Body:', this.responseText);
+						    var data = JSON.parse(this.responseText);
+						    if (data.response == "error" && typeof data.message.message != "undefined") {
+									$.gritter.add({
+					        	title: 'Error!',
+					        	text: data.message.message+'<br>'+data.message.messageDetail,
+					        	class_name: 'color danger'
+					      	});
+								}else if (data.response == "error" && typeof data.message != "undefined") {
+									$.gritter.add({
+										title: 'Error!',
+										text: data.message,
+										class_name: 'color danger'
+									});
+						    }else{
+									$.gritter.add({
+					        	title: 'Correcto!',
+					        	text: data.message,
+					        	class_name: 'color success'
+					      	});
+									guardarFactura();
+					 			}
 							}
 						};
 
@@ -1364,10 +1269,9 @@
 							dataType: "json",
 							data: {"opcion": opcion, "numeroPedido": numeroPedido, "refCotizacion": refCotizacion}
 						}).done( function( conceptos ){
-							console.log(conceptos);
-							var fecha = "<?php echo date("Y-m-d")."T".date("H:i:s"); ?>";
-							console.log(fecha);
-							var body = {
+								console.log(conceptos);
+								var fecha = "<?php echo date("Y-m-d")."T".date("H:i:s"); ?>";
+								var body = {
 							    'Receptor': {
 							        'UID': data.Data.UID,
 							        'ResidenciaFiscal': '',
@@ -1385,16 +1289,108 @@
 							    'FechaFromAPI': fecha,
 							    // 'Comentarios': 'Comentarios para agregar a la factura PDF',
 							    'EnviarCorreo': false
-							};
-
-							console.log(JSON.stringify(body));
-							request.send(JSON.stringify(body));
+								};
+								console.log(JSON.stringify(body));
+								// request.send(JSON.stringify(body));
 						});
-
-
 					}
 				}
 			};
+			request.send();
+		}
+
+		function buscarDatosCliente () {
+			var opcion = "datosRFC";
+			$.ajax({
+				method: "POST",
+				url: "buscar.php",
+				dataType: "json",
+				data: {"opcion": opcion, "rfc": RFC},
+			}).done( function( data ){
+				$("#modalRegistrarClientePortal #email").val(data.datos.correoElectronico);
+				$("#modalRegistrarClientePortal #telefono").val(data.datos.tlf1);
+				$("#modalRegistrarClientePortal #razons").val(data.datos.nombreEmpresa);
+				$("#modalRegistrarClientePortal #rfc").val(data.datos.RFC);
+				$("#modalRegistrarClientePortal #numero_exterior").val(data.datos.NumExt);
+				$("#modalRegistrarClientePortal #numero_interior").val(data.datos.NumInt);
+				$("#modalRegistrarClientePortal #codpos").val(data.datos.cp);
+				$("#modalRegistrarClientePortal #calle").val(data.datos.calle);
+				$("#modalRegistrarClientePortal #colonia").val(data.datos.colonia);
+				$("#modalRegistrarClientePortal #estado").val(data.datos.estado);
+				$("#modalRegistrarClientePortal #ciudad").val(data.datos.ciudad);
+				$("#modalRegistrarClientePortal #delegacion").val(data.datos.pais);
+				alert("El cliente no esta registrado en portal de Factura.com\n\n Registrarlo a continuación");
+				$("#modalRegistrarClientePortal").modal("show");
+			});
+		}
+
+		function guardarFactura() {
+			var request = new XMLHttpRequest();
+
+			request.open('GET', apiConfig.enlace+'api/v3/cfdi33/list');
+
+			request.setRequestHeader('Content-Type', 'application/json');
+			request.setRequestHeader('F-API-KEY', apiConfig.apiKey);
+			request.setRequestHeader('F-SECRET-KEY', apiConfig.secretKey);
+
+			request.onreadystatechange = function () {
+				if (this.readyState === 4) {
+					var data = JSON.parse(this.responseText);
+					console.log(data);
+					var totalfacturas = data.total;
+					for (var i = 0; i < totalfacturas; i++) {
+						if (numeroPedido == data.data[i].NumOrder){
+							var folio = data.data[i].Folio;
+							var ordenpedido = data.data[i].NumOrder;
+							var total = data.data[i].Total;
+							var status = data.data[i].Status;
+							var fecha = data.data[i].FechaTimbrado;
+							var cliente = data.data[i].RazonSocialReceptor;
+							var UID = data.data[i].UID;
+							var opcion = "guardarfactura";
+							$.ajax({
+								method: "POST",
+								url: "guardar.php",
+								dataType: "json",
+								data: {"opcion": opcion, "folio": folio, "ordenpedido": ordenpedido, "total": total, "status": status, "fecha": fecha, "cliente": cliente}
+							}).done( function( data ){
+								console.log(data);
+								mostrar_mensaje(data);
+							});
+
+							descargarPDF(UID);
+						}
+					}
+				}
+			};
+			request.send();
+		}
+
+		function descargarPDF (UID) {
+			var request = new XMLHttpRequest();
+
+			request.open('GET', apiConfig.enlace+'api/v3/cfdi33/'+UID+'/pdf');
+
+			request.setRequestHeader('F-API-KEY', apiConfig.apiKey);
+			request.setRequestHeader('F-SECRET-KEY', apiConfig.secretKey);
+			request.setRequestHeader('Content-Type', 'application/pdf');
+			request.setRequestHeader('Content-Transfer-Encoding', 'Binary');
+			request.setRequestHeader('Content-Disposition', 'attachment: filename=F2222.pdf');
+			request.responseType = 'blob';
+
+			request.onreadystatechange = function () {
+				if (this.readyState === 4) {
+					console.log('Status:', this.status);
+					console.log('Headers:', this.getAllResponseHeaders());
+					console.log('Body:', this.response);
+					var blob = new Blob([this.response], {type: 'application/pdf'});
+					var link = document.createElement('a');
+					link.href = window.URL.createObjectURL(blob);
+					link.download = "factura.pdf";
+					link.click();
+				}
+			};
+
 			request.send();
 		}
 
@@ -1416,11 +1412,11 @@
 
 			var request = new XMLHttpRequest();
 
-			request.open('POST', 'http://factura.com/api/v1/clients/create');
+			request.open('POST', apiConfig.enlace+'api/v1/clients/create');
 
 			request.setRequestHeader('Content-Type', 'application/json');
-			request.setRequestHeader('F-API-KEY', 'JDJ5JDEwJHJWelRXTWlJMEd4OS9kS3hRZTJNZy5neFAwV2dzdGttLjVleTcueDIyUHlMOEE0VEY5dUFL');
-			request.setRequestHeader('F-SECRET-KEY', 'JDJ5JDEwJDd3bXhpWENGRXJFMkNvOE1Hblo5Y2VPV3J5WXJxZmJoVEJhQjR0OE1Xa0hrV1lmRXhCWkFt');
+			request.setRequestHeader('F-API-KEY', apiConfig.apiKey);
+			request.setRequestHeader('F-SECRET-KEY', apiConfig.secretKey);
 
 			request.onreadystatechange = function () {
 			  if (this.readyState === 4) {
@@ -1429,16 +1425,19 @@
 			    console.log('Body:', this.responseText);
 			    var data = JSON.parse(this.responseText);
 			    if (data.status == "success"){
-			    	texto = "<div class='alert alert-success alert-dismissible fade show' role='alert'><strong>Bien!</strong> El cliente se registro correctamente en el portal! <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></i></div>";
-					color = "#379911";
+						$.gritter.add({
+							title: 'Correcto!',
+							text: 'El cliente se registró correctamente en el portal "Factura.com" Intente generar la factura nuevamente.',
+							class_name: 'color success'
+						});
 
-					$(".mensaje").html( texto );
 			    }else{
-			    	texto = "<div class='alert alert-warning alert-dismissible fade show' role='alert'><strong>Error!</strong> "+ data.message + "<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></i></div>";
-					color = "#C9302C";
-
-					$(".mensaje").html( texto );
-			    }
+						$.gritter.add({
+							title: 'Error!',
+							text: data.message,
+							class_name: 'color danger'
+						});
+					}
 			  }
 			};
 

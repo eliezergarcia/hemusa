@@ -31,8 +31,8 @@
                 <div class="card-header card-header-divider row align-items-end justify-content-between">
                   <p style="font-size: 20px;"></p>
                   <form id="frmColoresEntorno">
-                    <button id="btnDefaultColoresEntorno" type="button" name="button" class="btn btn-secondary btn-space btn-lg">Colores default</button>
-                    <button id="btnColoresEntorno" type="button" name="button" class="btn btn-secondary btn-space btn-lg">Editar <i class="fas fa-pencil-alt fa-sm"></i></button>
+                    <button id="" type="button" name="button" class="btn btn-secondary btn-space btn-lg">Colores default</button>
+                    <button id="" type="button" name="button" class="btn btn-secondary btn-space btn-lg">Editar <i class="fas fa-pencil-alt fa-sm"></i></button>
                 </div>
               </div>
             </div>
