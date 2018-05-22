@@ -9,7 +9,7 @@
 
 	// Con esta variable se cierra la sesión iniciada
 	$logoutAction = $_SERVER['PHP_SELF']."?doLogout=true";
-	
+
 	if ((isset($_SERVER['QUERY_STRING'])) && ($_SERVER['QUERY_STRING'] != "")){
 		$logoutAction .="&". htmlentities($_SERVER['QUERY_STRING']);
 	}
@@ -22,7 +22,7 @@
 	  	unset($_SESSION['MM_Username']);
 	  	unset($_SESSION['MM_UserGroup']);
 	  	unset($_SESSION['PrevUrl']);
-	
+
   		$logoutGoTo = $ruta."index.php";
   		if ($logoutGoTo) {
     		header("Location: $logoutGoTo");
@@ -38,10 +38,10 @@
 	$MM_donotCheckaccess = "true";
 
 	// Restringe el acceso a la página
-	function isAuthorized($strUsers, $strGroups, $UserName, $UserGroup) { 
-		
+	function isAuthorized($strUsers, $strGroups, $UserName, $UserGroup) {
+
   	// Declaramos la variable False para asumir que el visitante no está autorizado
-  	$isValid = False; 
+  	$isValid = False;
 
   	// Cuando un visitante inicia sesión en este sitio, la variable de sesión MM_Username establece igual a su nombre de usuario.
 
@@ -50,34 +50,34 @@
 
     // Además de haber iniciado sesión, puede restringir el acceso solo a ciertos usuarios basándose en una identificación establecida cuando inician sesión.
 
-    // Analiza las cadenas en matrices. 
-	    $arrUsers = Explode(",", $strUsers); 
-	    $arrGroups = Explode(",", $strGroups); 
-	    if (in_array($UserName, $arrUsers)) { 
-	    	$isValid = true; 
-	    } 
+    // Analiza las cadenas en matrices.
+	    $arrUsers = Explode(",", $strUsers);
+	    $arrGroups = Explode(",", $strGroups);
+	    if (in_array($UserName, $arrUsers)) {
+	    	$isValid = true;
+	    }
 
 	    // O bien, puede restringir el acceso solo a ciertos usuarios en función de su nombre de usuario.
-	    if (in_array($UserGroup, $arrGroups)) { 
-	    	$isValid = true; 
-	    } 
-	    if (($strUsers == "") && true) { 
-	    	$isValid = true; 
-	    } 
-	} 
-	return $isValid; 
+	    if (in_array($UserGroup, $arrGroups)) {
+	    	$isValid = true;
+	    }
+	    if (($strUsers == "") && true) {
+	    	$isValid = true;
+	    }
+	}
+	return $isValid;
 }
 
 	$MM_restrictGoTo = "login.php";
-	
-	if (!((isset($_SESSION['MM_Username'])) && (isAuthorized("",$MM_authorizedUsers, $_SESSION['MM_Username'], $_SESSION['MM_UserGroup'])))) {   
+
+	if (!((isset($_SESSION['MM_Username'])) && (isAuthorized("",$MM_authorizedUsers, $_SESSION['MM_Username'], $_SESSION['MM_UserGroup'])))) {
   		$MM_qsChar = "?";
   		$MM_referrer = $_SERVER['PHP_SELF'];
   		if (strpos($MM_restrictGoTo, "?")) $MM_qsChar = "&";
-  			if (isset($QUERY_STRING) && strlen($QUERY_STRING) > 0) 
+  			if (isset($QUERY_STRING) && strlen($QUERY_STRING) > 0)
   		$MM_referrer .= "?" . $QUERY_STRING;
   		$MM_restrictGoTo = $MM_restrictGoTo. $MM_qsChar . "accesscheck=" . urlencode($MM_referrer);
-  		header("Location: ". $MM_restrictGoTo); 
+  		header("Location: ". $MM_restrictGoTo);
   		exit;
 	}
 
@@ -100,4 +100,5 @@
 	$usuariologin = $row_consulta_usuario['nombre']." ".$row_consulta_usuario['apellidos'];
 	$dplogin = $row_consulta_usuario['dp'];
 	$tipomenu = $row_consulta_usuario['tipomenu'];
+	$avatar = $row_consulta_usuario['avatar'];
 ?>

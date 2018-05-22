@@ -28,30 +28,19 @@
                     	<div class="card card-fullcalendar">
                       		<div class="card-body">
                       			<!-- Tabla de Marcas -->
-									<table id="dt_marcas" class="table table-striped table-hover compact" cellspacing="0" width="100%">
-										<thead>
-											<tr>
-												<th>Marca</th>
-												<th>Factor</th>
-												<th>Moneda</th>
-												<th>Tiempo de Entrega</th>
-												<th>Excepción de Marca</th>
-												<th>Ver y Editar</th>
-												<th>Eliminar</th>
-											</tr>
-										</thead>
-										<tfoot>
-											<tr>
-												<th>Marca</th>
-												<th>Factor</th>
-												<th>Moneda</th>
-												<th>Tiempo de Entrega</th>
-												<th>Excepción de Marca</th>
-												<td></td>
-												<td></td>
-											</tr>
-										</tfoot>
-									</table>
+															<table id="dt_marcas" class="table table-striped table-hover compact" cellspacing="0" width="100%">
+																<thead>
+																	<tr>
+																		<th>Marca</th>
+																		<th>Factor</th>
+																		<th>Moneda</th>
+																		<th>Tiempo de Entrega</th>
+																		<th>Excepción de Marca</th>
+																		<th>Ver y Editar</th>
+																		<th>Eliminar</th>
+																	</tr>
+																</thead>
+															</table>
                       		</div>
                     	</div>
                 	</div>
@@ -68,7 +57,7 @@
 				  	<div class="modal-dialog" role="document">
 				    	<div class="modal-content">
 				      		<div class="modal-header">
-				        		<h4 class="modal-title" id="exampleModalLabel"><i class="fas fa-wrench fa-sm" aria-hidden="true"></i> Registro de marca</h4>
+				        		<h4 class="modal-title" id="exampleModalLabel">Registro de marca</h4>
 				        		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 				          		<span aria-hidden="true">&times;</span>
 				        		</button>
@@ -118,7 +107,7 @@
 				  	<div class="modal-dialog" role="document">
 				    	<div class="modal-content">
 				      		<div class="modal-header">
-				        		<h4 class="modal-title" id="exampleModalLabel"><i class="fas fa-edit fa-sm" aria-hidden="true"></i> Información de marca</h4>
+				        		<h4 class="modal-title" id="exampleModalLabel">Información de marca</h4>
 				        		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 				          			<span aria-hidden="true">&times;</span>
 				        		</button>
@@ -177,7 +166,7 @@
 				<input type="hidden" id="opcion" name="opcion" value="eliminar">
 				<input type="hidden" id="usuariologin" name="usuariologin">
 				<input type="hidden" id="dplogin" name="dplogin">
-				<div class="modal-full-color modal-full-color-danger modal fade" id="modalEliminarMarca" tabindex="-1" role="dialog" aria-labelledby="modalEliminarLabel">
+				<div class="modal fade" id="modalEliminarMarca" tabindex="-1" role="dialog" aria-labelledby="modalEliminarLabel">
 				  	<div class="modal-dialog" role="document">
 				    	<div class="modal-content">
 				      		<div class="modal-header">
@@ -185,7 +174,7 @@
 			                </div>
 				      		<div class="modal-body">
 				      			<div class="text-center">
-              				<div class="text-center"><span class="modal-main-icon mdi mdi-close-circle-o"></span></div>
+              				<div class="text-danger"><span class="modal-main-icon mdi mdi-close-circle-o"></span></div>
               				<h4>¿Está seguro de eliminar la marca?</h4>
               				<div class="row justify-content-center">
               					<input type="text" id="marca" name="marca" class="disabled col-6 form-control form-control-sm" disabled>
@@ -216,11 +205,6 @@
 		});
 
 		var  listar = function(){
-			$('#dt_marcas tfoot th').each( function () {
-    			var title = $(this).text();
-    			$(this).html( '<input class="form-control form-control-xs" type="text" placeholder="Buscar '+ title +'" />' );
-  			});
-
 			var table = $("#dt_marcas").DataTable({
 				"destroy": true,
 				"scrollX": true,
@@ -303,13 +287,6 @@
 		                }
 		            }
 				]
-			});
-
-			$("#dt_marcas tfoot input").on( 'keyup change', function () {
-	    		table
-	        		.column( $(this).parent().index()+':visible' )
-	        		.search( this.value )
-	        		.draw();
 			});
 
 			obtener_data_editar("#dt_marcas tbody", table);

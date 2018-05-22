@@ -21,7 +21,7 @@
 	      </div>
 	      <div class="be-right-navbar">
 	        <ul class="nav navbar-nav float-right be-user-nav">
-	          <li class="nav-item dropdown"><a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle"><img src="<?php echo $ruta; ?>assets/img/eliezerhernandez.jpg" alt="Avatar"><span class="user-name"><?php echo $usuario." ".$usuarioApellido; ?></span></a>
+	          <li class="nav-item dropdown"><a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle"><img src="<?php echo $ruta; ?>assets/img/<?php echo $avatar; ?>" alt="Avatar"><span class="user-name"><?php echo $usuario." ".$usuarioApellido; ?></span></a>
 	            <div role="menu" class="dropdown-menu">
 	              <div class="user-info">
 	                <div class="user-name"><?php echo $usuario." ".$usuarioApellido; ?></div>

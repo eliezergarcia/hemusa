@@ -1,6 +1,7 @@
 <?php
 	include("../../conexion.php");
   include("../../sesion.php");
+	error_reporting(0);
 
 	$opcion = $_POST['opcion'];
 
@@ -16,14 +17,14 @@
       $imss = $_POST['imss'];
       $tipoSangre = $_POST['tipoSangre'];
       $cumple = $_POST['cumple'];
-      $genero = $_POST['genero'];
-			editar_info($idusuario, $usuario, $nombreCompleto, $departamento, $emailHemusa, $emailPersonal, $celular, $ubicacion, $imss, $tipoSangre, $cumple, $genero, $conexion_usuarios);
+      $sexo = $_POST['sexo'];
+			editar_info($idusuario, $usuario, $nombreCompleto, $departamento, $emailHemusa, $emailPersonal, $celular, $ubicacion, $imss, $tipoSangre, $cumple, $sexo, $conexion_usuarios);
 			break;
 	}
 
-  function editar_info($idusuario, $usuario, $nombreCompleto, $departamento, $emailHemusa, $emailPersonal, $celular, $ubicacion, $imss, $tipoSangre, $cumple, $genero, $conexion_usuarios) {
+  function editar_info($idusuario, $usuario, $nombreCompleto, $departamento, $emailHemusa, $emailPersonal, $celular, $ubicacion, $imss, $tipoSangre, $cumple, $sexo, $conexion_usuarios) {
     $nombres = explode(" ", $nombreCompleto);
-    $query = "UPDATE usuarios SET user='$usuario', nombre='$nombres[0]', apellidos='$nombres[1]', dp='$departamento', correoHemusa='$emailHemusa', correoPersonal='$emailPersonal', movil='$celular', direccion='$ubicacion', imss='$imss', tipoSangre='$tipoSangre', fechaNacimiento='$cumple', genero='$genero' WHERE id='$idusuario'";
+    $query = "UPDATE usuarios SET user='$usuario', nombre='$nombres[0]', apellidos='$nombres[1]', dp='$departamento', correoHemusa='$emailHemusa', correoPersonal='$emailPersonal', movil='$celular', direccion='$ubicacion', imss='$imss', tipoSangre='$tipoSangre', fechaNacimiento='$cumple', sexo='$sexo' WHERE id='$idusuario'";
     $resultado = mysqli_query($conexion_usuarios, $query);
 
     if(!$resultado){

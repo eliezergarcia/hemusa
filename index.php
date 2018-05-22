@@ -95,7 +95,7 @@
                 </form>
               </div>
             </div>
-            <div class="splash-footer"><span>Copyright 2018 © Todos los Derechos Reservados</span></div>
+            <div class="splash-footer"><span>Copyright © 2018 Hemusa, Todos los derechos reservados.</span></div>
           </div>
         </div>
       </div>
@@ -109,9 +109,9 @@
         App.init();
       });
 
-      $("#btn-submit").click(function(){
-        $('.splash-container').fadeOut(500);
-      });
+      // $("#btn-submit").click(function(){
+      //   $('.splash-container').fadeOut(500);
+      // });
     </script>
   </body>
 </html>

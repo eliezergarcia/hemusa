@@ -1,6 +1,7 @@
 <?php
 	include('../../conexion.php');
 	include('../../sesion.php');
+	error_reporting(0);
 
 	$opcion = $_POST["opcion"];
 	$informacion = [];
@@ -13,6 +14,7 @@
 			$usuario = $_POST["usuario"];
 			$password = $_POST["pass"];
 			$departamento = $_POST["departamento"];
+			$sexo = $_POST["sexo"];
 			$direccion = $_POST["direccion"];
 			$tlfcasa = $_POST["tlfCasa"];
 			$movil = $_POST["movil"];
@@ -27,7 +29,7 @@
 				$informacion["informacion"] = "No se puede registrar la información porque el usuario '".$usuario."' ya existe!";
 				echo json_encode($informacion);
 			}else{
-				registrar($usuariologin, $dplogin, $usuario, $password, $nombre, $apellido, $departamento, $direccion, $tlfcasa, $movil, $correoPersonal, $correoHemusa, $tipoSangre, $contactoEmergencia, $imss, $conexion_usuarios);
+				registrar($usuariologin, $dplogin, $usuario, $password, $nombre, $apellido, $departamento, $sexo, $direccion, $tlfcasa, $movil, $correoPersonal, $correoHemusa, $tipoSangre, $contactoEmergencia, $imss, $conexion_usuarios);
 			}
 			break;
 
@@ -39,6 +41,7 @@
 			$usuario = $_POST["usuario"];
 			$password = $_POST["pass"];
 			$departamento = $_POST["departamento"];
+			$sexo = $_POST["sexo"];
 			$direccion = $_POST["direccion"];
 			$tlfcasa = $_POST["tlfCasa"];
 			$movil = $_POST["movil"];
@@ -46,7 +49,7 @@
 			$tipoSangre = $_POST["tipoSangre"];
 			$contactoEmergencia = $_POST["contactoEmergencia"];
 			$imss = $_POST["imss"];
-			editar($usuariologin, $dplogin, $idusuario, $nombre, $apellido, $correoHemusa, $usuario, $password, $departamento, $direccion, $tlfcasa, $movil, $correoPersonal, $tipoSangre, $contactoEmergencia, $imss, $conexion_usuarios);
+			editar($usuariologin, $dplogin, $idusuario, $nombre, $apellido, $correoHemusa, $usuario, $password, $departamento, $sexo, $direccion, $tlfcasa, $movil, $correoPersonal, $tipoSangre, $contactoEmergencia, $imss, $conexion_usuarios);
 			break;
 
 		case 'eliminar':
@@ -63,8 +66,14 @@
 		return $existe_usuario;
 	}
 
-	function registrar($usuariologin, $dplogin, $usuario, $password, $nombre, $apellido, $departamento, $direccion, $tlfcasa, $movil, $correoPersonal, $correoHemusa, $tipoSangre, $contactoEmergencia, $imss, $conexion_usuarios){
-		$query = "INSERT INTO usuarios (user, password, nombre, apellidos, dp, direccion, tlfcasa, movil, correoPersonal, correoHemusa, tipoSangre, contactoEmergencia, imss) VALUES ('$usuario', '$password', '$nombre', '$apellido', '$departamento', '$direccion', '$tlfcasa', '$movil', '$correoPersonal', '$correoHemusa', '$tipoSangre', '$contactoEmergencia', '$imss')";
+	function registrar($usuariologin, $dplogin, $usuario, $password, $nombre, $apellido, $departamento, $sexo, $direccion, $tlfcasa, $movil, $correoPersonal, $correoHemusa, $tipoSangre, $contactoEmergencia, $imss, $conexion_usuarios){
+		if ($sexo == 'M') {
+			$avatar = "defaultMasculino.png";
+		}else{
+			$avatar = "defaultFemenino.png";
+		}
+
+		$query = "INSERT INTO usuarios (user, password, nombre, apellidos, dp, sexo, direccion, tlfcasa, movil, correoPersonal, correoHemusa, tipoSangre, contactoEmergencia, imss, avatar) VALUES ('$usuario', '$password', '$nombre', '$apellido', '$departamento', '$sexo', '$direccion', '$tlfcasa', '$movil', '$correoPersonal', '$correoHemusa', '$tipoSangre', '$contactoEmergencia', '$imss', '$avatar')";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 		if (!$resultado) {
 			$informacion["respuesta"] = "ERROR";
@@ -82,8 +91,14 @@
 		mysqli_close($conexion_usuarios);
 	}
 
-	function editar($usuariologin, $dplogin, $idusuario, $nombre, $apellido, $correoHemusa, $usuario, $password, $departamento, $direccion, $tlfcasa, $movil, $correoPersonal, $tipoSangre, $contactoEmergencia, $imss, $conexion_usuarios){
-		$query ="UPDATE usuarios SET user='$usuario', password='$password', nombre='$nombre', apellidos='$apellido', dp='$departamento', direccion='$direccion', tlfcasa='$tlfcasa', movil='$movil', correoPersonal='$correoPersonal', correoHemusa='$correoHemusa', tipoSangre='$tipoSangre', contactoEmergencia='$contactoEmergencia', imss='$imss' WHERE id='$idusuario'";
+	function editar($usuariologin, $dplogin, $idusuario, $nombre, $apellido, $correoHemusa, $usuario, $password, $departamento, $sexo, $direccion, $tlfcasa, $movil, $correoPersonal, $tipoSangre, $contactoEmergencia, $imss, $conexion_usuarios){
+		if ($sexo == 'M') {
+			$avatar = "defaultMasculino.png";
+		}else{
+			$avatar = "defaultFemenino.png";
+		}
+
+		$query ="UPDATE usuarios SET user='$usuario', password='$password', nombre='$nombre', apellidos='$apellido', dp='$departamento', sexo='$sexo', direccion='$direccion', tlfcasa='$tlfcasa', movil='$movil', correoPersonal='$correoPersonal', correoHemusa='$correoHemusa', tipoSangre='$tipoSangre', contactoEmergencia='$contactoEmergencia', imss='$imss', avatar='$avatar' WHERE id='$idusuario'";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 		if (!$resultado) {
 			$informacion["respuesta"] = "ERROR";

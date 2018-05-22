@@ -53,7 +53,7 @@
 					<div class="modal-dialog" role="document">
 						<div class="modal-content">
 							<div class="modal-header">
-								<h4 class="modal-title" id="exampleModalLabel"><i class="fas fa-user-plus fa-sm" aria-hidden="true"></i> Registro de usuario</h4>
+								<h4 class="modal-title" id="exampleModalLabel">Registro de usuario</h4>
 								<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 							</div>
 							<div class="modal-body">
@@ -89,6 +89,13 @@
 										<label for="departamento">Departamento <font color="#FF4136">*</font></label>
 										<input type="text" id="departamento" name="departamento" class="form-control form-control-sm" required>
 									</div>
+									<div class="col-2 form-group">
+										<label for="departamento">Sexo <font color="#FF4136">*</font></label>
+										<select type="text" id="sexo" name="sexo" class="form-control form-control-sm select2" required>
+											<option value="M">M</option>
+											<option value="F">F</option>
+										</select>
+									</div>
 								</div>
 								<hr>
 								<div class="row ">
@@ -117,7 +124,16 @@
 									</div>
 									<div class="col-3 form-group">
 										<label for="tipoSangre">Tipo Sangre</label>
-										<input type="text" id="tipoSangre" name="tipoSangre" class="form-control form-control-sm" placeholder="Opcional">
+										<select type="text" id="tipoSangre" name="tipoSangre" class="form-control form-control-sm select2" placeholder="Opcional">
+											<option value="O negativo">O negativo</option>
+											<option value="O positivo">O positivo</option>
+											<option value="A negativo">A negativo</option>
+											<option value="A positivo">A positivo</option>
+											<option value="B negativo">B negativo</option>
+											<option value="B positivo">B positivo</option>
+											<option value="AB negativo">AB negativo</option>
+											<option value="AB positivo">AB positivo</option>
+										</select>
 									</div>
 								</div>
 								<div class="row">
@@ -151,7 +167,7 @@
 					<div class="modal-dialog modal-lg" role="document">
 						<div class="modal-content">
 							<div class="modal-header">
-								<h4 class="modal-title" id="modalEditarLabel"><i class="fas fa-edit fa-sm" aria-hidden="true"></i> Información de usuario</h4>
+								<h4 class="modal-title" id="modalEditarLabel">Información de usuario</h4>
 								<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 							</div>
 							<div class="modal-body">
@@ -187,6 +203,13 @@
 										<label for="departamento">Departamento <font color="#FF4136">*</font></label>
 										<input type="text" id="departamento" name="departamento" class="form-control form-control-sm" required>
 									</div>
+									<div class="col-2 form-group">
+										<label for="departamento">Sexo <font color="#FF4136">*</font></label>
+										<select type="text" id="sexo" name="sexo" class="form-control form-control-sm select2" required>
+											<option value="M">M</option>
+											<option value="F">F</option>
+										</select>
+									</div>
 								</div>
 								<hr>
 								<div class="row ">
@@ -215,7 +238,16 @@
 									</div>
 									<div class="col-3 form-group">
 										<label for="tipoSangre">Tipo Sangre</label>
-										<input type="text" id="tipoSangre" name="tipoSangre" class="form-control form-control-sm" placeholder="Opcional">
+										<select type="text" id="tipoSangre" name="tipoSangre" class="form-control form-control-sm select2" placeholder="Opcional">
+											<option value="O negativo">O negativo</option>
+											<option value="O positivo">O positivo</option>
+											<option value="A negativo">A negativo</option>
+											<option value="A positivo">A positivo</option>
+											<option value="B negativo">B negativo</option>
+											<option value="B positivo">B positivo</option>
+											<option value="AB negativo">AB negativo</option>
+											<option value="AB positivo">AB positivo</option>
+										</select>
 									</div>
 								</div>
 								<div class="row">
@@ -243,27 +275,27 @@
 				<input type="hidden" id="idusuario" name="idusuario" value="">
 				<input type="hidden" id="opcion" name="opcion" value="eliminar">
 				<!-- Modal -->
-				<div class="modal-full-color modal-full-color-danger modal fade" id="modalEliminarUsuario" tabindex="-1" role="dialog" aria-labelledby="modalEliminarLabel">
+				<div class="modal fade" id="modalEliminarUsuario" tabindex="-1" role="dialog" aria-labelledby="modalEliminarLabel">
 					<div class="modal-dialog" role="document">
 						<div class="modal-content">
 							<div class="modal-header">
-			                  	<button type="button" data-dismiss="modal" aria-hidden="true" class="close"><span class="mdi mdi-close"></span></button>
-			                </div>
-			                <div class="modal-body">
-                  				<div class="text-center">
-                    				<div class="text-center"><span class="modal-main-icon mdi mdi-close-circle-o"></span></div>
-                    				<h4>¿Estás seguro(a) de eliminar el usuario?</h4>
-                    				<div class="row justify-content-center">
-                    					<div class="form-group col-12 row justify-content-center">
-                    						<input type="text" class="disabled form-control col-6 form-control form-control-sm" id="nombre" name="nombre" disabled>
-                    					</div>
-                    				</div>
-                    				<div class="mt-8 invoice-footer">
-                      					<button type="button" class="btn btn-lg btn-secondary" data-dismiss="modal">Cancelar</button>
-                      					<button type="submit" class="btn btn-lg btn-danger">Eliminar</button>
-                    				</div>
-                  				</div>
-                			</div>
+                	<button type="button" data-dismiss="modal" aria-hidden="true" class="close"><span class="mdi mdi-close"></span></button>
+              </div>
+              <div class="modal-body">
+          				<div class="text-center">
+            				<div class="text-danger"><span class="modal-main-icon mdi mdi-close-circle-o"></span></div>
+            				<h4>¿Estás seguro(a) de eliminar el usuario?</h4>
+            				<div class="row justify-content-center">
+            					<div class="form-group col-12 row justify-content-center">
+            						<input type="text" class="disabled form-control col-6 form-control form-control-sm" id="nombre" name="nombre" disabled>
+            					</div>
+            				</div>
+            				<div class="mt-8 invoice-footer">
+              					<button type="button" class="btn btn-lg btn-secondary" data-dismiss="modal">Cancelar</button>
+              					<button type="submit" class="btn btn-lg btn-danger">Eliminar</button>
+            				</div>
+          				</div>
+        			</div>
 							<div class="modal-footer"></div>
 						</div>
 					</div>
@@ -384,13 +416,14 @@
 					nombre = $("#frmEditarUsuario #nombre").val(data.nombre),
 					apellido = $("#frmEditarUsuario #apellido").val(data.apellidos),
 					departamento = $("#frmEditarUsuario #departamento").val(data.dp),
+					departamento = $("#frmEditarUsuario #sexo").val(data.sexo).change(),
 					direccion = $("#frmEditarUsuario  #direccion").val(data.direccion),
 					tlfCasa = $("#frmEditarUsuario  #tlfCasa").val(data.tlfcasa),
 					movil = $("#frmEditarUsuario  #movil").val(data.movil),
 					correoPersonal = $("#frmEditarUsuario #correoPersonal").val(data.correoPersonal),
 					correoHemusa = $("#frmEditarUsuario #correoHemusa").val(data.correoHemusa),
 					contraHemusa = $("#frmEditarUsuario #contraHemusa").val(data.contraHemusa),
-					tipoSangre = $("#frmEditarUsuario #tipoSangre").val(data.tipoSangre),
+					tipoSangre = $("#frmEditarUsuario #tipoSangre").val(data.tipoSangre).change(),
 					contactoEmergencia = $("#frmEditarUsuario #contactoEmergencia").val(data.contactoEmergencia),
 					imss = $("#frmEditarUsuario #imss").val(data.imss),
 					opcion = $("#frmEditarUsuario #opcion").val("editar");

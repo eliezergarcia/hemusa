@@ -18,7 +18,7 @@
             <div class="user-display">
               <div class="user-display-bg"><img src="../../../assets/img/gallery/img-1.png" alt="Profile Background" style="margin-top: -300px;"></div>
               <div class="user-display-bottom">
-                <a href="" data-toggle="tooltip" data-placement="left" title="Cambiar foto de perfil"><div class="user-display-avatar"><img src="../../../assets/img/eliezerhernandez.jpg" alt="Avatar"></div></a>
+                <a href="" data-toggle="tooltip" data-placement="left" title="Cambiar foto de perfil"><div class="user-display-avatar"><img src="../../../assets/img/<?php echo $avatar; ?>" alt="Avatar"></div></a>
                 <div class="user-display-info">
                   <div class="name" style="font-size: 20px;"><?php echo $usuariologin; ?></div>
                   <div class="nick"><span class="mdi mdi-account"></span> <?php echo $user; ?></div>
@@ -143,7 +143,7 @@
                       <h4 style="margin-top: 5px; padding-left: 10px;">Género</h4>
                     </div>
                     <div class="col row">
-                      <select style="font-size: 16px;" type="text" name="genero" id="genero" class="form-control form-control-sm col-10 select2 input2">
+                      <select style="font-size: 16px;" type="text" name="sexo" id="sexo" class="form-control form-control-sm col-10 select2 input2">
                         <option value="M">Masculino</option>
                         <option value="F">Femenino</option>
 
@@ -244,7 +244,7 @@
           $("#imss").val(data.data.imss)
           $("#tipoSangre").val(data.data.tipoSangre).change()
           $("#cumple").val(data.data.fechaNacimiento)
-          $("#genero").val(data.data.genero).change()
+          $("#genero").val(data.data.sexo).change()
         }).fail(function (data) {
           console.log("Error al buscar los datos de usuario!")
         })
