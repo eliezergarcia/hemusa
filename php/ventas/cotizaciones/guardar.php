@@ -130,32 +130,33 @@
 	}
 
 	function agregar_cotizacion($usuariologin, $dplogin, $numeroCotizacion, $fechaCotizacion, $vendedor, $cliente, $contactoCliente, $moneda, $tiempoEntrega, $condicionesPago, $comentarios, $conexion_usuarios){
-		$query = "SELECT id FROM contactos WHERE nombreEmpresa LIKE '%$cliente%' LIMIT 1";
-		$resultado = mysqli_query($conexion_usuarios, $query);
-		if (!$resultado) {
-			$informacion["respuesta"] = "ERROR";
-			$informacion["informacion"] = "Ocurrió un problema al buscar el 'Id' de '".$nombreEmpresa."'!";
-		}else{
-			while($data = mysqli_fetch_array($resultado)){
-				$idCliente = $data['id'];
-			}
-			$fecha = date("Y", strtotime($fechaCotizacion)).'-'.date("m", strtotime($fechaCotizacion)).'-'.date("d", strtotime($fechaCotizacion));
-			$query = "INSERT INTO cotizacion (ref, cliente, contacto, vendedor, fecha, moneda, TiempoEntrega, CondPago, Otra) VALUES ('$numeroCotizacion', '$idCliente', '$contactoCliente', '$vendedor', '$fecha', '$moneda', '$tiempoEntrega', '$condicionesPago', '$comentarios')";
-			$resultado = mysqli_query($conexion_usuarios, $query);
-			if (!$resultado) {
-				$informacion["respuesta"] = "ERROR";
-				$informacion["informacion"] = "Ocurrió un problema al crear la cotización '".$numeroCotizacion."'!";
-			}else{
-				$informacion["respuesta"] = "BIEN";
-				$informacion["cotizacion"] = $numeroCotizacion;
-
-				$descripcion = "Se creo la cotizacion ".$numeroCotizacion;
-				$fechahora = date("Y-m-d G:i:s");
-				$query = "INSERT INTO movimientosusuarios (cotizacion, departamento, usuario, tipomovimiento, descripcion, fechahora) VALUES ('$numeroCotizacion','$dplogin', '$usuariologin', 'Registro', '$descripcion', '$fechahora')";
-				$resultado = mysqli_query($conexion_usuarios, $query);
-			}
-		}
-
+		// $query = "SELECT id FROM contactos WHERE nombreEmpresa LIKE '%$cliente%' LIMIT 1";
+		// $resultado = mysqli_query($conexion_usuarios, $query);
+		// if (!$resultado) {
+		// 	$informacion["respuesta"] = "ERROR";
+		// 	$informacion["informacion"] = "Ocurrió un problema al buscar el 'Id' de '".$nombreEmpresa."'!";
+		// }else{
+		// 	while($data = mysqli_fetch_array($resultado)){
+		// 		$idCliente = $data['id'];
+		// 	}
+		// 	$fecha = date("Y", strtotime($fechaCotizacion)).'-'.date("m", strtotime($fechaCotizacion)).'-'.date("d", strtotime($fechaCotizacion));
+		// 	$query = "INSERT INTO cotizacion (ref, cliente, contacto, vendedor, fecha, moneda, TiempoEntrega, CondPago, Otra) VALUES ('$numeroCotizacion', '$idCliente', '$contactoCliente', '$vendedor', '$fecha', '$moneda', '$tiempoEntrega', '$condicionesPago', '$comentarios')";
+		// 	$resultado = mysqli_query($conexion_usuarios, $query);
+		// 	if (!$resultado) {
+		// 		$informacion["respuesta"] = "ERROR";
+		// 		$informacion["informacion"] = "Ocurrió un problema al crear la cotización '".$numeroCotizacion."'!";
+		// 	}else{
+		// 		$informacion["respuesta"] = "BIEN";
+		// 		$informacion["cotizacion"] = $numeroCotizacion;
+		//
+		// 		$descripcion = "Se creo la cotizacion ".$numeroCotizacion;
+		// 		$fechahora = date("Y-m-d G:i:s");
+		// 		$query = "INSERT INTO movimientosusuarios (cotizacion, departamento, usuario, tipomovimiento, descripcion, fechahora) VALUES ('$numeroCotizacion','$dplogin', '$usuariologin', 'Registro', '$descripcion', '$fechahora')";
+		// 		$resultado = mysqli_query($conexion_usuarios, $query);
+		// 	}
+		// }
+		$informacion["respuesta"] = "BIEN";
+		$informacion["cotizacion"] = $numeroCotizacion;
 		echo json_encode($informacion);
 		cerrar($conexion_usuarios);
 	}
@@ -167,8 +168,8 @@
 			$informacion["respuesta"] = "ERROR";
 			$informacion["informacion"] = "Ocurrió un problema al registrar el contacto '".$contacto."'!";
 		}else{
-			$informacion["guardar"] = "contacto";
 			$informacion["idcliente"] = $idcliente;
+			$informacion["guardar"] = "contacto";
 			$informacion["respuesta"] = "BIEN";
 			$informacion["informacion"] = "Se guardo el contacto '".$contacto."' correctamente!";
 

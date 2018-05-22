@@ -42,8 +42,8 @@
               	<nav aria-label="breadcrumb" role="navigation">
 	                <ol class="breadcrumb page-head-nav">
 	                    <li class="breadcrumb-item"><a href="#">Ventas</a></li>
-	                    <li class="breadcrumb-item"><a href="cotizaciones.php">Cotizaciones</a></li>
-	                    <li class="breadcrumb-item">Cliente: <a href="<?php echo $ruta; ?>php/ventas/clientes/verContacto.php?id=<?php echo $idcliente; ?>"><?php echo $cliente; ?></a> - Ref. Cotización: <?php echo $numero; ?></li>
+	                    <li class="breadcrumb-item"><a href="cotizaciones.php" class="text-primary">Cotizaciones</a></li>
+	                    <li class="breadcrumb-item">Cliente: <a href="<?php echo $ruta; ?>php/ventas/clientes/verContacto.php?id=<?php echo $idcliente; ?>" class="text-primary"><?php echo $cliente; ?></a> - Ref. Cotización: <?php echo $numero; ?></li>
 	                </ol>
               	</nav>
           	</div>
@@ -216,40 +216,43 @@
 			<form id="frmAgregarClas" action="" method="POST">
 				<input type="hidden" id="id" name="id" value="<?php echo $idcliente; ?>">
 				<input type="hidden" id="opcion" name="opcion" value="agregarClas">
-				<div class="modal fade colored-header colored-header-success" id="modalAgregarClas" tabindex="-1" role="dialog" aria-labelledby="modalAgregarClas" aria-hidden="true">
+				<div class="modal fade" id="modalAgregarClas" tabindex="-1" role="dialog" aria-labelledby="modalAgregarClas" aria-hidden="true">
 				  	<div class="modal-dialog" role="document">
 				    	<div class="modal-content">
-				      		<div class="modal-header">
-				        		<h4 class="modal-title" id="tituloEditarPartida">Clasificación de cliente</h4>
-				        		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
-				        		</button>
-				      		</div>
-				      		<div class="modal-body">
-								<div class="col-12 row justify-content-center">
-									<h4>Selecciona una opción:</h4>
-								</div>
-								<div class="row justify-content-center col-12">
-									<div class="col-12 col-sm-2 col-lg-2">
-										<br>
-                    <label class="custom-control custom-radio">
-                      	<input type="radio" class="custom-control-input" name="clasificacion" id="clasificacion" value="clas1"><span class="custom-control-label">16 %</span>
-                    </label>
-                    <label class="custom-control custom-radio">
-                      	<input type="radio" class="custom-control-input" name="clasificacion" id="clasificacion" value="clas2"><span class="custom-control-label">20 %</span>
-                    </label>
-                    <label class="custom-control custom-radio">
-                      	<input type="radio" class="custom-control-input" name="clasificacion" id="clasificacion" value="clas3"><span class="custom-control-label">25 %</span>
-                    </label>
-                    <label class="custom-control custom-radio">
-                      	<input type="radio" class="custom-control-input" name="clasificacion" id="clasificacion" value="clas4"><span class="custom-control-label">30 %</span>
-                    </label>
-                </div>
-								</div>
-				      		</div>
-				      		<div class="modal-footer invoice-footer">
-				        		<button type="button" class="btn btn-lg btn-secondary" data-dismiss="modal">Cancelar</button>
-				        		<button id="btnAgregarClasCliente" type="button" class="btn btn-lg btn-success" data-dismiss="modal">Guardar</button>
-				      		</div>
+			      		<div class="modal-header">
+			        		<!-- <h4 class="modal-title" id="tituloEditarPartida">Clasificación de cliente</h4>
+			        		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+			        		</button> -->
+			      		</div>
+				      	<div class="modal-body">
+									<div class="text-center">
+										<div class="text-warning"><span class="modal-main-icon mdi mdi-alert-triangle"></span></div>
+										<h4>El cliente no tiene asginado ninguna clasificación,</h4>
+										<h4>asignala para poder cotizar</h4>
+										<h5>Selecciona una opción:</h5>
+											<div class="row justify-content-center col-12">
+											<div class="col-12 col-sm-2 col-lg-2">
+												<br>
+		                    <label class="custom-control custom-radio">
+		                      	<input type="radio" class="custom-control-input" name="clasificacion" id="clasificacion" value="clas1"><span class="custom-control-label">16 %</span>
+		                    </label>
+		                    <label class="custom-control custom-radio">
+		                      	<input type="radio" class="custom-control-input" name="clasificacion" id="clasificacion" value="clas2"><span class="custom-control-label">20 %</span>
+		                    </label>
+		                    <label class="custom-control custom-radio">
+		                      	<input type="radio" class="custom-control-input" name="clasificacion" id="clasificacion" value="clas3"><span class="custom-control-label">25 %</span>
+		                    </label>
+		                    <label class="custom-control custom-radio">
+		                      	<input type="radio" class="custom-control-input" name="clasificacion" id="clasificacion" value="clas4"><span class="custom-control-label">30 %</span>
+		                    </label>
+		                	</div>
+										</div>
+									</div>
+			      		</div>
+			      		<div class="modal-footer invoice-footer mt-8">
+			        		<!-- <button type="button" class="btn btn-lg btn-secondary" data-dismiss="modal">Cancelar</button> -->
+									<button id="btnAgregarClasCliente" type="button" class="btn btn-lg btn-warning" data-dismiss="modal">Guardar</button>
+			      		</div>
 				    	</div>
 				  	</div>
 				</div>
@@ -440,15 +443,15 @@
 			        				<div class="form-group col-6">
 			        					<label id="mensajeClaseE" for="">Producto importado</label>
 					        			<input class="form-check-input" type="hidden" name="valorClaseE" id="valorNinguno" value="none">
-										<label class="custom-control custom-radio">
-				                          <input type="radio" class="custom-control-input" name="valorClaseE" id="valorNacional" value="nacional" disabled required onchange="calcularPrecioClaseE()"><span class="custom-control-label">Nacional</span>
-				                        </label>
-				                        <label class="custom-control custom-radio">
-				                          <input type="radio" class="custom-control-input" name="valorClaseE" id="valorAmericano" value="americano" disabled required onchange="calcularPrecioClaseE()"><span class="custom-control-label">Americano</span>
-				                        </label>
-				                        <label class="custom-control custom-radio">
-				                          <input type="radio" class="custom-control-input" name="valorClaseE" id="valorOtro" value="otro" disabled required onchange="calcularPrecioClaseE()"><span class="custom-control-label">Otro</span>
-				                        </label>
+												<label class="custom-control custom-radio">
+                        <input type="radio" class="custom-control-input" name="valorClaseE" id="valorNacional" value="nacional" disabled required onchange="calcularPrecioClaseE()"><span class="custom-control-label">Nacional</span>
+                      </label>
+                      <label class="custom-control custom-radio">
+                        <input type="radio" class="custom-control-input" name="valorClaseE" id="valorAmericano" value="americano" disabled required onchange="calcularPrecioClaseE()"><span class="custom-control-label">Americano</span>
+                      </label>
+                      <label class="custom-control custom-radio">
+                        <input type="radio" class="custom-control-input" name="valorClaseE" id="valorOtro" value="otro" disabled required onchange="calcularPrecioClaseE()"><span class="custom-control-label">Otro</span>
+                      </label>
 									</div>
 			        			</div>
 			        			<div class="row">
@@ -645,11 +648,8 @@
 				console.log(info);
 				$("#frmAgregarClas #idCliente").val(data.data.id);
 				if(data.data.clasificacion == 0){
-					estandar = alert("El cliente no tiene asignado ningúna clasificación.\n\nFavor de asignar a continuación para poder cotizar.");
 					$('#modalAgregarClas').modal('show');
 				}else{
-					// buscar_oc_pendientes();
-					// setInterval(buscar_oc_pendientes, 3000);
 					listar_partidas();
 					listar_fletes(refCotizacion);
 					buscar_totales(refCotizacion);

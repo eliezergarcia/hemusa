@@ -231,6 +231,35 @@
 				</div>
 			</div>
 
+			<div id="mod-success" tabindex="-1" role="dialog" style="" class="modal fade" data-backdrop="static" data-keyboard="false">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+						</div>
+						<div class="modal-body">
+							<div class="text-center">
+								<div class="texto1">
+									<br><br>
+									<h3>Espere un momento...</h3>
+									<h4>La cotización se esta generando</h4>
+									<br>
+									<div class="text-center">
+										<div class="be-spinner">
+											<svg width="40px" height="40px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+												<circle fill="none" stroke-width="4" stroke-linecap="round" cx="33" cy="33" r="30" class="circle"></circle>
+											</svg>
+										</div>
+									</div>
+								</div>
+								<div class="mt-8">
+								</div>
+							</div>
+						</div>
+						<div class="modal-footer"></div>
+					</div>
+				</div>
+			</div>
+
 	</header>
 	<?php include('../../enlacesjs.php'); ?>
 	<script>
@@ -363,9 +392,6 @@
 				success : function(data) {
 					var clientes = data;
 					console.log(clientes);
-					// $("#cliente").autocomplete({
-					// 	source: clientes
-					// });
 					var input = document.getElementById("cliente");
 					var awesomplete = new Awesomplete(input);
 					awesomplete.list = clientes;
@@ -396,15 +422,6 @@
 				success : function(data) {
 					var idcliente = data.data.id
 					buscarContactos(idcliente);
-					// if (data.data.moneda == "mxn" ) {
-					// 	$("form #moneda").empty();
-					// 	$("form #moneda").append("<option value='mxn' selected>MXN</option>");
-					// 	$("form #moneda").append("<option value='usd'>USD</option>");
-					// }else{
-					// 	$("form #moneda").empty();
-					// 	$("form #moneda").append("<option value='usd' selected>USD</option>");
-					// 	$("form #moneda").append("<option value='mxn'>MXN</option>");
-					// }
 					$("form #moneda").val(data.data.moneda).change();
 					$("form #condicionesPago").val(data.data.CondPago);
 				}
@@ -443,6 +460,7 @@
 			$("form").on("submit", function(e){
 				e.preventDefault();
 				$('.modal').modal('hide');
+				$("#mod-success").modal("show");
 				$('form .disabled').attr('disabled', false);
 				var frm = $(this).serialize();
 				console.log(frm);
@@ -456,13 +474,30 @@
 						mostrar_mensaje(json_info);
 						$('#modalNuevaCotizacion').modal('show');
 						buscarContactos(json_info.idcliente);
-						mostrar_mensaje(json_info);
 					}else{
 						if (json_info.respuesta == "BIEN") {
-							window.location= "verCotizacion.php?numero="+json_info.cotizacion;
+							setTimeout(function () {
+								$(".texto1").fadeOut(300, function(){
+									$(this).html("");
+									$(this).fadeIn(300);
+								});
+							}, 2000);
+							setTimeout(function () {
+								$(".texto1").append("<div class='text-success'><span class='modal-main-icon mdi mdi-check-circle'></span></div>");
+								$(".texto1").append("<h3>Correcto!</h3>");
+								$(".texto1").append("<h4>La cotización se generó correctamente.</h4>");
+								$(".texto1").append("<div class='text-center'>");
+								$(".texto1").append("<p>Esperé un momento será redireccionado...</p>");
+								$(".texto1").append("</div>");
+							}, 2500);
+							setTimeout(function () {
+								window.location= "verCotizacion.php?numero="+json_info.cotizacion;
+							}, 4000);
 						}else{
-							mostrar_mensaje(json_info);
-							listar_cotizaciones();
+							setTimeout(function () {
+								$("#mod-success").modal("hide");
+								mostrar_mensaje(json_info);
+							}, 2000);
 						}
 					}
 				});

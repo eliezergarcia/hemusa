@@ -1,35 +1,36 @@
-<?php 
+<?php
 	include('../../conexion.php');
+	// error_reporting(0);
 	$opcion = $_POST['opcion'];
 
 	switch ($opcion) {
 		case 'clientes':
 			clientes($conexion_usuarios);
-			break;	
-			
+			break;
+
 		case 'nuevaremision':
 			$idcontacto = $_POST['idcontacto'];
 			nuevaremision($idcontacto, $conexion_usuarios);
 			break;
-		
+
 		case 'facturadonoentregado':
 			$idcliente = $_POST['idcliente'];
 			$buscar = $_POST['buscar'];
 			facturado_no_entregado($idcliente, $buscar, $conexion_usuarios);
 			break;
-		
+
 		case 'sinentregar':
 			$idcliente = $_POST['idcliente'];
 			$buscar = $_POST['buscar'];
 			sin_entregar($idcliente, $buscar, $conexion_usuarios);
 			break;
-		
+
 		case 'remisiones':
 			$idcliente = $_POST['idcliente'];
 			$buscar = $_POST['buscar'];
 			remisiones($idcliente, $buscar, $conexion_usuarios);
 			break;
-		
+
 		case 'cotizaciones':
 			$idcliente = $_POST['idcliente'];
 			$buscar = $_POST['buscar'];
@@ -49,7 +50,7 @@
 			}
 			echo json_encode($arreglo);
 		}
-		
+
 		mysqli_free_result($resultado);
 		mysqli_close($conexion_usuarios);
 	}
@@ -59,7 +60,7 @@
 		$resultado = mysqli_query($conexion_usuarios, $query);
 
 		$i = 1;
-		
+
 		while($data = mysqli_fetch_assoc($resultado)){
 			$input = '<input type="checkbox" class="btn btn-outline-primary" name="hremision" value="'.$data['id'].'">';
 			$arreglo['data'][] = array(
@@ -101,10 +102,10 @@
 					while($data = mysqli_fetch_assoc($resultado)){
 						$arreglo["data"][] = array(
 								'id' => $data['id'],
-								'indice' => $i, 
-								'ref' => $data['ref'], 
-								'fecha' => $data['facturaFecha'], 
-								'cantidad' => $data['partidaCantidad'], 
+								'indice' => $i,
+								'ref' => $data['ref'],
+								'fecha' => $data['facturaFecha'],
+								'cantidad' => $data['partidaCantidad'],
 								'suma' => $data['precioTotal']
 							);
 						$i++;
@@ -114,7 +115,7 @@
 				$query = "SELECT * FROM pedidos WHERE entregado ='0000-00-00' and cliente= '$idcliente' and factura != '' ORDER BY factura DESC";
 				$resultado = mysqli_query($conexion_usuarios, $query);
 				$arreglo = array();
-					
+
 				if (!$resultado) {
 					// die('Error al buscar herramienta sin pedido');
 				}else{
@@ -122,17 +123,17 @@
 					while($data = mysqli_fetch_assoc($resultado)){
 						$arreglo["data"][] = array(
 								'id' => $data['id'],
-								'indice' => $i, 
-								'ref' => $data['cotizacionRef'], 
-								'fecha' => $data['facturaFecha'], 
-								'cantidad' => $data['partidas'], 
+								'indice' => $i,
+								'ref' => $data['cotizacionRef'],
+								'fecha' => $data['facturaFecha'],
+								'cantidad' => $data['partidas'],
 								'suma' => "$ ".$data['total']
 							);
 						$i++;
 					}
 				}
 			}
-		}		
+		}
 
 		echo json_encode($arreglo);
 		mysqli_close($conexion_usuarios);
@@ -159,13 +160,13 @@
 				while($data = mysqli_fetch_assoc($resultado)){
 					$cotizacion = $data['cotizacionRef'];
 					// $orden = '<a href=\"../../compras/ordenesdecompras/verOrdenCompra.php?ordenCompra='.$data['noDePedido'].'\">'.$data['noDePedido'].'</a>';
-			
+
 					if($data['enviadoFecha'] == '0000-00-00'){
 						$enviado = "no";
 					}else{
 						$enviado = $data['enviadoFecha'];
 					}
-					
+
 					if($data['recibidoFecha'] == '0000-00-00'){
 						$recibido = "no";
 					}else{
@@ -180,10 +181,10 @@
 
 					$arreglo["data"][] = array(
 							'id' => $data['id'],
-							'indice' => $i, 
-							'marca' => $data['marca'], 
-							'modelo' => $data['modelo'], 
-							'descripcion' => utf8_encode($data['descripcion']), 
+							'indice' => $i,
+							'marca' => $data['marca'],
+							'modelo' => $data['modelo'],
+							'descripcion' => utf8_encode($data['descripcion']),
 							'cantidad' => $data['cantidad'],
 							'precioUnitario' => "$ ".$data['precioLista'],
 							'pedido' => $pedido,
@@ -194,7 +195,7 @@
 					$i++;
 				}
 			}
-		}		
+		}
 
 		echo json_encode($arreglo);
 		mysqli_close($conexion_usuarios);
@@ -222,19 +223,19 @@
 				while($data = mysqli_fetch_assoc($resultado)){
 					$arreglo["data"][] = array(
 							'id' => $data['id'],
-							'indice' => $i, 
-							'remision' => $data['remision'], 
-							'cliente' => $cliente, 
-							'contacto' => utf8_encode($data['contacto']), 
-							'cantidad' => $data['partidaCantidad'], 
-							'fecha' => $data['remisionFecha'], 
+							'indice' => $i,
+							'remision' => $data['remision'],
+							'cliente' => $cliente,
+							'contacto' => utf8_encode($data['contacto']),
+							'cantidad' => $data['partidaCantidad'],
+							'fecha' => $data['remisionFecha'],
 							'suma' => "$ ".$data['precioTotal'],
 							'moneda' => $data['moneda']
 						);
 					$i++;
 				}
 			}
-		}		
+		}
 
 		echo json_encode($arreglo);
 		mysqli_close($conexion_usuarios);
@@ -262,16 +263,16 @@
 				while($data = mysqli_fetch_assoc($resultado)){
 					$arreglo["data"][] = array(
 							'id' => $data['id'],
-							'indice' => $i, 
-							'cotizacion' => $data['ref'], 
-							'cliente' => $cliente, 
-							'contacto' => utf8_encode($data['contacto']), 
+							'indice' => $i,
+							'cotizacion' => $data['ref'],
+							'cliente' => $cliente,
+							'contacto' => utf8_encode($data['contacto']),
 							'fecha' => $data['fecha']
 						);
 					$i++;
 				}
 			}
-		}		
+		}
 
 		echo json_encode($arreglo);
 		mysqli_close($conexion_usuarios);
@@ -284,5 +285,5 @@
 			$informacion["respuesta"] = "BIEN";
 		}
 	}
-	
+
  ?>
