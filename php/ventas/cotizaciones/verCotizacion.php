@@ -13,7 +13,7 @@
 		$fecha = $data['fecha'];
 		$numerocotizacion = $data['ref'];
 		$vendedor = $data['vendedor'];
-		$moneda = strtoupper($data['moneda']);
+		$moneda = $data['moneda'];
 	}
 
 	$query = "SELECT * FROM contactos WHERE id='$idcliente'";
@@ -58,37 +58,55 @@
 															<div class="row align-items-start justify-content-around">
 																<div class="col-4 row justify-content-center">
 																	<div class="col">
-																	  	<h4><b>Cliente</b></h4>
-																	  	<h5 style="font-size: 15px;"><?php echo $cliente; ?></h5>
-																	  	<h5 style="font-size: 15px;"><?php echo $rfc; ?></h5>
-																	  	<h5 style="font-size: 15px;"><?php echo $calle.", ".$colonia; ?></h5>
-																	  	<h5 style="font-size: 15px;"><?php echo $ciudad.", ".$estado.", ".$cp; ?></h5><br><br>
+																		<div class="form-group">
+																			<h4><b>Cliente</b></h4>
+																			<h5 style="font-size: 17px;"><?php echo $cliente; ?></h5>
+																		</div>
+																		<div class="form-group">
+																			<h4 class="card-subtitle mb-2 text-muted">RFC</h4>
+																	  	<h5 style="font-size: 17px;"><?php echo $rfc; ?></h5>
+																		</div>
+																		<div class="form-group">
+																			<h4 class="card-subtitle mb-2 text-muted">Calle, colonia</h4>
+																	  	<h5 style="font-size: 17px;"><?php echo $calle.", ".$colonia; ?></h5>
+																		</div>
+																		<div class="form-group">
+																			<h4 class="card-subtitle mb-2 text-muted">Ciudad, estado, c.p.</h4>
+																	  	<h5 style="font-size: 17px;"><?php echo $ciudad.", ".$estado.", ".$cp; ?></h5><br><br>
+																		</div>
 																	</div>
 																</div>
-																<div class="col row justify-content-center">
-																	<div class="col-4">
+																<div class="col row justify-content-start">
+																	<div class="col-4 form-group">
 																		<h4><b>Contacto</b></h4>
 																		<h5 style="font-size: 15px;"><?php echo $contacto; ?></h5>
 																	</div>
-																	<div class="col-4">
+																	<div class="col-4 form-group">
 																	  	<h4><b>Número cotización</b></h4>
 																		<h5 style="font-size: 15px;"><?php echo $numerocotizacion; ?></h5><br>
 																	</div>
-																	<div class="col-4">
+																	<div class="col-4 form-group">
 																	  	<h4><b>Fecha</b></h4>
 																		<h5 style="font-size: 15px;"><?php echo strftime("%d-%B-%Y", strtotime($fecha)); ?></h5><br>
 																	</div>
-																	<div class="col-4">
+																	<div class="col-4 form-group">
 																	  	<h4><b>Vendedor</b></h4>
 																		<h5 style="font-size: 15px;"><?php echo $vendedor; ?></h5>
 																	</div>
-																	<div class="col-4">
+																	<div class="col-4 form-group">
 																		<h4><b>Condiciones de pago</b></h4>
 																	  	<h5 style="font-size: 15px;"><?php echo $condicionespago." días"; ?></h5>
 																	</div>
-																	<div class="col-4">
+																	<div class="col-4 form-group">
 																	  	<h4><b>Tiempo de entrega</b></h4>
 																		<h5 style="font-size: 15px;"><?php echo $tiempoentrega." días"; ?></h5>
+																	</div>
+																	<div class="col-4 form-group">
+																		<h4><b>Moneda </b> <a id="cambiarmoneda" href="#" class="text-primary"><i class="fas fa-sync"></i></a></h4>
+																		<select id="moneda" class="form-control form-control-sm select2 col-8">
+																			<option value="usd" selected>USD</option>
+																			<option value="mxn">MXN</option>
+																		</select>
 																	</div>
 																</div>
 															</div>
@@ -141,24 +159,24 @@
 																			<tbody>
 																				<tr>
 																					<th><h6><b>SUB-TOTAL:</b></h6></th>
-																					<th><h6><label id="subtotal"></h6></label></th>
+																					<th><h6><label style="font-size: 15px;" id="subtotal"></h6></label></th>
 																				</tr>
 																				<tr>
 																					<th><h6><b>IVA (16%):</b></h6></th>
-																					<th><h6><label id="iva"></label></h6></th>
+																					<th><h6><label style="font-size: 15px;" id="iva"></label></h6></th>
 																				</tr>
 																				<tr>
 																					<th><h6><b>TOTAL:</b></h6></th>
-																					<th><h6><label id="total"></label></h6></th>
+																					<th><h6><label style="font-size: 15px;" id="total"></label></h6></th>
 																				</tr>
 																				<tr>
 																					<th>
 																						<div class="row justify-content-between col">
 																							<h6><b>MONEDA: </b></h6>
-																							<a href="#" id="cambiarMoneda"><i class="fas fa-sync fa-2x text-primary"></i></a>
+																							<!-- <a href="#" id="cambiarMoneda"><i class="fas fa-sync fa-2x text-primary"></i></a> -->
 																						</div>
 																					</th>
-																					<th><h6><label id="moneda"><?php echo $moneda; ?></label></h6></th>
+																					<th><h6><label id="moneda"><?php echo strtoupper($moneda); ?></label></h6></th>
 																				</tr>
 																			</tbody>
 																		</table>
@@ -1607,7 +1625,7 @@
 			});
 		}
 
-		$("#cambiarMoneda").on("click", function (e) {
+		$("#cambiarmoneda").on("click", function (e) {
 			e.preventDefault();
 			var refCotizacion = $("#refCotizacion").val();
 			console.log(refCotizacion);

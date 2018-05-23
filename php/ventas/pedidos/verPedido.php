@@ -6,9 +6,15 @@
 	while($data = mysqli_fetch_array($resultado)){
 		$idcliente = $data['cliente'];
 	}
-	$resultado = mysqli_query($conexion_usuarios, "SELECT nombreEmpresa FROM contactos WHERE id='".$idcliente."'");
+	$resultado = mysqli_query($conexion_usuarios, "SELECT * FROM contactos WHERE id='$idcliente'");
 	while($data = mysqli_fetch_array($resultado)){
 		$nombrecliente = $data['nombreEmpresa'];
+		$rfc = $data['RFC'];
+		$calle = utf8_encode($data['calle']);
+		$colonia = $data['colonia'];
+		$ciudad = $data['ciudad'];
+		$estado = $data['estado'];
+		$cp = $data['cp'];
 	}
 
 ?>
@@ -23,168 +29,101 @@
 <body>
 	<?php include('../../header.php'); ?>
 		<div class="be-content">
-          	<div class="page-head">
-              	<h2 class="page-head-title">Pedido</h2>
-              	<nav aria-label="breadcrumb" role="navigation">
-				  	<ol class="breadcrumb">
-				    	<li class="breadcrumb-item">Ventas</li>
-				    	<li class="breadcrumb-item"><a id="toolTipVerCotizaciones" href="pedidos.php">Pedidos</a></li>
-				    	<li id="breadcrumb" class="breadcrumb-item acti ve" aria-current="page">
-				    		Cliente: <a id="toolTipVerCliente" href="<?php echo $ruta; ?>php/ventas/clientes/verContacto.php?id=<?php echo $idcliente; ?>"><?php echo $nombrecliente; ?></a> - Ref. Cotizacion: <a href="<?php echo $ruta; ?>php/ventas/cotizaciones/verCotizacion.php?numero=<?php echo $_REQUEST['refCotizacion']; ?>"><?php echo $_REQUEST['refCotizacion']; ?></a> - No. Pedido: <?php echo $_REQUEST['numeroPedido']; ?>
-				    	</li>
-				  	</ol>
+      <div class="page-head">
+        <h2 class="page-head-title">Pedido</h2>
+        <nav aria-label="breadcrumb" role="navigation">
+			  	<ol class="breadcrumb">
+			    	<li class="breadcrumb-item">Ventas</li>
+			    	<li class="breadcrumb-item"><a id="toolTipVerCotizaciones" href="pedidos.php" class="text-primary">Pedidos</a></li>
+			    	<li id="breadcrumb" class="breadcrumb-item acti ve" aria-current="page">
+			    		Cliente: <a id="toolTipVerCliente" href="<?php echo $ruta; ?>php/ventas/clientes/verContacto.php?id=<?php echo $idcliente; ?>" class="text-primary"><?php echo $nombrecliente; ?></a> - Ref. Cotizacion: <a href="<?php echo $ruta; ?>php/ventas/cotizaciones/verCotizacion.php?numero=<?php echo $_REQUEST['refCotizacion']; ?>" class="text-primary"><?php echo $_REQUEST['refCotizacion']; ?></a> - No. Pedido: <?php echo $_REQUEST['numeroPedido']; ?>
+			    	</li>
+			  	</ol>
 				</nav>
 			</div>
 			<div class="main-content container-fluid">
-              	<div class="row">
-                	<div class="col-lg-12">
-                    	<div class="card card-table">
-                      		<div class="card-body">
-                      			<br>
-								<!-- Botones de informacion -->
-									<div class="row justify-content-center btn-toolbar">
-										<div role="group" class="btn-group btn-group-justified mb-2 col-3" data-toggle="buttons">
-											<a href="#" id="btnsinproveedor" class="btn btn-lg btn-secondary" data-toggle="collapse" data-target="#informacioncliente"><i class="fas fa-address-card fa-sm" aria-hidden="true"></i> Cliente</a href="#">
-										  	<a href="#" id="btnnoentregado" class="btn btn-lg btn-secondary" data-toggle="collapse" data-target="#informacionpedido"><i class="fas fa-file-alt fa-sm" aria-hidden="true"></i> Pedido</a href="#">
-										</div>
-									</div>
-
-				    			<!-- Informacion de Cliente -->
-				    				<br>
-				    				<div class="container collapse" id="informacioncliente">
-					    				<!-- <div class="card col-12">
-										  	<div class="card-body"> -->
-										  		<div class="row col-12">
-										    		<b><h3 id="encabezadoCliente"></h3></b>
-										  		</div>
-										  		<br><br>
-										    	<div class="row">
-										    		<br>
-										    		<div class="col">
-												    	<h3 class="card-subtitle mb-2 text-muted">RFC</h3>
-												    	<h4 id="encabezadoRFC" class="card-text"></h4>
-											    	</div>
-											    	<div class="col">
-												    	<h3 class="card-subtitle mb-2 text-muted">Calle</h3>
-												    	<h4 id="encabezadoCalle" class="card-text"></h4>
-											    	</div>
-											    	<div class="col">
-												    	<h3 class="card-subtitle mb-2 text-muted">Colonia</h3>
-												    	<h4 id="encabezadoColonia" class="card-text"></h4>
-											    	</div>
-											    	<div class="col">
-												    	<h3 class="card-subtitle mb-2 text-muted">Ciudad</h3>
-												    	<h4 id="encabezadoCiudad" class="card-text"></h4>
-											    	</div>
-											    	<div class="col">
-												    	<h3 class="card-subtitle mb-2 text-muted">C.P.</h3>
-												    	<h4 id="encabezadoCP" class="card-text"></h4>
-											    	</div>
-										    	</div>
-										    	<hr>
-										    	<div class="row col-12">
-										    		<h4 class="card-title">Contacto</h4><br>
-										  		</div>
-										  		<br>
-										  		<div class="row">
-										    		<div class="col">
-												    	<h5 class="card-subtitle mb-2 text-muted">Nombre</h5>
-												    	<h4 id="encabezadoNombreC" class="card-text"></h4>
-											    	</div>
-											    	<div class="col">
-												    	<h5 class="card-subtitle mb-2 text-muted">Telefono</h5>
-												    	<h4 id="encabezadoTelC" class="card-text"></h4>
-											    	</div>
-											    	<div class="col">
-												    	<h5 class="card-subtitle mb-2 text-muted">Fax</h5>
-												    	<h4 id="encabezadoFaxC" class="card-text"></h4>
-											    	</div>
-											    	<div class="col">
-												    	<h5 class="card-subtitle mb-2 text-muted">Correo electronico</h5>
-												    	<h4 id="encabezadoCorreoC" class="card-text"></h4>
-											    	</div>
-										    	</div>
-										  <!-- 	</div>
-										</div> -->
-				    				</div>
-
-				    			<!-- Informacion de Pedido -->
-				    				<br><br><br>
-					    			<div class="container collapse" id="informacionpedido">
-						    			<div class="row">
-									    	<div class="form-group col">
-									      		<label for="disabledTextInput">Ref. Cotizacion</label>
-									      		<input type="text" id="refCotizacion" class="form-control form-control-sm" disabled>
-									    	</div>
-									    	<div class="form-group col">
-									      		<label for="disabledTextInput">Fecha</label>
-									      		<input type="text" id="fecha" class="form-control form-control-sm" disabled>
-									    	</div>
-									    	<div class="form-group col">
-									      		<label for="disabledTextInput">Vendedor</label>
-									      		<input type="text" id="vendedor" class="form-control form-control-sm" disabled>
-									    	</div>
-									    	<div class="form-group col">
-									      		<label for="disabledTextInput">Orden de compra</label>
-									      		<input type="text" id="ordenCompra" class="form-control form-control-sm" disabled>
-									    	</div>
-									  	</div>
-									  	<div class="row">
-									    	<div class="form-group col">
-									      		<label for="disabledTextInput">Factura</label>
-									      		<input type="text" id="factura" class="form-control form-control-sm" disabled>
-									    	</div>
-									    	<div class="form-group col">
-									      		<label for="disabledTextInput">Pagado</label>
-									      		<input type="text" id="pagado" class="form-control form-control-sm" disabled>
-									    	</div>
-									    	<div class="form-group col">
-									      		<label for="disabledTextInput">Moneda</label>
-									      		<select id="moneda" class="form-control form-control-sm select2">
-									      			<option value="usd" selected>USD</option>
-									      			<option value="mxn">MXN</option>
-									      		</select>
-									    	</div>
-									    	<div class="form-group col">
-									      		<label for="disabledTextInput">Paqueteria</label>
-									      		<select id="paqueteria" class="form-control form-control-sm select2">
-
-									      		</select>
-									    	</div>
-									    	<div class="form-group col">
-									      		<label for="disabledTextInput">No. de guia</label>
-									      		<div class="input-group mb-3">
-										      		<input type="text" id="numeroGuia" class="form-control form-control-sm">
-	                          						<div class="input-group-append">
-	                            						<button id="cambiarng" type="button" class="btn btn-primary"><i class="fas fa-pencil-alt fa-sm" aria-hidden="true"></i></button>
-	                          						</div>
-	                          					</div>
-									    	</div>
-									    </div>
-										<hr>
-									    <div class="row">
-									    	<div class="form-group col-2">
-									      		<label for="disabledTextInput">Proveedor</label>
-									      		<div>
-									      			<select name="proveedorg" id="proveedorg" class="form-control form-control-sm select2"></select>
-									      		</div>
-									    	</div>
-									    	<div class="form-group col-2">
-									      		<label for="disabledTextInput">Cantidad</label>
-									      		<!-- <a href="" id="cambiarcantidadg"><i class="fa fa-pencil btn-outline-primary" aria-hidden="true"></i></a>
-									      		<div>
-									      			<input type="text" id="cantidadg" name="cantidadg" class="form-control form-control-sm">
-									      		</div> -->
-									      		<div class="input-group mb-3">
-										      		<input type="text" id="cantidadg" class="form-control form-control-sm">
-	                          						<div class="input-group-append">
-	                            						<button id="cambiarcantidadg" type="button" class="btn btn-primary"><i class="fas fa-pencil-alt fa-sm" aria-hidden="true"></i></button>
-	                          						</div>
-	                          					</div>
-									    	</div>
-									    	<div class="form-group col">
-												<label for="formapago">Forma de Pago</label>
-									      		<div>
+      	<div class="row full-calendar">
+        	<div class="col-lg-12">
+            	<div class="card card-fullcalendar">
+              		<div class="card-body">
+              			<br>
+										<div class="row align-items-start justify-content-around">
+											<div class="col-4 row justify-content-center">
+												<div class="col">
+														<h4><b>Cliente</b></h4>
+														<h5 style="font-size: 17px;"><?php echo $nombrecliente; ?></h5>
+														<h4 class="card-subtitle mb-2 text-muted">RFC</h4>
+														<h5 style="font-size: 17px;"><?php echo $rfc; ?></h5>
+														<h4 class="card-subtitle mb-2 text-muted">Calle, colonia</h4>
+														<h5 style="font-size: 17px;"><?php echo $calle.", ".$colonia; ?></h5>
+														<h4 class="card-subtitle mb-2 text-muted">Ciudad, estado, c.p.</h4>
+														<h5 style="font-size: 17px;"><?php echo $ciudad.", ".$estado.", ".$cp; ?></h5><br><br>
+												</div>
+											</div>
+											<div class="col row justify-content-start">
+												<div class="col-3 form-group">
+													<h4><b>Ref. Cotización</b></h4>
+													<label id="refCotizacion"></label>
+												</div>
+												<div class="col-3 form-group">
+													<h4><b>Fecha</b></h4>
+													<label id="fecha"></label>
+												</div>
+												<div class="col-3 form-group">
+													<h4><b>Vendedor</b></h4>
+													<label id="vendedor"></label>
+												</div>
+												<div class="col-3 form-group">
+													<h4><b>Orden de Compra</b></h4>
+													<label id="ordenCompra"></label>
+												</div>
+												<div class="col-3 form-group">
+													<h4><b>Factura</b></h4>
+													<label id="factura"></label>
+												</div>
+												<div class="col-3 form-group">
+													<h4><b>Pagado</b></h4>
+													<label id="pagado"></label>
+												</div>
+												<div class="col-3 form-group">
+													<h4><b>Moneda </b> <a id="cambiarmoneda" href="#" class="text-primary"><i class="fas fa-sync"></i></a></h4>
+													<select id="moneda" class="form-control form-control-sm select2">
+														<option value="usd" selected>USD</option>
+														<option value="mxn">MXN</option>
+													</select>
+												</div>
+												<div class="col-3 form-group">
+													<h4><b>Paquetería </b><a id="cambiarpaqueteria" href="#" class="text-primary"><i class="fas fa-sync"></i></a></h4>
+													<select id="paqueteria" class="form-control form-control-sm select2">
+													</select>
+												</div>
+												<div class="col-3 form-group">
+													<h4><b>No. de guía</b></h4>
+													<div class="input-group mb-3">
+														<input type="text" id="numeroGuia" class="form-control form-control-sm">
+														<div class="input-group-append">
+															<button id="cambiarng" type="button" class="btn btn-primary"><i class="fas fa-pencil-alt fa-sm" aria-hidden="true"></i></button>
+														</div>
+													</div>
+												</div>
+												<div class="col-3 form-group">
+													<h4><b>Proveedor </b><a id="cambiarproveedor" href="#" class="text-primary"><i class="fas fa-sync"></i></a></h4>
+													<div>
+														<select name="proveedorg" id="proveedorg" class="form-control form-control-sm select2"></select>
+													</div>
+												</div>
+												<div class="col-3 form-group">
+													<h4><b>Cantidad</b></h4>
+													<div class="input-group mb-3">
+														<input type="text" id="cantidadg" class="form-control form-control-sm">
+														<div class="input-group-append">
+															<button id="cambiarcantidadg" type="button" class="btn btn-primary"><i class="fas fa-pencil-alt fa-sm" aria-hidden="true"></i></button>
+														</div>
+													</div>
+												</div>
+												<div class="col-3 form-group">
+													<h4><b>Forma de pago </b><a id="cambiarformapago" href="#" class="text-primary"><i class="fas fa-sync"></i></a></h4>
+													<div>
 												  	<select type="text" id="formapago" name="formapago" class="form-control form-control-sm select2">
 														<option value="1">Efectivo</option>
 														<option value="2">Cheque nominativo</option>
@@ -198,49 +137,49 @@
 														<option value="10">Otros</option>
 														<option value="11">NA</option>
 													</select>
-									      		</div>
-									    	</div>
-									    	<div class="form-group col">
-												<label for="metodopago">Método de Pago</label>
-									      		<div>
-												  <select type="text" id="metodopago" name="metodopago" class="form-control form-control-sm select2">
-														<option value="1">Pago en una sola exhibición</option>
-														<option value="2">Pago en parcialidades o diferido</option>
-													</select>
-									      		</div>
-									    	</div>
-											<div class="form-group col">
-												<label for="cfdi">Uso de CFDI</label>
-									      		<div>
-												  <select type="text" id="cfdi" name="cfdi" class="form-control form-control-sm select2">
-														<option value="1">Adquisición de mercancias</option>
-														<option value="2">Devoluciones, descuentos o bonificaciones</option>
-														<option value="3">Gastos en general</option>
-														<option value="4">Construcciones</option>
-														<option value="5">Mobiliario y equipo de oficina por inversiones</option>
-														<option value="6">Equipo de transporte</option>
-														<option value="7">Equipo de computo y accesorios</option>
-														<option value="8">Dados, troqueles, moldes, matrices y herramental</option>
-														<option value="9">Comunicaciones telefónicas</option>
-														<option value="10">Comunicaciones satelitales</option>
-														<option value="11">Otra maquinaria y equipo</option>
-														<option value="12">Horarios médicos, dentales y gastos hospitalarios</option>
-														<option value="13">Gastos médicos por incapacidad o discapacidad</option>
-														<option value="14">Gastos funerales</option>
-														<option value="15">Donativos</option>
-														<option value="16">Intereses reales efectivamente pagados por créditos hipotecarios</option>
-														<option value="17">Aportaciones voluntarias al SAR</option>
-														<option value="18">Primas por seguros de gastos médicos</option>
-														<option value="19">Gastos de transportación escolar obligatoria</option>
-														<option value="20">Depósitos en cuentas para el ahorro, primas que tengan como base planes de pensiones</option>
-														<option value="21">Pagos por servicios educativos (colegiaturas)</option>
-														<option value="22">Por definir</option>
-													</select>
-									      		</div>
-									    	</div>
-									    </div>
-					    			</div>
-
+									      	</div>
+												</div>
+												<div class="col-3 form-group">
+													<h4><b>Método de pago </b><a id="cambiarmetodopago" href="#" class="text-primary"><i class="fas fa-sync"></i></a></h4>
+													<div>
+														<select type="text" id="metodopago" name="metodopago" class="form-control form-control-sm select2">
+															<option value="1">Pago en una sola exhibición</option>
+															<option value="2">Pago en parcialidades o diferido</option>
+														</select>
+													</div>
+												</div>
+												<div class="col-3 form-group">
+													<h4><b>Uso de CFDI </b><a id="cambiarusocfdi" href="#" class="text-primary"><i class="fas fa-sync"></i></a></h4>
+													<div>
+														<select type="text" id="cfdi" name="cfdi" class="form-control form-control-sm select2">
+															<option value="1">Adquisición de mercancias</option>
+															<option value="2">Devoluciones, descuentos o bonificaciones</option>
+															<option value="3">Gastos en general</option>
+															<option value="4">Construcciones</option>
+															<option value="5">Mobiliario y equipo de oficina por inversiones</option>
+															<option value="6">Equipo de transporte</option>
+															<option value="7">Equipo de computo y accesorios</option>
+															<option value="8">Dados, troqueles, moldes, matrices y herramental</option>
+															<option value="9">Comunicaciones telefónicas</option>
+															<option value="10">Comunicaciones satelitales</option>
+															<option value="11">Otra maquinaria y equipo</option>
+															<option value="12">Horarios médicos, dentales y gastos hospitalarios</option>
+															<option value="13">Gastos médicos por incapacidad o discapacidad</option>
+															<option value="14">Gastos funerales</option>
+															<option value="15">Donativos</option>
+															<option value="16">Intereses reales efectivamente pagados por créditos hipotecarios</option>
+															<option value="17">Aportaciones voluntarias al SAR</option>
+															<option value="18">Primas por seguros de gastos médicos</option>
+															<option value="19">Gastos de transportación escolar obligatoria</option>
+															<option value="20">Depósitos en cuentas para el ahorro, primas que tengan como base planes de pensiones</option>
+															<option value="21">Pagos por servicios educativos (colegiaturas)</option>
+															<option value="22">Por definir</option>
+														</select>
+													</div>
+												</div>
+											</div>
+										</div>
+										<hr>
 				    			<!-- Tabla de partidas -->
 				    				<br><br><br>
 				    				<table id="dt_pedido" class="table table-striped table-hover table-fw-widget" width="100%">
@@ -274,15 +213,19 @@
 													<tbody>
 														<tr>
 															<th><h6><b>SUB-TOTAL:</b></h6></th>
-															<th><h6><label id="subtotal"></h6></label></th>
+															<th><h6><label style="font-size: 15px;" id="subtotal"></h6></label></th>
 														</tr>
 														<tr>
 															<th><h6><b>IVA (16%):</b></h6></th>
-															<th><h6><label id="iva"></label></h6></th>
+															<th><h6><label style="font-size: 15px;" id="iva"></label></h6></th>
 														</tr>
 														<tr>
 															<th><h6><b>TOTAL:</b></h6></th>
-															<th><h6><label id="total"></label></h6></th>
+															<th><h6><b><label style="font-size: 18px;" class="text-primary" id="total"></label></b></h6></th>
+														</tr>
+														<tr>
+															<th><h6><b>MONEDA:</b></h6></th>
+															<th><h6><label style="font-size: 15px;" id="monedatotal"></label></h6></th>
 														</tr>
 													</tbody>
 												</table>
@@ -537,6 +480,35 @@
 				</div>
 			</div>
 
+			<div id="mod-success" tabindex="-1" role="dialog" style="" class="modal fade" data-backdrop="static">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+						</div>
+						<div class="modal-body">
+							<div class="text-center">
+								<div class="texto1">
+									<br><br>
+									<h3>Espere un momento...</h3>
+									<h4>Se está generando la factura</h4>
+									<br>
+									<div class="text-center">
+										<div class="be-spinner">
+											<svg width="40px" height="40px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+												<circle fill="none" stroke-width="4" stroke-linecap="round" cx="33" cy="33" r="30" class="circle"></circle>
+											</svg>
+										</div>
+									</div>
+								</div>
+								<div class="mt-8">
+								</div>
+							</div>
+						</div>
+						<div class="modal-footer"></div>
+					</div>
+				</div>
+			</div>
+
 	</header>
 	<?php include('../../enlacesjs.php'); ?>
 	<script>
@@ -547,6 +519,9 @@
   		App.uiNotifications();
 			var refCotizacion = "<?php echo $_REQUEST['refCotizacion']; ?>";
 			var numeroPedido = "<?php echo $_REQUEST['numeroPedido']; ?>";
+			if (numeroPedido == "") {
+				numeroPedido = refCotizacion;
+			}
 			buscardatos(refCotizacion, numeroPedido);
 			agregarDevolucion(refCotizacion, numeroPedido);
 			cambiarnumeroguia(refCotizacion, numeroPedido);
@@ -554,8 +529,8 @@
 			cambiarformapago(refCotizacion, numeroPedido);
 			cambiarmetodopago(refCotizacion, numeroPedido);
 			cambiarusocfdi(refCotizacion, numeroPedido);
-			$('.collapse').collapse('show');
-			setTimeout(cerrarcollapse, 3000);
+			// $('.collapse').collapse('show');
+			// setTimeout(cerrarcollapse, 3000);
 			editarPartida(refCotizacion, numeroPedido);
 			// buscar_oc_pendientes();
 			// setInterval(buscar_oc_pendientes, 3000);
@@ -822,7 +797,7 @@
 				}).done( function( data ){
 					console.log(data);
 					mostrar_mensaje(data);
-					listar_partidas(refCotizacion, numeroPedido, RFC);
+					$("#dt_pedido").DataTable().ajax.reload();
 				});
 			}
 		}
@@ -836,6 +811,7 @@
 				$("#frmEditar #noserie").val(data.noserie);
 				$("#frmEditar #cantidad").val(data.cantidad);
 				$("#frmEditar #fechacompromiso").val(data.fechacompromiso);
+				$("#frmEditar #proveedor").val(data.proveedor).change();
 				var cantidad = data.cantidad;
 				if (cantidad > 1) {
 					document.getElementById("split").disabled = false;
@@ -870,7 +846,7 @@
 						console.log(info);
 						var json_info = JSON.parse( info );
 						console.log(json_info);
-						listar_partidas(refCotizacion, numeroPedido);
+						$("#dt_pedido").DataTable().ajax.reload();
 						mostrar_mensaje(json_info);
 					});
 				}
@@ -943,25 +919,26 @@
 				data: {"opcion": opcion, "refCotizacion": refCotizacion, "numeroPedido": numeroPedido},
 				success : function(data) {
 					console.log(data);
-					document.getElementById("encabezadoCliente").innerHTML = data.cliente.nombreEmpresa;
-					document.getElementById("encabezadoRFC").innerHTML = data.cliente.RFC;
-					document.getElementById("encabezadoCalle").innerHTML = data.cliente.calle;
-					document.getElementById("encabezadoColonia").innerHTML = data.cliente.colonia;
-					document.getElementById("encabezadoCiudad").innerHTML = data.cliente.ciudad;
-					document.getElementById("encabezadoCP").innerHTML = data.cliente.cp;
-
-					$("#refCotizacion").val(data.refCotizacion);
-					$("#ordenCompra").val(data.ordenCompra);
-					$("#fecha").val(data.fecha);
-					$("#vendedor").val(data.vendedor);
-					$("#factura").val(data.factura);
-					$("#pagado").val("$ "+data.pagado+" - $"+data.total);
-					$("#moneda").val(data.moneda);
-					$("#paqueteria").val(data.paqueteria);
+					// document.getElementById("encabezadoCliente").innerHTML = data.cliente.nombreEmpresa;
+					// document.getElementById("encabezadoRFC").innerHTML = data.cliente.RFC;
+					// document.getElementById("encabezadoCalle").innerHTML = data.cliente.calle;
+					// document.getElementById("encabezadoColonia").innerHTML = data.cliente.colonia;
+					// document.getElementById("encabezadoCiudad").innerHTML = data.cliente.ciudad;
+					// document.getElementById("encabezadoCP").innerHTML = data.cliente.cp;
+					console.log(data.ordenCompra);
+					document.getElementById("refCotizacion").innerHTML = data.refCotizacion;
+					document.getElementById("fecha").innerHTML = data.fecha;
+					document.getElementById("vendedor").innerHTML = data.vendedor;
+					document.getElementById("ordenCompra").innerHTML = data.ordenCompra;
+					document.getElementById("factura").innerHTML = data.factura;
+					document.getElementById("pagado").innerHTML = "$ "+data.pagado+" - $"+data.total;
+					document.getElementById("monedatotal").innerHTML = (data.moneda).toUpperCase();
+					$("#moneda").val(data.moneda).change();
+					$("#paqueteria").val(data.paqueteria).change();
 					$("#numeroGuia").val(data.numeroGuia);
-					$("#formapago").val(data.cliente.IdFormaPago);
-					$("#metodopago").val(data.cliente.IdMetodoPago);
-					$("#cfdi").val(data.cliente.IdUsoCFDI);
+					$("#formapago").val(data.cliente.IdFormaPago).change();
+					$("#metodopago").val(data.cliente.IdMetodoPago).change();
+					$("#cfdi").val(data.cliente.IdUsoCFDI).change();
 
 					var paqueteria = data.paqueteria;
 					paqueterias(paqueteria);
@@ -987,7 +964,7 @@
 							var total = data.total;
 							for (var i = 0; i < total; i++) {
 								if (numeroPedido == data.data[i].NumOrder){
-									$("#factura").val(data.data[i].Folio);
+									document.getElementById("factura").innerHTML = data.data[i].Folio;
 								}
 							}
 						}
@@ -1033,6 +1010,21 @@
 			});
 		}
 
+		$("#cambiarmoneda").on("click", function (e) {
+			e.preventDefault();
+			var refCotizacion = "<?php  echo $_REQUEST['refCotizacion']; ?>";
+			var numeroPedido = "<?php  echo $_REQUEST['numeroPedido']; ?>";
+			$.ajax({
+				method: "POST",
+				url: "guardar.php",
+				dataType: "json",
+				data: {"opcion": opcion = "cambiarMoneda", "refCotizacion": refCotizacion, "numeroPedido": numeroPedido},
+			}).done( function ( info ) {
+				mostrar_mensaje(info);
+				buscardatos(refCotizacion, numeroPedido);
+			});
+		});
+
 		var cambiarnumeroguia = function(refCotizacion, numeroPedido){
 			$("#cambiarng").on("click", function(event){
 				event.preventDefault();
@@ -1052,7 +1044,7 @@
 		}
 
 		var cambiarpaqueteria = function(refCotizacion, numeroPedido){
-			$("#paqueteria").on("change", function(event){
+			$("#cambiarpaqueteria").on("click", function(event){
 				event.preventDefault();
 				var opcion = "paqueteria";
 				var paqueteria = $("#paqueteria").val();
@@ -1069,7 +1061,7 @@
 		}
 
 		var cambiarformapago = function(refCotizacion, numeroPedido){
-			$("#formapago").on("change", function(event){
+			$("#cambiarformapago").on("click", function(event){
 				event.preventDefault();
 				var opcion = "formapago";
 				var formapago = $("#formapago").val();
@@ -1088,7 +1080,7 @@
 		}
 
 		var cambiarmetodopago = function(refCotizacion, numeroPedido){
-			$("#metodopago").on("change", function(event){
+			$("#cambiarmetodopago").on("click", function(event){
 				event.preventDefault();
 				var opcion = "metodopago";
 				var metodopago = $("#metodopago").val();
@@ -1107,7 +1099,7 @@
 		}
 
 		var cambiarusocfdi = function(refCotizacion, numeroPedido){
-			$("#cfdi").on("change", function(event){
+			$("#cambiarusocfdi").on("click", function(event){
 				event.preventDefault();
 				var opcion = "usocfdi";
 				var cfdi = $("#cfdi").val();
@@ -1126,7 +1118,7 @@
 		}
 
 		var cambiarproveedorgeneral = function(refCotizacion, numeroPedido, RFC){
-			$("#proveedorg").on("change", function(e){
+			$("#cambiarproveedor").on("click", function(e){
 				e.preventDefault();
 				var opcion = "proveedor";
 				var proveedor = $("#proveedorg").val();
@@ -1204,6 +1196,7 @@
 		}
 
 		var generar_factura = function(RFC, numeroPedido, refCotizacion){
+			$("#mod-success").modal("show");
 			var request = new XMLHttpRequest();
 
 			request.open('GET', apiConfig.enlace+'api/v1/clients/'+RFC);
@@ -1219,12 +1212,19 @@
 		    	console.log('Body:', this.responseText);
 		    	var data = JSON.parse(this.responseText);
 			    if (data.status == "error"){
-						$.gritter.add({
-		        	title: 'Error!',
-		        	text: data.message,
-		        	class_name: 'color danger'
-		      	});
-						buscarDatosCliente();
+							$(".texto1").fadeOut(300, function(){
+								$(this).html("");
+								$(this).fadeIn(300);
+							});
+						setTimeout(function () {
+							$(".texto1").append("<div class='text-warning'><span class='modal-main-icon mdi mdi-alert-triangle'></span></div>");
+							$(".texto1").append("<h3>Aviso!</h3>");
+							$(".texto1").append("<h4>El cliente no esta registrado en portal 'Factura.com'</h4>");
+							$(".texto1").append("<div class='text-center'>");
+							$(".texto1").append("<p>Registrarlo a continuación para poder facturar.</p>");
+							$(".texto1").append("</div>");
+						}, 425);
+						buscarDatosCliente(RFC);
 			    }else{
 						var request = new XMLHttpRequest();
 
@@ -1240,24 +1240,33 @@
 						    console.log('Body:', this.responseText);
 						    var data = JSON.parse(this.responseText);
 						    if (data.response == "error" && typeof data.message.message != "undefined") {
+									$("#mod-success").modal("hide");
 									$.gritter.add({
 					        	title: 'Error!',
 					        	text: data.message.message+'<br>'+data.message.messageDetail,
 					        	class_name: 'color danger'
 					      	});
 								}else if (data.response == "error" && typeof data.message != "undefined") {
+									$("#mod-success").modal("hide");
 									$.gritter.add({
-										title: 'Error!',
+										title: 'Aviso!',
 										text: data.message,
-										class_name: 'color danger'
+										class_name: 'color warning'
 									});
 						    }else{
-									$.gritter.add({
-					        	title: 'Correcto!',
-					        	text: data.message,
-					        	class_name: 'color success'
-					      	});
-									guardarFactura();
+									$(".texto1").fadeOut(300, function(){
+										$(this).html("");
+										$(this).fadeIn(300);
+									});
+									setTimeout(function () {
+										$(".texto1").append("<div class='text-success'><span class='modal-main-icon mdi mdi-check-circle'></span></div>");
+										$(".texto1").append("<h3>Correcto!</h3>");
+										$(".texto1").append("<h4>La factura se generó correctamente en el portal 'Factura.com'.</h4>");
+										$(".texto1").append("<div class='text-center'>");
+										$(".texto1").append("<p>En un momento se descargará el archivo PDF.</p>");
+										$(".texto1").append("</div>");
+									}, 425);
+									guardarFactura(numeroPedido);
 					 			}
 							}
 						};
@@ -1291,7 +1300,7 @@
 							    'EnviarCorreo': false
 								};
 								console.log(JSON.stringify(body));
-								// request.send(JSON.stringify(body));
+								request.send(JSON.stringify(body));
 						});
 					}
 				}
@@ -1299,7 +1308,7 @@
 			request.send();
 		}
 
-		function buscarDatosCliente () {
+		function buscarDatosCliente (RFC) {
 			var opcion = "datosRFC";
 			$.ajax({
 				method: "POST",
@@ -1319,12 +1328,23 @@
 				$("#modalRegistrarClientePortal #estado").val(data.datos.estado);
 				$("#modalRegistrarClientePortal #ciudad").val(data.datos.ciudad);
 				$("#modalRegistrarClientePortal #delegacion").val(data.datos.pais);
-				alert("El cliente no esta registrado en portal de Factura.com\n\n Registrarlo a continuación");
-				$("#modalRegistrarClientePortal").modal("show");
+				// alert("El cliente no esta registrado en portal de Factura.com\n\n Registrarlo a continuación");
+				setTimeout( function () {
+					$("#mod-success").modal("hide");
+					$("#modalRegistrarClientePortal").modal("show");
+					$(".texto1").html("");
+					$(".texto1").append("<br><br>");
+					$(".texto1").append("<h3>Espere un momento...</h3>");
+					$(".texto1").append("<h4>Se está generando la factura</h4>");
+					$(".texto1").append("<br>");
+					$(".texto1").append("<div class='text-center'><div class='be-spinner'><svg width='40px' height='40px' viewBox='0 0 66 66' xmlns='http://www.w3.org/2000/svg'><circle fill='none' stroke-width='4' stroke-linecap='round' cx='33' cy='33' r='30' class='circle'></circle></svg></div></div></div>");
+					$(".texto1").append("<br>");
+					$(".texto1").append("<br>");
+				}, 2500);
 			});
 		}
 
-		function guardarFactura() {
+		function guardarFactura(numeroPedido) {
 			var request = new XMLHttpRequest();
 
 			request.open('GET', apiConfig.enlace+'api/v3/cfdi33/list');
