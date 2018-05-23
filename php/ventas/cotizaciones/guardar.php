@@ -1,7 +1,6 @@
 <?php
 	include('../../conexion.php');
 	include('../../sesion.php');
-
 	// error_reporting(0);
 
 	$opcion = $_POST["opcion"];
@@ -82,6 +81,8 @@
 			$cotizadoEn = $_POST["cotizadoEn"];
 			$proveedorFlete = $_POST['proveedorFlete'];
 			editar($refCotizacion, $descripcion, $precioUnitario, $cantidad, $claveSat, $tedias, $refInterna, $cotizadoEn, $proveedorFlete, $idherramienta, $conexion_usuarios);
+			actualizarTotalFlete($refCotizacion, $conexion_usuarios);
+			actualizarTotalCotizacion($refCotizacion, $conexion_usuarios);
 			break;
 
 		case 'eliminar':
@@ -103,6 +104,8 @@
 			$costoFlete = $_POST['totalFlete'];
 			$refCotizacion = $_POST['refCotizacion'];
 			editarFlete($idflete, $proveedor, $costoFlete, $refCotizacion, $conexion_usuarios);
+			actualizarTotalFlete($refCotizacion, $conexion_usuarios);
+			actualizarTotalCotizacion($refCotizacion, $conexion_usuarios);
 			break;
 
 		case 'eliminarFlete':
@@ -110,9 +113,9 @@
 			eliminarFlete($idflete, $conexion_usuarios);
 			break;
 
-		case 'acutalizarTotalFlete':
-			$refCotizacion = $_POST['refCotizacion'];
-			acutalizarTotalFlete($refCotizacion, $conexion_usuarios);
+		case 'cambiarMoneda':
+		 	$refCotizacion = $_POST['refCotizacion'];
+			cambiar_moneda($refCotizacion, $conexion_usuarios);
 			break;
 
 		case 'cambiarPedido':
@@ -130,31 +133,31 @@
 	}
 
 	function agregar_cotizacion($usuariologin, $dplogin, $numeroCotizacion, $fechaCotizacion, $vendedor, $cliente, $contactoCliente, $moneda, $tiempoEntrega, $condicionesPago, $comentarios, $conexion_usuarios){
-		// $query = "SELECT id FROM contactos WHERE nombreEmpresa LIKE '%$cliente%' LIMIT 1";
-		// $resultado = mysqli_query($conexion_usuarios, $query);
-		// if (!$resultado) {
-		// 	$informacion["respuesta"] = "ERROR";
-		// 	$informacion["informacion"] = "Ocurrió un problema al buscar el 'Id' de '".$nombreEmpresa."'!";
-		// }else{
-		// 	while($data = mysqli_fetch_array($resultado)){
-		// 		$idCliente = $data['id'];
-		// 	}
-		// 	$fecha = date("Y", strtotime($fechaCotizacion)).'-'.date("m", strtotime($fechaCotizacion)).'-'.date("d", strtotime($fechaCotizacion));
-		// 	$query = "INSERT INTO cotizacion (ref, cliente, contacto, vendedor, fecha, moneda, TiempoEntrega, CondPago, Otra) VALUES ('$numeroCotizacion', '$idCliente', '$contactoCliente', '$vendedor', '$fecha', '$moneda', '$tiempoEntrega', '$condicionesPago', '$comentarios')";
-		// 	$resultado = mysqli_query($conexion_usuarios, $query);
-		// 	if (!$resultado) {
-		// 		$informacion["respuesta"] = "ERROR";
-		// 		$informacion["informacion"] = "Ocurrió un problema al crear la cotización '".$numeroCotizacion."'!";
-		// 	}else{
-		// 		$informacion["respuesta"] = "BIEN";
-		// 		$informacion["cotizacion"] = $numeroCotizacion;
-		//
-		// 		$descripcion = "Se creo la cotizacion ".$numeroCotizacion;
-		// 		$fechahora = date("Y-m-d G:i:s");
-		// 		$query = "INSERT INTO movimientosusuarios (cotizacion, departamento, usuario, tipomovimiento, descripcion, fechahora) VALUES ('$numeroCotizacion','$dplogin', '$usuariologin', 'Registro', '$descripcion', '$fechahora')";
-		// 		$resultado = mysqli_query($conexion_usuarios, $query);
-		// 	}
-		// }
+		$query = "SELECT id FROM contactos WHERE nombreEmpresa LIKE '%$cliente%' LIMIT 1";
+		$resultado = mysqli_query($conexion_usuarios, $query);
+		if (!$resultado) {
+			$informacion["respuesta"] = "ERROR";
+			$informacion["informacion"] = "Ocurrió un problema al buscar el 'Id' de '".$nombreEmpresa."'!";
+		}else{
+			while($data = mysqli_fetch_array($resultado)){
+				$idCliente = $data['id'];
+			}
+			$fecha = date("Y", strtotime($fechaCotizacion)).'-'.date("m", strtotime($fechaCotizacion)).'-'.date("d", strtotime($fechaCotizacion));
+			$query = "INSERT INTO cotizacion (ref, cliente, contacto, vendedor, fecha, moneda, TiempoEntrega, CondPago, Otra) VALUES ('$numeroCotizacion', '$idCliente', '$contactoCliente', '$vendedor', '$fecha', '$moneda', '$tiempoEntrega', '$condicionesPago', '$comentarios')";
+			$resultado = mysqli_query($conexion_usuarios, $query);
+			if (!$resultado) {
+				$informacion["respuesta"] = "ERROR";
+				$informacion["informacion"] = "Ocurrió un problema al crear la cotización '".$numeroCotizacion."'!";
+			}else{
+				$informacion["respuesta"] = "BIEN";
+				$informacion["cotizacion"] = $numeroCotizacion;
+
+				$descripcion = "Se creo la cotizacion ".$numeroCotizacion;
+				$fechahora = date("Y-m-d G:i:s");
+				$query = "INSERT INTO movimientosusuarios (cotizacion, departamento, usuario, tipomovimiento, descripcion, fechahora) VALUES ('$numeroCotizacion','$dplogin', '$usuariologin', 'Registro', '$descripcion', '$fechahora')";
+				$resultado = mysqli_query($conexion_usuarios, $query);
+			}
+		}
 		$informacion["respuesta"] = "BIEN";
 		$informacion["cotizacion"] = $numeroCotizacion;
 		echo json_encode($informacion);
@@ -364,6 +367,7 @@
 				$res2 = mysqli_query($conexion_usuarios, $query2);
 			}
 		}
+		actualizarTiempoEntrega($refCotizacion, $conexion_usuarios);
 		cerrar($conexion_usuarios);
 	}
 
@@ -372,162 +376,130 @@
 		$resultado = mysqli_query($conexion_usuarios, $query);
 		if (!$resultado) {
 			$informacion["respuesta"] = "ERROR";
-			$informacion["informacion"] = "Ocurrió un problema al actualizar los datos de la partida!";
+			$informacion["informacion"] = "Ocurrió un problema al actualizar la información de la partida!";
 			echo json_encode($informacion);
 		}else{
-			$query = "SELECT precioLista, flete, cantidad FROM cotizacionherramientas WHERE cotizacionRef = '$refCotizacion'";
+			if($proveedorFlete == "Ninguno" || $proveedorFlete == "ninguno"){
+				$query = "UPDATE cotizacionherramientas SET flete = 0.0000 WHERE id='".$idherramienta."'";
+				$resultado = mysqli_query($conexion_usuarios, $query);
+			}
+		}
+	}
+
+	function actualizarTiempoEntrega($refCotizacion, $conexion_usuarios){
+		$query = "SELECT TiempoEntrega FROM cotizacion WHERE ref = '$refCotizacion'";
+		$resultado = mysqli_query($conexion_usuarios, $query);
+		while($data = mysqli_fetch_assoc($resultado)){
+			$tedias = $data['TiempoEntrega'];
+		}
+
+		$query = "SELECT Tiempo_Entrega FROM cotizacionherramientas WHERE cotizacionRef = '$refCotizacion'";
+		$resultado = mysqli_query($conexion_usuarios, $query);
+		while($data = mysqli_fetch_assoc($resultado)){
+			if ($tedias < $data['Tiempo_Entrega']) {
+				$tedias = $data['Tiempo_Entrega'];
+			}
+		}
+		$query = "UPDATE cotizacion SET TiempoEntrega = '$tedias' WHERE ref = '$refCotizacion'";
+		$resultado = mysqli_query($conexion_usuarios, $query);
+	}
+
+	function actualizarTotalFlete($refCotizacion, $conexion_usuarios){
+		$query = "SELECT proveedorFlete FROM cotizacionherramientas WHERE cotizacionRef='$refCotizacion' AND proveedorFlete != 'Ninguno'";
+		$resultado = mysqli_query($conexion_usuarios, $query);
+		if(mysqli_num_rows($resultado) > 0){
+			$query = "SELECT proveedor FROM fletescotizacion WHERE refCotizacion ='$refCotizacion'";
 			$resultado = mysqli_query($conexion_usuarios, $query);
 			if (!$resultado) {
-				$informacion["respuesta"] = "ERROR";
-				$informacion["informacion"] = "Ocurrió un problema al buscar los datos de la partida!";
-				echo json_encode($informacion);
+				verificar_resultado($resultado);
 			}else{
-				$precioTotal = 0;
-				while ($data = mysqli_fetch_array($resultado)) {
-					$precioTotal = $precioTotal + ( ($data['precioLista'] + $data['flete']) * $data['cantidad'] );
-				}
-				$query = "UPDATE cotizacion SET precioTotal ='".$precioTotal."' WHERE ref ='".$refCotizacion."'";
-				$resultado = mysqli_query($conexion_usuarios, $query);
-				if(!$resultado){
-					$informacion["respuesta"] = "ERROR";
-					$informacion["informacion"] = "Ocurrió un problema al actualizar los datos de la cotización!";
-					echo json_encode($informacion);
-				}else{
-					if($proveedorFlete == "Ninguno" || $proveedorFlete == "ninguno"){
-						// $query = "UPDATE cotizacionherramientas SET flete = 0.0000 WHERE id='".$idherramienta."'";
-						// $resultado = mysqli_query($conexion_usuarios, $query);
-						// if (!$resultado) {
-						// 	verificar_resultado($resultado);
-						// }else{
-						// 	$query = "SELECT proveedor FROM fletescotizacion WHERE refCotizacion ='$refCotizacion'";
-						// 	$resultado = mysqli_query($conexion_usuarios, $query);
-						// 	if (!$resultado) {
-						// 		verificar_resultado($resultado);
-						// 	}else{
-						// 		while($data2 = mysqli_fetch_array($resultado)){
-						// 			$proveedorFlete = $data2['proveedor'];
-						// 			$query = "SELECT costoFlete FROM fletescotizacion WHERE refCotizacion ='$refCotizacion' AND proveedor = '$proveedorFlete'";
-						// 			$resultado = mysqli_query($conexion_usuarios, $query);
-						// 			while($data = mysqli_fetch_array($resultado)){
-						// 				$costoFlete = $data['costoFlete'];
-						// 			}
-						// 			$query = "SELECT precioLista, cantidad FROM cotizacionherramientas WHERE cotizacionRef='$refCotizacion' AND proveedorFlete = '$proveedorFlete'";
-						// 			$resultado = mysqli_query($conexion_usuarios, $query);
-						// 			if (!$resultado) {
-						// 				verificar_resultado($resultado);
-						// 			}else{
-						// 				$costoTotal = 0;
-						// 				while($data = mysqli_fetch_array($resultado)){
-						// 					$precioLista = $data['precioLista'];
-						// 					$cantidad = $data['cantidad'];
-						// 					$costoTotal = $costoTotal + ($precioLista * $cantidad);
-						// 				}
-						// 				$costoFleteTotal = $costoFlete / $costoTotal;
-						// 				$info['costoFlete'] = $costoFlete;
-						// 				$info['costoTotal'] = $costoTotal;
-						// 				$info['costoFleteTotal'] = $costoFleteTotal;
-
-						// 				$query = "SELECT id, precioLista, cantidad, marca FROM cotizacionherramientas WHERE cotizacionRef='$refCotizacion' AND proveedorFlete = '$proveedorFlete'";
-						// 				$resultado = mysqli_query($conexion_usuarios, $query);
-						// 				if (!$resultado) {
-						// 					verificar_resultado($resultado);
-						// 				}else{
-						// 					$flete = 0;
-						// 					$costoTotal = 0;
-						// 					while($data = mysqli_fetch_array($resultado)){
-						// 						$id = $data['id'];
-						// 						$precioLista = $data['precioLista'];
-						// 						$cantidad = $data['cantidad'];
-						// 						$marca = $data['marca'];
-						// 						$flete = $flete + (($precioLista * $cantidad) * $costoFleteTotal);
-						// 						$flete = $flete / $cantidad;
-						// 						$fleteHerramienta = $flete;
-						// 						$info['flete'.$marca] = $fleteHerramienta;
-						// 						$precioListaTotal = $precioLista + $fleteHerramienta;
-						// 						$info['Total'.$marca] = $precioListaTotal;
-						// 						$query = "UPDATE cotizacionherramientas SET flete ='".$fleteHerramienta."' WHERE id='".$id."'";
-						// 						$resultado2 = mysqli_query($conexion_usuarios, $query);
-						// 						$flete = 0;
-						// 						$fleteHerramienta = 0;
-						// 						$precioListaTotal = 0;
-						// 					}
-						// 					verificar_resultado($resultado2);
-						// 				}
-						// 			}
-						// 		}
-						// 	}
-						// }
+				while($data2 = mysqli_fetch_array($resultado)){
+					$proveedorFlete = $data2['proveedor'];
+					$query = "SELECT costoFlete FROM fletescotizacion WHERE refCotizacion ='$refCotizacion' AND proveedor = '$proveedorFlete'";
+					$resultado = mysqli_query($conexion_usuarios, $query);
+					while($data = mysqli_fetch_array($resultado)){
+						$costoFlete = $data['costoFlete'];
+					}
+					$query = "SELECT precioLista, cantidad FROM cotizacionherramientas WHERE cotizacionRef='$refCotizacion' AND proveedorFlete = '$proveedorFlete'";
+					$resultado = mysqli_query($conexion_usuarios, $query);
+					if (!$resultado) {
+						verificar_resultado($resultado);
 					}else{
-						$query = "SELECT costoFlete FROM fletescotizacion WHERE refCotizacion ='$refCotizacion' AND proveedor = '$proveedorFlete'";
-						$resultado = mysqli_query($conexion_usuarios, $query);
+						$costoTotal = 0;
 						while($data = mysqli_fetch_array($resultado)){
-							$costoFlete = $data['costoFlete'];
+							$precioLista = $data['precioLista'];
+							$cantidad = $data['cantidad'];
+							$costoTotal = $costoTotal + ($precioLista * $cantidad);
 						}
-						$query = "SELECT precioLista, cantidad FROM cotizacionherramientas WHERE cotizacionRef='$refCotizacion' AND proveedorFlete = '$proveedorFlete'";
+						$costoFleteTotal = $costoFlete / $costoTotal;
+						$info['costoFlete'] = $costoFlete;
+						$info['costoTotal'] = $costoTotal;
+						$info['costoFleteTotal'] = $costoFleteTotal;
+
+						$query = "SELECT id, precioLista, cantidad, marca FROM cotizacionherramientas WHERE cotizacionRef='$refCotizacion' AND proveedorFlete = '$proveedorFlete'";
 						$resultado = mysqli_query($conexion_usuarios, $query);
 						if (!$resultado) {
-							$informacion["respuesta"] = "ERROR";
-							$informacion["informacion"] = "Ocurrió un problema al buscar los datos de la partida 2!";
-							echo json_encode($informacion);
+							verificar_resultado($resultado);
 						}else{
+							$flete = 0;
 							$costoTotal = 0;
 							while($data = mysqli_fetch_array($resultado)){
+								$id = $data['id'];
 								$precioLista = $data['precioLista'];
 								$cantidad = $data['cantidad'];
-								$costoTotal = $costoTotal + ($precioLista * $cantidad);
+								$marca = $data['marca'];
+								$flete = $flete + (($precioLista * $cantidad) * $costoFleteTotal);
+								$flete = $flete / $cantidad;
+								$fleteHerramienta = $flete;
+								$info['flete'.$marca] = $fleteHerramienta;
+								$precioListaTotal = $precioLista + $fleteHerramienta;
+								$info['Total'.$marca] = $precioListaTotal;
+								$query = "UPDATE cotizacionherramientas SET flete ='".$fleteHerramienta."' WHERE id='".$id."'";
+								$resultado2 = mysqli_query($conexion_usuarios, $query);
+								$flete = 0;
+								$fleteHerramienta = 0;
+								$precioListaTotal = 0;
 							}
-							$costoFleteTotal = $costoFlete / $costoTotal;
-							$info['costoFlete'] = $costoFlete;
-							$info['costoTotal'] = $costoTotal;
-							$info['costoFleteTotal'] = $costoFleteTotal;
-
-							$query = "SELECT id, precioLista, cantidad, marca FROM cotizacionherramientas WHERE cotizacionRef='$refCotizacion' AND proveedorFlete = '$proveedorFlete'";
-							$resultado = mysqli_query($conexion_usuarios, $query);
-							if (!$resultado) {
+							if (!$resultado2) {
 								$informacion["respuesta"] = "ERROR";
-								$informacion["informacion"] = "Ocurrió un problema al buscar los datos de la partida 3!";
+								$informacion["informacion"] = "Ocurrió un problema al actualizar la información del flete!";
 								echo json_encode($informacion);
 							}else{
-								$flete = 0;
-								$costoTotal = 0;
-								while($data = mysqli_fetch_array($resultado)){
-									$id = $data['id'];
-									$precioLista = $data['precioLista'];
-									$cantidad = $data['cantidad'];
-									$marca = $data['marca'];
-									$flete = $flete + (($precioLista * $cantidad) * $costoFleteTotal);
-									$flete = $flete / $cantidad;
-									$fleteHerramienta = $flete;
-									$info['flete'.$marca] = $fleteHerramienta;
-									$precioListaTotal = $precioLista + $fleteHerramienta;
-									$info['Total'.$marca] = $precioListaTotal;
-									$query = "UPDATE cotizacionherramientas SET flete ='".$fleteHerramienta."' WHERE id='".$id."'";
-									$resultado2 = mysqli_query($conexion_usuarios, $query);
-									$flete = 0;
-									$fleteHerramienta = 0;
-									$precioListaTotal = 0;
-								}
 								// $informacion["respuesta"] = "BIEN";
-								// $informacion["informacion"] = "Los datos de la partida se modificaron correctamente!";
+								// $informacion["informacion"] = "Se actualizó la información correctamente!";
 								// echo json_encode($informacion);
 							}
 						}
 					}
-					$informacion["respuesta"] = "BIEN";
-					$informacion["informacion"] = "Los datos de la partida se modificaron correctamente!";
-					echo json_encode($informacion);
 				}
 			}
 		}
-		$query = "SELECT TiempoEntrega FROM cotizacion WHERE ref = '$refCotizacion'";
+	}
+
+	function actualizarTotalCotizacion($refCotizacion, $conexion_usuarios){
+		$query = "SELECT precioLista, flete, cantidad FROM cotizacionherramientas WHERE cotizacionRef = '$refCotizacion'";
 		$resultado = mysqli_query($conexion_usuarios, $query);
-		while($data = mysqli_fetch_assoc($resultado)){
-			if($tedias > $data['TiempoEntrega']){
-				$query2 = "UPDATE cotizacion SET TiempoEntrega = '$tedias' WHERE ref = '$refCotizacion'";
-				$res2 = mysqli_query($conexion_usuarios, $query2);
+		if (!$resultado) {
+			$informacion["respuesta"] = "ERROR";
+			$informacion["informacion"] = "Ocurrió un problema al buscar los datos de las partidas!";
+			echo json_encode($informacion);
+		}else{
+			$precioTotal = 0;
+			while ($data = mysqli_fetch_array($resultado)) {
+				$precioTotal = $precioTotal + ( ($data['precioLista'] + $data['flete']) * $data['cantidad'] );
 			}
+			$query = "UPDATE cotizacion SET precioTotal ='".$precioTotal."' WHERE ref ='".$refCotizacion."'";
+			$resultado = mysqli_query($conexion_usuarios, $query);
+			if(!$resultado){
+				$informacion["respuesta"] = "ERROR";
+				$informacion["informacion"] = "Ocurrió un problema al actualizar los datos de la cotización!";
+			}else{
+				$informacion["respuesta"] = "BIEN";
+				$informacion["informacion"] = "La información se actualizó correctamente!";
+			}
+			echo json_encode($informacion);
 		}
-		cerrar($conexion_usuarios);
+		actualizarTiempoEntrega($refCotizacion, $conexion_usuarios);
 	}
 
 	function eliminar($refCotizacion, $idherramienta, $conexion_usuarios){
@@ -583,6 +555,7 @@
 				}
 			}
 		}
+		actualizarTiempoEntrega($refCotizacion, $conexion_usuarios);
 		cerrar($conexion_usuarios);
 	}
 
@@ -602,85 +575,154 @@
 	}
 
 	function eliminarFlete($idflete, $conexion_usuarios){
-		$query = "DELETE FROM fletescotizacion WHERE id =$idflete";
+		$query = "SELECT * FROM fletescotizacion WHERE id = '$idflete'";
 		$resultado = mysqli_query($conexion_usuarios, $query);
+
 		if (!$resultado) {
 			$informacion["respuesta"] = "ERROR";
-			$informacion["informacion"] = "Ocurrió un problema al eliminar el flete!";
-			echo json_encode($informacion);
+			$informacion["informacion"] = "Ocurrió un problema al buscar información del flete!";
 		}else{
-			$informacion["respuesta"] = "BIEN";
-			$informacion["informacion"] = "Se eliminó el flete correctamente!";
-			echo json_encode($informacion);
+			while($data = mysqli_fetch_assoc($resultado)){
+				$refCotizacion = $data['refCotizacion'];
+				$proveedor = $data['proveedor'];
+				$costoFlete = $data['costoFlete'];
+			}
+			$query = "DELETE FROM fletescotizacion WHERE id =$idflete";
+			$resultado = mysqli_query($conexion_usuarios, $query);
+			if (!$resultado) {
+				$informacion["respuesta"] = "ERROR";
+				$informacion["informacion"] = "Ocurrió un problema al eliminar el flete!";
+			}else{
+				$query = "UPDATE cotizacionherramientas SET flete = 0.0000, proveedorFlete = 'Ninguno' WHERE cotizacionRef = '$refCotizacion' AND proveedorFlete='$proveedor'";
+				$resultado = mysqli_query($conexion_usuarios, $query);
+				if (!$resultado) {
+					$informacion["respuesta"] = "ERROR";
+					$informacion["informacion"] = "Ocurrió un problema al intentar modificar la información de las partidas!";
+				}else{
+					actualizarTotalCotizacion($refCotizacion, $conexion_usuarios);
+				}
+			}
 		}
-		cerrar($conexion_usuarios);
 	}
 
 	function editarFlete($idflete, $proveedor, $costoFlete, $refCotizacion, $conexion_usuarios){
 		$query ="UPDATE fletescotizacion SET proveedor='$proveedor', costoFlete='$costoFlete' WHERE id=$idflete";
 		$resultado = mysqli_query($conexion_usuarios, $query);
-		verificar_resultado($resultado);
-		cerrar($conexion_usuarios);
+		if (!$resultado) {
+			$informacion["respuesta"] = "ERROR";
+			$informacion["informacion"] = "Ocurrió un problema al modificar la información del flete!";
+		}
 	}
 
-	function acutalizarTotalFlete($refCotizacion, $conexion_usuarios){
-		$query = "SELECT proveedor FROM fletescotizacion WHERE refCotizacion ='$refCotizacion'";
+	function cambiar_moneda($refCotizacion, $conexion_usuarios){
+		$fecha = date("Y-m-d");
+		$query = "SELECT tipocambio FROM tipocambio WHERE fecha='$fecha'";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 		if (!$resultado) {
-			verificar_resultado($resultado);
+			$informacion["respuesta"] = "ERROR";
+			$informacion["informacion"] = "Ocurrió un problema al buscar el tipo de cambio del día!";
 		}else{
-			while($data2 = mysqli_fetch_array($resultado)){
-				$proveedorFlete = $data2['proveedor'];
-				$query = "SELECT costoFlete FROM fletescotizacion WHERE refCotizacion ='$refCotizacion' AND proveedor = '$proveedorFlete'";
-				$resultado = mysqli_query($conexion_usuarios, $query);
-				while($data = mysqli_fetch_array($resultado)){
-					$costoFlete = $data['costoFlete'];
+			while($data = mysqli_fetch_assoc($resultado)){
+				$tipocambio = $data['tipocambio'];
+			}
+			$query = "SELECT moneda FROM cotizacion WHERE ref = '$refCotizacion'";
+			$resultado = mysqli_query($conexion_usuarios, $query);
+			if (!$resultado) {
+				$informacion["respuesta"] = "ERROR";
+				$informacion["informacion"] = "Ocurrió un problema al buscar la moneda de la cotización!";
+			}else{
+				while($data = mysqli_fetch_assoc($resultado)){
+					$moneda = $data['moneda'];
 				}
-				$query = "SELECT precioLista, cantidad FROM cotizacionherramientas WHERE cotizacionRef='$refCotizacion' AND proveedorFlete = '$proveedorFlete'";
+
+				$total = 0;
+				$query = "SELECT * FROM cotizacionherramientas WHERE cotizacionRef = '$refCotizacion'";
 				$resultado = mysqli_query($conexion_usuarios, $query);
 				if (!$resultado) {
-					verificar_resultado($resultado);
+					$informacion["respuesta"] = "ERROR";
+					$informacion["informacion"] = "Ocurrió un problema al buscar información de las partidas!";
 				}else{
-					$costoTotal = 0;
-					while($data = mysqli_fetch_array($resultado)){
-						$precioLista = $data['precioLista'];
-						$cantidad = $data['cantidad'];
-						$costoTotal = $costoTotal + ($precioLista * $cantidad);
-					}
-					$costoFleteTotal = $costoFlete / $costoTotal;
-					$info['costoFlete'] = $costoFlete;
-					$info['costoTotal'] = $costoTotal;
-					$info['costoFleteTotal'] = $costoFleteTotal;
-
-					$query = "SELECT id, precioLista, cantidad, marca FROM cotizacionherramientas WHERE cotizacionRef='$refCotizacion' AND proveedorFlete = '$proveedorFlete'";
-					$resultado = mysqli_query($conexion_usuarios, $query);
-					if (!$resultado) {
-						verificar_resultado($resultado);
-					}else{
-						$flete = 0;
-						$costoTotal = 0;
-						while($data = mysqli_fetch_array($resultado)){
+					if ($moneda == "mxn") {
+						// Se hace el cambio a moneda USD
+						while($data = mysqli_fetch_assoc($resultado)){
 							$id = $data['id'];
 							$precioLista = $data['precioLista'];
-							$cantidad = $data['cantidad'];
-							$marca = $data['marca'];
-							$flete = $flete + (($precioLista * $cantidad) * $costoFleteTotal);
-							$flete = $flete / $cantidad;
-							$fleteHerramienta = $flete;
-							$info['flete'.$marca] = $fleteHerramienta;
-							$precioListaTotal = $precioLista + $fleteHerramienta;
-							$info['Total'.$marca] = $precioListaTotal;
-							$query = "UPDATE cotizacionherramientas SET flete ='".$fleteHerramienta."' WHERE id='".$id."'";
-							$resultado2 = mysqli_query($conexion_usuarios, $query);
-							$flete = 0;
-							$fleteHerramienta = 0;
-							$precioListaTotal = 0;
+							$flete = $data['flete'];
+							$precioLista = $precioLista / $tipocambio;
+							$flete = $flete / $tipocambio;
+							$total = $total + ($precioLista * $data['cantidad']);
+							$queryCambio = "UPDATE cotizacionherramientas SET precioLista = '$precioLista', moneda = 'usd', flete = '$flete' WHERE id='$id'";
+							$resultadoCambio = mysqli_query($conexion_usuarios, $queryCambio);
+							if (!$resultadoCambio) {
+								$informacion["respuesta"] = "ERROR";
+								$informacion["informacion"] = "Ocurrió un problema al intentar modificar la información!";
+								break;
+							}
 						}
-						verificar_resultado($resultado2);
+						$query = "UPDATE cotizacion SET precioTotal = '$total', moneda = 'usd' WHERE ref = '$refCotizacion'";
+						$resultado = mysqli_query($conexion_usuarios, $query);
+						if (!$resultado) {
+							$informacion["respuesta"] = "ERROR";
+							$informacion["informacion"] = "Ocurrió un problema al intentar modificar la información de la cotización!";
+						}else{
+							$informacion["respuesta"] = "BIEN";
+							$informacion["informacion"] = "La moneda se cambio y la información se modificó correctamente!";
+
+							$query = "SELECT * FROM fletescotizacion WHERE refCotizacion = '$refCotizacion'";
+							$resultado = mysqli_query($conexion_usuarios, $query);
+
+							while($data = mysqli_fetch_assoc($resultado)){
+								$id = $data['id'];
+								$costoFlete = $data['costoFlete'];
+								$costoFlete = $costoFlete / $tipocambio;
+								$queryCambio = "UPDATE fletescotizacion SET costoFlete = '$costoFlete' WHERE id = '$id'";
+								$resultadoCambio = mysqli_query($conexion_usuarios, $queryCambio);
+							}
+						}
+					}else{
+						// Se hace el cambio a moneda MXN
+						while($data = mysqli_fetch_assoc($resultado)){
+							$id = $data['id'];
+							$precioLista = $data['precioLista'];
+							$flete = $data['flete'];
+							$precioLista = $precioLista * $tipocambio;
+							$flete = $flete * $tipocambio;
+							$total = $total + ($precioLista * $data['cantidad']);
+							$queryCambio = "UPDATE cotizacionherramientas SET precioLista = '$precioLista', moneda = 'mxn', flete = '$flete' WHERE id='$id'";
+							$resultadoCambio = mysqli_query($conexion_usuarios, $queryCambio);
+							if (!$resultadoCambio) {
+								$informacion["respuesta"] = "ERROR";
+								$informacion["informacion"] = "Ocurrió un problema al intentar modificar la información!";
+								break;
+							}
+						}
+						$query = "UPDATE cotizacion SET precioTotal = '$total', moneda = 'mxn' WHERE ref = '$refCotizacion'";
+						$resultado = mysqli_query($conexion_usuarios, $query);
+						if (!$resultado) {
+							$informacion["respuesta"] = "ERROR";
+							$informacion["informacion"] = "Ocurrió un problema al intentar modificar la información de la cotización!";
+						}else{
+							$informacion["respuesta"] = "BIEN";
+							$informacion["informacion"] = "La moneda se cambio y la información se modificó correctamente!";
+
+							$query = "SELECT * FROM fletescotizacion WHERE refCotizacion = '$refCotizacion'";
+							$resultado = mysqli_query($conexion_usuarios, $query);
+
+							while($data = mysqli_fetch_assoc($resultado)){
+								$id = $data['id'];
+								$costoFlete = $data['costoFlete'];
+								$costoFlete = $costoFlete * $tipocambio;
+								$queryCambio = "UPDATE fletescotizacion SET costoFlete = '$costoFlete' WHERE id = '$id'";
+								$resultadoCambio = mysqli_query($conexion_usuarios, $queryCambio);
+							}
+						}
 					}
 				}
 			}
 		}
+
+		echo json_encode($informacion);
+		mysqli_close($conexion_usuarios);
 	}
 
 	function cambiarPedido($data, $refCotizacion, $numeroPedido, $numeroPartidas, $conexion_usuarios){

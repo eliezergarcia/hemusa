@@ -284,9 +284,10 @@
 			$idcliente = $data['cliente'];
 			$informacion['cotizacion'] = $data;
 			$vencimiento = $data['fecha'];
+			$informacion['fecha'] = strftime("%d - %B - %Y", strtotime($vencimiento));
 			$vencimiento = strtotime($vencimiento."+ 30 days");
 			$vencimiento = date("Y-m-d",$vencimiento);
-			$informacion['vencimiento'] = strftime("%d-%B-%Y", strtotime($vencimiento));
+			$informacion['vencimiento'] = strftime("%d - %B - %Y", strtotime($vencimiento));
 		}
 
 		$query = "SELECT * FROM cotizacionherramientas WHERE cotizacionRef = '$numeroCotizacion'";
@@ -307,8 +308,8 @@
 				'modelo' => $data['modelo'],
 				'descripcion' => $data['descripcion'],
 				'cantidad' => $data['cantidad'],
-				'precioUnitario' => $data['precioLista'],
-				'precioTotal' => $data['precioLista'] * $data['cantidad'],
+				'precioUnitario' => round($data['precioLista'], 2),
+				'precioTotal' => round(($data['precioLista'] + $data['flete']) * $data['cantidad'],2),
 				'unidad' => $data['Unidad'],
 				'tiempoEntrega' => $data['Tiempo_Entrega']." días",
 				'stock' => $stock

@@ -1,4 +1,4 @@
-<?php 	
+<?php
 	include("../../conexion.php");
 	error_reporting(0);
 
@@ -33,7 +33,7 @@
 		if(!$resultado){
 			die('Error al listar cotizaciones!');
 		}else{
-			while($data = mysqli_fetch_assoc($resultado)){			
+			while($data = mysqli_fetch_assoc($resultado)){
 				$arreglo['data'][] = array(
 					'ref' => $data['ref'],
 					'nombreEmpresa' => utf8_encode($data['nombreEmpresa']),
@@ -50,7 +50,7 @@
 	}
 
 	function listarpartidas($numeroCotizacion, $conexion_usuarios){
-		$query = "SELECT cotizacionherramientas.*, cotizacion.partidaCantidad FROM cotizacionherramientas INNER JOIN cotizacion ON cotizacion.ref = cotizacionherramientas.cotizacionRef WHERE cotizacionRef = '$numeroCotizacion' AND numeroPedido = ''";
+		$query = "SELECT cotizacionherramientas.*, cotizacion.partidaCantidad FROM cotizacionherramientas INNER JOIN cotizacion ON cotizacion.ref = cotizacionherramientas.cotizacionRef WHERE cotizacionRef = '$numeroCotizacion' AND numeroPedido = '' ORDER BY id DESC";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 
 		if(!$resultado){
@@ -92,7 +92,7 @@
 					'marca' => $data['marca'],
 					'modelo' => $modelo,
 					'descripcion' => $data['descripcion'],
-					'precioUnitario' =>'$ '.$precioUnitario,
+					'precioUnitario' => round($precioUnitario,2),
 					'cantidad' => $data['cantidad'],
 					'precioTotal' =>'$ '.number_format($precioTotal, 2, '.', ''),
 					'claveSat' => $data['ClaveProductoSAT'],
@@ -101,20 +101,21 @@
 					'stock' => $stock,
 					'refInterna' => $data['referencia_interna'],
 					'cotizadoEn' => $data['lugar_cotizacion'],
-					'proveedorFlete' => $data['proveedorFlete']
-				);	
+					'proveedorFlete' => $data['proveedorFlete'],
+					'flete' => $data['flete']
+				);
 
-				$i++;	
+				$i++;
 			}
 		}
-	
-		echo json_encode($arreglo, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_PARTIAL_OUTPUT_ON_ERROR);	
+
+		echo json_encode($arreglo, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_PARTIAL_OUTPUT_ON_ERROR);
 	}
 
 	function listarFletes($refCotizacion, $conexion_usuarios){
 		$query = "SELECT * FROM fletescotizacion WHERE refCotizacion = '$refCotizacion'";
 		$resultado = mysqli_query($conexion_usuarios, $query);
-		
+
 		if (!$resultado) {
 			die("Error al buscar fletes!");
 		}else{
@@ -122,14 +123,14 @@
 				$fletes["data"][] = $data;
 			}
 		}
-		
-		echo json_encode($fletes, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_PARTIAL_OUTPUT_ON_ERROR);	
+
+		echo json_encode($fletes, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_PARTIAL_OUTPUT_ON_ERROR);
 		cerrar($conexion_usuarios);
 	}
 
 	function listarCambiarPedido($refCotizacion, $conexion_usuarios){
 		$query = "SELECT * FROM cotizacionherramientas WHERE cotizacionRef='$refCotizacion'";
-		$resultado = mysqli_query($conexion_usuarios, $query);		
+		$resultado = mysqli_query($conexion_usuarios, $query);
 
 		if (!$resultado) {
 			die("Error la listar partidas de cotizacion!");
