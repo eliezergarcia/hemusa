@@ -314,6 +314,7 @@
 						'indice' => $i,
 						'check' => $check,
 						'claveSat' => $data['ClaveProductoSAT'],
+						'pedimento' => $data['Pedimento'],
 						'enviado' => $data['enviadoFecha'],
 						'recibido' => $data['recibidoFecha'],
 						'entregado' => $entregado,

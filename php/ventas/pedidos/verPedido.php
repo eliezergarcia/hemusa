@@ -151,7 +151,7 @@
 												<div class="col-3 form-group">
 													<h4><b>Uso de CFDI </b><a id="cambiarusocfdi" href="#" class="text-primary"><i class="fas fa-sync"></i></a></h4>
 													<div>
-														<select type="text" id="cfdi" name="cfdi" class="form-control form-control-sm select2">
+														<select id="cfdi" name="cfdi" class="form-control form-control-sm select2">
 															<option value="1">Adquisición de mercancias</option>
 															<option value="2">Devoluciones, descuentos o bonificaciones</option>
 															<option value="3">Gastos en general</option>
@@ -919,12 +919,6 @@
 				data: {"opcion": opcion, "refCotizacion": refCotizacion, "numeroPedido": numeroPedido},
 				success : function(data) {
 					console.log(data);
-					// document.getElementById("encabezadoCliente").innerHTML = data.cliente.nombreEmpresa;
-					// document.getElementById("encabezadoRFC").innerHTML = data.cliente.RFC;
-					// document.getElementById("encabezadoCalle").innerHTML = data.cliente.calle;
-					// document.getElementById("encabezadoColonia").innerHTML = data.cliente.colonia;
-					// document.getElementById("encabezadoCiudad").innerHTML = data.cliente.ciudad;
-					// document.getElementById("encabezadoCP").innerHTML = data.cliente.cp;
 					console.log(data.ordenCompra);
 					document.getElementById("refCotizacion").innerHTML = data.refCotizacion;
 					document.getElementById("fecha").innerHTML = data.fecha;

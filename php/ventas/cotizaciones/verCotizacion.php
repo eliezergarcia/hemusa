@@ -94,16 +94,16 @@
 																		<h5 style="font-size: 15px;"><?php echo $vendedor; ?></h5>
 																	</div>
 																	<div class="col-4 form-group">
-																		<h4><b>Condiciones de pago</b></h4>
-																	  	<h5 style="font-size: 15px;"><?php echo $condicionespago." días"; ?></h5>
+																		<h4><b>Condiciones de pago <a id="cambiarcondpago" href="#" class="text-primary"><i class="fas fa-sync"></i></a></b></h4>
+																		<input id="condpago" class="form-control form-control-sm col-8">
 																	</div>
 																	<div class="col-4 form-group">
-																	  	<h4><b>Tiempo de entrega</b></h4>
-																		<h5 style="font-size: 15px;"><?php echo $tiempoentrega." días"; ?></h5>
+																	  <h4><b>Tiempo de entrega <a id="cambiartiempoentrega" href="#" class="text-primary"><i class="fas fa-sync"></i></a></b></h4>
+																		<input id="tiempoentrega" class="form-control form-control-sm col-8">
 																	</div>
 																	<div class="col-4 form-group">
 																		<h4><b>Moneda </b> <a id="cambiarmoneda" href="#" class="text-primary"><i class="fas fa-sync"></i></a></h4>
-																		<select id="moneda" class="form-control form-control-sm select2 col-8">
+																		<select id="moneda" class="form-control-sm select2 col-8">
 																			<option value="usd" selected>USD</option>
 																			<option value="mxn">MXN</option>
 																		</select>
@@ -167,7 +167,7 @@
 																				</tr>
 																				<tr>
 																					<th><h6><b>TOTAL:</b></h6></th>
-																					<th><h6><label style="font-size: 15px;" id="total"></label></h6></th>
+																					<th><h6><label style="font-size: 18px;" class="text-primary" id="total"></label></h6></th>
 																				</tr>
 																				<tr>
 																					<th>
@@ -176,7 +176,7 @@
 																							<!-- <a href="#" id="cambiarMoneda"><i class="fas fa-sync fa-2x text-primary"></i></a> -->
 																						</div>
 																					</th>
-																					<th><h6><label id="moneda"><?php echo strtoupper($moneda); ?></label></h6></th>
+																					<th><h6><label style="font-size: 15px;" id="monedatotal"></label></h6></th>
 																				</tr>
 																			</tbody>
 																		</table>
@@ -675,9 +675,28 @@
 				if(data.data.clasificacion == 0){
 					$('#modalAgregarClas').modal('show');
 				}else{
+					buscardatos();
 					listar_partidas();
 					listar_fletes(refCotizacion);
 				}
+			});
+		}
+
+		function buscardatos () {
+			var refCotizacion = "<?php echo $_REQUEST['numero']; ?>";
+			$.ajax({
+				method: "POST",
+				url: "buscar.php",
+				dataType: "json",
+				data: {"opcion": opcion = "buscardatos", "refCotizacion": refCotizacion},
+			}).done( function ( data ) {
+				console.log(data);
+				$("#condpago").val(data.cotizacion.CondPago);
+				$("#tiempoentrega").val(data.cotizacion.TiempoEntrega);
+				$("#moneda").val(data.cotizacion.moneda).change();
+				document.getElementById('monedatotal').innerHTML = (data.cotizacion.moneda).toUpperCase();
+			}).fail(function ( info ){
+				mostrar_mensaje(info);
 			});
 		}
 
@@ -1625,6 +1644,40 @@
 			});
 		}
 
+		$("#cambiarcondpago").on("click", function (e) {
+			e.preventDefault();
+			var refCotizacion = "<?php echo $_REQUEST['numero']; ?>";
+			var condPago = $("#condpago").val();
+			$.ajax({
+				method: "POST",
+				url: "guardar.php",
+				dataType: "json",
+				data: {"opcion": opcion = "cambiarCondPago", "refCotizacion": refCotizacion, "condPago": condPago},
+			}).done( function ( info ) {
+				mostrar_mensaje(info);
+				buscardatos();
+			}).fail( function ( info ) {
+				mostrar_mensaje(info);
+			});
+		});
+
+		$("#cambiartiempoentrega").on("click", function (e) {
+			e.preventDefault();
+			var refCotizacion = "<?php echo $_REQUEST['numero']; ?>";
+			var tiempoEntrega = $("#tiempoentrega").val();
+			$.ajax({
+				method: "POST",
+				url: "guardar.php",
+				dataType: "json",
+				data: {"opcion": opcion = "cambiarTiempoEntrega", "refCotizacion": refCotizacion, "tiempoEntrega": tiempoEntrega},
+			}).done( function ( info ) {
+				mostrar_mensaje(info);
+				buscardatos();
+			}).fail( function ( info ) {
+				mostrar_mensaje(info);
+			});
+		});
+
 		$("#cambiarmoneda").on("click", function (e) {
 			e.preventDefault();
 			var refCotizacion = $("#refCotizacion").val();
@@ -1636,9 +1689,8 @@
 				data: {"opcion": opcion = "cambiarMoneda", "refCotizacion": refCotizacion},
 			}).done( function ( info ) {
 				mostrar_mensaje(info);
-				setTimeout( function () {
-					location.reload(true);
-				}, 2000);
+				buscardatos();
+				$('#dt_cotizacion').DataTable().ajax.reload();
 			});
 		});
 

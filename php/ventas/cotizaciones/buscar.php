@@ -10,6 +10,11 @@
 	$informacion = [];
 
 	switch ($opcion) {
+		case 'buscardatos':
+			$refCotizacion = $_POST['refCotizacion'];
+			buscar_datos($refCotizacion, $conexion_usuarios);
+			break;
+
 		case 'datosusuario':
 			$idusuario = $_POST['idusuario'];
 			datos_usuario($idusuario, $conexion_usuarios);
@@ -70,6 +75,23 @@
 			$numerocotizacion = $_POST['numerocotizacion'];
 			buscar_totales($numerocotizacion, $conexion_usuarios);
 			break;
+	}
+
+	function buscar_datos($refCotizacion, $conexion_usuarios){
+		$query = "SELECT * FROM cotizacion WHERE ref = '$refCotizacion'";
+		$resultado = mysqli_query($conexion_usuarios, $query);
+
+		if (!$resultado) {
+			$informacion["respuesta"] = "ERROR";
+			$informacion["informacion"] = "Ocurrió un problema al buscar los datos de la cotización!";
+		}else{
+			while($data = mysqli_fetch_assoc($resultado)){
+				$informacion["cotizacion"] = $data;
+			}
+		}
+
+		echo json_encode($informacion);
+		mysqli_close($conexion_usuarios);
 	}
 
 	function nueva_cotizacion($conexion_usuarios){

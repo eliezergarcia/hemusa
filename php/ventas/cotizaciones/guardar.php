@@ -113,6 +113,18 @@
 			eliminarFlete($idflete, $conexion_usuarios);
 			break;
 
+		case 'cambiarCondPago':
+			$refCotizacion = $_POST['refCotizacion'];
+			$condPago = $_POST['condPago'];
+			cambiar_condiciones_pago($refCotizacion, $condPago, $conexion_usuarios);
+			break;
+
+		case 'cambiarTiempoEntrega':
+			$refCotizacion = $_POST['refCotizacion'];
+			$tiempoEntrega = $_POST['tiempoEntrega'];
+			cambiar_tiempo_entrega($refCotizacion, $tiempoEntrega, $conexion_usuarios);
+			break;
+
 		case 'cambiarMoneda':
 		 	$refCotizacion = $_POST['refCotizacion'];
 			cambiar_moneda($refCotizacion, $conexion_usuarios);
@@ -612,6 +624,38 @@
 			$informacion["respuesta"] = "ERROR";
 			$informacion["informacion"] = "Ocurrió un problema al modificar la información del flete!";
 		}
+	}
+
+	function cambiar_condiciones_pago($refCotizacion, $condPago, $conexion_usuarios){
+		$query = "UPDATE cotizacion SET CondPago = '$condPago' WHERE ref = '$refCotizacion'";
+		$resultado = mysqli_query($conexion_usuarios, $query);
+
+		if (!$resultado) {
+			$informacion["respuesta"] = "ERROR";
+			$informacion["informacion"] = "Ocurrió un problema al intentar modificar las condiciones de pago!";
+		}else{
+			$informacion["respuesta"] = "BIEN";
+			$informacion["informacion"] = "Las condiciones de pago se modificaron correctamente!";
+		}
+
+		echo json_encode($informacion);
+		mysqli_close($conexion_usuarios);
+	}
+
+	function cambiar_tiempo_entrega($refCotizacion, $tiempoEntrega, $conexion_usuarios){
+		$query = "UPDATE cotizacion SET TiempoEntrega = '$tiempoEntrega' WHERE ref = '$refCotizacion'";
+		$resultado = mysqli_query($conexion_usuarios, $query);
+
+		if (!$resultado) {
+			$informacion["respuesta"] = "ERROR";
+			$informacion["informacion"] = "Ocurrió un problema al intentar modificar el tiempo de entrega!";
+		}else{
+			$informacion["respuesta"] = "BIEN";
+			$informacion["informacion"] = "El tiempo de entrega se modificó correctamente!";
+		}
+
+		echo json_encode($informacion);
+		mysqli_close($conexion_usuarios);
 	}
 
 	function cambiar_moneda($refCotizacion, $conexion_usuarios){
