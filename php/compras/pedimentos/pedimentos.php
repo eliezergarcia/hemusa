@@ -376,11 +376,11 @@
           $.ajax({
             method: "POST",
             url: "guardar.php",
+            dataType: "json",
             data: frm
           }).done( function( info ){
-            var json_info = JSON.parse( info );
-            mostrar_mensaje(json_info);
-            listar();
+            mostrar_mensaje(info);
+            $("#dt_pedimentos").DataTable().ajax.reload();
           });
         }
       });

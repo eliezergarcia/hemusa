@@ -245,7 +245,7 @@
 				<div class="modal-dialog modal-lg" role="document">
 					<div class="modal-content">
 						<div class="modal-header">
-							<h4 class="modal-title" id="exampleModalLabel"><i class="fas fa-list fa-sm" aria-hidden="true"></i> Packing List</h4>
+							<h4 class="modal-title" id="exampleModalLabel">Packing List</h4>
 							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 								<span aria-hidden="true">&times;</span>
 							</button>
@@ -280,7 +280,7 @@
 				  	<div class="modal-dialog" role="document">
 				    	<div class="modal-content">
 				      		<div class="modal-header">
-				        		<h4 class="modal-title" id="exampleModalLabel"><i class="fas fa-edit fa-sm" aria-hidden="true"></i> Información de partida</h4>
+				        		<h4 class="modal-title" id="exampleModalLabel">Información de partida</h4>
 				        		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 				          			<span aria-hidden="true">&times;</span>
 				        		</button>
@@ -334,7 +334,7 @@
 				  	<div class="modal-dialog modal-lg" role="document">
 				    	<div class="modal-content">
 				      		<div class="modal-header">
-				        		<h5 class="modal-title" id="exampleModalLabel"><i class="fa fa-exclamation-triangle btn-outline-danger" aria-hidden="true"></i> Devolucion de material</h5>
+				        		<h5 class="modal-title" id="exampleModalLabel">Devolucion de material</h5>
 				        		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 				          			<span aria-hidden="true">&times;</span>
 				        		</button>

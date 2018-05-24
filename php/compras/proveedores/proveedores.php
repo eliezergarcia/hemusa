@@ -56,7 +56,7 @@
           <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
               <div class="modal-header">
-                <h4 class="modal-title" id="exampleModalLabel"><i class="icon fas fa-address-card"></i> Agregar Proveedor</h4>
+                <h4 class="modal-title" id="exampleModalLabel">Agregar Proveedor</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
@@ -151,7 +151,7 @@
       <form id="frmEliminarProveedor" action="" method="POST">
         <input type="hidden" id="opcion" name="opcion" value="eliminarproveedor">
         <input type="hidden" id="idproveedor" name="idproveedor" value="">
-        <div class="modal fade modal-full-color modal-full-color-danger" id="modalEliminarProveedor" tabindex="-1" role="dialog" aria-labelledby="modalEliminarLabel">
+        <div class="modal fade" id="modalEliminarProveedor" tabindex="-1" role="dialog" aria-labelledby="modalEliminarLabel">
           <div class="modal-dialog" role="document">
             <div class="modal-content">
               <div class="modal-header">
@@ -159,7 +159,7 @@
               </div>
               <div class="modal-body">
                 <div class="text-center">
-                    <div class="text-center"><span class="modal-main-icon mdi mdi-close-circle-o"></span></div>
+                    <div class="text-danger"><span class="modal-main-icon mdi mdi-close-circle-o"></span></div>
                     <h4>¿Está seguro de eliminar el proveedor?</h4>
                     <div class="row justify-content-center">
                       <input type="text" class="disabled form-control form-control-sm col-6" id="nombreEmpresa" name="nombreEmpresa" disabled>

@@ -17,9 +17,9 @@
           <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
               <li class="breadcrumb-item">Compras</li>
-              <li class="breadcrumb-item"><a id="toolTipVerCotizaciones" href="ordenesdecompras.php">Ordenes de compras</a></li>
+              <li class="breadcrumb-item"><a id="toolTipVerCotizaciones" href="ordenesdecompras.php" class="text-primary">Ordenes de compras</a></li>
               <li id="breadcrumb" class="breadcrumb-item" aria-current="page">
-                Orden de compra: <a id="toolTipVerCliente" href="<?php echo $ruta; ?>php/compras/ordenesdecompras/verOrdenCompra.php?ordenCompra="><?php echo $_REQUEST['ordenCompra']; ?></a>
+                Orden de compra: <a id="toolTipVerCliente" href="<?php echo $ruta; ?>php/compras/ordenesdecompras/verOrdenCompra.php?ordenCompra=" class="text-primary"><?php echo $_REQUEST['ordenCompra']; ?></a>
               </li>
               <li id="breadcrumb" class="breadcrumb-item active" aria-current="page">Descripción de pedido</li>
             </ol>
@@ -93,7 +93,7 @@
           <div class="modal-dialog" role="document">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel"><i class="fas fa-edit fa-sm"></i><b> Información de partida</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Información de partida</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
@@ -138,7 +138,7 @@
           <div class="modal-dialog" role="document">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel"><b>Actualizar datos</b></h5>
+                <h5 class="modal-title" id="exampleModalLabel">Actualizar datos</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
@@ -301,7 +301,9 @@
           }).done( function( info ){
             var json_info = JSON.parse( info );
             mostrar_mensaje(json_info);
-            listar_partidas(ordencompra);
+            // listar_partidas(ordencompra);
+            $("#dt_partidas_oc_descripcion").DataTable().ajax.reload();
+            $("#dt_totales_oc").DataTable().ajax.reload();
           });
         }
       });

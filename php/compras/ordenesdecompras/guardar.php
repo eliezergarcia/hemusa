@@ -1,4 +1,4 @@
-<?php 
+<?php
 	include('../../conexion.php');
 	error_reporting(0);
 
@@ -19,7 +19,7 @@
 			$entrada = $_POST['entrada'];
 			actualizar($ordencompra, $pedimento, $folio, $facturaproveedor, $entrada, $conexion_usuarios);
 			break;
-		
+
 		case 'editarpartidadescripcion':
 			$idpartida = $_POST['idpartida'];
 			$ordencompra = $_POST['ordencompra'];
@@ -33,14 +33,14 @@
 		case 'editarpartida':
 			$idherramienta  = $_POST['idherramienta'];
 			$precioUnitario = $_POST['precioUnitario'];
-			$fechaCompromiso = $_POST['fechaCompromiso'];			
+			$fechaCompromiso = $_POST['fechaCompromiso'];
 			editar_partida($idherramienta, $precioUnitario, $fechaCompromiso, $conexion_usuarios);
 			break;
 
 		case 'crearordencompra':
 			$proveedor  = $_POST['proveedor'];
 			$saludo = $_POST['saludo'];
-			$direccionenvio = $_POST['direccionenvio'];			
+			$direccionenvio = $_POST['direccionenvio'];
 			crear_orden_compra($proveedor, $saludo, $direccionenvio, $conexion_usuarios);
 			break;
 	}
@@ -55,7 +55,7 @@
 
 	   	$query = "SELECT noDePedido FROM ordendecompras ORDER BY id DESC LIMIT 1";
      	$resultado = mysqli_query($conexion_usuarios, $query);
-     	
+
      	while($data = mysqli_fetch_array($resultado)){
      		$ultimaOC = $data['noDePedido'];
      	}
@@ -169,11 +169,11 @@
 				}
      		}
 		 }
-		 
+
 		$informacion['respuesta'] = "agregarordencompra";
 		$informacion['ordencompra'] = $numeroOC;
-     	echo json_encode($informacion);
-     	mysqli_close($conexion_usuarios);
+    echo json_encode($informacion);
+    mysqli_close($conexion_usuarios);
 	}
 
 	function flete($flete, $ordencompra, $conexion_usuarios){
@@ -195,7 +195,7 @@
 		$fecha = date("Y-m-d");
 		$query = "UPDATE cotizacionherramientas SET FechaPedimento = '$fecha', Pedimento = '$pedimento', foliopedimento = '$folio', facturaproveedor = '$facturaproveedor', entrada = '$entrada' WHERE noDePedido = '$ordencompra'";
 		$resultado = mysqli_query($conexion_usuarios, $query);
-		
+
 		$query = "UPDATE cotizacionherramientas SET FechaPedimento = '$fecha', Pedimento = '$pedimento', foliopedimento = '$folio', facturaproveedor = '$facturaproveedor', entrada = '$entrada' WHERE ordenCompra = '$ordencompra'";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 
@@ -207,7 +207,7 @@
 			$informacion["informacion"] = "Ocurrió un problema al intentar guardar la información del pedido!";
 		}else{
 			$informacion["respuesta"] = "BIEN";
-			$informacion["informacion"] = "la información se guardo correctamente!";
+			$informacion["informacion"] = "La información se guardó correctamente!";
 		}
 		echo json_encode($informacion);
 		mysqli_close($conexion_usuarios);
@@ -222,7 +222,7 @@
 
 		$query = "UPDATE cotizacionherramientas SET FechaPedimento = '$fecha', Pedimento = '$pedimento', foliopedimento = '$folio', facturaproveedor = '$facturaproveedor', entrada = '$entrada' WHERE id = '$idcotherramientas'";
 		$resultado = mysqli_query($conexion_usuarios, $query);
-		
+
 		$query = "UPDATE cotizacionherramientas SET FechaPedimento = '$fecha', Pedimento = '$pedimento', foliopedimento = '$folio', facturaproveedor = '$facturaproveedor', entrada = '$entrada' WHERE id = '$idcotherramientas'";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 
@@ -284,7 +284,7 @@
 	function verificar_resultado($resultado){
 		if(!$resultado){
 			$informacion["respuesta"] = "ERROR";
-		}else{ 
+		}else{
 			$informacion["respuesta"] = "BIEN";
 		}
 		echo json_encode($informacion);

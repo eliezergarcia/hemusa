@@ -55,7 +55,7 @@
 				<div class="modal-dialog modal-lg" role="document">
 					<div class="modal-content">
 						<div class="modal-header">
-							<h4 class="modal-title" id="modalNuevaCotizacionLabel"><i class="fas fa-file fa-sm"></i> Nueva remisión</h4>
+							<h4 class="modal-title" id="modalNuevaCotizacionLabel">Nueva remisión</h4>
 							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 						</div>
 						<div class="modal-body container">
@@ -116,14 +116,121 @@
 			</div>
 		</form>
 
+    <!-- Modal Agregar Contacto -->
+      <form id="frmagregarcontacto" action="#" method="POST">
+        <input type="hidden" id="opcion" name="opcion" value="agregarcontacto">
+        <input type="hidden" id="idcliente" name="idcliente">
+        <input type="hidden" id="usuariologin" name="usuariologin">
+        <input type="hidden" id="dplogin" name="dplogin">
+        <div class="modal fade colored-header colored-header-success" id="modalAgregarContacto" tabindex="-1" role="dialog" aria-labelledby="modalNuevaCotizacionLabel" aria-hidden="true"  data-backdrop="static" data-keyboard="false">
+          <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h4 class="modal-title" id="modalNuevaCotizacionLabel">Registro de contacto</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              </div>
+              <div class="modal-body container">
+                <div class="col-12">
+                  <div class="row">
+                    <div class="form-group col">
+                      <label for="contacto">Contacto <font color="#FF4136">*</font></label>
+                      <input type="text" id="contacto" name="contacto" class="form-control form-control-sm" required>
+                    </div>
+                    <div class="form-group col">
+                      <label for="puesto">Puesto <font color="#FF4136">*</font></label>
+                      <input type="text" id="puesto" name="puesto" class="form-control form-control-sm" required>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="form-group col">
+                      <label for="calle">Calle</label>
+                      <input type="text" id="calle" name="calle" class="form-control form-control-sm" placeholder="Opcional">
+                    </div>
+                    <div class="form-group col">
+                      <label for="colonia">Colonia</label>
+                      <input type="text" id="colonia" name="colonia" class="form-control form-control-sm" placeholder="Opcional">
+                    </div>
+                    <div class="form-group col">
+                      <label for="ciudad">Ciudad</label>
+                      <input type="text" id="ciudad" name="ciudad" class="form-control form-control-sm" placeholder="Opcional">
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="form-group col">
+                      <label for="estado">Estado</label>
+                      <input type="text" id="estado" name="estado" class="form-control form-control-sm" placeholder="Opcional">
+                    </div>
+                    <div class="form-group col">
+                      <label for="cp">C.P.</label>
+                      <input type="text" id="cp" name="cp" class="form-control form-control-sm" placeholder="Opcional">
+                    </div>
+                    <div class="form-group col">
+                      <label for="pais">Pais</label>
+                      <input type="text" id="pais" name="pais" class="form-control form-control-sm" placeholder="Opcional">
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="form-group col">
+                      <label for="tlf">Telefono</label>
+                      <input type="text" id="tlf" name="tlf" class="form-control form-control-sm" placeholder="Opcional">
+                    </div>
+                    <div class="form-group col">
+                      <label for="movil">Movil</label>
+                      <input type="text" id="movil" name="movil" class="form-control form-control-sm" placeholder="Opcional">
+                    </div>
+                    <div class="form-group col">
+                      <label for="correoElectronico">Correo electronico <font color="#FF4136">*</font></label>
+                      <input type="text" id="correoElectronico" name="correoElectronico" class="form-control form-control-sm" required>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer invoice-footer">
+                <button type="button" class="btn btn-lg btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-lg btn-success" name="crearCotizacion">Agregar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+
+    <div id="mod-success" tabindex="-1" role="dialog" style="" class="modal fade" data-backdrop="static" data-keyboard="false">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+          </div>
+          <div class="modal-body">
+            <div class="text-center">
+              <div class="texto1">
+                <br><br>
+                <h3>Espere un momento...</h3>
+                <h4>La remisión se esta generando</h4>
+                <br>
+                <div class="text-center">
+                  <div class="be-spinner">
+                    <svg width="40px" height="40px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+                      <circle fill="none" stroke-width="4" stroke-linecap="round" cx="33" cy="33" r="30" class="circle"></circle>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+              <div class="mt-8">
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer"></div>
+        </div>
+      </div>
+    </div>
+
 	</header>
 	<?php include('../../enlacesjs.php'); ?>
 	<script>
 		$(document).ready(function(){
 			App.init();
-	      	App.pageCalendar();
-	      	App.formElements();
-	      	App.uiNotifications();
+    	App.pageCalendar();
+    	App.formElements();
+    	App.uiNotifications();
 			listar();
 			guardar();
 			// eliminar();
@@ -245,13 +352,30 @@
 				dataType: "json",
 				data: {"opcion": opcion},
 				success : function(data) {
-					var clientes = data;
-					$("#cliente").autocomplete({
-						source: clientes
-					});
+          var input = document.getElementById("cliente");
+					var awesomplete = new Awesomplete(input);
+					awesomplete.list = data;
 				}
 			});
 		});
+
+
+    function buscarDatosCliente(){
+			var cliente = $("form #cliente").val();
+			var opcion = "buscarDatosCliente";
+			$.ajax({
+				method: "POST",
+				url: "buscar.php",
+				dataType: "json",
+				data: {"cliente": cliente, "opcion": opcion},
+				success : function(data) {
+					var idcliente = data.data.id
+					buscarContactos(idcliente);
+					$("form #moneda").val(data.data.moneda).change();
+					$("form #condicionesPago").val(data.data.CondPago);
+				}
+			});
+		}
 
 		function buscarContactos(idcliente){
 			var opcion = "buscarContactos";
@@ -281,127 +405,62 @@
 			});
 		}
 
+    function agregarcontacto(){
+			var contacto = $("#contactoCliente").val();
+			if (contacto == "- Agregar contacto -") {
+				$("#modalAgregarContacto").modal("show");
+			}
+		}
+
 		var guardar = function(){
 			$("form").on("submit", function(e){
 				e.preventDefault();
 				$('form .disabled').attr('disabled', false);
 				var frm = $(this).serialize();
-				console.log(frm);
+
 				$.ajax({
 					method: "POST",
 					url: "guardar.php",
+          dataType: "json",
 					data: frm
 				}).done( function( info ){
-					var json_info = JSON.parse( info );
-					if (json_info.respuesta == "BIEN") {
-						window.location= "verRemision.php?remision="+json_info.remision;
+          if (info.guardar == "contacto") {
+						mostrar_mensaje(info);
+            $('#modalAgregarContacto').modal('hide');
+						$('#modalNuevaRemision').modal('show');
+						buscarContactos(info.idcliente);
 					}else{
-						mostrar_mensaje(json_info);
-					}
+            $('.modal').modal('hide');
+            $("#mod-success").modal("show");
+            if (info.respuesta == "BIEN") {
+              setTimeout(function () {
+                $(".texto1").fadeOut(300, function(){
+                  $(this).html("");
+                  $(this).fadeIn(300);
+                });
+              }, 2000);
+              setTimeout(function () {
+                $(".texto1").append("<div class='text-success'><span class='modal-main-icon mdi mdi-check-circle'></span></div>");
+                $(".texto1").append("<h3>Correcto!</h3>");
+                $(".texto1").append("<h4>La remisión se generó correctamente.</h4>");
+                $(".texto1").append("<div class='text-center'>");
+                $(".texto1").append("<p>Esperé un momento será redireccionado...</p>");
+                $(".texto1").append("</div>");
+              }, 2500);
+              setTimeout(function () {
+                window.location= "verRemision.php?remision="+info.remision;
+              }, 4000);
+            }else{
+              setTimeout(function () {
+                $("#mod-success").modal("hide");
+                mostrar_mensaje(info);
+              }, 2000);
+            }
+          }
 				});
 			});
 		}
 
-		var eliminar = function(){
-			$("#eliminar-usuario").on("click", function(){
-				var idusuario = $("#frmEliminarUsuario #idusuario").val(),
-					opcion = $("#frmEliminarUsuario #opcion").val();
-				$.ajax({
-					method: "POST",
-					url: "guardar.php",
-					data: {"idusuario": idusuario, "opcion": opcion}
-				}).done( function( info ){
-					// console.log(info);
-					// var json_info = JSON.parse( info );
-					// console.log(json_info);
-					texto = "<strong>Bien!</strong> Se han guardado los cambios correctamente.";
-					color = "#379911";
-					$(".mensaje").html( texto ).css({"color": color });
-					$(".mensaje").fadeOut(3000, function(){
-					$(this).html("");
-					$(this).fadeIn(3000);
-					});
-
-					limpiar_datos();
-					listar();
-				});
-			});
-		}
-
-		var mostrar_mensaje = function( informacion ){
-			var texto = "", color = "";
-			if( informacion.respuesta == "BIEN" ){
-				texto = "<strong>Bien!</strong> Se han guardado los cambios correctamente.";
-				color = "#379911";
-			}else if( informacion.respuesta == "ERROR"){
-				texto = "<strong>Error</strong>, no se ejecutó la consulta.";
-				color = "#C9302C";
-			}else if( informacion.respuesta == "EXISTE" ){
-				texto = "<strong>Información!</strong> el usuario ya existe.";
-				color = "#5b94c5";
-			}else if( informacion.respuesta == "VACIO" ){
-				texto = "<strong>Advertencia!</strong> debe llenar todos los campos solicitados.";
-				color = "#ddb11d";
-			}else if( informacion.respuesta == "OPCION_VACIA"){
-				texto = "<strong>Adbertencia!</strong> la opción no existe o esta vacía, recargar la página. ";
-				color = "#DDB11D";
-			}
-
-			$(".mensaje").html( texto ).css({"color": color });
-			$(".mensaje").fadeOut(3000, function(){
-			$(this).html("");
-			$(this).fadeIn(3000);
-			});
-		}
-
-		var limpiar_datos = function(){
-			$("#opcion").val("registrar");
-			$("#idusuario").val("");
-			$("#usuario").val("").focus();
-			$("#password").val("");
-			$("#nombre").val("");
-			$("#apellidos").val("");
-			$("#departamento").val("");
-			$("#nivel").val("");
-		}
-
-		var agregar_nuevo_usuario = function(){
-			limpiar_datos();
-			$("#cuadro2").slideDown("slow");
-			$("#cuadro1").slideUp("slow");
-		}
-
-		var obtener_id_eliminar = function(tbody, table){
-			$(tbody).on("click", "button.eliminar", function(){
-				var data = table.row( $(this).parents("tr") ).data();
-				var idusuario = $("#frmEliminarUsuario #idusuario").val(data.id);
-			});
-		}
-
-		var idioma_espanol = {
-			"sProcessing":     "Procesando...",
-   			"sLengthMenu":     "Mostrar _MENU_ registros",
-    		"sZeroRecords":    "No se encontraron resultados",
-    		"sEmptyTable":     "Ningún dato disponible en esta tabla",
-    		"sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-    		"sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
-    		"sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
-    		"sInfoPostFix":    "",
-    		"sSearch":         "Buscar:",
-    		"sUrl":            "",
-    		"sInfoThousands":  ",",
-    		"sLoadingRecords": "Cargando...",
-		    "oPaginate": {
-		        "sFirst":    "Primero",
-		        "sLast":     "Último",
-		        "sNext":     "Siguiente",
-		        "sPrevious": "Anterior"
-		    },
-		    "oAria": {
-		        "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
-		        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
-		    }
-		}
 	</script>
 	<script type="text/javascript" src="<?php echo $ruta; ?>php/js/idioma_espanol.js"></script>
 	<script type="text/javascript" src="<?php echo $ruta; ?>php/js/mensajes_cambios.js"></script>

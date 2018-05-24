@@ -459,8 +459,6 @@
 		var guardar = function(){
 			$("form").on("submit", function(e){
 				e.preventDefault();
-				$('.modal').modal('hide');
-				$("#mod-success").modal("show");
 				$('form .disabled').attr('disabled', false);
 				var frm = $(this).serialize();
 				console.log(frm);
@@ -472,9 +470,12 @@
 					var json_info = JSON.parse( info );
 					if (json_info.guardar == "contacto") {
 						mostrar_mensaje(json_info);
+						$('#modalAgregarContacto').modal('show');
 						$('#modalNuevaCotizacion').modal('show');
 						buscarContactos(json_info.idcliente);
 					}else{
+						$('.modal').modal('hide');
+						$("#mod-success").modal("show");
 						if (json_info.respuesta == "BIEN") {
 							setTimeout(function () {
 								$(".texto1").fadeOut(300, function(){

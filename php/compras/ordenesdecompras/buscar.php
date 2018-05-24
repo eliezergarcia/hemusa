@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 	include ('../../conexion.php');
 
@@ -20,16 +20,16 @@
 			break;
 
 		case 'buscardatospartida':
-			$idpartida = $_POST['idpartida'];		
+			$idpartida = $_POST['idpartida'];
 			buscardatospartida($idpartida, $conexion_usuarios);
 			break;
 
 		case 'imprimircotizacion':
-			$ordencompra = $_POST['ordencompra'];		
+			$ordencompra = $_POST['ordencompra'];
 			imprimir_cotizacion($ordencompra, $conexion_usuarios);
 			break;
 
-			
+
 	}
 
 	function direccionenvio($conexion_usuarios){
@@ -59,23 +59,23 @@
 		$resultado = mysqli_query($conexion_usuarios, $query);
 
 		if (!$resultado) {
-			$informacion['ordendecompra'] = "ERROR"; 
+			$informacion['ordendecompra'] = "ERROR";
 		}else{
 			while($data = mysqli_fetch_assoc($resultado)){
-				$informacion['ordendecompra'] = array_map("utf8_encode", $data); 
+				$informacion['ordendecompra'] = array_map("utf8_encode", $data);
 				$idproveedor = $data['proveedor'];
 			}
 
 			$query = "SELECT * FROM contactos WHERE id ='$idproveedor'";
 			$resultado = mysqli_query($conexion_usuarios, $query);
 			if (!$resultado) {
-				$informacion["proveedor"] = "ERROR"; 
+				$informacion["proveedor"] = "ERROR";
 			}else{
 				while($data = mysqli_fetch_assoc($resultado)){
-					$informacion["proveedor"] = $data; 
+					$informacion["proveedor"] = $data;
 				}
 			}
-			
+
 		}
 
 		echo json_encode($informacion);
@@ -101,6 +101,8 @@
 		$resultado = mysqli_query($conexion_usuarios, $query);
 		while($data = mysqli_fetch_assoc($resultado)){
 			$informacion['ordencompra'] = array_map("utf8_encode", $data);
+			$fecha = $data['fecha'];
+			$informacion['fecha'] = strftime("%d - %B - %Y", strtotime($fecha));
 			$idproveedor = $data['proveedor'];
 			$fechaoc = $data['fecha'];
 		}
@@ -110,7 +112,7 @@
 		while($data = mysqli_fetch_assoc($resultado)){
 			$informacion['cliente'] = array_map("utf8_encode", $data);
 			$monedaproveedor = $data['moneda'];
-		}	
+		}
 
 		$query = "SELECT * FROM utilidad_pedido WHERE orden_compra = '$ordencompra'";
 		$resultado = mysqli_query($conexion_usuarios, $query);
@@ -129,7 +131,7 @@
 					if(mysqli_num_rows($resultadoalmacen) > 0){
 						while($dataalmacen = mysqli_fetch_array($resultadoalmacen)){
 							$almacen = $dataalmacen['enReserva'];
-						}	
+						}
 					}else{
 						$almacen = 0;
 					}
@@ -163,7 +165,7 @@
 			}
 		}else{
 			$query = "SELECT * FROM cotizacionherramientas WHERE noDePedido = '$ordencompra'";
-			$resultado = mysqli_query($conexion_usuarios, $query);		
+			$resultado = mysqli_query($conexion_usuarios, $query);
 
 			if (!$resultado) {
 				verificar_resultado($resultado);
@@ -178,8 +180,8 @@
 					$res1 = mysqli_query($conexion_usuarios, $query1);
 					while($data1 = mysqli_fetch_array($res1)){
 						$precioBase = $data1['precioBase'];
-						$almacen = $data1['enReserva'];	
-						$moneda = $data1['moneda'];					
+						$almacen = $data1['enReserva'];
+						$moneda = $data1['moneda'];
 					}
 
 					$query2 = "SELECT * FROM tipocambio WHERE fecha = '$fechaoc'";
@@ -224,8 +226,8 @@
 					$i++;
 				}
 			}
-		}	
-		
+		}
+
 		$query = "SELECT * FROM ordendecompras WHERE noDePedido = '$ordencompra'";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 		while($data = mysqli_fetch_assoc($resultado)){
@@ -245,7 +247,7 @@
 
 		if (mysqli_num_rows($resultado) > 0) {
 			$subtotal = 0;
-			while($data = mysqli_fetch_assoc($resultado)){		
+			while($data = mysqli_fetch_assoc($resultado)){
 				if($monedaproveedor == "usd"){
 					$subtotal = $subtotal +  ($data['costo_usd'] * $data['cantidad']);
 				}else{
@@ -266,7 +268,7 @@
 			);
 		}else{
 			$query = "SELECT * FROM cotizacionherramientas WHERE noDePedido = '$ordencompra'";
-			$resultado = mysqli_query($conexion_usuarios, $query);		
+			$resultado = mysqli_query($conexion_usuarios, $query);
 
 			if (!$resultado) {
 				verificar_resultado($resultado);
@@ -282,8 +284,8 @@
 					$res1 = mysqli_query($conexion_usuarios, $query1);
 					while($data1 = mysqli_fetch_array($res1)){
 						$precioBase = $data1['precioBase'];
-						$almacen = $data1['enReserva'];	
-						$moneda = $data1['moneda'];					
+						$almacen = $data1['enReserva'];
+						$moneda = $data1['moneda'];
 					}
 
 					$query2 = "SELECT * FROM tipocambio WHERE fecha = '$fechaoc'";

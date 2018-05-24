@@ -26,6 +26,7 @@
             <div class="col-lg-12">
                 <div class="card card-fullcalendar">
                     <div class="card-body">
+                        <br>
                         <!-- Grupo de botones -->
                           <div class="row justify-content-center btn-toolbar">
                             <div role="group" class="btn-group btn-group-justified mb-2 col-6">
@@ -50,15 +51,6 @@
                               </thead>
                               <tbody>
                               </tbody>
-                              <!-- <tfoot>
-                                <tr>
-                                  <th>Orden</th>
-                                  <th>Proveedor</th>
-                                  <th>Contacto</th>
-                                  <th>Fecha</th>
-                                  <td></td>
-                                </tr>
-                              </tfoot> -->
                             </table>
                           </div>
 
@@ -85,24 +77,24 @@
 
                         <!-- Tabla Sin Enviar -->
                           <br>
-                            <div id="sinenviar">
-                              <table id="dt_sinenviar" class="table table-striped table-hover compact" cellspacing="0" width="100%">
-                                <thead>
-                                  <tr>
-                                    <th>#</th>
-                                    <th>Cliente</th>
-                                    <th>Marca</th>
-                                    <th>Modelo</th>
-                                    <th>Descripción</th>
-                                    <th>Cantidad</th>
-                                    <th>Fecha pedido</th>
-                                    <th>Orden compra</th>
-                                    <th>Proveedor</th>
-                                    <th>Fecha enviado</th>
-                                  </tr>
-                                </thead>
-                              </table>
-                            </div>
+                          <div id="sinenviar">
+                            <table id="dt_sinenviar" class="table table-striped table-hover compact" cellspacing="0" width="100%">
+                              <thead>
+                                <tr>
+                                  <th>#</th>
+                                  <th>Cliente</th>
+                                  <th>Marca</th>
+                                  <th>Modelo</th>
+                                  <th>Descripción</th>
+                                  <th>Cantidad</th>
+                                  <th>Fecha pedido</th>
+                                  <th>Orden compra</th>
+                                  <th>Proveedor</th>
+                                  <th>Fecha enviado</th>
+                                </tr>
+                              </thead>
+                            </table>
+                          </div>
                     </div>
                 </div>
             </div>
@@ -183,18 +175,45 @@
 				</div>
 			</div>
 
+      <div id="mod-success" tabindex="-1" role="dialog" style="" class="modal fade" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+            </div>
+            <div class="modal-body">
+              <div class="text-center">
+                <div class="texto1">
+                  <br><br>
+                  <h3>Espere un momento...</h3>
+                  <h4>La orden de compra se esta generando</h4>
+                  <br>
+                  <div class="text-center">
+                    <div class="be-spinner">
+                      <svg width="40px" height="40px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+                        <circle fill="none" stroke-width="4" stroke-linecap="round" cx="33" cy="33" r="30" class="circle"></circle>
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+                <div class="mt-8">
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer"></div>
+          </div>
+        </div>
+      </div>
+
   </header>
   <?php include('../../enlacesjs.php'); ?>
   <script>
     $(document).ready(function(){
-    //   buscar_oc_pendientes();
-		  // setInterval(buscar_oc_pendientes, 3000);
       App.init();
       App.pageCalendar();
       App.formElements();
       App.uiNotifications();
-      guardar();
       listar_ordenesdecompras();
+      guardar();
     });
 
     var listar_ordenesdecompras = function(){
@@ -207,10 +226,6 @@
       $("#btnbackorder").addClass("btn-secondary");
       $("#btnsinenviar").removeClass("btn-primary");
       $("#btnsinenviar").addClass("btn-secondary");
-      // $('#dt_orden_compras tfoot th').each( function () {
-      //   var title = $(this).text();
-      //   $(this).html( '<input class="form-control form-control-sm" type="text" placeholder="Buscar '+title+'" />' );
-      // });
 
       var opcion = "ordenesdecompras";
       var table = $("#dt_orden_compras").DataTable({
@@ -279,7 +294,7 @@
             ]
           },
           {
-            text: '<i class="fas fa-shopping-cart fa-sm" aria-hidden="true"></i> Nueva OC',
+            text: '<i class="fas fa-shopping-cart fa-sm" aria-hidden="true"></i> Nueva Orden de Compra',
             "className": "btn btn-lg btn-space btn-secondary",
             action: function (e, dt, node, config){
             $("#modalCrearOC").modal("show");
@@ -307,11 +322,10 @@
                 dataType: "json",
                 data: {"opcion": opcion},
                 success : function(data) {
-                  var proveedores = data;
-                  console.log(proveedores);
-                  $("#frmCrearOC #proveedor").autocomplete({
-                    source: proveedores
-                  });
+                  console.log(data);
+                  var input = document.getElementById("proveedor");
+        					var awesomplete = new Awesomplete(input);
+        					awesomplete.list = data;
                 }
               });
     				}
@@ -523,20 +537,39 @@
       $("form").on("submit", function(e){
         e.preventDefault();
         $('.modal').modal('hide');
+        $("#mod-success").modal("show");
         var frm = $(this).serialize();
         console.log(frm);
         $.ajax({
           method: "POST",
           url: "guardar.php",
+          dataType: "json",
           data: frm,
         }).done( function( info ){
           console.log(info);
-          var datos = JSON.parse(info);
-          if (datos.respuesta == "agregarordencompra") {
-            window.location.href = "verOrdenCompra.php?ordenCompra="+datos.ordencompra;
+          if (info.respuesta == "agregarordencompra") {
+            setTimeout(function () {
+              $(".texto1").fadeOut(300, function(){
+                $(this).html("");
+                $(this).fadeIn(300);
+              });
+            }, 2000);
+            setTimeout(function () {
+              $(".texto1").append("<div class='text-success'><span class='modal-main-icon mdi mdi-check-circle'></span></div>");
+              $(".texto1").append("<h3>Correcto!</h3>");
+              $(".texto1").append("<h4>La orden de compra se generó correctamente.</h4>");
+              $(".texto1").append("<div class='text-center'>");
+              $(".texto1").append("<p>Esperé un momento será redireccionado...</p>");
+              $(".texto1").append("</div>");
+            }, 2500);
+            setTimeout(function () {
+              window.location.href = "verOrdenCompra.php?ordenCompra="+info.ordencompra;
+            }, 4000);
           }else{
-            console.log(datos);
-            mostrar_mensaje(datos);
+            setTimeout(function () {
+              $("#mod-success").modal("hide");
+              mostrar_mensaje(info);
+            }, 2000);
           }
         });
       });
