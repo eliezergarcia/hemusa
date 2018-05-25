@@ -237,11 +237,13 @@
 		});
 
 		var  listar = function(){
+      var opcion = "listarremisiones";
 			var table = $("#dt_remisiones").DataTable({
 				"destroy":"true",
 				"ajax":{
 					"method":"POST",
-					"url":"listar_remisiones.php"
+					"url":"listar.php",
+          "data": {"opcion": opcion},
 				},
 				"columns":[
 					{"data": "indice"},

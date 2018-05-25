@@ -1,13 +1,44 @@
-<?php 
+<?php
     include("../../conexion.php");
     $opcion = $_POST['opcion'];
 
 	switch ($opcion) {
-        case 'partidasembarque':
-            $idcliente = $_POST['idcliente'];
+    case 'embarques':
+			embarques($conexion_usuarios);
+      break;
+
+    case 'partidasembarque':
+      $idcliente = $_POST['idcliente'];
 			partidas_embarque($idcliente, $conexion_usuarios);
-            break;
+      break;
+
+    case 'verembarque':
+      $folio = $_POST['folio'];
+      ver_embarque($folio, $conexion_usuarios);
+      break;
 	}
+
+  function embarques($conexion_usuarios){
+    $query="SELECT embarques.folio_embarque, embarques.cliente, embarques.fecha_embarque, embarques.usuario, contactos.nombreEmpresa
+  	FROM embarques LEFT JOIN contactos on contactos.id=embarques.cliente WHERE folio_embarque >  '2666' ORDER BY folio_embarque DESC
+  	LIMIT 150 ";
+  	$resultado = mysqli_query($conexion_usuarios, $query);
+
+  	if(!$resultado){
+  		die('Error');
+  	}else{
+  		while($data = mysqli_fetch_assoc($resultado)){
+  			$arreglo['data'][] = array(
+  				'folio' => $data['folio_embarque'],
+  				'nombreCliente' => $data['nombreEmpresa'],
+  				'fecha' => $data['fecha_embarque'],
+  				'contactoHemusa' => $data['usuario']
+  			);
+  		}
+  	}
+
+  	echo json_encode($arreglo, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_PARTIAL_OUTPUT_ON_ERROR);
+  }
 
 	function partidas_embarque($idcliente, $conexion_usuarios){
 		$query = "SELECT * FROM cotizacionherramientas WHERE embarque = 'pendiente' AND cliente = '$idcliente'";
@@ -15,7 +46,7 @@
 
         $i = 1;
         while($data = mysqli_fetch_array($resultado)){
-            
+
             $arreglo['data'][] = array(
                 'id' => $data['id'],
                 'indice' => $i,
@@ -25,22 +56,41 @@
                 'descripcion' => $data['descripcion']
             );
             $i++;
-        }        
+        }
 
         echo json_encode($arreglo);
         cerrar($conexion_usuarios);
     }
 
-	function verificar_resultado($resultado){
-		if(!$resultado){
-			$informacion["respuesta"] = "ERROR";
-		}else{ 
-			$informacion["respuesta"] = "BIEN";
-		}
-		echo json_encode($informacion);
-	}
+  function ver_embarque($folio, $conexion_usuarios){
+    $query = "SELECT cotizacionherramientas.*, cotizacion.guia, cotizacion.IdPaqueteria, cotizacion.NoPedClient FROM cotizacionherramientas
+      INNER JOIN cotizacion ON cotizacion.ref = cotizacionherramientas.cotizacionRef WHERE folio_embarque = '$folio'";
+    $resultado = mysqli_query($conexion_usuarios, $query);
 
-	function cerrar($conexion_usuarios){
+    if(!$resultado){
+      die('Error');
+    }else{
+          $i = 1;
+      while($data = mysqli_fetch_assoc($resultado)){
+        $arreglo['data'][] = array(
+          'indice' => $i,
+          'marca' => $data['marca'],
+          'modelo' => $data['modelo'],
+                  'descripcion' => $data['descripcion'],
+                  'cantidad' => $data['cantidad'],
+                  'factura' => $data['factura'],
+                  'ordencompra' => $data['NoPedClient'],
+                  'paqueteria' => $data['guia'],
+                  'guia' => $data['guia']
+              );
+              $i++;
+      }
+    }
+
+    echo json_encode($arreglo, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_PARTIAL_OUTPUT_ON_ERROR);
+  }
+
+  function cerrar($conexion_usuarios){
 		mysqli_close($conexion_usuarios);
 	}
 

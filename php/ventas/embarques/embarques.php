@@ -42,7 +42,7 @@
                 	</div>
             	</div>
       		</div>
-          
+
     	</div>
 
 		<!-- Modal Packing List -->
@@ -147,13 +147,15 @@
 		});
 
 		var  listar = function(){
+      var opcion = "embarques";
 			var table = $("#dt_embarques").DataTable({
 				"destroy": true,
 				"deferRender": true,
 				"scrollX": true,
 				"ajax":{
 					"method":"POST",
-					"url":"listar_embarques.php"
+					"url":"listar.php",
+          "data": {"opcion": opcion},
 				},
 				"columns":[
 					{"data":"folio"},

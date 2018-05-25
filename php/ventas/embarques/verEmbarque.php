@@ -62,7 +62,7 @@
 
 		var  listar = function(){
 			var folio = "<?php echo $_REQUEST['embarque']; ?>";
-			console.log(folio);
+			var opcion = "verembarque";
 			var table = $("#dt_partidas_embarque").DataTable({
 				"destroy": true,
 				"autoWidth": true,
@@ -70,8 +70,8 @@
 				"scrollX": true,
 				"ajax":{
 					"method":"POST",
-					"url":"listar_partidas_embarque.php",
-					"data": {"folio": folio},
+					"url":"listar.php",
+					"data": {"folio": folio, "opcion": opcion},
 				},
 				"columns":[
 					{"data":"indice"},
