@@ -1,13 +1,13 @@
-<?php 
+<?php
 	include("../../conexion.php");
     $opcion = $_POST['opcion'];
 
-	switch ($opcion) {		
+	switch ($opcion) {
 		case 'quitarhembarque':
 			$idherramienta = $_POST['id'];
 			quitar_herramienta_embarque($idherramienta, $conexion_usuarios);
 			break;
-		
+
 		case 'crearembarque':
 			$usuario = $_POST['usuario'];
 			$folio = $_POST['folio'];
@@ -22,7 +22,13 @@
 	function quitar_herramienta_embarque($idherramienta, $conexion_usuarios){
 		$query = "UPDATE cotizacionherramientas SET embarque = '' WHERE id = '$idherramienta'";
 		$resultado = mysqli_query($conexion_usuarios, $query);
-		verificar_resultado($resultado);
+		if (!$resultado) {
+			$informacion["respuesta"] = "ERROR";
+			$informacion["informacion"] = "Ocurrió un problema al intentar quitar la herramienta de la lista de embarque'";
+		}else{
+			$informacion["respuesta"] = "BIEN";
+			$informacion["cotizacion"] = "La herramienta se quitó de la lista de embarque correctamente";
+		}
 	}
 
 	function crear_embarque($usuario, $folio, $idcliente, $peso, $dimensiones, $observaciones, $conexion_usuarios){
@@ -35,18 +41,20 @@
 		$resultado = mysqli_query($conexion_usuarios, $query);
 
 		if(!$resultado){
-			verificar_resultado($resultado);
+			$informacion["respuesta"] = "ERROR";
+			$informacion["informacion"] = "Ocurrió un problema al intentar generar la lista de embarque'";
 		}else{
 			$informacion['respuesta'] = "nuevoembarque";
 			$informacion['embarque'] = $folio;
 			echo json_encode($informacion);
 		}
+		mysqli_close($conexion_usuarios);
 	}
 
 	function verificar_resultado($resultado){
 		if(!$resultado){
 			$informacion["respuesta"] = "ERROR";
-		}else{ 
+		}else{
 			$informacion["respuesta"] = "BIEN";
 		}
 		echo json_encode($informacion);

@@ -176,7 +176,7 @@
 					<div class="modal-dialog colored-header colored-header-primary" role="document">
 						<div class="modal-content">
 							<div class="modal-header">
-								<h4 class="modal-title" id="modalNuevaCotizacionLabel"><i class="fas fa-edit"></i> Información de proveedor</h4>
+								<h4 class="modal-title" id="modalNuevaCotizacionLabel">Información de proveedor</h4>
 								<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 							</div>
 							<div class="modal-body container">
@@ -270,6 +270,7 @@
 									<div class="row form-group">
 										<label for="formapago" class="col-4">Forma de Pago</label>
 										<select type="text" id="formapago" name="formapago" class="limpiar form-control form-control-sm col-7">
+											<option value="0">Ninguno</option>
 											<option value="1">Efectivo</option>
 											<option value="2">Cheque nominativo</option>
 											<option value="3">Transferencia electrónica de fondos</option>
@@ -334,7 +335,7 @@
 			  	<div class="modal-dialog colored-header colored-header-success" role="document">
 			    	<div class="modal-content">
 			      		<div class="modal-header">
-			        		<h4 class="modal-title" id="exampleModalLabel"><i class="fas fa-cart-plus"></i> Nueva orden de compra</h4>
+			        		<h4 class="modal-title" id="exampleModalLabel">Nueva orden de compra</h4>
 			        		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 			          			<span aria-hidden="true">&times;</span>
 			        		</button>
@@ -396,6 +397,36 @@
 					</div>
 				</div>
 			</div>
+
+			<div id="mod-success" tabindex="-1" role="dialog" style="" class="modal fade" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+            </div>
+            <div class="modal-body">
+              <div class="text-center">
+                <div class="texto1">
+                  <br><br>
+                  <h3>Espere un momento...</h3>
+                  <h4>La orden de compra se esta generando</h4>
+                  <br>
+                  <div class="text-center">
+                    <div class="be-spinner">
+                      <svg width="40px" height="40px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+                        <circle fill="none" stroke-width="4" stroke-linecap="round" cx="33" cy="33" r="30" class="circle"></circle>
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+                <div class="mt-8">
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer"></div>
+          </div>
+        </div>
+      </div>
+
 	</div>
 	<?php include('../../enlacesjs.php'); ?>
 	<script>
@@ -528,7 +559,7 @@
 						]
 				},
           {
-          	text: '<i class="fa fa-cart-plus fa-sm" aria-hidden="true"></i> Nueva OC',
+          	text: '<i class="fa fa-cart-plus fa-sm" aria-hidden="true"></i> Crear Orden de Compra',
           	"className": "btn btn-secondary btn-lg btn-space",
           	action: function (e, dt, node, config){
   					$("#modalCrearOC").modal("show");
@@ -968,9 +999,9 @@
 			$("#credito").val(data.contacto.CondPago);
 			$("#contactohemusa").val(data.contacto.responsable);
 			$("#moneda").val(data.contacto.moneda);
-			$("#formapago").val(data.contacto.IdFormaPago);
-			$("#metodopago").val(data.contacto.IdMetodoPago);
-			$("#cfdi").val(data.contacto.IdUsoCFDI);
+			$("#formapago").val(data.contacto.IdFormaPago).change();
+			$("#metodopago").val(data.contacto.IdMetodoPago).change();
+			$("#cfdi").val(data.contacto.IdUsoCFDI).change();
 			$("#idproveedor").val(idproveedor);
 		});
 	})
@@ -979,21 +1010,39 @@
 		$("form").on("submit", function(e){
 			e.preventDefault();
 			$(".modal").modal("hide");
+			$("#mod-success").modal("show");
 			$("form .disabled").attr("disabled", false);
 			var frm = $(this).serialize();
 			console.log(frm);
 			$.ajax({
 				method: "POST",
 				url: "guardar.php",
+				dataType: "json",
 				data: frm,
 			}).done( function( info ){
-				console.log(info);
-				var datos = JSON.parse(info);
-				if (datos.respuesta == "agregarordencompra") {
-					window.location.href = "../ordenesdecompras/verOrdenCompra.php?ordenCompra="+datos.ordencompra;
+				if (info.respuesta == "agregarordencompra") {
+					setTimeout(function () {
+						$(".texto1").fadeOut(300, function(){
+							$(this).html("");
+							$(this).fadeIn(300);
+						});
+					}, 2000);
+					setTimeout(function () {
+						$(".texto1").append("<div class='text-success'><span class='modal-main-icon mdi mdi-check-circle'></span></div>");
+						$(".texto1").append("<h3>Correcto!</h3>");
+						$(".texto1").append("<h4>La orden de compra se generó correctamente.</h4>");
+						$(".texto1").append("<div class='text-center'>");
+						$(".texto1").append("<p>Esperé un momento será redireccionado...</p>");
+						$(".texto1").append("</div>");
+					}, 2500);
+					setTimeout(function () {
+						window.location.href = "../ordenesdecompras/verOrdenCompra.php?ordenCompra="+info.ordencompra;
+					}, 4000);
 				}else{
-					console.log(datos);
-					mostrar_mensaje(datos);
+					setTimeout(function () {
+						$("#mod-success").modal("hide");
+						mostrar_mensaje(info);
+					}, 2000);
 				}
 			});
 		});
@@ -1061,56 +1110,6 @@
 		});
 	}
 
-	var mostrar_mensaje = function( informacion ){
-			var texto = "", color = "";
-			if( informacion.respuesta == "BIEN" ){
-				texto = "<div class='alert alert-success'><strong>Bien!</strong> Se han guardado los cambios correctamente.</div>";
-				color = "#379911";
-			}else if( informacion.respuesta == "ERROR"){
-				texto = "<div class='alert alert-warning'><strong>Error</strong>, no se ejecut� la consulta.</div>";
-				color = "#C9302C";
-			}else if( informacion.respuesta == "EXISTE" ){
-				texto = "<strong>Informaci�n!</strong> el usuario ya existe.";
-				color = "#5b94c5";
-			}else if( informacion.respuesta == "VACIO" ){
-				texto = "<strong>Advertencia!</strong> debe llenar todos los campos solicitados.";
-				color = "#ddb11d";
-			}else if( informacion.respuesta == "OPCION_VACIA"){
-				texto = "<div class='alert alert-warning'><strong>Advertencia!</strong> la opci�n no existe o esta vac�a, recargar la p�gina.</div> ";
-				color = "#DDB11D";
-			}
-
-			$(".mensaje").html( texto );
-			$(".mensaje").fadeOut(5000, function(){
-				$(this).html("");
-				$(this).fadeIn(5000);
-			});
-	}
-
-	var idioma_espanol = {
-			"sProcessing":     "Procesando...",
-   			"sLengthMenu":     "Mostrar _MENU_ registros",
-    		"sZeroRecords":    "No se encontraron resultados",
-    		"sEmptyTable":     "Ning�n dato disponible en esta tabla",
-    		"sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-    		"sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
-    		"sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
-    		"sInfoPostFix":    "",
-    		"sSearch":         "Buscar: ",
-    		"sUrl":            "",
-    		"sInfoThousands":  ",",
-    		"sLoadingRecords": "Cargando...",
-		    "oPaginate": {
-		        "sFirst":    "Primero",
-		        "sLast":     "�ltimo",
-		        "sNext":     "Siguiente",
-		        "sPrevious": "Anterior"
-		    },
-		    "oAria": {
-		        "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
-		        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
-		    }
-		}
 </script>
 	<script src="<?php echo $ruta; ?>/php/js/idioma_espanol.js"></script>
 	<script src="<?php echo $ruta; ?>/php/js/mensajes_cambios.js"></script>

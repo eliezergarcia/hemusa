@@ -941,13 +941,56 @@
 					cambiarproveedorgeneral(refCotizacion, numeroPedido, RFC);
 					cambiarcantidadgeneral(refCotizacion, numeroPedido, RFC);
 
+				// 	$.get("http://devfactura.in/api/v3/cfdi33/list").done(function (data) {
+				// 	    console.log(data);
+				// 	});
+				//
+				// 	$.ajax({
+				//     url: "http://devfactura.in/api/v3/cfdi33/list",
+				//     type: "GET",
+				// 		headers: {
+				//         'Content-Type':'application/json',
+				// 				'F-API-KEY': apiConfig.apiKey,
+				// 				'F-SECRET-KEY': apiConfig.secretKey,
+				// 				'Access-Control-Allow-Origin': 'Origin'
+				//     },
+				//     // This is the important part
+				//     // xhrFields: {
+				//     //     withCredentials: true
+				//     // },
+				//     // This is the important part
+				//     // data: data,
+				//     success: function (response) {
+				//         console.log(response);
+				//     },
+				//     error: function (xhr, status) {
+				//         console.log(xhr);
+				// 				console.log(status);
+				//     }
+				// });
+
 					var request = new XMLHttpRequest();
 
 					request.open('GET', apiConfig.enlace + 'api/v3/cfdi33/list');
 
+					// request.withCredentials = true;
+					request.setRequestHeader('Access-Control-Allow-Origin', '*');
+					request.setRequestHeader('Origin', 'http://127.0.0.1');
+					request.setRequestHeader('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE, HEAD, OPTIONS');
+					request.setRequestHeader('Access-Control-Allow-Credentials', 'true');
+					// request.setRequestHeader("Access-Control-Allow-Headers", "access-control-allow-origin,content-type,f-api-key,f-secret-key");
 					request.setRequestHeader('Content-Type', 'application/json');
 					request.setRequestHeader('F-API-KEY', apiConfig.apiKey);
 					request.setRequestHeader('F-SECRET-KEY', apiConfig.secretKey);
+
+					request.onload = function() {
+					 var responseText = request.responseText;
+					 console.log(responseText);
+					};
+
+					request.onerror = function(xhr) {
+					  console.log(xhr);
+					};
 
 					request.onreadystatechange = function () {
 						if (this.readyState === 4) {
@@ -965,6 +1008,7 @@
 					};
 
 					request.send();
+
 	   		}
 			});
 		}

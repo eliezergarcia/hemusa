@@ -612,14 +612,73 @@
 			</div>
 		</div>
 
+		<div id="mod-cotizacion" tabindex="-1" role="dialog" style="" class="modal fade" data-backdrop="static" data-keyboard="false">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+          </div>
+          <div class="modal-body">
+            <div class="text-center">
+              <div class="texto1">
+                <br><br>
+                <h3>Espere un momento...</h3>
+                <h4>La cotización se esta generando</h4>
+                <br>
+                <div class="text-center">
+                  <div class="be-spinner">
+                    <svg width="40px" height="40px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+                      <circle fill="none" stroke-width="4" stroke-linecap="round" cx="33" cy="33" r="30" class="circle"></circle>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+              <div class="mt-8">
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer"></div>
+        </div>
+      </div>
+    </div>
+
+
+		<div id="mod-remision" tabindex="-1" role="dialog" style="" class="modal fade" data-backdrop="static" data-keyboard="false">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+          </div>
+          <div class="modal-body">
+            <div class="text-center">
+              <div class="texto1">
+                <br><br>
+                <h3>Espere un momento...</h3>
+                <h4>La remisión se esta generando</h4>
+                <br>
+                <div class="text-center">
+                  <div class="be-spinner">
+                    <svg width="40px" height="40px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+                      <circle fill="none" stroke-width="4" stroke-linecap="round" cx="33" cy="33" r="30" class="circle"></circle>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+              <div class="mt-8">
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer"></div>
+        </div>
+      </div>
+    </div>
+
 	</header>
 	<?php include('../../enlacesjs.php'); ?>
 	<script>
 		$(document).ready(function(){
 			App.init();
-      		App.pageCalendar();
-      		App.formElements();
-      		App.uiNotifications();
+  		App.pageCalendar();
+  		App.formElements();
+  		App.uiNotifications();
 			var idcliente = "<?php echo $_REQUEST['id']; ?>";
 			var idusuario = "<?php echo $idusuario; ?>";
 			console.log(idusuario);
@@ -1004,7 +1063,7 @@
 				}
 
 				$("form #nombrecliente").val(data.data.nombreEmpresa);
-				$("#moneda").val(data.data.moneda);
+				$("#moneda").val(data.data.moneda).change();
 				$("#condicionesPago").val(data.data.CondPago);
 
 			});
@@ -1022,6 +1081,7 @@
 				console.log(data);
 				$("#numerocotizacion").val(data.numeroCotizacion);
 				$("#fechacotizacion").val(data.fecha);
+				$("#moneda").val(data.moneda).change();
 			});
 
 			opcion = "buscarcontactos";
@@ -1066,7 +1126,7 @@
 						$("form #numeroCotizacion").val(data.numeroCotizacion);
 						$("form #remision").val(data.remision);
 						$("form #cliente").val(data.cliente);
-						$("form #moneda").val(data.moneda);
+						$("form #moneda").val(data.moneda).change();
 					}
 				}
 			});
@@ -1153,30 +1213,65 @@
 		var guardar = function(){
 			$("form").on("submit", function(e){
 				e.preventDefault();
-				$(".modal").modal("hide");
 				$("form .disabled").attr("disabled", false);
 				var frm = $(this).serialize();
 				console.log(frm);
 				$.ajax({
 					method: "POST",
 					url: "guardar.php",
+					dataType: "json",
 					data: frm,
 				}).done( function( info ){
-					console.log(info);
-					var datos = JSON.parse(info);
-					if (datos.respuesta == "agregarcotizacion") {
-						var numero = datos.numero;
-						var fecha = datos.fecha;
-						var contacto = datos.contacto;
-						var cliente = datos.cliente;
-						var partidas = datos.partidas;
-						window.location= "../cotizaciones/verCotizacion.php?numero="+numero;
-					}else if(datos.respuesta == "nuevaremision"){
-						var remision = datos.remision;
-						window.location= "../remisiones/verRemision.php?remision="+remision;
+					if (info.respuesta == "agregarcontacto") {
+						var numero = info.numero;
+						$('#modalAgregarContacto').modal('hide');
+						info.respuesta = "BIEN";
+						mostrar_mensaje(info);
+						buscarDatosCliente(info.idcliente);
+					}else if (info.respuesta == "agregarcotizacion") {
+						$(".modal").modal("hide");
+						$("#mod-cotizacion").modal("show");
+						setTimeout(function () {
+							$(".texto1").fadeOut(300, function(){
+								$(this).html("");
+								$(this).fadeIn(300);
+							});
+						}, 2000);
+						setTimeout(function () {
+							$(".texto1").append("<div class='text-success'><span class='modal-main-icon mdi mdi-check-circle'></span></div>");
+							$(".texto1").append("<h3>Correcto!</h3>");
+							$(".texto1").append("<h4>La cotización se generó correctamente.</h4>");
+							$(".texto1").append("<div class='text-center'>");
+							$(".texto1").append("<p>Esperé un momento será redireccionado...</p>");
+							$(".texto1").append("</div>");
+						}, 2500);
+						setTimeout(function () {
+							window.location= "../cotizaciones/verCotizacion.php?numero="+info.numero;
+						}, 4000);
+					}else if(info.respuesta == "nuevaremision"){
+						$(".modal").modal("hide");
+						$("#mod-remision").modal("show");
+						setTimeout(function () {
+							$(".texto1").fadeOut(300, function(){
+								$(this).html("");
+								$(this).fadeIn(300);
+							});
+						}, 2000);
+						setTimeout(function () {
+							$(".texto1").append("<div class='text-success'><span class='modal-main-icon mdi mdi-check-circle'></span></div>");
+							$(".texto1").append("<h3>Correcto!</h3>");
+							$(".texto1").append("<h4>La remisión se generó correctamente.</h4>");
+							$(".texto1").append("<div class='text-center'>");
+							$(".texto1").append("<p>Esperé un momento será redireccionado...</p>");
+							$(".texto1").append("</div>");
+						}, 2500);
+						setTimeout(function () {
+							window.location= "../remisiones/verRemision.php?remision="+info.remision;
+						}, 4000);
 					}else{
-						console.log(datos);
-						mostrar_mensaje(datos);
+						$("#mod-cotizacion").modal("hide");
+						$("#mod-remision").modal("hide");
+						mostrar_mensaje(info);
 					}
 				});
 			});

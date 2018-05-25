@@ -470,7 +470,7 @@
 					var json_info = JSON.parse( info );
 					if (json_info.guardar == "contacto") {
 						mostrar_mensaje(json_info);
-						$('#modalAgregarContacto').modal('show');
+						$('#modalAgregarContacto').modal('hide');
 						$('#modalNuevaCotizacion').modal('show');
 						buscarContactos(json_info.idcliente);
 					}else{

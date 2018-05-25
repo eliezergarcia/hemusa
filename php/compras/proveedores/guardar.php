@@ -111,7 +111,15 @@
 			$resultado = mysqli_query($conexion_usuarios, $query);
 		}
 
-		verificar_resultado($resultado);
+		if (!$resultado) {
+			$informacion["respuesta"] = "ERROR";
+			$informacion["informacion"] = "Ocurrió un problema al intentar modificar el estado de la(s) partida(s)!";
+		}else{
+			$informacion["respuesta"] = "BIEN";
+			$informacion["informacion"] = "El estado de la(s) partida(s) se cambio a 'Enviado' correctamente!";
+		}
+		echo json_encode($informacion);
+		mysqli_close($conexion_usuarios);
 	}
 
 	function herramienta_recibido($data,$conexion_usuarios){
@@ -125,7 +133,15 @@
 			$resultado = mysqli_query($conexion_usuarios, $query);
 		}
 
-		verificar_resultado($resultado);
+		if (!$resultado) {
+			$informacion["respuesta"] = "ERROR";
+			$informacion["informacion"] = "Ocurrió un problema al intentar modificar el estado de la(s) partida(s)!";
+		}else{
+			$informacion["respuesta"] = "BIEN";
+			$informacion["informacion"] = "El estado de la(s) partida(s) se cambio a 'Recibido' correctamente!";
+		}
+		echo json_encode($informacion);
+		mysqli_close($conexion_usuarios);
 	}
 
 
@@ -173,7 +189,14 @@
 	function quitarproveedor($id, $conexion_usuarios){
 		$query = "UPDATE cotizacionherramientas SET Proveedor = 'None' WHERE id='$id'";
 		$resultado = mysqli_query($conexion_usuarios, $query);
-		verificar_resultado($resultado);
+		if (!$resultado) {
+			$informacion["respuesta"] = "ERROR";
+			$informacion["informacion"] = "Ocurrió un problema al intentar quitar la herramienta del proveedor!";
+		}else{
+			$informacion["respuesta"] = "BIEN";
+			$informacion["informacion"] = "La herramienta se quitó correctamente!";
+		}
+		echo json_encode($informacion);
 		mysqli_close($conexion_usuarios);
 	}
 
@@ -304,14 +327,23 @@
 		$informacion['respuesta'] = "agregarordencompra";
 		$informacion['ordencompra'] = $numeroOC;
 		$informacion['nombreEmpresa'] = $proveedor;
-     	echo json_encode($informacion);
-     	mysqli_close($conexion_usuarios);
+   	echo json_encode($informacion);
+   	mysqli_close($conexion_usuarios);
 	}
 
 	function editar_informacion($idcontacto, $empresa, $rfc, $contacto, $calle, $noexterior, $nointerior, $colonia, $ciudad, $estado, $cp, $pais, $tlf1, $tlf2, $movil, $correofac1, $correofac2, $correo, $paginaweb, $credito, $contactohemusa, $moneda, $formapago, $metodopago, $cfdi, $conexion_usuarios){
 		$query = "UPDATE contactos SET nombreEmpresa = '$empresa', RFC = '$rfc', personaContacto = '$contacto', calle = '$calle', NumExt ='$nointerior', NumInt = '$nointerior', colonia = '$colonia', ciudad = '$ciudad', estado = '$estado', cp ='$cp', pais = '$pais', tlf1 ='$tlf1', tlf2 = '$tlf2', movil = '$movil', correoFacturacion1 = '$correofac1', correoFacturacion2 = '$correofac2', correoElectronico ='$correo',  paginaWeb = '$paginaweb', CondPago = '$credito', responsable = '$contactohemusa', moneda = '$moneda', IdFormaPago = '$formapago', IdMetodoPago = '$metodopago', IdUsoCFDI = '$cfdi' WHERE id = '$idcontacto'";
 		$resultado = mysqli_query($conexion_usuarios, $query);
-		verificar_resultado($resultado);
+		if (!$resultado) {
+			$informacion["respuesta"] = "ERROR";
+			$informacion["informacion"] = "Ocurrió un problema al intentar modificar la información del proveedor!";
+		}else{
+			$informacion["respuesta"] = "BIEN";
+			$informacion["informacion"] = "La información del proveedor se modificó correctamente!";
+		}
+		echo json_encode($informacion);
+		mysqli_close($conexion_usuarios);
+
 	}
 
 	function verificar_resultado($resultado){

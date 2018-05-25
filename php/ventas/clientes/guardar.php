@@ -1,7 +1,7 @@
-<?php 
+<?php
 	include("../../conexion.php");
 	include("../../sesion.php");
-	
+
 	$opcion = $_POST["opcion"];
 	$informacion = [];
 
@@ -31,7 +31,7 @@
 			}else{
 				agregar_cliente($usuariologin, $dplogin, $nombreEmpresa, $rfc, $moneda, $calle, $numExterior, $numInterior, $colonia, $cp, $ciudad, $estado, $pais, $tlf1, $tlf2, $paginaWeb, $correoElectronico, $conexion_usuarios);
 			}
-			
+
 			break;
 
 		case 'eliminarcliente':
@@ -45,7 +45,7 @@
 			$clas = $_POST['clasificacion'];
 			$nombrecliente = $_POST['nombrecliente'];
 			agregarClas($usuariologin, $dplogin, $idcliente, $clas, $nombrecliente, $conexion_usuarios);
-			break;	
+			break;
 
 		case 'agregarcontacto':
 			$idcliente = $_POST['idcliente'];
@@ -74,7 +74,7 @@
 			$condicionespago = $_POST['condicionesPago'];
 			$comentarios = $_POST['comentarios'];
 			agregar_cotizacion($usuariologin, $dplogin, $numerocotizacion, $fechacotizacion, $vendedor, $idcliente, $contactocliente, $moneda, $tiempoentrega, $condicionespago, $comentarios, $conexion_usuarios);
-			break;		
+			break;
 
 		case 'editarinformacion':
 			$idcontacto = $_POST['idcliente'];
@@ -104,7 +104,7 @@
 			$cfdi = $_POST['cfdi'];
 			editar_informacion($idcontacto, $empresa, $rfc, $contacto, $calle, $noexterior, $nointerior, $colonia, $ciudad, $estado, $cp, $pais, $tlf1, $tlf2, $movil, $correofac1, $correofac2, $correo, $paginaweb, $credito, $contactohemusa, $moneda, $formapago, $metodopago, $cfdi, $conexion_usuarios);
 			break;
-		
+
 		case 'nuevaremision':
 			$numeroCotizacion= $_POST['numeroCotizacion'];
 			$remision = $_POST['remision'];
@@ -144,7 +144,7 @@
 			$informacion["respuesta"] = "BIEN";
 			$informacion["informacion"] = "La información del cliente '".$nombreEmpresa."' se guardó correctamente!";
 		}
-		
+
 		echo json_encode($informacion);
 		cerrar($conexion_usuarios);
 	}
@@ -176,16 +176,18 @@
 			while($data = mysqli_fetch_array($resultado)){
 				$idCliente = $data['id'];
 			}
-			// $query = "INSERT INTO cotizacion (ref, cliente, contacto, vendedor, fecha, moneda, Otra, remision, remisionFecha) VALUES ('$numeroCotizacion', '$idCliente', '$contactoCliente', '$vendedor', '$fechaCotizacion', '$moneda', '$comentarios', '$remision', '$fechaCotizacion')";
-			// $resultado = mysqli_query($conexion_usuarios, $query);
-			// if (!$resultado) {
-			// 	verificar_resultado($resultado);
-			// }else{
+			$query = "INSERT INTO cotizacion (ref, cliente, contacto, vendedor, fecha, moneda, Otra, remision, remisionFecha) VALUES ('$numeroCotizacion', '$idCliente', '$contactoCliente', '$vendedor', '$fechaCotizacion', '$moneda', '$comentarios', '$remision', '$fechaCotizacion')";
+			$resultado = mysqli_query($conexion_usuarios, $query);
+			if (!$resultado) {
+				$informacion["respuesta"] = "ERROR";
+				$informacion["informacion"] = "Ocurrió un problema al generar la remisión!";
+			}else{
 				$informacion["respuesta"] = "nuevaremision";
 				$informacion["remision"] = $remision;
 				echo json_encode($informacion);
-			// }
+			}
 		}
+		mysqli_close($conexion_usuarios);
 	}
 
 	function agregarClas($usuariologin, $dplogin, $idcliente, $clas, $nombrecliente, $conexion_usuarios){
@@ -197,11 +199,11 @@
 			case 'clas2':
 				$clas = 1.25;
 				break;
-			
+
 			case 'clas3':
 				$clas = 1.33;
 				break;
-			
+
 			case 'clas4':
 				$clas = 1.42;
 				break;
@@ -211,7 +213,7 @@
 		$resultado = mysqli_query($conexion_usuarios, $query);
 		if (!$resultado) {
 			verificar_resultado($resultado);
-		}else{		
+		}else{
 			$descripcion = "Se modifico la clasificacion del cliente ".$nombrecliente." al ".$clas." %";
 			$fechahora = date("Y-m-d G:i:s");
 			$query = "INSERT INTO movimientosusuarios (departamento, usuario, tipomovimiento, descripcion, fechahora) VALUES ('$dplogin', '$usuariologin', 'Registro', '$descripcion', '$fechahora')";
@@ -219,7 +221,7 @@
 			verificar_resultado($resultado);
 		}
 		cerrar($conexion_usuarios);
-	}	
+	}
 
 	function agregar_contacto($usuariologin, $dplogin, $idcliente, $contacto, $puesto, $calle, $colonia, $ciudad, $estado, $cp, $pais, $tlf, $movil, $correoElectronico, $conexion_usuarios){
 		$query = "INSERT INTO contactospersonas (empresa,personaContacto,puesto,calle,colonia,ciudad,estado,cp,pais,tlf1,movil,correoElectronico) VALUES ('$idcliente', '$contacto', '$puesto', '$calle', '$colonia', '$ciudad', '$estado', '$cp', '$pais', '$tlf', '$movil', '$correoElectronico')";
@@ -228,7 +230,8 @@
 			$informacion["respuesta"] = "ERROR";
 			$informacion["informacion"] = "Ocurrió un problema al guardar el contacto del cliente!";
 		}else{
-			$informacion["respuesta"] = "BIEN";
+			$informacion["idcliente"] = $idcliente;
+			$informacion["respuesta"] = "agregarcontacto";
 			$informacion["informacion"] = "El contacto del cliente se guardó correctamente!";
 		}
 		echo json_encode($informacion);
@@ -241,29 +244,26 @@
 			verificar_resultado($resultado);
 		}else{
 
-			// $descripcion = "Se creo la cotizacion ".$numerocotizacion;
-			// $fechahora = date("Y-m-d G:i:s");
-			// $query = "INSERT INTO movimientosusuarios (cotizacion, departamento, usuario, tipomovimiento, descripcion, fechahora) VALUES ('$numerocotizacion', '$dplogin', '$usuariologin', 'Registro', '$descripcion', '$fechahora')";
-			// $resultado = mysqli_query($conexion_usuarios, $query);
-			// if (!$resultado) {
-			// 	verificar_resultado($resultado);
-			// }else{
+			$descripcion = "Se creo la cotizacion ".$numerocotizacion;
+			$fechahora = date("Y-m-d G:i:s");
+			$query = "INSERT INTO movimientosusuarios (cotizacion, departamento, usuario, tipomovimiento, descripcion, fechahora) VALUES ('$numerocotizacion', '$dplogin', '$usuariologin', 'Registro', '$descripcion', '$fechahora')";
+			$resultado = mysqli_query($conexion_usuarios, $query);
+			if (!$resultado) {
+				$informacion["respuesta"] = "ERROR";
+				$informacion["informacion"] = "Ocurrió un problema al generar la cotización!";
+			}else{
 				$informacion['respuesta'] = "agregarcotizacion";
 				$informacion['numero'] = $numerocotizacion;
-				$informacion['fecha'] = $fechacotizacion;
-				$informacion['contacto'] = $contactocliente;
-				$informacion['cliente'] = $idcliente;
-				$informacion['partidas'] = 0;
 				echo json_encode($informacion);
-			// }
+			}
 		}
-		cerrar($conexion_usuarios);		
+		mysqli_close($conexion_usuarios);
 	}
 
 	function verificar_resultado($resultado){
 		if(!$resultado){
 			$informacion["respuesta"] = "ERROR";
-		}else{ 
+		}else{
 			$informacion["respuesta"] = "BIEN";
 		}
 		echo json_encode($informacion);
