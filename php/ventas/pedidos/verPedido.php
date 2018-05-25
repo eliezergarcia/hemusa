@@ -941,34 +941,6 @@
 					cambiarproveedorgeneral(refCotizacion, numeroPedido, RFC);
 					cambiarcantidadgeneral(refCotizacion, numeroPedido, RFC);
 
-				// 	$.get("http://devfactura.in/api/v3/cfdi33/list").done(function (data) {
-				// 	    console.log(data);
-				// 	});
-				//
-				// 	$.ajax({
-				//     url: "http://devfactura.in/api/v3/cfdi33/list",
-				//     type: "GET",
-				// 		headers: {
-				//         'Content-Type':'application/json',
-				// 				'F-API-KEY': apiConfig.apiKey,
-				// 				'F-SECRET-KEY': apiConfig.secretKey,
-				// 				'Access-Control-Allow-Origin': 'Origin'
-				//     },
-				//     // This is the important part
-				//     // xhrFields: {
-				//     //     withCredentials: true
-				//     // },
-				//     // This is the important part
-				//     // data: data,
-				//     success: function (response) {
-				//         console.log(response);
-				//     },
-				//     error: function (xhr, status) {
-				//         console.log(xhr);
-				// 				console.log(status);
-				//     }
-				// });
-
 					var request = new XMLHttpRequest();
 
 					request.open('GET', apiConfig.enlace + 'api/v3/cfdi33/list');
@@ -989,7 +961,11 @@
 					};
 
 					request.onerror = function(xhr) {
-					  console.log(xhr);
+						$.gritter.add({
+			        title: 'Error!',
+			        text: 'Ocurrió un problema en la conexión de "Factura.com".',
+			        class_name: 'color danger'
+			      });
 					};
 
 					request.onreadystatechange = function () {

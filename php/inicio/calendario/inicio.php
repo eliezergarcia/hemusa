@@ -421,7 +421,7 @@
 		      	});
 			}else if( informacion.respuesta == "ERROR"){
 				$.gritter.add({
-		        title: 'Danger',
+		        title: 'Error',
 		        text: 'This is a simple Gritter Notification.',
 		        class_name: 'color danger'
 		      });
