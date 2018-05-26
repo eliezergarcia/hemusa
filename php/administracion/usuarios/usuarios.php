@@ -274,7 +274,6 @@
 			<form id="frmEliminarUsuario" action="" method="POST">
 				<input type="hidden" id="idusuario" name="idusuario" value="">
 				<input type="hidden" id="opcion" name="opcion" value="eliminar">
-				<!-- Modal -->
 				<div class="modal fade" id="modalEliminarUsuario" tabindex="-1" role="dialog" aria-labelledby="modalEliminarLabel">
 					<div class="modal-dialog" role="document">
 						<div class="modal-content">
@@ -314,20 +313,6 @@
 			guardar(); // Función para registrar, modificar y eliminar
 		});
 
-		$("#modalRegistrarUsuario").on("show.bs.modal", function(){
-			var opcion = "departamentos";
-			$.ajax({
-				method: "POST",
-				url: "buscar.php",
-				dataType: "json",
-				data: {"opcion": opcion},
-			}).done( function( data ){
-				var input = document.getElementById("departamento");
-				var awesomplete = new Awesomplete(input);
-				awesomplete.list = data.departamentos;
-			});
-		});
-
 		var listar = function(){ // DataTable de Usuarios
 			var table = $("#dt_usuarios").DataTable({
 				"destroy": true,
@@ -359,7 +344,6 @@
 		                {
 		                  extend:    'excelHtml5',
 		                  text:      '<i class="fas fa-file-excel fa-lg"></i> Excel',
-		                  // "className": "btn btn-lg btn-space btn-secondary",
 		                  exportOptions: {
 		                    columns: [ 0, 1, 2, 3 ]
 		                  }
@@ -367,7 +351,6 @@
 		                {
 		                  extend: 'csv',
 		                  text: '<i class="fas fa-file-alt fa-lg"></i> Csv',
-		                  // "className": "btn btn-lg btn-space btn-secondary",
 		                  exportOptions: {
 		                          columns: [ 0, 1, 2, 3 ]
 		                  }
@@ -376,7 +359,6 @@
 		                  extend:    'pdfHtml5',
 		                  text:      '<i class="fas fa-file-pdf fa-lg"></i> Pdf',
 		                  download: 'open',
-		                  // "className": "btn btn-lg btn-space btn-secondary",
 		                  exportOptions: {
 		                    columns: [ 0, 1, 2, 3 ]
 		                  }
@@ -406,6 +388,20 @@
 			obtener_data_editar("#dt_usuarios tbody", table);
 			obtener_id_eliminar("#dt_usuarios tbody", table);
 		}
+
+		$("#modalRegistrarUsuario").on("show.bs.modal", function(){
+			var opcion = "departamentos";
+			$.ajax({
+				method: "POST",
+				url: "buscar.php",
+				dataType: "json",
+				data: {"opcion": opcion},
+			}).done( function( data ){
+				var input = document.getElementById("departamento");
+				var awesomplete = new Awesomplete(input);
+				awesomplete.list = data.departamentos;
+			});
+		});
 
 		var obtener_data_editar = function(tbody, table){ // Se obtiene los datos de usuarios para editar del DT Usuarios
 			$(tbody).on("click", "button.editar", function(){
@@ -452,7 +448,7 @@
 					data: frm,
 				}).done( function( info ){
 					mostrar_mensaje(info);
-					listar();
+					$("#dt_usuarios").DataTable().ajax.reload();
 				});
 			});
 		}

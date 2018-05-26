@@ -34,14 +34,18 @@
 	          </li>
 	        </ul>
 	        <ul class="nav navbar-nav float-right be-icons-nav">
-	          <li class="nav-item dropdown"><a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle"><span class="icon mdi mdi-notifications"></span><span class="indicator"></span></a>
+	          <li class="nav-item dropdown">
+							<a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle">
+								<span class="icon mdi mdi-notifications"></span>
+								<span class="indicator">3</span>
+							</a>
 	            <ul class="dropdown-menu be-notifications">
 	              <li>
 	                <div class="title">Notificaciones<span class="badge badge-pill">3</span></div>
 	                <div class="list">
 	                  <div class="be-scroller">
 	                    <div class="content">
-	                      <ul>
+	                      <ul id="notificaciones">
 	                        <li class="notification notification-unread"><a href="#">
 	                            <div class="image"><img src="<?php echo $ruta; ?>assets/img/avatar2.png" alt="Avatar"></div>
 	                            <div class="notification-info">
@@ -187,16 +191,6 @@
                       </div>
                       <h2>Contactos</h2>
                       <div id="lista-contactos" class="contact-list">
-                        <!-- <?php
-                            $query = "SELECT * FROM usuarios";
-                            $resultado = mysqli_query($conexion_usuarios, $query);
-                            while($data = mysqli_fetch_assoc($resultado)){
-                        ?>
-                            <div class="user"><a href="#"><img src="<?php echo $ruta; ?>assets/img/avatar4.png" alt="Avatar">
-                            <div class="user-data2"><span class="status"></span><span class="name"><?php echo $data['nombre']." ".$data["apellidos"]; ?></span></div></a></div>
-                        <?php
-                            }
-                        ?> -->
                       </div>
                     </div>
                   </div>
@@ -214,7 +208,7 @@
                 </div>
                 <div class="chat-messages">
                   <div class="be-scroller">
-                    <div class="content">
+                    <div id="chat-messages" class="content">
                       <ul id="mensajes-chat">
                         <!-- <li class="friend">
                           <div class="msg">Hello</div>

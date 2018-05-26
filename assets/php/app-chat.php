@@ -35,6 +35,7 @@
     }else{
       while($data = mysqli_fetch_assoc($resultado)){
 				$idcontacto = $data['id'];
+				$avatar = $data['avatar'];
 
 				$query2 = "SELECT * FROM mensajeschat WHERE idcontacto = '$idusuario' AND idusuario = '$idcontacto' AND leido = 'no' ORDER BY id DESC LIMIT 1";
 				$resultado2 = mysqli_query($conexion_usuarios, $query2);
@@ -44,7 +45,8 @@
 						'id' => $idcontacto,
 						'nombre' => $data['nombre'],
 						'apellidos' => $data['apellidos'],
-						'reciente' => "no"
+						'reciente' => "no",
+						'avatar' => $avatar
 					);
 				}else{
 					while($data2 = mysqli_fetch_assoc($resultado2)){
@@ -52,7 +54,8 @@
 							'id' => $idcontacto,
 							'nombre' => $data['nombre'],
 							'apellidos' => $data['apellidos'],
-							'reciente' => $data2['mensaje']
+							'reciente' => $data2['mensaje'],
+							'avatar' => $avatar
 						);
 					}
 				}

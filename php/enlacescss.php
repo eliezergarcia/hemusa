@@ -23,10 +23,8 @@
     <link rel="stylesheet" type="text/css" href="<?php echo $ruta; ?>assets/lib/datatables/datatables.net-bs4/css/dataTables.bootstrap4.css"/>
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.0/semantic.min.css">
     <link rel="stylesheet" href="<?php echo $ruta; ?>assets/css/app.css" type="text/css"/>
-    <!-- <link rel="stylesheet" href="<?php echo $ruta; ?>php/css/estilos.css" type="text/css"/ -->
     <link rel="stylesheet" href="<?php echo $ruta; ?>php/css/awesomplete.css" type="text/css"/>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.12/css/all.css" integrity="sha384-G0fIWCsCzJIMAVNQPfjH08cyYaUtMwjJwqiRKxxE/rx96Uroj1BtIQ6MLJuheaO9" crossorigin="anonymous">
-    <link rel="stylesheet" href="<?php echo $ruta; ?>assets/css/style.css" type="text/css">
     <script src="<?php echo $ruta; ?>assets/lib/jquery/jquery.js" type="text/javascript"></script>
     <script type="text/javascript">
         $.ajax({

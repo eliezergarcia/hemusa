@@ -1,7 +1,9 @@
-var App = (function () {
-  'use strict';
-  App.chat = function( ){
-    $("#listar-contactos-chat").on("click", function(){
+var timer = 0;
+var timer2 = 0;
+
+// Se muestra la lista de contactos del chat
+  function listar_contactos () {
+    timer2 = setInterval(function () {
       var opcion = "listarcontactos";
       $.ajax({
         method: "POST",
@@ -11,157 +13,152 @@ var App = (function () {
       }).done( function( data ){
         console.log(data);
         var usuarios = data.usuarios;
-        $("#lista_contactos").empty();
+        $("#lista-contactos").empty();
         $("#lista-reciente").empty();
         for(var i=0;i<usuarios.length;i = i+1){
           if (usuarios[i].reciente == "no") {
-            $("#lista-contactos").append("<div class='user' id='"+ usuarios[i].id +"'><a href='#'><img src='../../../assets/img/avatar4.png' alt='Avatar'><div class='user-data2'><span class='status'></span><span class='name contacto-chat'>"+ usuarios[i].nombre + " " + usuarios[i].apellidos +"</span></div></a></div>");
+            $("#lista-contactos").append("<div class='user' id='"+ usuarios[i].id +"' onClick='mostrar_mensajes("+ usuarios[i].id +")'><a href='#'><img src='../../../assets/img/"+ usuarios[i].avatar +"' alt='Avatar'><div class='user-data2'><span class='status'></span><span class='name contacto-chat'>"+ usuarios[i].nombre + " " + usuarios[i].apellidos +"</span></div></a></div>");
           }else{
-            $("#lista-reciente").append("<div class='user' id='"+ usuarios[i].id +"'><a href='#'><img src='../../../assets/img/avatar4.png' alt='Avatar'><div class='user-data2'><span class='status'></span><span class='name contacto-chat'>"+ usuarios[i].nombre + " " + usuarios[i].apellidos +"</span><span class='message'>"+ usuarios[i].reciente +"</span></div></a></div>");
+            $("#lista-reciente").append("<div class='user' id='"+ usuarios[i].id +"' onClick='mostrar_mensajes("+ usuarios[i].id +")'><a href='#'><img src='../../../assets/img/"+ usuarios[i].avatar +"' alt='Avatar'><div class='user-data2'><span class='status'></span><span class='name contacto-chat'>"+ usuarios[i].nombre + " " + usuarios[i].apellidos +"</span><span class='message'>"+ usuarios[i].reciente +"</span></div></a></div>");
           }
         };
       });
-    });
+    }, 2000);
+  }
 
-    $("#lista-contactos").on("click", "div.user", function(){
-      var idcontacto = $(this).attr('id');
-      var opcion = "buscarmensajes";
-      $.ajax({
-        method: "POST",
-        url: "../../../assets/php/app-chat.php",
-        dataType: "json",
-        data: {"opcion": opcion, "idcontacto": idcontacto}
-      }).done( function( data ){
-        console.log(data);
-        var mensajes = data.mensajes;
-        console.log(mensajes);
-        $("#lista_contactos").empty();
-        $("#lista-reciente").empty();
-        $("#contacto-title").empty();
-        $("#contacto-title").append("<div class='user'><img src='../../../assets/img/avatar2.png' alt='Avatar'><h2>"+ data.contacto[0].nombre + " " + data.contacto[0].apellidos +"</h2><span>Active 1h ago</span></div><span class='icon return mdi mdi-chevron-left'></span>");
+  listar_contactos();
+  setTimeout(function (){
+    clearInterval(timer2);
+  }, 3500);
 
-        $("#mensajes-chat").empty();
-        if(mensajes == 0){
-          $("#tab1").addClass("chat-opened");
-        }else{
-          $("#tab1").addClass("chat-opened");
-          for(var i=0;i<mensajes.length;i = i+1){
-            if (mensajes[i].idcontacto == idcontacto) {
-              $("#mensajes-chat").append("<li class='self'><div class='msg'>"+ mensajes[i].mensaje +"</div></li>");
-            }else{
-              $("#mensajes-chat").append("<li class='friend'><div class='msg'>"+ mensajes[i].mensaje +"</div></li>");
-            }
-          };
-        }
-      });
-      $("#idcontacto").val(idcontacto);
-    });
+  $("#listar-contactos-chat").on("click", function () {
+    // clearInterval(timer2);
+    listar_contactos();
+  });
 
-    $("#lista-reciente").on("click", "div.user", function(){
-      var idcontacto = $(this).attr('id');
-      var opcion = "buscarmensajes";
-      $.ajax({
-        method: "POST",
-        url: "../../../assets/php/app-chat.php",
-        dataType: "json",
-        data: {"opcion": opcion, "idcontacto": idcontacto}
-      }).done( function( data ){
-        console.log(data);
-        var mensajes = data.mensajes;
-        console.log(mensajes);
-        $("#contacto-title").empty();
-        $("#contacto-title").append("<div class='user'><img src='../../../assets/img/avatar2.png' alt='Avatar'><h2>"+ data.contacto[0].nombre + " " + data.contacto[0].apellidos +"</h2><span>Active 1h ago</span></div><span class='icon return mdi mdi-chevron-left'></span>");
+// Se muestran los mensajes del contacto que se dio click
+  function mostrar_mensajes (idcontacto) {
+    clearInterval(timer2);
+    $("#idcontacto").val(idcontacto);
+    var opcion = "buscarmensajes";
+    $.ajax({
+      method: "POST",
+      url: "../../../assets/php/app-chat.php",
+      dataType: "json",
+      data: {"opcion": opcion, "idcontacto": idcontacto}
+    }).done( function( data ){
+      console.log(data);
+      var mensajes = data.mensajes;
+      console.log(mensajes);
+      $("#lista_contactos").empty();
+      $("#contacto-title").empty();
+      $("#contacto-title").append("<div class='user'><img src='../../../assets/img/"+ data.contacto[0].avatar +"' alt='Avatar'><h2>"+ data.contacto[0].nombre + " " + data.contacto[0].apellidos +"</h2><span>Active 1h ago</span></div><span class='icon return mdi mdi-chevron-left'></span>");
 
-        $("#mensajes-chat").empty();
-        if(mensajes == 0){
-          $("#tab1").addClass("chat-opened");
-        }else{
-          $("#tab1").addClass("chat-opened");
-          for(var i=0;i<mensajes.length;i = i+1){
-            if (mensajes[i].idcontacto == idcontacto) {
-              $("#mensajes-chat").append("<li class='self'><div class='msg'>"+ mensajes[i].mensaje +"</div></li>");
-            }else{
-              $("#mensajes-chat").append("<li class='friend'><div class='msg'>"+ mensajes[i].mensaje +"</div></li>");
-            }
-          };
-        }
-      });
-      $("#idcontacto").val(idcontacto);
-    });
-
-    $("#enviarmensaje").on("click", function(){
-      var mensaje = document.getElementById("mensajeusuario").value;
-      var idcontacto = $("#idcontacto").val();
-      $("#mensajes-chat").append("<li class='self'><div class='msg'>"+ mensaje +"</div></li>");
-      if(mensaje == ""){
-        alert("Escriba un mensaje para enviar.");
+      $("#mensajes-chat").empty();
+      if(mensajes == 0){
+        $("#tab1").addClass("chat-opened");
       }else{
-        var opcion = "guardarmensaje";
-        $.ajax({
-          method: "POST",
-          url: "../../../assets/php/app-chat.php",
-          dataType: "json",
-          data: {"opcion": opcion, "idcontacto": idcontacto, "mensaje": mensaje}
-        }).done( function( data ){
-          $("#mensajeusuario").val("");
-        });
+        $("#tab1").addClass("chat-opened");
+        for(var i=0;i<mensajes.length;i = i+1){
+          if (mensajes[i].idcontacto == idcontacto) {
+            $("#mensajes-chat").append("<li class='self'><div class='msg'>"+ mensajes[i].mensaje +"</div></li>");
+          }else{
+            $("#mensajes-chat").append("<li class='friend'><div class='msg'>"+ mensajes[i].mensaje +"</div></li>");
+          }
+        };
       }
     });
 
-    var actualizarmensajes = function(idcontacto){
-      // var idcontacto = $("#lista-contactos div.user").attr('id');
-      console.log(idcontacto);
-      var opcion = "buscarmensajes";
-      $.ajax({
-        method: "POST",
-        url: "../../../assets/php/app-chat.php",
-        dataType: "json",
-        data: {"opcion": opcion, "idcontacto": idcontacto}
-      }).done( function( data ){
-        console.log(data);
-        var mensajes = data.mensajes;
-        console.log(mensajes);
-        // $("#contacto-title").empty();
-        // $("#contacto-title").append("<div class='user'><img src='../../../assets/img/avatar2.png' alt='Avatar'><h2>"+ data.contacto[0].nombre + " " + data.contacto[0].apellidos +"</h2><span>Active 1h ago</span></div><span class='icon return mdi mdi-chevron-left'></span>");
+    timer = setInterval(function () {
+      actualizar_mensajes(idcontacto);
+    }, 2000);
+  }
 
-        $("#mensajes-chat").empty();
-        if(mensajes == 0){
-          // $("#tab1").addClass("chat-opened");
-        }else{
-          // $("#tab1").addClass("chat-opened");
-          for(var i=0;i<mensajes.length;i = i+1){
+// Se actualizan los mensajes del chat que se encuentra abierto
+  function actualizar_mensajes (idcontacto){
+    // console.log(idcontacto);
+    var opcion = "buscarmensajes";
+    $.ajax({
+      method: "POST",
+      url: "../../../assets/php/app-chat.php",
+      dataType: "json",
+      data: {"opcion": opcion, "idcontacto": idcontacto}
+    }).done( function( data ){
+      console.log(data);
+      var mensajes = data.mensajes;
+      console.log(mensajes);
+      if(mensajes == 0){
+      }else{
+        for(var i=0;i<mensajes.length;i = i+1){
+          if(mensajes[i].leido == "no"){
             if (mensajes[i].idcontacto == idcontacto) {
-              $("#mensajes-chat").append("<li class='self'><div class='msg'>"+ mensajes[i].mensaje +"</div></li>");
+              $("#chat-messages").animate({ scrollTop: $('#chat-messages')[0].scrollHeight}, 1000);
             }else{
               $("#mensajes-chat").append("<li class='friend'><div class='msg'>"+ mensajes[i].mensaje +"</div></li>");
+              $("#chat-messages").animate({ scrollTop: $('#chat-messages')[0].scrollHeight}, 1000);
             }
-          };
-        }
-      });
-    }
+          }
+        };
+      }
+    });
+  }
 
-    $("#contacto-title").on("click", "span.return", function(){
-      $("#tab1").removeClass("chat-opened");
+// Se guardan los mensajes enviados
+  $("#enviarmensaje").on("click", function(){
+    var mensaje = document.getElementById("mensajeusuario").value;
+    var idcontacto = $("#idcontacto").val();
+    $("#mensajes-chat").append("<li class='self'><div class='msg'>"+ mensaje +"</div></li>");
+    if(mensaje == ""){
+      alert("Escriba un mensaje para enviar.");
+    }else{
+      var opcion = "guardarmensaje";
       $.ajax({
         method: "POST",
         url: "../../../assets/php/app-chat.php",
         dataType: "json",
-        data: {"opcion": opcion}
+        data: {"opcion": opcion, "idcontacto": idcontacto, "mensaje": mensaje}
       }).done( function( data ){
-        console.log(data);
-        var usuarios = data.usuarios;
-        $("#lista_contactos").empty();
-        $("#lista-reciente").empty();
-        for(var i=0;i<usuarios.length;i = i+1){
-          if (usuarios[i].reciente == "no") {
-            $("#lista-contactos").append("<div class='user' id='"+ usuarios[i].id +"'><a href='#'><img src='../../../assets/img/avatar4.png' alt='Avatar'><div class='user-data2'><span class='status'></span><span class='name contacto-chat'>"+ usuarios[i].nombre + " " + usuarios[i].apellidos +"</span></div></a></div>");
+        $("#mensajeusuario").val("");
+      });
+    }
+  });
+
+// Se muetra la lista de contactos nuevamente
+  $("#contacto-title").on("click", "span.return", function(){
+    $("#tab1").removeClass("chat-opened");
+    listar_contactos();
+    clearInterval(timer);
+  });
+
+
+  $("#lista-reciente").on("click", "div.user", function(){
+    var idcontacto = $(this).attr('id');
+    var opcion = "buscarmensajes";
+    $.ajax({
+      method: "POST",
+      url: "../../../assets/php/app-chat.php",
+      dataType: "json",
+      data: {"opcion": opcion, "idcontacto": idcontacto}
+    }).done( function( data ){
+      console.log(data);
+      var mensajes = data.mensajes;
+      console.log(mensajes);
+      $("#contacto-title").empty();
+      $("#contacto-title").append("<div class='user'><img src='../../../assets/img/"+ data.contacto[0].avatar +"' alt='Avatar'><h2>"+ data.contacto[0].nombre + " " + data.contacto[0].apellidos +"</h2><span>Active 1h ago</span></div><span class='icon return mdi mdi-chevron-left'></span>");
+
+      $("#mensajes-chat").empty();
+      if(mensajes == 0){
+        $("#tab1").addClass("chat-opened");
+      }else{
+        $("#tab1").addClass("chat-opened");
+        for(var i=0;i<mensajes.length;i = i+1){
+          if (mensajes[i].idcontacto == idcontacto) {
+            $("#mensajes-chat").append("<li class='self'><div class='msg'>"+ mensajes[i].mensaje +"</div></li>");
           }else{
-            $("#lista-reciente").append("<div class='user' id='"+ usuarios[i].id +"'><a href='#'><img src='../../../assets/img/avatar4.png' alt='Avatar'><div class='user-data2'><span class='status'></span><span class='name contacto-chat'>"+ usuarios[i].nombre + " " + usuarios[i].apellidos +"</span><span class='message'>"+ usuarios[i].reciente +"</span></div></a></div>");
+            $("#mensajes-chat").append("<li class='friend'><div class='msg'>"+ mensajes[i].mensaje +"</div></li>");
           }
         };
-      });
+      }
     });
-  };
-
-  return App;
-})(App || {});
+    $("#idcontacto").val(idcontacto);
+  });

@@ -188,7 +188,6 @@
       App.pageCalendar();
       App.formElements();
       App.uiNotifications();
-      App.chat();
       App.init();
 			buscar_tipo_cambio();
 			listar_calendario();
