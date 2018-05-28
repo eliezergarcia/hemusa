@@ -4,7 +4,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="shortcut icon" href="assets/img/logo-fav.png">
+    <link rel="shortcut icon" href="<?php echo $ruta; ?>media/images/logo.png">
 
     <link rel="stylesheet" type="text/css" href="<?php echo $ruta; ?>assets/lib/material-design-icons/css/material-design-iconic-font.min.css">
     <link rel="stylesheet" type="text/css" href="<?php echo $ruta; ?>assets/lib/perfect-scrollbar/css/perfect-scrollbar.min.css">

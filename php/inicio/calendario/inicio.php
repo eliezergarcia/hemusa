@@ -155,9 +155,10 @@
 			            	<div class="text-center">
                       <div class="text-warning"><span class="modal-main-icon mdi mdi-alert-triangle"></span></div>
 				              		<h2><b>Aviso!</b></h2>
-				              		<h4>No se ha ingresado el tipo de cambio del día.<br>Puedes ingresar al siguiente link para obtenerlo:
+				              		<h4>No se ha ingresado el tipo de cambio del día.<br>Puedes ingresar al siguiente enlace para obtenerlo:
 				              			<?php
-        											$dia = date("d");
+                              $dias = array("Monday", "Tuesday", "Wednesdey", "Thursday", "Friday", "Saturday", "Sunday");
+        											$dia = date("d");                              
         											$mes = date("m");
         											$año = date("Y");
         											$diario = "http://dof.gob.mx/indicadores_detalle.php?cod_tipo_indicador=158&dfecha=".$dia."%2F".$mes."%2F".$año."&hfecha=".$dia."%2F".$mes."%2F".$año;

@@ -86,7 +86,7 @@
   	$colname_consulta_usuario = (get_magic_quotes_gpc()) ? $_SESSION['MM_Username'] : addslashes($_SESSION['MM_Username']);
 	}
 
-	mysqli_select_db($conexion_usuarios, $db);
+	// mysqli_select_db($conexion_usuarios, $db);
 	$query_consulta_usuario = sprintf("SELECT * FROM usuarios WHERE `user` = '%s'", $colname_consulta_usuario);
 	$consulta_usuario = mysqli_query($conexion_usuarios, $query_consulta_usuario) or die(mysqli_error());
 	$row_consulta_usuario = mysqli_fetch_assoc($consulta_usuario);

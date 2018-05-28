@@ -37,7 +37,7 @@
 	          <li class="nav-item dropdown">
 							<a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle">
 								<span class="icon mdi mdi-notifications"></span>
-								<span class="indicator">3</span>
+								<span class="indicator"></span>
 							</a>
 	            <ul class="dropdown-menu be-notifications">
 	              <li>

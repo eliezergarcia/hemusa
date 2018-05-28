@@ -110,13 +110,12 @@ var timer2 = 0;
     $("#mensajes-chat").append("<li class='self'><div class='msg'>"+ mensaje +"</div></li>");
     if(mensaje == ""){
       alert("Escriba un mensaje para enviar.");
-    }else{
-      var opcion = "guardarmensaje";
+    }else{    
       $.ajax({
         method: "POST",
         url: "../../../assets/php/app-chat.php",
         dataType: "json",
-        data: {"opcion": opcion, "idcontacto": idcontacto, "mensaje": mensaje}
+        data: {"opcion": opcion = "guardarmensaje", "idcontacto": idcontacto, "mensaje": mensaje}
       }).done( function( data ){
         $("#mensajeusuario").val("");
       });

@@ -55,7 +55,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="shortcut icon" href="<?php echo $ruta; ?>media/images/logo_hemusa.png">
+    <link rel="shortcut icon" href="<?php echo $ruta; ?>media/images/logo.png">
     <title>HEMUSA S.A de C.V</title>
     <link rel="stylesheet" type="text/css" href="assets/lib/perfect-scrollbar/css/perfect-scrollbar.min.css"/>
     <link rel="stylesheet" type="text/css" href="assets/lib/material-design-icons/css/material-design-iconic-font.min.css"/>
@@ -71,7 +71,7 @@
         <div class="main-content container-fluid">
           <div class="splash-container">
             <div class="card card-border-color card-border-color-primary">
-              <div class="card-header"><img src="media/images/logo_hemusa.png" alt="logo" width="230" height="90" class="logo-img"></div>
+              <div class="card-header"><img src="media/images/logo.png" alt="logo" width="205" height="80" class="logo-img"></div>
               <span class="splash-description">Porfavor ingresa tu informacion.</span>
               <div class="card-body">
                 <form class="" id="form_login" name="form_login" method="post" action="<?php echo $loginFormAction; ?>" >
