@@ -1,5 +1,5 @@
-<?php 
-	
+<?php
+
 	include("../../conexion.php");
 
 	$palabraBusca = $_POST['palabraBusca'];
@@ -28,8 +28,9 @@
 				while($datamarca = mysqli_fetch_assoc($resultadomarca)){
 					$factor = $datamarca['factor'];
 					$excepcion = $datamarca['excepcion'];
+					$descuento = $datamarca['descuento'];
 				}
-				
+
 				if ($data['igi'] == 0) {
 					$queryigi = "SELECT * FROM modelos_igi WHERE marca = '$marca' AND modelo = '$modelo'";
 					$resultadoigi = mysqli_query($conexion_usuarios, $queryigi);
@@ -47,12 +48,12 @@
 				}
 
 				if ($excepcion == 1) {
-					$costo = $data['precioBase'];
-					$precioLista = $data['precioBase'] + ($data['precioBase'] * $igi);
+					$costo = ($data['precioBase'] * $factor);
+					$precioLista = $data['precioBase'] + ($data['precioBase'] * $descuento) + ($data['precioBase'] * $igi);
 					$precioIVA = $precioLista * 1.16;
 				}else{
-					$costo = $data['precioBase'] * $factor;
-					$precioLista = ($data['precioBase'] * $factor) + ($data['precioBase'] * $igi);
+					$costo = ($data['precioBase'] * $factor);
+					$precioLista = ($data['precioBase'] * $factor)  + ($data['precioBase'] * $descuento) + ($data['precioBase'] * $igi);
 					$precioIVA = $precioLista * 1.16;
 				}
 
@@ -69,7 +70,7 @@
 					'clase' => $data['clase'],
 					'igi' => $igi
 				);
-				
+
 			}
 			echo json_encode($arreglo);
 		}

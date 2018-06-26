@@ -425,13 +425,13 @@
 			        					<label for="">Descripción <font color="#FF4136">*</font></label>
 			        					<input type="text" class="form-control form-control-sm" name="descripcion" id="descripcion" onchange="buscarClavesSat()" required>
 			        				</div>
+											<div class="form-group col">
+												<label for="">Clave SAT</label>
+												<select class="form-control form-control-sm select2" name="claveSat" id="claveSat">
+												</select>
+											</div>
 			        			</div>
 			        			<div class="row">
-			        				<div class="form-group col">
-			        					<label for="">Clave SAT</label>
-			        					<select class="form-control form-control-sm select2" name="claveSat" id="claveSat">
-			        					</select>
-			        				</div>
 			        				<div class="form-group col">
 			        					<label for="">Precio Unitario <font color="#FF4136">*</font></label>
 			        					<input type="text" class="form-control form-control-sm" name="precioUnitario" id="precioUnitario" required>

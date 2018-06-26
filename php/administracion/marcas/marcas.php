@@ -122,6 +122,10 @@
 					        			<label for="factor">Factor <font color="#FF4136">*</font></label>
 					        			<input type="text" id="factor" name="factor" class="form-control form-control-sm" required>
 					        		</div>
+											<div class="form-group col">
+					        			<label for="descuento">Descuento <font color="#FF4136">*</font></label>
+					        			<input type="text" id="descuento" name="descuento" class="form-control form-control-sm" required>
+					        		</div>
 				        		</div>
 				        		<div class="row">
 					        		<div class="form-group col">
@@ -309,7 +313,7 @@
 				}).done( function( info ){
 					var json_info = JSON.parse( info );
 					mostrar_mensaje(json_info);
-					listar();
+					$('#dt_marcas').DataTable().ajax.reload();
 				});
 			});
 		}
@@ -317,17 +321,18 @@
 		var obtener_data_editar = function(tbody, table){
 			$(tbody).on("click", "button.editar", function(){
 				var data = table.row( $(this).parents("tr") ).data();
-					console.log(data);
-				var idmarca = $("#idmarca").val(data.id),
-					marca = $("#marca").val(data.marca),
-					factor = $("#factor").val(data.factor),
-					moneda = $("#moneda").val(data.moneda),
-					tiempoEntrega = $("#tiempoEntrega").val(data.TiempoEntrega),
-					opcion = $("#opcion").val("editar");
+				console.log(data);
+				var idmarca = $("#frmEditarMarca #idmarca").val(data.id),
+					marca = $("#frmEditarMarca #marca").val(data.marca),
+					factor = $("#frmEditarMarca #factor").val(data.factor),
+					descuento = $("#frmEditarMarca #descuento").val(data.descuento),
+					moneda = $("#frmEditarMarca #moneda").val(data.moneda).change(),
+					tiempoEntrega = $("#frmEditarMarca #tiempoEntrega").val(data.TiempoEntrega),
+					opcion = $("#frmEditarMarca #opcion").val("editar");
 				if (data.excepcion == 1) {
-					$("#excepcionmarcasi").attr('checked', true);
+					$("#frmEditarMarca #excepcionmarcasi").attr('checked', true);
 				}else{
-					$("#excepcionmarcano").attr('checked', true);
+					$("#frmEditarMarca #excepcionmarcano").attr('checked', true);
 				}
 			});
 		}

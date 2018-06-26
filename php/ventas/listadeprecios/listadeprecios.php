@@ -200,7 +200,7 @@
 				}).done( function( info ){
 					var json_info = JSON.parse( info );
 					mostrar_mensaje(json_info);
-					listar();
+					$('#dt_precios').DataTable().ajax.reload();
 				});
 			});
 		}
