@@ -286,8 +286,8 @@
 	}
 
 	function buscar_claves_sat($descripcion, $conexion_usuarios){
-		list($palabra1, $palabra2, $palabra3) = explode(' ', $descripcion);
-		$query = "SELECT ClaveProductoSAT, descripcion FROM productos WHERE descripcion LIKE '%$palabra1%' AND descripcion LIKE '%$palabra2%' AND descripcion LIKE '%$palabra3%' AND ClaveProductoSAT != '' LIMIT 2500";
+		// list($palabra1, $palabra2, $palabra3) = explode(' ', $descripcion);
+		$query = "SELECT ClaveProductoSAT, descripcion FROM productos WHERE descripcion LIKE '%$descripcion%' AND ClaveProductoSAT != '' LIMIT 50";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 
 		while($data = mysqli_fetch_array($resultado)){

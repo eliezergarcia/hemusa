@@ -1,6 +1,6 @@
 <?php
 	include("../../conexion.php");
-	error_reporting(0);
+	// error_reporting(0);
 
 	$opcion = $_POST['opcion'];
 	$informacion[] = "";
@@ -418,7 +418,6 @@
 		}
 
 		echo json_encode($informacion);
-		verificar_resultado($resultado);
 	}
 
 	function quitar_herramienta($idherramienta, $remision, $conexion_usuarios){
@@ -468,7 +467,6 @@
 		}
 
 		echo json_encode($informacion);
-		verificar_resultado($resultado);
 	}
 
 	function numeroguia($numeroguia, $remision, $conexion_usuarios){

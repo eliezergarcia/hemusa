@@ -26,7 +26,7 @@
 							<nav aria-label="breadcrumb">
 	              <ol class="breadcrumb">
 	                <li class="breadcrumb-item">Compras</li>
-	                <li class="breadcrumb-item"><a href="proveedores.php">Proveedores</a></li>
+	                <li class="breadcrumb-item"><a href="proveedores.php" class="text-primary">Proveedores</a></li>
 	                <li class="breadcrumb-item active">Info Proveedor: <?php echo $nombreContacto; ?></li>
 	              </ol>
 	          	</nav>
@@ -1101,7 +1101,7 @@
 					success: function (data) {
 						var json_info = JSON.parse( data );
 						mostrar_mensaje(json_info);
-						listar_sinpedido(idproveedor);
+						$("#dt_listar_sinpedido").DataTable().ajax.reload();
 					}
 				});
 			}else{

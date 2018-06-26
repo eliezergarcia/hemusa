@@ -193,6 +193,7 @@
 													<th>Cantidad</th>
 													<th>Precio Total</th>
 													<th>Fecha Compromiso</th>
+													<th>Clave SAT</th>
 													<th>Proveedor</th>
 													<th>Almacen</th>
 													<th>Entregado <input type="checkbox" class="btn btn-outline-primary" name="sel" onclick="seleccionartodo()"></th>
@@ -665,6 +666,7 @@
 						{"data": "cantidad"},
 						{"data": "preciototal"},
 						{"data": "fechacompromiso"},
+						{"data": "claveSat"},
 						{"data": "proveedor"},
 						{"data": "almacen"},
 						{"data": "entregado"},

@@ -33,7 +33,7 @@
 										<label for="buscarProveedor" class="">Buscar cliente:</label>
 									</div>
 									<div class="form-group col-12 row justify-content-center">
-										<input id="idclientebuscar" class="awesomplete form-control col-2" list="mylist" />
+										<input id="idclientebuscar" class="form-control form-control-sm col-2" list="mylist" />
 										<datalist id="mylist">
 											<?php
 											include("../../conexion.php");
@@ -45,8 +45,8 @@
 										</datalist>
 									</div>
 									<div class="form-group col-12 row justify-content-center">
-										<button type="button" name="buscar" id="buscarPagosCliente" class="btn btn-primary">Buscar pendientes</button>
-										<button type="button" name="buscar" id="buscarPagadosCliente" class="btn btn-primary">Consultar pagados</button>
+										<button type="button" name="buscar" id="buscarPagosCliente" class="btn btn-primary btn-lg btn-space">Buscar pendientes</button>
+										<button type="button" name="buscar" id="buscarPagadosCliente" class="btn btn-primary btn-lg btn-space">Consultar pagados</button>
 									</div>
 								</div>
 								<br>
@@ -109,29 +109,30 @@
 									<label for="total" class="label-control">Total a registrar: $ </label>
 									<input type="text" id="total" name="total" class="form-control col-1">
 								</div> -->
-								<div class="col-11 row justify-content-end">
-									<input id="registrar-pagos" type="button" class="form-control btn btn-success col-1" value="Registrar">
+									<div class="col-11 row justify-content-end">
+										<input id="registrar-pagos" type="button" class="form-control btn btn-success col-1" value="Registrar">
+									</div>
 								</div>
-							</div>
 
 								<!-- Tabla de pagos cliente -->
 								<div id="pagos_cliente">
-									<div class="container row justify-content-around">
+									<div class="col-12 row justify-content-around">
 										<div>
 											<label>Fecha</label>
-											<input type="date" name="fechacliente" id="fechacliente" class="form-control" value="<?php echo date("Y-m-d");?>">
+											<input type="date" name="fechacliente" id="fechacliente" class="form-control form-control-sm" value="<?php echo date("Y-m-d");?>">
 										</div>
 										<div>
 											<label>Cuenta</label>
-											<!-- <input type="text" name="cuentacliente" id="cuentacliente" class="form-control"> -->
-											<select name="cuenta" id="cuentacliente" class="form-control limpiar" required>
+											<!-- <input type="text" name="cuentacliente" id="cuentacliente" class="form-control form-control-sm"> -->
+											<select name="cuenta" id="cuentacliente" class="form-control form-control-sm limpiar" required>
 											</select>
 										</div>
 										<div>
 											<label>Tipo de cambio</label>
-											<input type="text" name="tipocambiocliente" id="tipocambiocliente" class="form-control">
+											<input type="text" name="tipocambiocliente" id="tipocambiocliente" class="form-control form-control-sm">
 										</div>
 									</div>
+									<br>
 									<div class="col-12 row justify-content-center">
 										<table id="dt_pagos_cliente" class="table table-bordered table-striped display" cellspacing="0" width="100%">
 											<thead></tr>

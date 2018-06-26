@@ -64,6 +64,8 @@
 			break;
 
 		case 'agregarcotizacion':
+			$usuariologin = $_POST['usuariologin'];
+			$dplogin = $_POST['dplogin'];
 			$numerocotizacion = $_POST['numerocotizacion'];
 			$fechacotizacion = $_POST['fechacotizacion'];
 			$vendedor = $_POST['vendedor'];
@@ -243,19 +245,18 @@
 		if (!$resultado) {
 			verificar_resultado($resultado);
 		}else{
-
-			$descripcion = "Se creo la cotizacion ".$numerocotizacion;
-			$fechahora = date("Y-m-d G:i:s");
-			$query = "INSERT INTO movimientosusuarios (cotizacion, departamento, usuario, tipomovimiento, descripcion, fechahora) VALUES ('$numerocotizacion', '$dplogin', '$usuariologin', 'Registro', '$descripcion', '$fechahora')";
-			$resultado = mysqli_query($conexion_usuarios, $query);
-			if (!$resultado) {
-				$informacion["respuesta"] = "ERROR";
-				$informacion["informacion"] = "Ocurrió un problema al generar la cotización!";
-			}else{
+			// $descripcion = "Se creo la cotizacion ".$numerocotizacion;
+			// $fechahora = date("Y-m-d G:i:s");
+			// $query = "INSERT INTO movimientosusuarios (cotizacion, departamento, usuario, tipomovimiento, descripcion, fechahora) VALUES ('$numerocotizacion', '$dplogin', '$usuariologin', 'Registro', '$descripcion', '$fechahora')";
+			// $resultado = mysqli_query($conexion_usuarios, $query);
+			// if (!$resultado) {
+			// 	$informacion["respuesta"] = "ERROR";
+			// 	$informacion["informacion"] = "Ocurrió un problema al generar la cotización!";
+			// }else{
 				$informacion['respuesta'] = "agregarcotizacion";
 				$informacion['numero'] = $numerocotizacion;
 				echo json_encode($informacion);
-			}
+			// }
 		}
 		mysqli_close($conexion_usuarios);
 	}

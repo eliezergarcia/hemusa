@@ -251,7 +251,7 @@
 				      	<div class="modal-body">
 									<div class="text-center">
 										<div class="text-warning"><span class="modal-main-icon mdi mdi-alert-triangle"></span></div>
-										<h4>El cliente no tiene asginado ninguna clasificación,</h4>
+										<h4>El cliente no tiene asignado ninguna clasificación,</h4>
 										<h4>asignala para poder cotizar.</h4>
 										<h5>Selecciona una opción:</h5>
 											<div class="row justify-content-center col-12">
@@ -902,10 +902,10 @@
 						document.getElementById("marca").disabled = true;
 						document.getElementById("marca2").disabled = false;
 						document.getElementById("valorNacional").disabled = false;
-	                    document.getElementById("valorAmericano").disabled = false;
-	                    document.getElementById("valorOtro").disabled = false;
-	                    document.getElementById("valorNinguno").disabled = true;
-	                    $("#frmAgregarPartida #noExisteProducto").val("noExisteProducto");
+            document.getElementById("valorAmericano").disabled = false;
+            document.getElementById("valorOtro").disabled = false;
+            document.getElementById("valorNinguno").disabled = true;
+            $("#frmAgregarPartida #noExisteProducto").val("noExisteProducto");
 						$("#frmAgregarPartida #descripcion").val("");
 						$("#frmAgregarPartida #claveSat").val("");
 						$("#frmAgregarPartida #precioUnitario").val("");
@@ -954,12 +954,12 @@
 				success : function(data) {
 	      	if(data.data.clase == 'E'){
 	      		console.log(data);
-	          	document.getElementById("valorNacional").disabled = false;
-	              document.getElementById("valorAmericano").disabled = false;
-	              document.getElementById("valorOtro").disabled = false;
-	              $("#frmAgregarPartida #noExisteProducto").val("");
-	              $("#frmAgregarPartida #idproducto").val(data.data.IdProducto);
-	              $("#frmAgregarPartida #marca").val(data.data.marca);
+          	document.getElementById("valorNacional").disabled = false;
+            document.getElementById("valorAmericano").disabled = false;
+            document.getElementById("valorOtro").disabled = false;
+            $("#frmAgregarPartida #noExisteProducto").val("");
+            $("#frmAgregarPartida #idproducto").val(data.data.IdProducto);
+            $("#frmAgregarPartida #marca").val(data.data.marca);
 						$("#frmAgregarPartida #descripcion").val(data.data.descripcion);
 						$("#frmAgregarPartida #claveSat").append("<option>" + data.data.ClaveProductoSAT + "</option>");
 						if (data.data.ClaveProductoSAT == "") {
@@ -970,9 +970,8 @@
 								dataType: "json",
 								data: {"opcion": opcion, "descripcion": data.data.descripcion},
 								success : function(data) {
-									console.log("Hola");
-					            	var claves = data;
-					            	console.log(claves);
+		            	var claves = data;
+		            	console.log(claves);
 									$('#claveSat').empty();
 									$("#claveSat").append("<option>Selecciona CS</option>");
 									for(var i=0;i<claves.length;i = i+2){
@@ -1030,13 +1029,13 @@
 						$("#frmAgregarPartida #unidad").val(data.data.Unidad);
 						$("#frmAgregarPartida #tedias").val(data.tiempoEntrega);
 					}else{
-	                	console.log(data);
-	                	document.getElementById("valorNacional").disabled = true;
-	                    document.getElementById("valorAmericano").disabled = true;
-	                    document.getElementById("valorOtro").disabled = true;
-	                    document.getElementById("valorNinguno").disabled = false;
-	                    $("#frmAgregarPartida #noExisteProducto").val("");
-	                    $("#frmAgregarPartida #idproducto").val(data.data.IdProducto);
+          	console.log(data);
+          	document.getElementById("valorNacional").disabled = true;
+            document.getElementById("valorAmericano").disabled = true;
+            document.getElementById("valorOtro").disabled = true;
+            document.getElementById("valorNinguno").disabled = false;
+            $("#frmAgregarPartida #noExisteProducto").val("");
+            $("#frmAgregarPartida #idproducto").val(data.data.IdProducto);
 						$("#frmAgregarPartida #descripcion").val(data.data.descripcion);
 						$("#frmAgregarPartida #claveSat").append("<option>" + data.data.ClaveProductoSAT + "</option>");
 						if (data.data.ClaveProductoSAT == "") {
