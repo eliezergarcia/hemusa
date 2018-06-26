@@ -215,10 +215,11 @@
 		$resultado = mysqli_query($conexion_usuarios, $query);
 		while($data = mysqli_fetch_assoc($resultado)){
 			$arreglo['data'] = array_map("utf8_encode", $data);
+			$precioBase = $data['precioBase'];
 			if($data['igi'] == 0){
-				$arreglo['data']['igi'] = $data['igi'] + 1;
+				$arreglo['data']['igi'] = $precioBase * $data['igi'];
 			}else{
-				$arreglo['data']['igi'] = $data['igi'] + 1;
+				$arreglo['data']['igi'] = $precioBase * $data['igi'];
 			}
 			$IdMarca = $data['IdMarca'];
 		}
@@ -263,7 +264,7 @@
 						$arreglo['igi'] = "no";
 					}else{
 						while($data = mysqli_fetch_assoc($resultado)){
-							$arreglo['igi']['igi'] = $data['igi'] + 1;
+							$arreglo['igi']['igi'] = $precioBase * $data['igi'];
 						}
 					}
 				}
