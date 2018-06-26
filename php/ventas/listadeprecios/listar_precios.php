@@ -48,12 +48,12 @@
 				}
 
 				if ($excepcion == 1) {
-					$costo = ($data['precioBase'] * $descuento);
-					$precioLista = (($data['precioBase'] * $factor) * $descuento) + ($data['precioBase'] * $igi);
+					$costo = $data['precioBase'];
+					$precioLista = ($data['precioBase'] * $factor) + ($data['precioBase'] * $igi);
 					$precioIVA = $precioLista * 1.16;
 				}else{
-					$costo = ($data['precioBase'] * $descuento);
-					$precioLista = (($data['precioBase'] * $factor) * $descuento) + ($data['precioBase'] * $igi);
+					$costo = $data['precioBase'];
+					$precioLista = ($data['precioBase'] * $factor) + ($data['precioBase'] * $igi);
 					$precioIVA = $precioLista * 1.16;
 				}
 
