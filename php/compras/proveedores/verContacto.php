@@ -107,8 +107,8 @@
 																		<thead>
 																			<tr>
 																				<th>#</th>
-																				<th>Enviado</th>
-																				<th>Recibido</th>
+																				<th>Enviado <input type="checkbox" class="btn btn-outline-primary" name="selenviado" onclick="seleccionartodo()"></th>
+																				<th>Recibido <input type="checkbox" class="btn btn-outline-primary" name="selrecibido" onclick="seleccionartodo()"></th>
 																				<th>Marca</th>
 																				<th>Modelo</th>
 																				<th>Cantidad</th>
@@ -148,7 +148,7 @@
 															<!-- Listar ordenes de compra -->
 																<div id="listar_ordenesdecompra">
 																	<br>
-																	<center><h4><b>Remisiones</b></h4></center>
+																	<center><h4><b>Ordenes de compra</b></h4></center>
 																	<table id="dt_listar_ordenesdecompra" class="table table-striped table-hover display compact" cellspacing="0" width="100%">
 																		<thead>
 																			<tr>
@@ -440,6 +440,24 @@
 		guardar();
 	});
 
+	function seleccionartodo(){
+		$("input[name=enviado]").each(function (index) {
+			if($("input[name=selenviado]").is(':checked')){
+				$('input[name=enviado]').prop('checked' , true);
+			}else{
+				$('input[name=enviado]').prop('checked' , false);
+			}
+		});
+
+		$("input[name=recibido]").each(function (index) {
+			if($("input[name=selrecibido]").is(':checked')){
+				$('input[name=recibido]').prop('checked' , true);
+			}else{
+				$('input[name=recibido]').prop('checked' , false);
+			}
+		});
+	}
+
 	function buscarDatosCliente(){
 			$("#frmAgregarCotizacion #contactoCliente").val("");
 			$("#frmAgregarCotizacion #moneda").val("");
@@ -636,17 +654,17 @@
 	        },
 	        "columns":[
 			  {"data": "indice"},
-			  {"data": "enviado"},
-			  {"data": "recibir"},
-	          {"data": "marca"},
+			  {"data": "enviado", "sortable": false},
+			  {"data": "recibir", "sortable": false},
+	      {"data": "marca"},
 			  {"data": "modelo"},
 			  {"data": "cantidad"},
-	          {"data": "descripcion"},
-	          {"data": "cliente"},
-	          {"data": "pedido"},
-	          {"data": "fecha"},
-	          {"data": "costo"}
-	        ],
+        {"data": "descripcion"},
+        {"data": "cliente"},
+        {"data": "pedido"},
+        {"data": "fecha"},
+        {"data": "costo"}
+      ],
 			"columnDefs": [
 				{ "width": "15%", "targets": 7 },
 				{ "width": "6%", "targets": 9 }
@@ -730,7 +748,7 @@
 								}).done( function( data ){
 									console.log(data);
 									mostrar_mensaje(data);
-									listar_sinrecibido();
+									$("#dt_listar_sinrecibido").DataTable().ajax.reload();
 								});
 		                	}
 						}
@@ -766,7 +784,7 @@
 								}).done( function( data ){
 									console.log(data);
 									mostrar_mensaje(data);
-									listar_sinrecibido();
+									$("#dt_listar_sinrecibido").DataTable().ajax.reload();
 								});
 		                	}
 		                }
