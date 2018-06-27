@@ -142,39 +142,39 @@
               </div>
               <div class="modal-body row justify-content-center">
                 <div class="row justify-content-center form-group col-12">
-                  <label for="fechaPedimento" class="col-4">Fecha pedimento:</label>
-                  <input type="date" class="form-control form-control-sm col-6" name="fechaPedimento" id="fechaPedimento" value="<?php echo date("Y-m-d"); ?>" required>
+                  <label for="fechaPedimento" class="col-4">Fecha pedimento: <font color="#FF4136">*</font></label>
+                  <input type="date" class="form-control form-control-sm col-6" name="fechaPedimento" id="fechaPedimento" value="" required>
                 </div>
                 <div class="row justify-content-center form-group col-12">
-                  <label for="numeroPedimento" class="col-4">Número pedimento:</label>
+                  <label for="numeroPedimento" class="col-4">Número pedimento: <font color="#FF4136">*</font></label>
                   <input type="text" class="form-control form-control-sm col-6" name="numeroPedimento" id="numeroPedimento" required>
                 </div>
                 <div class="row justify-content-center form-group col-12">
-                  <label for="aduana" class="col-4">Aduana:</label>
+                  <label for="aduana" class="col-4">Aduana: <font color="#FF4136">*</font></label>
                   <input type="text" class="form-control form-control-sm col-6" name="aduana" id="aduana" value="Nuevo Laredo">
                 </div>
                 <div class="row justify-content-center form-group col-12">
-                  <label for="valorAduana" class="col-4">Valor aduana:</label>
+                  <label for="valorAduana" class="col-4">Valor aduana: <font color="#FF4136">*</font></label>
                   <input type="text" class="form-control form-control-sm col-6" name="valorAduana" id="valorAduana" value="" required>
                 </div>
                 <div class="row justify-content-center form-group col-12">
-                  <label for="cnt" class="col-4">CNT</label>
+                  <label for="cnt" class="col-4">CNT: <font color="#FF4136">*</font></label>
                   <input type="text" class="form-control form-control-sm col-6" name="cnt" id="cnt" value="" required>
                 </div>
                 <div class="row justify-content-center form-group col-12">
-                  <label for="dta" class="col-4">DTA</label>
+                  <label for="dta" class="col-4">DTA: <font color="#FF4136">*</font></label>
                   <input type="text" class="form-control form-control-sm col-6" name="dta" id="dta" value="" required>
                 </div>
                 <div class="row justify-content-center form-group col-12">
-                  <label for="prv" class="col-4">PRV</label>
+                  <label for="prv" class="col-4">PRV: <font color="#FF4136">*</font></label>
                   <input type="text" class="form-control form-control-sm col-6" name="prv" id="prv" value="" required>
                 </div>
                 <div class="row justify-content-center form-group col-12">
-                  <label for="igi" class="col-4">IGI</label>
+                  <label for="igi" class="col-4">IGI: <font color="#FF4136">*</font></label>
                   <input type="text" class="form-control form-control-sm col-6" name="igi" id="igi" value="" required>
                 </div>
                 <div class="row justify-content-center form-group col-12">
-                  <label for="iva" class="col-4">IVA</label>
+                  <label for="iva" class="col-4">IVA: <font color="#FF4136">*</font></label>
                   <input type="text" class="form-control form-control-sm col-6" name="iva" id="iva" value="" required>
                 </div>
               </div>
@@ -410,7 +410,7 @@
         var data = table.row( $(this).parents("tr") ).data();
         console.log(data);
         $("#frmEditarPedimento #idpedimento").val(data.id),
-        $("#frmEditarPedimento #fecha").val(data.fecha),
+        $("#frmEditarPedimento #fechaPedimento").val(data.fecha),
         $("#frmEditarPedimento #numeroPedimento").val(data.numero_pedimento),
         $("#frmEditarPedimento #aduana").val(data.aduana),
         $("#frmEditarPedimento #valorAduana").val(data.valor_aduana),
