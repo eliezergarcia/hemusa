@@ -1,0 +1,119 @@
+<?php
+	include('../../conexion.php');
+	// error_reporting(0);
+	$opcion = $_POST['opcion'];
+
+	switch ($opcion) {
+		case 'nacional':
+			nacional($conexion_usuarios);
+			break;
+
+    case 'partidasnacional':
+      $folio = $_POST['folio'];
+			partidas_nacional($folio, $conexion_usuarios);
+			break;
+
+    case 'importacion':
+			importacion($conexion_usuarios);
+			break;
+
+    case 'partidasimportacion':
+      $pedimento = $_POST['pedimento'];
+			partidas_importacion($pedimento, $conexion_usuarios);
+			break;
+  }
+
+  function nacional($conexion_usuarios){
+    $query = "SELECT DISTINCT folio FROM utilidad_pedido WHERE folio != '' AND folio != 0 ORDER BY id DESC LIMIT 100";
+    $resultado = mysqli_query($conexion_usuarios, $query);
+
+    if(!$resultado){
+			die('Error');
+		}else{
+			while($data = mysqli_fetch_assoc($resultado)){
+        $arreglo['data'][] = array(
+  				'folio' => $data['folio']
+  			);
+			}
+		}
+    echo json_encode($arreglo);
+		mysqli_close($conexion_usuarios);
+  }
+
+  function partidas_nacional($folio, $conexion_usuarios){
+		$query = "SELECT * FROM utilidad_pedido WHERE folio = '$folio'";
+		$resultado = mysqli_query($conexion_usuarios, $query);
+
+		if (mysqli_num_rows($resultado) > 0) {
+			$i = 1;
+			while($data = mysqli_fetch_assoc($resultado)){
+				$arreglo["data"][] = array(
+					'indice' => $i,
+					'id' => $data['id'],
+					'enviado' => $data['fecha_enviado'],
+					'recibido' => $data['fecha_llegada'],
+					'marca' => $data['marca'],
+					'modelo' => $data['modelo'],
+					'cantidad' => $data['cantidad'],
+					'descripcion' => $data['descripcion'],
+					'proveedor' => utf8_encode($proveedor),
+					'entrada' => $data['entrada'],
+					'cliente' => utf8_encode($cliente),
+					'pedido' => $data['orden_compra'],
+					'fecha' => $data['fecha_orden_compra']
+				);
+				$i++;
+			}
+		}
+
+		echo json_encode($arreglo, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_PARTIAL_OUTPUT_ON_ERROR);
+		mysqli_close($conexion_usuarios);
+	}
+
+  function importacion($conexion_usuarios){
+    $query = "SELECT DISTINCT Pedimento FROM utilidad_pedido WHERE Pedimento != '' AND Pedimento != 0 ORDER BY id DESC LIMIT 100";
+    $resultado = mysqli_query($conexion_usuarios, $query);
+
+    if(!$resultado){
+			die('Error');
+		}else{
+			while($data = mysqli_fetch_assoc($resultado)){
+        $arreglo['data'][] = array(
+  				'pedimento' => $data['Pedimento']
+  			);
+			}
+		}
+    echo json_encode($arreglo);
+		mysqli_close($conexion_usuarios);
+  }
+
+  function partidas_importacion($pedimento, $conexion_usuarios){
+		$query = "SELECT * FROM utilidad_pedido WHERE Pedimento = '$pedimento'";
+		$resultado = mysqli_query($conexion_usuarios, $query);
+
+		if (mysqli_num_rows($resultado) > 0) {
+			$i = 1;
+			while($data = mysqli_fetch_assoc($resultado)){
+				$arreglo["data"][] = array(
+					'indice' => $i,
+					'id' => $data['id'],
+					'enviado' => $data['fecha_enviado'],
+					'recibido' => $data['fecha_llegada'],
+					'marca' => $data['marca'],
+					'modelo' => $data['modelo'],
+					'cantidad' => $data['cantidad'],
+					'descripcion' => $data['descripcion'],
+					'proveedor' => utf8_encode($proveedor),
+					'entrada' => $data['entrada'],
+					'cliente' => utf8_encode($cliente),
+					'pedido' => $data['orden_compra'],
+					'fecha' => $data['fecha_orden_compra']
+				);
+				$i++;
+			}
+		}
+
+		echo json_encode($arreglo, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_PARTIAL_OUTPUT_ON_ERROR);
+		mysqli_close($conexion_usuarios);
+	}
+?>

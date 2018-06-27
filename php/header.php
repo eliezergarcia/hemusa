@@ -127,6 +127,8 @@
                       </li>
                       <li><a href="<?php echo $ruta; ?>php/compras/pedimentos/pedimentos.php"><i class="fas fa-warehouse"></i> Pedimentos</a>
                       </li>
+											<li><a href="<?php echo $ruta; ?>php/compras/controldesalida/controldesalida.php"><i class=""></i> Control de salida</a>
+                      </li>
                     </ul>
                   </li>
 					<li class="parent"><a href="#"><i class="icon far fa-credit-card"></i><span>Créditos y cobranza</span></a>
