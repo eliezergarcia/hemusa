@@ -95,7 +95,7 @@
             "className": "btn btn-lg btn-space btn-secondary",
             buttons: [
               {
-                text: '<i class="fas fa-print fa-lg" aria-hidden="true"></i> Compras',
+                text: '<i class="fas fa-print fa-lg" aria-hidden="true"></i> Almacen',
                 // "className": "btn btn-warning",
                 action: function (e, dt, node, config){
                   var opcion = "imprimir";
@@ -111,7 +111,6 @@
                   var opcion = "imprimir";
                   var opcion2 = "facturacion";
                   var numeroImportacion = prompt("Ingresa el número de importacion: ");
-                  var surtidopor = prompt("Surtido por: ");
 
                   genPDF(opcion, opcion2, numeroImportacion, surtidopor);
                 },
@@ -184,27 +183,15 @@
         doc.text("IMPORTACION # " + numeroImportacion, 533, 135)
         doc.text("PEDIMENTO  " + pedimento, 533, 155)
         doc.text("FOLIO  # ", 650, 175)
-        if (opcion2 == "facturacion"){
-          doc.setFontSize(11);
-          doc.text("SURTIDO POR: " + surtidopor, 325, 175)
-        }
 
         doc.autoTable(columns, rows, {
-          theme: 'striped',
+          theme: 'grid',
           margin: {top: 185, right: 20, bottom: 20, left: 20},
           tableWidth: 'auto',
           styles: {overflow: 'hidden', cellPadding: 5, fontSize: 9, rowHeight: 13, pageBreak: 'always', showHeader: 'firstPage'},
           // columnStyles: {0: {columnWidth: '5%'}}
         });
 
-        if (opcion2 == "compras"){
-          doc.setFontSize(20);
-          doc.setFontStyle('bold');
-          doc.line(250, doc.autoTable.previous.finalY  + 110, 600, doc.autoTable.previous.finalY  + 110)
-          doc.setFontStyle('normal');
-          doc.setFontSize(12);
-          doc.text("FIRMA DE QUIEN REVISA", 350, doc.autoTable.previous.finalY  + 125);
-        }
         if (opcionPDF == "imprimir") {
           doc.autoPrint();
         }

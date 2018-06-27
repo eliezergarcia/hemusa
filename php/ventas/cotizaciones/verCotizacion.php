@@ -1467,7 +1467,7 @@
 				doc.autoTable(columns, rows, {
 					theme: 'grid',
 					startY: 325,
-	                margin: {right: 20, bottom: 20, left: 20},
+	        margin: {right: 20, bottom: 20, left: 20},
 					tableWidth: 'auto',
 					styles: {overflow: 'visible', cellPadding: 6, fontSize: 7, rowHeight: 15, pageBreak: 'auto', columnWidth: 'auto'},
 				});

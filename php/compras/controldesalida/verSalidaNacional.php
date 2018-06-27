@@ -108,7 +108,7 @@
             "className": "btn btn-lg btn-space btn-secondary",
             buttons: [
               {
-                text: '<i class="fas fa-print fa-lg" aria-hidden="true"></i> Compras',
+                text: '<i class="fas fa-print fa-lg" aria-hidden="true"></i> Almacen',
                 // "className": "btn btn-warning",
                 action: function (e, dt, node, config){
                   var opcion = "imprimir";
@@ -122,9 +122,8 @@
                 action: function (e, dt, node, config){
                   var opcion = "imprimir";
                   var opcion2 = "facturacion";
-                  var surtidopor = prompt("Surtido por: ");
 
-                  genPDF(opcion, opcion2, surtidopor);
+                  genPDF(opcion, opcion2);
                 },
               }
             ]
@@ -158,7 +157,7 @@
           ];
         }else{
           var columns = [
-            {title: "#", dataKey: "indice"},
+            {title: "#   ", dataKey: "indice"},
             {title: "Cliente", dataKey: "cliente"},
             {title: "Pedido cliente", dataKey: "pedidocliente"},
             {title: "Marca", dataKey: "marca"},
@@ -166,7 +165,7 @@
             {title: "Cant.", dataKey: "cantidad"},
             {title: "Remision"},
             {title: "Factura"},
-            {title: "Observaciones"},
+            {title: "Observaciones                    "},
             {title: "Proveedor", dataKey: "proveedor"},
             {title: "Fact. Proveedor", dataKey: "facturaproveedor"},
           ];
@@ -195,16 +194,14 @@
         doc.text("FECHA:  " + data.fecha, 30, 135)
         doc.text("COMPRA NACIONAL", 533, 135)
         doc.text("FOLIO #" + folio, 700, 155)
-        if (opcion2 == "facturacion"){
-          doc.setFontSize(11);
-          doc.text("SURTIDO POR: " + surtidopor, 325, 155)
-        }
 
         doc.autoTable(columns, rows, {
-          theme: 'striped',
-          margin: {top: 165, right: 20, bottom: 20, left: 20},
+          theme: 'grid',
+          // margin: {top: 165, right: 20, bottom: 20, left: 20},
+          startY: 170,
+          margin: {right: 20, bottom: 20, left: 20},
           tableWidth: 'auto',
-          styles: {overflow: 'hidden', cellPadding: 5, fontSize: 9, rowHeight: 13, pageBreak: 'always', showHeader: 'firstPage'},
+          styles: {overflow: 'visible', cellPadding: 6, fontSize: 9, rowHeight: 15, pageBreak: 'auto', columnWidth: 'auto'},
           // columnStyles: {0: {columnWidth: '5%'}}
         });
 
