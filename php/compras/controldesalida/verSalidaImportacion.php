@@ -77,17 +77,13 @@
 				},
 				"columns":[
           {"data":'indice'},
-          {"data":'enviado'},
-          {"data":'recibido'},
           {"data":'marca'},
           {"data":'modelo'},
           {"data":'cantidad'},
-          {"data":'descripcion'},
-          {"data":'proveedor'},
-          {"data":'entrada'},
+          {"defaultContent": ''},
           {"data":'cliente'},
-          {"data":'pedido'},
-          {"data":'fecha'}
+          {"data":'proveedor'},
+          {"data":'facturaproveedor'}
 				],
 				"language": idioma_espanol,
 				"dom":

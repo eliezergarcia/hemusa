@@ -41,26 +41,39 @@
   }
 
   function partidas_nacional($folio, $conexion_usuarios){
-		$query = "SELECT * FROM utilidad_pedido WHERE folio = '$folio'";
+		$query = "SELECT * FROM utilidad_pedido WHERE folio = '$folio' ORDER BY marca ASC";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 
 		if (mysqli_num_rows($resultado) > 0) {
+
 			$i = 1;
 			while($data = mysqli_fetch_assoc($resultado)){
+				$cliente = $data['cliente'];
+				$proveedor = $data['proveedor'];
+
+				$query = "SELECT nombreEmpresa FROM contactos WHERE id = '$cliente'";
+				$resultadocliente = mysqli_query($conexion_usuarios, $query);
+				while($datacliente = mysqli_fetch_assoc($resultadocliente)){
+					$cliente = $datacliente['nombreEmpresa'];
+				}
+
+				$query = "SELECT nombreEmpresa FROM contactos WHERE id = '$proveedor'";
+				$resultadoproveedor = mysqli_query($conexion_usuarios, $query);
+				while($dataproveedor = mysqli_fetch_assoc($resultadoproveedor)){
+					$proveedor = $dataproveedor['nombreEmpresa'];
+				}
+
+
 				$arreglo["data"][] = array(
 					'indice' => $i,
 					'id' => $data['id'],
-					'enviado' => $data['fecha_enviado'],
-					'recibido' => $data['fecha_llegada'],
 					'marca' => $data['marca'],
 					'modelo' => $data['modelo'],
 					'cantidad' => $data['cantidad'],
 					'descripcion' => $data['descripcion'],
-					'proveedor' => utf8_encode($proveedor),
-					'entrada' => $data['entrada'],
 					'cliente' => utf8_encode($cliente),
-					'pedido' => $data['orden_compra'],
-					'fecha' => $data['fecha_orden_compra']
+					'proveedor' => utf8_encode($proveedor),
+					'facturaproveedor' => $data['factura_proveedor']
 				);
 				$i++;
 			}

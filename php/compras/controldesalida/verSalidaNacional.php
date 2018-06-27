@@ -33,17 +33,13 @@
 												<thead>
 													<tr>
                             <th>#</th>
-                            <th>Enviado</th>
-                            <th>Recibido</th>
                             <th>Marca</th>
                             <th>Modelo</th>
                             <th>Cantidad</th>
-                            <th>Descripcion</th>
-                            <th>Proveedor</th>
-                            <th>Entrada</th>
+                            <th>Recibido</th>
                             <th>Cliente</th>
-                            <th>Pedido</th>
-                            <th>Fecha</th>
+                            <th>Proveedor</th>
+                            <th>Factura Proveedor</th>
 													</tr>
 												</thead>
 											</table>
@@ -77,17 +73,13 @@
 				},
 				"columns":[
           {"data":'indice'},
-          {"data":'enviado'},
-          {"data":'recibido'},
           {"data":'marca'},
           {"data":'modelo'},
           {"data":'cantidad'},
-          {"data":'descripcion'},
-          {"data":'proveedor'},
-          {"data":'entrada'},
+          {"defaultContent": ''},
           {"data":'cliente'},
-          {"data":'pedido'},
-          {"data":'fecha'}
+          {"data":'proveedor'},
+          {"data":'facturaproveedor'}
 				],
 				"language": idioma_espanol,
 				"dom":
