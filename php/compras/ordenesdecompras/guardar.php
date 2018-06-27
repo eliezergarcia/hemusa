@@ -1,6 +1,7 @@
 <?php
 	include('../../conexion.php');
-	error_reporting(0);
+	// error_reporting(0
+
 
 	$opcion = $_POST['opcion'];
 
@@ -37,6 +38,11 @@
 			editar_partida($idherramienta, $precioUnitario, $fechaCompromiso, $conexion_usuarios);
 			break;
 
+		case 'cambiarMoneda':
+			$ordenCompra = $_POST['ordenCompra'];
+			cambiar_moneda($ordenCompra, $conexion_usuarios);
+			break;
+
 		case 'crearordencompra':
 			$proveedor  = $_POST['proveedor'];
 			$saludo = $_POST['saludo'];
@@ -45,11 +51,48 @@
 			break;
 	}
 
+	function cambiar_moneda($ordenCompra, $conexion_usuarios){
+		$query = "SELECT moneda FROM ordendecompras WHERE noDePedido = '$ordenCompra'";
+		$resultado = mysqli_query($conexion_usuarios, $query);
+
+		if (!$resultado) {
+			$informacion["respuesta"] = "ERROR";
+			$informacion["informacion"] = "Ocurrió un problema al intentar modificar la moneda de la Orden de compra!";
+		}else{
+			while($data = mysqli_fetch_assoc($resultado)){
+				$monedaorden = $data['moneda'];
+			}
+
+			if($monedaorden == "usd"){
+				$moneda = "mxn";
+			}else{
+				$moneda = "usd";
+			}
+
+			$query = "UPDATE utilidad_pedido SET moneda_pedido ='$moneda' WHERE orden_compra='$ordenCompra'";
+			$resultado = mysqli_query($conexion_usuarios, $query);
+
+			$query = "UPDATE ordendecompras SET moneda ='$moneda' WHERE noDePedido='$ordenCompra'";
+			$resultado = mysqli_query($conexion_usuarios, $query);
+
+			if (!$resultado) {
+				$informacion["respuesta"] = "ERROR";
+				$informacion["informacion"] = "Ocurrió un problema al intentar modificar la información de la cotización!";
+			}else{
+				$informacion["respuesta"] = "BIEN";
+				$informacion["informacion"] = "La moneda se cambio y la información se modificó correctamente!";
+			}
+		}
+		echo json_encode($informacion);
+    mysqli_close($conexion_usuarios);
+	}
+
 	function crear_orden_compra($proveedor, $saludo, $iddireccionenvio, $conexion_usuarios){
-		$query = "SELECT id FROM contactos WHERE nombreEmpresa LIKE '%$proveedor%' LIMIT 1";
+		$query = "SELECT id,moneda FROM contactos WHERE nombreEmpresa LIKE '%$proveedor%' LIMIT 1";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 		while($data = mysqli_fetch_assoc($resultado)){
 			$idproveedor = $data['id'];
+			$monedaproveedor = $data['moneda'];
 			$proveedor = strtoupper($proveedor);
 		}
 
@@ -79,7 +122,7 @@
 	     			$direccionenvio = $data['address'];
 	     		}
 	     		$fecha = date("Y").'-'.date("m").'-'.date("d");
-	     		$query = "INSERT INTO ordendecompras (nodePedido, fecha, proveedor, texto, envia_a) VALUES ('$numeroOC', '$fecha', '$idproveedor', '$saludo', '$direccionenvio')";
+	     		$query = "INSERT INTO ordendecompras (nodePedido, fecha, proveedor, texto, envia_a, moneda) VALUES ('$numeroOC', '$fecha', '$idproveedor', '$saludo', '$direccionenvio', '$monedaproveedor')";
 				$resultado = mysqli_query($conexion_usuarios, $query);
 				if(!$resultado){
 					verificar_resultado($resultado);

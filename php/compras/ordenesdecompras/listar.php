@@ -1,5 +1,5 @@
-<?php 
-	
+<?php
+
 	include("../../conexion.php");
 
 	$opcion = $_POST['opcion'];
@@ -37,10 +37,10 @@
 			partidasocdescripcion($ordencompra, $conexion_usuarios);
 			break;
 	}
-	
+
 	function ordenesdecompras($conexion_usuarios){
-		$query = "SELECT ordendecompras.id, ordendecompras.noDePedido, ordendecompras.Fecha, ordendecompras.proveedor, 
-		contactos.nombreEmpresa, usuarios.nombre as contacto FROM ordendecompras LEFT JOIN contactos on contactos.id=ordendecompras.proveedor 
+		$query = "SELECT ordendecompras.id, ordendecompras.noDePedido, ordendecompras.Fecha, ordendecompras.proveedor,
+		contactos.nombreEmpresa, usuarios.nombre as contacto FROM ordendecompras LEFT JOIN contactos on contactos.id=ordendecompras.proveedor
 		INNER JOIN usuarios on usuarios.id=ordendecompras.contacto  WHERE terminado='0000-00-00' ORDER BY fecha DESC LIMIT 999";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 
@@ -54,16 +54,16 @@
 					'contacto' => $data['contacto'],
 					'fecha' => $data['Fecha']
 				);
-						
+
 			}
 		}
 
-		echo json_encode($arreglo, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_PARTIAL_OUTPUT_ON_ERROR);	
+		echo json_encode($arreglo, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_PARTIAL_OUTPUT_ON_ERROR);
 	}
 
 	function backorder($conexion_usuarios){
 		$query ="SELECT cotizacionherramientas.*, contactos.nombreEmpresa FROM cotizacionherramientas INNER JOIN contactos
-		 ON contactos.id = cotizacionherramientas.cliente WHERE  pedido='si' AND noDePedido != '' AND enviadoFecha != '0000-00-00' 
+		 ON contactos.id = cotizacionherramientas.cliente WHERE  pedido='si' AND noDePedido != '' AND enviadoFecha != '0000-00-00'
 		AND pedidoFecha > '2015-01-01' AND recibidoFecha ='0000-00-00' AND Entregado ='0000-00-00' ORDER BY Proveedor DESC, pedidoFecha DESC";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 
@@ -72,7 +72,7 @@
 		}else{
 			$i = 1;
 			while($data = mysqli_fetch_assoc($resultado)){
-				
+
 				$arreglo['data'][] = array(
 					'id' => $data['id'],
 					'indice' => $i,
@@ -90,12 +90,12 @@
 				$i++;
 			}
 		}
-		echo json_encode($arreglo, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_PARTIAL_OUTPUT_ON_ERROR);	
+		echo json_encode($arreglo, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_PARTIAL_OUTPUT_ON_ERROR);
 	}
 
 	function sinenviar($conexion_usuarios){
 		$query ="SELECT cotizacionherramientas.*, contactos.nombreEmpresa FROM cotizacionherramientas INNER JOIN contactos
-		 ON contactos.id = cotizacionherramientas.cliente WHERE  pedido='si' AND noDePedido != '' AND enviadoFecha = '0000-00-00' 
+		 ON contactos.id = cotizacionherramientas.cliente WHERE  pedido='si' AND noDePedido != '' AND enviadoFecha = '0000-00-00'
 		AND pedidoFecha > '2015-01-01' AND recibidoFecha ='0000-00-00' AND Entregado ='0000-00-00' ORDER BY Proveedor";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 
@@ -104,7 +104,7 @@
 		}else{
 			$i = 1;
 			while($data = mysqli_fetch_assoc($resultado)){
-				
+
 				$arreglo['data'][] = array(
 					'id' => $data['id'],
 					'indice' => $i,
@@ -122,7 +122,7 @@
 				$i++;
 			}
 		}
-		echo json_encode($arreglo, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_PARTIAL_OUTPUT_ON_ERROR);	
+		echo json_encode($arreglo, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_PARTIAL_OUTPUT_ON_ERROR);
 	}
 
 	function partidasoc($ordencompra, $conexion_usuarios){
@@ -131,13 +131,14 @@
 		while($data = mysqli_fetch_assoc($resultado)){
 			$idproveedor = $data['proveedor'];
 			$fechaoc = $data['fecha'];
+			$moneda = $data['moneda'];
 		}
 
 		$query = "SELECT * FROM contactos WHERE id = '$idproveedor'";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 		while($data = mysqli_fetch_assoc($resultado)){
 			$monedaproveedor = $data['moneda'];
-		}	
+		}
 
 		$query = "SELECT * FROM utilidad_pedido WHERE orden_compra = '$ordencompra'";
 		$resultado = mysqli_query($conexion_usuarios, $query);
@@ -156,12 +157,12 @@
 					if(mysqli_num_rows($resultadoalmacen) > 0){
 						while($dataalmacen = mysqli_fetch_array($resultadoalmacen)){
 							$almacen = $dataalmacen['enReserva'];
-						}	
+						}
 					}else{
 						$almacen = 0;
 					}
 
-					if($monedaproveedor == "usd"){
+					if($moneda == "usd"){
 						$precioUnitario = $data['costo_usd'];
 						$precioTotal = $data['costo_usd'] * $data['cantidad'];
 						$utilidad = (($data['venta_usd'] - $data['costo_usd'])/$data['venta_usd']) * 100;
@@ -190,7 +191,7 @@
 			}
 		}else{
 			$query = "SELECT * FROM cotizacionherramientas WHERE noDePedido = '$ordencompra'";
-			$resultado = mysqli_query($conexion_usuarios, $query);		
+			$resultado = mysqli_query($conexion_usuarios, $query);
 
 			if (!$resultado) {
 				verificar_resultado($resultado);
@@ -203,17 +204,17 @@
 
 					$query1 = "SELECT precioBase,enReserva,moneda FROM productos WHERE marca = '$marca' AND ref = '$modelo'";
 					$res1 = mysqli_query($conexion_usuarios, $query1);
-					
+
 					if(mysqli_num_rows($res1) > 0){
 						while($data1 = mysqli_fetch_array($res1)){
 							$precioBase = $data1['precioBase'];
-							$almacen = $data1['enReserva'];	
-							$moneda = $data1['moneda'];					
+							$almacen = $data1['enReserva'];
+							$moneda = $data1['moneda'];
 						}
 					}else{
 						$precioBase = $data['precioLista'];
-						$almacen = 0;	
-						$moneda = $data['moneda'];	
+						$almacen = 0;
+						$moneda = $data['moneda'];
 					}
 
 					$query2 = "SELECT * FROM tipocambio WHERE fecha = '$fechaoc'";
@@ -258,9 +259,9 @@
 					$i++;
 				}
 			}
-		}		
+		}
 
-		echo json_encode($arreglo, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_PARTIAL_OUTPUT_ON_ERROR);	
+		echo json_encode($arreglo, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_PARTIAL_OUTPUT_ON_ERROR);
 		mysqli_close($conexion_usuarios);
 	}
 
@@ -271,6 +272,7 @@
 			$flete = $data['flete'];
 			$idproveedor = $data['proveedor'];
 			$fechaoc = $data['fecha'];
+			$moneda = $data['moneda'];
 		}
 
 		$query = "SELECT * FROM contactos WHERE id = '$idproveedor'";
@@ -284,7 +286,7 @@
 
 		if (mysqli_num_rows($resultado) > 0) {
 			$subtotal = 0;
-			while($data = mysqli_fetch_assoc($resultado)){		
+			while($data = mysqli_fetch_assoc($resultado)){
 				if($monedaproveedor == "usd"){
 					$subtotal = $subtotal +  ($data['costo_usd'] * $data['cantidad']);
 				}else{
@@ -301,11 +303,12 @@
 				'flete' => "$ ".round($flete, 2),
 				'iva' => "$ ".round($iva, 2),
 				'total' => "$ ".round($total, 2),
-				'utilidad' => "% ".round($utilidad, 2)
+				'utilidad' => "% ".round($utilidad, 2),
+				'moneda' => strtoupper($moneda)
 			);
 		}else{
 			$query = "SELECT * FROM cotizacionherramientas WHERE noDePedido = '$ordencompra'";
-			$resultado = mysqli_query($conexion_usuarios, $query);		
+			$resultado = mysqli_query($conexion_usuarios, $query);
 
 			if (!$resultado) {
 				verificar_resultado($resultado);
@@ -323,13 +326,13 @@
 					if(mysqli_num_rows($res1) > 0){
 						while($data1 = mysqli_fetch_array($res1)){
 							$precioBase = $data1['precioBase'];
-							$almacen = $data1['enReserva'];	
-							$moneda = $data1['moneda'];					
+							$almacen = $data1['enReserva'];
+							$moneda = $data1['moneda'];
 						}
 					}else{
 						$precioBase = $data['precioLista'];
-						$almacen = 0;	
-						$moneda = $data['moneda'];	
+						$almacen = 0;
+						$moneda = $data['moneda'];
 					}
 
 					$query2 = "SELECT * FROM tipocambio WHERE fecha = '$fechaoc'";
@@ -367,10 +370,10 @@
 				);
 			}
 		}
-		echo json_encode($arreglo, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_PARTIAL_OUTPUT_ON_ERROR);	
+		echo json_encode($arreglo, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_PARTIAL_OUTPUT_ON_ERROR);
 	}
 
-	function partidasocdescripcion($ordencompra, $conexion_usuarios){	
+	function partidasocdescripcion($ordencompra, $conexion_usuarios){
 		$query = "SELECT * FROM utilidad_pedido WHERE orden_compra = '$ordencompra'";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 
@@ -428,7 +431,7 @@
 			}
 		}
 
-		echo json_encode($arreglo, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_PARTIAL_OUTPUT_ON_ERROR);	
+		echo json_encode($arreglo, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_PARTIAL_OUTPUT_ON_ERROR);
 		mysqli_close($conexion_usuarios);
 	}
 

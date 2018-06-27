@@ -103,6 +103,7 @@
                                 <th>Iva</th>
                                 <th>Total</th>
                                 <th>Utilidad Total</th>
+                                <th>Moneda  <h4><a id="cambiarmoneda" href="#" class="text-primary"><i class="fas fa-sync"></i></a></h4></th>
                               </tr>
                             </thead>
                           </table>
@@ -414,7 +415,8 @@
           {"data":'flete'},
           {"data":'iva'},
           {"data":'total'},
-          {"data":'utilidad'}
+          {"data":'utilidad'},
+          {"data":'moneda'}
         ],
         "dom":
           // "<'row be-datatable-header'>" +
@@ -484,6 +486,21 @@
         });
       });
     }
+
+    $("#cambiarmoneda").on("click", function (e) {
+			e.preventDefault();
+			var ordenCompra = "<?php  echo $_REQUEST['ordenCompra']; ?>";
+			$.ajax({
+				method: "POST",
+				url: "guardar.php",
+				dataType: "json",
+				data: {"opcion": opcion = "cambiarMoneda", "ordenCompra": ordenCompra},
+			}).done( function ( info ) {
+				mostrar_mensaje(info);
+				$("#dt_partidas_oc").DataTable().ajax.reload();
+        $("#dt_totales_oc").DataTable().ajax.reload();
+			});
+		});
   </script>
   <script src="<?php echo $ruta; ?>/php/js/idioma_espanol.js"></script>
   <script src="<?php echo $ruta; ?>/php/js/mensajes_cambios.js"></script>

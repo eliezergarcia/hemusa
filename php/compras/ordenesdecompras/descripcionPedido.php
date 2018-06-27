@@ -234,7 +234,7 @@
           {"defaultContent":'<div class="invoice-footer"><button class="editar btn btn-lg btn-primary" data-toggle="modal" data-target="#modalEditarPartida"><i class="fas fa-edit fa-sm" aria-hidden="true"></i></button></div>'}
         ],
         "order":[[3, "desc"]],
-        "searching": false,
+        // "searching": false,
         "info": false,
         "paging": false,
         "ordering": false,
