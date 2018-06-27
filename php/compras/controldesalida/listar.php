@@ -52,6 +52,19 @@
 			while($data = mysqli_fetch_assoc($resultado)){
 				$cliente = $data['cliente'];
 				$proveedor = $data['proveedor'];
+				$idherramienta = $data['id_cotizacion_herramientas'];
+
+				$query = "SELECT cotizacionRef FROM cotizacionherramientas WHERE id = '$idherramienta'";
+				$resultado2 = mysqli_query($conexion_usuarios, $query);
+				while($data2 = mysqli_fetch_assoc($resultado2)){
+					$cotizacionRef = $data2['cotizacionRef'];
+				}
+
+				$query = "SELECT NoPedClient FROM cotizacion WHERE ref = '$cotizacionRef'";
+				$resultado3 = mysqli_query($conexion_usuarios, $query);
+				while($data3 = mysqli_fetch_assoc($resultado3)){
+					$pedidoCliente = $data3['NoPedClient'];
+				}
 
 				$query = "SELECT nombreEmpresa FROM contactos WHERE id = '$cliente'";
 				$resultadocliente = mysqli_query($conexion_usuarios, $query);
@@ -73,6 +86,7 @@
 					'cantidad' => $data['cantidad'],
 					'descripcion' => $data['descripcion'],
 					'cliente' => utf8_encode($cliente),
+					'pedidocliente' => $pedidoCliente,
 					'proveedor' => utf8_encode($proveedor),
 					'facturaproveedor' => $data['factura_proveedor']
 				);

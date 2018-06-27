@@ -51,6 +51,7 @@
                             <th>Cantidad</th>
                             <th>Recibido</th>
                             <th>Cliente</th>
+                            <th>Pedido Cliente</th>
                             <th>Proveedor</th>
                             <th>Factura Proveedor</th>
 													</tr>
@@ -91,6 +92,7 @@
           {"data":'cantidad'},
           {"defaultContent": ''},
           {"data":'cliente'},
+          {"data":'pedidocliente'},
           {"data":'proveedor'},
           {"data":'facturaproveedor'}
 				],
@@ -145,6 +147,7 @@
             {title: "Cantidad", dataKey: "cantidad"},
             {title: "Recibido"},
             {title: "Cliente", dataKey: "cliente"},
+            {title: "Pedido cliente", dataKey: "pedidocliente"},
             {title: "Proveedor", dataKey: "proveedor"},
             {title: "Factura Proveedor", dataKey: "facturaproveedor"},
         ];
@@ -175,14 +178,16 @@
 
         doc.autoTable(columns, rows, {
           theme: 'striped',
-                  margin: {top: 165, right: 20, bottom: 20, left: 20},
+          margin: {top: 165, right: 20, bottom: 20, left: 20},
           tableWidth: 'auto',
-          styles: {overflow: 'visible', cellPadding: 6, fontSize: 7, rowHeight: 15, pageBreak: 'always', showHeader: 'firstPage'},
+          styles: {overflow: 'visible', cellPadding: 6, fontSize: 10, rowHeight: 15, pageBreak: 'always', showHeader: 'firstPage'},
         });
 
-        doc.setFontSize(12);
+        doc.setFontSize(20);
+        doc.setFontStyle('bold');
         doc.line(250, doc.autoTable.previous.finalY  + 110, 600, doc.autoTable.previous.finalY  + 110)
         doc.setFontStyle('normal');
+        doc.setFontSize(12);
         doc.text("FIRMA DE QUIEN REVISA", 350, doc.autoTable.previous.finalY  + 125);
         // doc.text("Favor de enviar los archivos electrónicos de facturación en formato XML y PDF a los correos:", 130, doc.autoTable.previous.finalY  + 50);
         // doc.setFontStyle('bold');
