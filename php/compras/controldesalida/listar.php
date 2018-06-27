@@ -118,30 +118,60 @@
   }
 
   function partidas_importacion($pedimento, $conexion_usuarios){
-		$query = "SELECT * FROM utilidad_pedido WHERE Pedimento = '$pedimento'";
+		$fechaFin = date("Y-m-d");
+		$fechaInicio = date("Y-01-01");
+		$query = "SELECT * FROM utilidad_pedido WHERE Pedimento = '$pedimento' AND fecha_orden_compra >='$fechaInicio' AND fecha_orden_compra <= '$fechaFin' ORDER BY marca ASC";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 
 		if (mysqli_num_rows($resultado) > 0) {
+
 			$i = 1;
 			while($data = mysqli_fetch_assoc($resultado)){
+				$cliente = $data['cliente'];
+				$proveedor = $data['proveedor'];
+				$idherramienta = $data['id_cotizacion_herramientas'];
+
+				$query = "SELECT cotizacionRef FROM cotizacionherramientas WHERE id = '$idherramienta'";
+				$resultado2 = mysqli_query($conexion_usuarios, $query);
+				while($data2 = mysqli_fetch_assoc($resultado2)){
+					$cotizacionRef = $data2['cotizacionRef'];
+				}
+
+				$query = "SELECT NoPedClient FROM cotizacion WHERE ref = '$cotizacionRef'";
+				$resultado3 = mysqli_query($conexion_usuarios, $query);
+				while($data3 = mysqli_fetch_assoc($resultado3)){
+					$pedidoCliente = $data3['NoPedClient'];
+				}
+
+				$query = "SELECT nombreEmpresa FROM contactos WHERE id = '$cliente'";
+				$resultadocliente = mysqli_query($conexion_usuarios, $query);
+				while($datacliente = mysqli_fetch_assoc($resultadocliente)){
+					$cliente = $datacliente['nombreEmpresa'];
+				}
+
+				$query = "SELECT nombreEmpresa FROM contactos WHERE id = '$proveedor'";
+				$resultadoproveedor = mysqli_query($conexion_usuarios, $query);
+				while($dataproveedor = mysqli_fetch_assoc($resultadoproveedor)){
+					$proveedor = $dataproveedor['nombreEmpresa'];
+				}
+
 				$arreglo["data"][] = array(
 					'indice' => $i,
 					'id' => $data['id'],
-					'enviado' => $data['fecha_enviado'],
-					'recibido' => $data['fecha_llegada'],
 					'marca' => $data['marca'],
 					'modelo' => $data['modelo'],
 					'cantidad' => $data['cantidad'],
 					'descripcion' => $data['descripcion'],
-					'proveedor' => utf8_encode($proveedor),
-					'entrada' => $data['entrada'],
 					'cliente' => utf8_encode($cliente),
-					'pedido' => $data['orden_compra'],
-					'fecha' => $data['fecha_orden_compra']
+					'pedidocliente' => $pedidoCliente,
+					'proveedor' => utf8_encode($proveedor),
+					'facturaproveedor' => $data['factura_proveedor']
 				);
 				$i++;
 			}
 		}
+
+		$arreglo["fecha"][] = date("d-m-Y");
 
 		echo json_encode($arreglo, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_PARTIAL_OUTPUT_ON_ERROR);
 		mysqli_close($conexion_usuarios);

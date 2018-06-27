@@ -108,19 +108,23 @@
             "className": "btn btn-lg btn-space btn-secondary",
             buttons: [
               {
-                text: '<i class="fas fa-file-pdf fa-lg"></i> Pdf',
-                // "className": "btn btn-danger",
-                action: function (e, dt, node, config){
-                  var opcion = "pdf";
-                  genPDF(opcion);
-                },
-              },
-              {
-                text: '<i class="fas fa-print fa-lg" aria-hidden="true"></i> Imprimir',
+                text: '<i class="fas fa-print fa-lg" aria-hidden="true"></i> Compras',
                 // "className": "btn btn-warning",
                 action: function (e, dt, node, config){
                   var opcion = "imprimir";
-                  genPDF(opcion);
+                  var opcion2 = "compras";
+                  genPDF(opcion, opcion2);
+                },
+              },
+              {
+                text: '<i class="fas fa-print fa-lg" aria-hidden="true"></i> Facturación',
+                // "className": "btn btn-warning",
+                action: function (e, dt, node, config){
+                  var opcion = "imprimir";
+                  var opcion2 = "facturacion";
+                  var surtidopor = prompt("Surtido por: ");
+
+                  genPDF(opcion, opcion2, surtidopor);
                 },
               }
             ]
@@ -129,7 +133,7 @@
 			});
 		}
 
-    function genPDF(opcionPDF) {
+    function genPDF(opcionPDF, opcion2, surtidopor) {
       var folio = "<?php echo $_REQUEST['folio']; ?>";
       var opcion = "partidasnacional";
       console.log(folio);
@@ -140,7 +144,8 @@
         data: {"opcion": opcion, "folio": folio},
       }).done( function( data ){
         console.log(data);
-        var columns = [
+        if (opcion2 == "compras"){
+          var columns = [
             {title: "#", dataKey: "indice"},
             {title: "Marca", dataKey: "marca"},
             {title: "Modelo", dataKey: "modelo"},
@@ -150,7 +155,22 @@
             {title: "Pedido cliente", dataKey: "pedidocliente"},
             {title: "Proveedor", dataKey: "proveedor"},
             {title: "Factura Proveedor", dataKey: "facturaproveedor"},
-        ];
+          ];
+        }else{
+          var columns = [
+            {title: "#", dataKey: "indice"},
+            {title: "Cliente", dataKey: "cliente"},
+            {title: "Pedido cliente", dataKey: "pedidocliente"},
+            {title: "Marca", dataKey: "marca"},
+            {title: "Modelo", dataKey: "modelo"},
+            {title: "Cant.", dataKey: "cantidad"},
+            {title: "Remision"},
+            {title: "Factura"},
+            {title: "Observaciones"},
+            {title: "Proveedor", dataKey: "proveedor"},
+            {title: "Fact. Proveedor", dataKey: "facturaproveedor"},
+          ];
+        }
 
         var rows = data.data;
 
@@ -175,33 +195,27 @@
         doc.text("FECHA:  " + data.fecha, 30, 135)
         doc.text("COMPRA NACIONAL", 533, 135)
         doc.text("FOLIO #" + folio, 700, 155)
+        if (opcion2 == "facturacion"){
+          doc.setFontSize(11);
+          doc.text("SURTIDO POR: " + surtidopor, 325, 155)
+        }
 
         doc.autoTable(columns, rows, {
           theme: 'striped',
           margin: {top: 165, right: 20, bottom: 20, left: 20},
           tableWidth: 'auto',
-          styles: {overflow: 'visible', cellPadding: 6, fontSize: 10, rowHeight: 15, pageBreak: 'always', showHeader: 'firstPage'},
+          styles: {overflow: 'hidden', cellPadding: 5, fontSize: 9, rowHeight: 13, pageBreak: 'always', showHeader: 'firstPage'},
+          // columnStyles: {0: {columnWidth: '5%'}}
         });
 
-        doc.setFontSize(20);
-        doc.setFontStyle('bold');
-        doc.line(250, doc.autoTable.previous.finalY  + 110, 600, doc.autoTable.previous.finalY  + 110)
-        doc.setFontStyle('normal');
-        doc.setFontSize(12);
-        doc.text("FIRMA DE QUIEN REVISA", 350, doc.autoTable.previous.finalY  + 125);
-        // doc.text("Favor de enviar los archivos electrónicos de facturación en formato XML y PDF a los correos:", 130, doc.autoTable.previous.finalY  + 50);
-        // doc.setFontStyle('bold');
-        // doc.text("hemusa@hemusa.com administracion@hemusa.com", 190, doc.autoTable.previous.finalY  + 65);
-        // doc.setLineWidth(0.5)
-        // doc.setFontStyle('normal');
-        // doc.setFontSize(9);
-        // doc.text(data.ordencompra.envia_a, 50, doc.autoTable.previous.finalY  + 130);
-        // doc.text("Invoice to:", 340, doc.autoTable.previous.finalY  + 110);
-        // doc.text("Herramientas Mecánicas Universales S.A de C.V.", 340, doc.autoTable.previous.finalY  + 130);
-        // doc.text("Ruperto Martinez 831 PTE", 340, doc.autoTable.previous.finalY  + 140);
-        // doc.text("64000 Centro", 340, doc.autoTable.previous.finalY  + 150);
-        // doc.text("Monterrey, Nuevo León", 340, doc.autoTable.previous.finalY  + 160);
-        // doc.text("México", 340, doc.autoTable.previous.finalY  + 170);
+        if (opcion2 == "compras"){
+          doc.setFontSize(20);
+          doc.setFontStyle('bold');
+          doc.line(250, doc.autoTable.previous.finalY  + 110, 600, doc.autoTable.previous.finalY  + 110)
+          doc.setFontStyle('normal');
+          doc.setFontSize(12);
+          doc.text("FIRMA DE QUIEN REVISA", 350, doc.autoTable.previous.finalY  + 125);
+        }
         if (opcionPDF == "imprimir") {
           doc.autoPrint();
         }
