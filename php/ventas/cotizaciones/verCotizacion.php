@@ -382,7 +382,7 @@
 			</form>
 
 		<!-- Modal Agregar Partida -->
-			<form id="frmAgregarPartida" action="" method="POST">
+			<form id="frmAgregarPartida" name="frmAgregarPartida" action="" method="POST">
 				<div class="modal fade colored-header colored-header-success" id="modalAgregarPartida" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 				  	<div class="modal-dialog modal-lg" role="document">
 				    	<div class="modal-content">
@@ -922,240 +922,311 @@
 						document.getElementById("marca").disabled = false;
 						document.getElementById("marca2").disabled = true;
 						document.getElementById("valorNacional").disabled = true;
-	                    document.getElementById("valorAmericano").disabled = true;
-	                    document.getElementById("valorOtro").disabled = true;
-	                    document.getElementById("valorNinguno").disabled = false;
+            document.getElementById("valorAmericano").disabled = true;
+            document.getElementById("valorOtro").disabled = true;
+            document.getElementById("valorNinguno").disabled = false;
 						var marcas = data;
 						$('#marca').empty();
 						$("#marca").append("<option>Selecciona una marca</option>");
+						$("#marca").append("<option>Agregar a marca</option>");
 						for(var i=0;i<marcas.length;i++){
-		               	 	$("#marca").append("<option>" + marcas[i] + "</option>");
-		     			};
+	             $("#marca").append("<option>" + marcas[i] + "</option>");
+	     			};
 					}
 				}
 			});
 		}
 
 		function buscarDatosProducto(){
-			var modelo = $("#frmAgregarPartida #modelo").val();
-			var marca = $("#frmAgregarPartida #marca").val();
-			var idCliente = "<?php echo $idcliente; ?>";
-			var refCotizacion = "<?php echo $_REQUEST['numero']; ?>";
-			var opcion = "buscarDatosProducto";
-			console.log(modelo);
-			console.log(marca);
-			console.log(idCliente);
-			console.log(opcion);
-			$.ajax({
-				method: "POST",
-				url: "buscar.php",
-				dataType: "json",
-				data: {"modelo": modelo, "marca": marca, "idCliente": idCliente, "refCotizacion": refCotizacion,"opcion": opcion},
-				success : function(data) {
-	      	if(data.data.clase == 'E'){
-	      		console.log(data);
-          	document.getElementById("valorNacional").disabled = false;
-            document.getElementById("valorAmericano").disabled = false;
-            document.getElementById("valorOtro").disabled = false;
-            $("#frmAgregarPartida #noExisteProducto").val("");
-            $("#frmAgregarPartida #idproducto").val(data.data.IdProducto);
-            $("#frmAgregarPartida #marca").val(data.data.marca);
-						$("#frmAgregarPartida #descripcion").val(data.data.descripcion);
-						$("#frmAgregarPartida #claveSat").append("<option>" + data.data.ClaveProductoSAT + "</option>");
-						if (data.data.ClaveProductoSAT == "") {
-							var opcion = "buscarclavesat";
-							$.ajax({
-								method: "POST",
-								url: "buscar.php",
-								dataType: "json",
-								data: {"opcion": opcion, "descripcion": data.data.descripcion},
-								success : function(data) {
-		            	var claves = data;
-		            	console.log(claves);
-									$('#claveSat').empty();
-									$("#claveSat").append("<option>Selecciona CS</option>");
-									for(var i=0;i<claves.length;i = i+2){
-					               	 	$("#claveSat").append("<option value="+claves[i] +">"+ claves[i] + " - " + claves[i+1] + "</option>");
-					     			};
-					   			}
-							});
-						}
+			if($("#frmAgregarPartida #marca").val() == "Agregar a marca"){
+				document.frmAgregarPartida.modelo.style.backgroundColor='#99CCFF';
+				document.frmAgregarPartida.marca.style.backgroundColor='#99CCFF';
+				document.frmAgregarPartida.descripcion.style.backgroundColor='#99CCFF';
+				document.frmAgregarPartida.claveSat.style.backgroundColor='#99CCFF';
+				document.frmAgregarPartida.precioUnitario.style.backgroundColor='#99CCFF';
+				document.frmAgregarPartida.cantidad.style.backgroundColor='#99CCFF';
+				document.frmAgregarPartida.precioTotal.style.backgroundColor='#99CCFF';
+				document.frmAgregarPartida.unidad.style.backgroundColor='#99CCFF';
+				document.frmAgregarPartida.tedias.style.backgroundColor='#99CCFF';
+				document.frmAgregarPartida.refInterna.style.backgroundColor='#99CCFF';
+				document.frmAgregarPartida.cotizadoEn.style.backgroundColor='#99CCFF';
+				document.getElementById("selMarca").style.display = "none";
+				document.getElementById("inMarca").style.display = "";
+				document.getElementById("marca").disabled = true;
+				document.getElementById("marca2").disabled = false;
+				document.getElementById("valorNacional").disabled = false;
+				document.getElementById("valorAmericano").disabled = false;
+				document.getElementById("valorOtro").disabled = false;
+				document.getElementById("valorNinguno").disabled = true;
+				$("#frmAgregarPartida #noExisteProducto").val("noExisteProducto");
+				$("#frmAgregarPartida #descripcion").val("");
+				$("#frmAgregarPartida #claveSat").val("");
+				$("#frmAgregarPartida #precioUnitario").val("");
+				$("#frmAgregarPartida #cantidad").val("");
+				$("#frmAgregarPartida #precioTotal").val("");
+				$("#frmAgregarPartida #unidad").val("");
+				$("#frmAgregarPartida #tedias").val("");
+				$("#frmAgregarPartida #refInterna").val("");
+				$("#frmAgregarPartida #cotizadoEn").val("");
+			}else{
+				var modelo = $("#frmAgregarPartida #modelo").val();
+				var marca = $("#frmAgregarPartida #marca").val();
+				var idCliente = "<?php echo $idcliente; ?>";
+				var refCotizacion = "<?php echo $_REQUEST['numero']; ?>";
+				var opcion = "buscarDatosProducto";
+				console.log(modelo);
+				console.log(marca);
+				console.log(idCliente);
+				console.log(opcion);
+				$.ajax({
+					method: "POST",
+					url: "buscar.php",
+					dataType: "json",
+					data: {"modelo": modelo, "marca": marca, "idCliente": idCliente, "refCotizacion": refCotizacion,"opcion": opcion},
+					success : function(data) {
+						if(data.data.clase == 'E'){
+							console.log(data);
+							document.frmAgregarPartida.modelo.style.backgroundColor='#99CCFF';
+							document.frmAgregarPartida.marca.style.backgroundColor='#99CCFF';
+							document.frmAgregarPartida.descripcion.style.backgroundColor='#99CCFF';
+							document.frmAgregarPartida.claveSat.style.backgroundColor='#99CCFF';
+							document.frmAgregarPartida.precioUnitario.style.backgroundColor='#99CCFF';
+							document.frmAgregarPartida.cantidad.style.backgroundColor='#99CCFF';
+							document.frmAgregarPartida.precioTotal.style.backgroundColor='#99CCFF';
+							document.frmAgregarPartida.unidad.style.backgroundColor='#99CCFF';
+							document.frmAgregarPartida.tedias.style.backgroundColor='#99CCFF';
+							document.frmAgregarPartida.refInterna.style.backgroundColor='#99CCFF';
+							document.frmAgregarPartida.cotizadoEn.style.backgroundColor='#99CCFF';
+							document.getElementById("valorNacional").disabled = false;
+							document.getElementById("valorAmericano").disabled = false;
+							document.getElementById("valorOtro").disabled = false;
+							$("#frmAgregarPartida #noExisteProducto").val("");
+							$("#frmAgregarPartida #idproducto").val(data.data.IdProducto);
+							$("#frmAgregarPartida #marca").val(data.data.marca);
+							$("#frmAgregarPartida #descripcion").val(data.data.descripcion);
+							$("#frmAgregarPartida #claveSat").append("<option>" + data.data.ClaveProductoSAT + "</option>");
+							if (data.data.ClaveProductoSAT == "") {
+								var opcion = "buscarclavesat";
+								$.ajax({
+									method: "POST",
+									url: "buscar.php",
+									dataType: "json",
+									data: {"opcion": opcion, "descripcion": data.data.descripcion},
+									success : function(data) {
+										var claves = data;
+										console.log(claves);
+										$('#claveSat').empty();
+										$("#claveSat").append("<option>Selecciona CS</option>");
+										for(var i=0;i<claves.length;i = i+2){
+											$("#claveSat").append("<option value="+claves[i] +">"+ claves[i] + " - " + claves[i+1] + "</option>");
+										};
+									}
+								});
+							}
 
-						if(data.moneda == "usd" && data.data.moneda == "usd"){
-							if(typeof(data.igi) != "undefined"){
-								$("#frmAgregarPartida #precioUnitario").val(((data.data.precioBase)*(data.igi.igi)).toFixed(2));
-								$("#frmAgregarPartida #cantidad").val(1);
-								$("#frmAgregarPartida #precioTotal").val(((data.data.precioBase)*(data.igi.igi)).toFixed(2));
-							}else{
-								$("#frmAgregarPartida #precioUnitario").val(((data.data.precioBase)*(data.data.igi)).toFixed(2));
-								$("#frmAgregarPartida #cantidad").val(1);
-								$("#frmAgregarPartida #precioTotal").val(((data.data.precioBase)*(data.data.igi)).toFixed(2));
-							}
-						}
-						if(data.moneda == "usd" && (data.data.moneda == "mxn" || data.data.moneda == "mn")){
-							if(typeof(data.igi) != "undefined"){
-								$("#frmAgregarPartida #precioUnitario").val((((data.data.precioBase)*(data.igi.igi)) / data.tipocambio.tipocambio).toFixed(2));
-								$("#frmAgregarPartida #cantidad").val(1);
-								$("#frmAgregarPartida #precioTotal").val((((data.data.precioBase)*(data.igi.igi)) / data.tipocambio.tipocambio).toFixed(2));
-							}else{
-								$("#frmAgregarPartida #precioUnitario").val((((data.data.precioBase)*(data.data.igi)) / data.tipocambio.tipocambio).toFixed(2));
-								$("#frmAgregarPartida #cantidad").val(1);
-								$("#frmAgregarPartida #precioTotal").val((((data.data.precioBase)*(data.data.igi)) / data.tipocambio.tipocambio).toFixed(2));
-							}
-						}
-						if(data.moneda == "mxn" && (data.data.moneda == "mxn" || data.data.moneda == "mn")){
-							if(typeof(data.igi) != "undefined"){
-								$("#frmAgregarPartida #precioUnitario").val(((data.data.precioBase)*(data.igi.igi)).toFixed(2));
-								$("#frmAgregarPartida #cantidad").val(1);
-								$("#frmAgregarPartida #precioTotal").val(((data.data.precioBase)*(data.igi.igi)).toFixed(2));
-							}else{
-								$("#frmAgregarPartida #precioUnitario").val(((data.data.precioBase)*(data.data.igi)).toFixed(2));
-								$("#frmAgregarPartida #cantidad").val(1);
-								$("#frmAgregarPartida #precioTotal").val(((data.data.precioBase)*(data.data.igi)).toFixed(2));
-							}
-						}
-						if(data.moneda == "mxn" && data.data.moneda == "usd"){
-							if(typeof(data.igi) != "undefined"){
-								$("#frmAgregarPartida #precioUnitario").val((((data.data.precioBase)*(data.igi.igi)) * data.tipocambio.tipocambio).toFixed(2));
-								$("#frmAgregarPartida #cantidad").val(1);
-								$("#frmAgregarPartida #precioTotal").val((((data.data.precioBase)*(data.igi.igi)) * data.tipocambio.tipocambio).toFixed(2));
-							}else{
-								$("#frmAgregarPartida #precioUnitario").val((((data.data.precioBase)*(data.data.igi)) * data.tipocambio.tipocambio).toFixed(2));
-								$("#frmAgregarPartida #cantidad").val(1);
-								$("#frmAgregarPartida #precioTotal").val((((data.data.precioBase)*(data.data.igi)) * data.tipocambio.tipocambio).toFixed(2));
-							}
-						}
-
-						$("#frmAgregarPartida #unidad").val(data.data.Unidad);
-						$("#frmAgregarPartida #tedias").val(data.tiempoEntrega);
-					}else{
-          	console.log(data);
-          	document.getElementById("valorNacional").disabled = true;
-            document.getElementById("valorAmericano").disabled = true;
-            document.getElementById("valorOtro").disabled = true;
-            document.getElementById("valorNinguno").disabled = false;
-            $("#frmAgregarPartida #noExisteProducto").val("");
-            $("#frmAgregarPartida #idproducto").val(data.data.IdProducto);
-						$("#frmAgregarPartida #descripcion").val(data.data.descripcion);
-						$("#frmAgregarPartida #claveSat").append("<option>" + data.data.ClaveProductoSAT + "</option>");
-						if (data.data.ClaveProductoSAT == "") {
-							var opcion = "buscarclavesat";
-							$.ajax({
-								method: "POST",
-								url: "buscar.php",
-								dataType: "json",
-								data: {"opcion": opcion, "descripcion": data.data.descripcion},
-								success : function(datos) {
-		            	var claves = datos
-		            	console.log(claves);
-									$('#claveSat').empty();
-									$("#claveSat").append("<option>Selecciona CS</option>");
-									for(var i=0;i<claves.length;i = i+2){
-				             $("#claveSat").append("<option value="+claves[i] +">"+ claves[i] + " - " + claves[i+1] + "</option>");
-				     			};
-				   			}
-							});
-						}
-						if (data.marca.descuento == 0) {
-							data.marca.descuento = 1;
-						}
-
-						if (data.marca.excepcion == 0) {
 							if(data.moneda == "usd" && data.data.moneda == "usd"){
 								if(typeof(data.igi) != "undefined"){
-									$("#frmAgregarPartida #precioUnitario").val((((data.data.precioBase) + parseInt(data.igi.igi))*(data.clasificacion.clasificacion)).toFixed(2));
+									$("#frmAgregarPartida #precioUnitario").val(((data.data.precioBase)*(data.igi.igi)).toFixed(2));
 									$("#frmAgregarPartida #cantidad").val(1);
-									$("#frmAgregarPartida #precioTotal").val((((data.data.precioBase) + parseInt(data.igi.igi))*(data.clasificacion.clasificacion)).toFixed(2));
+									$("#frmAgregarPartida #precioTotal").val(((data.data.precioBase)*(data.igi.igi)).toFixed(2));
 								}else{
-									$("#frmAgregarPartida #precioUnitario").val((((data.data.precioBase) + parseInt(data.data.igi))*(data.clasificacion.clasificacion)).toFixed(2));
+									$("#frmAgregarPartida #precioUnitario").val(((data.data.precioBase)*(data.data.igi)).toFixed(2));
 									$("#frmAgregarPartida #cantidad").val(1);
-									$("#frmAgregarPartida #precioTotal").val((((data.data.precioBase) + parseInt(data.data.igi))*(data.clasificacion.clasificacion)).toFixed(2));
+									$("#frmAgregarPartida #precioTotal").val(((data.data.precioBase)*(data.data.igi)).toFixed(2));
 								}
 							}
 							if(data.moneda == "usd" && (data.data.moneda == "mxn" || data.data.moneda == "mn")){
 								if(typeof(data.igi) != "undefined"){
-									$("#frmAgregarPartida #precioUnitario").val(((((data.data.precioBase) + parseInt(data.igi.igi))*(data.clasificacion.clasificacion)) / data.tipocambio.tipocambio).toFixed(2));
+									$("#frmAgregarPartida #precioUnitario").val((((data.data.precioBase)*(data.igi.igi)) / data.tipocambio.tipocambio).toFixed(2));
 									$("#frmAgregarPartida #cantidad").val(1);
-									$("#frmAgregarPartida #precioTotal").val(((((data.data.precioBase) + parseInt(data.igi.igi))*(data.clasificacion.clasificacion)) / data.tipocambio.tipocambio).toFixed(2));
+									$("#frmAgregarPartida #precioTotal").val((((data.data.precioBase)*(data.igi.igi)) / data.tipocambio.tipocambio).toFixed(2));
 								}else{
-									$("#frmAgregarPartida #precioUnitario").val(((((data.data.precioBase) + parseInt(data.data.igi))*(data.clasificacion.clasificacion)) / data.tipocambio.tipocambio).toFixed(2));
+									$("#frmAgregarPartida #precioUnitario").val((((data.data.precioBase)*(data.data.igi)) / data.tipocambio.tipocambio).toFixed(2));
 									$("#frmAgregarPartida #cantidad").val(1);
-									$("#frmAgregarPartida #precioTotal").val(((((data.data.precioBase) + parseInt(data.data.igi))*(data.clasificacion.clasificacion)) / data.tipocambio.tipocambio).toFixed(2));
+									$("#frmAgregarPartida #precioTotal").val((((data.data.precioBase)*(data.data.igi)) / data.tipocambio.tipocambio).toFixed(2));
 								}
 							}
 							if(data.moneda == "mxn" && (data.data.moneda == "mxn" || data.data.moneda == "mn")){
 								if(typeof(data.igi) != "undefined"){
-									$("#frmAgregarPartida #precioUnitario").val((((data.data.precioBase) + parseInt(data.igi.igi))*(data.clasificacion.clasificacion)).toFixed(2));
+									$("#frmAgregarPartida #precioUnitario").val(((data.data.precioBase)*(data.igi.igi)).toFixed(2));
 									$("#frmAgregarPartida #cantidad").val(1);
-									$("#frmAgregarPartida #precioTotal").val((((data.data.precioBase) + parseInt(data.igi.igi))*(data.clasificacion.clasificacion)).toFixed(2));
+									$("#frmAgregarPartida #precioTotal").val(((data.data.precioBase)*(data.igi.igi)).toFixed(2));
 								}else{
-									$("#frmAgregarPartida #precioUnitario").val((((data.data.precioBase) + parseInt(data.igi.igi))*(data.clasificacion.clasificacion)).toFixed(2));
+									$("#frmAgregarPartida #precioUnitario").val(((data.data.precioBase)*(data.data.igi)).toFixed(2));
 									$("#frmAgregarPartida #cantidad").val(1);
-									$("#frmAgregarPartida #precioTotal").val((((data.data.precioBase) + parseInt(data.igi.igi))*(data.clasificacion.clasificacion)).toFixed(2));
+									$("#frmAgregarPartida #precioTotal").val(((data.data.precioBase)*(data.data.igi)).toFixed(2));
 								}
 							}
 							if(data.moneda == "mxn" && data.data.moneda == "usd"){
 								if(typeof(data.igi) != "undefined"){
-									$("#frmAgregarPartida #precioUnitario").val(((((data.data.precioBase) + parseInt(data.igi.igi))*(data.clasificacion.clasificacion)) * data.tipocambio.tipocambio).toFixed(2));
+									$("#frmAgregarPartida #precioUnitario").val((((data.data.precioBase)*(data.igi.igi)) * data.tipocambio.tipocambio).toFixed(2));
 									$("#frmAgregarPartida #cantidad").val(1);
-									$("#frmAgregarPartida #precioTotal").val(((((data.data.precioBase) + parseInt(data.igi.igi))*(data.clasificacion.clasificacion)) * data.tipocambio.tipocambio).toFixed(2));
+									$("#frmAgregarPartida #precioTotal").val((((data.data.precioBase)*(data.igi.igi)) * data.tipocambio.tipocambio).toFixed(2));
 								}else{
-									$("#frmAgregarPartida #precioUnitario").val(((((data.data.precioBase) + parseInt(data.igi.igi))*(data.clasificacion.clasificacion)) * data.tipocambio.tipocambio).toFixed(2));
+									$("#frmAgregarPartida #precioUnitario").val((((data.data.precioBase)*(data.data.igi)) * data.tipocambio.tipocambio).toFixed(2));
 									$("#frmAgregarPartida #cantidad").val(1);
-									$("#frmAgregarPartida #precioTotal").val(((((data.data.precioBase) + parseInt(data.igi.igi))*(data.clasificacion.clasificacion)) * data.tipocambio.tipocambio).toFixed(2));
+									$("#frmAgregarPartida #precioTotal").val((((data.data.precioBase)*(data.data.igi)) * data.tipocambio.tipocambio).toFixed(2));
 								}
 							}
+
+							$("#frmAgregarPartida #unidad").val(data.data.Unidad);
+							$("#frmAgregarPartida #tedias").val(data.tiempoEntrega);
 						}else{
-							if(data.moneda == "usd" && data.data.moneda == "usd"){
-								if(typeof(data.igi) != "undefined"){
-									$("#frmAgregarPartida #precioUnitario").val((((data.data.precioBase)*(data.marca.factor) + parseInt(data.igi.igi))*(data.marca.descuento)).toFixed(2));
-									$("#frmAgregarPartida #cantidad").val(1);
-									$("#frmAgregarPartida #precioTotal").val((((data.data.precioBase)*(data.marca.factor) + parseInt(data.igi.igi))*(data.marca.descuento)).toFixed(2));
-								}else{
-									$("#frmAgregarPartida #precioUnitario").val((((data.data.precioBase)*(data.marca.factor) + parseInt(data.data.igi))*(data.marca.descuento)).toFixed(2));
-									$("#frmAgregarPartida #cantidad").val(1);
-									$("#frmAgregarPartida #precioTotal").val((((data.data.precioBase)*(data.marca.factor) + parseInt(data.data.igi))*(data.marca.descuento)).toFixed(2));
+							console.log(data);
+							document.frmAgregarPartida.modelo.style.backgroundColor='white';
+							document.frmAgregarPartida.marca.style.backgroundColor='white';
+							document.frmAgregarPartida.descripcion.style.backgroundColor='white';
+							document.frmAgregarPartida.claveSat.style.backgroundColor='white';
+							document.frmAgregarPartida.precioUnitario.style.backgroundColor='white';
+							document.frmAgregarPartida.cantidad.style.backgroundColor='white';
+							document.frmAgregarPartida.precioTotal.style.backgroundColor='white';
+							document.frmAgregarPartida.unidad.style.backgroundColor='white';
+							document.frmAgregarPartida.tedias.style.backgroundColor='white';
+							document.frmAgregarPartida.refInterna.style.backgroundColor='white';
+							document.frmAgregarPartida.cotizadoEn.style.backgroundColor='white';
+							document.getElementById("valorNacional").disabled = true;
+							document.getElementById("valorAmericano").disabled = true;
+							document.getElementById("valorOtro").disabled = true;
+							document.getElementById("valorNinguno").disabled = false;
+							$("#frmAgregarPartida #noExisteProducto").val("");
+							$("#frmAgregarPartida #idproducto").val(data.data.IdProducto);
+							$("#frmAgregarPartida #descripcion").val(data.data.descripcion);
+							$("#frmAgregarPartida #claveSat").append("<option>" + data.data.ClaveProductoSAT + "</option>");
+							if (data.data.ClaveProductoSAT == "") {
+								var opcion = "buscarclavesat";
+								$.ajax({
+									method: "POST",
+									url: "buscar.php",
+									dataType: "json",
+									data: {"opcion": opcion, "descripcion": data.data.descripcion},
+									success : function(datos) {
+										var claves = datos
+										console.log(claves);
+										$('#claveSat').empty();
+										$("#claveSat").append("<option>Selecciona CS</option>");
+										for(var i=0;i<claves.length;i = i+2){
+											$("#claveSat").append("<option value="+claves[i] +">"+ claves[i] + " - " + claves[i+1] + "</option>");
+										};
+									}
+								});
+							}
+							if (data.marca.descuento == 0) {
+								data.marca.descuento = 1;
+							}
+
+							if (data.marca.excepcion == 0) {
+								if(data.moneda == "usd" && data.data.moneda == "usd"){
+									if(typeof(data.igi) != "undefined"){
+										$("#frmAgregarPartida #precioUnitario").val((((data.data.precioBase) + parseInt(data.igi.igi))*(data.clasificacion.clasificacion)).toFixed(2));
+										$("#frmAgregarPartida #cantidad").val(1);
+										$("#frmAgregarPartida #precioTotal").val((((data.data.precioBase) + parseInt(data.igi.igi))*(data.clasificacion.clasificacion)).toFixed(2));
+									}else{
+										$("#frmAgregarPartida #precioUnitario").val((((data.data.precioBase) + parseInt(data.data.igi))*(data.clasificacion.clasificacion)).toFixed(2));
+										$("#frmAgregarPartida #cantidad").val(1);
+										$("#frmAgregarPartida #precioTotal").val((((data.data.precioBase) + parseInt(data.data.igi))*(data.clasificacion.clasificacion)).toFixed(2));
+									}
+								}
+								if(data.moneda == "usd" && (data.data.moneda == "mxn" || data.data.moneda == "mn")){
+									if(typeof(data.igi) != "undefined"){
+										$("#frmAgregarPartida #precioUnitario").val(((((data.data.precioBase) + parseInt(data.igi.igi))*(data.clasificacion.clasificacion)) / data.tipocambio.tipocambio).toFixed(2));
+										$("#frmAgregarPartida #cantidad").val(1);
+										$("#frmAgregarPartida #precioTotal").val(((((data.data.precioBase) + parseInt(data.igi.igi))*(data.clasificacion.clasificacion)) / data.tipocambio.tipocambio).toFixed(2));
+									}else{
+										$("#frmAgregarPartida #precioUnitario").val(((((data.data.precioBase) + parseInt(data.data.igi))*(data.clasificacion.clasificacion)) / data.tipocambio.tipocambio).toFixed(2));
+										$("#frmAgregarPartida #cantidad").val(1);
+										$("#frmAgregarPartida #precioTotal").val(((((data.data.precioBase) + parseInt(data.data.igi))*(data.clasificacion.clasificacion)) / data.tipocambio.tipocambio).toFixed(2));
+									}
+								}
+								if(data.moneda == "mxn" && (data.data.moneda == "mxn" || data.data.moneda == "mn")){
+									if(typeof(data.igi) != "undefined"){
+										$("#frmAgregarPartida #precioUnitario").val((((data.data.precioBase) + parseInt(data.igi.igi))*(data.clasificacion.clasificacion)).toFixed(2));
+										$("#frmAgregarPartida #cantidad").val(1);
+										$("#frmAgregarPartida #precioTotal").val((((data.data.precioBase) + parseInt(data.igi.igi))*(data.clasificacion.clasificacion)).toFixed(2));
+									}else{
+										$("#frmAgregarPartida #precioUnitario").val((((data.data.precioBase) + parseInt(data.igi.igi))*(data.clasificacion.clasificacion)).toFixed(2));
+										$("#frmAgregarPartida #cantidad").val(1);
+										$("#frmAgregarPartida #precioTotal").val((((data.data.precioBase) + parseInt(data.igi.igi))*(data.clasificacion.clasificacion)).toFixed(2));
+									}
+								}
+								if(data.moneda == "mxn" && data.data.moneda == "usd"){
+									if(typeof(data.igi) != "undefined"){
+										$("#frmAgregarPartida #precioUnitario").val(((((data.data.precioBase) + parseInt(data.igi.igi))*(data.clasificacion.clasificacion)) * data.tipocambio.tipocambio).toFixed(2));
+										$("#frmAgregarPartida #cantidad").val(1);
+										$("#frmAgregarPartida #precioTotal").val(((((data.data.precioBase) + parseInt(data.igi.igi))*(data.clasificacion.clasificacion)) * data.tipocambio.tipocambio).toFixed(2));
+									}else{
+										$("#frmAgregarPartida #precioUnitario").val(((((data.data.precioBase) + parseInt(data.igi.igi))*(data.clasificacion.clasificacion)) * data.tipocambio.tipocambio).toFixed(2));
+										$("#frmAgregarPartida #cantidad").val(1);
+										$("#frmAgregarPartida #precioTotal").val(((((data.data.precioBase) + parseInt(data.igi.igi))*(data.clasificacion.clasificacion)) * data.tipocambio.tipocambio).toFixed(2));
+									}
+								}
+							}else{
+								if(data.moneda == "usd" && data.data.moneda == "usd"){
+									if(typeof(data.igi) != "undefined"){
+										$("#frmAgregarPartida #precioUnitario").val((((data.data.precioBase)*(data.marca.factor) + parseInt(data.igi.igi))*(data.marca.descuento)).toFixed(2));
+										$("#frmAgregarPartida #cantidad").val(1);
+										$("#frmAgregarPartida #precioTotal").val((((data.data.precioBase)*(data.marca.factor) + parseInt(data.igi.igi))*(data.marca.descuento)).toFixed(2));
+									}else{
+										$("#frmAgregarPartida #precioUnitario").val((((data.data.precioBase)*(data.marca.factor) + parseInt(data.data.igi))*(data.marca.descuento)).toFixed(2));
+										$("#frmAgregarPartida #cantidad").val(1);
+										$("#frmAgregarPartida #precioTotal").val((((data.data.precioBase)*(data.marca.factor) + parseInt(data.data.igi))*(data.marca.descuento)).toFixed(2));
+									}
+								}
+								if(data.moneda == "usd" && (data.data.moneda == "mxn" || data.data.moneda == "mn")){
+									if(typeof(data.igi) != "undefined"){
+										$("#frmAgregarPartida #precioUnitario").val(((((data.data.precioBase)*(data.marca.factor)+ parseInt(data.igi.igi))*(data.marca.descuento)) / data.tipocambio.tipocambio).toFixed(2));
+										$("#frmAgregarPartida #cantidad").val(1);
+										$("#frmAgregarPartida #precioTotal").val(((((data.data.precioBase)*(data.marca.factor)+ parseInt(data.igi.igi))*(data.marca.descuento)) / data.tipocambio.tipocambio).toFixed(2));
+									}else{
+										$("#frmAgregarPartida #precioUnitario").val(((((data.data.precioBase)*(data.marca.factor)+ parseInt(data.data.igi))*(data.marca.descuento)) / data.tipocambio.tipocambio).toFixed(2));
+										$("#frmAgregarPartida #cantidad").val(1);
+										$("#frmAgregarPartida #precioTotal").val(((((data.data.precioBase)*(data.marca.factor)+ parseInt(data.data.igi))*(data.marca.descuento)) / data.tipocambio.tipocambio).toFixed(2));
+									}
+								}
+								if(data.moneda == "mxn" && (data.data.moneda == "mxn" || data.data.moneda == "mn")){
+									if(typeof(data.igi) != "undefined"){
+										$("#frmAgregarPartida #precioUnitario").val((((data.data.precioBase)*(data.marca.factor) + parseInt(data.igi.igi))*(data.marca.descuento)).toFixed(2));
+										$("#frmAgregarPartida #cantidad").val(1);
+										$("#frmAgregarPartida #precioTotal").val((((data.data.precioBase)*(data.marca.factor) + parseInt(data.igi.igi))*(data.marca.descuento)).toFixed(2));
+									}else{
+										$("#frmAgregarPartida #precioUnitario").val((((data.data.precioBase)*(data.marca.factor) + parseInt(data.data.igi))*(data.marca.descuento)).toFixed(2));
+										$("#frmAgregarPartida #cantidad").val(1);
+										$("#frmAgregarPartida #precioTotal").val((((data.data.precioBase)*(data.marca.factor) + parseInt(data.data.igi))*(data.marca.descuento)).toFixed(2));
+									}
+								}
+								if(data.moneda == "mxn" && data.data.moneda == "usd"){
+									if(typeof(data.igi) != "undefined"){
+										$("#frmAgregarPartida #precioUnitario").val(((((data.data.precioBase)*(data.marca.factor)+ parseInt(data.igi.igi))*(data.marca.descuento)) * data.tipocambio.tipocambio).toFixed(2));
+										$("#frmAgregarPartida #cantidad").val(1);
+										$("#frmAgregarPartida #precioTotal").val(((((data.data.precioBase)*(data.marca.factor)+ parseInt(data.igi.igi))*(data.marca.descuento)) * data.tipocambio.tipocambio).toFixed(2));
+									}else{
+										$("#frmAgregarPartida #precioUnitario").val(((((data.data.precioBase)*(data.marca.factor)+ parseInt(data.data.igi))*(data.marca.descuento)) * data.tipocambio.tipocambio).toFixed(2));
+										$("#frmAgregarPartida #cantidad").val(1);
+										$("#frmAgregarPartida #precioTotal").val(((((data.data.precioBase)*(data.marca.factor)+ parseInt(data.data.igi))*(data.marca.descuento)) * data.tipocambio.tipocambio).toFixed(2));
+									}
 								}
 							}
-							if(data.moneda == "usd" && (data.data.moneda == "mxn" || data.data.moneda == "mn")){
-								if(typeof(data.igi) != "undefined"){
-									$("#frmAgregarPartida #precioUnitario").val(((((data.data.precioBase)*(data.marca.factor)+ parseInt(data.igi.igi))*(data.marca.descuento)) / data.tipocambio.tipocambio).toFixed(2));
-									$("#frmAgregarPartida #cantidad").val(1);
-									$("#frmAgregarPartida #precioTotal").val(((((data.data.precioBase)*(data.marca.factor)+ parseInt(data.igi.igi))*(data.marca.descuento)) / data.tipocambio.tipocambio).toFixed(2));
-								}else{
-									$("#frmAgregarPartida #precioUnitario").val(((((data.data.precioBase)*(data.marca.factor)+ parseInt(data.data.igi))*(data.marca.descuento)) / data.tipocambio.tipocambio).toFixed(2));
-									$("#frmAgregarPartida #cantidad").val(1);
-									$("#frmAgregarPartida #precioTotal").val(((((data.data.precioBase)*(data.marca.factor)+ parseInt(data.data.igi))*(data.marca.descuento)) / data.tipocambio.tipocambio).toFixed(2));
-								}
-							}
-							if(data.moneda == "mxn" && (data.data.moneda == "mxn" || data.data.moneda == "mn")){
-								if(typeof(data.igi) != "undefined"){
-									$("#frmAgregarPartida #precioUnitario").val((((data.data.precioBase)*(data.marca.factor) + parseInt(data.igi.igi))*(data.marca.descuento)).toFixed(2));
-									$("#frmAgregarPartida #cantidad").val(1);
-									$("#frmAgregarPartida #precioTotal").val((((data.data.precioBase)*(data.marca.factor) + parseInt(data.igi.igi))*(data.marca.descuento)).toFixed(2));
-								}else{
-									$("#frmAgregarPartida #precioUnitario").val((((data.data.precioBase)*(data.marca.factor) + parseInt(data.data.igi))*(data.marca.descuento)).toFixed(2));
-									$("#frmAgregarPartida #cantidad").val(1);
-									$("#frmAgregarPartida #precioTotal").val((((data.data.precioBase)*(data.marca.factor) + parseInt(data.data.igi))*(data.marca.descuento)).toFixed(2));
-								}
-							}
-							if(data.moneda == "mxn" && data.data.moneda == "usd"){
-								if(typeof(data.igi) != "undefined"){
-									$("#frmAgregarPartida #precioUnitario").val(((((data.data.precioBase)*(data.marca.factor)+ parseInt(data.igi.igi))*(data.marca.descuento)) * data.tipocambio.tipocambio).toFixed(2));
-									$("#frmAgregarPartida #cantidad").val(1);
-									$("#frmAgregarPartida #precioTotal").val(((((data.data.precioBase)*(data.marca.factor)+ parseInt(data.igi.igi))*(data.marca.descuento)) * data.tipocambio.tipocambio).toFixed(2));
-								}else{
-									$("#frmAgregarPartida #precioUnitario").val(((((data.data.precioBase)*(data.marca.factor)+ parseInt(data.data.igi))*(data.marca.descuento)) * data.tipocambio.tipocambio).toFixed(2));
-									$("#frmAgregarPartida #cantidad").val(1);
-									$("#frmAgregarPartida #precioTotal").val(((((data.data.precioBase)*(data.marca.factor)+ parseInt(data.data.igi))*(data.marca.descuento)) * data.tipocambio.tipocambio).toFixed(2));
-								}
-							}
+							$("#frmAgregarPartida #unidad").val(data.data.Unidad);
+							$("#frmAgregarPartida #tedias").val(data.tiempoEntrega);
 						}
-						$("#frmAgregarPartida #unidad").val(data.data.Unidad);
-						$("#frmAgregarPartida #tedias").val(data.tiempoEntrega);
+
+						if(data.data.clase == 'D'){
+							console.log(data);
+							document.frmAgregarPartida.modelo.style.backgroundColor='#FF9999';
+							document.frmAgregarPartida.marca.style.backgroundColor='#FF9999';
+							document.frmAgregarPartida.descripcion.style.backgroundColor='#FF9999';
+							document.frmAgregarPartida.claveSat.style.backgroundColor='#FF9999';
+							document.frmAgregarPartida.precioUnitario.style.backgroundColor='#FF9999';
+							document.frmAgregarPartida.cantidad.style.backgroundColor='#FF9999';
+							document.frmAgregarPartida.precioTotal.style.backgroundColor='#FF9999';
+							document.frmAgregarPartida.unidad.style.backgroundColor='#FF9999';
+							document.frmAgregarPartida.tedias.style.backgroundColor='#FF9999';
+							document.frmAgregarPartida.refInterna.style.backgroundColor='#FF9999';
+							document.frmAgregarPartida.cotizadoEn.style.backgroundColor='#FF9999';
+						}
 					}
-	   			}
-			});
+
+				});
+			}
 		}
 
 		var listar_partidas = function(){
@@ -1717,6 +1788,17 @@
       document.getElementById("valorAmericano").disabled = true;
       document.getElementById("valorOtro").disabled = false;
       document.getElementById("valorNinguno").disabled = true;
+			document.frmAgregarPartida.modelo.style.backgroundColor='white';
+			document.frmAgregarPartida.marca.style.backgroundColor='white';
+			document.frmAgregarPartida.descripcion.style.backgroundColor='white';
+			document.frmAgregarPartida.claveSat.style.backgroundColor='white';
+			document.frmAgregarPartida.precioUnitario.style.backgroundColor='white';
+			document.frmAgregarPartida.cantidad.style.backgroundColor='white';
+			document.frmAgregarPartida.precioTotal.style.backgroundColor='white';
+			document.frmAgregarPartida.unidad.style.backgroundColor='white';
+			document.frmAgregarPartida.tedias.style.backgroundColor='white';
+			document.frmAgregarPartida.refInterna.style.backgroundColor='white';
+			document.frmAgregarPartida.cotizadoEn.style.backgroundColor='white';
 		}
 	</script>
 	<script src="<?php echo $ruta; ?>/php/js/idioma_espanol.js"></script>
