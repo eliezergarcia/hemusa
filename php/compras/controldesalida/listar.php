@@ -41,7 +41,9 @@
   }
 
   function partidas_nacional($folio, $conexion_usuarios){
-		$query = "SELECT * FROM utilidad_pedido WHERE folio = '$folio' ORDER BY marca ASC";
+		$fechaFin = date("Y-m-d");
+		$fechaInicio = date("Y-01-01");
+		$query = "SELECT * FROM utilidad_pedido WHERE folio = '$folio' AND fecha_orden_compra >='$fechaInicio' AND fecha_orden_compra <= '$fechaFin' ORDER BY marca ASC";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 
 		if (mysqli_num_rows($resultado) > 0) {
@@ -63,7 +65,6 @@
 					$proveedor = $dataproveedor['nombreEmpresa'];
 				}
 
-
 				$arreglo["data"][] = array(
 					'indice' => $i,
 					'id' => $data['id'],
@@ -78,6 +79,8 @@
 				$i++;
 			}
 		}
+
+		$arreglo["fecha"][] = date("d-m-Y");
 
 		echo json_encode($arreglo, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_PARTIAL_OUTPUT_ON_ERROR);
 		mysqli_close($conexion_usuarios);
