@@ -501,6 +501,7 @@
         $("#dt_totales_oc").DataTable().ajax.reload();
 			});
 		});
+    
   </script>
   <script src="<?php echo $ruta; ?>/php/js/idioma_espanol.js"></script>
   <script src="<?php echo $ruta; ?>/php/js/mensajes_cambios.js"></script>

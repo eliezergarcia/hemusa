@@ -6995,6 +6995,12 @@ button.bg-grey:focus {
 .text-white {
   color: #fff !important; }
 
+.table-text-claseE {
+  color: var(--color-primario) !important; }
+
+.table-text-claseD {
+  color: var(--color-danger) !important; }
+
 .text-primary {
   color: var(--color-primario) !important; }
 

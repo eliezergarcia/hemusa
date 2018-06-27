@@ -250,12 +250,37 @@
 					{"data":"igi"},
 					{"defaultContent": "<div class='invoice-footer'><button class='editar btn btn-space btn-lg btn-primary' data-toggle='modal' data-target='#modalInformacion'><i class='fas fa-edit fa-sm' aria-hidden='true'></i></button></div>"}
 				],
-        		"lengthChange": false,
+        "lengthChange": false,
 				"language": idioma_espanol,
 				"dom":
-          			"<'row be-datatable-header'<'col-sm-6'B><'col-sm-6 text-right'f>>" +
-          			"<'row be-datatable-body'<'col-sm-12'tr>>" +
-          			"<'row be-datatable-footer'<'col-sm-5'i><'col-sm-7'p>>",
+    			"<'row be-datatable-header'<'col-sm-6'B><'col-sm-6 text-right'f>>" +
+    			"<'row be-datatable-body'<'col-sm-12'tr>>" +
+    			"<'row be-datatable-footer'<'col-sm-5'i><'col-sm-7'p>>",
+				"createdRow": function ( row, data, index ) {
+					console.log(data.clase);
+					if ( data.clase == "E" ) {
+							$('td', row).eq(0).addClass('table-text-claseE');
+							$('td', row).eq(1).addClass('table-text-claseE');
+							$('td', row).eq(2).addClass('table-text-claseE');
+							$('td', row).eq(3).addClass('table-text-claseE');
+							$('td', row).eq(4).addClass('table-text-claseE');
+							$('td', row).eq(5).addClass('table-text-claseE');
+							$('td', row).eq(6).addClass('table-text-claseE');
+							$('td', row).eq(7).addClass('table-text-claseE');
+							$('td', row).eq(8).addClass('table-text-claseE');
+					}
+					if ( data.clase == "D" ) {
+							$('td', row).eq(0).addClass('table-text-claseD');
+							$('td', row).eq(1).addClass('table-text-claseD');
+							$('td', row).eq(2).addClass('table-text-claseD');
+							$('td', row).eq(3).addClass('table-text-claseD');
+							$('td', row).eq(4).addClass('table-text-claseD');
+							$('td', row).eq(5).addClass('table-text-claseD');
+							$('td', row).eq(6).addClass('table-text-claseD');
+							$('td', row).eq(7).addClass('table-text-claseD');
+							$('td', row).eq(8).addClass('table-text-claseD');
+					}
+				},
 				"buttons":[
 		            {
 		            extend: 'collection',
