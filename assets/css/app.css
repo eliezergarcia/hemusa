@@ -7001,6 +7001,12 @@ button.bg-grey:focus {
 .table-text-claseD {
   color: var(--color-danger) !important; }
 
+.table-text-enviado {
+  color: var(--color-warning) !important; }
+
+.table-text-recibido {
+  color: var(--color-hover-success) !important; }
+
 .text-primary {
   color: var(--color-primario) !important; }
 

@@ -41,7 +41,7 @@
 	function ordenesdecompras($conexion_usuarios){
 		$query = "SELECT ordendecompras.id, ordendecompras.noDePedido, ordendecompras.Fecha, ordendecompras.proveedor,
 		contactos.nombreEmpresa, usuarios.nombre as contacto FROM ordendecompras LEFT JOIN contactos on contactos.id=ordendecompras.proveedor
-		INNER JOIN usuarios on usuarios.id=ordendecompras.contacto  WHERE terminado='0000-00-00' ORDER BY fecha DESC LIMIT 999";
+		INNER JOIN usuarios on usuarios.id=ordendecompras.contacto  WHERE terminado='0000-00-00' ORDER BY id DESC LIMIT 999";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 
 		if(!$resultado){
@@ -184,7 +184,9 @@
 						'precioTotal' => "$ ".round($precioTotal,2),
 						'almacen' => $almacen,
 						'fechaCompromiso' => "",
-						'utilidad' => "% ".round($utilidad,2)
+						'utilidad' => "% ".round($utilidad,2),
+						'enviado' => $data['fecha_enviado'],
+						'recibido' => $data['fecha_llegada']
 					);
 					$i++;
 				}

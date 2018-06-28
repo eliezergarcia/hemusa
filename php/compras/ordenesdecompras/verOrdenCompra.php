@@ -247,6 +247,33 @@
           {"data":'utilidad'},
           {"defaultContent":'<div class="invoice-footer"><button class="editar btn btn-lg btn-primary" data-toggle="modal" data-target="#modalEditar"><i class="fas fa-edit fa-sm" aria-hidden="true"></i></button></div>'}
         ],
+        "createdRow": function ( row, data, index ) {
+          if ( data.enviado != '0000-00-00' && data.recibido == '0000-00-00' ) {
+            $('td', row).eq(0).addClass('table-text-enviado');
+            $('td', row).eq(1).addClass('table-text-enviado');
+            $('td', row).eq(2).addClass('table-text-enviado');
+            $('td', row).eq(3).addClass('table-text-enviado');
+            $('td', row).eq(4).addClass('table-text-enviado');
+            $('td', row).eq(5).addClass('table-text-enviado');
+            $('td', row).eq(6).addClass('table-text-enviado');
+            $('td', row).eq(7).addClass('table-text-enviado');
+            $('td', row).eq(8).addClass('table-text-enviado');
+            $('td', row).eq(9).addClass('table-text-enviado');
+          }
+
+          if ( data.enviado != '0000-00-00' && data.recibido != '0000-00-00' ) {
+            $('td', row).eq(0).addClass('table-text-recibido');
+            $('td', row).eq(1).addClass('table-text-recibido');
+            $('td', row).eq(2).addClass('table-text-recibido');
+            $('td', row).eq(3).addClass('table-text-recibido');
+            $('td', row).eq(4).addClass('table-text-recibido');
+            $('td', row).eq(5).addClass('table-text-recibido');
+            $('td', row).eq(6).addClass('table-text-recibido');
+            $('td', row).eq(7).addClass('table-text-recibido');
+            $('td', row).eq(8).addClass('table-text-recibido');
+            $('td', row).eq(9).addClass('table-text-recibido');
+          }
+        },
         "order":[[3, "desc"]],
         "searching": false,
         "info": false,
@@ -299,7 +326,6 @@
         ]
       });
       obtener_data_partida("#dt_partidas_oc tbody", table);
-      // obtener_id_eliminar("#dt_orden_compras tbody", table);
     }
 
     function genPDF(opcionPDF) {
@@ -501,7 +527,7 @@
         $("#dt_totales_oc").DataTable().ajax.reload();
 			});
 		});
-    
+
   </script>
   <script src="<?php echo $ruta; ?>/php/js/idioma_espanol.js"></script>
   <script src="<?php echo $ruta; ?>/php/js/mensajes_cambios.js"></script>
