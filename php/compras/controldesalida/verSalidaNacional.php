@@ -201,7 +201,7 @@
           startY: 170,
           margin: {right: 20, bottom: 20, left: 20},
           tableWidth: 'auto',
-          styles: {overflow: 'visible', cellPadding: 6, fontSize: 9, rowHeight: 15, pageBreak: 'auto', columnWidth: 'auto'},
+          styles: {overflow: 'visible', cellPadding: 6, fontSize: 9, rowHeight: 15, pageBreak: 'auto', columnWidth: 'auto', tableLineWidth: 10},
           // columnStyles: {0: {columnWidth: '5%'}}
         });
 
