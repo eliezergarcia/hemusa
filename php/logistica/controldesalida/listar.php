@@ -24,7 +24,7 @@
   }
 
   function nacional($conexion_usuarios){
-    $query = "SELECT DISTINCT folio FROM utilidad_pedido WHERE folio != '' AND folio != 0 ORDER BY id DESC LIMIT 100";
+    $query = "SELECT DISTINCT folio FROM utilidad_pedido WHERE folio != '' AND folio != 0 ORDER BY id DESC LIMIT 200";
     $resultado = mysqli_query($conexion_usuarios, $query);
 
     if(!$resultado){
@@ -67,21 +67,33 @@
 					$pedidoCliente = $data3['NoPedClient'];
 				}
 
-				$query = "SELECT nombreEmpresa FROM contactos WHERE id = '$cliente'";
+				$query = "SELECT nombreEmpresa, alias FROM contactos WHERE id = '$cliente'";
 				$resultadocliente = mysqli_query($conexion_usuarios, $query);
 				while($datacliente = mysqli_fetch_assoc($resultadocliente)){
 					$cliente = $datacliente['nombreEmpresa'];
+					$aliascliente = $datacliente['alias'];
 				}
 
-				$query = "SELECT nombreEmpresa FROM contactos WHERE id = '$proveedor'";
+				if ($aliascliente != "") {
+					$cliente = $aliascliente;
+				}
+
+				$query = "SELECT nombreEmpresa, alias FROM contactos WHERE id = '$proveedor'";
 				$resultadoproveedor = mysqli_query($conexion_usuarios, $query);
 				while($dataproveedor = mysqli_fetch_assoc($resultadoproveedor)){
 					$proveedor = $dataproveedor['nombreEmpresa'];
+					$aliasproveedor = $dataproveedor['alias'];
+				}
+				$proveedor = str_replace("(PROVEEDOR)", "", $proveedor);
+
+				if ($aliasproveedor != "") {
+					$proveedor = $aliasproveedor;
 				}
 
 				if ($facturaproveedor == "" || $facturaproveedor == "0") {
 					$facturaproveedor = "";
 				}
+
 
 				$arreglo["data"][] = array(
 					'indice' => $i,
@@ -139,6 +151,7 @@
 				$cliente = $data['cliente'];
 				$proveedor = $data['proveedor'];
 				$idherramienta = $data['id_cotizacion_herramientas'];
+				$facturaproveedor = $data['factura_proveedor'];
 
 				$query = "SELECT cotizacionRef FROM cotizacionherramientas WHERE id = '$idherramienta'";
 				$resultado2 = mysqli_query($conexion_usuarios, $query);
@@ -152,16 +165,32 @@
 					$pedidoCliente = $data3['NoPedClient'];
 				}
 
-				$query = "SELECT nombreEmpresa FROM contactos WHERE id = '$cliente'";
+				$query = "SELECT nombreEmpresa, alias FROM contactos WHERE id = '$cliente'";
 				$resultadocliente = mysqli_query($conexion_usuarios, $query);
 				while($datacliente = mysqli_fetch_assoc($resultadocliente)){
 					$cliente = $datacliente['nombreEmpresa'];
+					$aliascliente = $datacliente['alias'];
 				}
 
-				$query = "SELECT nombreEmpresa FROM contactos WHERE id = '$proveedor'";
+				if ($aliascliente != "") {
+					$cliente = $aliascliente;
+				}
+
+				$query = "SELECT nombreEmpresa, alias FROM contactos WHERE id = '$proveedor'";
 				$resultadoproveedor = mysqli_query($conexion_usuarios, $query);
 				while($dataproveedor = mysqli_fetch_assoc($resultadoproveedor)){
 					$proveedor = $dataproveedor['nombreEmpresa'];
+					$aliasproveedor = $dataproveedor['alias'];
+				}
+
+				$proveedor = str_replace("(PROVEEDOR)", "", $proveedor);
+
+				if ($aliasproveedor != "") {
+					$proveedor = $aliasproveedor;
+				}
+
+				if ($facturaproveedor == "" || $facturaproveedor == "0") {
+					$facturaproveedor = "";
 				}
 
 				$arreglo["data"][] = array(
