@@ -165,11 +165,15 @@
 					'marca' => $data['marca'],
 					'modelo' => $data['modelo'],
 					'cantidad' => $data['cantidad'],
+					'recibido' => "",
 					'descripcion' => $data['descripcion'],
 					'cliente' => utf8_encode($cliente),
 					'pedidocliente' => $pedidoCliente,
 					'proveedor' => utf8_encode($proveedor),
-					'facturaproveedor' => $data['factura_proveedor']
+					'facturaproveedor' => $data['factura_proveedor'],
+					'remision' => "",
+					'factura' => "",
+					'observaciones' => "",
 				);
 				$i++;
 			}
