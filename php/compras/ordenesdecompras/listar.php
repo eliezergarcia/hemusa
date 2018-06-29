@@ -403,6 +403,7 @@
 					'indice' => $i,
 					'check' => $check,
 					'id' => $data['id'],
+					'idcotizacionherramientas' => $data['id_cotizacion_herramientas'],
 					'enviado' => $data['fecha_enviado'],
 					'recibido' => $data['fecha_llegada'],
 					'marca' => $data['marca'],

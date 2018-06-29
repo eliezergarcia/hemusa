@@ -65,6 +65,7 @@
                                 <th>Folio</th>
                                 <th>Pedimento</th>
                                 <th>Editar</th>
+                                <th></th>
                               </tr>
                             </thead>
                           </table>
@@ -243,8 +244,8 @@
           {"data":'utilidad'},
           {"data":'folio'},
           {"data":'pedimento'},
-          {"defaultContent":'<div class="invoice-footer"><button class="editar btn btn-lg btn-primary" data-toggle="modal" data-target="#modalEditarPartida"><i class="fas fa-edit fa-sm" aria-hidden="true"></i></button></div>'}
-          {"defaultContent":'<div class="invoice-footer"><button class="editar btn btn-lg btn-primary" data-toggle="modal" data-target="#modalEditarPartida"><i class="fas fa-edit fa-sm" aria-hidden="true"></i></button></div>'}
+          {"defaultContent":'<div class="invoice-footer"><button class="editar btn btn-lg btn-primary" data-toggle="modal" data-target="#modalEditarPartida"><i class="fas fa-edit fa-sm" aria-hidden="true"></i></button></div>'},
+          {"defaultContent":'<div class="invoice-footer"><button class="duplicar btn btn-lg btn-primary">Duplicar</button></div>'}
         ],
         "order":[[3, "desc"]],
         // "searching": false,
@@ -267,6 +268,7 @@
         ]
       });
       obtener_data_partida("#dt_partidas_oc_descripcion tbody", table);
+      obtener_data_duplicar("#dt_partidas_oc_descripcion tbody", table);
     }
 
     var listar_totales = function(ordencompra){
@@ -358,6 +360,29 @@
       });
     }
 
+    var obtener_data_partida = function(tbody, table){
+      $(tbody).on("click", "button.duplicar", function(){
+        var data = table.row( $(this).parents("tr") ).data();
+        console.log(data);
+        var cantidad = data.cantidad;
+        var idherramienta = data.id;
+        var opcion = "duplicar";
+  			var cantduplicar = prompt("Ingresa la cantidad para Almacén: ");
+        if (cantduplicar < 1 || cantduplicar > cantidad) {
+  				alert("Error en la cantidad del split");
+  			}else{
+          $.ajax({
+  					method: "POST",
+  					url: "guardar.php",
+  					dataType: "json",
+  					data: {"opcion": opcion, "idherramienta": idherramienta, "cantduplicar": cantduplicar, "cantidad": cantidad},
+  				}).done( function( info ){
+  					mostrar_mensaje(info);
+  					$("#dt_partidas_oc_descripcion").DataTable().ajax.reload();
+  				});
+        }
+      });
+    }
   </script>
   <script src="<?php echo $ruta; ?>/php/js/idioma_espanol.js"></script>
   <script src="<?php echo $ruta; ?>/php/js/mensajes_cambios.js"></script>

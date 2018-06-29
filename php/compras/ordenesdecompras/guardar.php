@@ -6,6 +6,13 @@
 	$opcion = $_POST['opcion'];
 
 	switch ($opcion) {
+		case 'duplicar':
+			$cantidad = $_POST['cantidad'];
+			$idherramienta = $_POST['idherramienta'];
+			$cantduplicar = $_POST['cantduplicar'];
+			duplicar($idherramienta, $cantduplicar, $cantidad, $conexion_usuarios);
+			break;
+
 		case 'flete':
 			$flete = $_POST['flete'];
 			$ordencompra = $_POST['ordencompra'];
@@ -50,6 +57,150 @@
 			$direccionenvio = $_POST['direccionenvio'];
 			crear_orden_compra($proveedor, $saludo, $direccionenvio, $conexion_usuarios);
 			break;
+	}
+
+	function duplicar($idherramienta, $cantduplicar, $cantidad, $conexion_usuarios){
+		if ($cantduplicar == $cantidad) {
+			$query = "UPDATE utilidad_pedido SET cliente = '611', nombre_cliente = 'ALMACEN' WHERE id = '$idherramienta'";
+			$resultado = mysqli_query($conexion_usuarios, $query);
+			if (!$resultado) {
+				$informacion["respuesta"] = "ERROR";
+				$informacion["informacion"] = "Ocurrió un problema al intentar mover la herramienta a Almacen!";
+			}else{
+				$query = "SELECT * FROM utilidad_pedido WHERE id = '$idherramienta'";
+				$resultado = mysqli_query($conexion_usuarios, $query);
+
+				while($data = mysqli_fetch_assoc($resultado)){
+					$marca = $data['marca'];
+					$modelo = $data['modelo'];
+				}
+
+				$query = "SELECT * FROM productos WHERE marca ='$marca' AND ref ='$modelo'";
+				$resultado = mysqli_query($conexion_usuarios, $query);
+
+				while($data = mysqli_fetch_assoc($resultado)){
+					$stock = $data['EnPortal'];
+				}
+
+				// $stock = $stock + $cantDuplicar;
+
+				$query = "UPDATE productos SET EnPortal = '$stock' WHERE marca = '$marca' AND ref = '$modelo'";
+				$resultado = mysqli_query($conexion_usuarios, $query);
+
+				if (!$resultado) {
+					$informacion["respuesta"] = "ERROR";
+					$informacion["informacion"] = "Ocurrió un problema al aumentar el stock de la herramienta!";
+				}else{
+					$informacion["respuesta"] = "BIEN";
+					$informacion["informacion"] = "La herramienta se movió al Almacen y se modificó el stock correctamente!";
+					$informacion["cantidad"] = $stock;
+				}
+			}
+		}
+		// $query = "SELECT * FROM cotizacionherramientas WHERE id ='$idherramienta'";
+		// $resultado = mysqli_query($conexion_usuarios, $query);
+		//
+		// while($data = mysqli_fetch_assoc($resultado)){
+		// 	$fechaCreacion = $data['FechaCreacion'];
+		// 	$cliente = $data['cliente'];
+		// 	$cotizacionNo = $data['cotizacionNo'];
+		// 	$cotizacionRef = $data['cotizacionRef'];
+		// 	$marca = $data['marca'];
+		// 	$modelo = $data['modelo'];
+		// 	$descripcion = $data['descripcion'];
+		// 	$precioLista = $data['precioLista'];
+		// 	$cantidad = $data['cantidad'];
+		// 	$unidad = $data['Unidad'];
+		// 	$claveSat = $data['ClaveProductoSAT'];
+		// 	$pedido = $data['Pedido'];
+		// 	$pedidoFecha = $data['pedidoFecha'];
+		// 	$noDePedido = $data['noDePedido'];
+		// 	$proveedor = $data['Proveedor'];
+		// 	$proveedorFecha = $data['proveedorFecha'];
+		// 	$iva = $data['IVA'];
+		// 	$moneda = $data['moneda'];
+		// 	$referenciaInterna = $data['referencia_interna'];
+		// 	$lugarCotizacion = $data['lugar_cotizacion'];
+		// 	$tiempoEntrega = $data['Tiempo_Entrega'];
+		// 	$flete = ($data['flete'] / 2);
+		// 	$proveedorFlete = $data['proveedorFlete'];
+		// 	$numeroPedido = $data['numeroPedido'];
+		// 	$fechaPedido = $data['fechaPedido'];
+		// 	$ordenCompra = $data['ordenCompra'];
+		// }
+		//
+		// $split = $cantidad - $cantidadsplit;
+		//
+		// $query = "INSERT INTO cotizacionherramientas (FechaCreacion, cliente, cotizacionNo, cotizacionRef, marca, modelo, descripcion, precioLista, cantidad, Unidad, ClaveProductoSAT, Pedido, pedidoFecha, noDePedido, Proveedor, proveedorFecha, IVA, moneda, referencia_interna, lugar_cotizacion, Tiempo_Entrega, flete, proveedorFlete, numeroPedido, fechaPedido, ordenCompra) VALUES ('$fechaCreacion', '$cliente', '$cotizacionNo', '$cotizacionRef', '$marca', '$modelo', '$descripcion', '$precioLista', '$cantidadsplit', '$unidad', '$claveSat', '$pedido', '$pedidoFecha', '$noDePedido', '$proveedor', '$proveedorFecha', '$iva', '$moneda', '$referenciaInterna', '$lugarCotizacion', '$tiempoEntrega', '$flete', '$proveedorFlete', '$numeroPedido', '$fechaPedido', '$ordenCompra')";
+		// $resultado = mysqli_query($conexion_usuarios, $query);
+		//
+		// if (!$resultado) {
+		// 	$informacion["respuesta"] = "ERROR";
+		// 	$informacion["informacion"] = "Ocurrió un problema al intentar aplicar el split 1 a la partida!";
+		// }else{
+		// 	if (!$resultado) {
+		// 		$informacion["respuesta"] = "ERROR";
+		// 		$informacion["informacion"] = "Ocurrió un problema al intentar aplicar el split 2 a la partida!";
+		// 	}else{
+		// 		$query = "UPDATE cotizacionherramientas SET cantidad = '$split' WHERE id='$idherramienta'";
+		// 		$resultado = mysqli_query($conexion_usuarios, $query);
+		//
+		// 		if (!$resultado) {
+		// 			$informacion["respuesta"] = "ERROR";
+		// 			$informacion["informacion"] = "Ocurrió un problema al intentar aplicar el split 3 a la partida!";
+		// 		}else{
+		// 			$query = "SELECT * FROM utilidad_pedido WHERE id_cotizacion_herramientas ='$idherramienta'";
+		// 			$resultado = mysqli_query($conexion_usuarios, $query);
+		//
+		// 			while($data = mysqli_fetch_assoc($resultado)){
+		// 				$id = $data['id'];
+		// 				$idCotizacionHerramientas = $data['id_cotizacion_herramientas'];
+		// 				$ordenCompra = $data['orden_compra'];
+		// 				$fechaOrdenCompra = $data['fecha_orden_compra'];
+		// 				$proveedor = $data['proveedor'];
+		// 				$entrada = $data['entrada'];
+		// 				$monedaPedido = $data['moneda_pedido'];
+		// 				$cliente = $data['cliente'];
+		// 				$marca = $data['marca'];
+		// 				$modelo = $data['modelo'];
+		// 				$cantidad = $data['cantidad'];
+		// 				$descripcion = $data['descripcion'];
+		// 				$tipoCambio = $data['tipo_cambio'];
+		// 				$costoMXN = $data['costo_mn'];
+		// 				$costoUSD = $data['costo_usd'];
+		// 				$ventaMXN = $data['venta_mn'];
+		// 				$ventaUSD = $data['venta_usd'];
+		// 				$utilidad = $data['utilidad'];
+		// 				$nombreCliente = $data['nombre_cliente'];
+		// 				$nombreProveedor = $data['nombre_proveedor'];
+		// 			}
+		//
+		// 			$split = $cantidad - $cantidadsplit;
+		//
+		// 			$query = "INSERT INTO utilidad_pedido (id_cotizacion_herramientas, orden_compra, fecha_orden_compra, proveedor, entrada, moneda_pedido, cliente, marca, modelo, cantidad, descripcion, tipo_cambio, costo_mn, costo_usd, venta_mn, venta_usd, utilidad, nombre_cliente, nombre_proveedor) VALUES ('$idCotizacionHerramientas', '$ordenCompra', '$fechaOrdenCompra', '$proveedor', '$entrada', '$monedaPedido', '$cliente', '$marca', '$modelo', '$cantidadsplit', '$descripcion', '$tipoCambio', '$costoMXN', '$costoUSD', '$ventaMXN', '$ventaUSD', '$utilidad', '$nombreCliente', '$nombreEmpresa')";
+		// 			$resultado = mysqli_query($conexion_usuarios, $query);
+		//
+		// 			if (!$resultado) {
+		// 				$informacion["respuesta"] = "ERROR";
+		// 				$informacion["informacion"] = "Ocurrió un problema al intentar aplicar el split 4 a la partida!";
+		// 			}else{
+		// 				$query = "UPDATE utilidad_pedido SET cantidad = '$split' WHERE id='$id'";
+		// 				$resultado = mysqli_query($conexion_usuarios, $query);
+		//
+		// 				if (!$resultado) {
+		// 					$informacion["respuesta"] = "ERROR";
+		// 					$informacion["informacion"] = "Ocurrió un problema al intentar aplicar el split 5 a la partida!";
+		// 				}else{
+		// 					$informacion["respuesta"] = "BIEN";
+		// 					$informacion["informacion"] = "El split se aplicó correctamente a la partida!";
+		// 				}
+		// 			}
+		// 		}
+		// 	}
+		// }
+
+		echo json_encode($informacion);
+		mysqli_close($conexion_usuarios);
 	}
 
 	function cambiar_moneda($ordenCompra, $conexion_usuarios){
