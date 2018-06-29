@@ -112,7 +112,7 @@ exports.getTheme = function (name) {
             alternateRow: { fillColor: 245 }
         },
         'grid': {
-            table: { fillColor: 255, textColor: 80, fontStyle: 'normal', lineWidth: 1 },
+            table: { fillColor: 255, textColor: 0, fontStyle: 'normal', lineWidth: 0.8 },
             header: { textColor: 255, fillColor: [63, 81, 181], fontStyle: 'bold', lineWidth: 0 },
             body: {},
             alternateRow: {}

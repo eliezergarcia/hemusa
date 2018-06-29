@@ -111,7 +111,13 @@
 		while($data = mysqli_fetch_assoc($resultado)){
 			$informacion['cliente'] = array_map("utf8_encode", $data);
 			$monedaproveedor = $data['moneda'];
+			$pais = $data['pais'];
 		}
+		if ($pais == "Mexico" || $pais == "MEXICO." || $pais == "MEXICO.," || $pais == "MEXICO ." || $pais == "MX" || $pais == "MEXI" || $pais == "M E X I C O" || $pais == "MEXIO") {
+			$pais = "MEXICO";
+		}
+
+		$informacion['cliente']['pais'] = $pais;
 
 		$query = "SELECT * FROM utilidad_pedido WHERE orden_compra = '$ordencompra'";
 		$resultado = mysqli_query($conexion_usuarios, $query);
