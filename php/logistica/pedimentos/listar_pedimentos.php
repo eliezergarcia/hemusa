@@ -1,5 +1,5 @@
-<?php
-
+<?php 
+	
 	include("../../conexion.php");
 
 	$fechaInicio = $_POST['fechaInicio'];
@@ -14,11 +14,11 @@
 	}else{
 		while($data = mysqli_fetch_assoc($resPedimentos)){
 			$arreglo["data"][] = $data;
-			array_map("utf8_encode", $data);
+			array_map("utf8_encode", $data); 
 		}
 		echo json_encode($arreglo);
 	}
 
-
+	
 	mysqli_close($conexion_usuarios);
  ?>

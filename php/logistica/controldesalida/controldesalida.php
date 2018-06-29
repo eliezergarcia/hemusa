@@ -16,7 +16,7 @@
           <p class="page-head-title">Control de salida</p>
           <nav aria-label="breadcrumb" role="navigation">
             <ol class="breadcrumb page-head-nav">
-                <li class="breadcrumb-item"><a href="#">Compras</a></li>
+                <li class="breadcrumb-item"><a href="#">Logística</a></li>
                 <li class="breadcrumb-item"><a href="#">Control de salida</a></li>
             </ol>
           </nav>

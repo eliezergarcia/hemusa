@@ -13,15 +13,11 @@
   <?php include('../../header.php'); ?>
     <div class="be-content">
       <div class="page-head">
-          <h2 class="page-head-title">Descripción de pedido</h2>
+          <h2 class="page-head-title">Ordenes de compras</h2>
           <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-              <li class="breadcrumb-item">Compras</li>
+              <li class="breadcrumb-item">Logística</li>
               <li class="breadcrumb-item"><a id="toolTipVerCotizaciones" href="ordenesdecompras.php" class="text-primary">Ordenes de compras</a></li>
-              <li id="breadcrumb" class="breadcrumb-item" aria-current="page">
-                Orden de compra: <a id="toolTipVerCliente" href="<?php echo $ruta; ?>php/compras/ordenesdecompras/verOrdenCompra.php?ordenCompra=" class="text-primary"><?php echo $_REQUEST['ordenCompra']; ?></a>
-              </li>
-              <li id="breadcrumb" class="breadcrumb-item active" aria-current="page">Descripción de pedido</li>
             </ol>
           </nav>
       </div>
@@ -30,6 +26,25 @@
             <div class="col-lg-12">
                 <div class="card card-fullcalendar">
                     <div class="card-body">
+                      <!-- Form buscar ordenes de compras -->
+                       <div class="col-12">
+                         <div class="row justify-content-center">
+                           <div>
+                             <div class="row justify-content-center form-group">
+                               <label for="fechaInicio">Fecha Inicio:</label>
+                               <input type="date" class="form-control form-control-sm row justify-content-center" name="fechaInicio" id="fechaInicio">
+                             </div>
+                             <div class="row justify-content-center form-group">
+                               <label for="fechaInicio">Fecha Fin:</label>
+                               <input type="date" class="form-control form-control-sm" name="fechaFin" id="fechaFin">
+                             </div>
+                             <div class="row justify-content-center form-group">
+                               <button class="btn btn-lg btn-primary" onclick="listar_partidas()"><i class="fas fa-search fa-sm"></i> Buscar</button>
+                             </div>
+                           </div>
+                         </div>
+                       </div>
+
                          <!-- Tabla de Partidas -->
                           <br>
                           <table id="dt_partidas_oc_descripcion" class="table table-hover table-striped compact" cellspacing="0" width="100%">
@@ -66,19 +81,6 @@
                                 <th>Pedimento</th>
                                 <th>Editar</th>
                                 <th></th>
-                              </tr>
-                            </thead>
-                          </table>
-
-                        <!-- Tabla de Total -->
-                          <br>
-                          <table id="dt_totales_oc" class="table table-striped table-hover display compact" cellspacing="0" width="100%">
-                            <thead>
-                              <tr>
-                                <th>Costo</th>
-                                <th>Flete</th>
-                                <th>Venta</th>
-                                <th>Utilidad</th>
                               </tr>
                             </thead>
                           </table>
@@ -186,11 +188,7 @@
       App.pageCalendar();
       App.formElements();
       App.uiNotifications();
-      var ordencompra = "<?php echo $_REQUEST['ordenCompra']; ?>";
-      var opcion = "datosordencompra";
-      listar_partidas(ordencompra);
-      listar_totales(ordencompra);
-      guardar(ordencompra);
+      guardar();
     });
 
     function seleccionartodo(){
@@ -204,6 +202,8 @@
     }
 
     var listar_partidas = function(ordencompra){
+      var fechaInicio = $("#fechaInicio").val(),
+          fechaFin = $("#fechaFin").val();
       var opcion = "partidasocdescripcion";
       var table = $("#dt_partidas_oc_descripcion").DataTable({
         "destroy":"true",
@@ -212,7 +212,7 @@
         "ajax":{
           "method":"POST",
           "url":"listar.php",
-          "data": {"opcion": opcion, "ordencompra": ordencompra}
+          "data": {"opcion": opcion, "fechaInicio": fechaInicio, "fechaFin": fechaFin}
         },
         "columns":[
           {"data":'check'},
@@ -271,35 +271,7 @@
       obtener_data_duplicar("#dt_partidas_oc_descripcion tbody", table);
     }
 
-    var listar_totales = function(ordencompra){
-      var opcion = "totalesocdescripcion";
-      console.log(opcion);
-      console.log(ordencompra);
-      var table = $("#dt_totales_oc").DataTable({
-        "destroy":"true",
-        "bDeferRender": true,
-        "ajax":{
-          "method":"POST",
-          "url":"listar.php",
-          "data": {"opcion": opcion, "ordencompra": ordencompra}
-        },
-        "columns":[
-          {"data":"costo"},
-          {"data":"flete"},
-          {"data":"venta"},
-          {"data":"utilidad"}
-        ],
-        "dom":
-          // "<'row be-datatable-header'<'col-sm-4'>>" +
-          "<'row be-datatable-body'<'col-sm-4'tr>>",
-        "searching": false,
-        "info": false,
-        "paging": false,
-        "ordering": false
-      });
-    }
-
-    var guardar = function(ordencompra){
+    var guardar = function(){
       $("form").on("submit", function(e){
         e.preventDefault();
         $("#frmActualizarDatos #ordencompra").val(ordencompra);

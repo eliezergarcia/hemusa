@@ -15,7 +15,7 @@
               <h2 class="page-head-title">Pedimentos</h2>
               <nav aria-label="breadcrumb" role="navigation">
                 <ol class="breadcrumb page-head-nav">
-                    <li class="breadcrumb-item"><a href="#">Compras</a></li>
+                    <li class="breadcrumb-item"><a href="#">Logística</a></li>
                     <li class="breadcrumb-item"><a href="#">Pedimentos</a></li>
                 </ol>
               </nav>
