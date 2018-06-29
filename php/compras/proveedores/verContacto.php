@@ -186,6 +186,10 @@
 										<input type="text" id="empresa" name="empresa" class="limpiar form-control form-control-sm col-7">
 									</div>
 									<div class="row form-group">
+										<label for="alias" class="col-4">Alias</label>
+										<input type="text" id="alias" name="alias" class="limpiar form-control form-control-sm col-7">
+									</div>
+									<div class="row form-group">
 										<label for="rfc" class="col-4">RFC</label>
 										<input type="text" id="rfc" name="rfc" class="limpiar form-control form-control-sm col-7">
 									</div>
@@ -1034,6 +1038,7 @@
 			data: {"opcion": opcion, "idproveedor": idproveedor},
 		}).done( function( data ){
 			$("#empresa").val(data.contacto.nombreEmpresa);
+			$("#alias").val(data.contacto.alias);
 			$("#rfc").val(data.contacto.RFC);
 			$("#contacto").val(data.contacto.personaContacto);
 			$("#calle").val(data.contacto.calle);
@@ -1065,39 +1070,43 @@
 		$("form").on("submit", function(e){
 			e.preventDefault();
 			$(".modal").modal("hide");
-			$("#mod-success").modal("show");
+			// $("#mod-success").modal("show");
 			$("form .disabled").attr("disabled", false);
 			var frm = $(this).serialize();
-			console.log(frm);
 			$.ajax({
 				method: "POST",
 				url: "guardar.php",
 				dataType: "json",
 				data: frm,
 			}).done( function( info ){
-				if (info.respuesta == "agregarordencompra") {
-					setTimeout(function () {
-						$(".texto1").fadeOut(300, function(){
-							$(this).html("");
-							$(this).fadeIn(300);
-						});
-					}, 2000);
-					setTimeout(function () {
-						$(".texto1").append("<div class='text-success'><span class='modal-main-icon mdi mdi-check-circle'></span></div>");
-						$(".texto1").append("<h3>Correcto!</h3>");
-						$(".texto1").append("<h4>La orden de compra se generó correctamente.</h4>");
-						$(".texto1").append("<div class='text-center'>");
-						$(".texto1").append("<p>Esperé un momento será redireccionado...</p>");
-						$(".texto1").append("</div>");
-					}, 2500);
-					setTimeout(function () {
-						window.location.href = "../ordenesdecompras/verOrdenCompra.php?ordenCompra="+info.ordencompra;
-					}, 4000);
+				if(info.respuesta != 'agregarordencompra'){
+					mostrar_mensaje(info);
 				}else{
-					setTimeout(function () {
-						$("#mod-success").modal("hide");
-						mostrar_mensaje(info);
-					}, 2000);
+					$("#mod-success").modal("show");
+					if (info.respuesta == "agregarordencompra") {
+						setTimeout(function () {
+							$(".texto1").fadeOut(300, function(){
+								$(this).html("");
+								$(this).fadeIn(300);
+							});
+						}, 2000);
+						setTimeout(function () {
+							$(".texto1").append("<div class='text-success'><span class='modal-main-icon mdi mdi-check-circle'></span></div>");
+							$(".texto1").append("<h3>Correcto!</h3>");
+							$(".texto1").append("<h4>La orden de compra se generó correctamente.</h4>");
+							$(".texto1").append("<div class='text-center'>");
+							$(".texto1").append("<p>Esperé un momento será redireccionado...</p>");
+							$(".texto1").append("</div>");
+						}, 2500);
+						setTimeout(function () {
+							window.location.href = "../ordenesdecompras/verOrdenCompra.php?ordenCompra="+info.ordencompra;
+						}, 4000);
+					}else{
+						setTimeout(function () {
+							$("#mod-success").modal("hide");
+							mostrar_mensaje(info);
+						}, 2000);
+					}
 				}
 			});
 		});

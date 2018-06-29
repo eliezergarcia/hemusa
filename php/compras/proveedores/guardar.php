@@ -58,6 +58,7 @@
 		case 'editarinformacion':
 			$idcontacto = $_POST['idproveedor'];
 			$empresa = $_POST['empresa'];
+			$alias = $_POST['alias'];
 			$rfc = $_POST['rfc'];
 			$contacto = $_POST['contacto'];
 			$calle = $_POST['calle'];
@@ -81,7 +82,7 @@
 			$formapago = $_POST['formapago'];
 			$metodopago = $_POST['metodopago'];
 			$cfdi = $_POST['cfdi'];
-			editar_informacion($idcontacto, $empresa, $rfc, $contacto, $calle, $noexterior, $nointerior, $colonia, $ciudad, $estado, $cp, $pais, $tlf1, $tlf2, $movil, $correofac1, $correofac2, $correo, $paginaweb, $credito, $contactohemusa, $moneda, $formapago, $metodopago, $cfdi, $conexion_usuarios);
+			editar_informacion($idcontacto, $empresa, $alias, $rfc, $contacto, $calle, $noexterior, $nointerior, $colonia, $ciudad, $estado, $cp, $pais, $tlf1, $tlf2, $movil, $correofac1, $correofac2, $correo, $paginaweb, $credito, $contactohemusa, $moneda, $formapago, $metodopago, $cfdi, $conexion_usuarios);
 			break;
 
 			default:
@@ -256,7 +257,6 @@
 		echo json_encode($informacion);
 		mysqli_close($conexion_usuarios);
 	}
-
 
 	function existe_proveedor($rfc, $conexion_usuarios){
 		$query = "SELECT id FROM contactos WHERE RFC = '$rfc' AND tipo = 'Proveedor'";
@@ -444,8 +444,8 @@
    	mysqli_close($conexion_usuarios);
 	}
 
-	function editar_informacion($idcontacto, $empresa, $rfc, $contacto, $calle, $noexterior, $nointerior, $colonia, $ciudad, $estado, $cp, $pais, $tlf1, $tlf2, $movil, $correofac1, $correofac2, $correo, $paginaweb, $credito, $contactohemusa, $moneda, $formapago, $metodopago, $cfdi, $conexion_usuarios){
-		$query = "UPDATE contactos SET nombreEmpresa = '$empresa', RFC = '$rfc', personaContacto = '$contacto', calle = '$calle', NumExt ='$nointerior', NumInt = '$nointerior', colonia = '$colonia', ciudad = '$ciudad', estado = '$estado', cp ='$cp', pais = '$pais', tlf1 ='$tlf1', tlf2 = '$tlf2', movil = '$movil', correoFacturacion1 = '$correofac1', correoFacturacion2 = '$correofac2', correoElectronico ='$correo',  paginaWeb = '$paginaweb', CondPago = '$credito', responsable = '$contactohemusa', moneda = '$moneda', IdFormaPago = '$formapago', IdMetodoPago = '$metodopago', IdUsoCFDI = '$cfdi' WHERE id = '$idcontacto'";
+	function editar_informacion($idcontacto, $empresa, $alias, $rfc, $contacto, $calle, $noexterior, $nointerior, $colonia, $ciudad, $estado, $cp, $pais, $tlf1, $tlf2, $movil, $correofac1, $correofac2, $correo, $paginaweb, $credito, $contactohemusa, $moneda, $formapago, $metodopago, $cfdi, $conexion_usuarios){
+		$query = "UPDATE contactos SET nombreEmpresa = '$empresa', alias = '$alias', RFC = '$rfc', personaContacto = '$contacto', calle = '$calle', NumExt ='$nointerior', NumInt = '$nointerior', colonia = '$colonia', ciudad = '$ciudad', estado = '$estado', cp ='$cp', pais = '$pais', tlf1 ='$tlf1', tlf2 = '$tlf2', movil = '$movil', correoFacturacion1 = '$correofac1', correoFacturacion2 = '$correofac2', correoElectronico ='$correo',  paginaWeb = '$paginaweb', CondPago = '$credito', responsable = '$contactohemusa', moneda = '$moneda', IdFormaPago = '$formapago', IdMetodoPago = '$metodopago', IdUsoCFDI = '$cfdi' WHERE id = '$idcontacto'";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 		if (!$resultado) {
 			$informacion["respuesta"] = "ERROR";
