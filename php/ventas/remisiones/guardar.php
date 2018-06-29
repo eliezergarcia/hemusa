@@ -300,14 +300,14 @@
 
 		if (!$resultado) {
 			$informacion["respuesta"] = "ERROR";
-			$informacion["informacion"] = "Ocurrió un problema al intentar agregar la(s) partida(s) al packing list!";
+			$informacion["informacion"] = "Ocurrió un problema al intentar agregar la(s) partida(s) a la lista de embarque!";
 		}else{
 			$informacion["respuesta"] = "BIEN";
-			$informacion["informacion"] = "Se agregó la(s) partida(s) al packing list correctamente!";
+			$informacion["informacion"] = "Se agregó la(s) partida(s) a la lista de embarque correctamente!";
 		}
 
 		echo json_encode($informacion);
-		verificar_resultado($resultado);
+		mysqli_close($conexion_usuarios);
 	}
 
 	function entregado($data, $conexion_usuarios){
