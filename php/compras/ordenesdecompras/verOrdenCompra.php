@@ -368,17 +368,17 @@
         doc.text("ORDEN DE COMPRA", 215, 70);
         doc.text("# " + data.ordencompra.noDePedido, 245, 90);
         doc.addImage(imgLogo, 'JPEG', 50, 80, 150, 60);
-        doc.setFontSize(7);
+        doc.setFontSize(8);
         doc.setFontStyle('normal');
         doc.text("RUPERTO MARTINEZ 831 pte Centro. C.P. 64000, Monterrey, Nuevo Leon, ", 20, 160)
         doc.text("Tel: (81) 8345 3811 email: ventas@hemusa.com, wwww.hemusa.com, R.F.C HMU810909370", 20, 170)
-        doc.setFontSize(10);
+        doc.setFontSize(11);
         doc.setFontStyle('normal');
         doc.text("Monterrey, N.L. " + data.fecha, 425, 125)
         doc.setFontSize(10);
         doc.setFontStyle('bold');
         doc.text("Proveedor", 20, 210);
-        doc.setFontSize(8);
+        doc.setFontSize(10);
         doc.setFontStyle('normal');
         doc.text(data.cliente.nombreEmpresa, 20, 225);
         doc.text(data.cliente.personaContacto, 20, 240);
@@ -413,21 +413,31 @@
           styles: {overflow: 'linebreak', cellPadding: 6, fontSize: 8, rowHeight: 15, pageBreak: 'always', columnWidth: 'auto'},
         });
 
-        doc.text("Favor de enviar los archivos electrónicos de facturación en formato XML y PDF a los correos:", 130, doc.autoTable.previous.finalY  + 50);
+        doc.setFontSize(9);
+        doc.text("Favor de enviar los archivos electrónicos de facturación en formato XML y PDF a los correos:", 120, doc.autoTable.previous.finalY  + 50);
         doc.setFontStyle('bold');
         doc.text("hemusa@hemusa.com administracion@hemusa.com", 190, doc.autoTable.previous.finalY  + 65);
-        doc.setLineWidth(0.5)
+        doc.setLineWidth(1)
+        doc.setDrawColor(0,0,0);
         doc.setFontStyle('normal');
         doc.line(20, doc.autoTable.previous.finalY  + 90, 575, doc.autoTable.previous.finalY  + 90)
+        doc.setFontSize(8);
+        doc.text("En cumplimiento a la regla 2.7.1.32 de la Resolución Miscelánea Fiscal de requisitos en la expedición de comprobantes fiscales.", 65, doc.autoTable.previous.finalY  + 105);
+        doc.text("• Las facturas en moneda Nacional en el apartado del método de pago Transferencia cta. 4371 deberá ser sustituido por transferencia de fondos clave 03.", 25, doc.autoTable.previous.finalY  + 120);
+        doc.text("• Las facturas en moneda USD en el apartado del método de pago Transferencia cta. 0578 deberá ser sustituido por transferencia de fondos clave 03.", 25, doc.autoTable.previous.finalY  + 135);
+        doc.setLineWidth(1)
+        doc.setDrawColor(0,0,0);
+        doc.setFontStyle('normal');
+        doc.line(20, doc.autoTable.previous.finalY  + 145, 575, doc.autoTable.previous.finalY  + 145)
         doc.setFontSize(9);
-        doc.text("Please ship the merchandise to:", 50, doc.autoTable.previous.finalY  + 110);
-        doc.text(data.ordencompra.envia_a, 50, doc.autoTable.previous.finalY  + 130);
-        doc.text("Invoice to:", 340, doc.autoTable.previous.finalY  + 110);
-        doc.text("Herramientas Mecánicas Universales S.A de C.V.", 340, doc.autoTable.previous.finalY  + 130);
-        doc.text("Ruperto Martinez 831 PTE", 340, doc.autoTable.previous.finalY  + 140);
-        doc.text("64000 Centro", 340, doc.autoTable.previous.finalY  + 150);
-        doc.text("Monterrey, Nuevo León", 340, doc.autoTable.previous.finalY  + 160);
-        doc.text("México", 340, doc.autoTable.previous.finalY  + 170);
+        doc.text("Please ship the merchandise to:", 50, doc.autoTable.previous.finalY  + 175);
+        doc.text(data.ordencompra.envia_a, 50, doc.autoTable.previous.finalY  + 195);
+        doc.text("Invoice to:", 340, doc.autoTable.previous.finalY  + 175);
+        doc.text("Herramientas Mecánicas Universales S.A de C.V.", 340, doc.autoTable.previous.finalY  + 195);
+        doc.text("Ruperto Martinez 831 PTE", 340, doc.autoTable.previous.finalY  + 205);
+        doc.text("64000 Centro", 340, doc.autoTable.previous.finalY  + 215);
+        doc.text("Monterrey, Nuevo León", 340, doc.autoTable.previous.finalY  + 225);
+        doc.text("México", 340, doc.autoTable.previous.finalY  + 235);
         if (opcionPDF == "imprimir") {
           doc.autoPrint();
         }
