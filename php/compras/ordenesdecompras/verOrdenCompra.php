@@ -392,16 +392,25 @@
 
         doc.autoTable(columns, rows, {
           theme: 'grid',
-                  margin: {top: 300, right: 20, bottom: 20, left: 20},
+          margin: {top: 300, right: 20, bottom: 20, left: 20},
           tableWidth: 'auto',
-          styles: {overflow: 'visible', cellPadding: 6, fontSize: 7, rowHeight: 15},
+          styles: {overflow: 'linebreak', cellPadding: 6, fontSize: 8, rowHeight: 15, pageBreak: 'always', columnWidth: 'auto'},
+          columnStyles: {
+            indice: {columnWidth: 20, halign: 'center'},
+            marca: {columnWidth: 60},
+            modelo:{columnWidth: 60},
+            descripcion: {columnWidth: 265},
+            cantidad:{columnWidth:50, halign: 'center'},
+            precioUnitario: {columnWidth: 50},
+            precioTotal:{columnWidth: 50},
+          },
         });
 
         doc.autoTable(columnstotales, rowstotales, {
           theme: 'grid',
-                  margin: {top: doc.autoTable.previous.finalY  + 15, right: 20, bottom: 20, left: 350},
+          margin: {top: doc.autoTable.previous.finalY  + 15, right: 20, bottom: 20, left: 350},
           tableWidth: 'auto',
-          styles: {overflow: 'visible', cellPadding: 6, fontSize: 7, rowHeight: 15},
+          styles: {overflow: 'linebreak', cellPadding: 6, fontSize: 8, rowHeight: 15, pageBreak: 'always', columnWidth: 'auto'},
         });
 
         doc.text("Favor de enviar los archivos electrónicos de facturación en formato XML y PDF a los correos:", 130, doc.autoTable.previous.finalY  + 50);

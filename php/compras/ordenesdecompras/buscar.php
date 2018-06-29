@@ -102,7 +102,7 @@
 		while($data = mysqli_fetch_assoc($resultado)){
 			$informacion['ordencompra'] = array_map("utf8_encode", $data);
 			$fecha = $data['fecha'];
-			$informacion['fecha'] = strftime("%d - %B - %Y", strtotime($fecha));
+			$informacion['fecha'] = strftime("%d - %m - %Y", strtotime($fecha));
 			$idproveedor = $data['proveedor'];
 			$fechaoc = $data['fecha'];
 		}
