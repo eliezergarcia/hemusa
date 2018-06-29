@@ -7002,10 +7002,10 @@ button.bg-grey:focus {
   color: var(--color-danger) !important; }
 
 .table-text-enviado {
-  color: var(--color-warning) !important; }
+  color: #FFB20B !important; }
 
 .table-text-recibido {
-  color: var(--color-hover-success) !important; }
+  color: #009000 !important; }
 
 .text-primary {
   color: var(--color-primario) !important; }
@@ -13975,7 +13975,7 @@ pre {
 
 .table > tbody > tr > td {
   font-weight: 400;
-  font-size: 13.5px;
+  font-size: 15px;
   vertical-align: middle; }
 
 .table-condensed > thead > tr > th {

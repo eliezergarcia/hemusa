@@ -65,14 +65,14 @@
 				$informacion['ordendecompra'] = array_map("utf8_encode", $data);
 				$idproveedor = $data['proveedor'];
 			}
-
+			
 			$query = "SELECT * FROM contactos WHERE id ='$idproveedor'";
 			$resultado = mysqli_query($conexion_usuarios, $query);
 			if (!$resultado) {
 				$informacion["proveedor"] = "ERROR";
 			}else{
 				while($data = mysqli_fetch_assoc($resultado)){
-					$informacion["proveedor"] = $data;
+					$informacion["proveedor"] = array_map("utf8_encode", $data);
 				}
 			}
 

@@ -203,18 +203,18 @@
     $(document).ready(function(){
       var ordencompra = "<?php echo $_REQUEST['ordenCompra']; ?>";
       var opcion = "datosordencompra";
-    //   buscar_oc_pendientes();
-		  // setInterval(buscar_oc_pendientes, 3000);
       App.init();
       App.pageCalendar();
       App.formElements();
       App.uiNotifications();
+      console.log(ordencompra);
       $.ajax({
         method: "POST",
         url: "buscar.php",
         dataType: "json",
         data: {"opcion": opcion, "ordencompra": ordencompra},
         success: function ( data ){
+          console.log(ordencompra);
           console.log(data);
           listar_partidas(data);
           listar_totales(data);
@@ -228,7 +228,7 @@
       var opcion = "partidasoc";
       var table = $("#dt_partidas_oc").DataTable({
         "destroy":"true",
-        "bDeferRender": true,
+        // "bDeferRender": true,
         "ajax":{
           "method":"POST",
           "url":"listar.php",
@@ -249,29 +249,29 @@
         ],
         "createdRow": function ( row, data, index ) {
           if ( data.enviado != '0000-00-00' && data.recibido == '0000-00-00' ) {
-            $('td', row).eq(0).addClass('table-text-enviado');
+            // $('td', row).eq(0).addClass('table-text-enviado');
             $('td', row).eq(1).addClass('table-text-enviado');
-            $('td', row).eq(2).addClass('table-text-enviado');
-            $('td', row).eq(3).addClass('table-text-enviado');
-            $('td', row).eq(4).addClass('table-text-enviado');
-            $('td', row).eq(5).addClass('table-text-enviado');
-            $('td', row).eq(6).addClass('table-text-enviado');
-            $('td', row).eq(7).addClass('table-text-enviado');
-            $('td', row).eq(8).addClass('table-text-enviado');
-            $('td', row).eq(9).addClass('table-text-enviado');
+            // $('td', row).eq(2).addClass('table-text-enviado');
+            // $('td', row).eq(3).addClass('table-text-enviado');
+            // $('td', row).eq(4).addClass('table-text-enviado');
+            // $('td', row).eq(5).addClass('table-text-enviado');
+            // $('td', row).eq(6).addClass('table-text-enviado');
+            // $('td', row).eq(7).addClass('table-text-enviado');
+            // $('td', row).eq(8).addClass('table-text-enviado');
+            // $('td', row).eq(9).addClass('table-text-enviado');
           }
 
           if ( data.enviado != '0000-00-00' && data.recibido != '0000-00-00' ) {
-            $('td', row).eq(0).addClass('table-text-recibido');
+            // $('td', row).eq(0).addClass('table-text-recibido');
             $('td', row).eq(1).addClass('table-text-recibido');
-            $('td', row).eq(2).addClass('table-text-recibido');
-            $('td', row).eq(3).addClass('table-text-recibido');
-            $('td', row).eq(4).addClass('table-text-recibido');
-            $('td', row).eq(5).addClass('table-text-recibido');
-            $('td', row).eq(6).addClass('table-text-recibido');
-            $('td', row).eq(7).addClass('table-text-recibido');
-            $('td', row).eq(8).addClass('table-text-recibido');
-            $('td', row).eq(9).addClass('table-text-recibido');
+            // $('td', row).eq(2).addClass('table-text-recibido');
+            // $('td', row).eq(3).addClass('table-text-recibido');
+            // $('td', row).eq(4).addClass('table-text-recibido');
+            // $('td', row).eq(5).addClass('table-text-recibido');
+            // $('td', row).eq(6).addClass('table-text-recibido');
+            // $('td', row).eq(7).addClass('table-text-recibido');
+            // $('td', row).eq(8).addClass('table-text-recibido');
+            // $('td', row).eq(9).addClass('table-text-recibido');
           }
         },
         "order":[[3, "desc"]],
