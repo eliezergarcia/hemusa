@@ -30,7 +30,7 @@
 									<table id="dt_partidas_embarque" class="table table-striped table-bordered table-hover display compact" cellspacing="0" width="100%">
 										<thead>
 											<tr class="text-center">
-												<th>N°</th>
+												<th>#</th>
 												<th>Marca</th>
 												<th>Modelo</th>
 												<th>Descripción</th>

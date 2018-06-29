@@ -70,20 +70,28 @@
     if(!$resultado){
       die('Error');
     }else{
-          $i = 1;
+      $i = 1;
       while($data = mysqli_fetch_assoc($resultado)){
+        $idpaqueteria = $data['IdPaqueteria'];
+
+        $querypaqueteria = "SELECT nombre FROM paqueterias WHERE IdPaqueteria = '$idpaqueteria'";
+        $resultadopaqueteria = mysqli_query($conexion_usuarios, $querypaqueteria);
+        while($datapaqueteria = mysqli_fetch_assoc($resultadopaqueteria)){
+          $paqueteria = $datapaqueteria['nombre'];
+        }
+
         $arreglo['data'][] = array(
           'indice' => $i,
           'marca' => $data['marca'],
           'modelo' => $data['modelo'],
-                  'descripcion' => $data['descripcion'],
-                  'cantidad' => $data['cantidad'],
-                  'factura' => $data['factura'],
-                  'ordencompra' => $data['NoPedClient'],
-                  'paqueteria' => $data['guia'],
-                  'guia' => $data['guia']
-              );
-              $i++;
+          'descripcion' => $data['descripcion'],
+          'cantidad' => $data['cantidad'],
+          'factura' => $data['factura'],
+          'ordencompra' => $data['NoPedClient'],
+          'paqueteria' => utf8_encode($paqueteria),
+          'guia' => $data['guia']
+        );
+        $i++;
       }
     }
 
