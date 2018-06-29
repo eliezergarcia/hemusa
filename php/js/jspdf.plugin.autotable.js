@@ -112,7 +112,7 @@ exports.getTheme = function (name) {
             alternateRow: { fillColor: 245 }
         },
         'grid': {
-            table: { fillColor: 255, textColor: 80, fontStyle: 'normal', lineWidth: 0.3 },
+            table: { fillColor: 255, textColor: 80, fontStyle: 'normal', lineWidth: 1 },
             header: { textColor: 255, fillColor: [63, 81, 181], fontStyle: 'bold', lineWidth: 0 },
             body: {},
             alternateRow: {}
@@ -140,7 +140,7 @@ function getDefaults() {
         tableWidth: 'auto',
         showHeader: 'everyPage',
         tableLineWidth: 0,
-        tableLineColor: 200,
+        tableLineColor: 100,
         // Hooks
         createdHeaderCell: function (cell, data) { },
         createdCell: function (cell, data) { },
@@ -165,7 +165,7 @@ function defaultStyles() {
         valign: 'top',
         fontSize: 10,
         cellPadding: 5 / scaleFactor,
-        lineColor: 0,
+        lineColor: 10,
         lineWidth: 0.5 / scaleFactor,
         columnWidth: 'auto'
     };
