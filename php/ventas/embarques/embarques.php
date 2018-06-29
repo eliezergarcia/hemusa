@@ -320,7 +320,8 @@
 						data: {"opcion": opcion, "id": id},
 						success: function (data) {
 							var json_info = JSON.parse( data );
-							partidasnuevoembarque();
+              mostrar_mensaje(json_info);
+							$("#dt_crear_embarque").DataTable().ajax.reload();
 						}
 					});
 				}

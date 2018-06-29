@@ -27,8 +27,9 @@
 			$informacion["informacion"] = "Ocurrió un problema al intentar quitar la herramienta de la lista de embarque'";
 		}else{
 			$informacion["respuesta"] = "BIEN";
-			$informacion["cotizacion"] = "La herramienta se quitó de la lista de embarque correctamente";
+			$informacion["informacion"] = "La herramienta se quitó de la lista de embarque correctamente";
 		}
+		echo json_encode($informacion);
 	}
 
 	function crear_embarque($usuario, $folio, $idcliente, $peso, $dimensiones, $observaciones, $conexion_usuarios){
