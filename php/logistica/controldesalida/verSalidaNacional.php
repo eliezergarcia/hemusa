@@ -186,7 +186,7 @@
         doc.setFontStyle('normal');
         doc.setFontSize(10);
         doc.text("RUPERTO MARTINEZ 831 PTE, MONTERREY, N.L., C.P. 64000, MEXICO", 275, 70);
-        doc.text("TELS: (81) 8345 3811, FAX: (81) 8342 8082,       hemusa@hemusa.com, www.hemusa.com", 225, 85);
+        doc.text("TELS: (81) 8345 3811, FAX: (81) 8342 8082,       ventas@hemusa.com, www.hemusa.com", 225, 85);
         doc.setLineWidth(1)
 				doc.setDrawColor(0,0,0);
         doc.line(20, 95, 825, 95)
