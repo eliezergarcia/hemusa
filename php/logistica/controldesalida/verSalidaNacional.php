@@ -177,7 +177,7 @@
         var doc = new jsPDF('l', 'pt', 'a4');
         doc.setFontSize(12);
         doc.setLineWidth(0.1)
-				doc.setDrawColor(50,50,50);
+				doc.setDrawColor(0,0,0);
         doc.line(20, 28, 825, 28)
         doc.setFontSize(20);
         doc.addImage(imgLogo, 'JPEG', 20, 30, 150, 60);
@@ -188,7 +188,7 @@
         doc.text("RUPERTO MARTINEZ 831 PTE, MONTERREY, N.L., C.P. 64000, MEXICO", 275, 70);
         doc.text("TELS: (81) 8345 3811, FAX: (81) 8342 8082,       hemusa@hemusa.com, www.hemusa.com", 225, 85);
         doc.setLineWidth(0.1)
-				doc.setDrawColor(50,50,50);
+				doc.setDrawColor(0,0,0);
         doc.line(20, 95, 825, 95)
         doc.setFontSize(13);
         doc.text("CONTROL DE SALIDA DE HERRAMIENTA", 475, 115)
@@ -245,7 +245,7 @@
           doc.setFontSize(20);
           doc.setFontStyle('bold');
           doc.setLineWidth(0.1)
-  				doc.setDrawColor(50,50,50);
+  				doc.setDrawColor(0,0,0);
           doc.line(250, doc.autoTable.previous.finalY  + 110, 600, doc.autoTable.previous.finalY  + 110)
           doc.setFontStyle('normal');
           doc.setFontSize(12);
