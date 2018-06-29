@@ -53,6 +53,7 @@
 				$cliente = $data['cliente'];
 				$proveedor = $data['proveedor'];
 				$idherramienta = $data['id_cotizacion_herramientas'];
+				$facturaproveedor = $data['factura_proveedor'];
 
 				$query = "SELECT cotizacionRef FROM cotizacionherramientas WHERE id = '$idherramienta'";
 				$resultado2 = mysqli_query($conexion_usuarios, $query);
@@ -78,6 +79,10 @@
 					$proveedor = $dataproveedor['nombreEmpresa'];
 				}
 
+				if ($facturaproveedor == "" || $facturaproveedor == "0") {
+					$facturaproveedor = "";
+				}
+
 				$arreglo["data"][] = array(
 					'indice' => $i,
 					'id' => $data['id'],
@@ -89,7 +94,7 @@
 					'cliente' => utf8_encode($cliente),
 					'pedidocliente' => $pedidoCliente,
 					'proveedor' => utf8_encode($proveedor),
-					'facturaproveedor' => $data['factura_proveedor'],
+					'facturaproveedor' => $facturaproveedor,
 					'remision' => "",
 					'factura' => "",
 					'observaciones' => "",
