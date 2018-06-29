@@ -187,7 +187,7 @@
 
 					$split = $cantidad - $cantidadsplit;
 
-					$query = "INSERT INTO utilidad_pedido (id_cotizacion_herramientas, orden_compra, fecha_orden_compra, proveedor, entrada, moneda_pedido, cliente, marca, modelo, cantidad, descripcion, tipo_cambio, costo_mn, costo_usd, venta_mn, venta_usd, utilidad, nombre_cliente, nombre_proveedor) VALUES ('$idCotizacionHerramientas', '$ordenCompra', '$fechaOrdenCompra', '$proveedor', '$entrada', '$monedaPedido', '$cliente', '$marca', '$modelo', '$cantidadsplit', '$descripcion', '$tipoCambio', '$costoMXN', '$costoUSD', '$ventaMXN', '$ventaUSD', '$utilidad', '$nombreCliente', '$nombreEmpresa')";
+					$query = "INSERT INTO utilidad_pedido (id_cotizacion_herramientas, orden_compra, fecha_orden_compra, proveedor, entrada, moneda_pedido, cliente, marca, modelo, cantidad, descripcion, tipo_cambio, costo_mn, costo_usd, venta_mn, venta_usd, utilidad, nombre_cliente, nombre_proveedor) VALUES ('$idCotizacionHerramientas', '$ordenCompra', '$fechaOrdenCompra', '$proveedor', '$entrada', '$monedaPedido', '$cliente', '$marca', '$modelo', '$cantidadsplit', '$descripcion', '$tipoCambio', '$costoMXN', '$costoUSD', '$ventaMXN', '$ventaUSD', '$utilidad', '$nombreCliente', '$nombreProveedor')";
 					$resultado = mysqli_query($conexion_usuarios, $query);
 
 					if (!$resultado) {
