@@ -13,7 +13,7 @@
 			$idproveedor = $_POST['idproveedor'];
 			total_sin_pedido($idproveedor, $conexion_usuarios);
 			break;
-		
+
 		case 'informacioncontacto':
 			$idproveedor = $_POST['idproveedor'];
 			informacion_contacto($idproveedor, $conexion_usuarios);
@@ -80,7 +80,7 @@
 					$totalsinpedido = $totalsinpedido + $precioProveedor;
 				}
 			}
-		}	
+		}
 
 		$informacion['totalsinpedido'] = round($totalsinpedido,2);
 		echo json_encode($informacion);
@@ -105,7 +105,7 @@
 			$arreglo['contacto'] = $data;
 		}
 
-		echo json_encode($arreglo);
+		echo json_encode($arreglo, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_PARTIAL_OUTPUT_ON_ERROR);
 	}
 
 
