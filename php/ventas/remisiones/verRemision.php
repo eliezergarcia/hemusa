@@ -186,6 +186,7 @@
 			    				<table id="dt_pedido" class="table table-striped table-hover display compact" cellspacing="0" width="100%">
 										<thead>
 											<tr>
+												<th>#</th>
 												<th>Marca</th>
 												<th>Modelo</th>
 												<th>Descripcion</th>
@@ -197,7 +198,6 @@
 												<th>Clave SAT</th>
 												<th>Proveedor</th>
 												<th>Almacen</th>
-												<th>Entregado <input type="checkbox" class="btn btn-outline-primary" name="sel" onclick="seleccionartodo()"></th>
 												<th>Editar</th>
 												<th>Quitar</th>
 											</tr>
@@ -485,6 +485,7 @@
 							<table id="dt_agregar_herramienta" class="table table-striped table-hover display compact" cellspacing="0" width="100%">
 								<thead>
 									<tr>
+										<th>#</th>
 										<th>Marca</th>
 										<th>Modelo</th>
 										<th>Descripción</th>
@@ -590,34 +591,6 @@
 					var RFC = data.cliente.RFC;
 					listar_partidas(remision, RFC);
 
-					// var request = new XMLHttpRequest();
-					//
-					// request.open('GET', 'http://factura.com/api/v3/cfdi33/list');
-					//
-					// request.setRequestHeader("Access-Control-Allow-Origin", "*");
-					// request.setRequestHeader('Access-Control-Allow-Headers', '*');
-					// request.setRequestHeader('Access-Control-Allow-Credentials', 'true');
-					// request.setRequestHeader('Content-Type', 'application/json');
-					// request.setRequestHeader('F-API-KEY', 'JDJ5JDEwJHJWelRXTWlJMEd4OS9kS3hRZTJNZy5neFAwV2dzdGttLjVleTcueDIyUHlMOEE0VEY5dUFL');
-					// request.setRequestHeader('F-SECRET-KEY', 'JDJ5JDEwJDd3bXhpWENGRXJFMkNvOE1Hblo5Y2VPV3J5WXJxZmJoVEJhQjR0OE1Xa0hrV1lmRXhCWkFt');
-					//
-					// request.onreadystatechange = function () {
-					//   if (this.readyState === 4) {
-					// 	console.log('Status:', this.status);
-					// 	console.log('Headers:', this.getAllResponseHeaders());
-					//     var data = JSON.parse(this.responseText);
-					// 	console.log(data);
-					//     var total = data.total;
-					//     for (var i = 0; i < total; i++) {
-					//     	if (remision == data.data[i].NumOrder){
-					//     		$("#factura").val(data.data[i].Folio);
-					//     	}
-					//     }
-					//   }
-					// };
-
-					// request.send();
-
 					var request = new XMLHttpRequest();
 
 					request.open('GET', apiConfig.enlace + 'api/v3/cfdi33/list');
@@ -684,6 +657,7 @@
 						"data": {"remision": remision, "opcion": opcion}
 					},
 					"columns":[
+						{"data": "indice"},
 						{"data": "marca"},
 						{"data": "modelo"},
 						{"data": "descripcion"},
@@ -695,7 +669,6 @@
 						{"data": "claveSat"},
 						{"data": "proveedor"},
 						{"data": "almacen"},
-						{"data": "entregado"},
 						{"defaultContent": "<div class='invoice-footer'><button type='button' class='editar btn btn-lg btn-primary' data-toggle='modal' data-target='#modalEditar'><i class='fas fa-edit fa-sms' aria-hidden='true'></i></button></div>"},
 						{"defaultContent": "<div class='invoice-footer'><button class='quitar btn btn-lg btn-danger'><i class='fas fa-times fa-sm' aria-hidden='true'></i></button></div>"}
 					],
@@ -728,35 +701,17 @@
 			        "dom":
 		    				"<'row be-datatable-header'<'col-sm-6'B><'col-sm-6 text-right'f>>" +
 		    				"<'row be-datatable-body'<'col-sm-12'tr>>",
-					// "rowCallback": function( Row, Data) {
-					//     if ( Data[9] == 0 )
-					//     {
-					//         $('td', Row).css('background-color', 'Green');
-					//     }
-					//     else if ( Data[9] == "Bueno" )
-					//     {
-					//         $('td', Row).css('background-color', 'Blue');
-					//     }
-					//     else if ( Data[9] == "Malo" )
-					//     {
-					//         $('td', Row).css('background-color', 'Red');
-					//     }
-					// },
-					"createdRow": function ( row, data, index ) {
-	            console.log(data.entregado);
-	            if ( data.entregado == "si" ) {
-	                $('td', row).eq(0).addClass('table-success');
-	                $('td', row).eq(1).addClass('table-success');
-	                $('td', row).eq(2).addClass('table-success');
-	                $('td', row).eq(3).addClass('table-success');
-	                $('td', row).eq(4).addClass('table-success');
-	                $('td', row).eq(5).addClass('table-success');
-	                $('td', row).eq(6).addClass('table-success');
-	                $('td', row).eq(7).addClass('table-success');
-	                $('td', row).eq(8).addClass('table-success');
-	                $('td', row).eq(9).addClass('table-success');
-	            }
-	        },
+								"createdRow": function ( row, data, index ) {
+				          if ( data.enviado != '0000-00-00' && data.recibido == '0000-00-00' ) {
+				            $('td', row).eq(1).addClass('table-text-enviado');
+				            $('td', row).eq(2).addClass('table-text-enviado');
+				          }
+
+				          if ( data.enviado != '0000-00-00' && data.recibido != '0000-00-00' ) {
+				            $('td', row).eq(1).addClass('table-text-recibido');
+				            $('td', row).eq(2).addClass('table-text-recibido');
+				          }
+				        },
 					"buttons":[
 						{
 							extend: 'collection',
@@ -781,20 +736,12 @@
 							]
 						},
 						// {
-			            //     text: 'Devolucion',
-			            //     "className": "btn btn-danger",
-			            //     action: function ( e, dt, node, config ) {
-			            //     	$('#modalDevolucion').modal('show');
-			            //     	listar_devolucion(refCotizacion, numeroPedido);
-			            //     }
-			            // },
-						{
-							text: '<i class="fas fa-check-circle fa-sm" aria-hidden="true"></i> Entregado',
-							"className": "btn btn-lg btn-space btn-secondary",
-							action: function ( e, dt, node, config ) {
-								entregado(remision, RFC);
-							}
-						},
+						// 	text: '<i class="fas fa-check-circle fa-sm" aria-hidden="true"></i> Entregado',
+						// 	"className": "btn btn-lg btn-space btn-secondary",
+						// 	action: function ( e, dt, node, config ) {
+						// 		entregado(remision, RFC);
+						// 	}
+						// },
 						{
 							text: '<i class="fas fa-list fa-sm" aria-hidden="true"></i> Packing list',
 							"className": "btn btn-lg btn-space btn-secondary",
@@ -1158,6 +1105,7 @@
 					"data": {"opcion": opcion, "idcontacto": idcontacto}
 				},
 				"columns":[
+					{"data": "indice"},
 					{"data": "marca"},
 					{"data": "modelo"},
 					{"data": "descripcion"},
@@ -1167,6 +1115,17 @@
 					{"data": "numeroPedido"},
 					{"data": "input"}
 				],
+				"createdRow": function ( row, data, index ) {
+					if ( data.enviado != '0000-00-00' && data.recibido == '0000-00-00' ) {
+						$('td', row).eq(1).addClass('table-text-enviado');
+						$('td', row).eq(2).addClass('table-text-enviado');
+					}
+
+					if ( data.enviado != '0000-00-00' && data.recibido != '0000-00-00' ) {
+						$('td', row).eq(1).addClass('table-text-recibido');
+						$('td', row).eq(2).addClass('table-text-recibido');
+					}
+				},
 				"dom":
       				"<'row be-datatable-header'<'col-sm-6'><'col-sm-6 text-right'f>>" +
       				"<'row be-datatable-body'<'col-sm-12'tr>>" +

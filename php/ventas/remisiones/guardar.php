@@ -348,11 +348,8 @@
 			}else{
 				$informacion["respuesta"] = "BIEN";
 				$informacion["remision"] = $remision;
-				echo json_encode($informacion);
 			}
 		}
-		$informacion["respuesta"] = "BIEN";
-		$informacion["remision"] = $remision;
 		echo json_encode($informacion);
 	}
 
@@ -360,10 +357,10 @@
 		$fecha = date("Y-m-d");
 		foreach ($herramienta as &$valor) {
 			$id = $valor;
-			$query = "UPDATE utilidad_pedido SET remision = '$fecha' WHERE id_cotizacion_herramientas = '$id'";
+			$query = "UPDATE utilidad_pedido SET remision = '$remision', fecha_entregado='$fecha' WHERE id_cotizacion_herramientas = '$id'";
 			$resultado = mysqli_query($conexion_usuarios, $query);
 
-			$query = "UPDATE cotizacionherramientas SET remision = '$remision' WHERE id = '$id'";
+			$query = "UPDATE cotizacionherramientas SET remision = '$remision', Entregado='$fecha' WHERE id = '$id'";
 			$resultado = mysqli_query($conexion_usuarios, $query);
 		}
 
@@ -422,7 +419,10 @@
 
 	function quitar_herramienta($idherramienta, $remision, $conexion_usuarios){
 		$fecha = date("Y-m-d");
-		$query = "UPDATE cotizacionherramientas SET remision = '' WHERE id = '$idherramienta'";
+		$query = "UPDATE utilidad_pedido SET remision = '$remision', fecha_entregado='$fecha' WHERE id_cotizacion_herramientas = '$idherramienta'";
+		$resultado = mysqli_query($conexion_usuarios, $query);
+
+		$query = "UPDATE cotizacionherramientas SET remision = '', Entregado='0000-00-00'  WHERE id = '$idherramienta'";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 
 		$query = "SELECT moneda FROM cotizacion WHERE remision = '$remision'";

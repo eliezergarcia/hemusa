@@ -129,7 +129,7 @@
 					'proveedor' => $data['Proveedor'],
 					'marca' => $marca,
 					'modelo' => $modelo,
-					'descripcion' => $data['descripcion'],
+					'descripcion' => utf8_encode($data['descripcion']),
 					'noserie' => $data['NoSerie'],
 					'preciounidad' => "$ ".($data['precioLista'] + $data['flete']),
 					'cantidad' => $data['cantidad'],
@@ -142,7 +142,6 @@
 		}
 
 		echo json_encode($arreglo, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_PARTIAL_OUTPUT_ON_ERROR);
-		mysqli_free_result($resultado);
 		mysqli_close($conexion_usuarios);
 	}
 
@@ -155,7 +154,10 @@
 		while($data = mysqli_fetch_assoc($resultado)){
 			$input = '<input type="checkbox" class="btn btn-outline-primary" name="hremision" value="'.$data['id'].'">';
 			$arreglo['data'][] = array(
+				'indice' => $i,
 				'id' => $data['id'],
+				'enviado' => $data['enviadoFecha'],
+				'recibido' => $data['recibidoFecha'],
 				'marca' => $data['marca'],
 				'modelo' => $data['modelo'],
 				'descripcion' => utf8_encode($data['descripcion']),
@@ -165,6 +167,7 @@
 				'numeroPedido' => $data['numeroPedido'],
 				'input' => $input
 			);
+			$i++;
 		}
 
 		echo json_encode($arreglo);
