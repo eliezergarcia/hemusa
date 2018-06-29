@@ -1,5 +1,5 @@
-<?php 
-	
+<?php
+
 	include("../../conexion.php");
 
 	$opcion = $_POST['opcion'];
@@ -16,7 +16,7 @@
 			paqueterias($paqueteria, $conexion_usuarios);
 			break;
 
-		case 'proveedores':		
+		case 'proveedores':
 			proveedores($conexion_usuarios);
 			break;
 
@@ -26,12 +26,12 @@
 			break;
 
 		case 'datosRFC':
-			$rfc = $_POST['rfc'];		
+			$rfc = $_POST['rfc'];
 			datosrfc($rfc, $conexion_usuarios);
 			break;
 
 		case 'buscarpartidasfacturar':
-			$remision = $_POST['remision'];		
+			$remision = $_POST['remision'];
 			buscarpartidasfacturar($remision, $conexion_usuarios);
 			break;
 
@@ -73,11 +73,11 @@
 					'indice' => $i,
 					'marca' => $data['marca'],
 					'modelo' => $data['modelo'],
-					'descripcion' => $data['descripcion'],
+					'descripcion' => utf8_encode($data['descripcion']),
 					'cantidad' => $data['cantidad'],
 					'precioUnitario' => "$ ".round($data['precioLista'],2),
 					'precioTotal' => "$ ".round($data['precioLista'] * $data['cantidad'],2)
-				);		
+				);
 				$i++;
 				$subtotal = $subtotal + ($data['precioLista'] * $data['cantidad']);
 			}
@@ -85,14 +85,14 @@
 				'subtotal' => "$ ".round($subtotal,2),
 				'iva' => "$ ".round($subtotal * .16,2),
 				'total' => "$ ".round($subtotal * 1.16,2)
-			);	
+			);
 		}
 
 		$query = "SELECT * FROM cotizacion WHERE remision ='$remision'";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 		while($data = mysqli_fetch_assoc($resultado)){
 			$arreglo['cotizacion'] = array_map("utf8_encode", $data);
-			$idcliente = $data['cliente'];	
+			$idcliente = $data['cliente'];
 		}
 
 		$query = "SELECT * FROM contactos WHERE id ='$idcliente'";
@@ -100,8 +100,8 @@
 		while($data = mysqli_fetch_assoc($resultado)){
 			$arreglo['cliente'] = array_map("utf8_encode", $data);
 		}
-		
-		echo json_encode($arreglo, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_PARTIAL_OUTPUT_ON_ERROR);	
+
+		echo json_encode($arreglo, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_PARTIAL_OUTPUT_ON_ERROR);
 		mysqli_free_result($resultado);
 		mysqli_close($conexion_usuarios);
 	}
@@ -111,7 +111,7 @@
      	$numero = substr(date("y"), 1).date("m").date("d").$n;
 	   	$query = "SELECT ref FROM cotizacion ORDER BY id DESC LIMIT 100";
      	$resultado = mysqli_query($conexion_usuarios, $query);
-     	
+
      	while($data = mysqli_fetch_array($resultado)){
      		$ultimaCotizacion = str_replace("HMU", "", $data['ref']);
 	     	while ($numero <= $ultimaCotizacion) {
@@ -119,7 +119,7 @@
 	     		$numero = substr(date("y"), 1).date("m").date("d").$n;
 			}
      	}
-		 
+
 		$numeroCotizacion = "HMU".substr(date("y"), 1).date("m").date("d").$n;
 
 		$query = "SELECT max(remision) AS ultimaremision FROM cotizacion";
@@ -198,7 +198,7 @@
 			}
 		}
 
-		echo json_encode($informacion, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_PARTIAL_OUTPUT_ON_ERROR);	
+		echo json_encode($informacion, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_PARTIAL_OUTPUT_ON_ERROR);
 	}
 
 	function paqueterias($paqueteria, $conexion_usuarios){
@@ -290,7 +290,7 @@
 			// 	'TipoFactor' => "Tasa",
 			// 	'TasaOCuota' => 0.16,
 			// 	'Importe' => ($data['precioLista'] * $data['cantidad']) + ($data['precioLista'] * $data['cantidad'] * 0.16)
-			// );	
+			// );
 			if ($data['Pedimento'] != '') {
 				$Partes = "{}";
 				$arreglo['data'][] = array(
@@ -311,7 +311,7 @@
 					'Aduana' => $data['Pedimento']
 					// 'Predial' => "487842327ee",
 					// 'Partes' => $Partes
-				);		
+				);
 			}else{
 				$arreglo['data'][] = array(
 					'ClaveProdServ' => $data['ClaveProductoSAT'],
@@ -324,7 +324,7 @@
 					'Descuento' => 0,
 					'Impuestos' => $traslados
 				);
-			}		
+			}
 
 		}
 
@@ -372,5 +372,5 @@
 		echo json_encode($arreglo);
 	}
 
-	
+
 ?>
