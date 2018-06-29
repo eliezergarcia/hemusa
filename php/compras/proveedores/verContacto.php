@@ -117,6 +117,7 @@
 																				<th>Pedido</th>
 																				<th>Fecha</th>
 																				<th>Costo</th>
+																				<th></th>
 																			</tr>
 																		</thead>
 																	</table>
@@ -398,6 +399,33 @@
 				</div>
 			</div>
 
+		<!-- Modal Eliminar Proveedor -->
+      <!-- <form id="frmSplitSinRecibido" action="" method="POST">
+        <input type="hidden" id="opcion" name="opcion" value="splitsinrecibido">
+        <input type="hidden" id="idherramienta" name="idherramienta" value="">
+        <div class="modal fade" id="modalSplitSinRecibido" tabindex="-1" role="dialog" aria-labelledby="modalSplitLabel">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" data-dismiss="modal" aria-hidden="true" class="close"><span class="mdi mdi-close"></span></button>
+              </div>
+              <div class="modal-body">
+                <div class="text-center">
+                    <h4>Ingresa la cantidad a aplicar el split: </h4>
+                    <div class="row justify-content-center">
+                      <input type="text" class="form-control form-control-sm col-3" id="cantidadsplit" name="cantidadsplit">
+                    </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+								<button type="button" class="btn btn-lg btn-secondary" data-dismiss="modal">Cancelar</button>
+								<button type="submit" class="btn btn-lg btn-primary">Guardar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form> -->
+
 			<div id="mod-success" tabindex="-1" role="dialog" style="" class="modal fade" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog">
           <div class="modal-content">
@@ -663,7 +691,16 @@
         {"data": "cliente"},
         {"data": "pedido"},
         {"data": "fecha"},
-        {"data": "costo"}
+        {"data": "costo"},
+				{"data": "cantidad",
+					"render": function(cantidad){
+						if(cantidad > 1){
+							return "<div class='invoice-footer'><button class='splitSinrecibido btn btn-lg btn-primary'  data-toggle='modal' data-target='#modalSplitSinRecibido'>Split</button></div>";
+						}else{
+							return "";
+						}
+					}
+				}
       ],
 			"columnDefs": [
 				{ "width": "15%", "targets": 7 },
@@ -792,7 +829,7 @@
 				]
 	    });
 
-	    // obtener_id_quitar("#dt_listar_sinpedido tbody", table, idproveedor);
+	    split_sin_recibido("#dt_listar_sinrecibido tbody", table);
 	}
 
 	var listar_sinentregar = function(){
@@ -1124,6 +1161,28 @@
 				});
 			}else{
 
+			}
+		});
+	}
+
+	var split_sin_recibido = function(tbody, table){
+		$(tbody).on("click", "button.splitSinrecibido", function(){
+			var data = table.row( $(this).parents("tr") ).data();
+			var idherramienta = data.id;
+			var opcion = "splitsinrecibido";
+			var cantidadsplit = prompt("Ingresa la cantidad del split: ");
+			if (cantidadsplit < 1) {
+				alert("Error en la cantidad del split");
+			}else{
+				$.ajax({
+					method: "POST",
+					url: "guardar.php",
+					dataType: "json",
+					data: {"opcion": opcion, "idherramienta": idherramienta, "cantidadsplit": cantidadsplit},
+				}).done( function( info ){
+					mostrar_mensaje(info);
+					$("#dt_listar_sinrecibido").DataTable().ajax.reload();
+				});
 			}
 		});
 	}
