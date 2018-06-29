@@ -69,11 +69,25 @@
 			$i=1;
 			$subtotal = 0;
 			while($data = mysqli_fetch_assoc($resultado)){
+				$refCotizacion = $data['cotizacionRef'];
+
+				$query = "SELECT * FROM cotizacion WHERE ref = '$refCotizacion'";
+				$resultado2 = mysqli_query($conexion_usuarios, $query);
+				while($data2 = mysqli_fetch_assoc($resultado2)){
+					$pedidoCliente = $data2['NoPedClient'];
+				}
+
+				// $descripcion = str_replace($data['descripcion'], "", "(", 5);
+				$descripcion = utf8_encode($data['descripcion']);
+				$datadescripcion = explode('(', $descripcion);
+				$desc = $datadescripcion[0];
+
 				$arreglo["partidas"][]=array(
 					'indice' => $i,
 					'marca' => $data['marca'],
 					'modelo' => $data['modelo'],
-					'descripcion' => utf8_encode($data['descripcion']),
+					'descripcion' => utf8_encode($desc),
+					'pedidoCliente' => $pedidoCliente,
 					'cantidad' => $data['cantidad'],
 					'precioUnitario' => "$ ".round($data['precioLista'],2),
 					'precioTotal' => "$ ".round($data['precioLista'] * $data['cantidad'],2)
