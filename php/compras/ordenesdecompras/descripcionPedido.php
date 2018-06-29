@@ -35,6 +35,7 @@
                           <table id="dt_partidas_oc_descripcion" class="table table-hover table-striped compact" cellspacing="0" width="100%">
                             <thead>
                               <tr>
+                                <th><input type="checkbox" class="btn btn-outline-primary" name="checksel" onclick="seleccionartodo()"></th>
                                 <th>#</th>
                                 <th>Enviado</th>
                                 <th>Recibido</th>
@@ -191,6 +192,16 @@
       guardar(ordencompra);
     });
 
+    function seleccionartodo(){
+      $("input[name=hcheck]").each(function (index) {
+				if($("input[name=checksel]").is(':checked')){
+					$('input[name=hcheck]').prop('checked' , true);
+				}else{
+					$('input[name=hcheck]').prop('checked' , false);
+				}
+			});
+    }
+
     var listar_partidas = function(ordencompra){
       var opcion = "partidasocdescripcion";
       var table = $("#dt_partidas_oc_descripcion").DataTable({
@@ -203,6 +214,7 @@
           "data": {"opcion": opcion, "ordencompra": ordencompra}
         },
         "columns":[
+          {"data":'check'},
           {"data":'indice'},
           {"data":'enviado'},
           {"data":'recibido'},
@@ -231,6 +243,7 @@
           {"data":'utilidad'},
           {"data":'folio'},
           {"data":'pedimento'},
+          {"defaultContent":'<div class="invoice-footer"><button class="editar btn btn-lg btn-primary" data-toggle="modal" data-target="#modalEditarPartida"><i class="fas fa-edit fa-sm" aria-hidden="true"></i></button></div>'}
           {"defaultContent":'<div class="invoice-footer"><button class="editar btn btn-lg btn-primary" data-toggle="modal" data-target="#modalEditarPartida"><i class="fas fa-edit fa-sm" aria-hidden="true"></i></button></div>'}
         ],
         "order":[[3, "desc"]],
@@ -290,21 +303,44 @@
         $("#frmActualizarDatos #ordencompra").val(ordencompra);
         var frm = $(this).serialize();
         console.log(frm);
-        if ($("#frmActualizarDatos #pedimento").val().length != 0 && $("#frmActualizarDatos #pedimento").val().length != 21 ) {
+
+        var verificar = 0;
+  			$("input[name=hcheck]").each(function (index) {
+  				if($(this).is(':checked')){
+  					verificar++;
+  				}
+  			});
+  			if(verificar == 0){
+  				alert("Debes de seleccionar al menos una partida!");
+  			}else{
+  				var herramienta = new Array();
+  				$("input[name=hcheck]").each(function (index) {
+  					if($(this).is(':checked')){
+  						herramienta.push($(this).val());
+  					}
+  				});
+          console.log(herramienta);
+
+          if ($("#frmActualizarDatos #pedimento").val().length != 0 && $("#frmActualizarDatos #pedimento").val().length != 21 ) {
             alert("El número de pedimento es inválido!\nVerifica que tiene la siguiente estructura\nEjemplo: XX--XX--XXXX--XXXXXXX");
-        }else{
-          $(".modal").modal("hide");
-          $.ajax({
-          method: "POST",
-          url: "guardar.php",
-          data: frm
-          }).done( function( info ){
-            var json_info = JSON.parse( info );
-            mostrar_mensaje(json_info);
-            // listar_partidas(ordencompra);
-            $("#dt_partidas_oc_descripcion").DataTable().ajax.reload();
-            $("#dt_totales_oc").DataTable().ajax.reload();
-          });
+          }else{
+            var pedimento = $("#frmActualizarDatos #pedimento").val();
+            var folio = $("#frmActualizarDatos #folio").val();
+            var facturaproveedor = $("#frmActualizarDatos #facturaproveedor").val();
+            var entrada = $("#frmActualizarDatos #entrada").val();
+            var opcion = "actualizar";
+            $(".modal").modal("hide");
+            $.ajax({
+              method: "POST",
+              url: "guardar.php",
+              data: {"herramienta": JSON.stringify(herramienta), "pedimento": pedimento, "folio": folio, "facturaproveedor": facturaproveedor, "entrada": entrada, "opcion": opcion}
+            }).done( function( info ){
+              var json_info = JSON.parse( info );
+              mostrar_mensaje(json_info);
+              $("#dt_partidas_oc_descripcion").DataTable().ajax.reload();
+              $("#dt_totales_oc").DataTable().ajax.reload();
+            });
+          }
         }
       });
     }

@@ -18,7 +18,8 @@
 			$folio = $_POST['folio'];
 			$facturaproveedor = $_POST['facturaproveedor'];
 			$entrada = $_POST['entrada'];
-			actualizar($ordencompra, $pedimento, $folio, $facturaproveedor, $entrada, $conexion_usuarios);
+			$datapartidas = json_decode($_POST['herramienta']);
+			actualizar($ordencompra, $pedimento, $folio, $facturaproveedor, $entrada, $datapartidas, $conexion_usuarios);
 			break;
 
 		case 'editarpartidadescripcion':
@@ -234,16 +235,16 @@
 		mysqli_close($conexion_usuarios);
 	}
 
-	function actualizar($ordencompra, $pedimento, $folio, $facturaproveedor, $entrada, $conexion_usuarios){
+	function actualizar($ordencompra, $pedimento, $folio, $facturaproveedor, $entrada, $datapartidas, $conexion_usuarios){
 		$fecha = date("Y-m-d");
-		$query = "UPDATE cotizacionherramientas SET FechaPedimento = '$fecha', Pedimento = '$pedimento', foliopedimento = '$folio', facturaproveedor = '$facturaproveedor', entrada = '$entrada' WHERE noDePedido = '$ordencompra'";
-		$resultado = mysqli_query($conexion_usuarios, $query);
+		foreach ($datapartidas as &$valor) {
+			$id = $valor;
+			$query = "UPDATE cotizacionherramientas SET FechaPedimento = '$fecha', Pedimento = '$pedimento', foliopedimento = '$folio', facturaproveedor = '$facturaproveedor', entrada = '$entrada' WHERE id = '$id'";
+			$resultado = mysqli_query($conexion_usuarios, $query);
 
-		$query = "UPDATE cotizacionherramientas SET FechaPedimento = '$fecha', Pedimento = '$pedimento', foliopedimento = '$folio', facturaproveedor = '$facturaproveedor', entrada = '$entrada' WHERE ordenCompra = '$ordencompra'";
-		$resultado = mysqli_query($conexion_usuarios, $query);
-
-		$query = "UPDATE utilidad_pedido SET Pedimento = '$pedimento', folio = '$folio', factura_proveedor = '$facturaproveedor', entrada = '$entrada' WHERE orden_compra = '$ordencompra'";
-		$resultado = mysqli_query($conexion_usuarios, $query);
+			$query = "UPDATE utilidad_pedido SET Pedimento = '$pedimento', folio = '$folio', factura_proveedor = '$facturaproveedor', entrada = '$entrada' WHERE id_cotizacion_herramientas = '$id'";
+			$resultado = mysqli_query($conexion_usuarios, $query);
+		}
 
 		if (!$resultado) {
 			$informacion["respuesta"] = "ERROR";

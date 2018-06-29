@@ -397,8 +397,11 @@
 					$proveedor= $dataproveedor['nombreEmpresa'];
 				}
 
+				$check = '<input type="checkbox" class="btn btn-outline-primary" name="hcheck" value="'.$data['id_cotizacion_herramientas'].'">';
+
 				$arreglo["data"][] = array(
 					'indice' => $i,
+					'check' => $check,
 					'id' => $data['id'],
 					'enviado' => $data['fecha_enviado'],
 					'recibido' => $data['fecha_llegada'],
