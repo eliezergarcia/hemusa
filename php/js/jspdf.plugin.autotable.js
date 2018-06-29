@@ -1,10 +1,10 @@
 /*!
  * jsPDF AutoTable plugin v2.3.2
- * Copyright (c) 2014 Simon Bengtsson, https://github.com/simonbengtsson/jsPDF-AutoTable 
- * 
+ * Copyright (c) 2014 Simon Bengtsson, https://github.com/simonbengtsson/jsPDF-AutoTable
+ *
  * Licensed under the MIT License.
  * http://opensource.org/licenses/mit-license
- * 
+ *
  * */if (typeof window === 'object') window.jspdfAutoTableVersion = '2.3.2';/*
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -113,7 +113,7 @@ exports.getTheme = function (name) {
         },
         'grid': {
             table: { fillColor: 255, textColor: 80, fontStyle: 'normal', lineWidth: 0.1 },
-            header: { textColor: 255, fillColor: [26, 188, 156], fontStyle: 'bold', lineWidth: 0 },
+            header: { textColor: 255, fillColor: [63, 81, 181], fontStyle: 'bold', lineWidth: 0 },
             body: {},
             alternateRow: {}
         },
@@ -165,8 +165,8 @@ function defaultStyles() {
         valign: 'top',
         fontSize: 10,
         cellPadding: 5 / scaleFactor,
-        lineColor: 200,
-        lineWidth: 0 / scaleFactor,
+        lineColor: 80,
+        lineWidth: 0.5 / scaleFactor,
         columnWidth: 'auto'
     };
 }
@@ -359,7 +359,7 @@ exports.addTableBorder = addTableBorder;
 function addPage() {
     var table = config_1.Config.tableInstance();
     table.finalY = table.cursor.y;
-    // Add user content just before adding new page ensure it will 
+    // Add user content just before adding new page ensure it will
     // be drawn above other things on the page
     addContentHooks();
     addTableBorder();
@@ -512,7 +512,7 @@ function printFullRow(row, drawRowHooks, drawCellHooks) {
         }
     }
     printRow(row, drawRowHooks, drawCellHooks);
-    // Parts of the row is now printed. Time for adding a new page, prune 
+    // Parts of the row is now printed. Time for adding a new page, prune
     // the text and start over
     if (Object.keys(remainingTexts).length > 0) {
         for (var j = 0; j < table.columns.length; j++) {

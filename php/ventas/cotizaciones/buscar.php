@@ -307,14 +307,16 @@
 			$idcliente = $data['cliente'];
 			$informacion['cotizacion'] = $data;
 			$vencimiento = $data['fecha'];
-			$informacion['fecha'] = strftime("%d - %B - %Y", strtotime($vencimiento));
+			$informacion['fecha'] = strftime("%d - %m - %Y", strtotime($vencimiento));
 			$vencimiento = strtotime($vencimiento."+ 30 days");
 			$vencimiento = date("Y-m-d",$vencimiento);
-			$informacion['vencimiento'] = strftime("%d - %B - %Y", strtotime($vencimiento));
+			$informacion['vencimiento'] = strftime("%d - %m - %Y", strtotime($vencimiento));
 		}
 
 		$query = "SELECT * FROM cotizacionherramientas WHERE cotizacionRef = '$numeroCotizacion'";
 		$resultado = mysqli_query($conexion_usuarios, $query);
+
+		$i = 1;
 
 		while($data = mysqli_fetch_assoc($resultado)){
 			$marca = $data['marca'];
@@ -327,16 +329,18 @@
 
 
 			$informacion['partidas'][] = array(
+				'indice' => $i,
 				'marca' => $data['marca'],
 				'modelo' => $data['modelo'],
 				'descripcion' => $data['descripcion'],
 				'cantidad' => $data['cantidad'],
 				'precioUnitario' => round($data['precioLista'], 2),
 				'precioTotal' => round(($data['precioLista'] + $data['flete']) * $data['cantidad'],2),
-				'unidad' => $data['Unidad'],
+				'unidad' => strtoupper($data['Unidad']),
 				'tiempoEntrega' => $data['Tiempo_Entrega']." días",
 				'stock' => $stock
 			);
+			$i++;
 		}
 
 		$informacion['numeropartidas'] = mysqli_num_rows($resultado);

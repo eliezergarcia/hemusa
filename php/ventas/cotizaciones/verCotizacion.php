@@ -1397,6 +1397,7 @@
 				var numeropartidas = data.numeropartidas;
 				if(opcionPDF == "pdfCompleto" || opcionPDF == "imprimirCompleto"){
 					var columns = [
+						{title: "#", dataKey: "indice"},
 						{title: "Marca", dataKey: "marca"},
 						{title: "Modelo", dataKey: "modelo"},
 						{title: "Descripción", dataKey: "descripcion"},
@@ -1409,6 +1410,7 @@
 					];
 				}else{
 					var columns = [
+						{title: "#", dataKey: "indice"},
 						{title: "Marca", dataKey: "marca"},
 						{title: "Modelo", dataKey: "modelo"},
 						{title: "Descripción", dataKey: "descripcion"},
@@ -1464,14 +1466,45 @@
 				doc.text(data.cotizacion.contacto, 420, 225);
 				doc.text(data.cliente.calle + ", " + data.cliente.colonia, 20, 255);
 				doc.text(data.cliente.ciudad + ", " + data.cliente.estado + ", C.P." + data.cliente.cp, 20, 270);
-				doc.autoTable(columns, rows, {
-					theme: 'grid',
-					startY: 325,
-	        margin: {right: 20, bottom: 20, left: 20},
-					tableWidth: 'auto',
-					styles: {overflow: 'visible', cellPadding: 6, fontSize: 7, rowHeight: 15, pageBreak: 'auto', columnWidth: 'auto'},
-				});
-
+				if(opcionPDF == "pdfCompleto" || opcionPDF == "imprimirCompleto"){
+					doc.autoTable(columns, rows, {
+						theme: 'grid',
+						startY: 325,
+						margin: {right: 20, bottom: 20, left: 20},
+						tableWidth: 'auto',
+						styles: {overflow: 'linebreak', cellPadding: 6, fontSize: 8, rowHeight: 15, pageBreak: 'always', columnWidth: 'auto'},
+						columnStyles: {
+							indice: {columnWidth: 20, halign: 'center'},
+							marca: {columnWidth: 50},
+							modelo:{columnWidth:50},
+							descripcion: {columnWidth: 160},
+							cantidad:{columnWidth:50, halign: 'center'},
+							precioUnitario: {columnWidth: 50},
+							precioTotal:{columnWidth: 50},
+							unidad: {columnWidth: 50, halign: 'center'},
+							tiempoEntrega: {columnWidth: 50, halign: 'center'},
+							stock: {columnWidth: 40, halign: 'center'},
+						},
+					});
+				}else{
+					doc.autoTable(columns, rows, {
+						theme: 'grid',
+						startY: 325,
+						margin: {right: 20, bottom: 20, left: 20},
+						tableWidth: 'auto',
+						styles: {overflow: 'linebreak', cellPadding: 6, fontSize: 8, rowHeight: 15, pageBreak: 'always', columnWidth: 'auto'},
+						columnStyles: {
+							indice: {columnWidth: 20, halign: 'center'},
+							marca: {columnWidth: 50},
+							modelo:{columnWidth:50},
+							descripcion: {columnWidth: 240},
+							cantidad:{columnWidth:50, halign: 'center'},
+							precioUnitario: {columnWidth: 50},
+							precioTotal:{columnWidth: 50},
+							unidad: {columnWidth: 50, halign: 'center'},
+						},
+					});
+				}
 				doc.setFontSize(9);
 				doc.setFontStyle('bold');
 				doc.text("Tiempo de Entrega", 315, doc.autoTable.previous.finalY  + 30);
@@ -1493,17 +1526,16 @@
 				doc.text("MONEDA:", 440, doc.autoTable.previous.finalY  + 75);
 				doc.setFontStyle('normal');
 				doc.text(moneda.toUpperCase(), 520, doc.autoTable.previous.finalY  + 75);
-				// doc.setFontSize(8);
-				// doc.text("Por favor envíe su comprobante de pago, datos fiscales y de", 40, doc.autoTable.previous.finalY  + 30);
-				// doc.text("envío para finalizar su pedido. Esperamos seguir haciendo", 40, doc.autoTable.previous.finalY  + 40);
-				// doc.text("negocios con usted.", 40, doc.autoTable.previous.finalY  + 50);
 				doc.setLineWidth(0.1)
+				doc.setDrawColor(50,50,50);
 				doc.line(20, doc.autoTable.previous.finalY  + 90, 575, doc.autoTable.previous.finalY  + 90)
 				doc.setFontSize(7);
 				doc.text("Los precios son válidos por 30 días a partir de la fecha de esta cotización. AVISO: La presente cotización estará sujeta a cambios sin previo aviso en caso de que la paridad del", 20, doc.autoTable.previous.finalY  + 105);
 				doc.text("peso (MXP) frente al dólar americano (USD) se vea afectado por un impacto igual o mayor de un 1% entre un día y el otro, teniendo HEMUSA la facultad de modificar los precios", 20, doc.autoTable.previous.finalY  + 115);
 				doc.text("de sus productos en la misma proporción.", 20, doc.autoTable.previous.finalY  + 125);
 				doc.text("Iventario en constante rotación. Los días de entrega son hábiles y estimados a partir de la fecha de la colocación de la orden de compra, los cuales podrán variar sin previo aviso.", 20, doc.autoTable.previous.finalY  + 140);
+				doc.setLineWidth(0.1)
+				doc.setDrawColor(50,50,50);
 				doc.line(20, doc.autoTable.previous.finalY  + 150, 575, doc.autoTable.previous.finalY  + 150)
 				doc.setFontSize(9);
 				doc.text("Por favor envíe su comprobante de pago, datos fiscales y de envío para finalizar su pedido.", 20, doc.autoTable.previous.finalY  + 170);
@@ -1531,7 +1563,7 @@
 				if (opcionPDF == "imprimir" || opcionPDF == "imprimirCompleto") {
 					doc.autoPrint();
 				}
-			  doc.save('cotizacion.pdf');
+			  doc.save('cotizacion_' + numeroCotizacion + '.pdf');
 			});
 		}
 
