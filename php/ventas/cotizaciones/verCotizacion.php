@@ -39,7 +39,7 @@
 	<?php include('../../header.php'); ?>
 		<div class="be-content">
           	<div class="page-head">
-              	<h2 class="page-head-title">Cotización</h2>
+              	<h2 class="page-head-title" style="font-size: 30px;"><b>Cotización</b></h2>
               	<nav aria-label="breadcrumb" role="navigation">
 	                <ol class="breadcrumb page-head-nav">
 	                    <li class="breadcrumb-item"><a href="#">Ventas</a></li>
@@ -95,22 +95,22 @@
 																	</div>
 																	<div class="col-4 form-group">
 																		<h4><b>Condiciones de pago <a id="cambiarcondpago" href="#" class="text-primary"><i class="fas fa-sync"></i></a></b></h4>
-																		<input id="condpago" class="form-control form-control-sm col-8">
+																		<input id="condpago" class="form-control form-control-sm col-7">
 																	</div>
 																	<div class="col-4 form-group">
 																	  <h4><b>Tiempo de entrega <a id="cambiartiempoentrega" href="#" class="text-primary"><i class="fas fa-sync"></i></a></b></h4>
-																		<input id="tiempoentrega" class="form-control form-control-sm col-8">
+																		<input id="tiempoentrega" class="form-control form-control-sm col-7">
 																	</div>
 																	<div class="col-4 form-group">
 																		<h4><b>Moneda </b> <a id="cambiarmoneda" href="#" class="text-primary"><i class="fas fa-sync"></i></a></h4>
-																		<select id="moneda" class="form-control-sm col-8">
+																		<select id="moneda" class="form-control-sm col-7">
 																			<option value="usd" selected>USD</option>
 																			<option value="mxn">MXN</option>
 																		</select>
 																	</div>
 																	<div class="col-4 form-group">
 																	  <h4><b>Clasificación de cliente <a id="cambiarclasificacion" href="#" class="text-primary"><i class="fas fa-sync"></i></a></b></h4>
-																		<select id="clasificacion" class="form-control-sm col-8">
+																		<select id="clasificacion" class="form-control-sm col-7">
 																			<option value="1.20" selected>16 %</option>
 																			<option value="1.25" selected>20 %</option>
 																			<option value="1.33" selected>25 %</option>
@@ -1154,9 +1154,9 @@
 										$("#frmAgregarPartida #cantidad").val(1);
 										$("#frmAgregarPartida #precioTotal").val((((data.data.precioBase) + parseInt(data.igi.igi))*(data.clasificacion.clasificacion)).toFixed(2));
 									}else{
-										$("#frmAgregarPartida #precioUnitario").val((((data.data.precioBase) + parseInt(data.igi.igi))*(data.clasificacion.clasificacion)).toFixed(2));
+										$("#frmAgregarPartida #precioUnitario").val((((data.data.precioBase) + parseInt(data.data.igi))*(data.clasificacion.clasificacion)).toFixed(2));
 										$("#frmAgregarPartida #cantidad").val(1);
-										$("#frmAgregarPartida #precioTotal").val((((data.data.precioBase) + parseInt(data.igi.igi))*(data.clasificacion.clasificacion)).toFixed(2));
+										$("#frmAgregarPartida #precioTotal").val((((data.data.precioBase) + parseInt(data.data.igi))*(data.clasificacion.clasificacion)).toFixed(2));
 									}
 								}
 								if(data.moneda == "mxn" && data.data.moneda == "usd"){
@@ -1165,9 +1165,9 @@
 										$("#frmAgregarPartida #cantidad").val(1);
 										$("#frmAgregarPartida #precioTotal").val(((((data.data.precioBase) + parseInt(data.igi.igi))*(data.clasificacion.clasificacion)) * data.tipocambio.tipocambio).toFixed(2));
 									}else{
-										$("#frmAgregarPartida #precioUnitario").val(((((data.data.precioBase) + parseInt(data.igi.igi))*(data.clasificacion.clasificacion)) * data.tipocambio.tipocambio).toFixed(2));
+										$("#frmAgregarPartida #precioUnitario").val(((((data.data.precioBase) + parseInt(data.data.igi))*(data.clasificacion.clasificacion)) * data.tipocambio.tipocambio).toFixed(2));
 										$("#frmAgregarPartida #cantidad").val(1);
-										$("#frmAgregarPartida #precioTotal").val(((((data.data.precioBase) + parseInt(data.igi.igi))*(data.clasificacion.clasificacion)) * data.tipocambio.tipocambio).toFixed(2));
+										$("#frmAgregarPartida #precioTotal").val(((((data.data.precioBase) + parseInt(data.data.igi))*(data.clasificacion.clasificacion)) * data.tipocambio.tipocambio).toFixed(2));
 									}
 								}
 							}else{
@@ -1472,10 +1472,10 @@
 				doc.text("Contacto:", 20, 200);
 				doc.setFontSize(10);
 				doc.setFontStyle('normal');
-				doc.text(data.cliente.nombreEmpresa, 20, 130);
-				doc.text(data.cliente.RFC, 20, 145);
-				doc.text(data.cliente.calle + ", " + data.cliente.colonia, 20, 160);
-				doc.text(data.cliente.ciudad + ", " + data.cliente.estado + ", C.P." + data.cliente.cp, 20, 175);
+				doc.text((data.cliente.nombreEmpresa).toUpperCase(), 20, 130);
+				doc.text((data.cliente.RFC).toUpperCase(), 20, 145);
+				doc.text((data.cliente.calle).toUpperCase() + ", " + (data.cliente.colonia).toUpperCase(), 20, 160);
+				doc.text((data.cliente.ciudad).toUpperCase() + ", " + (data.cliente.estado).toUpperCase() + ", C.P." + (data.cliente.cp).toUpperCase(), 20, 175);
 				doc.text(data.cotizacion.contacto, 20, 220);
 				doc.setFontSize(8);
 				doc.setFontStyle('normal');
@@ -1494,13 +1494,13 @@
 							indice: {columnWidth: 20, halign: 'center'},
 							marca: {columnWidth: 60},
 							modelo:{columnWidth: 60},
-							descripcion: {columnWidth: 140},
+							descripcion: {columnWidth: 135},
 							cantidad:{columnWidth:50, halign: 'center'},
 							precioUnitario: {columnWidth: 50},
 							precioTotal:{columnWidth: 50},
-							unidad: {columnWidth: 50, halign: 'center'},
+							unidad: {columnWidth: 40, halign: 'center'},
 							tiempoEntrega: {columnWidth: 50, halign: 'center'},
-							stock: {columnWidth: 40, halign: 'center'},
+							stock: {columnWidth: 35, halign: 'center'},
 						},
 					});
 				}else{
@@ -1518,7 +1518,7 @@
 							cantidad:{columnWidth:50, halign: 'center'},
 							precioUnitario: {columnWidth: 50},
 							precioTotal:{columnWidth: 50},
-							unidad: {columnWidth: 50, halign: 'center'},
+							unidad: {columnWidth: 40, halign: 'center'},
 						},
 					});
 				}
@@ -1542,7 +1542,7 @@
 				doc.setFontStyle('bold');
 				doc.text("MONEDA:", 440, doc.autoTable.previous.finalY  + 75);
 				doc.setFontStyle('normal');
-				doc.text(moneda.toUpperCase(), 520, doc.autoTable.previous.finalY  + 75);
+				doc.text(moneda.toUpperCase(), 528, doc.autoTable.previous.finalY  + 75);
 				doc.setLineWidth(0.1)
 				doc.setDrawColor(50,50,50);
 				doc.line(20, doc.autoTable.previous.finalY  + 90, 575, doc.autoTable.previous.finalY  + 90)

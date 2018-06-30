@@ -315,10 +315,10 @@
 			$idcliente = $data['cliente'];
 			$informacion['cotizacion'] = $data;
 			$vencimiento = $data['fecha'];
-			$informacion['fecha'] = strftime("%d - %m - %Y", strtotime($vencimiento));
+			$informacion['fecha'] = strftime("%d/%m/%Y", strtotime($vencimiento));
 			$vencimiento = strtotime($vencimiento."+ 30 days");
 			$vencimiento = date("Y-m-d",$vencimiento);
-			$informacion['vencimiento'] = strftime("%d - %m - %Y", strtotime($vencimiento));
+			$informacion['vencimiento'] = strftime("%d/%m/%Y", strtotime($vencimiento));
 		}
 
 		$query = "SELECT * FROM cotizacionherramientas WHERE cotizacionRef = '$numeroCotizacion'";
