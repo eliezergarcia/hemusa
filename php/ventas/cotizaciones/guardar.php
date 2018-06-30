@@ -130,6 +130,12 @@
 			cambiar_moneda($refCotizacion, $conexion_usuarios);
 			break;
 
+		case 'cambiarClasificacion':
+		 	$clasificacion = $_POST['clasificacion'];
+			$idcliente = $_POST['idcliente'];
+			cambiar_clasificacion($clasificacion, $idcliente, $conexion_usuarios);
+			break;
+
 		case 'cambiarPedido':
 			$data = json_decode($_POST['herramienta']);
 			$refCotizacion = $_POST['refCotizacion'];
@@ -763,6 +769,22 @@
 					}
 				}
 			}
+		}
+
+		echo json_encode($informacion);
+		mysqli_close($conexion_usuarios);
+	}
+
+	function cambiar_clasificacion($clasificacion, $idcliente, $conexion_usuarios){
+		$query = "UPDATE contactos SET clasificacion = '$clasificacion' WHERE id = '$idcliente'";
+		$resultado = mysqli_query($conexion_usuarios, $query);
+
+		if (!$resultado) {
+			$informacion["respuesta"] = "ERROR";
+			$informacion["informacion"] = "Ocurrió un problema al intentar cambiar la clasificación del cliente!";
+		}else{
+			$informacion["respuesta"] = "BIEN";
+			$informacion["informacion"] = "La clasificación del cliente se cambió correctamente!";
 		}
 
 		echo json_encode($informacion);

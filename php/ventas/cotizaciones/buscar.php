@@ -87,6 +87,14 @@
 		}else{
 			while($data = mysqli_fetch_assoc($resultado)){
 				$informacion["cotizacion"] = $data;
+				$idcliente = $data['cliente'];
+			}
+
+			$query = "SELECT * FROM contactos WHERE id = '$idcliente'";
+			$resultado = mysqli_query($conexion_usuarios, $query);
+
+			while($data = mysqli_fetch_assoc($resultado)){
+				$informacion["cliente"] = $data;
 			}
 		}
 

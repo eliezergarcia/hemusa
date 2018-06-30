@@ -87,7 +87,7 @@
 																	</div>
 																	<div class="col-4 form-group">
 																	  	<h4><b>Fecha</b></h4>
-																		<h5 style="font-size: 15px;"><?php echo strftime("%d-%B-%Y", strtotime($fecha)); ?></h5><br>
+																		<h5 style="font-size: 15px;"><?php echo strftime("%d/%m/%Y", strtotime($fecha)); ?></h5><br>
 																	</div>
 																	<div class="col-4 form-group">
 																	  	<h4><b>Vendedor</b></h4>
@@ -103,9 +103,18 @@
 																	</div>
 																	<div class="col-4 form-group">
 																		<h4><b>Moneda </b> <a id="cambiarmoneda" href="#" class="text-primary"><i class="fas fa-sync"></i></a></h4>
-																		<select id="moneda" class="form-control-sm select2 col-8">
+																		<select id="moneda" class="form-control-sm col-8">
 																			<option value="usd" selected>USD</option>
 																			<option value="mxn">MXN</option>
+																		</select>
+																	</div>
+																	<div class="col-4 form-group">
+																	  <h4><b>Clasificación de cliente <a id="cambiarclasificacion" href="#" class="text-primary"><i class="fas fa-sync"></i></a></b></h4>
+																		<select id="clasificacion" class="form-control-sm col-8">
+																			<option value="1.20" selected>16 %</option>
+																			<option value="1.25" selected>20 %</option>
+																			<option value="1.33" selected>25 %</option>
+																			<option value="1.42" selected>30 %</option>
 																		</select>
 																	</div>
 																</div>
@@ -694,6 +703,7 @@
 				$("#condpago").val(data.cotizacion.CondPago);
 				$("#tiempoentrega").val(data.cotizacion.TiempoEntrega);
 				$("#moneda").val(data.cotizacion.moneda).change();
+				$("#clasificacion").val(data.cliente.clasificacion).change();
 				document.getElementById('monedatotal').innerHTML = (data.cotizacion.moneda).toUpperCase();
 			}).fail(function ( info ){
 				mostrar_mensaje(info);
@@ -1794,6 +1804,24 @@
 				url: "guardar.php",
 				dataType: "json",
 				data: {"opcion": opcion = "cambiarMoneda", "refCotizacion": refCotizacion},
+			}).done( function ( info ) {
+				mostrar_mensaje(info);
+				buscardatos();
+				$('#dt_cotizacion').DataTable().ajax.reload();
+			});
+		});
+
+		$("#cambiarclasificacion").on("click", function (e) {
+			e.preventDefault();
+			var clasificacion = $("#clasificacion").val();
+			var idcliente = "<?php echo $idcliente; ?>";
+			console.log(clasificacion);
+			console.log(idcliente);
+			$.ajax({
+				method: "POST",
+				url: "guardar.php",
+				dataType: "json",
+				data: {"opcion": opcion = "cambiarClasificacion", "clasificacion": clasificacion, "idcliente": idcliente},
 			}).done( function ( info ) {
 				mostrar_mensaje(info);
 				buscardatos();
