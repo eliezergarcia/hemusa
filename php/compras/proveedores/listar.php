@@ -168,9 +168,15 @@
 					$modelo = $data['modelo'];
 
 					if($data['enviadoFecha'] == '0000-00-00'){
-						$enviado = '<input type="checkbox" class="btn btn-outline-primary" name="enviado" value="'.$data['id'].'">';;
+						$enviado = "";
 					}else{
 						$enviado = $data['enviadoFecha'];
+					}
+
+					if($data['recibidoFecha'] == '0000-00-00'){
+						$recibido = "";
+					}else{
+						$recibido = $data['recibidoFecha'];
 					}
 
 					$queryprecio = "SELECT precioBase, enReserva, marca FROM productos WHERE marca = '$marca' AND ref = '$modelo'";
@@ -198,10 +204,12 @@
 						}
 					}
 
-					$recibido = '<input type="checkbox" class="btn btn-outline-primary" name="recibido" value="'.$data['id'].'">';;
+					// $recibido = '<input type="checkbox" class="btn btn-outline-primary" name="recibido" value="'.$data['id'].'">';;
+					$check = '<input type="checkbox" class="btn btn-outline-primary" name="sel" value="'.$data['id'].'">';
 
 					$arreglo["data"][] = array(
 							'id' => $data['id'],
+							'check' => $check,
 							'indice' => $i,
 							'enviado' => $enviado,
 							'recibir' => $recibido,
@@ -234,7 +242,7 @@
 				$proveedor = strtoupper($data['nombreEmpresa']);
 			}
 
-			$query = "SELECT cotizacionherramientas.*, contactos.* FROM cotizacionherramientas INNER JOIN contactos ON contactos.id = cotizacionherramientas.cliente WHERE (enviadoFecha LIKE '%$buscar%' OR recibidoFecha LIKE '%$buscar%' OR marca LIKE '%$buscar%' OR modelo LIKE '%$buscar%' OR descripcion LIKE '%$buscar%' OR nombreEmpresa LIKE '%$buscar%' OR noDePedido LIKE '%$buscar%' OR pedidoFecha LIKE '%$buscar%') AND Proveedor='$proveedor' AND recibidoFecha!='0000-00-00' AND proveedorFecha!='0000-00-00' AND Entregado='0000-00-00' AND pedidoFecha >= '2017-01-01' ORDER BY modelo";
+			$query = "SELECT cotizacionherramientas.*, contactos.nombreEmpresa FROM cotizacionherramientas INNER JOIN contactos ON contactos.id = cotizacionherramientas.cliente WHERE (enviadoFecha LIKE '%$buscar%' OR recibidoFecha LIKE '%$buscar%' OR marca LIKE '%$buscar%' OR modelo LIKE '%$buscar%' OR descripcion LIKE '%$buscar%' OR nombreEmpresa LIKE '%$buscar%' OR noDePedido LIKE '%$buscar%' OR pedidoFecha LIKE '%$buscar%') AND Proveedor='$proveedor' AND recibidoFecha!='0000-00-00' AND proveedorFecha!='0000-00-00' AND Entregado='0000-00-00' AND pedidoFecha >= '2017-01-01' ORDER BY modelo";
 			$resultado = mysqli_query($conexion_usuarios, $query);
 			$arreglo = array();
 
@@ -245,6 +253,7 @@
 				while($data = mysqli_fetch_assoc($resultado)){
 					$marca = $data['marca'];
 					$modelo = $data['modelo'];
+					$idherramienta = $data['id'];
 
 					$queryprecio = "SELECT precioBase, enReserva, marca FROM productos WHERE marca = '$marca' AND ref = '$modelo'";
 					$resultadoprecio = mysqli_query($conexion_usuarios, $queryprecio);
@@ -271,8 +280,11 @@
 						}
 					}
 
+					$check = '<input type="checkbox" class="btn btn-outline-primary" name="sel" value="'.$idherramienta.'">';
+
 					$arreglo["data"][] = array(
 							'id' => $data['id'],
+							'check' => $check,
 							'indice' => $i,
 							'enviado' => $data['enviadoFecha'],
 							'recibir' => $data['recibidoFecha'],

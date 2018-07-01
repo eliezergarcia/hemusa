@@ -107,8 +107,9 @@
 																		<thead>
 																			<tr>
 																				<th>#</th>
-																				<th>Enviado <input type="checkbox" class="btn btn-outline-primary" name="selenviado" onclick="seleccionartodo()"></th>
-																				<th>Recibido <input type="checkbox" class="btn btn-outline-primary" name="selrecibido" onclick="seleccionartodo()"></th>
+																				<th><input type="checkbox" class="btn btn-outline-primary" name="selg" onclick="seleccionartodo()"></th>
+																				<th>Enviado</th>
+																				<th>Recibido</th>
 																				<th>Marca</th>
 																				<th>Modelo</th>
 																				<th>Cantidad</th>
@@ -131,6 +132,7 @@
 																		<thead>
 																			<tr>
 																				<th>#</th>
+																				<th><input type="checkbox" class="btn btn-outline-primary" name="selg" onclick="seleccionartodo()"></th>
 																				<th>Enviado</th>
 																				<th>Recibido</th>
 																				<th>Marca</th>
@@ -461,6 +463,14 @@
 				$('input[name=recibido]').prop('checked' , false);
 			}
 		});
+
+		$("input[name=sel]").each(function (index) {
+			if($("input[name=selg]").is(':checked')){
+				$('input[name=sel]').prop('checked' , true);
+			}else{
+				$('input[name=sel]').prop('checked' , false);
+			}
+		});
 	}
 
 	function buscarDatosCliente(){
@@ -679,8 +689,9 @@
 	        },
 	        "columns":[
 			  {"data": "indice"},
-			  {"data": "enviado", "sortable": false},
-			  {"data": "recibir", "sortable": false},
+				{"data": "check", "sortable": false},
+			  {"data": "enviado"},
+			  {"data": "recibir"},
 	      {"data": "marca"},
 			  {"data": "modelo"},
 			  {"data": "cantidad"},
@@ -752,21 +763,21 @@
 						]
 					},
 					{
-		                text: '<i class="fas fa-check fa-sm" aria-hidden="true"></i> Enviado',
-		                "className": "btn btn-lg btn-secondary btn-space",
-		                action: function ( e, dt, node, config ) {
-		                	var verificar = 0;
-							$("input[name=enviado]").each(function (index) {
-								if($(this).is(':checked')){
-									verificar++;
-								}
-							});
+		         text: '<i class="fas fa-check fa-sm" aria-hidden="true"></i> Enviado',
+		         "className": "btn btn-lg btn-secondary btn-space",
+		          action: function ( e, dt, node, config ) {
+		          	var verificar = 0;
+								$("input[name=sel]").each(function (index) {
+									if($(this).is(':checked')){
+										verificar++;
+									}
+								});
 							if(verificar == 0){
 								alert("Debes de seleccionar al menos una partida!");
 							}else{
 								var herramienta = new Array();
 								var numeroPartidas = 0;
-								$("input[name=enviado]").each(function (index) {
+								$("input[name=sel]").each(function (index) {
 									if($(this).is(':checked')){
 										herramienta.push($(this).val());
 										numeroPartidas++;
@@ -792,7 +803,7 @@
 		                "className": "btn btn-lg btn-secondary btn-space",
 		                action: function ( e, dt, node, config ) {
 		                	var verificar = 0;
-							$("input[name=recibido]").each(function (index) {
+							$("input[name=sel]").each(function (index) {
 								if($(this).is(':checked')){
 									verificar++;
 								}
@@ -802,7 +813,7 @@
 							}else{
 								var herramienta = new Array();
 								var numeroPartidas = 0;
-								$("input[name=recibido]").each(function (index) {
+								$("input[name=sel]").each(function (index) {
 									if($(this).is(':checked')){
 										herramienta.push($(this).val());
 										numeroPartidas++;
@@ -822,7 +833,43 @@
 								});
 		                	}
 		                }
-		            }
+		            },
+								{
+					         text: '<i class="fas fa-times fa-sm" aria-hidden="true"></i> Enviado',
+					         "className": "btn btn-lg btn-secondary btn-space",
+					          action: function ( e, dt, node, config ) {
+					          	var verificar = 0;
+											$("input[name=sel]").each(function (index) {
+												if($(this).is(':checked')){
+													verificar++;
+												}
+											});
+										if(verificar == 0){
+											alert("Debes de seleccionar al menos una partida!");
+										}else{
+											var herramienta = new Array();
+											var numeroPartidas = 0;
+											$("input[name=sel]").each(function (index) {
+												if($(this).is(':checked')){
+													herramienta.push($(this).val());
+													numeroPartidas++;
+												}
+											});
+											var opcion = "herramientaquitarenviado";
+											console.log(herramienta);
+											$.ajax({
+												method: "POST",
+												url: "guardar.php",
+												dataType: "json",
+												data: {"herramienta": JSON.stringify(herramienta), "opcion": opcion},
+											}).done( function( data ){
+												console.log(data);
+												mostrar_mensaje(data);
+												$("#dt_listar_sinrecibido").DataTable().ajax.reload();
+											});
+					                	}
+									}
+								}
 				]
 	    });
 
@@ -855,6 +902,7 @@
 	        },
 	        "columns":[
 			  {"data": "indice"},
+				{"data": "check"},
 			  {"data": "enviado"},
 			  {"data": "recibir"},
 	          {"data": "marca"},
@@ -918,7 +966,43 @@
 									pageSize: 'LEGAL'
 								}
 						]
-				}
+				},
+				{
+								text: '<i class="fas fa-times fa-sm" aria-hidden="true"></i> Recibido',
+								"className": "btn btn-lg btn-secondary btn-space",
+								action: function ( e, dt, node, config ) {
+									var verificar = 0;
+					$("input[name=sel]").each(function (index) {
+						if($(this).is(':checked')){
+							verificar++;
+						}
+					});
+					if(verificar == 0){
+						alert("Debes de seleccionar al menos una partida!");
+					}else{
+						var herramienta = new Array();
+						var numeroPartidas = 0;
+						$("input[name=sel]").each(function (index) {
+							if($(this).is(':checked')){
+								herramienta.push($(this).val());
+								numeroPartidas++;
+							}
+						});
+						var opcion = "herramientaquitarrecibido";
+						console.log(herramienta);
+						$.ajax({
+							method: "POST",
+							url: "guardar.php",
+							dataType: "json",
+							data: {"herramienta": JSON.stringify(herramienta), "opcion": opcion},
+						}).done( function( data ){
+							console.log(data);
+							mostrar_mensaje(data);
+							$("#dt_listar_sinentregar").DataTable().ajax.reload();
+						});
+									}
+								}
+						},
 				]
 	    });
 

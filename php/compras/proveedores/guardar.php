@@ -101,6 +101,16 @@
 			herramienta_recibido($data, $conexion_usuarios);
 			break;
 
+		case 'herramientaquitarenviado':
+			$data = json_decode($_POST['herramienta']);
+			herramienta_quitar_enviado($data, $conexion_usuarios);
+			break;
+
+		case 'herramientaquitarrecibido':
+			$data = json_decode($_POST['herramienta']);
+			herramienta_quitar_recibido($data, $conexion_usuarios);
+			break;
+
 		case 'splitsinrecibido':
 			$cantidadsplit = $_POST['cantidadsplit'];
 			$idherramienta = $_POST['idherramienta'];
@@ -241,10 +251,30 @@
 		$fecha = date("Y-m-d");
 		foreach ($data as &$valor) {
 			$id = $valor;
+
+			$query = "SELECT * FROM utilidad_pedido WHERE id_cotizacion_herramientas = '$id'";
+			$resultado = mysqli_query($conexion_usuarios, $query);
+			while($data = mysqli_fetch_assoc($resultado)){
+				$marca = $data['marca'];
+				$modelo = $data['modelo'];
+				$cantidadaumentar = $data['cantidad'];
+			}
+
+			$query = "SELECT enReserva FROM productos WHERE marca = '$marca' AND ref = '$modelo'";
+			$resultado = mysqli_query($conexion_usuarios, $query);
+			while($data = mysqli_fetch_assoc($resultado)){
+				$cantidad = $data['enReserva'];
+			}
+
+			$cantidadstock = $cantidad + $cantidadaumentar;
+
 			$query = "UPDATE cotizacionherramientas SET recibidoFecha = '$fecha' WHERE id = '$id'";
 			$resultado = mysqli_query($conexion_usuarios, $query);
 
 			$query = "UPDATE utilidad_pedido SET fecha_llegada = '$fecha' WHERE id_cotizacion_herramientas = '$id'";
+			$resultado = mysqli_query($conexion_usuarios, $query);
+
+			$query = "UPDATE productos SET enReserva = '$cantidadstock' WHERE marca = '$marca' AND ref = '$modelo'";
 			$resultado = mysqli_query($conexion_usuarios, $query);
 		}
 
@@ -253,7 +283,71 @@
 			$informacion["informacion"] = "Ocurrió un problema al intentar modificar el estado de la(s) partida(s)!";
 		}else{
 			$informacion["respuesta"] = "BIEN";
-			$informacion["informacion"] = "El estado de la(s) partida(s) se cambio a 'Recibido' correctamente!";
+			$informacion["informacion"] = "El estado de la(s) partida(s) se cambio a 'Recibido' y se aumento el stock correctamente!";
+		}
+		echo json_encode($informacion);
+		mysqli_close($conexion_usuarios);
+	}
+
+	function herramienta_quitar_enviado($data, $conexion_usuarios){
+		$fecha = date("Y-m-d");
+		foreach ($data as &$valor) {
+			$id = $valor;
+			$query = "UPDATE cotizacionherramientas SET enviadoFecha = '0000-00-00' WHERE id = '$id'";
+			$resultado = mysqli_query($conexion_usuarios, $query);
+
+			$query = "UPDATE utilidad_pedido SET fecha_enviado = '0000-00-00' WHERE id_cotizacion_herramientas = '$id'";
+			$resultado = mysqli_query($conexion_usuarios, $query);
+		}
+
+		if (!$resultado) {
+			$informacion["respuesta"] = "ERROR";
+			$informacion["informacion"] = "Ocurrió un problema al intentar modificar el estado de la(s) partida(s)!";
+		}else{
+			$informacion["respuesta"] = "BIEN";
+			$informacion["informacion"] = "El estado de la(s) partida(s) se cambio a 'Sin Enviar' correctamente!";
+		}
+		echo json_encode($informacion);
+		mysqli_close($conexion_usuarios);
+	}
+
+	function herramienta_quitar_recibido($data,$conexion_usuarios){
+		$fecha = date("Y-m-d");
+		foreach ($data as &$valor) {
+			$id = $valor;
+
+			$query = "SELECT * FROM utilidad_pedido WHERE id_cotizacion_herramientas = '$id'";
+			$resultado = mysqli_query($conexion_usuarios, $query);
+			while($data = mysqli_fetch_assoc($resultado)){
+				$marca = $data['marca'];
+				$modelo = $data['modelo'];
+				$cantidadquitar = $data['cantidad'];
+			}
+
+			$query = "SELECT enReserva FROM productos WHERE marca = '$marca' AND ref = '$modelo'";
+			$resultado = mysqli_query($conexion_usuarios, $query);
+			while($data = mysqli_fetch_assoc($resultado)){
+				$cantidad = $data['enReserva'];
+			}
+
+			$cantidadstock = $cantidad - $cantidadquitar;
+
+			$query = "UPDATE cotizacionherramientas SET recibidoFecha = '0000-00-00' WHERE id = '$id'";
+			$resultado = mysqli_query($conexion_usuarios, $query);
+
+			$query = "UPDATE utilidad_pedido SET fecha_llegada = '0000-00-00' WHERE id_cotizacion_herramientas = '$id'";
+			$resultado = mysqli_query($conexion_usuarios, $query);
+
+			$query = "UPDATE productos SET enReserva = '$cantidadstock' WHERE marca = '$marca' AND ref = '$modelo'";
+			$resultado = mysqli_query($conexion_usuarios, $query);
+		}
+
+		if (!$resultado) {
+			$informacion["respuesta"] = "ERROR";
+			$informacion["informacion"] = "Ocurrió un problema al intentar modificar el estado de la(s) partida(s)!";
+		}else{
+			$informacion["respuesta"] = "BIEN";
+			$informacion["informacion"] = "El estado de la(s) partida(s) se cambio a 'Sin Recibido' y se quitó de el stock correctamente!";
 		}
 		echo json_encode($informacion);
 		mysqli_close($conexion_usuarios);
