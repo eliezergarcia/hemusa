@@ -103,14 +103,14 @@
 																	</div>
 																	<div class="col-4 form-group">
 																		<h4><b>Moneda </b> <a id="cambiarmoneda" href="#" class="text-primary"><i class="fas fa-sync"></i></a></h4>
-																		<select id="moneda" class="form-control-sm col-7">
+																		<select id="moneda" class="form-control form-control-sm col-7">
 																			<option value="usd" selected>USD</option>
 																			<option value="mxn">MXN</option>
 																		</select>
 																	</div>
 																	<div class="col-4 form-group">
 																	  <h4><b>Clasificación de cliente <a id="cambiarclasificacion" href="#" class="text-primary"><i class="fas fa-sync"></i></a></b></h4>
-																		<select id="clasificacion" class="form-control-sm col-7">
+																		<select id="clasificacion" class="form-control form-control-sm col-7">
 																			<option value="1.20" selected>16 %</option>
 																			<option value="1.25" selected>20 %</option>
 																			<option value="1.33" selected>25 %</option>
@@ -148,7 +148,7 @@
 															</table>
 
 														<!-- Tabla de Totales -->
-															<br>
+															<br><br><br>
 															<div class="col-12 row justify-content-end align-items-start">
 																<div class="row justify-content-start col">
 																	<table id="dt_fletes" class="table table-striped table-bordered display compact" cellspacing="0" width="100%">
@@ -211,23 +211,23 @@
 				      		</div>
 
 				      		<div class="modal-body">
-				      			<h4>Selecciona las partidas para cambiar a pedido e ingresa el pedido del cliente.</h4>
-				      			<div class="col-12">
-					      			<table id="dt_cambiar_pedido" class="table table-striped table-hover display compact" cellspacing="0" width="100%">
-					      				<thead>
-					      					<tr>
-					      						<th>#</th>
-					      						<th>Marca</th>
-					      						<th>Modelo</th>
-					      						<th>Descripción</th>
-														<th>Cantidad</th>
-					      						<th>Precio Total</th>
-					      						<th><input type="checkbox" class="btn btn-outline-primary" name="sel" onclick="seleccionartodo()"></th>
-					      					</tr>
-					      				</thead>
-					      			</table>
-
-				      			</div>
+										<div class="row justify-content-center">
+											<h4>Selecciona las partidas e ingresa el pedido del cliente.</h4>
+										</div>
+										<br><br>
+				      			<table id="dt_cambiar_pedido" class="table table-striped table-hover display compact" cellspacing="0" width="100%">
+				      				<thead>
+				      					<tr>
+				      						<th>#</th>
+				      						<th>Marca</th>
+				      						<th>Modelo</th>
+				      						<th>Descripción</th>
+													<th>Cantidad</th>
+				      						<th>Precio Total</th>
+				      						<th><input type="checkbox" class="btn btn-outline-primary" name="sel" onclick="seleccionartodo()"></th>
+				      					</tr>
+				      				</thead>
+				      			</table>
 				      			<br>
 				      			<div class="row justify-content-end">
 				      				<div class="form-group col-4">
@@ -408,11 +408,14 @@
 			        			<div class="row">
 			        				<div class="form-group col">
 			        					<label class="custom-control custom-checkbox custom-control-inline">
-				                          	<input type="checkbox" class="custom-control-input" id="modificarPrecioLista" name="modificarPrecioLista" value="modificar"><span class="custom-control-label custom-control-color">Modificar los datos en lista de precios</span>
-				                        </label>
-			        					<!-- <input type="checkbox" id="modificarPrecioLista" name="modificarPrecioLista" value="modificar">
-			        					<label for="modificarPrecioLista">Modificar los datos en lista de precios</label> -->
+				                	<input type="checkbox" class="custom-control-input" id="modificarPrecioLista" name="modificarPrecioLista" value="modificar"><span class="custom-control-label custom-control-color">Modificar lista de precios</span>
+				                </label>
 			        				</div>
+											<div class="form-group col">
+												<label class="custom-control custom-checkbox custom-control-inline">
+													<input type="checkbox" class="custom-control-input" id="agregarAMarca" name="agregarAMarca"><span class="custom-control-label custom-control-color">Agregar a marca</span>
+				                </label>
+											</div>
 			        			</div>
 			        			<div class="row">
 			        				<div class="form-group col-6">
@@ -476,7 +479,7 @@
 			        				<div class="form-group col-6">
 			        					<label id="mensajeClaseE" for="">Producto importado</label>
 					        			<input class="form-check-input" type="hidden" name="valorClaseE" id="valorNinguno" value="none">
-												<label class="custom-control custom-radio">
+											<label class="custom-control custom-radio">
                         <input type="radio" class="custom-control-input" name="valorClaseE" id="valorNacional" value="nacional" disabled required onchange="calcularPrecioClaseE()"><span class="custom-control-label">Nacional</span>
                       </label>
                       <label class="custom-control custom-radio">
@@ -761,12 +764,14 @@
 					{"data": "input"}
 				],
 				"order": false,
-		        "lengthChange": false,
-		        "info": false,
-		        "paging": false,
-		        "ordering": false,
-		        "searching": false,
-		        "language": idioma_espanol
+        "lengthChange": false,
+        "info": false,
+        "paging": false,
+        "ordering": false,
+        "searching": false,
+        "language": idioma_espanol,
+				"dom":
+          "<'row be-datatable-body'<'col-sm-12'tr>>"
 			});
 			obtener_id_cambiar_pedido("#dt_cambiar_pedido tbody", table);
 		});
@@ -938,7 +943,6 @@
 						var marcas = data;
 						$('#marca').empty();
 						$("#marca").append("<option>Selecciona una marca</option>");
-						$("#marca").append("<option>Agregar a marca</option>");
 						for(var i=0;i<marcas.length;i++){
 	             $("#marca").append("<option>" + marcas[i] + "</option>");
 	     			};
@@ -946,6 +950,73 @@
 				}
 			});
 		}
+
+		$("#agregarAMarca").on("change", function (){
+			if($("input[name=agregarAMarca]").is(':checked')){
+				document.frmAgregarPartida.modelo.style.backgroundColor='#99CCFF';
+				document.frmAgregarPartida.marca.style.backgroundColor='#99CCFF';
+				document.frmAgregarPartida.descripcion.style.backgroundColor='#99CCFF';
+				document.frmAgregarPartida.claveSat.style.backgroundColor='#99CCFF';
+				document.frmAgregarPartida.precioUnitario.style.backgroundColor='#99CCFF';
+				document.frmAgregarPartida.cantidad.style.backgroundColor='#99CCFF';
+				document.frmAgregarPartida.precioTotal.style.backgroundColor='#99CCFF';
+				document.frmAgregarPartida.unidad.style.backgroundColor='#99CCFF';
+				document.frmAgregarPartida.tedias.style.backgroundColor='#99CCFF';
+				document.frmAgregarPartida.refInterna.style.backgroundColor='#99CCFF';
+				document.frmAgregarPartida.cotizadoEn.style.backgroundColor='#99CCFF';
+				document.getElementById("selMarca").style.display = "none";
+				document.getElementById("inMarca").style.display = "";
+				document.getElementById("marca").disabled = true;
+				document.getElementById("marca2").disabled = false;
+				document.getElementById("valorNacional").disabled = false;
+				document.getElementById("valorAmericano").disabled = false;
+				document.getElementById("valorOtro").disabled = false;
+				document.getElementById("valorNinguno").disabled = true;
+				$("#frmAgregarPartida #noExisteProducto").val("noExisteProducto");
+				$("#frmAgregarPartida #descripcion").val("");
+				$("#frmAgregarPartida #claveSat").val("");
+				$("#frmAgregarPartida #precioUnitario").val("");
+				$("#frmAgregarPartida #cantidad").val("");
+				$("#frmAgregarPartida #precioTotal").val("");
+				$("#frmAgregarPartida #unidad").val("");
+				$("#frmAgregarPartida #tedias").val("");
+				$("#frmAgregarPartida #refInterna").val("");
+				$("#frmAgregarPartida #cotizadoEn").val("");
+			}else{
+				$("#frmAgregarPartida #noExisteProducto").val("");
+				$("#frmAgregarPartida #marca").val("").focus();
+				$("#frmAgregarPartida #marca2").val("");
+				$("#frmAgregarPartida #descripcion").val("");
+				$("#frmAgregarPartida #claveSat").empty();
+				$("#frmAgregarPartida #claveSat").val("");
+				$("#frmAgregarPartida #precioUnitario").val("");
+				$("#frmAgregarPartida #cantidad").val("");
+				$("#frmAgregarPartida #precioTotal").val("");
+				$("#frmAgregarPartida #unidad").val("");
+				$("#frmAgregarPartida #tedias").val("");
+				$("#frmAgregarPartida #refInterna").val("");
+				$("#frmAgregarPartida #cotizadoEn").val("");
+				$("#frmAgregarPartida #modificarPrecioLista").attr('checked', false);
+				document.getElementById("marca").disabled = true;
+				document.getElementById("marca2").disabled = false;
+				document.getElementById("valorNacional").disabled = true;
+	      document.getElementById("valorAmericano").disabled = true;
+	      document.getElementById("valorOtro").disabled = false;
+	      document.getElementById("valorNinguno").disabled = true;
+				document.frmAgregarPartida.modelo.style.backgroundColor='white';
+				document.frmAgregarPartida.marca.style.backgroundColor='white';
+				document.frmAgregarPartida.descripcion.style.backgroundColor='white';
+				document.frmAgregarPartida.claveSat.style.backgroundColor='white';
+				document.frmAgregarPartida.precioUnitario.style.backgroundColor='white';
+				document.frmAgregarPartida.cantidad.style.backgroundColor='white';
+				document.frmAgregarPartida.precioTotal.style.backgroundColor='white';
+				document.frmAgregarPartida.unidad.style.backgroundColor='white';
+				document.frmAgregarPartida.tedias.style.backgroundColor='white';
+				document.frmAgregarPartida.refInterna.style.backgroundColor='white';
+				document.frmAgregarPartida.cotizadoEn.style.backgroundColor='white';
+				buscarMarcaHerramienta();
+			}
+		});
 
 		function buscarDatosProducto(){
 			if($("#frmAgregarPartida #marca").val() == "Agregar a marca"){
@@ -1247,7 +1318,6 @@
 				"destroy":"true",
 				"bDeferRender": true,
 				"scrollX": true,
-				"sPaginationType": "full_numbers",
 				"ajax":{
 					"url": "listar.php",
 					"type": "POST",
@@ -1320,9 +1390,8 @@
 				"paging": false,
 				"language": idioma_espanol,
 				"dom":
-          			"<'row be-datatable-header'<'col-sm-6'B><'col-sm-6 text-right'f>>" +
-          			"<'row be-datatable-body'<'col-sm-12'tr>>" +
-          			"<'row be-datatable-footer'<'col-sm-5'i><'col-sm-7'p>>",
+        	"<'row be-datatable-header'<'col-sm-6'B><'col-sm-6 text-right'f>>" +
+          "<'row be-datatable-body'<'col-sm-12'tr>>",
 				"buttons":[
 					{
 						extend: 'collection',
@@ -1588,9 +1657,7 @@
 			var opcion = "listarFletes";
 			var table = $("#dt_fletes").DataTable({
 				"destroy":"true",
-				"bDeferRender": true,
 				"scrollX": true,
-				"sPaginationType": "full_numbers",
 				"ajax":{
 					"url": "listar.php",
 					"type": "POST",
@@ -1602,14 +1669,19 @@
 					{"defaultContent": "<button type='button' class='editar btn btn-lg btn-primary' data-toggle='modal' data-target='#modalEditarFlete'><i class='fas fa-edit fa-sm' aria-hidden='true'></i></button>"},
 					{"defaultContent": "<button type='button' class='eliminar btn btn-lg btn-danger' data-toggle='modal' data-target='#modalEliminarFlete'><i class='fas fa-trash fa-sm' aria-hidden='true'></i></button>"}
 				],
+				"columnDefs": [
+					{ "width": "25%", "targets": 0 },
+					{ "width": "25%", "targets": 1 },
+					{ "width": "25%", "targets": 2 },
+					{ "width": "25%", "targets": 3 },
+				],
 				"language": idioma_espanol,
 				"order": false,
-		        "lengthChange": false,
-		        "info": false,
-		        "paging": false,
-		        "ordering": false,
-		        "searching": false,
-		        // "language": idioma_espanol,
+        "lengthChange": false,
+        "info": false,
+        "paging": false,
+        "ordering": false,
+        "searching": false,
 				"dom":
 					"<'col-12 row justify-content-start'<tr>>"
 			});

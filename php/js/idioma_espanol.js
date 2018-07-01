@@ -1,7 +1,7 @@
 var idioma_espanol = {
 	"sProcessing":     "Procesando...",
 	"sLengthMenu":     "Mostrar _MENU_ registros",
-	"sEmptyTable":     "Ningún dato disponible en esta tabla",
+	// "sEmptyTable":     "Ningún dato disponible en esta tabla",
 	"sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
 	"sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
 	"sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
@@ -9,8 +9,8 @@ var idioma_espanol = {
 	"sSearch":         "Buscar:",
 	"sUrl":            "",
 	"sInfoThousands":  ",",
-	"sLoadingRecords": "Cargando...",
 	"sZeroRecords":    "No se encontraron resultados",
+	"sLoadingRecords": "Cargando...",
 	"oPaginate": {
 	    "sFirst":    "Primero",
 	    "sLast":     "Último",

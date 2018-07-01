@@ -53,8 +53,8 @@
 		$query = "SELECT cotizacionherramientas.*, cotizacion.partidaCantidad FROM cotizacionherramientas INNER JOIN cotizacion ON cotizacion.ref = cotizacionherramientas.cotizacionRef WHERE cotizacionRef = '$numeroCotizacion' AND numeroPedido = '' ORDER BY id DESC";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 
-		if(!$resultado){
-			die('Error al listar las partidas de la cotizacion!');
+		if(mysqli_num_rows($resultado) < 1){
+				$arreglo["data"] = 0;
 		}else{
 			$i=1;
 			while($data = mysqli_fetch_assoc($resultado)){
@@ -116,15 +116,15 @@
 		$query = "SELECT * FROM fletescotizacion WHERE refCotizacion = '$refCotizacion'";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 
-		if (!$resultado) {
-			die("Error al buscar fletes!");
+		if (mysqli_num_rows($resultado) < 1) {
+			$arreglo["data"] = 0;
 		}else{
 			while($data = mysqli_fetch_assoc($resultado)){
-				$fletes["data"][] = $data;
+				$arreglo["data"][] = $data;
 			}
 		}
 
-		echo json_encode($fletes, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_PARTIAL_OUTPUT_ON_ERROR);
+		echo json_encode($arreglo, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_PARTIAL_OUTPUT_ON_ERROR);
 		cerrar($conexion_usuarios);
 	}
 
