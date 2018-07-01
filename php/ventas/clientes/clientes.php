@@ -67,6 +67,10 @@
                     <label for="nombreEmpresa">Nombre de empresa <font color="#FF4136">*</font></label>
                     <input type="text" id="nombreEmpresa" name="nombreEmpresa" class="limpiar form-control form-control-sm" required>
                   </div>
+                  <div class="form-group col-4">
+                    <label for="alias">Alias</label>
+                    <input type="text" id="alias" name="alias" class="limpiar form-control form-control-sm" placeholder="Opcional">
+                  </div>
                 </div>
                 <div class="row">
                   <div class="form-group col">
@@ -91,7 +95,7 @@
                     <input type="text" id="numExterior" name="numExterior" class="limpiar form-control form-control-sm" required>
                   </div>
                   <div class="form-group col">
-                    <label for="numInterior">Num. Interior <font color="#FF4136">*</font></label>
+                    <label for="numInterior">Num. Interior</label>
                     <input type="text" id="numInterior" name="numInterior" class="limpiar form-control form-control-sm" placeholder="Opcional">
                   </div>
                   <div class="form-group col">
@@ -337,10 +341,9 @@
           url: "guardar.php",
           data: frm
         }).done( function( info ){
-          console.log(info);
           var json_info = JSON.parse( info );
           mostrar_mensaje(json_info);
-          listar_clientes();
+          $('#dt_clientes').DataTable().ajax.reload();
         });
       });
     }
