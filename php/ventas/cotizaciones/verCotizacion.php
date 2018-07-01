@@ -103,14 +103,14 @@
 																	</div>
 																	<div class="col-4 form-group">
 																		<h4><b>Moneda </b> <a id="cambiarmoneda" href="#" class="text-primary"><i class="fas fa-sync"></i></a></h4>
-																		<select id="moneda" class="form-control form-control-sm col-7">
+																		<select id="moneda" class="form-control-sm col-7">
 																			<option value="usd" selected>USD</option>
 																			<option value="mxn">MXN</option>
 																		</select>
 																	</div>
 																	<div class="col-4 form-group">
 																	  <h4><b>Clasificación de cliente <a id="cambiarclasificacion" href="#" class="text-primary"><i class="fas fa-sync"></i></a></b></h4>
-																		<select id="clasificacion" class="form-control form-control-sm col-7">
+																		<select id="clasificacion" class="form-control-sm col-7">
 																			<option value="1.20" selected>16 %</option>
 																			<option value="1.25" selected>20 %</option>
 																			<option value="1.33" selected>25 %</option>
@@ -182,7 +182,6 @@
 																					<th>
 																						<div class="row justify-content-between col">
 																							<h5><b>MONEDA: </b></h5>
-																							<!-- <a href="#" id="cambiarMoneda"><i class="fas fa-sync fa-2x text-primary"></i></a> -->
 																						</div>
 																					</th>
 																					<th><h5><label style="font-size: 15px;" id="monedatotal"></label></h5></th>

@@ -30,7 +30,7 @@
 	<?php include('../../header.php'); ?>
 		<div class="be-content">
       <div class="page-head">
-        <h2 class="page-head-title">Pedido</h2>
+        <h2 class="page-head-title" style="font-size: 30px;"><b>Pedido</b></h2>
         <nav aria-label="breadcrumb" role="navigation">
 			  	<ol class="breadcrumb">
 			    	<li class="breadcrumb-item">Ventas</li>
@@ -87,20 +87,20 @@
 												</div>
 												<div class="col-3 form-group">
 													<h4><b>Moneda </b> <a id="cambiarmoneda" href="#" class="text-primary"><i class="fas fa-sync"></i></a></h4>
-													<select id="moneda" class="form-control form-control-sm select2">
+													<select id="moneda" class="form-control-sm col-10">
 														<option value="usd" selected>USD</option>
 														<option value="mxn">MXN</option>
 													</select>
 												</div>
 												<div class="col-3 form-group">
 													<h4><b>Paquetería </b><a id="cambiarpaqueteria" href="#" class="text-primary"><i class="fas fa-sync"></i></a></h4>
-													<select id="paqueteria" class="form-control form-control-sm select2">
+													<select id="paqueteria" class="form-control-sm col-10">
 													</select>
 												</div>
 												<div class="col-3 form-group">
 													<h4><b>No. de guía</b></h4>
 													<div class="input-group mb-3">
-														<input type="text" id="numeroGuia" class="form-control form-control-sm">
+														<input type="text" id="numeroGuia" class="form-control form-control-sm col-9">
 														<div class="input-group-append">
 															<button id="cambiarng" type="button" class="btn btn-primary"><i class="fas fa-pencil-alt fa-sm" aria-hidden="true"></i></button>
 														</div>
@@ -109,13 +109,13 @@
 												<div class="col-3 form-group">
 													<h4><b>Proveedor </b><a id="cambiarproveedor" href="#" class="text-primary"><i class="fas fa-sync"></i></a></h4>
 													<div>
-														<select name="proveedorg" id="proveedorg" class="form-control form-control-sm select2"></select>
+														<select name="proveedorg" id="proveedorg" class="form-control-sm col-10"></select>
 													</div>
 												</div>
 												<div class="col-3 form-group">
 													<h4><b>Cantidad</b></h4>
 													<div class="input-group mb-3">
-														<input type="text" id="cantidadg" class="form-control form-control-sm">
+														<input type="text" id="cantidadg" class="form-control form-control-sm col-9">
 														<div class="input-group-append">
 															<button id="cambiarcantidadg" type="button" class="btn btn-primary"><i class="fas fa-pencil-alt fa-sm" aria-hidden="true"></i></button>
 														</div>
@@ -124,7 +124,7 @@
 												<div class="col-3 form-group">
 													<h4><b>Forma de pago </b><a id="cambiarformapago" href="#" class="text-primary"><i class="fas fa-sync"></i></a></h4>
 													<div>
-												  	<select type="text" id="formapago" name="formapago" class="form-control form-control-sm select2">
+												  	<select type="text" id="formapago" name="formapago" class="form-control-sm col-10">
 														<option value="1">Efectivo</option>
 														<option value="2">Cheque nominativo</option>
 														<option value="3">Transferencia electrónica de fondos</option>
@@ -142,7 +142,7 @@
 												<div class="col-3 form-group">
 													<h4><b>Método de pago </b><a id="cambiarmetodopago" href="#" class="text-primary"><i class="fas fa-sync"></i></a></h4>
 													<div>
-														<select type="text" id="metodopago" name="metodopago" class="form-control form-control-sm select2">
+														<select type="text" id="metodopago" name="metodopago" class="form-control-sm col-10">
 															<option value="1">Pago en una sola exhibición</option>
 															<option value="2">Pago en parcialidades o diferido</option>
 														</select>
@@ -151,7 +151,7 @@
 												<div class="col-3 form-group">
 													<h4><b>Uso de CFDI </b><a id="cambiarusocfdi" href="#" class="text-primary"><i class="fas fa-sync"></i></a></h4>
 													<div>
-														<select id="cfdi" name="cfdi" class="form-control form-control-sm select2">
+														<select id="cfdi" name="cfdi" class="form-control-sm col-10">
 															<option value="1">Adquisición de mercancias</option>
 															<option value="2">Devoluciones, descuentos o bonificaciones</option>
 															<option value="3">Gastos en general</option>
@@ -185,6 +185,7 @@
 				    				<table id="dt_pedido" class="table table-striped table-hover table-fw-widget" width="100%">
 											<thead>
 												<tr>
+													<th>#</th>
 													<th>Marca</th>
 													<th>Modelo</th>
 													<th>Descripcion</th>
@@ -196,14 +197,14 @@
 													<th>Clave SAT</th>
 													<th>Proveedor</th>
 													<th>Almacen</th>
-													<th>Entregado <input type="checkbox" class="btn btn-outline-primary" name="sel" onclick="seleccionartodo()"></th>
+													<!-- <th>Entregado <input type="checkbox" class="btn btn-outline-primary" name="sel" onclick="seleccionartodo()"></th> -->
 													<th>Editar</th>
 												</tr>
 											</thead>
 										</table>
 
 				    			<!-- Tabla de totales -->
-				    				<br>
+				    				<br><br><br>
 				    				<div class="col-12 row justify-content-end align-items-start">
 										<div class="col row justify-content-start">
 
@@ -213,20 +214,20 @@
 												<table class="table table-bordered table-striped">
 													<tbody>
 														<tr>
-															<th><h6><b>SUB-TOTAL:</b></h6></th>
-															<th><h6><label style="font-size: 15px;" id="subtotal"></h6></label></th>
+															<th><h5><b>SUB-TOTAL:</b></h5></th>
+															<th><h5><label style="font-size: 15px;" id="subtotal"></h5></label></th>
 														</tr>
 														<tr>
-															<th><h6><b>IVA (16%):</b></h6></th>
-															<th><h6><label style="font-size: 15px;" id="iva"></label></h6></th>
+															<th><h5><b>IVA (16%):</b></h5></th>
+															<th><h5><label style="font-size: 15px;" id="iva"></label></h5></th>
 														</tr>
 														<tr>
-															<th><h6><b>TOTAL:</b></h6></th>
-															<th><h6><b><label style="font-size: 18px;" class="text-primary" id="total"></label></b></h6></th>
+															<th><h5><b>TOTAL:</b></h5></th>
+															<th><h5><b><label style="font-size: 18px;" class="text-primary" id="total"></label></b></h5></th>
 														</tr>
 														<tr>
-															<th><h6><b>MONEDA:</b></h6></th>
-															<th><h6><label style="font-size: 15px;" id="monedatotal"></label></h6></th>
+															<th><h5><b>MONEDA:</b></h5></th>
+															<th><h5><label style="font-size: 15px;" id="monedatotal"></label></h5></th>
 														</tr>
 													</tbody>
 												</table>
@@ -530,11 +531,7 @@
 			cambiarformapago(refCotizacion, numeroPedido);
 			cambiarmetodopago(refCotizacion, numeroPedido);
 			cambiarusocfdi(refCotizacion, numeroPedido);
-			// $('.collapse').collapse('show');
-			// setTimeout(cerrarcollapse, 3000);
 			editarPartida(refCotizacion, numeroPedido);
-			// buscar_oc_pendientes();
-			// setInterval(buscar_oc_pendientes, 3000);
 			packinglist();
 		});
 
@@ -658,6 +655,7 @@
 						"data": {"refCotizacion": refCotizacion, "numeroPedido": numeroPedido, "opcion": opcion}
 					},
 					"columns":[
+						{"data": "indice"},
 						{"data": "marca"},
 						{"data": "modelo"},
 						{"data": "descripcion"},
@@ -669,102 +667,78 @@
 						{"data": "claveSat"},
 						{"data": "proveedor"},
 						{"data": "almacen"},
-						{"data": "entregado"},
 						{"defaultContent": "<div class='invoice-footer'><button type='button' class='editar btn btn-lg btn-primary' data-toggle='modal' data-target='#modalEditar'><i class='fas fa-edit fa-sm' aria-hidden='true'></i></button></div>"}
 					],
 					"order": false,
-			        "lengthChange": false,
-			        "info": false,
-			        "paging": false,
-			        "ordering": false,
-			        "language": idioma_espanol,
-			        "footerCallback": function ( row, data, start, end, display ) {
-			            var api = this.api();
-			            var intVal = function ( i ) {
-			                return typeof i === 'string' ?
-			                    i.replace(/[\$,]/g, '')*1 :
-			                    typeof i === 'number' ?
-			                        i : 0;
-			            };
+	        "lengthChange": false,
+	        "info": false,
+	        "paging": false,
+	        "ordering": false,
+	        "language": idioma_espanol,
+			    "footerCallback": function ( row, data, start, end, display ) {
+            var api = this.api();
+            var intVal = function ( i ) {
+                return typeof i === 'string' ?
+                    i.replace(/[\$,]/g, '')*1 :
+                    typeof i === 'number' ?
+                        i : 0;
+            };
 
-			            var subtotal = api
-			                .column( 6 )
-			                .data()
-			                .reduce( function (a, b) {
-			                    return intVal(a) + intVal(b);
-			                }, 0 );
+            var subtotal = api
+                .column( 7 )
+                .data()
+                .reduce( function (a, b) {
+                    return intVal(a) + intVal(b);
+                }, 0 );
 
-			            $("#subtotal").text("$ "+ subtotal.toFixed(2));
+			      $("#subtotal").text("$ "+ subtotal.toFixed(2));
 						$("#iva").text("$ "+ (subtotal * .16).toFixed(2));
 						$("#total").text("$ "+ (subtotal + subtotal*.16).toFixed(2));
-
-			            // $( api.column( 6 ).footer() ).html('SubTotal $ ' + subtotal.toFixed(2));
-			            // $( api.column( 7 ).footer() ).html('IVA $ ' + (subtotal * .16).toFixed(2));
-			            // $( api.column( 8 ).footer() ).html('Total $ ' + (subtotal + subtotal*.16).toFixed(2));
-			        },
-			        "dom":
-          				"<'row be-datatable-header'<'col-sm-6'B><'col-sm-6 text-right'f>>" +
-          				"<'row be-datatable-body'<'col-sm-12'tr>>" +
-          				"<'row be-datatable-footer'<'col-sm-5'i><'col-sm-7'p>>",
-					// "rowCallback": function( Row, Data) {
-					//     if ( Data[9] == 0 )
-					//     {
-					//         $('td', Row).css('background-color', 'Green');
-					//     }
-					//     else if ( Data[9] == "Bueno" )
-					//     {
-					//         $('td', Row).css('background-color', 'Blue');
-					//     }
-					//     else if ( Data[9] == "Malo" )
-					//     {
-					//         $('td', Row).css('background-color', 'Red');
-					//     }
-					// },
+			     },
+	        "dom":
+      			"<'row be-datatable-header'<'col-sm-6'B><'col-sm-6 text-right'f>>" +
+      			"<'row be-datatable-body'<'col-sm-12'tr>>",
 					"createdRow": function ( row, data, index ) {
-			            console.log(data.entregado);
-			            if ( data.entregado == "si" ) {
-			                $('td', row).eq(0).addClass('table-success');
-			                $('td', row).eq(1).addClass('table-success');
-			                $('td', row).eq(2).addClass('table-success');
-			                $('td', row).eq(3).addClass('table-success');
-			                $('td', row).eq(4).addClass('table-success');
-			                $('td', row).eq(5).addClass('table-success');
-			                $('td', row).eq(6).addClass('table-success');
-			                $('td', row).eq(7).addClass('table-success');
-			                $('td', row).eq(8).addClass('table-success');
-			                $('td', row).eq(9).addClass('table-success');
-			            }
-			        },
+						if ( data.enviado != '0000-00-00' && data.recibido == '0000-00-00' ) {
+							$('td', row).eq(1).addClass('table-text-enviado');
+							$('td', row).eq(2).addClass('table-text-enviado');
+						}
+
+						if ( data.enviado != '0000-00-00' && data.recibido != '0000-00-00' ) {
+							$('td', row).eq(1).addClass('table-text-recibido');
+							$('td', row).eq(2).addClass('table-text-recibido');
+						}
+					},
 					"buttons":[
 						// {
-			            //     text: 'Devolucion',
-			            //     "className": "btn btn-danger",
-			            //     action: function ( e, dt, node, config ) {
-			            //     	$('#modalDevolucion').modal('show');
-			            //     	listar_devolucion(refCotizacion, numeroPedido);
-			            //     }
-			            // },
-									{
-										text: '<i class="fas fa-check-circle fa-sm" aria-hidden="true"></i> Entregado',
-										"className": "btn btn-lg btn-space btn-secondary",
-										action: function ( e, dt, node, config ) {
-											entregado(refCotizacion, numeroPedido, RFC);
-										}
-									},
-			            {
-			                text: '<i class="fas fa-list fa-sm" aria-hidden="true"></i> Packing list',
-			                "className": "btn btn-lg btn-space btn-secondary",
-			                action: function ( e, dt, node, config ) {
-			                	$('#modalPackingList').modal('show');
-			                }
-			            },
-									{
-										text: '<i class="fas fa-file-alt fa-sm" aria-hidden="true"></i> Generar factura',
-										"className": "btn btn-lg btn-space btn-primary",
-										action: function ( e, dt, node, config ) {
-											generar_factura(RFC, numeroPedido, refCotizacion);
-										}
-									}
+            //   text: 'Devolucion',
+            //   "className": "btn btn-danger",
+            //   action: function ( e, dt, node, config ) {
+            //   	$('#modalDevolucion').modal('show');
+            //   	listar_devolucion(refCotizacion, numeroPedido);
+            //   }
+            // },
+						// {
+						// 	text: '<i class="fas fa-check-circle fa-sm" aria-hidden="true"></i> Entregado',
+						// 	"className": "btn btn-lg btn-space btn-secondary",
+						// 	action: function ( e, dt, node, config ) {
+						// 		entregado(refCotizacion, numeroPedido, RFC);
+						// 	}
+						// },
+            {
+                text: '<i class="fas fa-box fa-sm" aria-hidden="true"></i> Lista de embarque',
+                "className": "btn btn-lg btn-space btn-secondary",
+                action: function ( e, dt, node, config ) {
+                	$('#modalPackingList').modal('show');
+                }
+            },
+						{
+							text: '<i class="fas fa-file-alt fa-sm" aria-hidden="true"></i> Generar factura',
+							"className": "btn btn-lg btn-space btn-primary",
+							action: function ( e, dt, node, config ) {
+								generar_factura(RFC, numeroPedido, refCotizacion);
+							}
+						}
 					]
 				});
 
