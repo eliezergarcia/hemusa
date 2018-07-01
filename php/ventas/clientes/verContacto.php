@@ -22,14 +22,14 @@
 	<?php include('../../header.php'); ?>
 		<div class="be-content">
 			<div class="page-head">
-			  	<h2 class="page-head-title">Información de cliente</h2>
-			  	<nav aria-label="breadcrumb">
-	              	<ol class="breadcrumb">
-	                	<li class="breadcrumb-item">Ventas</li>
-	                	<li class="breadcrumb-item"><a href="clientes.php">Clientes</a></li>
-	                	<li class="breadcrumb-item active">Cliente: <?php echo $nombreContacto; ?></li>
-	              	</ol>
-	         	</nav>
+		  	<h2 class="page-head-title" style="font-size: 30px;"><b>Información de cliente</b></h2>
+		  	<nav aria-label="breadcrumb">
+        	<ol class="breadcrumb">
+          	<li class="breadcrumb-item">Ventas</li>
+          	<li class="breadcrumb-item"><a href="clientes.php" class="text-primary">Clientes</a></li>
+          	<li class="breadcrumb-item active">Cliente: <?php echo $nombreContacto; ?></li>
+        	</ol>
+         </nav>
 			</div>
 			<div class="main-content container-fluid">
 			  <div class="row full-calendar">
@@ -87,7 +87,7 @@
 												<th>Cantidad</th>
 												<th>Precio Unitario</th>
 												<th>Pedido</th>
-												<th>Orden</th>
+												<th>Orden de compra</th>
 												<th>Enviado</th>
 												<th>Recibido</th>
 											</tr>
@@ -127,6 +127,7 @@
 												<th>Cantidad</th>
 												<th>Suma</th>
 												<th>Moneda</th>
+												<th>Ver</th>
 											</tr>
 										</thead>
 									</table>
@@ -202,7 +203,7 @@
 		</form>
 
 	<!-- Modal Editar Información -->
-		<form action="#" method="POST">
+		<form action="#" id="frmEditarInformacion" method="POST">
 	 		<input type="hidden" id="opcion" name="opcion" value="editarinformacion">
 	 		<input type="hidden" id="idcliente" name="idcliente">
 			<input type="hidden" id="usuariologin" name="usuariologin">
@@ -218,6 +219,10 @@
 							<div class="row form-group">
 								<label for="empresa" class="col-4">Empresa</label>
 								<input type="text" id="empresa" name="empresa" class="limpiar form-control form-control-sm col-7">
+							</div>
+							<div class="row form-group">
+								<label for="alias" class="col-4">Alias</label>
+								<input type="text" id="alias" name="alias" class="limpiar form-control form-control-sm col-7">
 							</div>
 							<div class="row form-group">
 								<label for="rfc" class="col-4">RFC</label>
@@ -300,6 +305,15 @@
 								<select type="text" id="moneda" name="moneda" class="limpiar form-control form-control-sm col-7">
 									<option value="mxn">MXN</option>
 									<option value="usd">USD</option>
+								</select>
+							</div>
+							<div class="row form-group">
+								<label for="clasificacion" class="col-4">Clasificación</label>
+								<select id="clasificacion" name="clasificacion" class="form-control form-control-sm col-7">
+									<option value="1.20">16 %</option>
+									<option value="1.25">20 %</option>
+									<option value="1.33">25 %</option>
+									<option value="1.42">30 %</option>
 								</select>
 							</div>
 							<div class="row form-group">
@@ -545,7 +559,7 @@
 								</div>
 							</div>
 							<div class="row">
-									<div class="col-8 form-group">
+									<div class="col-7 form-group">
 										<label for="cliente" class="col-12">Cliente <font color="#FF4136">*</font></label>
 										<input placeholder="Busca un cliente" class="disabled form-control form-control-sm col-12" data-min-length="1" list="clientes" id="cliente" name="cliente" type="text" onchange="buscarDatosCliente()" disabled required>
 										<!-- <datalist id="clientes">
@@ -640,7 +654,6 @@
         </div>
       </div>
     </div>
-
 
 		<div id="mod-remision" tabindex="-1" role="dialog" style="" class="modal fade" data-backdrop="static" data-keyboard="false">
       <div class="modal-dialog">
@@ -902,7 +915,8 @@
 		          {"data": "fecha"},
 				  {"data": "cantidad"},
 				  {"data": "suma"},
-				  {"data": "moneda"}
+				  {"data": "moneda"},
+					{"defaultContent": "<div class='invoice-footer'><button class='verremision btn btn-lg btn-primary'><i class='fas fa-edit fa-sm' aria-hidden='true'></i></button></div>"}
 		        ],
 		        "language": idioma_espanol,
 				"dom":
@@ -954,6 +968,7 @@
 			        },
 				]
 		    });
+				obtener_data_ver_remision("#dt_listar_remisiones tbody", table);
 		}
 
 		var listar_cotizaciones = function(){
@@ -1048,6 +1063,14 @@
 			});
 		}
 
+		var obtener_data_ver_remision = function(tbody, table){ // se obtiene el id del usuario para eliminar del DT Usuarios
+			$(tbody).on("click", "button.verremision", function(){
+				var data = table.row( $(this).parents("tr") ).data();
+				var remision = data.remision;
+				window.location.href = "../remisiones/verRemision.php?remision="+remision;
+			});
+		}
+
 		function buscardatoscliente(idcliente){
 			var opcion = "datoscliente";
 			$.ajax({
@@ -1057,10 +1080,10 @@
 				data: {"idcliente": idcliente, "opcion": opcion}
 			}).done( function( data ){
 				console.log(data);
-				if(data.data.clasificacion == 0){
-					estandar = alert("El cliente no tiene asignado ningúna clasificación.\n\nFavor de asignar a continuación para poder cotizar.");
-					$('#modalAgregarClas').modal('show');
-				}
+				// if(data.data.clasificacion == 0){
+				// 	estandar = alert("El cliente no tiene asignado ningúna clasificación.\n\nFavor de asignar a continuación para poder cotizar.");
+				// 	$('#modalAgregarClas').modal('show');
+				// }
 
 				$("form #nombrecliente").val(data.data.nombreEmpresa);
 				$("#moneda").val(data.data.moneda).change();
@@ -1183,7 +1206,9 @@
 				dataType: "json",
 				data: {"opcion": opcion, "idcliente": idcliente},
 			}).done( function( data ){
+				console.log(data);
 				$("#empresa").val(data.contacto.nombreEmpresa);
+				$("#alias").val(data.contacto.alias);
 				$("#rfc").val(data.contacto.RFC);
 				$("#contacto").val(data.contacto.personaContacto);
 				$("#calle").val(data.contacto.calle);
@@ -1204,6 +1229,7 @@
 				$("#credito").val(data.contacto.CondPago);
 				$("#contactohemusa").val(data.contacto.responsable);
 				$("#moneda").val(data.contacto.moneda);
+				$("#frmEditarInformacion #clasificacion").val(data.contacto.clasificacion).change();
 				$("#formapago").val(data.contacto.IdFormaPago);
 				$("#metodopago").val(data.contacto.IdMetodoPago);
 				$("#cfdi").val(data.contacto.IdUsoCFDI);

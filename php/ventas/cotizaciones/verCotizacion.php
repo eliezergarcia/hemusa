@@ -111,10 +111,10 @@
 																	<div class="col-4 form-group">
 																	  <h4><b>Clasificación de cliente <a id="cambiarclasificacion" href="#" class="text-primary"><i class="fas fa-sync"></i></a></b></h4>
 																		<select id="clasificacion" class="form-control-sm col-7">
-																			<option value="1.20" selected>16 %</option>
-																			<option value="1.25" selected>20 %</option>
-																			<option value="1.33" selected>25 %</option>
-																			<option value="1.42" selected>30 %</option>
+																			<option value="1.20">16 %</option>
+																			<option value="1.25">20 %</option>
+																			<option value="1.33">25 %</option>
+																			<option value="1.42">30 %</option>
 																		</select>
 																	</div>
 																</div>

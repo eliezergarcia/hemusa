@@ -48,10 +48,9 @@
 			while($data = mysqli_fetch_assoc($resultado)){
 				$arreglo["data"][] = array_map("utf8_encode", $data);
 			}
-			echo json_encode($arreglo);
 		}
 
-		mysqli_free_result($resultado);
+		echo json_encode($arreglo, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_PARTIAL_OUTPUT_ON_ERROR);
 		mysqli_close($conexion_usuarios);
 	}
 
@@ -76,15 +75,15 @@
 			);
 		}
 
-		echo json_encode($arreglo);
+		echo json_encode($arreglo, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_PARTIAL_OUTPUT_ON_ERROR);
 	}
 
 	function facturado_no_entregado($idcliente, $buscar, $conexion_usuarios){
 		$query = "SELECT * FROM contactos WHERE id = '$idcliente'";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 
-		if(!$resultado){
-			die("Error al buscar proveedor");
+		if(mysqli_num_rows($resultado) < 1){
+			$arreglo['data'] = 0;
 		}else{
 			while($data = mysqli_fetch_assoc($resultado)){
 				$cliente = $data['nombreEmpresa'];
@@ -95,8 +94,8 @@
 			$arreglo = array();
 
 			if(mysqli_num_rows($resultado) > 0){
-				if (!$resultado) {
-					die('Error al buscar herramientano entregado');
+				if(mysqli_num_rows($resultado) < 1){
+					$arreglo['data'] = 0;
 				}else{
 					$i = 1;
 					while($data = mysqli_fetch_assoc($resultado)){
@@ -116,8 +115,8 @@
 				$resultado = mysqli_query($conexion_usuarios, $query);
 				$arreglo = array();
 
-				if (!$resultado) {
-					// die('Error al buscar herramienta sin pedido');
+				if(mysqli_num_rows($resultado) < 1){
+					$arreglo['data'] = 0;
 				}else{
 					$i = 1;
 					while($data = mysqli_fetch_assoc($resultado)){
@@ -135,7 +134,7 @@
 			}
 		}
 
-		echo json_encode($arreglo);
+		echo json_encode($arreglo, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_PARTIAL_OUTPUT_ON_ERROR);
 		mysqli_close($conexion_usuarios);
 	}
 
@@ -143,8 +142,8 @@
 		$query = "SELECT * FROM contactos WHERE id = '$idcliente'";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 
-		if(!$resultado){
-			die("Error al buscar proveedor");
+		if(mysqli_num_rows($resultado) < 1){
+			$arreglo['data'] = 0;
 		}else{
 			while($data = mysqli_fetch_assoc($resultado)){
 				$cliente = $data['nombreEmpresa'];
@@ -153,8 +152,8 @@
 			$query="SELECT cotizacionherramientas.*, cotizacion.NoPedClient FROM cotizacionherramientas INNER JOIN cotizacion ON cotizacion.ref = cotizacionherramientas.cotizacionRef WHERE (marca LIKE '%$buscar%' AND modelo LIKE '%$buscar%' AND descripcion LIKE '%$buscar%' AND noDePedido LIKE '%$buscar%' AND numeroPedido LIKE '%$buscar%' AND enviadoFecha LIKE '%$buscar%' AND recibidoFecha LIKE '%$buscar%') AND Entregado='0000-00-00' AND pedidoFecha!='0000-00-00' AND cotizacionherramientas.cliente ='$idcliente' ORDER BY marca ASC";
 			$resultado = mysqli_query($conexion_usuarios, $query);
 
-			if (!$resultado) {
-				die('Error al buscar herramienta sin entregar');
+			if(mysqli_num_rows($resultado) < 1){
+				$arreglo['data'] = 0;
 			}else{
 				$i = 1;
 				while($data = mysqli_fetch_assoc($resultado)){
@@ -197,7 +196,7 @@
 			}
 		}
 
-		echo json_encode($arreglo);
+		echo json_encode($arreglo, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_PARTIAL_OUTPUT_ON_ERROR);
 		mysqli_close($conexion_usuarios);
 	}
 
@@ -205,8 +204,8 @@
 		$query = "SELECT * FROM contactos WHERE id = '$idcliente'";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 
-		if(!$resultado){
-			die("Error al buscar proveedor");
+		if(mysqli_num_rows($resultado) < 1){
+			$arreglo['data'] = 0;
 		}else{
 			while($data = mysqli_fetch_assoc($resultado)){
 				$cliente = $data['nombreEmpresa'];
@@ -216,8 +215,8 @@
 			$resultado = mysqli_query($conexion_usuarios, $query);
 			$arreglo = array();
 
-			if (!$resultado) {
-				die('Error al buscar herramienta sin entregar');
+			if(mysqli_num_rows($resultado) < 1){
+				$arreglo['data'] = 0;
 			}else{
 				$i = 1;
 				while($data = mysqli_fetch_assoc($resultado)){
@@ -230,14 +229,14 @@
 							'cantidad' => $data['partidaCantidad'],
 							'fecha' => $data['remisionFecha'],
 							'suma' => "$ ".$data['precioTotal'],
-							'moneda' => $data['moneda']
+							'moneda' => strtoupper($data['moneda'])
 						);
 					$i++;
 				}
 			}
 		}
 
-		echo json_encode($arreglo);
+		echo json_encode($arreglo, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_PARTIAL_OUTPUT_ON_ERROR);
 		mysqli_close($conexion_usuarios);
 	}
 
@@ -245,8 +244,8 @@
 		$query = "SELECT * FROM contactos WHERE id = '$idcliente'";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 
-		if(!$resultado){
-			die("Error al buscar proveedor");
+		if(mysqli_num_rows($resultado) < 1){
+			$arreglo['data'] = 0;
 		}else{
 			while($data = mysqli_fetch_assoc($resultado)){
 				$cliente = $data['nombreEmpresa'];
@@ -256,8 +255,8 @@
 			$resultado = mysqli_query($conexion_usuarios, $query);
 			$arreglo = array();
 
-			if (!$resultado) {
-				die('Error al buscar herramienta sin entregar');
+			if(mysqli_num_rows($resultado) < 1){
+				$arreglo['data'] = 0;
 			}else{
 				$i = 1;
 				while($data = mysqli_fetch_assoc($resultado)){
@@ -274,7 +273,7 @@
 			}
 		}
 
-		echo json_encode($arreglo);
+		echo json_encode($arreglo, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_PARTIAL_OUTPUT_ON_ERROR);
 		mysqli_close($conexion_usuarios);
 	}
 
