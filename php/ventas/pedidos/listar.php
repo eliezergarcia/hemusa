@@ -78,8 +78,9 @@
 	function sinproveedor($buscar, $conexion_usuarios){
 		$query = "SELECT DISTINCT cotizacionRef FROM cotizacionherramientas WHERE Pedido = 'si' AND pedidoFecha != '0000-00-00' AND Proveedor = 'None' AND pedidoFecha >= '2017-01-01' LIMIT 999";
 		$resultado = mysqli_query($conexion_usuarios, $query);
-		if (!$resultado) {
-			verificar_resultado($resultado);
+
+		if (mysqli_num_rows($resultado) < 1) {
+			$arreglo["data"] = 0;
 		}else{
 			while($data1 = mysqli_fetch_assoc($resultado)){
 				$cotizacionRef = $data1['cotizacionRef'];

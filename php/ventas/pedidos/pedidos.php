@@ -14,7 +14,7 @@
 	<?php include("../../header.php"); ?>
 		<div class="be-content">
           	<div class="page-head">
-              	<h2 class="page-head-title">Pedidos</h2>
+              	<h2 class="page-head-title" style="font-size: 30px;"><b>Pedidos</b></h2>
               	<nav aria-label="breadcrumb" role="navigation">
 	                <ol class="breadcrumb page-head-nav">
 	                    <li class="breadcrumb-item"><a href="#">Ventas</a></li>
@@ -485,13 +485,6 @@
 					],
 					"order": [5, "desc"],
 			        "language": idioma_espanol,
-					// "language": {
-					// 	"lengthMenu": "Display _MENU_ records per page",
-					// 	"zeroRecords": "Nothing found - sorry",
-					// 	"info": "Showing page _PAGE_ of _PAGES_",
-					// 	"infoEmpty": "Ningún dato disponible en esta tabla",
-					// 	"infoFiltered": "(filtered from _MAX_ total records)"
-					// },
 			        "dom":
 	          			"<'row be-datatable-header'<'col-sm-6'B><'col-sm-6 text-right'f>>" +
 	          			"<'row be-datatable-body'<'col-sm-12'tr>>" +
@@ -551,55 +544,8 @@
 				window.location=("verPedido.php?refCotizacion="+data.cotizacionRef+"&numeroPedido="+data.numeroPedido);
 			});
 		}
-
-		var idioma_espanol = {
-			"processing":     "Procesando...",
-			"lengthMenu":     "Mostrar _MENU_ registros",
-			// "loadingRecords": "Cargando...",
-			"zeroRecords":    "No se encontraron resultados",
-			"emptyTable":     "Ningún dato disponible en esta tabla",
-			"info":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-			"infoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
-			"infoFiltered":   "(filtrado de un total de _MAX_ registros)",
-			"infoPostFix":    "",
-			"search":         "Buscar:",
-			"Url":            "",
-			"InfoThousands":  ",",
-		    "oPaginate": {
-		        "sFirst":    "Primero",
-		        "sLast":     "Último",
-		        "sNext":     "Siguiente",
-		        "sPrevious": "Anterior"
-		    },
-		    "oAria": {
-		        "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
-		        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
-		    }
-			// {
-			// "decimal":        "",
-			// "emptyTable":     "Ningún dato disponible en esta tabla",
-			// "info":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-			// "infoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
-			// "infoFiltered":   "(filtrado de un total de _MAX_ registros)",
-			// "infoPostFix":    "",
-			// "thousands":      ",",
-			// "lengthMenu":     "Mostrar _MENU_ registros",
-			// "loadingRecords": "Procesando...",
-			// "processing":     "Procesando...",
-			// "search":         "Buscar:",
-			// "zeroRecords":    "No se encontraron resultados",
-			// "paginate": {
-			// 	"first":      "Primero",
-			// 	"last":       "Ultimo",
-			// 	"next":       "Siguiente",
-			// 	"previous":   "Anterior"
-			// },
-			// "aria": {
-			// 	"sortAscending":  ": Activar para ordenar la columna de manera ascendente",
-			// 	"sortDescending": ": Activar para ordenar la columna de manera descendente"
-			// }
-		}
 	</script>
-	<!-- <script src="<?php echo $ruta; ?>/php/js/notificaciones.js"></script> -->
+	<script src="<?php echo $ruta; ?>/php/js/idioma_espanol.js"></script>
+	<script src="<?php echo $ruta; ?>/php/js/mensajes_cambios.js"></script>
 </body>
 </html>
