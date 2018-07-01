@@ -65,8 +65,8 @@
 			$resultado = mysqli_query($conexion_usuarios, $query);
 			$arreglo = array();
 
-			if (!$resultado) {
-				die('Error al buscar herramienta sin pedido');
+			if (mysqli_num_rows($resultado) < 1) {
+				$arreglo['data'] = 0;
 			}else{
 				$i = 1;
 				while($data = mysqli_fetch_assoc($resultado)){
@@ -152,12 +152,12 @@
 				$proveedor = strtoupper($data['nombreEmpresa']);
 			}
 
-			$query = "SELECT cotizacionherramientas.*, contactos.nombreEmpresa FROM cotizacionherramientas INNER JOIN contactos ON contactos.id = cotizacionherramientas.cliente WHERE (enviadoFecha LIKE '%$buscar%' OR marca LIKE '%$buscar%' OR modelo LIKE '%$buscar%' OR descripcion LIKE '%$buscar%' OR nombreEmpresa LIKE '%$buscar%' OR noDePedido LIKE '%$buscar%' OR pedidoFecha LIKE '%$buscar%') AND Proveedor='$proveedor' AND recibidoFecha='0000-00-00' AND proveedorFecha!='0000-00-00' AND noDePedido != '' AND pedidoFecha >= '2017-01-01' ORDER BY modelo";
+			$query = "SELECT cotizacionherramientas.*, contactos.nombreEmpresa FROM cotizacionherramientas INNER JOIN contactos ON contactos.id = cotizacionherramientas.cliente WHERE (enviadoFecha LIKE '%$buscar%' OR marca LIKE '%$buscar%' OR modelo LIKE '%$buscar%' OR descripcion LIKE '%$buscar%' OR nombreEmpresa LIKE '%$buscar%' OR noDePedido LIKE '%$buscar%' OR pedidoFecha LIKE '%$buscar%') AND Proveedor LIKE '%$proveedor%' AND recibidoFecha='0000-00-00' AND proveedorFecha!='0000-00-00' AND noDePedido != '' AND pedidoFecha >= '2017-01-01' ORDER BY modelo";
 			$resultado = mysqli_query($conexion_usuarios, $query);
 			$arreglo = array();
 
-			if (!$resultado) {
-				die('Error al buscar herramienta sin recibido');
+			if (mysqli_num_rows($resultado) < 1) {
+				$arreglo['data'] = 0;
 			}else{
 				$i = 1;
 				while($data = mysqli_fetch_assoc($resultado)){
@@ -236,8 +236,8 @@
 			$resultado = mysqli_query($conexion_usuarios, $query);
 			$arreglo = array();
 
-			if (!$resultado) {
-				die('Error al buscar herramienta sin entregar');
+			if (mysqli_num_rows($resultado) < 1) {
+				$arreglo['data'] = 0;
 			}else{
 				$i = 1;
 				while($data = mysqli_fetch_assoc($resultado)){
@@ -307,8 +307,8 @@
 			$resultado = mysqli_query($conexion_usuarios, $query);
 			$arreglo = array();
 
-			if (!$resultado) {
-				die('Error al buscar ordenes de compra');
+			if (mysqli_num_rows($resultado) < 1) {
+				$arreglo['data'] = 0;
 			}else{
 				$i = 1;
 				while($data = mysqli_fetch_assoc($resultado)){

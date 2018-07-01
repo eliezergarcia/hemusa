@@ -145,7 +145,7 @@
 					}
 
 					$stock = $stock + $cantduplicar;
-					
+
 					$query = "UPDATE productos SET enReserva='$stock' WHERE marca ='$marca' AND ref ='$modelo'";
 					$resultado = mysqli_query($conexion_usuarios, $query);
 
@@ -201,7 +201,7 @@
 	}
 
 	function crear_orden_compra($proveedor, $saludo, $iddireccionenvio, $conexion_usuarios){
-		$query = "SELECT id,moneda FROM contactos WHERE nombreEmpresa LIKE '%$proveedor%' LIMIT 1";
+		$query = "SELECT id, moneda FROM contactos WHERE nombreEmpresa LIKE '%$proveedor%' LIMIT 1";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 		while($data = mysqli_fetch_assoc($resultado)){
 			$idproveedor = $data['id'];

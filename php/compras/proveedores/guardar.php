@@ -315,10 +315,11 @@
 	}
 
 	function crearordencompra($idproveedor, $saludo, $iddireccionenvio, $idusario, $conexion_usuarios){
-		$query = "SELECT nombreEmpresa FROM contactos WHERE id = '$idproveedor'";
+		$query = "SELECT nombreEmpresa, moneda FROM contactos WHERE id = '$idproveedor'";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 		while($data = mysqli_fetch_assoc($resultado)){
 			$proveedor = strtoupper($data['nombreEmpresa']);
+			$monedaproveedor = $data['moneda'];
 		}
 
 	   	$query = "SELECT noDePedido FROM ordendecompras ORDER BY id DESC LIMIT 1";
@@ -347,7 +348,7 @@
 	     			$direccionenvio = $data['address'];
 	     		}
 	     		$fecha = date("Y").'-'.date("m").'-'.date("d");
-	     		$query = "INSERT INTO ordendecompras (nodePedido, fecha, proveedor, contacto, texto, envia_a) VALUES ('$numeroOC', '$fecha', '$idproveedor', '$idusario', '$saludo', '$direccionenvio')";
+	     		$query = "INSERT INTO ordendecompras (nodePedido, fecha, proveedor, contacto, texto, envia_a, moneda) VALUES ('$numeroOC', '$fecha', '$idproveedor', '$idusario', '$saludo', '$direccionenvio', '$monedaproveedor')";
 				$resultado = mysqli_query($conexion_usuarios, $query);
 				if(!$resultado){
 					verificar_resultado($resultado);

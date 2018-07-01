@@ -22,7 +22,7 @@
 	<?php include('../../header.php'); ?>
 		<div class="be-content">
 					<div class="page-head">
-							<h2 class="page-head-title">Información de proveedor</h2>
+							<h2 class="page-head-title" style="font-size: 30px;"><b>Información de proveedor</b></h2>
 							<nav aria-label="breadcrumb">
 	              <ol class="breadcrumb">
 	                <li class="breadcrumb-item">Compras</li>
@@ -95,7 +95,7 @@
 																	</table>
 																	<div>
 																		<br>
-																		<center><h3><b>Total: $ <label id="totalsinpedido"></label></b></h3></center>
+																		<center><h3><b>Total: $ <label id="totalsinpedido" style="font-size: 25px;"><b></b></label></b></h3></center>
 																	</div>
 																</div>
 
@@ -403,33 +403,6 @@
 				</div>
 			</div>
 
-		<!-- Modal Eliminar Proveedor -->
-      <!-- <form id="frmSplitSinRecibido" action="" method="POST">
-        <input type="hidden" id="opcion" name="opcion" value="splitsinrecibido">
-        <input type="hidden" id="idherramienta" name="idherramienta" value="">
-        <div class="modal fade" id="modalSplitSinRecibido" tabindex="-1" role="dialog" aria-labelledby="modalSplitLabel">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <button type="button" data-dismiss="modal" aria-hidden="true" class="close"><span class="mdi mdi-close"></span></button>
-              </div>
-              <div class="modal-body">
-                <div class="text-center">
-                    <h4>Ingresa la cantidad a aplicar el split: </h4>
-                    <div class="row justify-content-center">
-                      <input type="text" class="form-control form-control-sm col-3" id="cantidadsplit" name="cantidadsplit">
-                    </div>
-                </div>
-              </div>
-              <div class="modal-footer">
-								<button type="button" class="btn btn-lg btn-secondary" data-dismiss="modal">Cancelar</button>
-								<button type="submit" class="btn btn-lg btn-primary">Guardar</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </form> -->
-
 			<div id="mod-success" tabindex="-1" role="dialog" style="" class="modal fade" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog">
           <div class="modal-content">
@@ -560,11 +533,31 @@
 	          {"data": "utilidad"},
 	          {"defaultContent": "<div class='invoice-footer'><button class='quitar btn btn-lg btn-danger'><i class='fas fa-times fa-sm' aria-hidden='true'></i></button></div>"}
 	        ],
-	        "language": idioma_espanol,
-					"dom":
-							"<'row be-datatable-header'<'col-sm-6'B><'col-sm-6 text-right'f>>" +
-							"<'row be-datatable-body'<'col-sm-12'tr>>" +
-							"<'row be-datatable-footer'<'col-sm-5'i><'col-sm-7'p>>",
+	      "language": idioma_espanol,
+				"dom":
+					"<'row be-datatable-header'<'col-sm-6'B><'col-sm-6 text-right'f>>" +
+					"<'row be-datatable-body'<'col-sm-12'tr>>" +
+					"<'row be-datatable-footer'<'col-sm-5'i><'col-sm-7'p>>",
+				// "footerCallback": function ( row, data, start, end, display ) {
+				// 	var api = this.api();
+				// 	var intVal = function ( i ) {
+				// 		return typeof i === 'string' ?
+				// 		i.replace(/[\$,]/g, '')*1 :
+				// 		typeof i === 'number' ?
+				// 		i : 0;
+				// 	};
+				//
+				// 		var total = api
+				// 				.column( 7 )
+				// 				.data()
+				// 				.reduce( function (a, b) {
+				// 						return intVal(a) + intVal(b);
+				// 				}, 0 );
+				//
+				// 		$("#total").text("$ "+ subtotal.toFixed(2));
+				// 		$("#iva").text("$ "+ (subtotal * .16).toFixed(2));
+				// 		$("#total").text("$ "+ (subtotal + subtotal*.16).toFixed(2));
+				// 	 },
 				"buttons":[
 					{
 						extend: 'collection',
@@ -1166,6 +1159,7 @@
 						var json_info = JSON.parse( data );
 						mostrar_mensaje(json_info);
 						$("#dt_listar_sinpedido").DataTable().ajax.reload();
+						obtener_total(idproveedor);
 					}
 				});
 			}else{
