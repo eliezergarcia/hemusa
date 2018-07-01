@@ -40,7 +40,7 @@
 
 	function ordenesdecompras($conexion_usuarios){
 		$query = "SELECT ordendecompras.id, ordendecompras.noDePedido, ordendecompras.Fecha, ordendecompras.proveedor,
-		contactos.nombreEmpresa, usuarios.nombre as contacto FROM ordendecompras LEFT JOIN contactos on contactos.id=ordendecompras.proveedor
+		contactos.nombreEmpresa, usuarios.nombre, usuarios.apellidos FROM ordendecompras LEFT JOIN contactos on contactos.id=ordendecompras.proveedor
 		INNER JOIN usuarios on usuarios.id=ordendecompras.contacto  WHERE terminado='0000-00-00' ORDER BY id DESC LIMIT 999";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 
@@ -51,7 +51,7 @@
 				$arreglo["data"][] = array(
 					'ordencompra' => $data['noDePedido'],
 					'proveedor' => utf8_encode($data['nombreEmpresa']),
-					'contacto' => $data['contacto'],
+					'contacto' => $data['nombre']." ".$data['apellidos'],
 					'fecha' => $data['Fecha']
 				);
 
@@ -289,7 +289,7 @@
 		if (mysqli_num_rows($resultado) > 0) {
 			$subtotal = 0;
 			while($data = mysqli_fetch_assoc($resultado)){
-				if($monedaproveedor == "usd"){
+				if($moneda == "usd"){
 					$subtotal = $subtotal +  ($data['costo_usd'] * $data['cantidad']);
 				}else{
 					$subtotal = $subtotal + ($data['costo_mn'] * $data['cantidad']);

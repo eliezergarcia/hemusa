@@ -13,7 +13,7 @@
   <?php include('../../header.php'); ?>
     <div class="be-content">
       <div class="page-head">
-          <h2 class="page-head-title">Descripción de pedido</h2>
+          <h2 class="page-head-title" style="font-size: 30px;"><b>Descripción de pedido</b></h2>
           <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
               <li class="breadcrumb-item">Compras</li>

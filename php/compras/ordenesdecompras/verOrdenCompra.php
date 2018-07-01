@@ -7,6 +7,7 @@
   $resultado = mysqli_query($conexion_usuarios, $query);
   while($data = mysqli_fetch_assoc($resultado)){
     $idproveedor = $data['proveedor'];
+    $fechaoc = $data['fecha'];
   }
 
   $query = "SELECT * FROM contactos WHERE id = '$idproveedor'";
@@ -31,7 +32,7 @@
   <?php include('../../header.php'); ?>
     <div class="be-content">
       <div class="page-head">
-          <h2 class="page-head-title">Orden de compra</h2>
+          <h2 class="page-head-title" style="font-size: 30px;"><b>Orden de compra</b></h2>
           <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
               <li class="breadcrumb-item">Compras</li>
@@ -47,6 +48,13 @@
             <div class="col-lg-12">
                 <div class="card card-fullcalendar">
                     <div class="card-body">
+                        <br>
+                        <div class="row justify-content-center">
+                          <h2><b>ORDEN DE COMPRA # <?php echo $_REQUEST['ordenCompra']; ?></b></h2>
+                        </div>
+                        <div class="row col justify-content-end">
+                          <h3><b>Fecha: </b><?php echo $fechaoc; ?></h3>
+                        </div>
 
                         <!-- Encabezado -->
                         <br>
@@ -54,7 +62,7 @@
                           <div class="col-4 row justify-content-start">
                             <div class="col">
                               <div class="form-group">
-                                <h4><b>Proveedor</b></h4>
+                                <h3><b>Proveedor</b></h3>
                                 <h5 style="font-size: 17px;"><?php echo $proveedor; ?></h5>
                               </div>
                               <div class="form-group">
@@ -146,7 +154,7 @@
           <div class="modal-dialog" role="document">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel"><i class="fas fa-edit fa-sm"></i><b> Información de partida</b></h5>
+                <h5 class="modal-title" id="exampleModalLabel"><b> Información de partida</b></h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
@@ -249,29 +257,13 @@
         ],
         "createdRow": function ( row, data, index ) {
           if ( data.enviado != '0000-00-00' && data.recibido == '0000-00-00' ) {
-            // $('td', row).eq(0).addClass('table-text-enviado');
             $('td', row).eq(1).addClass('table-text-enviado');
-            // $('td', row).eq(2).addClass('table-text-enviado');
-            // $('td', row).eq(3).addClass('table-text-enviado');
-            // $('td', row).eq(4).addClass('table-text-enviado');
-            // $('td', row).eq(5).addClass('table-text-enviado');
-            // $('td', row).eq(6).addClass('table-text-enviado');
-            // $('td', row).eq(7).addClass('table-text-enviado');
-            // $('td', row).eq(8).addClass('table-text-enviado');
-            // $('td', row).eq(9).addClass('table-text-enviado');
+            $('td', row).eq(2).addClass('table-text-enviado');
           }
 
           if ( data.enviado != '0000-00-00' && data.recibido != '0000-00-00' ) {
-            // $('td', row).eq(0).addClass('table-text-recibido');
             $('td', row).eq(1).addClass('table-text-recibido');
-            // $('td', row).eq(2).addClass('table-text-recibido');
-            // $('td', row).eq(3).addClass('table-text-recibido');
-            // $('td', row).eq(4).addClass('table-text-recibido');
-            // $('td', row).eq(5).addClass('table-text-recibido');
-            // $('td', row).eq(6).addClass('table-text-recibido');
-            // $('td', row).eq(7).addClass('table-text-recibido');
-            // $('td', row).eq(8).addClass('table-text-recibido');
-            // $('td', row).eq(9).addClass('table-text-recibido');
+            $('td', row).eq(2).addClass('table-text-enviado');
           }
         },
         "order":[[3, "desc"]],
@@ -282,8 +274,7 @@
         "language": idioma_espanol,
         "dom":
           "<'row be-datatable-header'<'col-sm-6'B><'col-sm-6 text-right'f>>" +
-          "<'row be-datatable-body'<'col-sm-12'tr>>" +
-          "<'row be-datatable-footer'<'col-sm-5'i><'col-sm-7'p>>",
+          "<'row be-datatable-body'<'col-sm-12'tr>>",
         "buttons":[
           {
             extend: 'collection',
@@ -291,7 +282,7 @@
             "className": "btn btn-lg btn-space btn-secondary",
             buttons: [
               {
-                text: '<i class="fas fa-file-pdf fa-lg"></i> Pdf',
+                text: '<i class="fas fa-file-pdf fa-lg"></i> PDF',
                 // "className": "btn btn-danger",
                 action: function (e, dt, node, config){
                   var opcion = "pdf";
@@ -489,10 +480,7 @@
           {"data":'moneda'}
         ],
         "dom":
-          // "<'row be-datatable-header'>" +
           "<'row be-datatable-body'<'col-sm-5'tr>>",
-          // "<'col-12 row justify-content-start'<tr>>",
-          // "<'row be-datatable-footer'<'col-sm-5'i><'col-sm-7'p>>",
         "searching": false,
         "info": false,
         "paging": false,
