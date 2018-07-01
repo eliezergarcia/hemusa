@@ -13,7 +13,7 @@
   <?php include('../../header.php'); ?>
     <div class="be-content">
           <div class="page-head">
-              <h2 class="page-head-title">Proveedores</h2>
+              <h2 class="page-head-title" style="font-size: 30px;"><b>Proveedores</b></h2>
               <nav aria-label="breadcrumb" role="navigation">
                 <ol class="breadcrumb page-head-nav">
                     <li class="breadcrumb-item"><a href="#">Compras</a></li>
@@ -66,6 +66,10 @@
                   <div class="form-group col">
                     <label for="nombreEmpresa">Nombre de empresa <font color="#FF4136">*</font></label>
                     <input type="text" id="nombreEmpresa" name="nombreEmpresa" class="limpiar form-control form-control-sm" required>
+                  </div>
+                  <div class="form-group col-4">
+                    <label for="alias">Alias</label>
+                    <input type="text" id="alias" name="alias" class="limpiar form-control form-control-sm" placeholder="Opcional">
                   </div>
                 </div>
                 <div class="row">
@@ -212,8 +216,6 @@
       App.pageCalendar();
       App.formElements();
       App.uiNotifications();
-    //   buscar_oc_pendientes();
-		  // setInterval(buscar_oc_pendientes, 3000);
       listar_proveedores();
       guardar();
     });
@@ -339,10 +341,9 @@
           url: "guardar.php",
           data: frm
         }).done( function( info ){
-          console.log(info);
           var json_info = JSON.parse( info );
           mostrar_mensaje(json_info);
-          listar_proveedores();
+          $('#dt_proveedores').DataTable().ajax.reload();
         });
       });
     }

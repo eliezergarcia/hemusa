@@ -8,6 +8,7 @@
 	switch ($opcion) {
 		case 'agregarproveedor':
 			$nombreEmpresa = $_POST['nombreEmpresa'];
+			$alias = $_POST['alias'];
 			$rfc = $_POST['rfc'];
 			$moneda = $_POST['moneda'];
 			$calle = $_POST['calle'];
@@ -29,7 +30,7 @@
 				$informacion["informacion"] = "No se pudo registrar la información porque el RFC '".$rfc."' ya existe!";
 				echo json_encode($informacion);
 			}else{
-				agregar_proveedor($nombreEmpresa, $rfc, $moneda, $calle, $numExterior, $numInterior, $colonia, $cp, $ciudad, $estado, $pais, $tlf1, $tlf2, $paginaWeb, $correoElectronico, $conexion_usuarios);
+				agregar_proveedor($nombreEmpresa, $alias, $rfc, $moneda, $calle, $numExterior, $numInterior, $colonia, $cp, $ciudad, $estado, $pais, $tlf1, $tlf2, $paginaWeb, $correoElectronico, $conexion_usuarios);
 			}
 
 			break;
@@ -265,8 +266,8 @@
 		return $existeproveedor;
 	}
 
-	function agregar_proveedor($nombreEmpresa, $rfc, $moneda, $calle, $numExterior, $numInterior, $colonia, $cp, $ciudad, $estado, $pais, $tlf1, $tlf2, $paginaWeb, $correoElectronico, $conexion_usuarios){
-		$query = "INSERT INTO contactos (nombreEmpresa, calle, NumInt, NumExt, ciudad, estado, cp, pais, tlf1, tlf2, correoElectronico, paginaWeb, RFC, colonia, tipo, moneda) VALUES ('$nombreEmpresa', '$calle', '$numInterior', '$numExterior', '$ciudad', '$estado', '$cp', '$pais', '$tlf1', '$tlf2', '$correoElectronico', '$paginaWeb', '$rfc', '$colonia', 'Proveedor', '$moneda')";
+	function agregar_proveedor($nombreEmpresa, $alias, $rfc, $moneda, $calle, $numExterior, $numInterior, $colonia, $cp, $ciudad, $estado, $pais, $tlf1, $tlf2, $paginaWeb, $correoElectronico, $conexion_usuarios){
+		$query = "INSERT INTO contactos (nombreEmpresa, alias, calle, NumInt, NumExt, ciudad, estado, cp, pais, tlf1, tlf2, correoElectronico, paginaWeb, RFC, colonia, tipo, moneda) VALUES ('$nombreEmpresa', '$alias', '$calle', '$numInterior', '$numExterior', '$ciudad', '$estado', '$cp', '$pais', '$tlf1', '$tlf2', '$correoElectronico', '$paginaWeb', '$rfc', '$colonia', 'Proveedor', '$moneda')";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 		if (!$resultado) {
 			$informacion["respuesta"] = "ERROR";
