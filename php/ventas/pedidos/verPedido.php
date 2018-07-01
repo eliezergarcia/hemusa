@@ -1200,101 +1200,124 @@
 			    console.log('Status:', this.status);
 		    	console.log('Headers:', this.getAllResponseHeaders());
 		    	console.log('Body:', this.responseText);
-		    	var data = JSON.parse(this.responseText);
-			    if (data.status == "error"){
+					if (this.status == 0){
+						$(".texto1").fadeOut(300, function(){
+							$(this).html("");
+							$(this).fadeIn(300);
+						});
+						setTimeout(function () {
+							$(".texto1").append("<div class='text-danger'><span class='modal-main-icon mdi mdi-close-circle-o'></span></div>");
+							$(".texto1").append("<h3>Error!</h3>");
+							$(".texto1").append("<h4>Ocurrió un problema al conectar a  portal 'Factura.com'.</h4>");
+							}, 425);
+						}
+						setTimeout( function () {
+							$("#mod-success").modal("hide");
+							$(".texto1").html("");
+							$(".texto1").append("<br><br>");
+							$(".texto1").append("<h3>Espere un momento...</h3>");
+							$(".texto1").append("<h4>Se está generando la factura</h4>");
+							$(".texto1").append("<br>");
+							$(".texto1").append("<div class='text-center'><div class='be-spinner'><svg width='40px' height='40px' viewBox='0 0 66 66' xmlns='http://www.w3.org/2000/svg'><circle fill='none' stroke-width='4' stroke-linecap='round' cx='33' cy='33' r='30' class='circle'></circle></svg></div></div></div>");
+							$(".texto1").append("<br>");
+							$(".texto1").append("<br>");
+						}, 5000);
+					}else{
+						var data = JSON.parse(this.responseText);
+						if (data.status == "error"){
 							$(".texto1").fadeOut(300, function(){
 								$(this).html("");
 								$(this).fadeIn(300);
 							});
-						setTimeout(function () {
-							$(".texto1").append("<div class='text-warning'><span class='modal-main-icon mdi mdi-alert-triangle'></span></div>");
-							$(".texto1").append("<h3>Aviso!</h3>");
-							$(".texto1").append("<h4>El cliente no esta registrado en portal 'Factura.com'</h4>");
-							$(".texto1").append("<div class='text-center'>");
-							$(".texto1").append("<p>Registrarlo a continuación para poder facturar.</p>");
-							$(".texto1").append("</div>");
-						}, 425);
-						buscarDatosCliente(RFC);
-			    }else{
-						var request = new XMLHttpRequest();
+							setTimeout(function () {
+								$(".texto1").append("<div class='text-warning'><span class='modal-main-icon mdi mdi-alert-triangle'></span></div>");
+								$(".texto1").append("<h3>Aviso!</h3>");
+								$(".texto1").append("<h4>El cliente no esta registrado en portal 'Factura.com'</h4>");
+								$(".texto1").append("<div class='text-center'>");
+								$(".texto1").append("<p>Registrarlo a continuación para poder facturar.</p>");
+								$(".texto1").append("</div>");
+							}, 425);
+							buscarDatosCliente(RFC);
+						}else{
+							var request = new XMLHttpRequest();
 
-						request.open('POST', apiConfig.enlace+'api/v3/cfdi33/create');
-						request.setRequestHeader('Content-Type', 'application/json');
-						request.setRequestHeader('F-API-KEY', apiConfig.apiKey);
-						request.setRequestHeader('F-SECRET-KEY', apiConfig.secretKey);
+							request.open('POST', apiConfig.enlace+'api/v3/cfdi33/create');
+							request.setRequestHeader('Content-Type', 'application/json');
+							request.setRequestHeader('F-API-KEY', apiConfig.apiKey);
+							request.setRequestHeader('F-SECRET-KEY', apiConfig.secretKey);
 
-						request.onreadystatechange = function () {
-							if (this.readyState === 4) {
-								console.log('Status:', this.status);
-						    console.log('Headers:', this.getAllResponseHeaders());
-						    console.log('Body:', this.responseText);
-						    var data = JSON.parse(this.responseText);
-						    if (data.response == "error" && typeof data.message.message != "undefined") {
-									$("#mod-success").modal("hide");
-									$.gritter.add({
-					        	title: 'Error!',
-					        	text: data.message.message+'<br>'+data.message.messageDetail,
-					        	class_name: 'color danger'
-					      	});
-								}else if (data.response == "error" && typeof data.message != "undefined") {
-									$("#mod-success").modal("hide");
-									$.gritter.add({
-										title: 'Aviso!',
-										text: data.message,
-										class_name: 'color warning'
-									});
-						    }else{
-									$(".texto1").fadeOut(300, function(){
-										$(this).html("");
-										$(this).fadeIn(300);
-									});
-									setTimeout(function () {
-										$(".texto1").append("<div class='text-success'><span class='modal-main-icon mdi mdi-check-circle'></span></div>");
-										$(".texto1").append("<h3>Correcto!</h3>");
-										$(".texto1").append("<h4>La factura se generó correctamente en el portal 'Factura.com'.</h4>");
-										$(".texto1").append("<div class='text-center'>");
-										$(".texto1").append("<p>En un momento se descargará el archivo PDF.</p>");
-										$(".texto1").append("</div>");
-									}, 425);
-									guardarFactura(numeroPedido);
-					 			}
-							}
-						};
-
-						var opcion = "buscarpartidasfacturar";
-						$.ajax({
-							method: "POST",
-							url: "buscar.php",
-							dataType: "json",
-							data: {"opcion": opcion, "numeroPedido": numeroPedido, "refCotizacion": refCotizacion}
-						}).done( function( conceptos ){
-								console.log(conceptos);
-								var fecha = "<?php echo date("Y-m-d")."T".date("H:i:s"); ?>";
-								var body = {
-							    'Receptor': {
-							        'UID': data.Data.UID,
-							        'ResidenciaFiscal': '',
-							    },
-							    'TipoDocumento':'factura',
-							    'Conceptos': conceptos.data,
-							    'UsoCFDI': conceptos.cfdi,
-							    'Serie':'1194',
-							    'FormaPago': conceptos.formapago,
-							    'MetodoPago': conceptos.metodopago,
-							    'CondicionesDePago': conceptos.condpago,
-							    'Moneda': conceptos.moneda,
-							    'TipoCambio': conceptos.tipocambio,
-							    'NumOrder': numeroPedido,
-							    'FechaFromAPI': fecha,
-							    // 'Comentarios': 'Comentarios para agregar a la factura PDF',
-							    'EnviarCorreo': false
+							request.onreadystatechange = function () {
+								if (this.readyState === 4) {
+									console.log('Status:', this.status);
+									console.log('Headers:', this.getAllResponseHeaders());
+									console.log('Body:', this.responseText);
+									var data = JSON.parse(this.responseText);
+									if (data.response == "error" && typeof data.message.message != "undefined") {
+										$("#mod-success").modal("hide");
+										$.gritter.add({
+											title: 'Error!',
+											text: data.message.message+'<br>'+data.message.messageDetail,
+											class_name: 'color danger'
+										});
+									}else if (data.response == "error" && typeof data.message != "undefined") {
+										$("#mod-success").modal("hide");
+										$.gritter.add({
+											title: 'Aviso!',
+											text: data.message,
+											class_name: 'color warning'
+										});
+									}else{
+										$(".texto1").fadeOut(300, function(){
+											$(this).html("");
+											$(this).fadeIn(300);
+										});
+										setTimeout(function () {
+											$(".texto1").append("<div class='text-success'><span class='modal-main-icon mdi mdi-check-circle'></span></div>");
+											$(".texto1").append("<h3>Correcto!</h3>");
+											$(".texto1").append("<h4>La factura se generó correctamente en el portal 'Factura.com'.</h4>");
+											$(".texto1").append("<div class='text-center'>");
+												$(".texto1").append("<p>En un momento se descargará el archivo PDF.</p>");
+												$(".texto1").append("</div>");
+											}, 425);
+											guardarFactura(numeroPedido);
+										}
+									}
 								};
-								console.log(JSON.stringify(body));
-								request.send(JSON.stringify(body));
-						});
+
+								var opcion = "buscarpartidasfacturar";
+								$.ajax({
+									method: "POST",
+									url: "buscar.php",
+									dataType: "json",
+									data: {"opcion": opcion, "numeroPedido": numeroPedido, "refCotizacion": refCotizacion}
+								}).done( function( conceptos ){
+									console.log(conceptos);
+									var fecha = "<?php echo date("Y-m-d")."T".date("H:i:s"); ?>";
+									var body = {
+										'Receptor': {
+											'UID': data.Data.UID,
+											'ResidenciaFiscal': '',
+										},
+										'TipoDocumento':'factura',
+										'Conceptos': conceptos.data,
+										'UsoCFDI': conceptos.cfdi,
+										'Serie':'1194',
+										'FormaPago': conceptos.formapago,
+										'MetodoPago': conceptos.metodopago,
+										'CondicionesDePago': conceptos.condpago,
+										'Moneda': conceptos.moneda,
+										'TipoCambio': conceptos.tipocambio,
+										'NumOrder': numeroPedido,
+										'FechaFromAPI': fecha,
+										// 'Comentarios': 'Comentarios para agregar a la factura PDF',
+										'EnviarCorreo': false
+									};
+									console.log(JSON.stringify(body));
+									request.send(JSON.stringify(body));
+								});
+							}
 					}
 				}
-			};
 			request.send();
 		}
 
