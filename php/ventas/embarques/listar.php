@@ -82,6 +82,13 @@
     $resultado = mysqli_query($conexion_usuarios, $query);
     while($data = mysqli_fetch_assoc($resultado)){
       $arreglo['embarque'] = $data;
+      $idcliente = $data['cliente'];
+    }
+
+    $query = "SELECT * FROM contactos WHERE id = '$idcliente'";
+    $resultado = mysqli_query($conexion_usuarios, $query);
+    while($data = mysqli_fetch_assoc($resultado)){
+      $arreglo['cliente'] = $data;
     }
 
     echo json_encode($arreglo, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_PARTIAL_OUTPUT_ON_ERROR);

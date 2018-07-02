@@ -188,19 +188,18 @@
     			doc.setFontSize(15);
     			doc.setFontStyle('bold');
     			doc.text("Lista de Embarque", 375, 35);
-	        doc.addImage(imgLogo, 'JPEG', 30, 30, 125, 65);
-	        // doc.setFontSize(8);
-	        // doc.setFontStyle('bold');
-	        // doc.text("HERRAMIENTAS MECANICAS", 18, 35);
-    			// doc.text("UNIVERSALES S.A. DE C.V.", 20, 39);
-    			// doc.setFontStyle('normal');
-    			// doc.setLineWidth(0.1)
-    			// doc.line(9, 43, 70, 43)
-    			// doc.setFontSize(7);
-    	    // doc.text("RUPERTO MARTINEZ 831 pte Centro. C.P. 64000", 11, 48)
-    			// doc.text("Monterrey, Nuevo Leon, R.F.C HMU810909370", 13, 52)
-    	    // doc.text("Tel: (81) 8345 3811 email: ventas@hemusa.com", 12, 56)
-    			// doc.setFontSize(8);
+	        doc.addImage(imgLogo, 'JPEG', 30, 40, 140, 55);
+	        doc.setFontSize(8);
+          doc.setFontStyle('bold');
+	        doc.text("HERRAMIENTAS MECANICAS", 38, 108);
+    			doc.text("UNIVERSALES S.A. DE C.V.", 42, 119);
+    			doc.setFontStyle('normal');
+    			doc.setLineWidth(0.1)
+    			doc.line(35, 124, 160, 124)
+    			doc.setFontSize(7);
+    	    doc.text("RUPERTO MARTINEZ 831 pte Centro. C.P. 64000", 17, 135)
+    			doc.text("Monterrey, Nuevo Leon, R.F.C HMU810909370", 22, 145)
+    	    doc.text("Tel: (81) 8345 3811 email: ventas@hemusa.com", 20, 155)
     			var columns2 = ["Folio"];
     			var rows2 = [
     				[data.embarque.folio_embarque]
@@ -209,49 +208,79 @@
     			var rows3 = [
     				[data.embarque.fecha_embarque]
     			];
-    			// var columns4 = ["Vendido"];
-    			// var rows4 = [
-    			// 	[],
-    			// 	[],
-    			// 	[],
-    			// 	[]
-    			// ];
-    			// var columns5 = ["Consignado"];
-    			// var rows5 = [
-    			// 	[],
-    			// 	[],
-    			// 	[],
-    			// 	[]
-    			// ];
+    			var columns4 = ["Vendido a:"];
+    			var rows4 = [
+    				[],
+    				[],
+    				[],
+    				[]
+    			];
+    			var columns5 = ["Consignado a:"];
+    			var rows5 = [
+    				[],
+    				[],
+    				[],
+    				[]
+    			];
 
-			     doc.autoTable(columns2, rows2, {
-	            theme: 'grid',
-	             margin: {top: 50, right: 20, bottom: 10, left: 725},
-	          tableWidth: 'auto',
-	          styles: {overflow: 'linebreak', cellPadding: 6, fontSize: 8, rowHeight: 15, pageBreak: 'always', columnWidth: 'auto', halign: 'center'},
-	           });
-			     doc.autoTable(columns3, rows3, {
-	          	theme: 'grid',
-	        	  margin: {top: 94, right: 20, bottom: 20, left: 725},
-	          	tableWidth: 'auto',
-	          	styles: {overflow: 'linebreak', cellPadding: 6, fontSize: 8, rowHeight: 15, pageBreak: 'always', columnWidth: 'auto', halign: 'center'},
+			    doc.autoTable(columns2, rows2, {
+             theme: 'grid',
+             margin: {top: 61, right: 40, bottom: 10, left: 725},
+             tableWidth: 'auto',
+             styles: {overflow: 'linebreak', cellPadding: 6, fontSize: 8, rowHeight: 15, pageBreak: 'always', columnWidth: 'auto', halign: 'center'},
 	        });
-			// doc.autoTable(columns4, rows4, {
-	    //       	theme: 'grid',
-	    //     	margin: {top: 25, left: 80, right: 140, bottom: 20},
-	    //       	tableWidth: 'auto',
-	    //       	styles: {overflow: 'linebreak', cellPadding: 6, fontSize: 8, rowHeight: 15, pageBreak: 'always', columnWidth: 'auto'},
-	    //     });
-			// doc.autoTable(columns5, rows5, {
-	    //       	theme: 'grid',
-			// 	  margin: {top: 25, left: 160, right: 60, bottom: 20},
-	    //       	tableWidth: 'auto',
-	    //       	styles: {overflow: 'linebreak', cellPadding: 6, fontSize: 8, rowHeight: 15, pageBreak: 'always', columnWidth: 'auto'},
-	    //     });
-
+			    doc.autoTable(columns3, rows3, {
+          	theme: 'grid',
+            margin: {top: 104, right: 40, bottom: 20, left: 725},
+          	tableWidth: 'auto',
+          	styles: {overflow: 'linebreak', cellPadding: 6, fontSize: 8, rowHeight: 15, pageBreak: 'always', columnWidth: 'auto', halign: 'center'},
+	        });
+			    doc.autoTable(columns4, rows4, {
+          	theme: 'striped',
+        	  margin: {top: 50, left: 200, right: 400, bottom: 10},
+          	tableWidth: 'auto',
+          	styles: {overflow: 'linebreak', cellPadding: 6, fontSize: 8, rowHeight: 15, pageBreak: 'always', columnWidth: 'auto'},
+	        });
+          doc.setFontSize(11);
+          doc.setFontStyle('bold');
+          doc.text((data.cliente.nombreEmpresa).toUpperCase(), 205,85);
+          doc.setFontSize(10);
+          doc.setFontStyle('normal');
+          doc.text((data.cliente.calle).toUpperCase()+" # "+(data.cliente.NumExt).toUpperCase(), 205,100);
+          doc.text((data.cliente.colonia).toUpperCase(), 205,115);
+          doc.text((data.cliente.estado).toUpperCase()+" , "+(data.cliente.ciudad).toUpperCase()+" C.P:"+(data.cliente.cp).toUpperCase(), 205,130);
+          doc.setLineWidth(0.8)
+          doc.setDrawColor(0,0,0);
+          doc.line(200, 157, 441, 157);
+          doc.line(199.2, 70, 199.2, 157);
+          doc.line(441, 70, 441, 157);
+			    doc.autoTable(columns5, rows5, {
+	          	theme: 'striped',
+				      margin: {top: 50, left: 450, right: 150, bottom: 10},
+	          	tableWidth: 'auto',
+	          	styles: {overflow: 'linebreak', cellPadding: 6, fontSize: 8, rowHeight: 15, pageBreak: 'always', columnWidth: 'auto'},
+	        });
+          doc.setFontSize(9);
+          doc.text("Teléfono: ", 205,145);
+          doc.setFontSize(9);
+          if(data.cliente.tfl2 != ""){
+            doc.text((data.cliente.tlf1)+" / "+(data.cliente.tlf2), 250,145);
+          }else{
+            doc.text((data.cliente.tlf1), 250,145);
+          }
+          doc.setFontSize(10);
+          doc.setFontStyle('normal');
+          doc.text((data.cliente.calle).toUpperCase()+" # "+(data.cliente.NumExt).toUpperCase(), 455,85);
+          doc.text((data.cliente.colonia).toUpperCase(), 455,100);
+          doc.text((data.cliente.estado).toUpperCase()+" , "+(data.cliente.ciudad).toUpperCase()+" C.P:"+(data.cliente.cp).toUpperCase(), 455,115);
+          doc.setLineWidth(0.8)
+          doc.setDrawColor(0,0,0);
+          doc.line(450, 157, 692, 157);
+          doc.line(450, 70, 450, 157);
+          doc.line(691, 70, 691, 157);
 	        doc.autoTable(columns, rows, {
           	theme: 'grid',
-        	  margin: {top: 200, right: 20, bottom: 20, left: 20},
+        	  margin: {top: 180, right: 20, bottom: 20, left: 20},
           	tableWidth: 'auto',
           	styles: {overflow: 'linebreak', cellPadding: 6, fontSize: 8, rowHeight: 15, pageBreak: 'always', columnWidth: 'auto'},
             columnStyles: {
