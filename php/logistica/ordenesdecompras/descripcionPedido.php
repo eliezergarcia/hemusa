@@ -247,6 +247,38 @@
           {"defaultContent":'<div class="invoice-footer"><button class="editar btn btn-lg btn-primary" data-toggle="modal" data-target="#modalEditarPartida"><i class="fas fa-edit fa-sm" aria-hidden="true"></i></button></div>'},
           {"defaultContent":'<div class="invoice-footer"><button class="duplicar btn btn-lg btn-primary">Duplicar</button></div>'}
         ],
+        "createdRow": function ( row, data, index ) {
+          if ( data.proveedor || data.proveedor == "") {
+            $('td', row).eq(8).addClass('table-text-proveedor');
+          }
+          if ( data.cliente || data.cliente == "") {
+            $('td', row).eq(10).addClass('table-text-cliente');
+          }
+          if ( data.pedido || data.pedido == "") {
+            $('td', row).eq(11).addClass('table-text-pedido');
+          }
+          if ( data.facturap || data.facturap == "") {
+            $('td', row).eq(18).addClass('table-text-facturap');
+          }
+          if ( data.facturah || data.facturah == "") {
+            $('td', row).eq(19).addClass('table-text-facturah');
+          }
+          if ( data.remision || data.remision == "") {
+            $('td', row).eq(20).addClass('table-text-remision');
+          }
+          if ( data.totalventamxn || data.totalventamxn == "") {
+            $('td', row).eq(23).addClass('table-text-totalventamxn');
+          }
+          if ( data.totalventausd || data.totalventausd == "") {
+            $('td', row).eq(24).addClass('table-text-totalventausd');
+          }
+          if ( data.folio || data.folio == "") {
+            $('td', row).eq(27).addClass('table-text-folio');
+          }
+          if ( data.pedimento || data.pedimento == "") {
+            $('td', row).eq(28).addClass('table-text-pedimento');
+          }
+        },
         "order":[[3, "desc"]],
         // "searching": false,
         "info": false,
@@ -257,7 +289,31 @@
           "<'row be-datatable-header'<'col-sm-6'B><'col-sm-6 text-right'f>>" +
           "<'row be-datatable-body'<'col-sm-12'tr>>" +
           "<'row be-datatable-footer'<'col-sm-5'i><'col-sm-7'p>>",
+
         "buttons": [
+          {
+            extend: 'collection',
+            text: '<i class="fas fa-table fa-sm"></i> Exportar tabla',
+            "className": "btn btn-lg btn-space btn-secondary",
+            buttons: [
+                {
+                  extend:    'excelHtml5',
+                  text:      '<i class="fas fa-file-excel fa-lg"></i> Excel Nacional',
+                  // "className": "btn btn-lg btn-space btn-secondary",
+                  exportOptions: {
+                    columns: [ 1, 2, 3, 4, 5, 6, 7, 8, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 27  ]
+                  }
+                },
+                {
+                  extend: 'csv',
+                  text: '<i class="fas fa-file-alt fa-lg"></i> Excel Importacion',
+                  // "className": "btn btn-lg btn-space btn-secondary",
+                  exportOptions: {
+                          columns: [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 27, 28]
+                  }
+                },
+            ]
+          },
           {
             text: 'Actualizar datos',
             "className": "btn btn-success btn-lg",

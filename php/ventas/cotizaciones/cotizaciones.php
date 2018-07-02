@@ -306,47 +306,47 @@
           			"<'row be-datatable-footer'<'col-sm-5'i><'col-sm-7'p>>",
 				"buttons":[
 					{
-			            extend: 'collection',
-			            text: '<i class="fas fa-table fa-sm"></i> Exportar tabla',
-			            "className": "btn btn-lg btn-space btn-secondary",
-			            buttons: [
-			                {
-			                  extend:    'excelHtml5',
-			                  text:      '<i class="fas fa-file-excel fa-lg"></i> Excel',
-			                  // "className": "btn btn-lg btn-space btn-secondary",
-			                  exportOptions: {
-			                    columns: [ 0, 1, 2, 3, 4, 5, 6 ]
-			                  }
-			                },
-			                {
-			                  extend: 'csv',
-			                  text: '<i class="fas fa-file-alt fa-lg"></i> Csv',
-			                  // "className": "btn btn-lg btn-space btn-secondary",
-			                  exportOptions: {
-			                          columns: [ 0, 1, 2, 3, 4, 5, 6 ]
-			                  }
-			                },
-			                {
-			                  extend:    'pdfHtml5',
-			                  text:      '<i class="fas fa-file-pdf fa-lg"></i> Pdf',
-			                  download: 'open',
-			                  // "className": "btn btn-lg btn-space btn-secondary",
-			                  exportOptions: {
-			                    columns: [ 0, 1, 2, 3, 4, 5, 6 ]
-			                  }
-			                },
-			                {
-			                  extend: 'print',
-			                  text: '<i class="fas fa-print fa-lg"></i> Imprimir',
-			                  header: 'false',
-			                  exportOptions: {
-			                          columns: [ 0, 1, 2, 3, 4, 5, 6 ]
-			                  },
-			                  orientation: 'landscape',
-			                  pageSize: 'LEGAL'
-			                }
-			            ]
-			          },
+            extend: 'collection',
+            text: '<i class="fas fa-table fa-sm"></i> Exportar tabla',
+            "className": "btn btn-lg btn-space btn-secondary",
+            buttons: [
+                {
+                  extend:    'excelHtml5',
+                  text:      '<i class="fas fa-file-excel fa-lg"></i> Excel',
+                  // "className": "btn btn-lg btn-space btn-secondary",
+                  exportOptions: {
+                    columns: [ 0, 1, 2, 3, 4, 5, 6 ]
+                  }
+                },
+                {
+                  extend: 'csv',
+                  text: '<i class="fas fa-file-alt fa-lg"></i> Csv',
+                  // "className": "btn btn-lg btn-space btn-secondary",
+                  exportOptions: {
+                          columns: [ 0, 1, 2, 3, 4, 5, 6 ]
+                  }
+                },
+                {
+                  extend:    'pdfHtml5',
+                  text:      '<i class="fas fa-file-pdf fa-lg"></i> Pdf',
+                  download: 'open',
+                  // "className": "btn btn-lg btn-space btn-secondary",
+                  exportOptions: {
+                    columns: [ 0, 1, 2, 3, 4, 5, 6 ]
+                  }
+                },
+                {
+                  extend: 'print',
+                  text: '<i class="fas fa-print fa-lg"></i> Imprimir',
+                  header: 'false',
+                  exportOptions: {
+                          columns: [ 0, 1, 2, 3, 4, 5, 6 ]
+                  },
+                  orientation: 'landscape',
+                  pageSize: 'LEGAL'
+                }
+            ]
+          },
 					{
 						text: '<i class="fas fa-file-alt fa-sm" aria-hidden="true"></i> Agregar cotización',
 						"className": "btn btn-lg btn-space btn-secondary",
