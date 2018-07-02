@@ -189,7 +189,10 @@
 							'pedido' => $pedido,
 							'orden' => $data['noDePedido'],
 							'enviado' => $enviado,
-							'recibido' => $recibido
+							'recibido' => $recibido,
+							'remision' => $data['remision'],
+							'pedido' => $data['NoPedClient'],
+							'cotizacion' => $data['cotizacionRef']
 						);
 					$i++;
 				}

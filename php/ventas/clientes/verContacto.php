@@ -90,6 +90,7 @@
 												<th>Orden de compra</th>
 												<th>Enviado</th>
 												<th>Recibido</th>
+												<th></th>
 											</tr>
 										</thead>
 									</table>
@@ -732,23 +733,24 @@
 			var opcion = "sinentregar";
 			var buscar = $("#buscar").val();
 			var table = $("#dt_listar_sinentregar").DataTable({
-		        "destroy":"true",
-		        "ajax":{
-		          "method":"POST",
-		          "url":"listar.php" ,
-		          "data": {"idcliente": idcliente, "opcion": opcion, "buscar": buscar},
-		        },
-		        "columns":[
-		          {"data": "indice"},
-		          {"data": "marca"},
-		          {"data": "modelo"},
-		          {"data": "descripcion"},
-		          {"data": "cantidad"},
+      "destroy":"true",
+      "ajax":{
+        "method":"POST",
+        "url":"listar.php" ,
+        "data": {"idcliente": idcliente, "opcion": opcion, "buscar": buscar},
+      },
+      "columns":[
+          {"data": "indice"},
+          {"data": "marca"},
+          {"data": "modelo"},
+          {"data": "descripcion"},
+          {"data": "cantidad"},
 				  {"data": "precioUnitario"},
 				  {"data": "pedido"},
 				  {"data": "orden"},
 				  {"data": "enviado"},
-				  {"data": "recibido"}
+				  {"data": "recibido"},
+					{"defaultContent": "<div class='invoice-footer'><button class='verherramienta btn btn-lg btn-primary'><i class='fas fa-edit fa-sm' aria-hidden='true'></i></button></div>"}
 		        ],
 		        "language": idioma_espanol,
 				"dom":
@@ -800,6 +802,7 @@
 			        },
 				]
 		    });
+				obtener_data_ver_herramienta("#dt_listar_sinentregar tbody", table);
 		}
 
 		var listar_facturadonoentregado = function(){
@@ -1068,6 +1071,22 @@
 				var data = table.row( $(this).parents("tr") ).data();
 				var remision = data.remision;
 				window.location.href = "../remisiones/verRemision.php?remision="+remision;
+			});
+		}
+
+		var obtener_data_ver_herramienta = function(tbody, table){ // se obtiene el id del usuario para eliminar del DT Usuarios
+			$(tbody).on("click", "button.verherramienta", function(){
+				var data = table.row( $(this).parents("tr") ).data();
+				console.log(data);
+				var cotizacion = data.cotizacion;
+				var remision = data.remision;
+				var pedido = data.pedido;
+
+				if(remision == 0 || remision == ""){
+					window.location.href = "../pedidos/verPedido.php?refCotizacion="+cotizacion+"&numeroPedido="+pedido;
+				}else{
+					window.location.href = "../remisiones/verRemision.php?remision="+remision;
+				}
 			});
 		}
 
