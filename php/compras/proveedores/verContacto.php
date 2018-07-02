@@ -8,7 +8,7 @@
 	$query = "SELECT * FROM contactos WHERE id ='".$idContacto."'";
 	$resultado = mysqli_query($conexion_usuarios, $query);
 	while($row = mysqli_fetch_array($resultado)){
-		$nombreContacto = $row['nombreEmpresa'];
+		$nombreContacto = utf8_encode($row['nombreEmpresa']);
 		$tipo = $row['tipo'];
 	}
 ?>

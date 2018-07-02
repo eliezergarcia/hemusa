@@ -317,7 +317,7 @@
 				$proveedor = strtoupper($data['nombreEmpresa']);
 			}
 
-			$query = "SELECT ordendecompras.*, usuarios.nombre FROM ordendecompras INNER JOIN usuarios ON usuarios.id = ordendecompras.contacto WHERE (noDePedido LIKE '%$buscar%' OR fecha LIKE '%$buscar%' OR nombre LIKE '%$buscar%') AND proveedor = '$idproveedor' ORDER BY fecha DESC";
+			$query = "SELECT ordendecompras.*, usuarios.nombre FROM ordendecompras INNER JOIN usuarios ON usuarios.id = ordendecompras.contacto WHERE (noDePedido LIKE '%$buscar%' OR fecha LIKE '%$buscar%' OR nombre LIKE '%$buscar%') AND proveedor = '$idproveedor' ORDER BY id DESC";
 			$resultado = mysqli_query($conexion_usuarios, $query);
 			$arreglo = array();
 

@@ -53,7 +53,7 @@
                           <h2><b>ORDEN DE COMPRA # <?php echo $_REQUEST['ordenCompra']; ?></b></h2>
                         </div>
                         <div class="row col justify-content-end">
-                          <h3><b>Fecha: </b><?php echo $fechaoc; ?></h3>
+                          <h3><b>Fecha: </b><?php echo date("d/m/Y", strtotime($fechaoc)); ?></h3>
                         </div>
 
                         <!-- Encabezado -->
