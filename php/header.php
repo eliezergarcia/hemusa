@@ -27,13 +27,13 @@
 	                <div class="user-name"><?php echo $usuario." ".$usuarioApellido; ?></div>
 	                <div class="user-position online">Disponible</div>
 	              </div>
-	              	<a href="<?php echo $ruta;?>php/inicio/perfil/perfil.php" class="dropdown-item"><span class="icon mdi mdi-face"></span> Cuenta</a>
-	              	<a href="<?php echo $ruta;?>php/inicio/configuracion/configuracion.php" class="dropdown-item"><span class="icon mdi mdi-settings"></span> Configuración</a>
+	              	<!-- <a href="<?php echo $ruta;?>php/inicio/perfil/perfil.php" class="dropdown-item"><span class="icon mdi mdi-face"></span> Cuenta</a> -->
+	              	<!-- <a href="<?php echo $ruta;?>php/inicio/configuracion/configuracion.php" class="dropdown-item"><span class="icon mdi mdi-settings"></span> Configuración</a> -->
 	              	<a href="../../../index.php" class="dropdown-item"><span class="icon mdi mdi-power"></span> Cerrar sesión</a>
 	            </div>
 	          </li>
 	        </ul>
-	        <ul class="nav navbar-nav float-right be-icons-nav">
+	        <!-- <ul class="nav navbar-nav float-right be-icons-nav">
 	          <li class="nav-item dropdown">
 							<a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle">
 								<span class="icon mdi mdi-notifications"></span>
@@ -72,7 +72,7 @@
 	              </li>
 	            </ul>
 	          </li>
-	           <li class="nav-item dropdown"><a href="#" role="button" aria-expanded="false" class="nav-link be-toggle-right-sidebar"><span id='listar-contactos-chat' class="icon mdi mdi-comments"></span></a></li>
+	          <li class="nav-item dropdown"><a href="#" role="button" aria-expanded="false" class="nav-link be-toggle-right-sidebar"><span id='listar-contactos-chat' class="icon mdi mdi-comments"></span></a></li>
 	          <li class="nav-item dropdown"><a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle"><span class="icon mdi mdi-apps"></span></a>
 	            <ul class="dropdown-menu be-connections">
 	              <li>
@@ -94,7 +94,7 @@
 	              </li>
 	            </ul>
 	          </li>
-	        </ul>
+	        </ul> -->
 	      </div>
 	    </div>
 	</nav>
@@ -164,8 +164,8 @@
                     </ul>
                   </li>
 	              <li class="divider">Features</li>
-	              <li><a href="#"><i class="icon fas fa-envelope"></i><span>Email</span></a></li>
-								<li><a href="#"><i class="icon fas fa-images"></i><span>Galería</span></a></li>
+	              <li><a href="#"><i class="icon fas fa-envelope"></i><span>Email</span><span class="badge badge-primary float-right">BETA</span></a></li>
+								<li><a href="#"><i class="icon fas fa-images"></i><span>Galería</span><span class="badge badge-primary float-right">BETA</span></a></li>
 	            </ul>
 	          </div>
 	        </div>
