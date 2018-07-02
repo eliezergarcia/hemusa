@@ -1259,6 +1259,7 @@
 											text: data.message.message+'<br>'+data.message.messageDetail,
 											class_name: 'color danger'
 										});
+										quitarStock(numeroPedido, refCotizacion);
 									}else if (data.response == "error" && typeof data.message != "undefined") {
 										$("#mod-success").modal("hide");
 										$.gritter.add({
@@ -1266,6 +1267,7 @@
 											text: data.message,
 											class_name: 'color warning'
 										});
+										quitarStock(numeroPedido, refCotizacion);
 									}else{
 										$(".texto1").fadeOut(300, function(){
 											$(this).html("");
@@ -1278,8 +1280,8 @@
 											$(".texto1").append("<div class='text-center'>");
 												$(".texto1").append("<p>En un momento se descargará el archivo PDF.</p>");
 												$(".texto1").append("</div>");
-											}, 425);
-											guardarFactura(numeroPedido);
+											}, 2500);
+											guardarFactura(numeroPedido, refCotizacion);
 										}
 									}
 								};
@@ -1357,7 +1359,7 @@
 			});
 		}
 
-		function guardarFactura(numeroPedido) {
+		function guardarFactura(numeroPedido, refCotizacion) {
 			var request = new XMLHttpRequest();
 
 			request.open('GET', apiConfig.enlace+'api/v3/cfdi33/list');
@@ -1391,12 +1393,26 @@
 								mostrar_mensaje(data);
 							});
 
+							quitarStock(numeroPedido, refCotizacion);
+							buscardatos(refCotizacion, numeroPedido);
 							descargarPDF(UID);
 						}
 					}
 				}
 			};
 			request.send();
+		}
+
+		function quitarStock(numeroPedido, refCotizacion){
+			$.ajax({
+				method: "POST",
+				url: "guardar.php",
+				dataType: "json",
+				data: {"opcion": opcion = "quitarstock", "numeroPedido": numeroPedido, "refCotizacion": refCotizacion},
+			}).done( function( data ){
+				console.log(data);
+				mostrar_mensaje(data);
+			});
 		}
 
 		function descargarPDF (UID) {

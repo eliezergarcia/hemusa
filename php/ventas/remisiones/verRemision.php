@@ -546,8 +546,6 @@
     	App.uiNotifications();
 			var remision = "<?php echo $_REQUEST['remision']; ?>";
 			buscardatos(remision);
-			// $('.collapse').collapse('show');
-			// setTimeout(cerrarcollapse, 3000);
 			cambiarnumeroguia(remision);
 			cambiarpaqueteria(remision);
 			cambiarproveedorgeneral(remision);
@@ -556,11 +554,8 @@
 			cambiarmetodopago(remision);
 			cambiarusocfdi(remision);
 			editarPartida(remision);
-			// buscar_oc_pendientes();
-			// setInterval(buscar_oc_pendientes, 3000);
 			agregarHerramienta(remision);
 			packinglist();
-			// agregarDevolucion(refCotizacion, numeroPedido);
 		});
 
 		function buscardatos(remision){

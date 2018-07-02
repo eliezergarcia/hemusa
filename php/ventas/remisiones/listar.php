@@ -68,8 +68,8 @@
 		$query = "SELECT * FROM cotizacionherramientas WHERE remision ='$remision'";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 
-		if(!$resultado){
-			die('Error al buscar partidas! 2');
+		if(mysqli_num_rows($resultado) < 1){
+			$arreglo['data'] = 0;
 		}else{
 			$i=1;
 			while($data = mysqli_fetch_assoc($resultado)){

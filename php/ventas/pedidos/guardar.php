@@ -85,6 +85,12 @@
 			guardar_factura($folio, $ordenpedido, $total, $status, $fecha, $cliente, $conexion_usuarios);
 			break;
 
+		case 'quitarstock':
+			$numeroPedido = $_POST['numeroPedido'];
+			$refCotizacion = $_POST['refCotizacion'];
+			quitar_stock($numeroPedido, $refCotizacion, $conexion_usuarios);
+			break;
+
 		case 'packinglist':
 			$data = json_decode($_POST['herramienta']);
 			packinglist($data, $conexion_usuarios);
@@ -94,6 +100,46 @@
 			$data = json_decode($_POST['herramienta']);
 			entregado($data, $conexion_usuarios);
 			break;
+	}
+
+	function quitar_stock($numeroPedido, $refCotizacion, $conexion_usuarios){
+		$query = "SELECT * FROM cotizacionherramientas WHERE cotizacionRef = '$refCotizacion'";
+		$resultado = mysqli_query($conexion_usuarios, $query);
+
+		$fecha = date("Y-m-d");
+		while($data = mysqli_fetch_assoc($resultado)){
+			$id = $data['id'];
+			$marca = $data['marca'];
+			$modelo = $data['modelo'];
+			$cantidadquitar = $data['cantidad'];
+			$entregado = $data['Entregado'];
+
+			if ($entregado == "0000-00-00") {
+				$query2 = "UPDATE cotizacionherramientas SET Entregado='$fecha' WHERE id = '$id'";
+				$resultado2 = mysqli_query($conexion_usuarios, $query2);
+
+				$query3 = "SELECT enReserva FROM productos WHERE marca = '$marca' AND ref = '$modelo'";
+				$resultado3 = mysqli_query($conexion_usuarios, $query3);
+				while($data2 = mysqli_fetch_assoc($resultado3)){
+					$cantidad = $data2['enReserva'];
+				}
+
+				$cantidadstock = $cantidad - $cantidadquitar;
+
+				$query4 = "UPDATE productos SET enReserva = '$cantidadstock' WHERE marca = '$marca' AND ref = '$modelo'";
+				$resultado4 = mysqli_query($conexion_usuarios, $query4);
+			}
+		}
+
+		if (!$resultado) {
+			$informacion["respuesta"] = "ERROR";
+			$informacion["informacion"] = "Ocurrió un problema al intentar modificar el estado y el stock de la herramienta!";
+		}else{
+			$informacion["respuesta"] = "BIEN";
+			$informacion["informacion"] = "El estado se cambio a 'Entregado' y se quitó del stock correctamente!";
+		}
+		echo json_encode($informacion);
+		mysqli_close($conexion_usuarios);
 	}
 
 	function cambiar_moneda($refCotizacion, $numeroPedido, $conexion_usuarios){
