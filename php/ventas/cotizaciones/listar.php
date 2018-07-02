@@ -91,7 +91,7 @@
 					'numero' => $i,
 					'marca' => $data['marca'],
 					'modelo' => $modelo,
-					'descripcion' => $data['descripcion'],
+					'descripcion' => utf8_encode($data['descripcion']),
 					'precioUnitario' => round($precioUnitario,2),
 					'cantidad' => $data['cantidad'],
 					'precioTotal' =>'$ '.number_format($precioTotal, 2, '.', ''),
