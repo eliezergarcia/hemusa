@@ -7,6 +7,11 @@
 			embarques($conexion_usuarios);
       break;
 
+    case 'partidasembarque':
+      $idcliente = $_POST['idcliente'];
+			partidas_embarque($idcliente, $conexion_usuarios);
+      break;
+
     case 'imprimirembarque':
       $folio = $_POST['folio'];
 			imprimir_embarque($folio, $conexion_usuarios);
@@ -120,6 +125,30 @@
     $resultado = mysqli_query($conexion_usuarios, $query);
     while($data = mysqli_fetch_assoc($resultado)){
       $arreglo['embarque'][] = $data;
+    }
+
+    echo json_encode($arreglo, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_PARTIAL_OUTPUT_ON_ERROR);
+  }
+
+  function partidas_embarque($idcliente, $conexion_usuarios){
+    $query = "SELECT * FROM cotizacionherramientas WHERE folio_embarque ='' AND embarque = 'pendiente' AND cliente = '$idcliente'";
+    $resultado = mysqli_query($conexion_usuarios, $query);
+
+    if(mysqli_num_rows($resultado) < 1){
+      $arreglo['data'] = 0;
+    }else{
+      $i = 1;
+      while($data = mysqli_fetch_assoc($resultado)){
+        $arreglo['data'][] = array(
+          'id' => $data['id'],
+          'indice' => $i,
+          'marca' => $data['marca'],
+          'modelo' => $data['modelo'],
+          'cantidad' => $data['cantidad'],
+          'descripcion' => $data['descripcion']
+        );
+        $i++;
+      }
     }
 
     echo json_encode($arreglo, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_PARTIAL_OUTPUT_ON_ERROR);
