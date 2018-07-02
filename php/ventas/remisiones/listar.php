@@ -32,7 +32,7 @@
 
 		$query = "SELECT cotizacion.*, contactos.nombreEmpresa, remisiones.remision as r , case when remisiones.efectivo is null then 0 else remisiones.Efectivo end as 'Efectivo' FROM cotizacion LEFT JOIN contactos on
 		contactos.id=cotizacion.cliente LEFT JOIN remisiones on remisiones.remision=cotizacion.remision WHERE cotizacion.Comentario='' AND cotizacion.remision!=0 AND
-		cotizacion.remisionFactura=0 AND cotizacion.remisionFecha <= '$ano_inicio' AND cotizacion.remisionFecha >='$ano_fin' ORDER BY cotizacion.remision DESC";
+		cotizacion.remisionFactura=0 AND cotizacion.remisionFecha <= '$ano_inicio' AND cotizacion.remisionFecha >='$ano_fin' ORDER BY cotizacion.remision DESC LIMIT 100";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 
 		if(!$resultado){
@@ -43,7 +43,24 @@
 				if($data['Efectivo'] == 1){
 					$factura = "Pagada";
 				}else{
-					$factura = "";
+					$remision = $data['remision'];
+
+					$query2 = "SELECT factura FROM cotizacionherramientas WHERE remision = '$remision'";
+					$resultado2 = mysqli_query($conexion_usuarios, $query2);
+					while($data2 = mysqli_fetch_assoc($resultado2)){
+						$factura = $data2['factura'];
+						if ($data2['factura'] == 0) {
+							$factura = "Pendiente";
+						}else{
+							mysqli_free_result($resultado2);
+							$query3 = "SELECT factura FROM cotizacion WHERE id = '$factura'";
+							$resultado3 = mysqli_query($conexion_usuarios, $query3);
+							while($data3 = mysqli_fetch_assoc($resultado3)){
+								$factura = $data3['factura'];
+							}
+							mysqli_free_result($resultado3);
+						}
+					}
 				}
 
 				$arreglo['data'][] = array(

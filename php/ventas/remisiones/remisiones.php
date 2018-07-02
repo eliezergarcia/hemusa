@@ -256,6 +256,15 @@
 					{"data": "facturas"},
 					{"defaultContent": "<div class='invoice-footer'><button class='verRemision btn btn-lg btn-primary'><i class='fas fa-edit fa-sm' aria-hidden='true'></i></button></div>"}
 				],
+        "createdRow": function ( row, data, index ) {
+          if ( data.facturas == "Pendiente" ) {
+            $('td', row).eq(7).addClass('text-danger');
+          }
+
+          if ( data.facturas == "Pagada" ) {
+            $('td', row).eq(7).addClass('text-success');
+          }
+        },
 				"language": idioma_espanol,
 				"dom":
 	    			"<'row be-datatable-header'<'col-sm-6'B><'col-sm-6 text-right'f>>" +
