@@ -30,6 +30,9 @@
 
 		if (mysqli_num_rows($resultado) > 0) {
 			$informacion['respuesta'] = "BIEN";
+			while($data = mysqli_fetch_assoc($resultado)){
+				$informacion['tipocambio'] = $data['tipocambio'];
+			}
 		}else{
 			$informacion['respuesta'] = "ERROR";
 		}

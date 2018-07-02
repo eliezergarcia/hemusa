@@ -34,7 +34,15 @@
 	            	<div class="col-lg-12">
 	              		<div class="card card-fullcalendar">
 	                		<div class="card-body">
-	                  			<div id="calendar"></div>
+                        <div class="row justify-content-center">
+                          <div class="" style="font-size: 30px">
+                            Tipo de Cambio: $
+                          </div>
+                          <div class="">
+                            <label id="tipoCambio" style="font-size: 30px"></label>
+                          </div>
+                        </div>
+	                  		<div id="calendar"></div>
 	                		</div>
 	              		</div>
 	          		</div>
@@ -158,7 +166,7 @@
 				              		<h4>No se ha ingresado el tipo de cambio del día.<br>Puedes ingresar al siguiente enlace para obtenerlo:
 				              			<?php
                               $dias = array("Monday", "Tuesday", "Wednesdey", "Thursday", "Friday", "Saturday", "Sunday");
-        											$dia = date("d");                              
+        											$dia = date("d");
         											$mes = date("m");
         											$año = date("Y");
         											$diario = "http://dof.gob.mx/indicadores_detalle.php?cod_tipo_indicador=158&dfecha=".$dia."%2F".$mes."%2F".$año."&hfecha=".$dia."%2F".$mes."%2F".$año;
@@ -240,6 +248,7 @@
 				console.log(info);
 				if (info.respuesta == "BIEN") {
 					guardar();
+          document.getElementById('tipoCambio').innerHTML = (info.tipocambio);
 					listar_calendario(usuario, departamento);
 				}else{
 					guardar();
