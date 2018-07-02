@@ -250,10 +250,21 @@
 	    //     });
 
 	        doc.autoTable(columns, rows, {
-	          	theme: 'grid',
-	        	margin: {top: 200, right: 20, bottom: 20, left: 20},
-	          	tableWidth: 'auto',
-	          	styles: {overflow: 'linebreak', cellPadding: 6, fontSize: 8, rowHeight: 15, pageBreak: 'always', columnWidth: 'auto'},
+          	theme: 'grid',
+        	  margin: {top: 200, right: 20, bottom: 20, left: 20},
+          	tableWidth: 'auto',
+          	styles: {overflow: 'linebreak', cellPadding: 6, fontSize: 8, rowHeight: 15, pageBreak: 'always', columnWidth: 'auto'},
+            columnStyles: {
+              indice: {columnWidth: 20, halign: 'center'},
+              marca: {columnWidth: 60},
+              modelo:{columnWidth: 60},
+              descripcion: {columnWidth: 335},
+              cantidad:{columnWidth:50, halign: 'center'},
+              factura: {columnWidth: 50},
+              ordencompra:{columnWidth: 50},
+              paquteria:{columnWidth: 75},
+              guia:{columnWidth: 100},
+            },
 	        });
 
 			    doc.setFontSize(8);

@@ -24,19 +24,30 @@
   }
 
   function nacional($conexion_usuarios){
-    $query = "SELECT DISTINCT folio FROM utilidad_pedido WHERE folio != '' AND folio != 0 ORDER BY id DESC LIMIT 200";
+		$fechaFin = date("Y-m-d");
+		$fechaInicio = date("Y-01-01");
+    $query = "SELECT DISTINCT folio, proveedor FROM utilidad_pedido WHERE (folio != '' OR folio != 0) AND fecha_orden_compra >='$fechaInicio' AND fecha_orden_compra <= '$fechaFin' ORDER BY id DESC LIMIT 200";
     $resultado = mysqli_query($conexion_usuarios, $query);
 
     if(!$resultado){
 			die('Error');
 		}else{
 			while($data = mysqli_fetch_assoc($resultado)){
+				$idproveedor = $data['proveedor'];
+				$query2 = "SELECT * FROM contactos WHERE id = '$idproveedor'";
+				$resultado2 = mysqli_query($conexion_usuarios, $query2);
+				while($data2 = mysqli_fetch_assoc($resultado2)){
+					$proveedor = $data2['nombreEmpresa'];
+				}
+
+
         $arreglo['data'][] = array(
-  				'folio' => $data['folio']
+  				'folio' => $data['folio'],
+					'proveedor' => utf8_encode($proveedor)
   			);
 			}
 		}
-    echo json_encode($arreglo);
+    echo json_encode($arreglo, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_PARTIAL_OUTPUT_ON_ERROR);
 		mysqli_close($conexion_usuarios);
   }
 

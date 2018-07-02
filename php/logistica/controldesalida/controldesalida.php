@@ -42,6 +42,7 @@
 														<thead>
 															<tr>
 																<th>Folio</th>
+                                <th>Proveedor</th>
 																<th>Ver</th>
 															</tr>
 														</thead>
@@ -95,6 +96,7 @@
 				},
 				"columns":[
 					{"data": "folio"},
+          {"data": "proveedor"},
 					{"defaultContent": "<div class='invoice-footer'><button class='editar btn btn-space btn-primary btn-lg'><i class='fas fa-edit fa-sm'></i></button></div>", "sortable": false},
 				],
 				"order": [[0, "desc"]],
