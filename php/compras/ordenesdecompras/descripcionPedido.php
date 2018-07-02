@@ -32,7 +32,7 @@
                     <div class="card-body">
                          <!-- Tabla de Partidas -->
                           <br>
-                          <table id="dt_partidas_oc_descripcion" class="table table-hover table-striped compact" cellspacing="0" width="100%">
+                          <table id="dt_partidas_oc_descripcion" class="table table-hover table-striped table-bordered compact" cellspacing="0" width="100%">
                             <thead>
                               <tr>
                                 <th><input type="checkbox" class="btn btn-outline-primary" name="checksel" onclick="seleccionartodo()"></th>
@@ -257,6 +257,38 @@
           "<'row be-datatable-header'<'col-sm-6'B><'col-sm-6 text-right'f>>" +
           "<'row be-datatable-body'<'col-sm-12'tr>>" +
           "<'row be-datatable-footer'<'col-sm-5'i><'col-sm-7'p>>",
+        "createdRow": function ( row, data, index ) {
+          if ( data.proveedor || data.proveedor == "") {
+            $('td', row).eq(8).addClass('table-text-proveedor');
+          }
+          if ( data.cliente || data.cliente == "") {
+            $('td', row).eq(10).addClass('table-text-cliente');
+          }
+          if ( data.pedido || data.pedido == "") {
+            $('td', row).eq(11).addClass('table-text-pedido');
+          }
+          if ( data.facturap || data.facturap == "") {
+            $('td', row).eq(18).addClass('table-text-facturap');
+          }
+          if ( data.facturah || data.facturah == "") {
+            $('td', row).eq(19).addClass('table-text-facturah');
+          }
+          if ( data.remision || data.remision == "") {
+            $('td', row).eq(20).addClass('table-text-remision');
+          }
+          if ( data.totalventamxn || data.totalventamxn == "") {
+            $('td', row).eq(23).addClass('table-text-totalventamxn');
+          }
+          if ( data.totalventausd || data.totalventausd == "") {
+            $('td', row).eq(24).addClass('table-text-totalventausd');
+          }
+          if ( data.folio || data.folio == "") {
+            $('td', row).eq(27).addClass('table-text-folio');
+          }
+          if ( data.pedimento || data.pedimento == "") {
+            $('td', row).eq(28).addClass('table-text-pedimento');
+          }
+        },
         "buttons": [
           {
             text: 'Actualizar datos',

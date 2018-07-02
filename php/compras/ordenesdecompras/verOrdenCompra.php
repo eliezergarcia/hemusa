@@ -263,7 +263,7 @@
 
           if ( data.enviado != '0000-00-00' && data.recibido != '0000-00-00' ) {
             $('td', row).eq(1).addClass('table-text-recibido');
-            $('td', row).eq(2).addClass('table-text-enviado');
+            $('td', row).eq(2).addClass('table-text-recibido');
           }
         },
         "order":[[3, "desc"]],
