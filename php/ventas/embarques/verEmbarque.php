@@ -138,7 +138,7 @@
 			            "className": "btn btn-lg btn-space btn-secondary",
 			            buttons: [
 							{
-								text: '<i class="fas fa-file-pdf fa-lg"></i> Pdf',
+								text: '<i class="fas fa-file-pdf fa-lg"></i> PDF',
 								// "className": "btn btn-danger",
 								action: function (e, dt, node, config){
                   var opcion = "pdf";
@@ -188,19 +188,19 @@
     			doc.setFontSize(15);
     			doc.setFontStyle('bold');
     			doc.text("Lista de Embarque", 375, 35);
-	        doc.addImage(imgLogo, 'JPEG', 17, 10, 47.5, 19);
-	        doc.setFontSize(8);
-	        doc.setFontStyle('bold');
-	        doc.text("HERRAMIENTAS MECANICAS", 18, 35);
-    			doc.text("UNIVERSALES S.A. DE C.V.", 20, 39);
-    			doc.setFontStyle('normal');
-    			doc.setLineWidth(0.1)
-    			doc.line(9, 43, 70, 43)
-    			doc.setFontSize(7);
-    	    doc.text("RUPERTO MARTINEZ 831 pte Centro. C.P. 64000", 11, 48)
-    			doc.text("Monterrey, Nuevo Leon, R.F.C HMU810909370", 13, 52)
-    	    doc.text("Tel: (81) 8345 3811 email: ventas@hemusa.com", 12, 56)
-    			doc.setFontSize(8);
+	        doc.addImage(imgLogo, 'JPEG', 30, 30, 125, 65);
+	        // doc.setFontSize(8);
+	        // doc.setFontStyle('bold');
+	        // doc.text("HERRAMIENTAS MECANICAS", 18, 35);
+    			// doc.text("UNIVERSALES S.A. DE C.V.", 20, 39);
+    			// doc.setFontStyle('normal');
+    			// doc.setLineWidth(0.1)
+    			// doc.line(9, 43, 70, 43)
+    			// doc.setFontSize(7);
+    	    // doc.text("RUPERTO MARTINEZ 831 pte Centro. C.P. 64000", 11, 48)
+    			// doc.text("Monterrey, Nuevo Leon, R.F.C HMU810909370", 13, 52)
+    	    // doc.text("Tel: (81) 8345 3811 email: ventas@hemusa.com", 12, 56)
+    			// doc.setFontSize(8);
     			var columns2 = ["Folio"];
     			var rows2 = [
     				[data.embarque.folio_embarque]
@@ -232,7 +232,7 @@
 	           });
 			     doc.autoTable(columns3, rows3, {
 	          	theme: 'grid',
-	        	  margin: {top: 90, right: 20, bottom: 20, left: 725},
+	        	  margin: {top: 94, right: 20, bottom: 20, left: 725},
 	          	tableWidth: 'auto',
 	          	styles: {overflow: 'linebreak', cellPadding: 6, fontSize: 8, rowHeight: 15, pageBreak: 'always', columnWidth: 'auto', halign: 'center'},
 	        });

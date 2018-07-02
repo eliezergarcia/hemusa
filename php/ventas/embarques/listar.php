@@ -142,6 +142,8 @@
         $arreglo['data'][] = array(
           'id' => $data['id'],
           'indice' => $i,
+          'enviado' => $data['enviadoFecha'],
+          'recibido' => $data['recibidoFecha'],
           'marca' => $data['marca'],
           'modelo' => $data['modelo'],
           'cantidad' => $data['cantidad'],

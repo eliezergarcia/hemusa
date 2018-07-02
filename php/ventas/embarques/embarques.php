@@ -292,6 +292,17 @@
 					{"data": "descripcion"},
 					{"defaultContent": "<div class='invoice-footer'><button class='quitar btn btn-lg btn-danger'><i class='fas fa-times fa-sm' aria-hidden='true'></i></button></div>"}
 				],
+        "createdRow": function ( row, data, index ) {
+          if ( data.enviado != '0000-00-00' && data.recibido == '0000-00-00' ) {
+            $('td', row).eq(1).addClass('table-text-enviado');
+            $('td', row).eq(2).addClass('table-text-enviado');
+          }
+
+          if ( data.enviado != '0000-00-00' && data.recibido != '0000-00-00' ) {
+            $('td', row).eq(1).addClass('table-text-recibido');
+            $('td', row).eq(2).addClass('table-text-recibido');
+          }
+        },
 				"order": false,
 		        "lengthChange": false,
 		        "info": false,
