@@ -36,10 +36,40 @@
 			$marca = $_POST['marca'];
 			eliminar($usuariologin, $dplogin, $idmarca, $marca, $conexion_usuarios);
 			break;
+
+		case 'subirlista':
+			$json = $_POST['lista'];
+			// $data = var_dump(json_decode($_POST['lista']));
+			// $lista = $_POST['lista'];
+			// $json = '[{"foo-bar": 12345, "foo-bar2": 78965}]';
+			$data = json_decode($json);
+			$indice = $_POST['indice'];
+			subir_lista($data, $indice, $conexion_usuarios);
+			break;
+
 		default:
 			$informacion["respuesta"] = "OPCION_VACIA";
 			echo json_encode($informacion);
 			break;
+	}
+
+	function subir_lista($data, $indice, $conexion_usuarios){
+		foreach ($data as &$valor) {
+			$modelo = $data->{'CODIGO'};
+			$marca = $data->{'MARCA'};
+			$descripcion = $data->{'DESCRIPCION'};
+			$preciolista = $data->{'PRECIO LISTA'};
+			$clavesat = $data->{'CLAVE SAT'};
+
+
+			$informacion["indice"] = $indice;
+			$informacion["modelo"] = $modelo;
+			$informacion["marca"] = $marca;
+			$informacion["descripcion"] = $descripcion;
+			$informacion["preciolista"] = $preciolista;
+			$informacion["clavesat"] = $clavesat;
+		}
+		echo json_encode($informacion);
 	}
 
 	function existe_marca($marca, $conexion_usuarios){

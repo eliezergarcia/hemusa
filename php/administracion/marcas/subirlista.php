@@ -7,7 +7,7 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-	<title>Lista de precios</title>
+	<title>Subir lista de precios</title>
 	<?php include('../../enlacescss.php'); ?>
 </head>
 <body>
@@ -15,11 +15,11 @@
 	<?php include('../../header.php'); ?>
 		<div class="be-content">
           	<div class="page-head">
-              	<h2 class="page-head-title">Lista de precios</h2>
+              	<h2 class="page-head-title" style="font-size: 30px;"><b>Subir lista de precios</b></h2>
               	<nav aria-label="breadcrumb" role="navigation">
 	                <ol class="breadcrumb page-head-nav">
-	                    <li class="breadcrumb-item"><a href="#">Ventas</a></li>
-	                    <li class="breadcrumb-item"><a href="#">Herramientas</a></li>
+	                    <li class="breadcrumb-item"><a href="#">Administración</a></li>
+	                    <li class="breadcrumb-item"><a href="#">Subir lista de precios</a></li>
 	                </ol>
               	</nav>
           	</div>
@@ -91,6 +91,22 @@
   	    			"<'row be-datatable-body'<'col-sm-12'tr>>" +
   	    			"<'row be-datatable-footer'<'col-sm-5'i><'col-sm-7'p>>",
           });
+					var opcion = "subirlista";
+					var lista = data.data;
+					for (var i = 0; i < 500; i++) {
+						var lista = JSON.stringify(data.data[i]);
+						console.log(lista);
+						console.log(i);
+						$.ajax({
+							method: "POST",
+							url: "guardar.php",
+							dataType: "json",
+							data: {"opcion": opcion, "lista": lista, "indice": i},
+						}).done( function( info ){
+							console.log(info);
+						});
+					}
+
 				}
 			});
 		}

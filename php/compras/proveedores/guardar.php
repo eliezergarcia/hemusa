@@ -229,6 +229,7 @@
 		$fecha = date("Y-m-d");
 		foreach ($data as &$valor) {
 			$id = $valor;
+
 			$query = "UPDATE cotizacionherramientas SET enviadoFecha = '$fecha' WHERE id = '$id'";
 			$resultado = mysqli_query($conexion_usuarios, $query);
 
@@ -247,23 +248,23 @@
 		mysqli_close($conexion_usuarios);
 	}
 
-	function herramienta_recibido($data,$conexion_usuarios){
+	function herramienta_recibido($data, $conexion_usuarios){
 		$fecha = date("Y-m-d");
 		foreach ($data as &$valor) {
 			$id = $valor;
 
 			$query = "SELECT * FROM utilidad_pedido WHERE id_cotizacion_herramientas = '$id'";
 			$resultado = mysqli_query($conexion_usuarios, $query);
-			while($data = mysqli_fetch_assoc($resultado)){
-				$marca = $data['marca'];
-				$modelo = $data['modelo'];
-				$cantidadaumentar = $data['cantidad'];
+			while($data2 = mysqli_fetch_assoc($resultado)){
+				$marca = $data2['marca'];
+				$modelo = $data2['modelo'];
+				$cantidadaumentar = $data2['cantidad'];
 			}
 
 			$query = "SELECT enReserva FROM productos WHERE marca = '$marca' AND ref = '$modelo'";
 			$resultado = mysqli_query($conexion_usuarios, $query);
-			while($data = mysqli_fetch_assoc($resultado)){
-				$cantidad = $data['enReserva'];
+			while($data3 = mysqli_fetch_assoc($resultado)){
+				$cantidad = $data3['enReserva'];
 			}
 
 			$cantidadstock = $cantidad + $cantidadaumentar;
