@@ -19,7 +19,7 @@
               <li class="breadcrumb-item">Compras</li>
               <li class="breadcrumb-item"><a id="toolTipVerCotizaciones" href="ordenesdecompras.php" class="text-primary">Ordenes de compras</a></li>
               <li id="breadcrumb" class="breadcrumb-item" aria-current="page">
-                Orden de compra: <a id="toolTipVerCliente" href="<?php echo $ruta; ?>php/compras/ordenesdecompras/verOrdenCompra.php?ordenCompra=" class="text-primary"><?php echo $_REQUEST['ordenCompra']; ?></a>
+                Orden de compra: <a id="toolTipVerCliente" href="<?php echo $ruta; ?>php/compras/ordenesdecompras/verOrdenCompra.php?ordenCompra=<?php echo $_REQUEST['ordenCompra']; ?>" class="text-primary"><?php echo $_REQUEST['ordenCompra']; ?></a>
               </li>
               <li id="breadcrumb" class="breadcrumb-item active" aria-current="page">Descripción de pedido</li>
             </ol>
@@ -56,6 +56,7 @@
                                 <th>Factura Proveedor</th>
                                 <th>Factura Hemusa</th>
                                 <th>Remision</th>
+                                <th>Cant. Faturada</th>
                                 <th>Venta MXN</th>
                                 <th>Venta USD</th>
                                 <th>Total Venta MXN</th>
@@ -236,6 +237,7 @@
           {"data":'facturap'},
           {"data":'facturah'},
           {"data":'remision'},
+          {"data":'cantfacturada'},
           {"data":'ventamxn'},
           {"data":'ventausd'},
           {"data":'totalventamxn'},
@@ -277,16 +279,16 @@
             $('td', row).eq(20).addClass('table-text-remision');
           }
           if ( data.totalventamxn || data.totalventamxn == "") {
-            $('td', row).eq(23).addClass('table-text-totalventamxn');
+            $('td', row).eq(24).addClass('table-text-totalventamxn');
           }
           if ( data.totalventausd || data.totalventausd == "") {
-            $('td', row).eq(24).addClass('table-text-totalventausd');
+            $('td', row).eq(25).addClass('table-text-totalventausd');
           }
           if ( data.folio || data.folio == "") {
-            $('td', row).eq(27).addClass('table-text-folio');
+            $('td', row).eq(28).addClass('table-text-folio');
           }
           if ( data.pedimento || data.pedimento == "") {
-            $('td', row).eq(28).addClass('table-text-pedimento');
+            $('td', row).eq(29).addClass('table-text-pedimento');
           }
         },
         "buttons": [

@@ -116,11 +116,11 @@
             data: data.data,
             "columns": [
                 { "data": "CODIGO" },
-                { "data": "CLAVE" },
                 { "data": "DESCRIPCION LARGA" },
-                { "data": "PRECIO LISTA" },
+                { "data": "ESTANDAR" },
+                { "data": "PRECIO BASE" },
                 { "data": "MARCA" },
-                { "data": "CLAVE SAT" }
+                { "data": "PAGINA CATALOGO" }
             ],
             "language": idioma_espanol,
     				"dom":

@@ -71,6 +71,7 @@
                                 <th>Factura Proveedor</th>
                                 <th>Factura Hemusa</th>
                                 <th>Remision</th>
+                                <th>Cant. Facturada</th>
                                 <th>Venta MXN</th>
                                 <th>Venta USD</th>
                                 <th>Total Venta MXN</th>
@@ -236,6 +237,7 @@
           {"data":'facturap'},
           {"data":'facturah'},
           {"data":'remision'},
+          {"data":'cantfacturada'},
           {"data":'ventamxn'},
           {"data":'ventausd'},
           {"data":'totalventamxn'},
@@ -267,16 +269,16 @@
             $('td', row).eq(20).addClass('table-text-remision');
           }
           if ( data.totalventamxn || data.totalventamxn == "") {
-            $('td', row).eq(23).addClass('table-text-totalventamxn');
+            $('td', row).eq(24).addClass('table-text-totalventamxn');
           }
           if ( data.totalventausd || data.totalventausd == "") {
-            $('td', row).eq(24).addClass('table-text-totalventausd');
+            $('td', row).eq(25).addClass('table-text-totalventausd');
           }
           if ( data.folio || data.folio == "") {
-            $('td', row).eq(27).addClass('table-text-folio');
+            $('td', row).eq(28).addClass('table-text-folio');
           }
           if ( data.pedimento || data.pedimento == "") {
-            $('td', row).eq(28).addClass('table-text-pedimento');
+            $('td', row).eq(29).addClass('table-text-pedimento');
           }
         },
         "order":[[3, "desc"]],
@@ -301,7 +303,7 @@
                   text:      '<i class="fas fa-file-excel fa-lg"></i> Excel Nacional',
                   // "className": "btn btn-lg btn-space btn-secondary",
                   exportOptions: {
-                    columns: [ 1, 2, 3, 4, 5, 6, 7, 8, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 27  ]
+                    columns: [ 1, 2, 3, 4, 5, 6, 7, 8, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 27, 28  ]
                   }
                 },
                 {
@@ -309,7 +311,7 @@
                   text: '<i class="fas fa-file-alt fa-lg"></i> Excel Importacion',
                   // "className": "btn btn-lg btn-space btn-secondary",
                   exportOptions: {
-                          columns: [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 27, 28]
+                          columns: [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 27, 28, 29]
                   }
                 },
             ]

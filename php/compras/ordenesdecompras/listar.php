@@ -399,6 +399,12 @@
 
 				$check = '<input type="checkbox" class="btn btn-outline-primary" name="hcheck" value="'.$data['id_cotizacion_herramientas'].'">';
 
+				if ($data['factura_hemusa'] != 0) {
+					$cantfacturada = $data['cantidad'];
+				}else{
+					$cantfacturada = 0;
+				}
+
 				$arreglo["data"][] = array(
 					'indice' => $i,
 					'check' => $check,
@@ -423,6 +429,7 @@
 					'facturap' => $data['factura_proveedor'],
 					'facturah' => $data['factura_hemusa'],
 					'remision' => $data['remision'],
+					'cantfacturada' => $cantfacturada,
 					'ventamxn' => round($data['venta_mn'],2),
 					'ventausd' => round($data['venta_usd'],2),
 					'totalventamxn' => round($data['venta_mn'] * $data['cantidad'],2),

@@ -16,9 +16,9 @@
     $proveedor = utf8_encode($data['nombreEmpresa']);
 		$rfc = $data['RFC'];
 		$calle = utf8_encode($data['calle']);
-		$colonia = $data['colonia'];
-		$ciudad = $data['ciudad'];
-		$estado = $data['estado'];
+		$colonia = utf8_encode($data['colonia']);
+		$ciudad = utf8_encode($data['ciudad']);
+		$estado = utf8_encode($data['estado']);
 		$cp = $data['cp'];
   }
 ?>
