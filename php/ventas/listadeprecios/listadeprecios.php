@@ -58,9 +58,10 @@
 												</div>
 												<div class="invoice-footer">
 											    	<button id="btn_listar_precios" class="btn btn-lg btn-primary"><i class="fas fa-search fa-sm"></i> Buscar</button>
+													</form>
+														<button id="subirListaPrecios" class="btn btn-lg btn-success" data-toggle="modal" data-target="#modalSubirListaPrecios"><i class="fas fa-list-alt fa-sm"></i> Subir Lista</button>
 												</div>
 										    </div>
-								      	</form>
 								 	</div>
 								 	<br>
 
@@ -89,33 +90,44 @@
     	</div>
 
 		<!-- Modal Subir lista de precios -->
-			<div class="modal fade" id="subirListaPrecios" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-			  	<div class="modal-dialog" role="document">
-			   		<div class="modal-content">
-			      		<div class="modal-header">
-			        		<h5 class="modal-title" id="exampleModalLabel">Subir lista de precios</h5>
-			        		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-			          			<span aria-hidden="true">&times;</span>
-			        		</button>
-			      		</div>
-				      	<div class="modal-body">
-				        	<div>
-								<form action="subirlista.php" class="row justify-content-start" enctype="multipart/form-data" method="post">
-	 								<div class="col-12 row justify-content-start align-items-center form-group">
-						  	 			<label class="row col-3">Subir archivo: </label>
-						  	 			<input id="archivo" name="archivo" accept=".csv" type="file" class="form-control row col-9 justify-content-center">
-						  	 			<!-- <input name="MAX_FILE_SIZE" type="hidden" value="20000000" />  -->
-						  	 		</div>
-							</div>
-				      	</div>
-				      	<div class="modal-footer invoice-footer">
-				        	<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-				        	<button type="submit" class="btn btn-primary">Subir</button>
-				      	</div>
-			  	 				</form>
-			    	</div>
-			  	</div>
-			</div>
+			<div class="modal fade colored-header colored-header-success" id="modalSubirListaPrecios" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		  	<div class="modal-dialog" role="document">
+		   		<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="exampleModalLabel">Subir lista de precios</h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+			      <div class="modal-body">
+			        <div class="row justify-content-center">
+								<!-- <form action="subirlista.phps" enctype="multipart/form-data" method="post"> -->
+									<div class="row justify-content-center">
+										<!-- <div class="col-12">
+											<label>Para poder subir la lista de precios, verifique lo siguiente: </label>
+										</div>
+										<h4>- Extensión del archivo ".csv" </h4>
+										<h4>- La fila #1 deberá ser los encabezados de cada fila </h4>
+										<h4>- Cada encabezado deberá tener solo una linea de texto </h4> -->
+										<!-- <label>Para poder subir la lista de precios, verifique que cumpla con lo siguiente: </label> -->
+									</div>
+									<div class="row justify-content-center">
+										<label>Subir archivo: </label>
+									</div>
+									<div class="row justify-content-center">
+										<input id="csv-file" name="files" accept=".csv" type="file" class="form-control">
+									</div>
+				  	 			<!-- <input name="MAX_FILE_SIZE" type="hidden" value="20000000" />  -->
+								</div>
+			      	</div>
+			      	<div class="modal-footer invoice-footer">
+			        	<button type="button" class="btn btn-lg btn-secondary" data-dismiss="modal">Cancelar</button>
+			        	<button type="submit" class="btn btn-lg btn-success">Agregar</button>
+			      	</div>
+		  	 				<!-- </form> -->
+		    		</div>
+		  		</div>
+				</div>
 
 		<!-- Modal Informacion Herramienta -->
 			<form action="" method="POST">
@@ -177,7 +189,24 @@
   		App.formElements();
   		App.uiNotifications();
 			guardar();
+			$("#csv-file").change(handleFileSelect);
 		});
+
+		var data;
+
+		function handleFileSelect(evt) {
+			var file = evt.target.files[0];
+
+			Papa.parse(file, {
+				header: true,
+				delimiter:":",
+				dynamicTyping: true,
+				complete: function(results) {
+					data = results;
+					console.log(data);
+				}
+			});
+		}
 
 		$("#btn_listar_precios").on("click", function(){
 			listar();

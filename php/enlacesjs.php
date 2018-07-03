@@ -48,3 +48,4 @@
 <script src="<?php echo $ruta; ?>assets/lib/jquery.niftymodals/dist/jquery.niftymodals.js" type="text/javascript"></script>
 <script src="<?php echo $ruta; ?>assets/js/app-api-factura.js" type="text/javascript"></script>
 <script src="<?php echo $ruta; ?>assets/js/app-notificaciones.js" type="text/javascript"></script>
+<script src="<?php echo $ruta; ?>php/js/papaparse.min.js" type="text/javascript"></script>

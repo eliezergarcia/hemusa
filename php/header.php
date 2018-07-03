@@ -161,6 +161,8 @@
                       </li>
                       <li><a href="<?php echo $ruta; ?>php/administracion/marcas/marcas.php"><i class="fas fa-wrench"></i> Marcas</a>
                       </li>
+											<li><a href="<?php echo $ruta; ?>php/administracion/marcas/subirlista.php"><i class="fas fa-th-list"></i> Subir lista de precios</a>
+                      </li>
                     </ul>
                   </li>
 	              <li class="divider">Features</li>

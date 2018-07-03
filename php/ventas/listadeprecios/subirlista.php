@@ -1,4 +1,4 @@
-<?php 
+<?php
 	require_once('../../conexion.php'); // Llamada a connect.php para establecer conexión con la BD
 	require_once('../../sesion.php'); // Llamada a sesion.php para validar si hay sesión inciada
 	$ruta = "http://localhost/Hemusa/";
@@ -13,9 +13,9 @@
 
 </head>
 <body>
-	
+
 	<?php include('../../header.php'); ?>
-	
+
   		<main class="mdl-layout__content">
     		<div class="page-content">
                     <div class="row fondo" id="titulo">
@@ -40,14 +40,14 @@
                 <?php
                     //obtenemos el archivo .csv
                     $tipo = $_FILES['archivo']['type'];
- 
+
                     $tamanio = $_FILES['archivo']['size'];
- 
+
                     $archivotmp = $_FILES['archivo']['tmp_name'];
- 
+
                     //cargamos el archivo
                     $lineas = file($archivotmp);
- 
+
                     //inicializamos variable a 0, esto nos ayudará a indicarle que no lea la primera línea
                     $i=0;
                 ?>
@@ -57,62 +57,62 @@
                             <th>Codigo</th>
                             <th>Clave</th>
                             <th>Descripcion</th>
-                            <th>Estandar</th>
-                            <th>Master</th>
+                            <!-- <th>Estandar</th> -->
+                            <!-- <th>Master</th> -->
                             <th>Precio Lista</th>
-                            <th>Precio Distribuidor</th>
-                            <th>Página Catálogo</th>
+                            <!-- <th>Precio Distribuidor</th> -->
+                            <!-- <th>Página Catálogo</th> -->
                             <th>Marca</th>
-                            <th>Sección Catálogo</th>
-                            <th>Código Barras</th>
+                            <!-- <th>Sección Catálogo</th> -->
+                            <!-- <th>Código Barras</th> -->
                             <th>Clave Sat</th>
-                            <th>Disponibilidad</th>
-                            <th>Mes Promoción</th>
-                            <th>Nombre Promoción</th>
-                            <th>Descuento</th>
-                            <th>Precio Mínimo Venta</th>
-                            <th>Descontinuado</th>
+                            <!-- <th>Disponibilidad</th> -->
+                            <!-- <th>Mes Promoción</th> -->
+                            <!-- <th>Nombre Promoción</th> -->
+                            <!-- <th>Descuento</th> -->
+														<!-- <th>Precio Mínimo Venta</th> -->
+                            <!-- <th>Descontinuado</th> -->
                         </tr>
                     </thead>
                     <tbody>
                 <?php
                     //Recorremos el bucle para leer línea por línea
-                    foreach ($lineas as $linea_num => $linea){ 
+                    foreach ($lineas as $linea_num => $linea){
                         //abrimos bucle
-                        /*si es diferente a 0 significa que no se encuentra en la primera línea 
+                        /*si es diferente a 0 significa que no se encuentra en la primera línea
                         (con los títulos de las columnas) y por lo tanto puede leerla*/
-                        if($i != 0){ 
+                        if($i != 0){
                             //abrimos condición, solo entrará en la condición a partir de la segunda pasada del bucle.
-                            /* La funcion explode nos ayuda a delimitar los campos, por lo tanto irá 
+                            /* La funcion explode nos ayuda a delimitar los campos, por lo tanto irá
                             leyendo hasta que encuentre un ; */
                             $datos = explode(":", $linea);
-                     
+
                             //Almacenamos los datos que vamos leyendo en una variable
                             //usamos la función utf8_encode para leer correctamente los caracteres especiales
                             $codigo = utf8_encode($datos[0]);
                             $clave = utf8_encode($datos[1]);
                             $descripcion = utf8_encode($datos[2]);
-                            $estandar = utf8_encode($datos[3]);
-                            $master = utf8_encode($datos[4]);
+                            // $estandar = utf8_encode($datos[3]);
+                            // $master = utf8_encode($datos[4]);
                             $precioLista = utf8_encode($datos[5]);
-                            $precioDis = utf8_encode($datos[6]);
-                            $pagCat = utf8_encode($datos[7]);
-                            $marca = utf8_encode($datos[9]);
-                            $secCat = utf8_encode($datos[10]);
-                            $codigoBarras = utf8_encode($datos[11]);
-                            $claveSat = utf8_encode($datos[14]);
-                            $disponibilidad = utf8_encode($datos[15]);
-                            $mesProm = utf8_encode($datos[16]);
-                            $nombreProm = utf8_encode($datos[17]);
-                            $descuento = utf8_encode($datos[18]);
-                            $precioMin = utf8_encode($datos[19]);
+                            // $precioDis = utf8_encode($datos[6]);
+                            // $pagCat = utf8_encode($datos[7]);
+                            $marca = utf8_encode($datos[8]);
+                            // $secCat = utf8_encode($datos[10]);
+                            // $codigoBarras = utf8_encode($datos[11]);
+                            $claveSat = utf8_encode($datos[11]);
+                            // $disponibilidad = utf8_encode($datos[15]);
+                            // $mesProm = utf8_encode($datos[16]);
+                            // $nombreProm = utf8_encode($datos[17]);
+                            // $descuento = utf8_encode($datos[18]);
+                            // $precioMin = utf8_encode($datos[19]);
 
-                            $mar = strtolower($marca);
+                            // $mar = strtolower($marca);
 
                             // $deposito = utf8_encode($datos[2]);
                             // $retiro = utf8_encode($datos[3]);
                             // $deposito = str_replace(',', ".", $deposito);
-                     
+
                             //guardamos en base de datos la línea leida
                             // mysql_query("INSERT INTO datos(nombre,edad,profesion) VALUES('$nombre','$edad','$profesion')");
                             $query = "SELECT * FROM productos WHERE ref = '$codigo'";
@@ -132,30 +132,29 @@
                         <tr>
                             <td><?php echo $codigo; ?></td>
                             <td><?php echo $clave; ?></td>
-                            <td><?php echo $descripcion; ?></td>  
-                            <td><?php echo $estandar; ?></td>    
-                            <td><?php echo $master; ?></td>                          
-                            <td><?php echo $precioLista; ?></td> 
-                            <td><?php echo $precioDis; ?></td>                                                   
-                            <td><?php echo $pagCat; ?></td>                          
-                            <td><?php echo $marca; ?></td>                          
-                            <td><?php echo $secCat; ?></td>                          
-                            <td><?php echo $codigoBarras; ?></td>                          
+                            <td><?php echo $descripcion; ?></td>
+                            <!-- <td><?php echo $estandar; ?></td> -->
+                            <!-- <td><?php echo $master; ?></td> -->
+                            <td><?php echo $precioLista; ?></td>
+                            <!-- <td><?php echo $precioDis; ?></td> -->
+                            <!-- <td><?php echo $pagCat; ?></td> -->
+                            <td><?php echo $marca; ?></td>
+                            <!-- <td><?php echo $secCat; ?></td> -->
+                            <!-- <td><?php echo $codigoBarras; ?></td> -->
                             <td><?php echo $claveSat; ?></td>
-                            <td><?php echo $disponibilidad; ?></td>                          
-                            <td><?php echo $mesProm; ?></td>                          
-                            <td><?php echo $nombreProm; ?></td>                          
-                            <td><?php echo $descuento; ?></td>                          
-                            <td><?php echo $precioMin; ?></td>  
-                            <td><?php echo $des; ?>
-                            </td>                                                    
+                            <!-- <td><?php echo $disponibilidad; ?></td> -->
+                            <!-- <td><?php echo $mesProm; ?></td> -->
+                            <!-- <td><?php echo $nombreProm; ?></td> -->
+                            <!-- <td><?php echo $descuento; ?></td> -->
+                            <!-- <td><?php echo $precioMin; ?></td> -->
+                            <!-- <td><?php echo $des; ?></td> -->
                         </tr>
                 <?php
-                     
+
                             //cerramos condición
                         }
- 
-                    /*Cuando pase la primera pasada se incrementará nuestro valor y a la siguiente pasada ya 
+
+                    /*Cuando pase la primera pasada se incrementará nuestro valor y a la siguiente pasada ya
                     entraremos en la condición, de esta manera conseguimos que no lea la primera línea.*/
                     $i++;
                     //cerramos bucle
@@ -172,12 +171,12 @@
     $(document).on("ready", function(){
         var table = $("#dt_reporte_pagos").DataTable({
                 "destroy":"true",
-                "bDeferRender": true,           
+                "bDeferRender": true,
                 "sPaginationType": "full_numbers",
                 "order": false,
                 "language": idioma_espanol,
                 "lengthChange": false,
-                "dom":  
+                "dom":
                     "<'container-fluid row'<'row justify-content-center col-sm-4 buttons'B><'row justify-content-end col-sm-8 buttons'f>>" +
                     "<'clear'>" +
                     "<'container-fluid row'<'row justify-content-center col-sm-12 buttons'tr>>" +
