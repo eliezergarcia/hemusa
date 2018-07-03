@@ -39,11 +39,18 @@
                                 <thead>
                                   <tr>
                                     <th>Codigo</th>
-                                    <th>Clave</th>
                                     <th>Descripcion</th>
-                                    <th>Precio Lista</th>
-                                    <th>Marca</th>
+																		<th>Estándar</th>
+                                    <th>Precio Base</th>
+																		<th>Marca</th>
+																		<th>Página Catálogo</th>
+																		<th>Sección Catálogo</th>
+																		<th>Código de Barras</th>
                                     <th>Clave Sat</th>
+																		<th>Clave Unidad</th>
+																		<th>IVA</th>
+																		<th>Mes Promoción</th>
+																		<th>Descuento</th>
                                   </tr>
                                 </thead>
                               </table>
