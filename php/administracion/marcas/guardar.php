@@ -57,7 +57,7 @@
 		foreach ($data as &$valor) {
 			$modelo = $data->{'CODIGO'};
 			$marca = $data->{'MARCA'};
-			$descripcion = $data->{'DESCRIPCION'};
+			$descripcion = $data->{'DESCRIPCION LARGA'};
 			$preciolista = $data->{'PRECIO LISTA'};
 			$clavesat = $data->{'CLAVE SAT'};
 
@@ -68,6 +68,7 @@
 			$informacion["descripcion"] = $descripcion;
 			$informacion["preciolista"] = $preciolista;
 			$informacion["clavesat"] = $clavesat;
+			$informacion["respuesta"] = "BIEN";
 		}
 		echo json_encode($informacion);
 	}
