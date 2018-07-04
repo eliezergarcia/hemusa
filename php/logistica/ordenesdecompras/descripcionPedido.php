@@ -313,7 +313,7 @@
                   text: '<i class="fas fa-file-alt fa-lg"></i> Excel Importacion',
                   // "className": "btn btn-lg btn-space btn-secondary",
                   exportOptions: {
-                          columns: [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 27, 28, 29]
+                          columns: [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 28, 29]
                   },
                   title: 'excel_importacion'
                 },
