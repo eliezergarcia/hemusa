@@ -307,7 +307,7 @@
             },
           },
           {
-            text: '<i class="fas fa-align-justify fa-sm" aria-hidden="true"></i> Ver descripcion de pedido',
+            text: '<i class="fas fa-align-justify fa-sm" aria-hidden="true"></i> Descripción de pedido',
             "className": "btn btn-lg btn-space btn-primary",
             action: function (e, dt, node, config){
               window.location= "descripcionPedido.php?ordenCompra="+data.ordendecompra.noDePedido;
