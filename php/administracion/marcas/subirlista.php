@@ -38,7 +38,7 @@
                               <table id="example" class="ui celler table" width="100%">
                                 <thead>
                                   <tr>
-                                    <th>Codigo</th>
+                                    <th>Modelo</th>
                                     <th>Descripcion</th>
 																		<th>Estándar</th>
                                     <th>Precio Base</th>
@@ -47,7 +47,7 @@
 																		<th>Sección Catálogo</th>
 																		<th>Código de Barras</th>
                                     <th>Clave Sat</th>
-																		<th>Clave Unidad</th>
+																		<th>Unidad</th>
 																		<th>IVA</th>
 																		<th>Mes Promoción</th>
 																		<th>Descuento</th>
@@ -115,12 +115,19 @@
           $('#example').DataTable( {
             data: data.data,
             "columns": [
-                { "data": "CODIGO" },
-                { "data": "DESCRIPCION LARGA" },
-                { "data": "ESTANDAR" },
-                { "data": "PRECIO BASE" },
-                { "data": "MARCA" },
-                { "data": "PAGINA CATALOGO" }
+                { "data": "MODELO"},
+                { "data": "DESCRIPCION"},
+                { "data": "ESTANDAR"},
+                { "data": "PRECIO BASE"},
+                { "data": "MARCA"},
+                { "data": "PAGINA CATALOGO"},
+								{ "data": "SECCION CATALOGO"},
+								{ "data": "CODIGO BARRAS"},
+								{ "data": "CLAVE SAT"},
+								{ "data": "UNIDAD"},
+								{ "data": "IVA"},
+								{ "data": "MES PROMOCION"},
+								{ "data": "DESCUENTO"}
             ],
             "language": idioma_espanol,
     				"dom":
@@ -133,10 +140,8 @@
 							$(this).html("");
 							$(this).fadeIn(300);
 						});
-					}, 2000);
+					}, 5000);
 					setTimeout(function () {
-						// $(".texto1").append("<div class='text-success'><span class='modal-main-icon mdi mdi-check-circle'></span></div>");
-						// $(".texto1").append("<h3>Correcto!</h3>");
 							$(".texto1").append("<br>");
 							$(".texto1").append("<br>");
 							$(".texto1").append("<div class='text-center'>");
@@ -147,17 +152,16 @@
 							$(".texto1").append("<div class='text-center'><div class='be-spinner'><svg width='40px' height='40px' viewBox='0 0 66 66' xmlns='http://www.w3.org/2000/svg'><circle fill='none' stroke-width='4' stroke-linecap='round' cx='33' cy='33' r='30' class='circle'></circle></svg></div></div></div>");
 							$(".texto1").append("<br>");
 							$(".texto1").append("<h4><label id='numeroi'></label> filas de <label id='numeroj'></label> actualizadas</h4>");
-						}, 2500);
+						}, 7000);
 					var opcion = "subirlista";
 					var lista = data.data;
-					var j = 251;
-					// document.getElementById("numeroj").innerHTML = "Hola";
+					var j = 1000;
 					setTimeout(function () {
-						$('#numeroj').html(j-1);
-						}, 2500);
+						$('#numeroj').html(j);
+					}, 7000);
 						var filascorrectas = 0;
 						var filaserror = 0;
-					for (var i = 0; i < j; i++) {
+					for (var i = 1; i <= j; i++) {
 						var lista = JSON.stringify(data.data[i]);
 						console.log(lista);
 						console.log(i);
@@ -171,27 +175,26 @@
 							$('#numeroi').html(info.indice);
 							if (info.respuesta == "BIEN") {
 								filascorrectas = parseInt(filascorrectas) + 1;
-								console.log(filascorrectas);
-								if (filascorrectas == (j-1)) {
-									setTimeout(function () {
-										$(".texto1").fadeOut(300, function(){
-											$(this).html("");
-											$(this).fadeIn(300);
-										});
-									}, 2000);
-									setTimeout(function () {
-										$(".texto1").append("<br>");
-										$(".texto1").append("<div class='text-success'><span class='modal-main-icon mdi mdi-check-circle'></span></div>");
-										$(".texto1").append("<h3>Correcto!</h3>");
-										$(".texto1").append("<h4>La lista de precios se actualizó correctamente.</h4>");
-										// $(".texto1").append("<div class='text-center'>");
-										// $(".texto1").append("<p>En un momento se descargará el archivo PDF.</p>");
-										// $(".texto1").append("</div>");
-										console.log(lista.length);
-									}, 2500);
-								}
 							}else{
 								filaserror = parseInt(filaserror) + 1;
+							}
+							if (info.indice == (j)) {
+								setTimeout(function () {
+									$(".texto1").fadeOut(300, function(){
+										$(this).html("");
+										$(this).fadeIn(300);
+									});
+								}, 2000);
+								setTimeout(function () {
+									$(".texto1").append("<br>");
+									$(".texto1").append("<div class='text-success'><span class='modal-main-icon mdi mdi-check-circle'></span></div>");
+									$(".texto1").append("<h3>Correcto!</h3>");
+									$(".texto1").append("<h4>La lista de precios se actualizó correctamente.</h4>");
+									$(".texto1").append("<br>");
+									$(".texto1").append("<h5>Correctos: <h4 class='text-success'>"+filascorrectas+"</h4></h5>");
+									$(".texto1").append("<h5>Errores: <h4 class='text-danger'>"+filaserror+"</h4></h5>");
+									console.log(lista.length);
+								}, 2500);
 							}
 						});
 					}

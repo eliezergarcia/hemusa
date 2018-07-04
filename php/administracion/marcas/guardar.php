@@ -54,23 +54,70 @@
 	}
 
 	function subir_lista($data, $indice, $conexion_usuarios){
-		foreach ($data as &$valor) {
-			$modelo = $data->{'CODIGO'};
-			$marca = $data->{'MARCA'};
-			$descripcion = $data->{'DESCRIPCION LARGA'};
-			$preciolista = $data->{'PRECIO LISTA'};
-			$clavesat = $data->{'CLAVE SAT'};
+		$modelo = $data->{'MODELO'};
+		$descripcion = $data->{'DESCRIPCION'};
+		$estandar = $data->{'ESTANDAR'};
+		$precioBase = $data->{'PRECIO BASE'};
+		$marca = strtolower($data->{'MARCA'});
+		$paginaCatalogo = $data->{'PAGINA CATALOGO'};
+		$seccionCatalogo = $data->{'SECCION CATALOGO'};
+		$codigoBarras = $data->{'CODIGO BARRAS'};
+		$clavesat = $data->{'CLAVE SAT'};
+		$unidad = $data->{'UNIDAD'};
+		$clavesat = $data->{'CLAVE SAT'};
+		$iva = $data->{'IVA'};
+		$mesPromocion = $data->{'MES PROMOCION'};
+		$descuento = $data->{'DESCUENTO'};
 
+		if ($unidad == 'EA') {
+			$unidad = "PIEZA";
+		}
 
+		if ($unidad == 'SET') {
+			$unidad = "KIT";
+		}
+
+		if ($unidad == 'PR') {
+			$unidad = "PAR";
+		}
+
+		$descuentos = str_replace(" %", "", $descuento);
+		$query = "UPDATE productos SET descripcion='$descripcion', precioBase='$precioBase', clase='A', CantidadMinima='$estandar', Unidad='$unidad', ClaveProductoSAT='$clavesat', estandar='$estandar', paginaCatalogo='$paginaCatalogo', seccionCatalogo='$seccionCatalogo', codigoBarras='$codigoBarras', iva='$iva', mesPromocion='$mesPromocion', descuento='$descuentos' WHERE marca='$marca' AND ref='$modelo'";
+		// $query = "SELECT * FROM productos WHERE marca ='$marca' AND ref = '$modelo'";
+		$resultado = mysqli_query($conexion_usuarios, $query);
+		if(!$resultado){
+			$query = "INSERT INTO productos (marca, ref, descripcion, precioBase, enReserva, clase, moneda, CantidadMinima, Unidad, ClaveProductoSAT, EnPortal, estandar, paginaCatalogo, seccionCatalogo, codigoBarras, iva, mesPromocion, descuento) VALUES ('$marca', '$modelo', '$descripcion', '$precioBase', 0, 'A', 'mxn', '$estandar', '$unidad', '$clavesat', 0, '$estandar', '$paginaCatalogo', '$seccionCatalogo', '$codigoBarras', '$iva', '$mesPromocion', '$descuento')";
+			$resultado = mysqli_query($conexion_usuarios, $query);
+			if(!$resultado){
+				$informacion["indice"] = $indice;
+				$informacion["respuesta"] = "ERROR";
+				$informacion["error"] = mysqli_error($query);
+			}else{
+				$informacion["indice"] = $indice;
+				$informacion["respuesta"] = "BIEN";
+			}
+		}else{
 			$informacion["indice"] = $indice;
-			$informacion["modelo"] = $modelo;
-			$informacion["marca"] = $marca;
-			$informacion["descripcion"] = $descripcion;
-			$informacion["preciolista"] = $preciolista;
-			$informacion["clavesat"] = $clavesat;
 			$informacion["respuesta"] = "BIEN";
 		}
 		echo json_encode($informacion);
+
+		// $informacion["indice"] = $indice;
+		// $informacion["modelo"] = $modelo;
+		// $informacion["descripcion"] = $descripcion;
+		// $informacion["estandar"] = $estandar;
+		// $informacion["precioBase"] = $precioBase;
+		// $informacion["marca"] = $marca;
+		// $informacion["paginaCatalogo"] = $paginaCatalogo;
+		// $informacion["seccionCatalogo"] = $seccionCatalogo;
+		// $informacion["codigoBarras"] = $codigoBarras;
+		// $informacion["unidad"] = $unidad;
+		// $informacion["iva"] = $iva;
+		// $informacion["mesPromocion"] = $mesPromocion;
+		// $informacion["descuento"] = $descuento;
+		// $informacion["clavesat"] = $clavesat;
+		// $informacion["respuesta"] = "BIEN";
+		// echo json_encode($informacion);
 	}
 
 	function existe_marca($marca, $conexion_usuarios){
