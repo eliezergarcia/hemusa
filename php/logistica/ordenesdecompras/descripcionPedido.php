@@ -31,13 +31,13 @@
                          <div class="row justify-content-center">
                            <div>
                              <div class="row justify-content-center form-group">
-                               <label for="fechaInicio">Fecha Inicio:</label>
-                               <input type="date" class="form-control form-control-sm row justify-content-center" name="fechaInicio" id="fechaInicio">
+                               <label for="folio">Ingresa el número de folio:</label>
+                               <input type="text" class="form-control form-control-sm row justify-content-center" name="folio" id="folio">
                              </div>
-                             <div class="row justify-content-center form-group">
+                             <!-- <div class="row justify-content-center form-group">
                                <label for="fechaInicio">Fecha Fin:</label>
                                <input type="date" class="form-control form-control-sm" name="fechaFin" id="fechaFin">
-                             </div>
+                             </div> -->
                              <div class="row justify-content-center form-group">
                                <button class="btn btn-lg btn-primary" onclick="listar_partidas()"><i class="fas fa-search fa-sm"></i> Buscar</button>
                              </div>
@@ -203,8 +203,9 @@
     }
 
     var listar_partidas = function(ordencompra){
-      var fechaInicio = $("#fechaInicio").val(),
-          fechaFin = $("#fechaFin").val();
+      // var fechaInicio = $("#fechaInicio").val(),
+      //     fechaFin = $("#fechaFin").val();
+      var folio = $("#folio").val();
       var opcion = "partidasocdescripcion";
       var table = $("#dt_partidas_oc_descripcion").DataTable({
         "destroy":"true",
@@ -213,7 +214,7 @@
         "ajax":{
           "method":"POST",
           "url":"listar.php",
-          "data": {"opcion": opcion, "fechaInicio": fechaInicio, "fechaFin": fechaFin}
+          "data": {"opcion": opcion, "folio": folio}
         },
         "columns":[
           {"data":'check'},
@@ -303,7 +304,7 @@
                   text:      '<i class="fas fa-file-excel fa-lg"></i> Excel Nacional',
                   // "className": "btn btn-lg btn-space btn-secondary",
                   exportOptions: {
-                    columns: [ 1, 2, 3, 4, 5, 6, 7, 8, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 27, 28  ]
+                    columns: [ 1, 2, 3, 4, 5, 6, 7, 8, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 28, 29  ]
                   },
                   title: 'excel_nacional'
                 },

@@ -199,11 +199,27 @@
 					$informacion['cliente'] = $data2;
 				}
 
+				$query3 = "SELECT DISTINCT cotizacionRef FROM cotizacionherramientas WHERE remision = '$remision'";
+				$res3 = mysqli_query($conexion_usuarios, $query3);
+				while($data3 = mysqli_fetch_assoc($res3)){
+					$cotizacionRef = $data3['cotizacionRef'];
+				}
+
+				$query4 = "SELECT * FROM cotizacion WHERE ref='$cotizacionRef'";
+				$resultado4 = mysqli_query($conexion_usuarios, $query4);
+				while($data4 = mysqli_fetch_assoc($resultado4)){
+					$vendedor = $data4['vendedor'];
+					$factura = $data4['factura'];
+					$pedidocliente = $data4['NoPedClient'];
+				}
+
+				$informacion['vendedor'] = $vendedor;
+				$informacion['factura'] = $factura;
+				$informacion['pedidocliente'] = $pedidocliente;
+
 				$informacion['refCotizacion'] = $data['ref'];
 				$informacion['remision'] = $data['remision'];
 				$informacion['fecha'] = $data['fecha'];
-				$informacion['vendedor'] = $data['vendedor'];
-				$informacion['factura'] = $data['factura'];
 				$informacion['pagado'] = $data['Pagado'];
 				$informacion['total'] = $data['precioTotal'];
 				$informacion['moneda'] = $data['moneda'];

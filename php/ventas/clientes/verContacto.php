@@ -67,7 +67,8 @@
 								<div class="row justify-content-center btn-toolbar">
 									<div role="group" class="btn-group btn-group-justified mb-2 col-6">
 										<a href="#" id="btnsinentregar" class="btn btn-primary btn-space" onclick="listar_sinentregar()">SIN ENTREGAR</a href="#">
-									  	<a href="#" id="btnfacturado" class="btn btn-primary btn-space" onclick="listar_facturadonoentregado()">FACTURADO NO ENTREGADO</a href="#">
+									  <a href="#" id="btnfacturado" class="btn btn-primary btn-space" onclick="listar_facturadonoentregado()">FACTURADO NO ENTREGADO</a href="#">
+										<a href="#" id="btnnopagadas" class="btn btn-primary btn-space" onclick="listar_facturasnopagadas()">NO PAGADAS</a href="#">
 										<a href="#" id="btnremisiones" class="btn btn-primary btn-space" onclick="listar_remisiones()">REMISIONES</a href="#">
 										<a href="#" id="btncotizaciones" class="btn btn-primary btn-space" onclick="listar_cotizaciones()">COTIZACIONES</a href="#">
 									</div>
@@ -108,6 +109,28 @@
 												<th>Fecha</th>
 												<th>Cantidad</th>
 												<th>Suma</th>
+												<th></th>
+											</tr>
+										</thead>
+									</table>
+								</div>
+
+							<!-- Listar facturas no pagadas -->
+								<div id="listar_facturasnopagadas">
+									<br>
+									<center><h4><b>Facturado no pagadas</b></h4></center>
+									<table id="dt_listar_facturasnopagadas" class="table table-striped table-hover display compact" cellspacing="0" width="100%">
+										<thead>
+											<tr>
+												<th>#</th>
+												<th>Factura</th>
+												<th>Orden compra</th>
+												<th>Fecha factura</th>
+												<th>Pagado</th>
+												<th>Suma</th>
+												<th>Moneda</th>
+												<th>Vence factura</th>
+												<th></th>
 											</tr>
 										</thead>
 									</table>
@@ -122,6 +145,7 @@
 											<tr>
 												<th>#</th>
 												<th>Remision</th>
+												<th>Ref. Cotización</th>
 												<th>Cliente</th>
 												<th>Contacto</th>
 												<th>Fecha</th>
@@ -179,19 +203,19 @@
 							</div>
 			      			<div class="row justify-content-center">
 								<div class="col-2 form-check form-group">
-			                        <label class="custom-control custom-radio">
-			                          	<input type="radio" class="custom-control-input" name="clasificacion" id="clasificacion" value="clas1"><span class="custom-control-label">16 %</span>
-			                        </label>
-			                        <label class="custom-control custom-radio">
-			                          	<input type="radio" class="custom-control-input" name="clasificacion" id="clasificacion" value="clas2"><span class="custom-control-label">20 %</span>
-			                        </label>
-			                        <label class="custom-control custom-radio">
-			                          	<input type="radio" class="custom-control-input" name="clasificacion" id="clasificacion" value="clas3"><span class="custom-control-label">25 %</span>
-			                        </label>
-			                        <label class="custom-control custom-radio">
-			                          	<input type="radio" class="custom-control-input" name="clasificacion" id="clasificacion" value="clas4"><span class="custom-control-label">30 %</span>
-			                        </label>
-			                    </div>
+                    <label class="custom-control custom-radio">
+                      	<input type="radio" class="custom-control-input" name="clasificacion" id="clasificacion" value="clas1"><span class="custom-control-label">16 %</span>
+                    </label>
+                    <label class="custom-control custom-radio">
+                      	<input type="radio" class="custom-control-input" name="clasificacion" id="clasificacion" value="clas2"><span class="custom-control-label">20 %</span>
+                    </label>
+                    <label class="custom-control custom-radio">
+                      	<input type="radio" class="custom-control-input" name="clasificacion" id="clasificacion" value="clas3"><span class="custom-control-label">25 %</span>
+                    </label>
+                    <label class="custom-control custom-radio">
+                      	<input type="radio" class="custom-control-input" name="clasificacion" id="clasificacion" value="clas4"><span class="custom-control-label">30 %</span>
+                    </label>
+                </div>
 							</div>
 						</div>
 			      		<div class="modal-footer invoice-footer">
@@ -722,6 +746,7 @@
 			$("#listar_sinentregar").slideDown("slow");
 			$("#listar_remisiones").slideUp("slow");
 			$("#listar_cotizaciones").slideUp("slow");
+			$("#listar_facturasnopagadas").slideUp("slow");
 			$("#btnsinentregar").removeClass("btn-secondary");
 			$("#btnsinentregar").addClass("btn-primary");
 			$("#btnfacturado").removeClass("btn-primary");
@@ -730,6 +755,8 @@
 			$("#btnremisiones").addClass("btn-secondary");
 			$("#btncotizaciones").removeClass("btn-primary");
 			$("#btncotizaciones").addClass("btn-secondary");
+			$("#btnnopagadas").removeClass("btn-primary");
+			$("#btnnopagadas").addClass("btn-secondary");
 			var opcion = "sinentregar";
 			var buscar = $("#buscar").val();
 			var table = $("#dt_listar_sinentregar").DataTable({
@@ -811,6 +838,7 @@
 			$("#listar_sinentregar").slideUp("slow");
 			$("#listar_remisiones").slideUp("slow");
 			$("#listar_cotizaciones").slideUp("slow");
+			$("#listar_facturasnopagadas").slideUp("slow");
 			$("#btnfacturado").removeClass("btn-secondary");
 			$("#btnfacturado").addClass("btn-primary");
 			$("#btnsinentregar").removeClass("btn-primary");
@@ -819,6 +847,8 @@
 			$("#btnremisiones").addClass("btn-secondary");
 			$("#btncotizaciones").removeClass("btn-primary");
 			$("#btncotizaciones").addClass("btn-secondary");
+			$("#btnnopagadas").removeClass("btn-primary");
+			$("#btnnopagadas").addClass("btn-secondary");
 			var opcion = "facturadonoentregado";
 			var buscar = $("#buscar").val();
 			var table = $("#dt_listar_facturadonoentregado").DataTable({
@@ -833,7 +863,8 @@
 		          {"data": "ref"},
 		          {"data": "fecha"},
 		          {"data": "cantidad"},
-		          {"data": "suma"}
+		          {"data": "suma"},
+							{"defaultContent": "<div class='invoice-footer'><button class='vercotizacion btn btn-lg btn-primary'><i class='fas fa-edit fa-sm' aria-hidden='true'></i></button></div>"}
 		        ],
 		        "language": idioma_espanol,
 				"dom":
@@ -885,6 +916,7 @@
 			        },
 				]
 		    });
+				obtener_data_ver_cotizacion_facturado("#dt_listar_facturadonoentregado tbody", table);
 		}
 
 		var listar_remisiones = function(){
@@ -893,6 +925,7 @@
 			$("#listar_sinentregar").slideUp("slow");
 			$("#listar_remisiones").slideDown("slow");
 			$("#listar_cotizaciones").slideUp("slow");
+			$("#listar_facturasnopagadas").slideUp("slow");
 			$("#btnremisiones").removeClass("btn-secondary");
 			$("#btnremisiones").addClass("btn-primary");
 			$("#btnsinentregar").removeClass("btn-primary");
@@ -901,21 +934,24 @@
 			$("#btnfacturado").addClass("btn-secondary");
 			$("#btncotizaciones").removeClass("btn-primary");
 			$("#btncotizaciones").addClass("btn-secondary");
+			$("#btnnopagadas").removeClass("btn-primary");
+			$("#btnnopagadas").addClass("btn-secondary");
 			var opcion = "remisiones";
 			var buscar = $("#buscar").val();
 			var table = $("#dt_listar_remisiones").DataTable({
-		        "destroy":"true",
-		        "ajax":{
-		          "method":"POST",
-		          "url":"listar.php" ,
-		          "data": {"idcliente": idcliente, "opcion": opcion, "buscar": buscar},
-		        },
-		        "columns":[
-		          {"data": "indice"},
-		          {"data": "remision"},
-		          {"data": "cliente"},
-		          {"data": "contacto"},
-		          {"data": "fecha"},
+      "destroy":"true",
+      "ajax":{
+        "method":"POST",
+        "url":"listar.php" ,
+        "data": {"idcliente": idcliente, "opcion": opcion, "buscar": buscar},
+      },
+        "columns":[
+          {"data": "indice"},
+          {"data": "remision"},
+					{"data": "cotizacion"},
+          {"data": "cliente"},
+          {"data": "contacto"},
+          {"data": "fecha"},
 				  {"data": "cantidad"},
 				  {"data": "suma"},
 				  {"data": "moneda"},
@@ -974,12 +1010,103 @@
 				obtener_data_ver_remision("#dt_listar_remisiones tbody", table);
 		}
 
+		var listar_facturasnopagadas = function () {
+				var idcliente = "<?php echo $_REQUEST['id']; ?>";
+				$("#listar_facturadonoentregado").slideUp("slow");
+				$("#listar_sinentregar").slideUp("slow");
+				$("#listar_remisiones").slideUp("slow");
+				$("#listar_cotizaciones").slideUp("slow");
+				$("#listar_facturasnopagadas").slideDown("slow");
+				$("#btncotizaciones").removeClass("btn-primary");
+				$("#btncotizaciones").addClass("btn-secondary");
+				$("#btnsinentregar").removeClass("btn-primary");
+				$("#btnsinentregar").addClass("btn-secondary");
+				$("#btnfacturado").removeClass("btn-primary");
+				$("#btnfacturado").addClass("btn-secondary");
+				$("#btnremisiones").removeClass("btn-primary");
+				$("#btnremisiones").addClass("btn-secondary");
+				$("#btnnopagadas").removeClass("btn-secondary");
+				$("#btnnopagadas").addClass("btn-primary");
+				var opcion = "facturasnopagadas";
+				var buscar = $("#buscar").val();
+				var table = $("#dt_listar_facturasnopagadas").DataTable({
+	        "destroy":"true",
+	        "ajax":{
+	          "method":"POST",
+	          "url":"listar.php" ,
+	          "data": {"idcliente": idcliente, "opcion": opcion, "buscar": buscar},
+	        },
+	        "columns":[
+	          {"data": "indice"},
+	          {"data": "factura"},
+	          {"data": "ordencompra"},
+	          {"data": "fechafactura"},
+	          {"data": "pagado"},
+						{"data": "suma"},
+						{"data": "moneda"},
+						{"data": "vencefactura"},
+						{"defaultContent": "<div class='invoice-footer'><button class='vercotizacion btn btn-lg btn-primary'><i class='fas fa-edit fa-sm' aria-hidden='true'></i></button></div>"}
+	        ],
+			    "language": idioma_espanol,
+					"dom":
+        		"<'row be-datatable-header'<'col-sm-6'B><'col-sm-6 text-right'f>>" +
+        		"<'row be-datatable-body'<'col-sm-12'tr>>" +
+        		"<'row be-datatable-footer'<'col-sm-5'i><'col-sm-7'p>>",
+					"buttons":[
+			            {
+				            extend: 'collection',
+				            text: '<i class="fas fa-table fa-sm"></i> Exportar tabla',
+				            "className": "btn btn-lg btn-space btn-secondary",
+				            buttons: [
+				                {
+				                  extend:    'excelHtml5',
+				                  text:      '<i class="fas fa-file-excel fa-lg"></i> Excel',
+				                  // "className": "btn btn-lg btn-space btn-secondary",
+				                  exportOptions: {
+				                    columns: [ 0, 1, 2, 3, 4 ]
+				                  }
+				                },
+				                {
+				                  extend: 'csv',
+				                  text: '<i class="fas fa-file-alt fa-lg"></i> Csv',
+				                  // "className": "btn btn-lg btn-space btn-secondary",
+				                  exportOptions: {
+				                          columns: [ 0, 1, 2, 3, 4 ]
+				                  }
+				                },
+				                {
+				                  extend:    'pdfHtml5',
+				                  text:      '<i class="fas fa-file-pdf fa-lg"></i> Pdf',
+				                  download: 'open',
+				                  // "className": "btn btn-lg btn-space btn-secondary",
+				                  exportOptions: {
+				                    columns: [ 0, 1, 2, 3, 4 ]
+				                  }
+				                },
+				                {
+				                  extend: 'print',
+				                  text: '<i class="fas fa-print fa-lg"></i> Imprimir',
+				                  header: 'false',
+				                  exportOptions: {
+				                          columns: [ 0, 1, 2, 3, 4 ]
+				                  },
+				                  orientation: 'landscape',
+				                  pageSize: 'LEGAL'
+				                }
+				            ]
+				        },
+					]
+			    });
+					obtener_data_ver_cotizacion_nopagada("#dt_listar_facturadonoentregado tbody", table);
+		}
+
 		var listar_cotizaciones = function(){
 			var idcliente = "<?php echo $_REQUEST['id']; ?>";
 			$("#listar_facturadonoentregado").slideUp("slow");
 			$("#listar_sinentregar").slideUp("slow");
 			$("#listar_remisiones").slideUp("slow");
 			$("#listar_cotizaciones").slideDown("slow");
+			$("#listar_facturasnopagadas").slideUp("slow");
 			$("#btncotizaciones").removeClass("btn-secondary");
 			$("#btncotizaciones").addClass("btn-primary");
 			$("#btnsinentregar").removeClass("btn-primary");
@@ -988,6 +1115,8 @@
 			$("#btnfacturado").addClass("btn-secondary");
 			$("#btnremisiones").removeClass("btn-primary");
 			$("#btnremisiones").addClass("btn-secondary");
+			$("#btnnopagdas").removeClass("btn-primary");
+			$("#btnnopagdas").addClass("btn-secondary");
 			var opcion = "cotizaciones";
 			var buscar = $("#buscar").val();
 			var table = $("#dt_listar_cotizaciones").DataTable({
@@ -1058,37 +1187,22 @@
 			obtener_data_ver_cotizacion("#dt_listar_cotizaciones tbody", table);
 		}
 
-		var obtener_data_ver_cotizacion = function(tbody, table){ // se obtiene el id del usuario para eliminar del DT Usuarios
+		var obtener_data_ver_cotizacion = function(tbody, table){
+
+		var obtener_data_ver_cotizacion_facturado = function(tbody, table){
+
+		var obtener_data_ver_cotizacion_facturado = function(tbody, table){
 			$(tbody).on("click", "button.vercotizacion", function(){
 				var data = table.row( $(this).parents("tr") ).data();
-				var cotizacion = data.cotizacion;
-				window.location.href = "../cotizaciones/verCotizacion.php?numero="+cotizacion;
-			});
-		}
-
-		var obtener_data_ver_remision = function(tbody, table){ // se obtiene el id del usuario para eliminar del DT Usuarios
-			$(tbody).on("click", "button.verremision", function(){
-				var data = table.row( $(this).parents("tr") ).data();
-				var remision = data.remision;
-				window.location.href = "../remisiones/verRemision.php?remision="+remision;
-			});
-		}
-
-		var obtener_data_ver_herramienta = function(tbody, table){ // se obtiene el id del usuario para eliminar del DT Usuarios
-			$(tbody).on("click", "button.verherramienta", function(){
-				var data = table.row( $(this).parents("tr") ).data();
 				console.log(data);
-				var cotizacion = data.cotizacion;
-				var remision = data.remision;
-				var pedido = data.pedido;
-
-				if(remision == 0 || remision == ""){
-					window.location.href = "../pedidos/verPedido.php?refCotizacion="+cotizacion+"&numeroPedido="+pedido;
-				}else{
-					window.location.href = "../remisiones/verRemision.php?remision="+remision;
-				}
+				// var remision = data.remision;
+				// window.location.href = "../remisiones/verRemision.php?remision="+remision;
 			});
 		}
+
+		var obtener_data_ver_remision = function(tbody, table){
+
+		var obtener_data_ver_herramienta = function(tbody, table){
 
 		function buscardatoscliente(idcliente){
 			var opcion = "datoscliente";

@@ -33,9 +33,8 @@
 			break;
 
 		case 'partidasocdescripcion':
-			$fechaInicio = $_POST['fechaInicio'];
-			$fechaFin = $_POST['fechaFin'];
-			partidasocdescripcion($fechaInicio, $fechaFin, $conexion_usuarios);
+			$folio = $_POST['folio'];
+			partidasocdescripcion($folio, $conexion_usuarios);
 			break;
 	}
 
@@ -376,8 +375,10 @@
 		echo json_encode($arreglo, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_PARTIAL_OUTPUT_ON_ERROR);
 	}
 
-	function partidasocdescripcion($fechaInicio, $fechaFin, $conexion_usuarios){
-		$query = "SELECT * FROM utilidad_pedido WHERE fecha_orden_compra >='$fechaInicio' AND fecha_orden_compra <='$fechaFin' ORDER BY fecha_orden_compra DESC";
+	function partidasocdescripcion($folio, $conexion_usuarios){
+		$fechaFin = date("Y-m-d");
+		$fechaInicio = date("Y-01-01");
+		$query = "SELECT * FROM utilidad_pedido WHERE folio = '$folio' AND fecha_orden_compra >='$fechaInicio' AND fecha_orden_compra <= '$fechaFin' ORDER BY fecha_orden_compra DESC";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 
 		if (mysqli_num_rows($resultado) > 0) {

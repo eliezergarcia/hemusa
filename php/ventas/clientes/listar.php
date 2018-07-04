@@ -25,6 +25,12 @@
 			sin_entregar($idcliente, $buscar, $conexion_usuarios);
 			break;
 
+		case 'facturasnopagadas':
+			$idcliente = $_POST['idcliente'];
+			$buscar = $_POST['buscar'];
+			facturas_no_pagadas($idcliente, $buscar, $conexion_usuarios);
+			break;
+
 		case 'remisiones':
 			$idcliente = $_POST['idcliente'];
 			$buscar = $_POST['buscar'];
@@ -78,6 +84,41 @@
 		echo json_encode($arreglo, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_PARTIAL_OUTPUT_ON_ERROR);
 	}
 
+	function facturas_no_pagadas($idcliente, $buscar, $conexion_usuarios){
+		$query = "SELECT cotizacion.*, contactos.CondPago FROM cotizacion LEFT JOIN contactos ON contactos.id=cotizacion.cliente WHERE cliente = '$idcliente' AND factura!='0' ORDER BY facturaFecha DESC";
+		$resultado = mysqli_query($conexion_usuarios, $query);
+
+		if(mysqli_num_rows($resultado) < 1){
+			$arreglo['data'] = 0;
+		}else{
+			$i = 1;
+			while($data = mysqli_fetch_assoc($resultado)){
+				$vencimiento = $data['CondPago'];
+				$fecha = strftime("%d/%m/%Y", strtotime($data['facturaFecha']));
+				// $vencimiento = strtotime($fecha."+".$vencimiento."days");
+				$vencimiento = strtotime($fecha."+ 60 days");
+				$vencimiento = date("Y-m-d",$vencimiento);
+
+				$arreglo["data"][] = array(
+					'id' => $data['id'],
+					'indice' => $i,
+					'remision' => $data['remision'],
+					'factura' => $data['factura'],
+					'ordencompra' => $data['NoPedClient'],
+					'fechafactura' => $data['facturaFecha'],
+					'pagado' => round($data['Pagado'], 2),
+					'suma' => round($data['precioTotal'] + ($data['precioTotal']*.16),2),
+					'moneda' => strtoupper($data['moneda']),
+					'vencefactura' => $vencimiento
+				);
+				$i++;
+			}
+
+		}
+		echo json_encode($arreglo, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_PARTIAL_OUTPUT_ON_ERROR);
+		mysqli_close($conexion_usuarios);
+	}
+
 	function facturado_no_entregado($idcliente, $buscar, $conexion_usuarios){
 		$query = "SELECT * FROM contactos WHERE id = '$idcliente'";
 		$resultado = mysqli_query($conexion_usuarios, $query);
@@ -102,10 +143,12 @@
 						$arreglo["data"][] = array(
 								'id' => $data['id'],
 								'indice' => $i,
+								'pedidocliente' => $data['NoPedClient'],
+								'remision' => $data['remision'],
 								'ref' => $data['ref'],
 								'fecha' => $data['facturaFecha'],
 								'cantidad' => $data['partidaCantidad'],
-								'suma' => $data['precioTotal']
+								'suma' => "$ ".$data['precioTotal']
 							);
 						$i++;
 					}
@@ -226,6 +269,7 @@
 					$arreglo["data"][] = array(
 							'id' => $data['id'],
 							'indice' => $i,
+							'cotizacion' => $data['ref'],
 							'remision' => $data['remision'],
 							'cliente' => $cliente,
 							'contacto' => utf8_encode($data['contacto']),

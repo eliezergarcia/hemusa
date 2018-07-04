@@ -102,7 +102,6 @@
 		var data;
 
 		function handleFileSelect(evt) {
-			$("#mod-success").modal("show");
 			var file = evt.target.files[0];
 
 			Papa.parse(file, {
@@ -131,73 +130,21 @@
             ],
             "language": idioma_espanol,
     				"dom":
-  	    			"<'row be-datatable-header'<'col-sm-6'><'col-sm-6 text-right'f>>" +
+  	    			"<'row be-datatable-header'<'col-sm-6'B><'col-sm-6 text-right'f>>" +
   	    			"<'row be-datatable-body'<'col-sm-12'tr>>" +
   	    			"<'row be-datatable-footer'<'col-sm-5'i><'col-sm-7'p>>",
+						"buttons":[
+							{
+									text: '<i class="fas fa-upload"></i> Subir lista',
+									"className": "btn btn-lg btn-space btn-primary",
+									titleAttr: 'Subir lista',
+									action: function ( e, dt, node, config ) {
+
+									}
+							}
+						]
           });
-					setTimeout(function () {
-						$(".texto1").fadeOut(300, function(){
-							$(this).html("");
-							$(this).fadeIn(300);
-						});
-					}, 5000);
-					setTimeout(function () {
-							$(".texto1").append("<br>");
-							$(".texto1").append("<br>");
-							$(".texto1").append("<div class='text-center'>");
-							$(".texto1").append("<h3>La lista de precios se está actualizando.</h3>");
-							$(".texto1").append("<h4>Este proceso puede demorar algunos minutos.</h4>");
-							$(".texto1").append("</div>");
-							$(".texto1").append("<br>");
-							$(".texto1").append("<div class='text-center'><div class='be-spinner'><svg width='40px' height='40px' viewBox='0 0 66 66' xmlns='http://www.w3.org/2000/svg'><circle fill='none' stroke-width='4' stroke-linecap='round' cx='33' cy='33' r='30' class='circle'></circle></svg></div></div></div>");
-							$(".texto1").append("<br>");
-							$(".texto1").append("<h4><label id='numeroi'></label> filas de <label id='numeroj'></label> actualizadas</h4>");
-						}, 7000);
-					var opcion = "subirlista";
-					var lista = data.data;
-					var j = 1000;
-					setTimeout(function () {
-						$('#numeroj').html(j);
-					}, 7000);
-						var filascorrectas = 0;
-						var filaserror = 0;
-					for (var i = 1; i <= j; i++) {
-						var lista = JSON.stringify(data.data[i]);
-						console.log(lista);
-						console.log(i);
-						$.ajax({
-							method: "POST",
-							url: "guardar.php",
-							dataType: "json",
-							data: {"opcion": opcion, "lista": lista, "indice": i},
-						}).done( function( info ){
-							console.log(info.respuesta);
-							$('#numeroi').html(info.indice);
-							if (info.respuesta == "BIEN") {
-								filascorrectas = parseInt(filascorrectas) + 1;
-							}else{
-								filaserror = parseInt(filaserror) + 1;
-							}
-							if (info.indice == (j)) {
-								setTimeout(function () {
-									$(".texto1").fadeOut(300, function(){
-										$(this).html("");
-										$(this).fadeIn(300);
-									});
-								}, 2000);
-								setTimeout(function () {
-									$(".texto1").append("<br>");
-									$(".texto1").append("<div class='text-success'><span class='modal-main-icon mdi mdi-check-circle'></span></div>");
-									$(".texto1").append("<h3>Correcto!</h3>");
-									$(".texto1").append("<h4>La lista de precios se actualizó correctamente.</h4>");
-									$(".texto1").append("<br>");
-									$(".texto1").append("<h5>Correctos: <h4 class='text-success'>"+filascorrectas+"</h4></h5>");
-									$(".texto1").append("<h5>Errores: <h4 class='text-danger'>"+filaserror+"</h4></h5>");
-									console.log(lista.length);
-								}, 2500);
-							}
-						});
-					}
+
 				}
 			});
 			// setTimeout( function () {
@@ -213,120 +160,76 @@
 			// }, 5000);
 		}
 
-
-		// var listar = function(){
-		// 	var palabraBusca = $("#palabraBusca").val(),
-		// 		marcaBuscar = $("#marcaBuscar").val();
-    //
-		// 	if (marcaBuscar == "") {
-		// 		marcaBuscar = "todo";
-		// 	}
-		// 	console.log(palabraBusca);
-		// 	console.log(marcaBuscar);
-		// 	var table = $("#dt_precios").DataTable({
-		// 		"destroy":"true",
-		// 		"bDeferRender": true,
-		// 		"scrollX": true,
-		// 		"sPaginationType": "full_numbers",
-		// 		"ajax":{
-		// 			"method":"POST",
-		// 			"url":"listar_precios.php",
-		// 			"data": {
-		// 				"palabraBusca": palabraBusca,
-		// 				"marcaBuscar": marcaBuscar
-		// 			}
-		// 		},
-		// 		"columns":[
-		// 			{"data":"marca"},
-		// 			{"data":"modelo"},
-		// 			{"data":"descripcion"},
-		// 			{"data":"precioLista"},
-		// 			{"data":"precioIVA"},
-		// 			{"data":"almacen"},
-		// 			{"data":"moneda"},
-		// 			{"data":"clase"},
-		// 			{"data":"igi"},
-		// 			{"defaultContent": "<div class='invoice-footer'><button class='editar btn btn-space btn-lg btn-primary' data-toggle='modal' data-target='#modalInformacion'><i class='fas fa-edit fa-sm' aria-hidden='true'></i></button></div>"}
-		// 		],
-    //     "lengthChange": false,
-		// 		"language": idioma_espanol,
-		// 		"dom":
-    // 			"<'row be-datatable-header'<'col-sm-6'B><'col-sm-6 text-right'f>>" +
-    // 			"<'row be-datatable-body'<'col-sm-12'tr>>" +
-    // 			"<'row be-datatable-footer'<'col-sm-5'i><'col-sm-7'p>>",
-		// 		"createdRow": function ( row, data, index ) {
-		// 			console.log(data.clase);
-		// 			if ( data.clase == "E" ) {
-		// 					$('td', row).eq(0).addClass('table-text-claseE');
-		// 					$('td', row).eq(1).addClass('table-text-claseE');
-		// 					$('td', row).eq(2).addClass('table-text-claseE');
-		// 					$('td', row).eq(3).addClass('table-text-claseE');
-		// 					$('td', row).eq(4).addClass('table-text-claseE');
-		// 					$('td', row).eq(5).addClass('table-text-claseE');
-		// 					$('td', row).eq(6).addClass('table-text-claseE');
-		// 					$('td', row).eq(7).addClass('table-text-claseE');
-		// 					$('td', row).eq(8).addClass('table-text-claseE');
-		// 			}
-		// 			if ( data.clase == "D" ) {
-		// 					$('td', row).eq(0).addClass('table-text-claseD');
-		// 					$('td', row).eq(1).addClass('table-text-claseD');
-		// 					$('td', row).eq(2).addClass('table-text-claseD');
-		// 					$('td', row).eq(3).addClass('table-text-claseD');
-		// 					$('td', row).eq(4).addClass('table-text-claseD');
-		// 					$('td', row).eq(5).addClass('table-text-claseD');
-		// 					$('td', row).eq(6).addClass('table-text-claseD');
-		// 					$('td', row).eq(7).addClass('table-text-claseD');
-		// 					$('td', row).eq(8).addClass('table-text-claseD');
-		// 			}
-		// 		},
-		// 		"buttons":[
-		//             {
-		//             extend: 'collection',
-		//             text: '<i class="fas fa-table fa-sm"></i> Exportar tabla',
-		//             "className": "btn btn-lg btn-space btn-secondary",
-		//             buttons: [
-		//                 {
-		//                   extend:    'excelHtml5',
-		//                   text:      '<i class="fas fa-file-excel fa-lg"></i> Excel',
-		//                   // "className": "btn btn-lg btn-space btn-secondary",
-		//                   exportOptions: {
-		//                     columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8 ]
-		//                   }
-		//                 },
-		//                 {
-		//                   extend: 'csv',
-		//                   text: '<i class="fas fa-file-alt fa-lg"></i> Csv',
-		//                   // "className": "btn btn-lg btn-space btn-secondary",
-		//                   exportOptions: {
-		//                           columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8 ]
-		//                   }
-		//                 },
-		//                 {
-		//                   extend:    'pdfHtml5',
-		//                   text:      '<i class="fas fa-file-pdf fa-lg"></i> Pdf',
-		//                   download: 'open',
-		//                   // "className": "btn btn-lg btn-space btn-secondary",
-		//                   exportOptions: {
-		//                     columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8 ]
-		//                   }
-		//                 },
-		//                 {
-		//                   extend: 'print',
-		//                   text: '<i class="fas fa-print fa-lg"></i> Imprimir',
-		//                   header: 'false',
-		//                   exportOptions: {
-		//                           columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8 ]
-		//                   },
-		//                   orientation: 'landscape',
-		//                   pageSize: 'LEGAL'
-		//                 }
-		//             ]
-		//           }
-		// 		]
-		// 	});
-    //
-		// 	obtener_data_herramienta("#dt_precios tbody", table);
-		// }
+		var obtener_data_subir_lista = function(tbody, table){
+			$(".subirlistaprecios").on("click", function(){
+				console.log("Subir Lista");
+				// $("#mod-success").modal("show");
+				// obtener_data_subir_lista(data.data);
+				// setTimeout(function () {
+				// 	$(".texto1").fadeOut(300, function(){
+				// 		$(this).html("");
+				// 		$(this).fadeIn(300);
+				// 	});
+				// }, 5000);
+				// setTimeout(function () {
+				// 		$(".texto1").append("<br>");
+				// 		$(".texto1").append("<br>");
+				// 		$(".texto1").append("<div class='text-center'>");
+				// 		$(".texto1").append("<h3>La lista de precios se está actualizando.</h3>");
+				// 		$(".texto1").append("<h4>Este proceso puede demorar algunos minutos.</h4>");
+				// 		$(".texto1").append("</div>");
+				// 		$(".texto1").append("<br>");
+				// 		$(".texto1").append("<div class='text-center'><div class='be-spinner'><svg width='40px' height='40px' viewBox='0 0 66 66' xmlns='http://www.w3.org/2000/svg'><circle fill='none' stroke-width='4' stroke-linecap='round' cx='33' cy='33' r='30' class='circle'></circle></svg></div></div></div>");
+				// 		$(".texto1").append("<br>");
+				// 		$(".texto1").append("<h4><label id='numeroi'></label> filas de <label id='numeroj'></label> actualizadas</h4>");
+				// 	}, 7000);
+				// var opcion = "subirlista";
+				// var lista = data.data;
+				// var j = 1000;
+				// setTimeout(function () {
+				// 	$('#numeroj').html(j);
+				// }, 7000);
+				// 	var filascorrectas = 0;
+				// 	var filaserror = 0;
+				// for (var i = 1; i <= j; i++) {
+				// 	var lista = JSON.stringify(data.data[i]);
+				// 	console.log(lista);
+				// 	console.log(i);
+				// 	$.ajax({
+				// 		method: "POST",
+				// 		url: "guardar.php",
+				// 		dataType: "json",
+				// 		data: {"opcion": opcion, "lista": lista, "indice": i},
+				// 	}).done( function( info ){
+				// 		console.log(info.respuesta);
+				// 		$('#numeroi').html(info.indice);
+				// 		if (info.respuesta == "BIEN") {
+				// 			filascorrectas = parseInt(filascorrectas) + 1;
+				// 		}else{
+				// 			filaserror = parseInt(filaserror) + 1;
+				// 		}
+				// 		if (info.indice == (j)) {
+				// 			setTimeout(function () {
+				// 				$(".texto1").fadeOut(300, function(){
+				// 					$(this).html("");
+				// 					$(this).fadeIn(300);
+				// 				});
+				// 			}, 2000);
+				// 			setTimeout(function () {
+				// 				$(".texto1").append("<br>");
+				// 				$(".texto1").append("<div class='text-success'><span class='modal-main-icon mdi mdi-check-circle'></span></div>");
+				// 				$(".texto1").append("<h3>Correcto!</h3>");
+				// 				$(".texto1").append("<h4>La lista de precios se actualizó correctamente.</h4>");
+				// 				$(".texto1").append("<br>");
+				// 				$(".texto1").append("<h5>Correctos: <h4 class='text-success'>"+filascorrectas+"</h4></h5>");
+				// 				$(".texto1").append("<h5>Errores: <h4 class='text-danger'>"+filaserror+"</h4></h5>");
+				// 				console.log(lista.length);
+				// 			}, 2500);
+				// 		}
+				// 	});
+				// }
+			});
+		}
 
 	</script>
   <script type="text/javascript" src="<?php echo $ruta; ?>php/js/idioma_espanol.js"></script>
