@@ -102,9 +102,10 @@
 				$arreglo["data"][] = array(
 					'id' => $data['id'],
 					'indice' => $i,
+					'cotizacion' => $data['ref'],
 					'remision' => $data['remision'],
 					'factura' => $data['factura'],
-					'ordencompra' => $data['NoPedClient'],
+					'pedido' => $data['NoPedClient'],
 					'fechafactura' => $data['facturaFecha'],
 					'pagado' => round($data['Pagado'], 2),
 					'suma' => round($data['precioTotal'] + ($data['precioTotal']*.16),2),

@@ -1039,7 +1039,7 @@
 	        "columns":[
 	          {"data": "indice"},
 	          {"data": "factura"},
-	          {"data": "ordencompra"},
+	          {"data": "pedido"},
 	          {"data": "fechafactura"},
 	          {"data": "pagado"},
 						{"data": "suma"},
@@ -1192,17 +1192,44 @@
 		var obtener_data_ver_cotizacion_facturado = function(tbody, table){
 
 		var obtener_data_ver_cotizacion_facturado = function(tbody, table){
-			$(tbody).on("click", "button.vercotizacion", function(){
+			$$(tbody).on("click", "button.vercotizacion", function(){
 				var data = table.row( $(this).parents("tr") ).data();
 				console.log(data);
-				// var remision = data.remision;
-				// window.location.href = "../remisiones/verRemision.php?remision="+remision;
+				var cotizacion = data.cotizacion;
+				var remision = data.remision;
+				var pedido = data.pedido;
+
+				if(remision == 0 || remision == ""){
+					window.location.href = "../pedidos/verPedido.php?refCotizacion="+cotizacion+"&numeroPedido="+pedido;
+				}else{
+					window.location.href = "../remisiones/verRemision.php?remision="+remision;
+				}
 			});
 		}
 
 		var obtener_data_ver_remision = function(tbody, table){
+			$(tbody).on("click", "button.verremision", function(){
+				var data = table.row( $(this).parents("tr") ).data();
+				var remision = data.remision;
+				window.location.href = "../remisiones/verRemision.php?remision="+remision;
+			});
+		}
 
 		var obtener_data_ver_herramienta = function(tbody, table){
+			$(tbody).on("click", "button.verherramienta", function(){
+				var data = table.row( $(this).parents("tr") ).data();
+				console.log(data);
+				var cotizacion = data.cotizacion;
+				var remision = data.remision;
+				var pedido = data.pedido;
+
+				if(remision == 0 || remision == ""){
+					window.location.href = "../pedidos/verPedido.php?refCotizacion="+cotizacion+"&numeroPedido="+pedido;
+				}else{
+					window.location.href = "../remisiones/verRemision.php?remision="+remision;
+				}
+			});
+		}
 
 		function buscardatoscliente(idcliente){
 			var opcion = "datoscliente";

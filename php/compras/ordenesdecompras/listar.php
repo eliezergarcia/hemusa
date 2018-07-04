@@ -409,7 +409,7 @@
 
 				$check = '<input type="checkbox" class="btn btn-outline-primary" name="hcheck" value="'.$data['id_cotizacion_herramientas'].'">';
 
-				if ($data['factura_hemusa'] != 0) {
+				if ($data['factura_hemusa'] != 0 || $data['remision'] != 0) {
 					$cantfacturada = $data['cantidad'];
 				}else{
 					$cantfacturada = 0;
