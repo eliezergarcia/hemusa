@@ -256,7 +256,9 @@
 						'precioTotal' => "$ ".round($precioTotal,2),
 						'almacen' => $almacen,
 						'fechaCompromiso' => "",
-						'utilidad' => "% ".round($utilidad,2)
+						'utilidad' => "% ".round($utilidad,2),
+						'enviado' => $data['enviadoFecha'],
+						'recibido' => $data['recibidoFecha']
 					);
 					$i++;
 				}
@@ -363,12 +365,20 @@
 				$total = ($subtotal + $flete) * 1.16;
 				$utilidad = (($total - $subtotal)/$total) * 100;
 
+				$query2 = "SELECT * FROM ordendecompras WHERE noDePedido = '$ordencompra'";
+				$resultado2 = mysqli_query($conexion_usuarios, $query2);
+
+				while($data2 = mysqli_fetch_assoc($resultado2)){
+					$monedaorden = $data2['moneda'];
+				}
+
 				$arreglo["data"][] = array(
 					'subtotal' => "$ ".round($subtotal, 2),
 					'flete' => "$ ".round($flete, 2),
 					'iva' => "$ ".round($iva, 2),
 					'total' => "$ ".round($total, 2),
-					'utilidad' => "% ".round($utilidad, 2)
+					'utilidad' => "% ".round($utilidad, 2),
+					'moneda' => strtoupper($monedaorden)
 				);
 			}
 		}
