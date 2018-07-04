@@ -336,46 +336,66 @@
     var guardar = function(ordencompra){
       $("form").on("submit", function(e){
         e.preventDefault();
-        $("#frmActualizarDatos #ordencompra").val(ordencompra);
-        var frm = $(this).serialize();
-        console.log(frm);
+        var opcion =  $("#opcion", this).val();
 
-        var verificar = 0;
-  			$("input[name=hcheck]").each(function (index) {
-  				if($(this).is(':checked')){
-  					verificar++;
-  				}
-  			});
-  			if(verificar == 0){
-  				alert("Debes de seleccionar al menos una partida!");
-  			}else{
-  				var herramienta = new Array();
-  				$("input[name=hcheck]").each(function (index) {
-  					if($(this).is(':checked')){
-  						herramienta.push($(this).val());
-  					}
-  				});
-          console.log(herramienta);
+        console.log(opcion);
+        if (opcion == "editarpartidadescripcion") {
+          var frm = $(this).serialize();
+          $(".modal").modal("hide");
+          // var frm = $(this).serialize();
+          $.ajax({
+            method: "POST",
+            url: "guardar.php",
+            data: frm,
+          }).done( function( info ){
+            var json_info = JSON.parse( info );
+            mostrar_mensaje(json_info);
+            $("#dt_partidas_oc_descripcion").DataTable().ajax.reload();
+            $("#dt_totales_oc").DataTable().ajax.reload();
+          });
+        }else{
 
-          if ($("#frmActualizarDatos #pedimento").val().length != 0 && $("#frmActualizarDatos #pedimento").val().length != 21 ) {
-            alert("El número de pedimento es inválido!\nVerifica que tiene la siguiente estructura\nEjemplo: XX--XX--XXXX--XXXXXXX");
+          $("#frmActualizarDatos #ordencompra").val(ordencompra);
+          var frm = $(this).serialize();
+          console.log(frm);
+
+          var verificar = 0;
+          $("input[name=hcheck]").each(function (index) {
+            if($(this).is(':checked')){
+              verificar++;
+            }
+          });
+          if(verificar == 0){
+            alert("Debes de seleccionar al menos una partida!");
           }else{
-            var pedimento = $("#frmActualizarDatos #pedimento").val();
-            var folio = $("#frmActualizarDatos #folio").val();
-            var facturaproveedor = $("#frmActualizarDatos #facturaproveedor").val();
-            var entrada = $("#frmActualizarDatos #entrada").val();
-            var opcion = "actualizar";
-            $(".modal").modal("hide");
-            $.ajax({
-              method: "POST",
-              url: "guardar.php",
-              data: {"herramienta": JSON.stringify(herramienta), "pedimento": pedimento, "folio": folio, "facturaproveedor": facturaproveedor, "entrada": entrada, "opcion": opcion}
-            }).done( function( info ){
-              var json_info = JSON.parse( info );
-              mostrar_mensaje(json_info);
-              $("#dt_partidas_oc_descripcion").DataTable().ajax.reload();
-              $("#dt_totales_oc").DataTable().ajax.reload();
+            var herramienta = new Array();
+            $("input[name=hcheck]").each(function (index) {
+              if($(this).is(':checked')){
+                herramienta.push($(this).val());
+              }
             });
+            console.log(herramienta);
+
+            if ($("#frmActualizarDatos #pedimento").val().length != 0 && $("#frmActualizarDatos #pedimento").val().length != 21 ) {
+              alert("El número de pedimento es inválido!\nVerifica que tiene la siguiente estructura\nEjemplo: XX--XX--XXXX--XXXXXXX");
+            }else{
+              var pedimento = $("#frmActualizarDatos #pedimento").val();
+              var folio = $("#frmActualizarDatos #folio").val();
+              var facturaproveedor = $("#frmActualizarDatos #facturaproveedor").val();
+              var entrada = $("#frmActualizarDatos #entrada").val();
+              var opcion = "actualizar";
+              $(".modal").modal("hide");
+              $.ajax({
+                method: "POST",
+                url: "guardar.php",
+                data: {"herramienta": JSON.stringify(herramienta), "pedimento": pedimento, "folio": folio, "facturaproveedor": facturaproveedor, "entrada": entrada, "opcion": opcion}
+              }).done( function( info ){
+                var json_info = JSON.parse( info );
+                mostrar_mensaje(json_info);
+                $("#dt_partidas_oc_descripcion").DataTable().ajax.reload();
+                $("#dt_totales_oc").DataTable().ajax.reload();
+              });
+            }
           }
         }
       });
