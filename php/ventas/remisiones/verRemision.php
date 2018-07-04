@@ -210,20 +210,20 @@
 											<table class="table table-bordered table-striped">
 												<tbody>
 													<tr>
-														<th><h6><b>SUB-TOTAL:</b></h6></th>
-														<th><h6><label style="font-size: 15px;" id="subtotal"></h6></label></th>
+														<th><h5><b>SUB-TOTAL:</b></h5></th>
+														<th><h5><label style="font-size: 15px;" id="subtotal"></h5></label></th>
 													</tr>
 													<tr>
-														<th><h6><b>IVA (16%):</b></h6></th>
-														<th><h6><label style="font-size: 15px;" id="iva"></label></h6></th>
+														<th><h5><b>IVA (16%):</b></h5></th>
+														<th><h5><label style="font-size: 15px;" id="iva"></label></h5></th>
 													</tr>
 													<tr>
-														<th><h6><b>TOTAL:</b></h6></th>
-														<th><h6><b><label style="font-size: 18px;" class="text-primary" id="total"></label></b></h6></th>
+														<th><h5><b>TOTAL:</b></h5></th>
+														<th><h5><b><label style="font-size: 18px;" class="text-primary" id="total"></label></b></h5></th>
 													</tr>
 													<tr>
-														<th><h6><b>MONEDA:</b></h6></th>
-														<th><h6><label style="font-size: 15px;" id="monedatotal"></label></h6></th>
+														<th><h5><b>MONEDA:</b></h5></th>
+														<th><h5><label style="font-size: 15px;" id="monedatotal"></label></h5></th>
 													</tr>
 												</tbody>
 											</table>
@@ -683,7 +683,7 @@
 			            };
 
 			            var subtotal = api
-			                .column( 6 )
+			                .column( 7 )
 			                .data()
 			                .reduce( function (a, b) {
 			                    return intVal(a) + intVal(b);
