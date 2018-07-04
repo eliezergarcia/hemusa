@@ -309,7 +309,7 @@
                   title: 'excel_nacional'
                 },
                 {
-                  extend: 'csv',
+                  extend: 'excelHtml5',
                   text: '<i class="fas fa-file-alt fa-lg"></i> Excel Importacion',
                   // "className": "btn btn-lg btn-space btn-secondary",
                   exportOptions: {
