@@ -59,7 +59,6 @@
 												<div class="invoice-footer">
 											    	<button id="btn_listar_precios" class="btn btn-lg btn-primary"><i class="fas fa-search fa-sm"></i> Buscar</button>
 													</form>
-														<button id="subirListaPrecios" class="btn btn-lg btn-success" data-toggle="modal" data-target="#modalSubirListaPrecios"><i class="fas fa-list-alt fa-sm"></i> Subir Lista</button>
 												</div>
 										    </div>
 								 	</div>
@@ -78,6 +77,14 @@
 												<th>Moneda</th>
 												<th>Clase</th>
 												<th>IGI</th>
+												<th>Estándar</th>
+												<th>Unidad</th>
+												<th>Clave SAT</th>
+												<th>Pág. Catálogo</th>
+												<th>Sec. Catálogo</th>
+												<th>IVA</th>
+												<th>Mes Promoción</th>
+												<th>Desc.</th>
 												<th>Ver y Editar</th>
 											</tr>
 										</thead>
@@ -277,6 +284,14 @@
 					{"data":"moneda"},
 					{"data":"clase"},
 					{"data":"igi"},
+					{"data":"estandar"},
+					{"data":"unidad"},
+					{"data":"clavesat"},
+					{"data":"pagcatalogo"},
+					{"data":"seccatalogo"},
+					{"data":"iva"},
+					{"data":"mespromocion"},
+					{"data":"descuento"},
 					{"defaultContent": "<div class='invoice-footer'><button class='editar btn btn-space btn-lg btn-primary' data-toggle='modal' data-target='#modalInformacion'><i class='fas fa-edit fa-sm' aria-hidden='true'></i></button></div>"}
 				],
         "lengthChange": false,

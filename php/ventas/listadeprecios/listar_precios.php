@@ -66,15 +66,21 @@
 					'precioLista' => "$ ".round($precioLista, 2),
 					'precioIVA' => "$ ".round($precioIVA, 2),
 					'almacen' => $data['enReserva'],
-					'moneda' => $data['moneda'],
+					'moneda' => strtoupper($data['moneda']),
 					'clase' => $data['clase'],
-					'igi' => $igi
+					'igi' => $igi,
+					'estandar' => $data['estandar'],
+					'unidad' => $data['Unidad'],
+					'clavesat' => $data['ClaveProductoSAT'],
+					'pagcatalogo' => $data['paginaCatalogo'],
+					'seccatalogo' => $data['seccionCatalogo'],
+					'iva' => $data['iva'],
+					'mespromocion' => $data['mesPromocion'],
+					'descuento' => "% ".$data['descuento'],
 				);
 
 			}
-			echo json_encode($arreglo);
+			echo json_encode($arreglo, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_PARTIAL_OUTPUT_ON_ERROR);
 		}
-		mysqli_free_result($resPrecios);
 		mysqli_close($conexion_usuarios);
-
  ?>
