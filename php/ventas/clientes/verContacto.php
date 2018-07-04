@@ -1097,7 +1097,7 @@
 				        },
 					]
 			    });
-					obtener_data_ver_cotizacion_nopagada("#dt_listar_facturadonoentregado tbody", table);
+					obtener_data_ver_cotizacion_nopagada("#dt_listar_facturasnopagadas tbody", table);
 		}
 
 		var listar_cotizaciones = function(){
@@ -1188,11 +1188,39 @@
 		}
 
 		var obtener_data_ver_cotizacion = function(tbody, table){
+			$(tbody).on("click", "button.vercotizacion", function(){
+				var data = table.row( $(this).parents("tr") ).data();
+				console.log(data);
+				var cotizacion = data.cotizacion;
+				var remision = data.remision;
+				var pedido = data.pedido;
+
+				if(remision == 0 || remision == ""){
+					window.location.href = "../pedidos/verPedido.php?refCotizacion="+cotizacion+"&numeroPedido="+pedido;
+				}else{
+					window.location.href = "../remisiones/verRemision.php?remision="+remision;
+				}
+			});
+		}
+
+		var obtener_data_ver_cotizacion_nopagada = function(tbody, table){
+			$(tbody).on("click", "button.vercotizacion", function(){
+				var data = table.row( $(this).parents("tr") ).data();
+				console.log(data);
+				var cotizacion = data.cotizacion;
+				var remision = data.remision;
+				var pedido = data.pedido;
+
+				if(remision == 0 || remision == ""){
+					window.location.href = "../pedidos/verPedido.php?refCotizacion="+cotizacion+"&numeroPedido="+pedido;
+				}else{
+					window.location.href = "../remisiones/verRemision.php?remision="+remision;
+				}
+			});
+		}
 
 		var obtener_data_ver_cotizacion_facturado = function(tbody, table){
-
-		var obtener_data_ver_cotizacion_facturado = function(tbody, table){
-			$$(tbody).on("click", "button.vercotizacion", function(){
+			$(tbody).on("click", "button.vercotizacion", function(){
 				var data = table.row( $(this).parents("tr") ).data();
 				console.log(data);
 				var cotizacion = data.cotizacion;

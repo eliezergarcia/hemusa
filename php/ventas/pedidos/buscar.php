@@ -56,6 +56,7 @@
 				$informacion['remision'] = $data['remision'];
 				$informacion['fecha'] = $data['fecha'];
 				$informacion['vendedor'] = $data['vendedor'];
+				$informacion['pedidocliente'] = $data['NoPedClient'];
 				$informacion['factura'] = $data['factura'];
 				$informacion['pagado'] = $data['Pagado'];
 				$informacion['total'] = $data['precioTotal'];

@@ -899,7 +899,7 @@
 					document.getElementById("refCotizacion").innerHTML = data.refCotizacion;
 					document.getElementById("fecha").innerHTML = data.fecha;
 					document.getElementById("vendedor").innerHTML = data.vendedor;
-					document.getElementById("ordenCompra").innerHTML = data.ordenCompra;
+					document.getElementById("ordenCompra").innerHTML = data.pedidocliente;
 					document.getElementById("factura").innerHTML = data.factura;
 					document.getElementById("pagado").innerHTML = "$ "+data.pagado+" - $"+data.total;
 					document.getElementById("monedatotal").innerHTML = (data.moneda).toUpperCase();
