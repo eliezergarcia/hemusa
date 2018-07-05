@@ -186,6 +186,7 @@
 	}
 
 	function buscardatos($remision, $conexion_usuarios){
+
 		$query = "SELECT * FROM cotizacion WHERE remision='$remision'";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 
@@ -199,13 +200,22 @@
 					$informacion['cliente'] = $data2;
 				}
 
-				$query3 = "SELECT DISTINCT cotizacionRef FROM cotizacionherramientas WHERE remision = '$remision'";
-				$res3 = mysqli_query($conexion_usuarios, $query3);
-				while($data3 = mysqli_fetch_assoc($res3)){
-					$cotizacionRef = $data3['cotizacionRef'];
+				$informacion['refCotizacion'] = $data['ref'];
+
+				if ($data['vendedor'] == "") {
+					$informacion['vendedor'] = $data['vendedor'];
+				}else{
+					$informacion['vendedor'] = $data['contacto'];
 				}
 
-				$query4 = "SELECT * FROM cotizacion WHERE ref='$cotizacionRef'";
+				
+				$query3 = "SELECT DISTINCT factura FROM cotizacionherramientas WHERE remision = '$remision'";
+				$res3 = mysqli_query($conexion_usuarios, $query3);
+				while($data3 = mysqli_fetch_assoc($res3)){
+					$cotizacionRef = $data3['factura'];
+				}
+
+				$query4 = "SELECT * FROM cotizacion WHERE id='$cotizacionRef'";
 				$resultado4 = mysqli_query($conexion_usuarios, $query4);
 				while($data4 = mysqli_fetch_assoc($resultado4)){
 					$vendedor = $data4['vendedor'];
@@ -213,11 +223,9 @@
 					$pedidocliente = $data4['NoPedClient'];
 				}
 
-				$informacion['vendedor'] = $vendedor;
 				$informacion['factura'] = $factura;
 				$informacion['pedidocliente'] = $pedidocliente;
 
-				$informacion['refCotizacion'] = $data['ref'];
 				$informacion['remision'] = $data['remision'];
 				$informacion['fecha'] = $data['fecha'];
 				$informacion['pagado'] = $data['Pagado'];

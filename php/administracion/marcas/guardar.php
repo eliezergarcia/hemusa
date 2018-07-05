@@ -64,7 +64,6 @@
 		$codigoBarras = $data->{'CODIGO BARRAS'};
 		$clavesat = $data->{'CLAVE SAT'};
 		$unidad = $data->{'UNIDAD'};
-		$clavesat = $data->{'CLAVE SAT'};
 		$iva = $data->{'IVA'};
 		$mesPromocion = $data->{'MES PROMOCION'};
 		$descuento = $data->{'DESCUENTO'};
@@ -83,7 +82,7 @@
 
 		$descuentos = str_replace(" %", "", $descuento);
 		$query = "UPDATE productos SET descripcion='$descripcion', precioBase='$precioBase', clase='A', CantidadMinima='$estandar', Unidad='$unidad', ClaveProductoSAT='$clavesat', estandar='$estandar', paginaCatalogo='$paginaCatalogo', seccionCatalogo='$seccionCatalogo', codigoBarras='$codigoBarras', iva='$iva', mesPromocion='$mesPromocion', descuento='$descuentos' WHERE marca='$marca' AND ref='$modelo'";
-		// $query = "SELECT * FROM productos WHERE marca ='$marca' AND ref = '$modelo'";
+
 		$resultado = mysqli_query($conexion_usuarios, $query);
 		if(!$resultado){
 			$query = "INSERT INTO productos (marca, ref, descripcion, precioBase, enReserva, clase, moneda, CantidadMinima, Unidad, ClaveProductoSAT, EnPortal, estandar, paginaCatalogo, seccionCatalogo, codigoBarras, iva, mesPromocion, descuento) VALUES ('$marca', '$modelo', '$descripcion', '$precioBase', 0, 'A', 'mxn', '$estandar', '$unidad', '$clavesat', 0, '$estandar', '$paginaCatalogo', '$seccionCatalogo', '$codigoBarras', '$iva', '$mesPromocion', '$descuento')";
@@ -92,6 +91,19 @@
 				$informacion["indice"] = $indice;
 				$informacion["respuesta"] = "ERROR";
 				$informacion["error"] = mysqli_error($query);
+				$informacion["MODELO"] = $modelo;
+				$informacion["DESCRIPCION"] = $descripcion;
+				$informacion["ESTANDAR"] = $estandar;
+				$informacion["PRECIO BASE"] = $precioBase;
+				$informacion["MARCA"] = $marca;
+				$informacion["PAGINA CATALOGO"] = $paginaCatalogo;
+				$informacion["SECCION CATALOGO"] = $seccionCatalogo;
+				$informacion["CODIGO BARRAS"] = $codigoBarras;
+				$informacion["CLAVE SAT"] = $claveSat;
+				$informacion["UNIDAD"] = $unidad;
+				$informacion["IVA"] = $iva;
+				$informacion["MES PROMOCION"] = $mesPromocion;
+				$informacion["DESCUENTO"] = $descuento;
 			}else{
 				$informacion["indice"] = $indice;
 				$informacion["respuesta"] = "BIEN";
@@ -101,23 +113,6 @@
 			$informacion["respuesta"] = "BIEN";
 		}
 		echo json_encode($informacion);
-
-		// $informacion["indice"] = $indice;
-		// $informacion["modelo"] = $modelo;
-		// $informacion["descripcion"] = $descripcion;
-		// $informacion["estandar"] = $estandar;
-		// $informacion["precioBase"] = $precioBase;
-		// $informacion["marca"] = $marca;
-		// $informacion["paginaCatalogo"] = $paginaCatalogo;
-		// $informacion["seccionCatalogo"] = $seccionCatalogo;
-		// $informacion["codigoBarras"] = $codigoBarras;
-		// $informacion["unidad"] = $unidad;
-		// $informacion["iva"] = $iva;
-		// $informacion["mesPromocion"] = $mesPromocion;
-		// $informacion["descuento"] = $descuento;
-		// $informacion["clavesat"] = $clavesat;
-		// $informacion["respuesta"] = "BIEN";
-		// echo json_encode($informacion);
 	}
 
 	function existe_marca($marca, $conexion_usuarios){

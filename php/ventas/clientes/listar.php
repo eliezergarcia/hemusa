@@ -93,11 +93,20 @@
 		}else{
 			$i = 1;
 			while($data = mysqli_fetch_assoc($resultado)){
-				$vencimiento = $data['CondPago'];
-				$fecha = strftime("%d/%m/%Y", strtotime($data['facturaFecha']));
-				// $vencimiento = strtotime($fecha."+".$vencimiento."days");
-				$vencimiento = strtotime($fecha."+ 60 days");
-				$vencimiento = date("Y-m-d",$vencimiento);
+				if ($data['CondPago'] == 0) {
+					// $vencimiento = 1;
+					// $fecha = strftime("%d/%m/%Y", strtotime($data['facturaFecha']));
+					// $vencimiento = strtotime($fecha."+".$vencimiento."days");
+					// // $vencimiento = strtotime($fecha."+ 60 days");
+					// $vencimiento = date("Y-m-d",$vencimiento);
+					$vencimiento = "si";
+				}else{
+					$vencimiento = $data['CondPago'];
+					$fecha = strftime("%d/%m/%Y", strtotime($data['facturaFecha']));
+					$vencimiento = strtotime($fecha."+ 30 days");
+					// $vencimiento = strtotime($fecha."+ 60 days");
+					// $vencimiento = date("Y-m-d",$vencimiento);
+				}
 
 				$arreglo["data"][] = array(
 					'id' => $data['id'],
@@ -107,8 +116,8 @@
 					'factura' => $data['factura'],
 					'pedido' => $data['NoPedClient'],
 					'fechafactura' => $data['facturaFecha'],
-					'pagado' => round($data['Pagado'], 2),
-					'suma' => round($data['precioTotal'] + ($data['precioTotal']*.16),2),
+					'pagado' => "$ ".round($data['Pagado'], 2),
+					'suma' => "$ ".round($data['precioTotal'] + ($data['precioTotal']*.16),2),
 					'moneda' => strtoupper($data['moneda']),
 					'vencefactura' => $vencimiento
 				);
