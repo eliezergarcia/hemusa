@@ -1782,6 +1782,9 @@
 					$('#dt_cotizacion').DataTable().ajax.reload();
 					mostrar_mensaje(json_info);
 					limpiar_datos();
+					if (json_info.cotizacion == "partida") {
+						$("#modalAgregarPartida").modal("show");
+					}
 				});
 			});
 		}

@@ -323,6 +323,7 @@
 										echo json_encode($informacion);
 									}else{
 										$informacion["respuesta"] = "BIEN";
+										$informacion["cotizacion"] = "partida";
 										$informacion["informacion"] = "Los datos de la partida se guardaron correctamente y se registro el nuevo producto!";
 										echo json_encode($informacion);
 									}
@@ -343,11 +344,13 @@
 												echo json_encode($informacion);
 											}else{
 												$informacion["respuesta"] = "BIEN";
+												$informacion["cotizacion"] = "partida";
 												$informacion["informacion"] = "Los datos de la partida se guardaron correctamente y se actualizaron los datos del producto!";
 												echo json_encode($informacion);
 											}
 										}else{
 											$informacion["respuesta"] = "BIEN";
+											$informacion["cotizacion"] = "partida";
 											$informacion["informacion"] = "Los datos de la partida se guardaron correctamente!";
 											echo json_encode($informacion);
 										}
@@ -363,11 +366,13 @@
 										echo json_encode($informacion);
 									}else{
 										$informacion["respuesta"] = "BIEN";
+										$informacion["cotizacion"] = "partida";
 										$informacion["informacion"] = "Los datos de la partida se guardaron correctamente y se actualizaron los datos del producto!";
 										echo json_encode($informacion);
 									}
 								}else{
 									$informacion["respuesta"] = "BIEN";
+									$informacion["cotizacion"] = "partida";
 									$informacion["informacion"] = "Los datos de la partida se guardaron correctamente!";
 									echo json_encode($informacion);
 								}

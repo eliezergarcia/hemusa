@@ -49,7 +49,7 @@
 		$resultado = mysqli_query($conexion_usuarios, $query);
 
 		if(!$resultado){
-			die('Error');
+			$arreglo["data"] = 0;
 		}else{
 			while($data = mysqli_fetch_assoc($resultado)){
 				$arreglo["data"][] = array_map("utf8_encode", $data);
