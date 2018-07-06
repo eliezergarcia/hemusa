@@ -226,7 +226,7 @@
 					}else{
 						$fechacompromiso = "Sin fecha de compromiso";
 					}
-					$check = '<input type="checkbox" class="btn btn-outline-primary" name="hpacking" value="'.$data['id'].'">';
+					$check = '<input type="checkbox" class="btn btn-outline-primary" name="hproveedor" value="'.$data['id'].'">';
 
 					if($data['Entregado'] == "0000-00-00"){
 						$entregado = '<input type="checkbox" class="btn btn-outline-primary" name="hentregado" value="'.$data['id'].'">';

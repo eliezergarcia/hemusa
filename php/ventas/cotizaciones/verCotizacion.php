@@ -740,6 +740,14 @@
 					$('input[name=hcambiarpedido]').prop('checked' , false);
 				}
 			});
+
+			$("input[name=hproveedor]").each(function (index) {
+				if($("input[name=selprovg]").is(':checked')){
+					$('input[name=hproveedor]').prop('checked' , true);
+				}else{
+					$('input[name=hproveedor]').prop('checked' , false);
+				}
+			});
 		}
 
 		$("#modalCambiarPedido").on("show.bs.modal", function(){

@@ -196,6 +196,7 @@
 													<th>Fecha Compromiso</th>
 													<th>Clave SAT</th>
 													<th>Proveedor</th>
+													<th><input type="checkbox" class="btn btn-outline-primary" name="selprovg" onclick="seleccionartodo()"></th>
 													<th>Almacen</th>
 													<!-- <th>Entregado <input type="checkbox" class="btn btn-outline-primary" name="sel" onclick="seleccionartodo()"></th> -->
 													<th>Editar</th>
@@ -636,6 +637,14 @@
 					$('input[name=hentregado]').prop('checked' , false);
 				}
 			});
+
+			$("input[name=hproveedor]").each(function (index) {
+				if($("input[name=selprovg]").is(':checked')){
+					$('input[name=hproveedor]').prop('checked' , true);
+				}else{
+					$('input[name=hproveedor]').prop('checked' , false);
+				}
+			});
 		}
 
 		function cerrarcollapse(){
@@ -666,6 +675,7 @@
 						{"data": "fechacompromiso"},
 						{"data": "claveSat"},
 						{"data": "proveedor"},
+						{"data": "check"},
 						{"data": "almacen"},
 						{"defaultContent": "<div class='invoice-footer'><button type='button' class='editar btn btn-lg btn-primary' data-toggle='modal' data-target='#modalEditar'><i class='fas fa-edit fa-sm' aria-hidden='true'></i></button></div>"}
 					],
@@ -707,6 +717,10 @@
 						if ( data.enviado != '0000-00-00' && data.recibido != '0000-00-00' ) {
 							$('td', row).eq(1).addClass('table-text-recibido');
 							$('td', row).eq(2).addClass('table-text-recibido');
+						}
+						if ( data.enviado == '0000-00-00' && data.recibido == '0000-00-00' ) {
+							$('td', row).eq(1).addClass('text-danger');
+							$('td', row).eq(2).addClass('text-danger');
 						}
 					},
 					"buttons":[
@@ -1114,10 +1128,28 @@
 				var proveedor = $("#proveedorg").val();
 				console.log(opcion);
 				console.log(proveedor);
+				var verificar = 0;
+				$("input[name=hproveedor]").each(function (index) {
+					if($(this).is(':checked')){
+						verificar++;
+					}
+				});
+				if(verificar == 0){
+					alert("Debes de seleccionar al menos una partida.");
+				}else{
+					var herramienta = new Array();
+					$("input[name=hproveedor]").each(function (index) {
+						if($(this).is(':checked')){
+							herramienta.push($(this).val());
+						}
+					});
+				}
+					var opcion = "proveedor";
+					console.log(herramienta);
 				$.ajax({
 					method: "POST",
 					url: "guardar.php",
-					data: {"opcion": opcion, "proveedor": proveedor, "refCotizacion": refCotizacion, "numeroPedido": numeroPedido},
+					data: {"opcion": opcion, "herramienta": JSON.stringify(herramienta), "proveedor": proveedor, "refCotizacion": refCotizacion, "numeroPedido": numeroPedido},
 				}).done( function( info ){
 					var json_info = JSON.parse( info );
 					listar_partidas(refCotizacion, numeroPedido, RFC);

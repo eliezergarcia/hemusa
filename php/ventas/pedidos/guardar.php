@@ -48,7 +48,8 @@
 			$proveedor = $_POST['proveedor'];
 			$refCotizacion = $_POST['refCotizacion'];
 			$numeroPedido = $_POST['numeroPedido'];
-			proveedor($proveedor, $refCotizacion, $numeroPedido, $conexion_usuarios);
+			$data = json_decode($_POST['herramienta']);
+			proveedor($proveedor, $refCotizacion, $numeroPedido, $data, $conexion_usuarios);
 			break;
 
 		case 'cantidad':
@@ -436,29 +437,27 @@
 		mysqli_close($conexion_usuarios);
 	}
 
-	function proveedor($proveedor, $refCotizacion, $numeroPedido, $conexion_usuarios){
-		$query = "SELECT id FROM cotizacionherramientas WHERE cotizacionRef='$refCotizacion'";
-		$resultado = mysqli_query($conexion_usuarios, $query);
-		if (!$resultado) {
-			$informacion["respuesta"] = "ERROR";
-			$informacion["informacion"] = "Ocurrió un problema al buscar partidas!";
-		}else{
-			while($data = mysqli_fetch_array($resultado)){
-				$id = $data['id'];
-				if($proveedor == "None"){
-					$fecha = "0000-00-00";
-				}else{
-					$fecha = date("Y-m-d");
-				}
-				$query2 = "UPDATE cotizacionherramientas SET Proveedor='$proveedor', proveedorFecha='$fecha' WHERE id='$id'";
+	function proveedor($proveedor, $refCotizacion, $numeroPedido, $data, $conexion_usuarios){
+		foreach ($data as &$valor) {
+			$id = $valor;
+			if($proveedor == "None" || $proveedor != "ALMACEN"){
+				$fecha = "0000-00-00";
+			}else{
+				$fecha = date("Y-m-d");
+			}
+			if ($proveedor == "ALMACEN") {
+				$query2 = "UPDATE cotizacionherramientas SET Proveedor='$proveedor', proveedorFecha='$fecha', enviadoFecha='$fecha', recibidoFecha='$fecha' WHERE id='$id'";
 				$resultado2 = mysqli_query($conexion_usuarios, $query2);
-				if (!$resultado2) {
-					$informacion["respuesta"] = "ERROR";
-					$informacion["informacion"] = "Ocurrió un problema al guardar el proveedor ".$proveedor."!";
-				}else{
-					$informacion["respuesta"] = "BIEN";
-					$informacion["informacion"] = "El proveedor ".$proveedor." se guardó correctamente!";
-				}
+			}else{
+				$query2 = "UPDATE cotizacionherramientas SET Proveedor='$proveedor', proveedorFecha='$fecha', enviadoFecha='$fecha', recibidoFecha='$fecha' WHERE id='$id'";
+				$resultado2 = mysqli_query($conexion_usuarios, $query2);
+			}
+			if (!$resultado2) {
+				$informacion["respuesta"] = "ERROR";
+				$informacion["informacion"] = "Ocurrió un problema al guardar el proveedor ".$proveedor."!";
+			}else{
+				$informacion["respuesta"] = "BIEN";
+				$informacion["informacion"] = "El proveedor ".$proveedor." se guardó correctamente!";
 			}
 		}
 		echo json_encode($informacion);
@@ -490,7 +489,7 @@
 	}
 
 	function editarpartida($id, $claveSat, $noserie, $cantidad, $fechacompromiso, $proveedor, $split, $entregado, $pedimento, $conexion_usuarios){
-		if($proveedor == "None"){
+		if($proveedor == "None" || $proveedor != "ALMACEN"){
 			$fecha = "0000-00-00";
 		}else{
 			$fecha = date("Y-m-d");
@@ -498,7 +497,12 @@
 		$query = "UPDATE utilidad_pedido SET fecha_entregado = '$entregado', Pedimento = '$pedimento' WHERE id_cotizacion_herramientas =$id";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 
-		$query = "UPDATE cotizacionherramientas SET ClaveProductoSAT='$claveSat', NoSerie='$noserie', cantidad='$cantidad', fechacompromiso='$fechacompromiso', Proveedor='$proveedor', proveedorFecha='$fecha', Entregado = '$entregado', Pedimento = '$pedimento' WHERE id =$id";
+		if ($proveedor == "ALMACEN") {
+			$query = "UPDATE cotizacionherramientas SET ClaveProductoSAT='$claveSat', NoSerie='$noserie', cantidad='$cantidad', fechacompromiso='$fechacompromiso', Proveedor='$proveedor', proveedorFecha='$fecha', enviadoFecha='$fecha', recibidoFecha='$fecha', Entregado = '$entregado', Pedimento = '$pedimento' WHERE id =$id";
+		}else{
+			$query = "UPDATE cotizacionherramientas SET ClaveProductoSAT='$claveSat', NoSerie='$noserie', cantidad='$cantidad', fechacompromiso='$fechacompromiso', Proveedor='$proveedor', proveedorFecha='$fecha', enviadoFecha='$fecha', recibidoFecha='$fecha', Entregado = '$entregado', Pedimento = '$pedimento' WHERE id =$id";
+		}
+
 		$resultado = mysqli_query($conexion_usuarios, $query);
 		if (!$resultado) {
 			$informacion["respuesta"] = "ERROR";
