@@ -29,6 +29,10 @@
                     	<div class="card card-fullcalendar">
                       		<div class="card-body">
                             <br>
+														<div class="">
+															<h4>Instrucciones: <button class="btn btn-warning" data-toggle="modal" data-target="#modalInstrucciones"><i class="fas fa-info-circle"></i></button></h4>
+														</div>
+														<br>
                             <div class="row col-4 justify-content-center">
                               <input id="csv-file" name="files" accept=".csv" type="file" class="form-control">
                             </div>
@@ -60,6 +64,64 @@
             	</div>
       		</div>
     	</div>
+
+			<!-- Modal Instrucciones -->
+				<div class="modal fade colored-header colored-header-warning" id="modalInstrucciones" tabindex="-1" role="dialog" aria-labelledby="modalAgregarLabel" aria-hidden="true">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+								<div class="modal-header">
+									<h4 class="modal-title">Instrucciones</h4>
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+								<div class="modal-body row align-items-center justify-content-center">
+									<div>
+										<div class="col-12 justify-content-center">
+											<label>Para poder subir la lista de precios correctamente, es necesario que el archivo tenga las siguientes características:</label>
+										</div>
+										<br>
+										<div class="col-12 justify-content-center">
+											<label>1. La <b>primera fila</b> deberá ser los <b>encabezados de cada columna</b></label>
+											<label>2. Los <b>nombres</b> de las <b>columnas</b> a actualizar deberán estar <b>en mayúsculas y sin acentos</b>, tal y como se muestra a continuación: </label>
+											<br><br>
+											<div class="row col justify-content-around">
+												<div class="col">
+													<h5>- MODELO</h5>
+													<h5>- DESCRIPCION</h5>
+													<h5>- ESTANDAR</h5>
+													<h5>- PRECIO BASE</h5>
+													<h5>- MARCA</h5>
+													<h5>- PAGINA CATALOGO</h5>
+													<h5>- SECCION CATALOGO</h5>
+												</div>
+												<div class="col">
+													<h5>- CODIGO BARRAS</h5>
+													<h5>- CLAVE SAT</h5>
+													<h5>- UNIDAD</h5>
+													<h5>- IVA</h5>
+													<h5>- MES PROMOCION</h5>
+													<h5>- DESCUENTO</h5>
+												</div>
+											</div>
+										</div>
+										<br>
+										<div class="col-12 justify-content-center">
+											<label>3. El <b>formato</b> de las <b>columnas de precio</b> deberán tener <b>formato general, sin "$, puntos y comas"</b>.</label>
+										</div>
+										<div class="col-12 justify-content-center">
+											<label>4. El archivo deberá <b>guardarse como "Texto CSV (.csv)"</b>.</label>
+										</div>
+										<div class="col-12 justify-content-center">
+											<label>5. El <b>delimitador de campos</b> deberá ser: <b>":"</b>.</label>
+										</div>
+										<div class="col-12 justify-content-center">
+											<label>6. El <b>delimitador de cadena</b> deberá ser: <b>comilla simple</b>.</label>
+										</div>
+									</div>
+								</div>
+						</div>
+					</div>
+				</div>
 
 			<div id="mod-success" tabindex="-1" role="dialog" style="" class="modal fade" data-backdrop="static">
 				<div class="modal-dialog">
@@ -162,6 +224,8 @@
 				}, 5500);
 					var filascorrectas = 0;
 					var filaserror = 0;
+					$('#filascorrectas').html(filascorrectas);
+					$('#filaserror').html(filaserror);
 					var arregloErrores = new Array();
 				for (var i = 1; i <= j; i++) {
 					var lista = JSON.stringify(data.data[i]);
