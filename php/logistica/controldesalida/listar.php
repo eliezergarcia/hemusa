@@ -26,7 +26,7 @@
   function nacional($conexion_usuarios){
 		$fechaFin = date("Y-m-d");
 		$fechaInicio = date("Y-01-01");
-    $query = "SELECT DISTINCT folio, proveedor FROM utilidad_pedido WHERE (folio != '' OR folio != 0  OR folio != '0') AND fecha_orden_compra >='$fechaInicio' AND fecha_orden_compra <= '$fechaFin' ORDER BY id DESC";
+    $query = "SELECT DISTINCT folio, proveedor FROM utilidad_pedido WHERE (folio != '' OR folio != 0  OR folio != '0') AND fecha_orden_compra >='$fechaInicio' AND fecha_orden_compra <= '$fechaFin' ORDER BY id DESC LIMIT 250";
     $resultado = mysqli_query($conexion_usuarios, $query);
 
     if(!$resultado){
