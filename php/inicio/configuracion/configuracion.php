@@ -22,11 +22,16 @@
               <div class="user-display">
                 <div class="user-display-bg"><img src="../../../assets/img/gallery/img-1.png" alt="Profile Background" style="margin-top: -300px;"></div>
                 <div class="user-display-bottom">
+                  <!-- <a href="" data-toggle="tooltip" data-placement="left" title="Cambiar foto de perfil"><div class="user-display-avatar"><img src="../../../assets/img/<?php echo $avatar; ?>" alt="Avatar"></div></a>
+                  <div class="user-display-info">
+                    <div class="name" style="font-size: 20px;"><?php echo $usuariologin; ?></div>
+                    <div class="nick"><span class="mdi mdi-account"></span> <?php echo $user; ?></div>
+                  </div> -->
                   <div class="name" style="font-size: 22px;">Configuración del sistema</div>
                 </div>
               </div>
             </div>
-            <div class="col-lg-6 col-sm-12">
+            <!-- <div class="col-lg-6 col-sm-12">
               <div class="card">
                 <div class="card-header card-header-divider row align-items-end justify-content-between">
                   <p style="font-size: 20px;"></p>
@@ -35,8 +40,8 @@
                     <button id="" type="button" name="button" class="btn btn-secondary btn-space btn-lg">Editar <i class="fas fa-pencil-alt fa-sm"></i></button>
                 </div>
               </div>
-            </div>
-            <div class="col-lg-6 col-sm-12">
+            </div> -->
+            <!-- <div class="col-lg-6 col-sm-12">
               <div class="card">
                 <div class="card-header card-header-divider row align-items-start justify-content-between">
                   <p style="font-size: 20px;">Notificaciones</p>
@@ -85,7 +90,7 @@
                   </div>
                 </div>
               </div>
-            </div>
+            </div> -->
 
             <div class="col-lg-5 col-sm-12">
               <div class="card">
@@ -207,8 +212,8 @@
       $(document).ready(function(){
       	App.init()
         App.formElements()
-        App.chat()
         buscarConfiguracion()
+        // App.chat()
       })
 
       const inputs = [].slice.call(document.querySelectorAll('.colores input'));

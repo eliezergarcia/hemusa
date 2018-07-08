@@ -27,8 +27,8 @@
 	                <div class="user-name"><?php echo $usuario." ".$usuarioApellido; ?></div>
 	                <div class="user-position online">Disponible</div>
 	              </div>
-	              	<!-- <a href="<?php echo $ruta;?>php/inicio/perfil/perfil.php" class="dropdown-item"><span class="icon mdi mdi-face"></span> Cuenta</a> -->
-	              	<!-- <a href="<?php echo $ruta;?>php/inicio/configuracion/configuracion.php" class="dropdown-item"><span class="icon mdi mdi-settings"></span> Configuración</a> -->
+	              	<a href="<?php echo $ruta;?>php/inicio/perfil/perfil.php" class="dropdown-item"><span class="icon mdi mdi-face"></span> Cuenta</a>
+	              	<a href="<?php echo $ruta;?>php/inicio/configuracion/configuracion.php" class="dropdown-item"><span class="icon mdi mdi-settings"></span> Configuración</a>
 	              	<a href="../../../index.php" class="dropdown-item"><span class="icon mdi mdi-power"></span> Cerrar sesión</a>
 	            </div>
 	          </li>

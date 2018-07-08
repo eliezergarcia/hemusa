@@ -146,7 +146,6 @@
                       <select style="font-size: 16px;" type="text" name="sexo" id="sexo" class="form-control form-control-sm col-10 select2 input2">
                         <option value="M">Masculino</option>
                         <option value="F">Femenino</option>
-
                       </select>
                     </div>
                   </div>
@@ -207,6 +206,24 @@
                         <td>Jun 30, 2015</td>
                         <td class="actions"><a href="#" class="icon"><i class="mdi mdi-delete"></i></a></td>
                       </tr>
+                      <tr>
+                        <td class="user-avatar"> <img src="../../../assets/img/avatar5.png" alt="Avatar">Justine Myranda</td>
+                        <td>Left sidebar adjusments</td>
+                        <td>Jul 15, 2015</td>
+                        <td class="actions"><a href="#" class="icon"><i class="mdi mdi-delete"></i></a></td>
+                      </tr>
+                      <tr>
+                        <td class="user-avatar"> <img src="../../../assets/img/avatar3.png" alt="Avatar">Sherwood Clifford</td>
+                        <td>Topbar dropdown style</td>
+                        <td>Jun 30, 2015</td>
+                        <td class="actions"><a href="#" class="icon"><i class="mdi mdi-delete"></i></a></td>
+                      </tr>
+                      <tr>
+                        <td class="user-avatar"> <img src="../../../assets/img/avatar.png" alt="Avatar">Kristopher Donny</td>
+                        <td>Left sidebar adjusments</td>
+                        <td>Jul 15, 2015</td>
+                        <td class="actions"><a href="#" class="icon"><i class="mdi mdi-delete"></i></a></td>
+                      </tr>
                     </tbody>
                   </table>
                 </div>
@@ -223,8 +240,8 @@
       	App.init()
         App.formElements()
       	App.pageProfile()
-        App.chat()
         buscarDatosUsuario()
+        App.chat()
       })
 
       function buscarDatosUsuario () {
