@@ -3,7 +3,6 @@ var App = (function () {
 
   App.pageCalendar = function( ){
 
-
     /* initialize the external events
     -----------------------------------------------------------------*/
 
@@ -27,88 +26,69 @@ var App = (function () {
 
     /* initialize the calendar
     -----------------------------------------------------------------*/
+      $.ajax({
+        method: "POST",
+        url: "../calendario/listar.php",
+        dataType: 'json',
+      }).done( function( data ){
+        console.log(data);
+        $('#calendar').fullCalendar({
+        header: {
+          left: 'title',
+          center: '',
+          right: 'month,agendaWeek,agendaDay, today, prev,next',
+        },
+        drop: function() {
+          // is the "remove after drop" checkbox checked?
+          if ($('#drop-remove').is(':checked')) {
+            // if so, remove the element from the "Draggable Events" list
+            $(this).remove();
+          }
+        },
+        defaultDate: new Date(),
+        editable: true,
+        eventLimit: true,
+        droppable: true, // this allows things to be dropped onto the calendar
+        events: data,
+        dayClick: function(date, jsEvent, view) {
+          $("#modalCrearEvento").modal("show");
+          var dia = date.format("DD-MM-YYYY");
+          $("#fechaInicio").val(dia);
+          $("#fechaFin").val(dia);
+        },
+        eventClick: function(calEvent, jsEvent, view){
+          var id = calEvent.id;
+          var opcion = "buscarevento";
+          $.ajax({
+            method: "POST",
+            url: "buscar.php",
+            dataType: 'json',
+            data: {"id": id, "opcion": opcion},
+          }).done( function( data ){
+            console.log(data);
+            if (data.respuesta == "BIEN") {
+              $("#modalEditarEvento").modal("show");
+              $("#frmEditarEventoCalendario #idEvento").val(data.data.id);
+              $("#frmEditarEventoCalendario #titulo").val(data.data.titulo);
+              $("#frmEditarEventoCalendario #fechaInicio").val(data.data.fechaInicio);
+              $("#frmEditarEventoCalendario #fechaFin").val(data.data.fechaFin);
 
-    $('#calendar').fullCalendar({
-      header: {
-        left: 'title',
-        center: '',
-        right: 'month,agendaWeek,agendaDay, today, prev,next',
-      },
-      defaultDate: new Date(),
-      editable: true,
-      eventLimit: true,
-      droppable: true, // this allows things to be dropped onto the calendar
-      drop: function() {
-        // is the "remove after drop" checkbox checked?
-        if ($('#drop-remove').is(':checked')) {
-          // if so, remove the element from the "Draggable Events" list
-          $(this).remove();
+              if (data.data.horaInicio != "00:00:00" && data.data.horaFin != "00:00:00") {
+                $('input[name=checkTodoElDiaEditar]').prop('checked' , false);
+                $('#frmEditarEventoCalendario input[name=horaInicio]').prop('disabled' , false);
+                $('#frmEditarEventoCalendario input[name=horaFin]').prop('disabled' , false);
+              }
+              $("#frmEditarEventoCalendario #horaInicio").val(data.data.horaInicio);
+              $("#frmEditarEventoCalendario #horaFin").val(data.data.horaFin);
+              $("#frmEditarEventoCalendario #repetir").val(data.data.repetir);
+              $("#frmEditarEventoCalendario #recordatorio").val(data.data.recordatorio);
+              $("#frmEditarEventoCalendario #notas").val(data.data.notas);
+            }else{
+              mostrar_mensaje(data);
+            }
+          });
         }
-      },
-      events: [
-        {
-          title: 'All Day Event',
-          start: '2016-06-01'
-        },
-        {
-          title: 'Long Event',
-          start: '2016-06-07',
-          end: '2016-06-10'
-        },
-        {
-          id: 999,
-          title: 'Repeating Event',
-          start: '2016-06-09T16:00:00'
-        },
-        {
-          id: 999,
-          title: 'Repeating Event',
-          start: '2016-06-16T16:00:00'
-        },
-        {
-          title: 'Conference',
-          start: '2016-06-11',
-          end: '2016-06-13'
-        },
-        {
-          title: 'Meeting',
-          start: '2016-06-12T10:30:00',
-          end: '2016-06-12T12:30:00'
-        },
-        {
-          title: 'Lunch',
-          start: '2016-06-12T12:00:00'
-        },
-        {
-          title: 'Meeting',
-          start: '2016-06-12T14:30:00'
-        },
-        {
-          title: 'Happy Hour',
-          start: '2016-06-12T17:30:00'
-        },
-        {
-          title: 'Dinner',
-          start: '2016-06-12T20:00:00'
-        },
-        {
-          title: 'Birthday Party',
-          start: '2016-06-13T07:00:00'
-        },
-        {
-          title: 'Click for Google',
-          url: 'http://google.com/',
-          start: '2016-06-28'
-        }
-      ],
-      dayClick: function(date, jsEvent, view) {
-            $("#modalEvento").modal("show");
-            // var dia = date.format("DD/MM/YYYY");
-            // document.getElementById("dia").innerHTML = dia;
-            // var dia = moment().format('YYYY-MM-DDThh:mm');
-            // console.log(dia);
-            // $("#fechainicio").val(dia);
-        }
+      });
     });
 
   };

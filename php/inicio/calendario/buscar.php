@@ -75,10 +75,12 @@
 		$resultado = mysqli_query($conexion_usuarios, $query);
 
 		if (!$resultado) {
-			$informacion['respuesta'] = "ERROR";
+			$informacion["respuesta"] = "ERROR";
+			$informacion["informacion"] = "Ocurrió un problema al buscar la información del evento";
 		}else{
 			while ($data = mysqli_fetch_assoc($resultado)) {
-				$informacion['data'] = $data;
+				$informacion["respuesta"] = "BIEN";
+				$informacion["data"] = $data;
 			}
 		}
 		echo json_encode($informacion);

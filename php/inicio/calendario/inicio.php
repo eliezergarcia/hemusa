@@ -11,17 +11,9 @@
   	<?php include('../../enlacescss.php'); ?>
 </head>
 <body id="body-menu" class="">
-  	<?php include('../../header.php'); ?>
-	  	<div class="be-content">
-	        <!-- <div class="page-head">
-	          	<h2 class="page-head-title">Calendario</h2>
-	          	<nav aria-label="breadcrumb" role="navigation">
-		            <ol class="breadcrumb page-head-nav">
-		              	<li class="breadcrumb-item"><a href="#">Inicio</a></li>
-		              	<li class="breadcrumb-item"><a href="#">Calendario</a></li>
-		            </ol>
-	          	</nav>
-	        </div> -->
+  <?php include('../../header.php'); ?>
+	  <div class="be-content">
+
 	        <!-- <div class="col-2">
 		        <select id="menu" name="menu" class="form-control form-control-sm select2">
 		        	<option value="1">Barra completa</option>
@@ -29,129 +21,238 @@
 		        	<option value="3">Barra oculta</option>
 		        </select>
 	        </div> -->
-	        <div class="main-content container-fluid">
-	          	<div class="row full-calendar">
-	            	<div class="col-lg-12">
-	              		<div class="card card-fullcalendar">
-	                		<div class="card-body">
-                        <div class="row justify-content-center">
-                          <div class="" style="font-size: 30px">
-                            Tipo de Cambio: $
-                          </div>
-                          <div class="">
-                            <label id="tipoCambio" style="font-size: 30px"></label>
-                          </div>
-                        </div>
-	                  		<div id="calendar"></div>
-	                		</div>
-	              		</div>
-	          		</div>
-	        	</div>
+      <div class="main-content container-fluid">
+      	<div class="row full-calendar">
+        	<div class="col-lg-12">
+            <div class="row justify-content-center">
+              <div class="btn-space" style="font-size: 25px">
+                Tipo de Cambio: $
+              </div>
+              <div class="">
+                <label id="tipoCambio" style="font-size: 25px"></label>
+              </div>
+            </div>
+        		<div class="card card-fullcalendar">
+          		<div class="card-body">
+            		<div id="calendar"></div>
+          		</div>
+        		</div>
+      		</div>
+      	</div>
 			</div>
 		</div>
 
 
-		<!-- Modal Evento Calendario -->
-	    	<div id="modalEvento" tabindex="-1" role="dialog" class="modal fade colored-header colored-header-primary">
-		      	<div class="modal-dialog">
-		        	<div class="modal-content">
-		          		<div class="modal-header modal-header-colored">
-		            		<h3 class="modal-title">Calendario - Evento</h3>
-		            		<button type="button" data-dismiss="modal" aria-hidden="true" class="close md-close"><span class="mdi mdi-close">       </span></button>
-		          		</div>
-			          	<div class="modal-body">
-			              	<label><h4><b>Titulo</b></h4></label>
-			            	<div class="form-group">
-			              		<input type="titulo" class="form-control form-control-sm">
-			            	</div>
-			                <label><h4><b>Fecha</b></h4></label>
-			            	<div class="row no-margin-y">
-			              		<div class="col-6 col-sm-7 col-md-5 col-lg-4 col-xl-6">
-			                        <div data-min-view="2" data-date-format="dd-mm-yyyy" class="input-group date datetimepicker">
-			                          	<input size="16" type="text" value="<?php echo date("d-m-Y"); ?>" class="form-control form-control-sm">
-			                          	<div class="input-group-append">
-			                            	<button class="btn btn-primary"><i class="icon-th mdi mdi-calendar"></i></button>
-			                          	</div>
-			                        </div>
-			                    </div>
-			              		<div class="col-6 col-sm-7 col-md-5 col-lg-4 col-xl-6">
-			                        <div data-min-view="2" data-date-format="dd-mm-yyyy" class="input-group date datetimepicker">
-			                          	<input size="16" type="text" value="<?php echo date("d-m-Y"); ?>" class="form-control form-control-sm">
-			                          	<div class="input-group-append">
-			                            	<button class="btn btn-primary"><i class="icon-th mdi mdi-calendar"></i></button>
-			                          	</div>
-			                        </div>
-			                    </div>
-			            	</div>
-			            	<div class="form-group row">
-			                	<div class="col-12 col-sm-7 col-md-5 col-lg-4 col-xl-6">
-			                    	<div data-start-view="0" data-date="" data-date-format="HH:ii" data-link-field="dtp_input1" class="input-group date datetimepicker">
-			                      		<input size="16" type="text" value="00:00" readonly="" class="form-control form-control-sm">
-			                      		<div class="input-group-append">
-			                        		<button class="btn btn-primary"><i class="icon-th mdi mdi-calendar"></i></button>
-			                      		</div>
-			                    	</div>
-			                  	</div>
-			                  	<div class="col-12 col-sm-7 col-md-5 col-lg-4 col-xl-6">
-			                    	<div data-start-view="0" data-date="" data-date-format="HH:ii" data-link-field="dtp_input1" class="input-group date datetimepicker">
-			                      		<input size="16" type="text" value="00:00" readonly="" class="form-control form-control-sm">
-			                      		<div class="input-group-append">
-			                        		<button class="btn btn-primary"><i class="icon-th mdi mdi-calendar"></i></button>
-			                      		</div>
-			                    	</div>
-			                  	</div>
-			                </div>
-			                <div class="row">
-			              		<div class="form-group col-md-12">
-			                		<label class="custom-control custom-checkbox custom-control-inline">
-	                          			<input type="checkbox" checked="" class="custom-control-input"><span class="custom-control-label custom-control-color">Todo el día</span>
-	                        		</label>
-			              		</div>
-			            	</div>
-			                <label><h4><b>Repetir</b></h4></label>
-			                <div class="form-group row">
-			                    <div class="col-12 col-sm-12 col-lg-12">
-			                        <select class="form-control form-control-sm select2">
-			                            <option value="AK">No repetir</option>
-			                            <option value="HI">Diariamente</option>
-			                            <option value="HI">De Lunes a Viernes</option>
-			                            <option value="HI">Semanalmente</option>
-			                            <option value="HI">Mensualmente</option>
-			                            <option value="HI">Anualmente</option>
-			                        </select>
-			                    </div>
-			                </div>
-			                <label><h4><b>Recordatorio</b></h4></label>
-			                <div class="form-group row">
-			                    <div class="col-12 col-sm-8 col-lg-12">
-			                        <select class="form-control form-control-sm select2">
-			                        	<option value="">Añadir recordatorio..</option>
-			                            <option value="AK">5 minutos</option>
-			                            <option value="HI">10 minutos</option>
-			                            <option value="HI">15 minutos</option>
-			                            <option value="HI">30 minutos</option>
-			                            <option value="HI">1 hora</option>
-			                            <option value="HI">1 día</option>
-			                            <option value="HI">2 días</option>
-			                            <option value="HI">3 días</option>
-			                            <option value="HI">1 semana</option>
-			                        </select>
-			                    </div>
-			                </div>
-	                      	<label for="inputTextarea3"><h4><b>Notas</b></h4></label>
-			                <div class="form-group row">
-	                      		<div class="col-12 col-sm-8 col-lg-12">
-	                        		<textarea id="inputTextarea3" class="form-control"></textarea>
-	                      		</div>
-	                    	</div>
-			          	</div>
+		<!-- Modal Crear Evento -->
+      <form class="" id="frmCrearEventoCalendario" name="frmCrearEventoCalendario" action="#" method="post">
+        <input type="hidden" name="opcion" id="opcion" value="crearevento">
+        <div id="modalCrearEvento" tabindex="-1" role="dialog" class="modal fade colored-header colored-header-primary">
+		     <div class="modal-dialog">
+		      <div class="modal-content">
+		       <div class="modal-header modal-header-colored">
+		        <h3 class="modal-title btn-space">Crear evento</h3>
+		        <button type="button" data-dismiss="modal" aria-hidden="true" class="close md-close"><span class="mdi mdi-close">       </span></button>
+		       </div>
+			     <div class="modal-body">
+			      <label><h4><b>Titulo</b></h4></label>
+			      <div class="form-group">
+			       <input type="text" id="titulo" name="titulo" class="form-control form-control-sm">
+			      </div>
+			      <label><h4><b>Fecha</b></h4></label>
+			       <div class="row no-margin-y">
+			        <div class="col-6 col-sm-7 col-md-5 col-lg-4 col-xl-6">
+                <div data-min-view="2" data-date-format="dd-mm-yyyy" class="input-group date datetimepicker">
+                  <input size="16" type="text" id="fechaInicio" name="fechaInicio" value="" class="form-control form-control-sm">
+                  <div class="input-group-append">
+                    <button class="btn btn-primary"><i class="icon-th mdi mdi-calendar"></i></button>
+                  </div>
+                </div>
+              </div>
+          		<div class="col-6 col-sm-7 col-md-5 col-lg-4 col-xl-6">
+                <div data-min-view="2" data-date-format="dd-mm-yyyy" class="input-group date datetimepicker">
+                  <input size="16" type="text" id="fechaFin" name="fechaFin" value="" class="form-control form-control-sm">
+                  <div class="input-group-append">
+                    <button class="btn btn-primary"><i class="icon-th mdi mdi-calendar"></i></button>
+                  </div>
+                </div>
+              </div>
+			       </div>
+          	<div class="form-group row">
+              	<div class="col-12 col-sm-7 col-md-5 col-lg-4 col-xl-6">
+                  	<div data-start-view="0" data-date="" data-date-format="HH:ii" data-link-field="dtp_input1" class="input-group date datetimepicker">
+                    		<input size="16" type="text" id="horaInicio" name="horaInicio" value="00:00" disabled class="form-control form-control-sm">
+                    		<div class="input-group-append">
+                      		<button class="btn btn-primary"><i class="icon-th mdi mdi-calendar"></i></button>
+                    		</div>
+                  	</div>
+                	</div>
+                	<div class="col-12 col-sm-7 col-md-5 col-lg-4 col-xl-6">
+                  	<div data-start-view="0" data-date="" data-date-format="HH:ii" data-link-field="dtp_input1" class="input-group date datetimepicker">
+                    		<input size="16" type="text" id="horaFin" name="horaFin" value="00:00" disabled class="form-control form-control-sm">
+                    		<div class="input-group-append">
+                      		<button class="btn btn-primary"><i class="icon-th mdi mdi-calendar"></i></button>
+                    		</div>
+                  	</div>
+                	</div>
+              </div>
+              <div class="row">
+            		<div class="form-group col-md-12">
+              		<label class="custom-control custom-checkbox custom-control-inline">
+                    <input type="checkbox" id="checkTodoElDia" name="checkTodoElDia"  checked="" class="custom-control-input" onclick="quitarReadonly()"><span class="custom-control-label custom-control-color">Todo el día</span>
+                  </label>
+            	  </div>
+          	  </div>
+              <label><h4><b>Repetir</b></h4></label>
+              <div class="form-group row">
+                  <div class="col-12 col-sm-12 col-lg-12">
+                      <select class="form-control form-control-sm select2" id="repetir" name="repetir">
+                          <option value="NR">No repetir</option>
+                          <option value="RD">Diariamente</option>
+                          <option value="RLV">De Lunes a Viernes</option>
+                          <option value="RS">Semanalmente</option>
+                          <option value="RM">Mensualmente</option>
+                          <option value="RA">Anualmente</option>
+                      </select>
+                  </div>
+              </div>
+              <label><h4><b>Recordatorio</b></h4></label>
+              <div class="form-group row">
+                  <div class="col-12 col-sm-8 col-lg-12">
+                      <select class="form-control form-control-sm select2" id="recordatorio" name="recordatorio">
+                      	  <option value="NR">Añadir recordatorio..</option>
+                          <option value="5M">5 minutos</option>
+                          <option value="10M">10 minutos</option>
+                          <option value="15M">15 minutos</option>
+                          <option value="30M">30 minutos</option>
+                          <option value="1H">1 hora</option>
+                          <option value="1D">1 día</option>
+                          <option value="2D">2 días</option>
+                          <option value="3D">3 días</option>
+                          <option value="1S">1 semana</option>
+                      </select>
+                  </div>
+              </div>
+	            <label for="inputTextarea3"><h4><b>Notas</b></h4></label>
+              <div class="form-group row">
+                		<div class="col-12 col-sm-8 col-lg-12">
+                  		<textarea id="notas" name="notas" class="form-control" ></textarea>
+                		</div>
+              	</div>
+        	   </div>
 			          	<div class="modal-footer">
 			            	<button type="button" data-dismiss="modal" class="btn btn-secondary btn-lg md-close">Cancelar</button>
-			            	<button type="button" class="btn btn-primary btn-lg md-close">Guardar</button>
+			            	<button type="submit" class="btn btn-primary btn-lg md-close">Guardar</button>
 			          	</div>
 		        	</div>
 	      		</div>
 	    	</div>
+      </form>
+
+    <!-- Modal Editar Evento -->
+      <form class="" id="frmEditarEventoCalendario" name="frmEditarEventoCalendario" action="#" method="post">
+        <input type="hidden" name="opcion" id="opcion" value="editarevento">
+        <input type="hidden" name="idEvento" id="idEvento" value="">
+        <div id="modalEditarEvento" tabindex="-1" role="dialog" class="modal fade colored-header colored-header-primary">
+		     <div class="modal-dialog">
+		      <div class="modal-content">
+		       <div class="modal-header modal-header-colored">
+		        <h3 class="modal-title btn-space">Editar evento</h3>
+		        <button type="button" data-dismiss="modal" aria-hidden="true" class="close md-close"><span class="mdi mdi-close">       </span></button>
+		       </div>
+			     <div class="modal-body">
+			      <label><h4><b>Titulo</b></h4></label>
+			      <div class="form-group">
+			       <input type="text" id="titulo" name="titulo" class="form-control form-control-sm">
+			      </div>
+			      <label><h4><b>Fecha</b></h4></label>
+			       <div class="row no-margin-y">
+			        <div class="col-6 col-sm-7 col-md-5 col-lg-4 col-xl-6">
+                <div data-min-view="2" data-date-format="dd-mm-yyyy" class="input-group date datetimepicker">
+                  <input size="16" type="text" id="fechaInicio" name="fechaInicio" value="" class="form-control form-control-sm">
+                  <div class="input-group-append">
+                    <button class="btn btn-primary"><i class="icon-th mdi mdi-calendar"></i></button>
+                  </div>
+                </div>
+              </div>
+          		<div class="col-6 col-sm-7 col-md-5 col-lg-4 col-xl-6">
+                <div data-min-view="2" data-date-format="dd-mm-yyyy" class="input-group date datetimepicker">
+                  <input size="16" type="text" id="fechaFin" name="fechaFin" value="" class="form-control form-control-sm">
+                  <div class="input-group-append">
+                    <button class="btn btn-primary"><i class="icon-th mdi mdi-calendar"></i></button>
+                  </div>
+                </div>
+              </div>
+			       </div>
+          	<div class="form-group row">
+              	<div class="col-12 col-sm-7 col-md-5 col-lg-4 col-xl-6">
+                  	<div data-start-view="0" data-date="" data-date-format="HH:ii" data-link-field="dtp_input1" class="input-group date datetimepicker">
+                    		<input size="16" type="text" id="horaInicio" name="horaInicio" value="00:00" disabled class="form-control form-control-sm">
+                    		<div class="input-group-append">
+                      		<button class="btn btn-primary"><i class="icon-th mdi mdi-calendar"></i></button>
+                    		</div>
+                  	</div>
+                	</div>
+                	<div class="col-12 col-sm-7 col-md-5 col-lg-4 col-xl-6">
+                  	<div data-start-view="0" data-date="" data-date-format="HH:ii" data-link-field="dtp_input1" class="input-group date datetimepicker">
+                    		<input size="16" type="text" id="horaFin" name="horaFin" value="00:00" disabled class="form-control form-control-sm">
+                    		<div class="input-group-append">
+                      		<button class="btn btn-primary"><i class="icon-th mdi mdi-calendar"></i></button>
+                    		</div>
+                  	</div>
+                	</div>
+              </div>
+              <div class="row">
+            		<div class="form-group col-md-12">
+              		<label class="custom-control custom-checkbox custom-control-inline">
+                    <input type="checkbox" id="checkTodoElDiaEditar" name="checkTodoElDiaEditar"  checked="" class="custom-control-input" onclick="quitarReadonly()"><span class="custom-control-label custom-control-color">Todo el día</span>
+                  </label>
+            	  </div>
+          	  </div>
+              <label><h4><b>Repetir</b></h4></label>
+              <div class="form-group row">
+                  <div class="col-12 col-sm-12 col-lg-12">
+                      <select class="form-control form-control-sm select2" id="repetir" name="repetir">
+                          <option value="NR">No repetir</option>
+                          <option value="RD">Diariamente</option>
+                          <option value="RLV">De Lunes a Viernes</option>
+                          <option value="RS">Semanalmente</option>
+                          <option value="RM">Mensualmente</option>
+                          <option value="RA">Anualmente</option>
+                      </select>
+                  </div>
+              </div>
+              <label><h4><b>Recordatorio</b></h4></label>
+              <div class="form-group row">
+                  <div class="col-12 col-sm-8 col-lg-12">
+                      <select class="form-control form-control-sm select2" id="recordatorio" name="recordatorio">
+                      	  <option value="NR">Añadir recordatorio..</option>
+                          <option value="5M">5 minutos</option>
+                          <option value="10M">10 minutos</option>
+                          <option value="15M">15 minutos</option>
+                          <option value="30M">30 minutos</option>
+                          <option value="1H">1 hora</option>
+                          <option value="1D">1 día</option>
+                          <option value="2D">2 días</option>
+                          <option value="3D">3 días</option>
+                          <option value="1S">1 semana</option>
+                      </select>
+                  </div>
+              </div>
+	            <label for="inputTextarea3"><h4><b>Notas</b></h4></label>
+              <div class="form-group row">
+                		<div class="col-12 col-sm-8 col-lg-12">
+                  		<textarea id="notas" name="notas" class="form-control" ></textarea>
+                		</div>
+              	</div>
+        	   </div>
+			          	<div class="modal-footer">
+			            	<button type="button" data-dismiss="modal" class="btn btn-secondary btn-lg md-close">Cancelar</button>
+			            	<button type="submit" class="btn btn-primary btn-lg md-close">Guardar</button>
+			          	</div>
+		        	</div>
+	      		</div>
+	    	</div>
+      </form>
 
 		<!-- Modal Tipo de Cambiio -->
 			<div id="modalTipoCambio" class="modal fade" data-backdrop="static" data-keyboard="false">
@@ -199,8 +300,67 @@
       App.uiNotifications();
       App.init();
 			buscar_tipo_cambio();
-			listar_calendario();
+			// listar_calendario();
 		});
+
+    var buscar_tipo_cambio = function(){
+			var opcion = "tipocambio";
+			$.ajax({
+				method: "POST",
+				url: "buscar.php",
+				dataType: "json",
+				data: {"opcion": opcion},
+			}).done( function( info ){
+				console.log(info);
+				if (info.respuesta == "BIEN") {
+					guardar();
+          document.getElementById('tipoCambio').innerHTML = (info.tipocambio);
+				}else{
+					guardar();
+					$("#modalTipoCambio").modal("show");
+				}
+			});
+		}
+
+    var guardar = function(){
+			$("form").on("submit", function(e){
+				e.preventDefault();
+				$('.modal').modal('hide');
+				var frm = $(this).serialize();
+				console.log(frm);
+				$.ajax({
+					method: "POST",
+					url: "guardar.php",
+					dataType: "json",
+					data: frm,
+				}).done( function( info ){
+					mostrar_mensaje(info);
+          App.pageCalendar();
+				});
+			});
+		}
+
+    function quitarReadonly () {
+      if($("input[name=checkTodoElDia]").is(':checked')){
+        $('input[name=checkTodoElDia]').prop('checked' , true);
+        $('#frmCrearEventoCalendario input[name=horaInicio]').prop('disabled' , true);
+        $('#frmCrearEventoCalendario input[name=horaFin]').prop('disabled' , true);
+      }else{
+        $('input[name=checkTodoElDia]').prop('checked' , false);
+        $('#frmCrearEventoCalendario input[name=horaInicio]').prop('disabled' , false);
+        $('#frmCrearEventoCalendario input[name=horaFin]').prop('disabled' , false);
+      }
+
+      if($("input[name=checkTodoElDiaEditar]").is(':checked')){
+        $('input[name=checkTodoElDiaEditar]').prop('checked' , true);
+        $('#frmEditarEventoCalendario input[name=horaInicio]').prop('disabled' , true);
+        $('#frmEditarEventoCalendario input[name=horaFin]').prop('disabled' , true);
+      }else{
+        $('input[name=checkTodoElDiaEditar]').prop('checked' , false);
+        $('#frmEditarEventoCalendario input[name=horaInicio]').prop('disabled' , false);
+        $('#frmEditarEventoCalendario input[name=horaFin]').prop('disabled' , false);
+      }
+    }
 
     var config = {
       apiKey: "AIzaSyDe92NNoooohCjs30aiW3INmdBtZChCDls ",
@@ -235,27 +395,6 @@
 		// 		$("#nav-menu").addClass("navbar-default");
 		// 	}
 		// });
-
-
-		var buscar_tipo_cambio = function(){
-			var opcion = "tipocambio";
-			$.ajax({
-				method: "POST",
-				url: "buscar.php",
-				dataType: "json",
-				data: {"opcion": opcion},
-			}).done( function( info ){
-				console.log(info);
-				if (info.respuesta == "BIEN") {
-					guardar();
-          document.getElementById('tipoCambio').innerHTML = (info.tipocambio);
-					listar_calendario(usuario, departamento);
-				}else{
-					guardar();
-					$("#modalTipoCambio").modal("show");
-				}
-			});
-		}
 
 		var listar_calendario = function(usuario, departamento){
 			$.ajax({
@@ -403,45 +542,8 @@
 			});
 		}
 
-		var guardar = function(){
-			$("form").on("submit", function(e){
-				e.preventDefault();
-				$('.modal').modal('hide');
-				var frm = $(this).serialize();
-				console.log(frm);
-				$.ajax({
-					method: "POST",
-					url: "guardar.php",
-					dataType: "json",
-					data: frm,
-				}).done( function( info ){
-					console.log(info)
-					mostrar_mensaje(info);
-				});
-			});
-		}
-
-		var mostrar_mensaje = function( informacion ){
-			if( informacion.respuesta == "BIEN" ){
-				$.gritter.add({
-		        	title: 'Correcto!',
-		        	text: 'El tipo de cambio de hoy se registro correctamente.',
-		        	class_name: 'color success'
-		      	});
-			}else if( informacion.respuesta == "ERROR"){
-				$.gritter.add({
-		        title: 'Error',
-		        text: 'This is a simple Gritter Notification.',
-		        class_name: 'color danger'
-		      });
-			}
-
-			$(".mensaje").html( texto );
-			$(".mensaje").fadeOut(5000, function(){
-				$(this).html("");
-				$(this).fadeIn(5000);
-			});
-		}
 	</script>
+  <script src="<?php echo $ruta; ?>/php/js/idioma_espanol.js"></script>
+	<script src="<?php echo $ruta; ?>/php/js/mensajes_cambios.js"></script>
 </body>
 </html>
