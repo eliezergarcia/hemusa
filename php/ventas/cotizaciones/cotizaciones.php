@@ -278,6 +278,7 @@
 				"destroy": true,
 				"deferRender": true,
 				"scrollX": true,
+				"autoWidth": false,
 				"ajax":{
 					"url": "listar.php",
 					"type": "POST",
@@ -294,9 +295,12 @@
 					{"defaultContent": "<div class='invoice-footer'><button class='vercotizacion btn btn-space btn-lg btn-primary'><i class='fas fa-edit fa-sm' aria-hidden='true'></i></button></div>"}
 				],
 				"columnDefs": [
-					{ "width": "5%", "targets": 0 },
-					{ "width": "5%", "targets": 2 },
-					{ "width": "5%", "targets": 3 },
+					{ "width": "10%", "targets": 0 },
+					{ "width": "10%", "targets": 2 },
+					{ "width": "10%", "targets": 3 },
+					{ "width": "10%", "targets": 4 },
+					{ "width": "10%", "targets": 5 },
+					{ "width": "10%", "targets": 6 },
 				],
 				"order":[[4, "desc"]],
 				"language": idioma_espanol,

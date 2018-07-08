@@ -60,137 +60,6 @@
 		mysqli_close($conexion_usuarios);
 	}
 
-	function nuevaremision($idcontacto, $conexion_usuarios){
-		$query = "SELECT * FROM cotizacionherramientas WHERE Pedido='si' AND cliente='$idcontacto' AND Entregado='0000-00-00' AND factura = '0' AND remision='' ORDER BY modelo";
-		$resultado = mysqli_query($conexion_usuarios, $query);
-
-		$i = 1;
-
-		while($data = mysqli_fetch_assoc($resultado)){
-			$input = '<input type="checkbox" class="btn btn-outline-primary" name="hremision" value="'.$data['id'].'">';
-			$arreglo['data'][] = array(
-				'id' => $data['id'],
-				'marca' => $data['marca'],
-				'modelo' => $data['modelo'],
-				'descripcion' => utf8_encode($data['descripcion']),
-				'cantidad' => $data['cantidad'],
-				'precioTotal' => round($data['precioLista'] * $data['cantidad'],2),
-				'cotizacion' => $data['cotizacionRef'],
-				'numeroPedido' => $data['numeroPedido'],
-				'input' => $input
-			);
-		}
-
-		echo json_encode($arreglo, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_PARTIAL_OUTPUT_ON_ERROR);
-	}
-
-	function facturas_no_pagadas($idcliente, $buscar, $conexion_usuarios){
-		$query = "SELECT cotizacion.*, contactos.CondPago FROM cotizacion LEFT JOIN contactos ON contactos.id=cotizacion.cliente WHERE cliente = '$idcliente' AND factura!='0' ORDER BY facturaFecha DESC";
-		$resultado = mysqli_query($conexion_usuarios, $query);
-
-		if(mysqli_num_rows($resultado) < 1){
-			$arreglo['data'] = 0;
-		}else{
-			$i = 1;
-			while($data = mysqli_fetch_assoc($resultado)){
-				if ($data['CondPago'] == 0) {
-					// $vencimiento = 1;
-					// $fecha = strftime("%d/%m/%Y", strtotime($data['facturaFecha']));
-					// $vencimiento = strtotime($fecha."+".$vencimiento."days");
-					// // $vencimiento = strtotime($fecha."+ 60 days");
-					// $vencimiento = date("Y-m-d",$vencimiento);
-					$vencimiento = "si";
-				}else{
-					$vencimiento = $data['CondPago'];
-					$fecha = strftime("%d/%m/%Y", strtotime($data['facturaFecha']));
-					$vencimiento = strtotime($fecha."+ 30 days");
-					// $vencimiento = strtotime($fecha."+ 60 days");
-					// $vencimiento = date("Y-m-d",$vencimiento);
-				}
-
-				$arreglo["data"][] = array(
-					'id' => $data['id'],
-					'indice' => $i,
-					'cotizacion' => $data['ref'],
-					'remision' => $data['remision'],
-					'factura' => $data['factura'],
-					'pedido' => $data['NoPedClient'],
-					'fechafactura' => $data['facturaFecha'],
-					'pagado' => "$ ".round($data['Pagado'], 2),
-					'suma' => "$ ".round($data['precioTotal'] + ($data['precioTotal']*.16),2),
-					'moneda' => strtoupper($data['moneda']),
-					'vencefactura' => $vencimiento
-				);
-				$i++;
-			}
-
-		}
-		echo json_encode($arreglo, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_PARTIAL_OUTPUT_ON_ERROR);
-		mysqli_close($conexion_usuarios);
-	}
-
-	function facturado_no_entregado($idcliente, $buscar, $conexion_usuarios){
-		$query = "SELECT * FROM contactos WHERE id = '$idcliente'";
-		$resultado = mysqli_query($conexion_usuarios, $query);
-
-		if(mysqli_num_rows($resultado) < 1){
-			$arreglo['data'] = 0;
-		}else{
-			while($data = mysqli_fetch_assoc($resultado)){
-				$cliente = $data['nombreEmpresa'];
-			}
-
-			$query = "SELECT * FROM cotizacion WHERE (ref LIKE '%$buscar%' AND facturaFecha LIKE '%$buscar%') AND Pedido!='0000-00-00' AND fechaEntregado='0000-00-00' AND cliente= '$idcliente' AND factura !='0' ORDER BY factura DESC";
-			$resultado = mysqli_query($conexion_usuarios, $query);
-			$arreglo = array();
-
-			if(mysqli_num_rows($resultado) > 0){
-				if(mysqli_num_rows($resultado) < 1){
-					$arreglo['data'] = 0;
-				}else{
-					$i = 1;
-					while($data = mysqli_fetch_assoc($resultado)){
-						$arreglo["data"][] = array(
-								'id' => $data['id'],
-								'indice' => $i,
-								'pedidocliente' => $data['NoPedClient'],
-								'remision' => $data['remision'],
-								'ref' => $data['ref'],
-								'fecha' => $data['facturaFecha'],
-								'cantidad' => $data['partidaCantidad'],
-								'suma' => "$ ".$data['precioTotal']
-							);
-						$i++;
-					}
-				}
-			}else{
-				$query = "SELECT * FROM pedidos WHERE entregado ='0000-00-00' and cliente= '$idcliente' and factura != '' ORDER BY factura DESC";
-				$resultado = mysqli_query($conexion_usuarios, $query);
-				$arreglo = array();
-
-				if(mysqli_num_rows($resultado) < 1){
-					$arreglo['data'] = 0;
-				}else{
-					$i = 1;
-					while($data = mysqli_fetch_assoc($resultado)){
-						$arreglo["data"][] = array(
-								'id' => $data['id'],
-								'indice' => $i,
-								'ref' => $data['cotizacionRef'],
-								'fecha' => $data['facturaFecha'],
-								'cantidad' => $data['partidas'],
-								'suma' => "$ ".$data['total']
-							);
-						$i++;
-					}
-				}
-			}
-		}
-
-		echo json_encode($arreglo, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_PARTIAL_OUTPUT_ON_ERROR);
-		mysqli_close($conexion_usuarios);
-	}
-
 	function sin_entregar($idcliente, $buscar, $conexion_usuarios){
 		$query = "SELECT * FROM contactos WHERE id = '$idcliente'";
 		$resultado = mysqli_query($conexion_usuarios, $query);
@@ -202,7 +71,7 @@
 				$cliente = $data['nombreEmpresa'];
 			}
 
-			$query="SELECT cotizacionherramientas.*, cotizacion.NoPedClient FROM cotizacionherramientas INNER JOIN cotizacion ON cotizacion.ref = cotizacionherramientas.cotizacionRef WHERE (marca LIKE '%$buscar%' AND modelo LIKE '%$buscar%' AND descripcion LIKE '%$buscar%' AND noDePedido LIKE '%$buscar%' AND numeroPedido LIKE '%$buscar%' AND enviadoFecha LIKE '%$buscar%' AND recibidoFecha LIKE '%$buscar%') AND Entregado='0000-00-00' AND pedidoFecha!='0000-00-00' AND cotizacionherramientas.cliente ='$idcliente' ORDER BY marca ASC";
+			$query="SELECT cotizacionherramientas.*, cotizacion.NoPedClient FROM cotizacionherramientas INNER JOIN cotizacion ON cotizacion.ref = cotizacionherramientas.cotizacionRef WHERE (marca LIKE '%$buscar%' OR modelo LIKE '%$buscar%' OR descripcion LIKE '%$buscar%' OR noDePedido LIKE '%$buscar%' OR numeroPedido LIKE '%$buscar%' OR enviadoFecha LIKE '%$buscar%' OR recibidoFecha LIKE '%$buscar%') AND Entregado='0000-00-00' AND pedidoFecha!='0000-00-00' AND cotizacionherramientas.cliente ='$idcliente' ORDER BY marca ASC";
 			$resultado = mysqli_query($conexion_usuarios, $query);
 
 			if(mysqli_num_rows($resultado) < 1){
@@ -214,13 +83,13 @@
 					// $orden = '<a href=\"../../compras/ordenesdecompras/verOrdenCompra.php?ordenCompra='.$data['noDePedido'].'\">'.$data['noDePedido'].'</a>';
 
 					if($data['enviadoFecha'] == '0000-00-00'){
-						$enviado = "no";
+						$enviado = "No";
 					}else{
 						$enviado = $data['enviadoFecha'];
 					}
 
 					if($data['recibidoFecha'] == '0000-00-00'){
-						$recibido = "no";
+						$recibido = "No";
 					}else{
 						$recibido = $data['recibidoFecha'];
 					}
@@ -256,6 +125,102 @@
 		mysqli_close($conexion_usuarios);
 	}
 
+	function facturado_no_entregado($idcliente, $buscar, $conexion_usuarios){
+		$query = "SELECT * FROM contactos WHERE id = '$idcliente'";
+		$resultado = mysqli_query($conexion_usuarios, $query);
+
+		if(mysqli_num_rows($resultado) < 1){
+			$arreglo['data'] = 0;
+		}else{
+			while($data = mysqli_fetch_assoc($resultado)){
+				$cliente = $data['nombreEmpresa'];
+			}
+
+			$query = "SELECT * FROM cotizacion WHERE (ref LIKE '%$buscar%' OR facturaFecha LIKE '%$buscar%') AND Pedido!='0000-00-00' AND fechaEntregado='0000-00-00' AND factura !='0' AND cliente= '$idcliente' ORDER BY factura DESC";
+			$resultado = mysqli_query($conexion_usuarios, $query);
+
+			if(mysqli_num_rows($resultado) > 0){
+				$i = 1;
+				while($data = mysqli_fetch_assoc($resultado)){
+					$arreglo["data"][] = array(
+							'id' => $data['id'],
+							'indice' => $i,
+							'pedidocliente' => $data['NoPedClient'],
+							'remision' => $data['remision'],
+							'ref' => $data['ref'],
+							'fecha' => $data['facturaFecha'],
+							'cantidad' => $data['partidaCantidad'],
+							'suma' => "$ ".$data['precioTotal']
+						);
+					$i++;
+				}
+			}else{
+				$query = "SELECT * FROM pedidos WHERE entregado ='0000-00-00' AND cliente= '$idcliente' AND factura != '' ORDER BY factura DESC";
+				$resultado = mysqli_query($conexion_usuarios, $query);
+
+				if(mysqli_num_rows($resultado) < 1){
+					$arreglo['data'] = 0;
+				}else{
+					$i = 1;
+					while($data = mysqli_fetch_assoc($resultado)){
+						$arreglo["data"][] = array(
+								'id' => $data['id'],
+								'indice' => $i,
+								'ref' => $data['cotizacionRef'],
+								'fecha' => $data['facturaFecha'],
+								'cantidad' => $data['partidas'],
+								'suma' => "$ ".$data['total']
+							);
+						$i++;
+					}
+				}
+			}
+		}
+
+		echo json_encode($arreglo, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_PARTIAL_OUTPUT_ON_ERROR);
+		mysqli_close($conexion_usuarios);
+	}
+
+	function facturas_no_pagadas($idcliente, $buscar, $conexion_usuarios){
+		$query = "SELECT cotizacion.*, contactos.CondPago FROM cotizacion LEFT JOIN contactos ON contactos.id=cotizacion.cliente WHERE (factura LIKE '%$buscar%' OR NoPedClient LIKE '%$buscar%' OR facturaFecha LIKE '%$buscar%') AND cliente = '$idcliente' AND factura!='0' ORDER BY facturaFecha DESC ";
+		$resultado = mysqli_query($conexion_usuarios, $query);
+
+		if(mysqli_num_rows($resultado) < 1){
+			$arreglo['data'] = 0;
+		}else{
+			$i = 1;
+			while($data = mysqli_fetch_assoc($resultado)){
+				if ($data['CondPago'] == 0) {
+					$fecha = $data['facturaFecha'];
+					$nuevafecha = strtotime ( '+1 day' , strtotime ( $fecha ) ) ;
+					$vencimiento = date ( 'd-m-Y' , $nuevafecha );
+				}else{
+					$fecha = $data['facturaFecha'];
+					$nuevafecha = strtotime ( '+'.$data['CondPago'].' day' , strtotime ( $fecha ) ) ;
+					$vencimiento = date ( 'd-m-Y' , $nuevafecha );
+				}
+
+				$arreglo["data"][] = array(
+					'id' => $data['id'],
+					'indice' => $i,
+					'cotizacion' => $data['ref'],
+					'remision' => $data['remision'],
+					'factura' => $data['factura'],
+					'pedido' => $data['NoPedClient'],
+					'fechafactura' => date('d-m-Y', strtotime($data['facturaFecha'])),
+					'pagado' => "$ ".round($data['Pagado'], 2),
+					'suma' => "$ ".round($data['precioTotal'] + ($data['precioTotal']*.16),2),
+					'moneda' => strtoupper($data['moneda']),
+					'vencefactura' => $vencimiento
+				);
+				$i++;
+			}
+
+		}
+		echo json_encode($arreglo, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_PARTIAL_OUTPUT_ON_ERROR);
+		mysqli_close($conexion_usuarios);
+	}
+
 	function remisiones($idcliente, $buscar, $conexion_usuarios){
 		$query = "SELECT * FROM contactos WHERE id = '$idcliente'";
 		$resultado = mysqli_query($conexion_usuarios, $query);
@@ -267,7 +232,7 @@
 				$cliente = $data['nombreEmpresa'];
 			}
 
-			$query = "SELECT * FROM cotizacion WHERE (remision LIKE '%$buscar%' AND contacto LIKE '%$buscar%' AND remisionFecha LIKE '%$buscar%') AND Comentario='' AND remision!=0 AND remisionFactura=0 AND cliente='$idcliente' ORDER BY remision DESC ";
+			$query = "SELECT * FROM cotizacion WHERE (remision LIKE '%$buscar%' OR ref LIKE '%$buscar%' OR contacto LIKE '%$buscar%' OR remisionFecha LIKE '%$buscar%') AND Comentario='' AND remision!=0 AND remisionFactura=0 AND cliente='$idcliente' ORDER BY remision DESC ";
 			$resultado = mysqli_query($conexion_usuarios, $query);
 			$arreglo = array();
 
@@ -308,7 +273,7 @@
 				$cliente = $data['nombreEmpresa'];
 			}
 
-			$query = "SELECT * FROM cotizacion WHERE (ref LIKE '%$buscar%' AND contacto LIKE '%$buscar%' AND fecha LIKE '%$buscar%') AND remision=0 AND comentario='' AND cliente= '$idcliente' ORDER BY fecha DESC";
+			$query = "SELECT * FROM cotizacion WHERE (ref LIKE '%$buscar%' OR contacto LIKE '%$buscar%' OR fecha LIKE '%$buscar%') AND remision=0 AND comentario='' AND cliente= '$idcliente' ORDER BY fecha DESC";
 			$resultado = mysqli_query($conexion_usuarios, $query);
 			$arreglo = array();
 
@@ -332,6 +297,30 @@
 
 		echo json_encode($arreglo, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_PARTIAL_OUTPUT_ON_ERROR);
 		mysqli_close($conexion_usuarios);
+	}
+
+	function nuevaremision($idcontacto, $conexion_usuarios){
+		$query = "SELECT * FROM cotizacionherramientas WHERE Pedido='si' AND cliente='$idcontacto' AND Entregado='0000-00-00' AND factura = '0' AND remision='' ORDER BY modelo";
+		$resultado = mysqli_query($conexion_usuarios, $query);
+
+		$i = 1;
+
+		while($data = mysqli_fetch_assoc($resultado)){
+			$input = '<input type="checkbox" class="btn btn-outline-primary" name="hremision" value="'.$data['id'].'">';
+			$arreglo['data'][] = array(
+				'id' => $data['id'],
+				'marca' => $data['marca'],
+				'modelo' => $data['modelo'],
+				'descripcion' => utf8_encode($data['descripcion']),
+				'cantidad' => $data['cantidad'],
+				'precioTotal' => round($data['precioLista'] * $data['cantidad'],2),
+				'cotizacion' => $data['cotizacionRef'],
+				'numeroPedido' => $data['numeroPedido'],
+				'input' => $input
+			);
+		}
+
+		echo json_encode($arreglo, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_PARTIAL_OUTPUT_ON_ERROR);
 	}
 
 	function verificar_resultado($resultado){

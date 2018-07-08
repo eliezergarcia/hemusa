@@ -103,14 +103,14 @@
 																	</div>
 																	<div class="col-4 form-group">
 																		<h4><b>Moneda </b> <a id="cambiarmoneda" href="#" class="text-primary"><i class="fas fa-sync"></i></a></h4>
-																		<select id="moneda" class="form-control-sm col-7">
+																		<select id="moneda" class="form-control form-control-sm col-7">
 																			<option value="usd" selected>USD</option>
 																			<option value="mxn">MXN</option>
 																		</select>
 																	</div>
 																	<div class="col-4 form-group">
 																	  <h4><b>Clasificación de cliente <a id="cambiarclasificacion" href="#" class="text-primary"><i class="fas fa-sync"></i></a></b></h4>
-																		<select id="clasificacion" class="form-control-sm col-7">
+																		<select id="clasificacion" class="form-control form-control-sm col-7">
 																			<option value="1.20">16 %</option>
 																			<option value="1.25">20 %</option>
 																			<option value="1.33">25 %</option>
@@ -136,7 +136,7 @@
 																		<th>Precio Total</th>
 																		<th>Clave SAT</th>
 																		<th>Unidad</th>
-																		<th>T.E. Días</th>
+																		<th>T.E.</th>
 																		<th>Stock</th>
 																		<th>Referencia Interna</th>
 																		<th>Cotizado En</th>
@@ -424,7 +424,7 @@
 			        				<div id="selMarca" class="form-group col">
 			        					<label for="marca">Marca <font color="#FF4136">*</font></label>
 			        					<!-- <input type="text" class="form-control form-control-sm" name="marca" id="marca" required> -->
-			        					<select name="marca" id="marca" class="form-control form-control-sm select2" onchange="buscarDatosProducto()" required></select>
+			        					<select name="marca" id="marca" class="form-control form-control-sm " onkeypress="buscarDatosProducto()" required></select>
 			        				</div>
 			        				<div id="inMarca" class="form-group col" style="display: none;">
 			        					<label for="marca">Marca <font color="#FF4136">*</font></label>
@@ -438,7 +438,7 @@
 			        				</div>
 											<div class="form-group col">
 												<label for="">Clave SAT</label>
-												<select class="form-control form-control-sm select2" name="claveSat" id="claveSat">
+												<select class="form-control form-control-sm" name="claveSat" id="claveSat">
 												</select>
 											</div>
 			        			</div>
@@ -535,7 +535,7 @@
                     		</div>
                     		<div class="mt-8 invoice-footer">
                       		<button type="button" class="btn btn-lg btn-secondary" data-dismiss="modal">Cancelar</button>
-				        					<button type="submit" class="btn btn-lg btn-danger">Eliminar</button>
+				        					<button type="submit" id="eliminarPartida" class="btn btn-lg btn-danger">Eliminar</button>
                     		</div>
 				        		</div>
 				      		</div>
@@ -1025,6 +1025,30 @@
 			}
 		});
 
+		$('#modalAgregarPartida').on('shown.bs.modal', function (e) {
+			$("#frmAgregarPartida #modelo").focus();
+		});
+
+		$('#modalAgregarFlete').on('shown.bs.modal', function (e) {
+			$("#frmAgregarFlete #proveedor").focus();
+		});
+
+		$('#modalEliminarPartida').on('shown.bs.modal', function (e) {
+			$("#frmEliminarPartida #eliminarPartida").focus();
+		});
+
+		$('#modalEditarFlete').on('shown.bs.modal', function (e) {
+			$("#frmEditarFlete #proveedor").focus();
+		});
+
+		$('#modalEliminarFlete').on('shown.bs.modal', function (e) {
+			$("#frmEliminarFlete #eliminar-flete").focus();
+		});
+
+		$('#modalCambiarPedido').on('shown.bs.modal', function (e) {
+			$("#frmCambiarPedido #numeroPedido").focus();
+		});
+
 		function buscarDatosProducto(){
 			if($("#frmAgregarPartida #marca").val() == "Agregar a marca"){
 				document.frmAgregarPartida.modelo.style.backgroundColor='#99CCFF';
@@ -1316,6 +1340,9 @@
 
 				});
 			}
+			// $("#frmAgregarPartida #marca").blur();
+			$("#frmAgregarPartida #cantidad").focus();
+			$("#frmAgregarPartida #cantidad").select();
 		}
 
 		var listar_partidas = function(){
@@ -1323,8 +1350,9 @@
 			var numeroCotizacion = $("#numeroCotizacion").val();
 			var table = $("#dt_cotizacion").DataTable({
 				"destroy":"true",
-				"bDeferRender": true,
+				"DeferRender": true,
 				"scrollX": true,
+				"autoWidth": false,
 				"ajax":{
 					"url": "listar.php",
 					"type": "POST",
@@ -1355,14 +1383,21 @@
 				],
 				"columnDefs": [
 					{ "width": "2%", "targets": 0 },
-					{ "width": "20%", "targets": 3 },
-					{ "width": "5%", "targets": 4 },
+					{ "width": "8%", "targets": 1 },
+					{ "width": "8%", "targets": 2 },
+					// { "width": "28%", "targets": 3 },
+					{ "width": "8%", "targets": 4 },
 					{ "width": "5%", "targets": 5 },
-					{ "width": "5%", "targets": 6 },
-					{ "width": "4%", "targets": 8 },
-					{ "width": "4%", "targets": 9 },
-					{ "width": "3%", "targets": 10 },
-					{ "width": "4%", "targets": 13 },
+					{ "width": "8%", "targets": 6 },
+					{ "width": "8%", "targets": 7 },
+					{ "width": "5%", "targets": 8 },
+					{ "width": "5%", "targets": 9 },
+					{ "width": "5%", "targets": 10 },
+					{ "visible": false, "targets": 11 },
+					{ "visible": false, "targets": 12 },
+					{ "visible": false, "targets": 13 },
+					{ "width": "5%", "targets": 14 },
+					{ "width": "5%", "targets": 15 },
 				],
 				"footerCallback": function ( row, data, start, end, display ) {
 						var api = this.api();
@@ -1380,15 +1415,9 @@
 										return intVal(a) + intVal(b);
 								}, 0 );
 
-						// var moneda = moneda.toUpperCase();
 						$("#subtotal").text("$ "+ subtotal.toFixed(2));
 						$("#iva").text("$ "+ (subtotal * .16).toFixed(2));
 						$("#total").text("$ "+ (subtotal + subtotal*.16).toFixed(2));
-						// $("#moneda").text(moneda);
-
-						// $("#subtotal").text("$ "+ subtotal.toFixed(2));
-						// $("#iva").text("$ "+ (subtotal * .16).toFixed(2));
-						// $("#total").text("$ "+ (subtotal + subtotal*.16).toFixed(2));
 				},
 				"order": false,
 				"ordering": false,
@@ -1401,13 +1430,18 @@
           "<'row be-datatable-body'<'col-sm-12'tr>>",
 				"buttons":[
 					{
+						extend: 'colvis',
+						columns: ':not(.noVis)',
+						text: '<i class="fas fa-columns fa-sm"></i> Columnas',
+						"className": "btn btn-lg btn-space btn-secondary",
+					},
+					{
 						extend: 'collection',
 						text: '<i class="fas fa-file-alt fa-sm"></i> Exportar cotización',
 						"className": "btn btn-lg btn-space btn-secondary",
 						buttons: [
 							{
 								text:      '<i class="fas fa-file-pdf fa-sm"></i> PDF',
-								// "className": "btn btn-secondary btn-big color-blanco",
 								action: function ( e, dt, node, config ) {
 									var opcion = "pdf";
 									genPDF(opcion);
@@ -1415,7 +1449,6 @@
 							},
 							{
 								text: '<i class="fas fa-print fa-sm"></i> Imprimir',
-								// "className": "btn btn-secondary btn-big",
 								action: function ( e, dt, node, config ) {
 									var opcion = "imprimir";
 									genPDF(opcion);
@@ -1423,7 +1456,6 @@
 							},
 							{
 								text:      '<i class="fas fa-file-pdf fa-sm"></i> PDF Completo',
-								// "className": "btn btn-secondary btn-big color-blanco",
 								action: function ( e, dt, node, config ) {
 									var opcion = "pdfCompleto";
 									genPDF(opcion);
@@ -1431,7 +1463,6 @@
 							},
 							{
 								text:      '<i class="fas fa-print fa-sm"></i> Imprimir Completo',
-								// "className": "btn btn-secondary btn-big",
 								action: function ( e, dt, node, config ) {
 									var opcion = "imprimirCompleto";
 									genPDF(opcion);
@@ -1440,22 +1471,34 @@
 						]
 					},
 					{
-						text: '<i class="fas fa-truck fa-sm" aria-hidden="true"></i> Agregar flete',
-						"className": "btn btn-secondary btn-lg btn-space",
-						action: function ( e, dt, node, config ) {
-							$('#modalAgregarFlete').modal('show');
-						}
-					},
-					{
 						text: '<i class="fas fa-wrench fa-sm" aria-hidden="true"></i> Agregar partida',
 						"className": "btn btn-secondary btn-lg btn-space",
+						key: {
+                shiftKey: true,
+                key: 'h'
+            },
 						action: function ( e, dt, node, config ) {
 							$('#modalAgregarPartida').modal('show');
 						}
 					},
 					{
+						text: '<i class="fas fa-truck fa-sm" aria-hidden="true"></i> Agregar flete',
+						"className": "btn btn-secondary btn-lg btn-space",
+						key: {
+                shiftKey: true,
+                key: 'f'
+            },
+						action: function ( e, dt, node, config ) {
+							$('#modalAgregarFlete').modal('show');
+						}
+					},
+					{
 						text: '<i class="fas fa-check-square fa-sm" aria-hidden="true"></i> Generar pedido',
 						"className": "btn btn-primary btn-lg btn-space",
+						key: {
+                shiftKey: true,
+                key: 'p'
+            },
 						action: function ( e, dt, node, config ) {
 							$('#modalCambiarPedido').modal('show');
 						}
@@ -1663,8 +1706,9 @@
 		var listar_fletes = function(refCotizacion){
 			var opcion = "listarFletes";
 			var table = $("#dt_fletes").DataTable({
-				"destroy":"true",
+				"destroy": true,
 				"scrollX": true,
+				"autoWidth": false,
 				"ajax":{
 					"url": "listar.php",
 					"type": "POST",

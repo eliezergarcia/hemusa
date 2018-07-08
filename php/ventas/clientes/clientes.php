@@ -33,10 +33,10 @@
                                   <th>Nombre empresa</th>
                                   <th>Persona contacto</th>
                                   <th>Teléfono #1</th>
-                                  <th>Fáx</th>
                                   <th>Correo electrónico</th>
-                                  <th>Ver Cliente</th>
-                                  <th>Eliminar Cliente</th>
+                                  <th>Correo facturación</th>
+                                  <th>Ver</th>
+                                  <th>Eliminar</th>
                                 </tr>
                               </thead>
                             </table>
@@ -212,7 +212,6 @@
   <script type="text/javascript">
     $(document).ready(function(){
       App.init();
-      App.pageCalendar();
       App.formElements();
       App.uiNotifications();
       listar_clientes();
@@ -224,6 +223,7 @@
       var table = $("#dt_clientes").DataTable({
         "destroy":"true",
         "scrollX": true,
+        "autoWidth": false,
         "ajax":{
           "method":"POST",
           "url":"listar.php",
@@ -233,16 +233,20 @@
           {"data": "nombreEmpresa"},
           {"data": "personaContacto"},
           {"data": "tlf1"},
-          {"data": "fax"},
           {"data": "correoElectronico"},
+          {"data": "correoFacturacion1"},
           {"defaultContent": "<div class='invoice-footer'><button class='editar btn btn-space btn-primary btn-lg'><i class='fas fa-edit fa-sm'></i></button></div>", "sortable": false},
           {"defaultContent": "<div class='invoice-footer'><button class='eliminar btn btn-space btn-danger btn-lg' data-toggle='modal' data-target='#modalEliminarCliente'><i class='fas fa-trash-alt fa-sm'></i></button></div>", "sortable": false}
         ],
         "columnDefs": [
-          { "width": "9%", "targets": 6 },
-          { "width": "9%", "targets": 5 },
+          { "width": "30%", "targets": 0 },
+          { "width": "15%", "targets": 1 },
+          { "width": "15%", "targets": 2 },
+          { "width": "15%", "targets": 3 },
+          { "width": "15%", "targets": 4 },
+          { "width": "5%", "targets": 5 },
+          { "width": "5%", "targets": 6 },
         ],
-        "order": [[0, "asc"]],
         "language": idioma_espanol,
         "dom":
           "<'row be-datatable-header'<'col-sm-6'B><'col-sm-6 text-right'f>>" +

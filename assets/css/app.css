@@ -1487,7 +1487,7 @@ pre {
     opacity: 1; }
 
 select.form-control:not([size]):not([multiple]) {
-  height: 3.692rem; }
+  height: 37px; }
 
 select.form-control:focus::-ms-value {
   color: #404040;
@@ -2474,7 +2474,7 @@ tbody.collapse.show {
   .dropdown-item.active, .dropdown-item:active {
     color: #FFFFFF;
     text-decoration: none;
-    background-color: var(--color-primario); }
+    background-color: transparent; }
   .dropdown-item.disabled, .dropdown-item:disabled {
     color: #878787;
     background-color: transparent; }

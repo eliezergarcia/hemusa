@@ -44,7 +44,7 @@
 										</span>
 									</div>
 									<div class="col dropdown row justify-content-end align-items-center">
-									 	<button class="btn btn-lg btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									 	<button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 									    	<i class="fas fa-bars" aria-hidden="true"></i>
 									  	</button>
 									  	<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -56,7 +56,7 @@
 								</div>
 								<hr>
 
-							<!-- Boton de Buscar -->
+							<!-- Input de búsqueda -->
 								<form class="form-horizontal row justify-content-center" action="pedidos.php" method="post">
 									<div class="form-group col-12 row justify-content-center">
 										<input type="text" class="form-control form-control-sm col-2" name="buscar" id="buscar" placeholder="Buscar">
@@ -65,19 +65,19 @@
 
 							<!-- Grupo de botones -->
 								<div class="row justify-content-center btn-toolbar">
-									<div role="group" class="btn-group btn-group-justified mb-2 col-6">
+									<div role="group" class="btn-group btn-group-justified mb-2 col-8">
+										<a href="#" id="btncotizaciones" class="btn btn-primary btn-space" onclick="listar_cotizaciones()">COTIZACIONES</a href="#">
+										<a href="#" id="btnremisiones" class="btn btn-primary btn-space" onclick="listar_remisiones()">REMISIONES</a href="#">
 										<a href="#" id="btnsinentregar" class="btn btn-primary btn-space" onclick="listar_sinentregar()">SIN ENTREGAR</a href="#">
 									  <a href="#" id="btnfacturado" class="btn btn-primary btn-space" onclick="listar_facturadonoentregado()">FACTURADO NO ENTREGADO</a href="#">
 										<a href="#" id="btnnopagadas" class="btn btn-primary btn-space" onclick="listar_facturasnopagadas()">NO PAGADAS</a href="#">
-										<a href="#" id="btnremisiones" class="btn btn-primary btn-space" onclick="listar_remisiones()">REMISIONES</a href="#">
-										<a href="#" id="btncotizaciones" class="btn btn-primary btn-space" onclick="listar_cotizaciones()">COTIZACIONES</a href="#">
 									</div>
 								</div>
 
 							<!-- Listar sin entregar -->
 								<div id="listar_sinentregar">
 									<br>
-									<center><h4><b>Sin entregar</b></h4></center>
+									<center><h4><b>Herramienta sin entregar</b></h4></center>
 									<table id="dt_listar_sinentregar" class="table table-striped table-hover display compact" cellspacing="0" width="100%">
 										<thead>
 											<tr>
@@ -91,7 +91,7 @@
 												<th>Orden de compra</th>
 												<th>Enviado</th>
 												<th>Recibido</th>
-												<th></th>
+												<th>Ver</th>
 											</tr>
 										</thead>
 									</table>
@@ -100,7 +100,7 @@
 							<!-- Listar facturado no entregado -->
 								<div id="listar_facturadonoentregado">
 									<br>
-									<center><h4><b>Facturado no entregado</b></h4></center>
+									<center><h4><b>Herramienta facturada no entregada</b></h4></center>
 									<table id="dt_listar_facturadonoentregado" class="table table-striped table-hover display compact" cellspacing="0" width="100%">
 										<thead>
 											<tr>
@@ -109,7 +109,7 @@
 												<th>Fecha</th>
 												<th>Cantidad</th>
 												<th>Suma</th>
-												<th></th>
+												<th>Ver</th>
 											</tr>
 										</thead>
 									</table>
@@ -118,7 +118,7 @@
 							<!-- Listar facturas no pagadas -->
 								<div id="listar_facturasnopagadas">
 									<br>
-									<center><h4><b>Facturado no pagadas</b></h4></center>
+									<center><h4><b>Facturas no pagadas</b></h4></center>
 									<table id="dt_listar_facturasnopagadas" class="table table-striped table-hover display compact" cellspacing="0" width="100%">
 										<thead>
 											<tr>
@@ -130,7 +130,7 @@
 												<th>Suma</th>
 												<th>Moneda</th>
 												<th>Vence factura</th>
-												<th></th>
+												<th>Ver</th>
 											</tr>
 										</thead>
 									</table>
@@ -176,11 +176,11 @@
 									</table>
 								</div>
 						</div>
-			        </div>
-			    </div>
-			</div>
-      	</div>
-    </div>
+		       </div>
+		    	</div>
+				</div>
+    	</div>
+  	</div>
 
 	<!-- Modal Agregar Clasificacion -->
 		<form action="#" method="POST">
@@ -761,72 +761,85 @@
 			var buscar = $("#buscar").val();
 			var table = $("#dt_listar_sinentregar").DataTable({
       "destroy":"true",
+			"scrollX": true,
+			"autoWidth": false,
       "ajax":{
         "method":"POST",
         "url":"listar.php" ,
         "data": {"idcliente": idcliente, "opcion": opcion, "buscar": buscar},
       },
       "columns":[
-          {"data": "indice"},
-          {"data": "marca"},
-          {"data": "modelo"},
-          {"data": "descripcion"},
-          {"data": "cantidad"},
-				  {"data": "precioUnitario"},
-				  {"data": "pedido"},
-				  {"data": "orden"},
-				  {"data": "enviado"},
-				  {"data": "recibido"},
-					{"defaultContent": "<div class='invoice-footer'><button class='verherramienta btn btn-lg btn-primary'><i class='fas fa-edit fa-sm' aria-hidden='true'></i></button></div>"}
-		        ],
-		        "language": idioma_espanol,
-				"dom":
-	          		"<'row be-datatable-header'<'col-sm-6'B><'col-sm-6 text-right'f>>" +
-	          		"<'row be-datatable-body'<'col-sm-12'tr>>" +
-	          		"<'row be-datatable-footer'<'col-sm-5'i><'col-sm-7'p>>",
-				"buttons":[
-		            {
-			            extend: 'collection',
-			            text: '<i class="fas fa-table fa-sm"></i> Exportar tabla',
-			            "className": "btn btn-lg btn-space btn-secondary",
-			            buttons: [
-			                {
-			                  extend:    'excelHtml5',
-			                  text:      '<i class="fas fa-file-excel fa-lg"></i> Excel',
-			                  // "className": "btn btn-lg btn-space btn-secondary",
-			                  exportOptions: {
-			                    columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8 ]
-			                  }
-			                },
-			                {
-			                  extend: 'csv',
-			                  text: '<i class="fas fa-file-alt fa-lg"></i> Csv',
-			                  // "className": "btn btn-lg btn-space btn-secondary",
-			                  exportOptions: {
-			                          columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8 ]
-			                  }
-			                },
-			                {
-			                  extend:    'pdfHtml5',
-			                  text:      '<i class="fas fa-file-pdf fa-lg"></i> Pdf',
-			                  download: 'open',
-			                  // "className": "btn btn-lg btn-space btn-secondary",
-			                  exportOptions: {
-			                    columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8 ]
-			                  }
-			                },
-			                {
-			                  extend: 'print',
-			                  text: '<i class="fas fa-print fa-lg"></i> Imprimir',
-			                  header: 'false',
-			                  exportOptions: {
-			                          columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8 ]
-			                  },
-			                  orientation: 'landscape',
-			                  pageSize: 'LEGAL'
-			                }
-			            ]
-			        },
+        {"data": "indice"},
+        {"data": "marca"},
+        {"data": "modelo"},
+        {"data": "descripcion"},
+        {"data": "cantidad"},
+			  {"data": "precioUnitario"},
+			  {"data": "pedido"},
+			  {"data": "orden"},
+			  {"data": "enviado"},
+			  {"data": "recibido"},
+				{"defaultContent": "<div class='invoice-footer'><button class='verherramienta btn btn-lg btn-primary'><i class='fas fa-edit fa-sm' aria-hidden='true'></i></button></div>"}
+		   ],
+			 "columnDefs": [
+			    { "width": "5%", "className": "dt-center", "targets": 0 },
+					{ "width": "10%", "targets": 1 },
+					{ "width": "10%", "targets": 2 },
+					{ "width": "7%", "targets": 4 },
+					{ "width": "10%", "targets": 5 },
+					{ "width": "10%", "targets": 6 },
+					{ "width": "8%", "targets": 7 },
+					{ "width": "8%", "targets": 8 },
+					{ "width": "8%", "targets": 9 },
+			  ],
+		   "language": idioma_espanol,
+			 "dom":
+    		"<'row be-datatable-header'<'col-sm-6'B><'col-sm-6 text-right'f>>" +
+    		"<'row be-datatable-body'<'col-sm-12'tr>>" +
+    		"<'row be-datatable-footer'<'col-sm-5'i><'col-sm-7'p>>",
+			 "buttons":[
+          {
+            extend: 'collection',
+            text: '<i class="fas fa-table fa-sm"></i> Exportar tabla',
+            "className": "btn btn-lg btn-space btn-secondary",
+            buttons: [
+                {
+                  extend:    'excelHtml5',
+                  text:      '<i class="fas fa-file-excel fa-lg"></i> Excel',
+                  // "className": "btn btn-lg btn-space btn-secondary",
+                  exportOptions: {
+                    columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8 ]
+                  }
+                },
+                {
+                  extend: 'csv',
+                  text: '<i class="fas fa-file-alt fa-lg"></i> Csv',
+                  // "className": "btn btn-lg btn-space btn-secondary",
+                  exportOptions: {
+                          columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8 ]
+                  }
+                },
+                {
+                  extend:    'pdfHtml5',
+                  text:      '<i class="fas fa-file-pdf fa-lg"></i> Pdf',
+                  download: 'open',
+                  // "className": "btn btn-lg btn-space btn-secondary",
+                  exportOptions: {
+                    columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8 ]
+                  }
+                },
+                {
+                  extend: 'print',
+                  text: '<i class="fas fa-print fa-lg"></i> Imprimir',
+                  header: 'false',
+                  exportOptions: {
+                          columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8 ]
+                  },
+                  orientation: 'landscape',
+                  pageSize: 'LEGAL'
+                }
+            ]
+          },
 				]
 		    });
 				obtener_data_ver_herramienta("#dt_listar_sinentregar tbody", table);
