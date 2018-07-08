@@ -49,3 +49,6 @@
 <script src="<?php echo $ruta; ?>assets/js/app-api-factura.js" type="text/javascript"></script>
 <script src="<?php echo $ruta; ?>assets/js/app-notificaciones.js" type="text/javascript"></script>
 <script src="<?php echo $ruta; ?>php/js/papaparse.min.js" type="text/javascript"></script>
+<script src="<?php echo $ruta; ?>assets/lib/jquery.magnific-popup/jquery.magnific-popup.min.js" type="text/javascript"></script>
+<script src="<?php echo $ruta; ?>assets/lib/masonry-layout/masonry.pkgd.min.js" type="text/javascript"></script>
+<script src="<?php echo $ruta; ?>assets/js/app-page-gallery.js" type="text/javascript"></script>

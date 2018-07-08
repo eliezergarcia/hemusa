@@ -167,7 +167,7 @@
                   </li>
 	              <li class="divider">Features</li>
 	              <li><a href="#"><i class="icon fas fa-envelope"></i><span>Email</span><span class="badge badge-primary float-right">BETA</span></a></li>
-								<li><a href="#"><i class="icon fas fa-images"></i><span>Galería</span><span class="badge badge-primary float-right">BETA</span></a></li>
+								<li><a href="<?php echo $ruta; ?>php/galeria/galeria.php"><i class="icon fas fa-images"></i><span>Galería</span><span class="badge badge-primary float-right">BETA</span></a></li>
 	            </ul>
 	          </div>
 	        </div>
