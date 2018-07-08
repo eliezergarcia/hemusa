@@ -52,3 +52,4 @@
 <script src="<?php echo $ruta; ?>assets/lib/jquery.magnific-popup/jquery.magnific-popup.min.js" type="text/javascript"></script>
 <script src="<?php echo $ruta; ?>assets/lib/masonry-layout/masonry.pkgd.min.js" type="text/javascript"></script>
 <script src="<?php echo $ruta; ?>assets/js/app-page-gallery.js" type="text/javascript"></script>
+<script src="<?php echo $ruta; ?>assets/js/app-mail-inbox.js" type="text/javascript"></script>
