@@ -106,30 +106,30 @@
 	}
 
 	function nopagado($buscar, $conexion_usuarios){
-		$query = "SELECT cotizacion.*, contactos.nombreEmpresa FROM cotizacion INNER JOIN contactos ON contactos.id = cotizacion.cliente WHERE (cotizacion.ref LIKE '%$buscar%' OR NoPedClient LIKE '%$buscar%' OR nombreEmpresa LIKE '%$buscar%' OR contacto LIKE '%$buscar%' OR vendedor LIKE '%$buscar%' OR Pedido LIKE '%$buscar%') AND factura!=0 AND NoPedClient != '0' AND Pagado < 1.14 * precioTotal AND fecha >= '2017-01-01' ORDER BY facturaFecha ASC";
-		$resultado = mysqli_query($conexion_usuarios, $query);
-
-		while($data = mysqli_fetch_assoc($resultado)){
-			$idcotizacion = $data['id'];
-
-			$query2 = "SELECT cotizacionRef FROM cotizacionherramientas WHERE factura = '$idcotizacion'";
-			$resultado2 = mysqli_query($conexion_usuarios, $query2);
-			while($data2 = mysqli_fetch_assoc($resultado2)){
-				$cotizacionRef = $data2['cotizacionRef'];
-			}
-
-
-			$arreglo['data'][] = array(
-				'cotizacionRef' => $cotizacionRef,
-				'numeroPedido' => $data['NoPedClient'],
-				'nombreEmpresa' => $data['nombreEmpresa'],
-				'contacto' => $data['contacto'],
-				'vendedor' => $data['vendedor'],
-				'fecha' => $data['Pedido'],
-				'partidas' => $data['partidaCantidad'],
-				'total' => "$ ".$data['precioTotal']
-			);
-		}
+		// $query = "SELECT cotizacion.*, contactos.nombreEmpresa FROM cotizacion INNER JOIN contactos ON contactos.id = cotizacion.cliente WHERE (cotizacion.ref LIKE '%$buscar%' OR NoPedClient LIKE '%$buscar%' OR nombreEmpresa LIKE '%$buscar%' OR contacto LIKE '%$buscar%' OR vendedor LIKE '%$buscar%' OR Pedido LIKE '%$buscar%') AND factura!=0 AND NoPedClient != '0' AND Pagado < 1.14 * precioTotal AND fecha >= '2017-01-01' ORDER BY facturaFecha ASC";
+		// $resultado = mysqli_query($conexion_usuarios, $query);
+		//
+		// while($data = mysqli_fetch_assoc($resultado)){
+		// 	$idcotizacion = $data['id'];
+		//
+		// 	$query2 = "SELECT cotizacionRef FROM cotizacionherramientas WHERE factura = '$idcotizacion'";
+		// 	$resultado2 = mysqli_query($conexion_usuarios, $query2);
+		// 	while($data2 = mysqli_fetch_assoc($resultado2)){
+		// 		$cotizacionRef = $data2['cotizacionRef'];
+		// 	}
+		//
+		//
+		// 	$arreglo['data'][] = array(
+		// 		'cotizacionRef' => $cotizacionRef,
+		// 		'numeroPedido' => $data['NoPedClient'],
+		// 		'nombreEmpresa' => $data['nombreEmpresa'],
+		// 		'contacto' => $data['contacto'],
+		// 		'vendedor' => $data['vendedor'],
+		// 		'fecha' => $data['Pedido'],
+		// 		'partidas' => $data['partidaCantidad'],
+		// 		'total' => "$ ".$data['precioTotal']
+		// 	);
+		// }
 
 		$query = "SELECT pedidos.*, contactos.nombreEmpresa FROM pedidos INNER JOIN contactos ON contactos.id = pedidos.cliente WHERE (cotizacionRef LIKE '%$buscar%' OR numeroPedido LIKE '%$buscar%' OR nombreEmpresa LIKE '%$buscar%' OR contacto LIKE '%$buscar%' OR vendedor LIKE '%$buscar%' OR fecha LIKE '%$buscar%') AND factura!= '' AND numeroPedido != '' AND pagado < 1.14 * total AND fecha >= '2017-01-01' ORDER BY facturaFecha ASC";
 		$resultado = mysqli_query($conexion_usuarios, $query);

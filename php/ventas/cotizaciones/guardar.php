@@ -830,7 +830,7 @@
 			if (!$resultado) {
 				$respuesta['respuesta'] = "ERROR 2";
 			}else{
-				$query = "UPDATE cotizacion SET Pedido = '$fecha', NoPedClient = '$numeroPedido' WHERE ref='$refCotizacion'";
+				$query = "UPDATE cotizacion SET partidaPedido='$numeroPartidas', Pedido = '$fecha', NoPedClient = '$numeroPedido' WHERE ref='$refCotizacion'";
 				$resultado = mysqli_query($conexion_usuarios, $query);
 				if (!$resultado) {
 					$respuesta['respuesta'] = "ERROR 3";
@@ -861,5 +861,4 @@
 	function cerrar($conexion_usuarios){
 		mysqli_close($conexion_usuarios);
 	}
-
 ?>

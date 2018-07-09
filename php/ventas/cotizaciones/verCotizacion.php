@@ -229,7 +229,7 @@
 				      			</table>
 				      			<br>
 				      			<div class="row justify-content-end">
-				      				<div class="form-group col-4">
+				      				<div class="form-group col-6">
 				      					<label for="">No. de Pedido</label>
 				      					<input type="text" id="numeroPedido" name="numeroPedido" class="form-control form-control-sm">
 				      				</div>
@@ -751,6 +751,7 @@
 		}
 
 		$("#modalCambiarPedido").on("show.bs.modal", function(){
+			$("#frmCambiarPedido #numeroPedido").focus();
 			var refCotizacion = "<?php echo $_REQUEST['numero']; ?>";
 			var opcion = "listarCambiarPedido";
 			var table = $("#dt_cambiar_pedido").DataTable({
@@ -1043,10 +1044,6 @@
 
 		$('#modalEliminarFlete').on('shown.bs.modal', function (e) {
 			$("#frmEliminarFlete #eliminar-flete").focus();
-		});
-
-		$('#modalCambiarPedido').on('shown.bs.modal', function (e) {
-			$("#frmCambiarPedido #numeroPedido").focus();
 		});
 
 		function buscarDatosProducto(){

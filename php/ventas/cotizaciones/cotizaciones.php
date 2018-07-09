@@ -424,6 +424,7 @@
 				dataType: "json",
 				data: {"cliente": cliente, "opcion": opcion},
 				success : function(data) {
+					console.log(data);
 					var idcliente = data.data.id
 					buscarContactos(idcliente);
 					$("form #moneda").val(data.data.moneda).change();

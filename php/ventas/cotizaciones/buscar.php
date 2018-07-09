@@ -192,7 +192,7 @@
 	}
 
 	function buscar_datos_cliente($cliente, $conexion_usuarios){
-		$query = "SELECT * FROM contactos WHERE nombreEmpresa LIKE '%".$cliente."%'";
+		$query = "SELECT * FROM contactos WHERE nombreEmpresa LIKE '%$cliente%' AND tipo = 'Cliente' LIMIT 1";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 		while($data = mysqli_fetch_assoc($resultado)){
 			$idCliente = $data['id'];

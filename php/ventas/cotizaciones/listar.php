@@ -27,7 +27,7 @@
 	}
 
 	function listarcotizaciones($conexion_usuarios){
-		$query = "SELECT cotizacion.*, contactos.nombreEmpresa FROM cotizacion INNER JOIN contactos ON contactos.id = cotizacion.cliente WHERE Pedido = '0000-00-00' AND NoPedClient = '' AND remision = '' ORDER BY id DESC LIMIT 999";
+		$query = "SELECT cotizacion.*, contactos.nombreEmpresa FROM cotizacion INNER JOIN contactos ON contactos.id = cotizacion.cliente WHERE partidaPedido != partidaCantidad ORDER BY id DESC LIMIT 999";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 
 		if(!$resultado){
@@ -47,6 +47,7 @@
 		}
 
 		echo json_encode($arreglo, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_PARTIAL_OUTPUT_ON_ERROR);
+		mysqli_close($conexion_usuarios);
 	}
 
 	function listarpartidas($numeroCotizacion, $conexion_usuarios){
@@ -129,7 +130,7 @@
 	}
 
 	function listarCambiarPedido($refCotizacion, $conexion_usuarios){
-		$query = "SELECT * FROM cotizacionherramientas WHERE cotizacionRef='$refCotizacion'";
+		$query = "SELECT * FROM cotizacionherramientas WHERE cotizacionRef='$refCotizacion' AND numeroPedido = ''";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 
 		if (!$resultado) {
