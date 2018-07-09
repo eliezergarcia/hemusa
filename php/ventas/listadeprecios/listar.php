@@ -6,16 +6,15 @@
 	$marcaBuscar = $_POST['marcaBuscar'];
 
 		if ($marcaBuscar == 'todo') {
-			$queryPrecios = "SELECT * FROM productos WHERE (productos.marca LIKE '%$palabraBusca%' OR productos.ref LIKE  '%$palabraBusca%' OR productos.descripcion LIKE  '%$palabraBusca%')";
+			$queryPrecios = "SELECT * FROM productos WHERE (marca LIKE '%$palabraBusca%' OR ref LIKE  '%$palabraBusca%' OR descripcion LIKE '%$palabraBusca%')";
 		}else{
-			$queryPrecios = "SELECT * FROM productos WHERE marca = '$marcaBuscar' AND (productos.marca LIKE '%$palabraBusca%' OR productos.ref LIKE  '%$palabraBusca%' OR productos.descripcion LIKE  '%$palabraBusca%')";
+			$queryPrecios = "SELECT * FROM productos WHERE marca = '$marcaBuscar' AND (marca LIKE '%$palabraBusca%' OR ref LIKE  '%$palabraBusca%' OR descripcion LIKE '%$palabraBusca%')";
 		}
-
 
 		$resPrecios = mysqli_query($conexion_usuarios, $queryPrecios);
 
 		if(!$resPrecios){
-			die('Error');
+			$arreglo['data'] = 0;
 		}else{
 
 			while($data = mysqli_fetch_assoc($resPrecios)){

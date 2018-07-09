@@ -71,8 +71,8 @@
 												<th>Marca</th>
 												<th>Modelo</th>
 												<th>Descripción</th>
-												<th>Precio de lista</th>
-												<th>Precio con IVA</th>
+												<th>Precio lista</th>
+												<th>Precio IVA</th>
 												<th>Almacen</th>
 												<th>Moneda</th>
 												<th>Clase</th>
@@ -85,7 +85,7 @@
 												<th>IVA</th>
 												<th>Mes Promoción</th>
 												<th>Desc.</th>
-												<th>Ver y Editar</th>
+												<th>Editar</th>
 											</tr>
 										</thead>
 									</table>
@@ -255,20 +255,17 @@
 		var listar = function(){
 			var palabraBusca = $("#palabraBusca").val(),
 				marcaBuscar = $("#marcaBuscar").val();
-
 			if (marcaBuscar == "") {
 				marcaBuscar = "todo";
 			}
-			console.log(palabraBusca);
-			console.log(marcaBuscar);
 			var table = $("#dt_precios").DataTable({
-				"destroy":"true",
-				"bDeferRender": true,
+				"destroy": true,
+				"DeferRender": true,
 				"scrollX": true,
-				"sPaginationType": "full_numbers",
+				"autoWidth": false,
 				"ajax":{
 					"method":"POST",
-					"url":"listar_precios.php",
+					"url":"listar.php",
 					"data": {
 						"palabraBusca": palabraBusca,
 						"marcaBuscar": marcaBuscar
@@ -293,6 +290,24 @@
 					{"data":"mespromocion"},
 					{"data":"descuento"},
 					{"defaultContent": "<div class='invoice-footer'><button class='editar btn btn-space btn-lg btn-primary' data-toggle='modal' data-target='#modalInformacion'><i class='fas fa-edit fa-sm' aria-hidden='true'></i></button></div>"}
+				],
+				"columnDefs": [
+					{ "width": "8%", "targets": 0 },
+					{ "width": "8%", "targets": 1 },
+					{ "width": "8%", "targets": 3 },
+					{ "width": "8%", "targets": 4 },
+					{ "width": "5%", "targets": 5 },
+					{ "width": "5%", "targets": 6 },
+					{ "width": "5%", "targets": 7 },
+					{ "width": "5%", "targets": 8 },
+					{ "width": "6%", "targets": 9 },
+					{ "width": "6%", "targets": 10 },
+					{ "visible": false, "targets": 11 },
+					{ "visible": false, "targets": 12 },
+					{ "visible": false, "targets": 13 },
+					{ "width": "5%", "targets": 14 },
+					{ "visible": false, "targets": 15 },
+					{ "width": "5%", "targets": 16 },
 				],
         "lengthChange": false,
 				"language": idioma_espanol,
@@ -326,6 +341,12 @@
 					}
 				},
 				"buttons":[
+					{
+						extend: 'colvis',
+						columns: ':not(.noVis)',
+						text: '<i class="fas fa-columns fa-sm"></i> Columnas',
+						"className": "btn btn-lg btn-space btn-secondary",
+					},
 		            {
 		            extend: 'collection',
 		            text: '<i class="fas fa-table fa-sm"></i> Exportar tabla',
