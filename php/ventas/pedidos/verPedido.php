@@ -74,11 +74,11 @@
 													<label id="vendedor"></label>
 												</div>
 												<div class="col-3 form-group">
-													<h4><b>Orden de Compra</b></h4>
+													<h4><b>Pedido cliente</b></h4>
 													<label id="ordenCompra"></label>
 												</div>
 												<div class="col-3 form-group">
-													<h4><b>Factura</b></h4>
+													<h4><b>Facturas</b></h4>
 													<label id="factura"></label>
 												</div>
 												<div class="col-3 form-group">
@@ -87,14 +87,14 @@
 												</div>
 												<div class="col-3 form-group">
 													<h4><b>Moneda </b> <a id="cambiarmoneda" href="#" class="text-primary"><i class="fas fa-sync"></i></a></h4>
-													<select id="moneda" class="form-control-sm col-10">
+													<select id="moneda" class="form-control form-control-sm col-10">
 														<option value="usd" selected>USD</option>
 														<option value="mxn">MXN</option>
 													</select>
 												</div>
 												<div class="col-3 form-group">
 													<h4><b>Paquetería </b><a id="cambiarpaqueteria" href="#" class="text-primary"><i class="fas fa-sync"></i></a></h4>
-													<select id="paqueteria" class="form-control-sm col-10">
+													<select id="paqueteria" class="form-control form-control-sm col-10">
 													</select>
 												</div>
 												<div class="col-3 form-group">
@@ -109,7 +109,7 @@
 												<div class="col-3 form-group">
 													<h4><b>Proveedor </b><a id="cambiarproveedor" href="#" class="text-primary"><i class="fas fa-sync"></i></a></h4>
 													<div>
-														<select name="proveedorg" id="proveedorg" class="form-control-sm col-10"></select>
+														<select name="proveedorg" id="proveedorg" class="form-control form-control-sm col-10"></select>
 													</div>
 												</div>
 												<div class="col-3 form-group">
@@ -124,7 +124,7 @@
 												<div class="col-3 form-group">
 													<h4><b>Forma de pago </b><a id="cambiarformapago" href="#" class="text-primary"><i class="fas fa-sync"></i></a></h4>
 													<div>
-												  	<select type="text" id="formapago" name="formapago" class="form-control-sm col-10">
+												  	<select type="text" id="formapago" name="formapago" class="form-control form-control-sm col-10">
 														<option value="1">Efectivo</option>
 														<option value="2">Cheque nominativo</option>
 														<option value="3">Transferencia electrónica de fondos</option>
@@ -142,7 +142,7 @@
 												<div class="col-3 form-group">
 													<h4><b>Método de pago </b><a id="cambiarmetodopago" href="#" class="text-primary"><i class="fas fa-sync"></i></a></h4>
 													<div>
-														<select type="text" id="metodopago" name="metodopago" class="form-control-sm col-10">
+														<select type="text" id="metodopago" name="metodopago" class="form-control form-control-sm col-10">
 															<option value="1">Pago en una sola exhibición</option>
 															<option value="2">Pago en parcialidades o diferido</option>
 														</select>
@@ -151,7 +151,7 @@
 												<div class="col-3 form-group">
 													<h4><b>Uso de CFDI </b><a id="cambiarusocfdi" href="#" class="text-primary"><i class="fas fa-sync"></i></a></h4>
 													<div>
-														<select id="cfdi" name="cfdi" class="form-control-sm col-10">
+														<select id="cfdi" name="cfdi" class="form-control form-control-sm col-10">
 															<option value="1">Adquisición de mercancias</option>
 															<option value="2">Devoluciones, descuentos o bonificaciones</option>
 															<option value="3">Gastos en general</option>
@@ -185,6 +185,7 @@
 				    				<table id="dt_pedido" class="table table-striped table-hover table-fw-widget" width="100%">
 											<thead>
 												<tr>
+													<th><input type="checkbox" class="btn btn-outline-primary" name="selprovg" onclick="seleccionartodo()"></th>
 													<th>#</th>
 													<th>Marca</th>
 													<th>Modelo</th>
@@ -196,8 +197,9 @@
 													<th>Fecha Compromiso</th>
 													<th>Clave SAT</th>
 													<th>Proveedor</th>
-													<th><input type="checkbox" class="btn btn-outline-primary" name="selprovg" onclick="seleccionartodo()"></th>
 													<th>Almacen</th>
+													<th>Remisión</th>
+													<th>Factura</th>
 													<!-- <th>Entregado <input type="checkbox" class="btn btn-outline-primary" name="sel" onclick="seleccionartodo()"></th> -->
 													<th>Editar</th>
 												</tr>
@@ -522,9 +524,6 @@
   		App.uiNotifications();
 			var refCotizacion = "<?php echo $_REQUEST['refCotizacion']; ?>";
 			var numeroPedido = "<?php echo $_REQUEST['numeroPedido']; ?>";
-			if (numeroPedido == "") {
-				numeroPedido = refCotizacion;
-			}
 			buscardatos(refCotizacion, numeroPedido);
 			agregarDevolucion(refCotizacion, numeroPedido);
 			cambiarnumeroguia(refCotizacion, numeroPedido);
@@ -652,18 +651,19 @@
 		}
 
 		var listar_partidas = function(refCotizacion, numeroPedido, RFC){
-			// $("#dt_pedido").append('<tfoot><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th></tfoot>');
 				var opcion = "listarpartidas";
 				var table = $("#dt_pedido").DataTable({
 					"destroy":"true",
 					"deferRender": true,
 					"scrollX": true,
+					"autoWidth": false,
 					"ajax":{
 						"url": "listar.php",
 						"type": "POST",
 						"data": {"refCotizacion": refCotizacion, "numeroPedido": numeroPedido, "opcion": opcion}
 					},
 					"columns":[
+						{"data": "check"},
 						{"data": "indice"},
 						{"data": "marca"},
 						{"data": "modelo"},
@@ -675,9 +675,28 @@
 						{"data": "fechacompromiso"},
 						{"data": "claveSat"},
 						{"data": "proveedor"},
-						{"data": "check"},
 						{"data": "almacen"},
+						{"data": "remision"},
+						{"data": "factura"},
 						{"defaultContent": "<div class='invoice-footer'><button type='button' class='editar btn btn-lg btn-primary' data-toggle='modal' data-target='#modalEditar'><i class='fas fa-edit fa-sm' aria-hidden='true'></i></button></div>"}
+					],
+					"columnDefs": [
+						{ "width": "2%", "targets": 0 },
+						{ "width": "2%", "targets": 1 },
+						{ "width": "10%", "targets": 2 },
+						{ "width": "10%", "targets": 3 },
+						// { "width": "10%", "targets": 4 },
+						{ "visible": false, "targets": 5 },
+						{ "width": "8%", "targets": 6 },
+						{ "width": "5%", "targets": 7 },
+						{ "width": "8%", "targets": 8 },
+						{ "visible": false, "targets": 9 },
+						{ "visible": false, "targets": 10 },
+						{ "width": "15%", "targets": 11 },
+						{ "width": "2%", "targets": 12 },
+						{ "width": "2%", "targets": 13 },
+						{ "width": "5%", "targets": 14 },
+						{ "width": "5%", "targets": 15 },
 					],
 					"order": false,
 	        "lengthChange": false,
@@ -695,7 +714,7 @@
             };
 
             var subtotal = api
-                .column( 7 )
+                .column( 8 )
                 .data()
                 .reduce( function (a, b) {
                     return intVal(a) + intVal(b);
@@ -710,17 +729,17 @@
       			"<'row be-datatable-body'<'col-sm-12'tr>>",
 					"createdRow": function ( row, data, index ) {
 						if ( data.enviado != '0000-00-00' && data.recibido == '0000-00-00' ) {
-							$('td', row).eq(1).addClass('table-text-enviado');
 							$('td', row).eq(2).addClass('table-text-enviado');
+							$('td', row).eq(3).addClass('table-text-enviado');
 						}
 
 						if ( data.enviado != '0000-00-00' && data.recibido != '0000-00-00' ) {
-							$('td', row).eq(1).addClass('table-text-recibido');
 							$('td', row).eq(2).addClass('table-text-recibido');
+							$('td', row).eq(3).addClass('table-text-recibido');
 						}
 						if ( data.enviado == '0000-00-00' && data.recibido == '0000-00-00' ) {
-							$('td', row).eq(1).addClass('text-danger');
 							$('td', row).eq(2).addClass('text-danger');
+							$('td', row).eq(3).addClass('text-danger');
 						}
 					},
 					"buttons":[
@@ -739,6 +758,12 @@
 						// 		entregado(refCotizacion, numeroPedido, RFC);
 						// 	}
 						// },
+						{
+							extend: 'colvis',
+							columns: ':not(.noVis)',
+							text: '<i class="fas fa-columns fa-sm"></i> Columnas',
+							"className": "btn btn-lg btn-space btn-secondary",
+						},
             {
                 text: '<i class="fas fa-box fa-sm" aria-hidden="true"></i> Lista de embarque',
                 "className": "btn btn-lg btn-space btn-secondary",
@@ -935,12 +960,7 @@
 
 					request.open('GET', apiConfig.enlace + 'api/v3/cfdi33/list');
 
-					// request.withCredentials = true;
 					request.setRequestHeader('Access-Control-Allow-Origin', '*');
-					request.setRequestHeader('Origin', 'http://127.0.0.1');
-					request.setRequestHeader('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE, HEAD, OPTIONS');
-					request.setRequestHeader('Access-Control-Allow-Credentials', 'true');
-					// request.setRequestHeader("Access-Control-Allow-Headers", "access-control-allow-origin,content-type,f-api-key,f-secret-key");
 					request.setRequestHeader('Content-Type', 'application/json');
 					request.setRequestHeader('F-API-KEY', apiConfig.apiKey);
 					request.setRequestHeader('F-SECRET-KEY', apiConfig.secretKey);
@@ -958,23 +978,21 @@
 			      });
 					};
 
-					request.onreadystatechange = function () {
-						if (this.readyState === 4) {
-							console.log('Status:', this.status);
-							console.log('Headers:', this.getAllResponseHeaders());
-							var data = JSON.parse(this.responseText);
-							console.log(data);
-							var total = data.total;
-							for (var i = 0; i < total; i++) {
-								if (numeroPedido == data.data[i].NumOrder){
-									document.getElementById("factura").innerHTML = data.data[i].Folio;
-								}
-							}
-						}
-					};
-
-					request.send();
-
+					// request.onreadystatechange = function () {
+					// 	if (this.readyState === 4) {
+					// 		console.log('Status:', this.status);
+					// 		console.log('Headers:', this.getAllResponseHeaders());
+					// 		var data = JSON.parse(this.responseText);
+					// 		console.log(data);
+					// 		var total = data.total;
+					// 		for (var i = 0; i < total; i++) {
+					// 			if (numeroPedido == data.data[i].NumOrder){
+					// 				document.getElementById("factura").innerHTML = data.data[i].Folio;
+					// 			}
+					// 		}
+					// 	}
+					// };
+					// request.send();
 	   		}
 			});
 		}
@@ -1291,7 +1309,6 @@
 											text: data.message.message+'<br>'+data.message.messageDetail,
 											class_name: 'color danger'
 										});
-										quitarStock(numeroPedido, refCotizacion);
 									}else if (data.response == "error" && typeof data.message != "undefined") {
 										$("#mod-success").modal("hide");
 										$.gritter.add({
@@ -1299,7 +1316,6 @@
 											text: data.message,
 											class_name: 'color warning'
 										});
-										quitarStock(numeroPedido, refCotizacion);
 									}else{
 										$(".texto1").fadeOut(300, function(){
 											$(this).html("");
@@ -1312,7 +1328,7 @@
 											$(".texto1").append("<div class='text-center'>");
 												$(".texto1").append("<p>En un momento se descargará el archivo PDF.</p>");
 												$(".texto1").append("</div>");
-											}, 2500);
+											}, 6500);
 											guardarFactura(numeroPedido, refCotizacion);
 										}
 									}
@@ -1335,7 +1351,7 @@
 										'TipoDocumento':'factura',
 										'Conceptos': conceptos.data,
 										'UsoCFDI': conceptos.cfdi,
-										'Serie':'1194',
+										'Serie': '1194',
 										'FormaPago': conceptos.formapago,
 										'MetodoPago': conceptos.metodopago,
 										'CondicionesDePago': conceptos.condpago,

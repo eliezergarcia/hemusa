@@ -52,12 +52,28 @@
 					$informacion['cliente'] = $data2;
 				}
 
+				if ($data['factura'] != 0) {
+					$facturas = $data['factura'];
+				}else{
+					$query3 = "SELECT DISTINCT cotizacionherramientas.factura, cotizacion.factura FROM cotizacionherramientas LEFT JOIN cotizacion ON cotizacion.id = cotizacionherramientas.factura WHERE cotizacionherramientas.factura != 0 AND cotizacionherramientas.cotizacionRef = '$refCotizacion'";
+					$resultado3 = mysqli_query($conexion_usuarios, $query3);
+					if (mysqli_num_rows($resultado3) < 1) {
+						$facturas = "";
+					}else{
+						$facturas = "";
+						while($data3 = mysqli_fetch_assoc($resultado3)){
+							$facturas = $data3['factura'].", ".$facturas;
+						}
+					}
+				}
+
+
 				$informacion['refCotizacion'] = $data['ref'];
 				$informacion['remision'] = $data['remision'];
 				$informacion['fecha'] = $data['fecha'];
 				$informacion['vendedor'] = $data['vendedor'];
 				$informacion['pedidocliente'] = $data['NoPedClient'];
-				$informacion['factura'] = $data['factura'];
+				$informacion['factura'] = $facturas;
 				$informacion['pagado'] = $data['Pagado'];
 				$informacion['total'] = $data['precioTotal'];
 				$informacion['moneda'] = $data['moneda'];
@@ -77,11 +93,22 @@
 					$informacion['cliente'] = $data2;
 				}
 
+				$query3 = "SELECT DISTINCT cotizacionherramientas.factura, cotizacion.factura FROM cotizacionherramientas LEFT JOIN cotizacion ON cotizacion.id = cotizacionherramientas.factura WHERE cotizacionherramientas.factura != 0 AND cotizacionherramientas.cotizacionRef = '$refCotizacion'";
+				$resultado3 = mysqli_query($conexion_usuarios, $query3);
+				if (mysqli_num_rows($resultado3) < 1) {
+					$facturas = "";
+				}else{
+					$facturas = "";
+					while($data3 = mysqli_fetch_assoc($resultado3)){
+						$facturas = $data3['factura'].", ".$facturas;
+					}
+				}
+
 				$informacion['refCotizacion'] = $data['cotizacionRef'];
 				$informacion['ordenCompra'] = $data['ordenCompra'];
 				$informacion['fecha'] = $data['fecha'];
 				$informacion['vendedor'] = $data['vendedor'];
-				$informacion['factura'] = $data['factura'];
+				$informacion['factura'] = $facturas;
 				$informacion['pagado'] = $data['pagado'];
 				$informacion['total'] = $data['total'];
 				$informacion['moneda'] = $data['moneda'];

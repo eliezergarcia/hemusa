@@ -42,7 +42,7 @@
 										<div role="group" class="btn-group btn-group-justified mb-2 col-6">
 											<a href="#" id="btnsinproveedor" class="btn btn-primary btn-space" onclick="listar_sinproveedor()">SIN PROVEEDOR</a href="#">
 										  	<a href="#" id="btnnoentregado" class="btn btn-primary btn-space" onclick="listar_noentregado()">NO ENTREGADO</a href="#">
-											<a href="#" id="btnnopagado" class="btn btn-primary btn-space" onclick="listar_nopagado()">NO PAGADO</a href="#">
+											<a href="#" id="btnnopagado" class="btn btn-primary btn-space" onclick="listar_nopagado()">FACTURADO NO PAGADO</a href="#">
 											<a href="#" id="btnterminado" class="btn btn-primary btn-space" onclick="listar_terminado()">TERMINADO</a href="#">
 										</div>
 									</div>
@@ -92,7 +92,7 @@
 								<!-- Tabla de nopagado -->
 									<div id="nopagado">
 										<br>
-										<center><h4><b>Pedidos no pagados</b></h4></center><br>
+										<center><h4><b>Pedidos facturados no pagados</b></h4></center><br>
 										<table id="dt_nopagado" class="table table-striped display compact" cellspacing="0" width="100%">
 											<thead>
 												<tr>
@@ -195,6 +195,7 @@
 					"destroy":"true",
 					"deferRender": true,
 					"scrollX": true,
+					"autoWidth": false,
 					"ajax":{
 						"url": "listar.php",
 						"type": "POST",
@@ -210,6 +211,16 @@
 						{"data": "partidas"},
 						{"data": "total"},
 						{"defaultContent": "<div class='invoice-footer'><button class='verpedido btn btn-lg btn-primary'><i class='fas fa-edit fa-sm' aria-hidden='true'></i></button></div>"}
+					],
+					"columnDefs": [
+						{ "width": "10%", "targets": 0 },
+						{ "width": "10%", "targets": 1 },
+						{ "width": "10%", "targets": 3 },
+						{ "width": "10%", "targets": 4 },
+						{ "width": "10%", "targets": 5 },
+						{ "width": "7%", "targets": 6 },
+						{ "width": "7%", "targets": 7 },
+						{ "width": "5%", "targets": 8 },
 					],
 					"order": [5, "desc"],
 			        "language": idioma_espanol,
@@ -286,6 +297,7 @@
 					"destroy":"true",
 					"deferRender": true,
 					"scrollX": true,
+					"autoWidth": false,
 					"ajax":{
 						"url": "listar.php",
 						"type": "POST",
@@ -301,6 +313,16 @@
 						{"data": "partidas"},
 						{"data": "total"},
 						{"defaultContent": "<div class='invoice-footer'><button class='verpedido btn btn-lg btn-primary'><i class='fas fa-edit fa-sm' aria-hidden='true'></i></button></div>"}
+					],
+					"columnDefs": [
+						{ "width": "10%", "targets": 0 },
+						{ "width": "10%", "targets": 1 },
+						{ "width": "10%", "targets": 3 },
+						{ "width": "10%", "targets": 4 },
+						{ "width": "10%", "targets": 5 },
+						{ "width": "7%", "targets": 6 },
+						{ "width": "7%", "targets": 7 },
+						{ "width": "5%", "targets": 8 },
 					],
 					"order": [5, "desc"],
 			        "language": idioma_espanol,
@@ -377,6 +399,7 @@
 					"destroy":"true",
 					"deferRender": true,
 					"scrollX": true,
+					"autoWidth": false,
 					"ajax":{
 						"url": "listar.php",
 						"type": "POST",
@@ -392,6 +415,16 @@
 						{"data": "partidas"},
 						{"data": "total"},
 						{"defaultContent": "<div class='invoice-footer'><button class='verpedido btn btn-lg btn-primary'><i class='fas fa-edit fa-sm' aria-hidden='true'></i></button></div>"}
+					],
+					"columnDefs": [
+						{ "width": "10%", "targets": 0 },
+						{ "width": "10%", "targets": 1 },
+						{ "width": "10%", "targets": 3 },
+						{ "width": "10%", "targets": 4 },
+						{ "width": "10%", "targets": 5 },
+						{ "width": "7%", "targets": 6 },
+						{ "width": "7%", "targets": 7 },
+						{ "width": "5%", "targets": 8 },
 					],
 					"order": [5, "desc"],
 			        "language": idioma_espanol,
@@ -467,6 +500,7 @@
 					"destroy":"true",
 					"deferRender": true,
 					"scrollX": true,
+					"autoWidth": false,
 					"ajax":{
 						"url": "listar.php",
 						"type": "POST",
@@ -482,6 +516,16 @@
 						{"data": "partidas"},
 						{"data": "total"},
 						{"defaultContent": "<div class='invoice-footer'><button class='verpedido btn btn-lg btn-primary'><i class='fas fa-edit fa-sm' aria-hidden='true'></i></button></div>"}
+					],
+					"columnDefs": [
+						{ "width": "10%", "targets": 0 },
+						{ "width": "10%", "targets": 1 },
+						{ "width": "10%", "targets": 3 },
+						{ "width": "10%", "targets": 4 },
+						{ "width": "10%", "targets": 5 },
+						{ "width": "7%", "targets": 6 },
+						{ "width": "7%", "targets": 7 },
+						{ "width": "5%", "targets": 8 },
 					],
 					"order": [5, "desc"],
 			        "language": idioma_espanol,
