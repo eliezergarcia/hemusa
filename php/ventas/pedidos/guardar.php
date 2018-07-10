@@ -56,14 +56,15 @@
 			$cantidad = $_POST['cantidad'];
 			$refCotizacion = $_POST['refCotizacion'];
 			$numeroPedido = $_POST['numeroPedido'];
-			cantidad($cantidad, $refCotizacion, $numeroPedido, $conexion_usuarios);
+			$data = json_decode($_POST['herramienta']);
+			cantidad($cantidad, $refCotizacion, $numeroPedido, $data, $conexion_usuarios);
 			break;
 
 		case 'editarpartida':
 			$id = $_POST['id'];
 			$claveSat = $_POST['claveSat'];
 			$noserie = $_POST['noserie'];
-			$cantidad = $_POST['cantidad'];
+			// $cantidad = $_POST['cantidad'];
 			$fechacompromiso = $_POST['fechacompromiso'];
 			$proveedor = $_POST['proveedor'];
 			if (isset($_POST['split'])) {
@@ -71,9 +72,9 @@
 			}else{
 				$split = 0;
 			}
-			$entregado = $_POST['entregado'];
+			// $entregado = $_POST['entregado'];
 			$pedimento = $_POST['pedimento'];
-			editarpartida($id, $claveSat, $noserie, $cantidad, $fechacompromiso, $proveedor, $split, $entregado, $pedimento, $conexion_usuarios);
+			editarpartida($id, $claveSat, $noserie, $fechacompromiso, $proveedor, $split, $pedimento, $conexion_usuarios);
 			break;
 
 		case 'guardarfactura':
@@ -154,46 +155,21 @@
 			while($data = mysqli_fetch_assoc($resultado)){
 				$tipocambio = $data['tipocambio'];
 			}
-			$query = "SELECT moneda, total FROM pedidos WHERE cotizacionRef = '$refCotizacion' AND numeroPedido = '$numeroPedido'";
+
+			$query = "SELECT moneda FROM pedidos WHERE cotizacionRef = '$refCotizacion' AND numeroPedido = '$numeroPedido'";
 			$resultado = mysqli_query($conexion_usuarios, $query);
 			if (mysqli_num_rows($resultado) > 0) {
 				while($data = mysqli_fetch_assoc($resultado)){
 					$monedapedido = $data['moneda'];
-					$totalpedido = $data['pedido'];
 				}
 
-				if ($monedapedido == "mxn") {
-					// Se hace el cambio a moneda USD
-					$totalpedido = $totalpedido / $tipocambio;
-					$monedacambio = "usd";
-				}else{
-					// Se hace el cambio a moneda MXN
-					$totalpedido = $totalpedido * $tipocambio;
-					$monedacambio = "mxn";
-				}
-
-				$query = "UPDATE pedidos SET total = '$totalpedido', moneda = '$monedacambio' WHERE cotizacionRef = '$refCotizacion' AND numeroPedido = '$numeroPedido'";
-				$resultado = mysqli_query($conexion_usuarios, $query);
-			}
-
-			$query = "SELECT moneda FROM cotizacion WHERE ref = '$refCotizacion'";
-			$resultado = mysqli_query($conexion_usuarios, $query);
-			if (!$resultado) {
-				$informacion["respuesta"] = "ERROR";
-				$informacion["informacion"] = "Ocurrió un problema al buscar la moneda de la cotización!";
-			}else{
-				while($data = mysqli_fetch_assoc($resultado)){
-					$moneda = $data['moneda'];
-				}
-
-				$total = 0;
-				$query = "SELECT * FROM cotizacionherramientas WHERE cotizacionRef = '$refCotizacion'";
+				$query = "SELECT * FROM cotizacionherramientas WHERE cotizacionRef = '$refCotizacion' AND numeroPedido = '$numeroPedido'";
 				$resultado = mysqli_query($conexion_usuarios, $query);
 				if (!$resultado) {
 					$informacion["respuesta"] = "ERROR";
 					$informacion["informacion"] = "Ocurrió un problema al buscar información de las partidas!";
 				}else{
-					if ($moneda == "mxn") {
+					if ($monedapedido == "mxn") {
 						// Se hace el cambio a moneda USD
 						while($data = mysqli_fetch_assoc($resultado)){
 							$id = $data['id'];
@@ -210,7 +186,7 @@
 								break;
 							}
 						}
-						$query = "UPDATE cotizacion SET precioTotal = '$total', moneda = 'usd' WHERE ref = '$refCotizacion'";
+						$query = "UPDATE pedidos SET total = '$total', moneda = 'usd' WHERE cotizacionRef = '$refCotizacion' AND numeroPedido = '$numeroPedido'";
 						$resultado = mysqli_query($conexion_usuarios, $query);
 						if (!$resultado) {
 							$informacion["respuesta"] = "ERROR";
@@ -247,7 +223,7 @@
 								break;
 							}
 						}
-						$query = "UPDATE cotizacion SET precioTotal = '$total', moneda = 'mxn' WHERE ref = '$refCotizacion'";
+						$query = "UPDATE pedidos SET total = '$total', moneda = 'usd' WHERE cotizacionRef = '$refCotizacion' AND numeroPedido = '$numeroPedido'";
 						$resultado = mysqli_query($conexion_usuarios, $query);
 						if (!$resultado) {
 							$informacion["respuesta"] = "ERROR";
@@ -265,6 +241,101 @@
 								$costoFlete = $costoFlete * $tipocambio;
 								$queryCambio = "UPDATE fletescotizacion SET costoFlete = '$costoFlete' WHERE id = '$id'";
 								$resultadoCambio = mysqli_query($conexion_usuarios, $queryCambio);
+							}
+						}
+					}
+				}
+			}else{
+				$query = "SELECT moneda FROM cotizacion WHERE ref = '$refCotizacion'";
+				$resultado = mysqli_query($conexion_usuarios, $query);
+				if (!$resultado) {
+					$informacion["respuesta"] = "ERROR";
+					$informacion["informacion"] = "Ocurrió un problema al buscar la moneda de la cotización!";
+				}else{
+					while($data = mysqli_fetch_assoc($resultado)){
+						$moneda = $data['moneda'];
+					}
+
+					$total = 0;
+					$query = "SELECT * FROM cotizacionherramientas WHERE cotizacionRef = '$refCotizacion'";
+					$resultado = mysqli_query($conexion_usuarios, $query);
+					if (!$resultado) {
+						$informacion["respuesta"] = "ERROR";
+						$informacion["informacion"] = "Ocurrió un problema al buscar información de las partidas!";
+					}else{
+						if ($moneda == "mxn") {
+							// Se hace el cambio a moneda USD
+							while($data = mysqli_fetch_assoc($resultado)){
+								$id = $data['id'];
+								$precioLista = $data['precioLista'];
+								$flete = $data['flete'];
+								$precioLista = $precioLista / $tipocambio;
+								$flete = $flete / $tipocambio;
+								$total = $total + ($precioLista * $data['cantidad']);
+								$queryCambio = "UPDATE cotizacionherramientas SET precioLista = '$precioLista', moneda = 'usd', flete = '$flete' WHERE id='$id'";
+								$resultadoCambio = mysqli_query($conexion_usuarios, $queryCambio);
+								if (!$resultadoCambio) {
+									$informacion["respuesta"] = "ERROR";
+									$informacion["informacion"] = "Ocurrió un problema al intentar modificar la información!";
+									break;
+								}
+							}
+							$query = "UPDATE cotizacion SET precioTotal = '$total', moneda = 'usd' WHERE ref = '$refCotizacion'";
+							$resultado = mysqli_query($conexion_usuarios, $query);
+							if (!$resultado) {
+								$informacion["respuesta"] = "ERROR";
+								$informacion["informacion"] = "Ocurrió un problema al intentar modificar la información de la cotización!";
+							}else{
+								$informacion["respuesta"] = "BIEN";
+								$informacion["informacion"] = "La moneda se cambio y la información se modificó correctamente!";
+
+								$query = "SELECT * FROM fletescotizacion WHERE refCotizacion = '$refCotizacion'";
+								$resultado = mysqli_query($conexion_usuarios, $query);
+
+								while($data = mysqli_fetch_assoc($resultado)){
+									$id = $data['id'];
+									$costoFlete = $data['costoFlete'];
+									$costoFlete = $costoFlete / $tipocambio;
+									$queryCambio = "UPDATE fletescotizacion SET costoFlete = '$costoFlete' WHERE id = '$id'";
+									$resultadoCambio = mysqli_query($conexion_usuarios, $queryCambio);
+								}
+							}
+						}else{
+							// Se hace el cambio a moneda MXN
+							while($data = mysqli_fetch_assoc($resultado)){
+								$id = $data['id'];
+								$precioLista = $data['precioLista'];
+								$flete = $data['flete'];
+								$precioLista = $precioLista * $tipocambio;
+								$flete = $flete * $tipocambio;
+								$total = $total + ($precioLista * $data['cantidad']);
+								$queryCambio = "UPDATE cotizacionherramientas SET precioLista = '$precioLista', moneda = 'mxn', flete = '$flete' WHERE id='$id'";
+								$resultadoCambio = mysqli_query($conexion_usuarios, $queryCambio);
+								if (!$resultadoCambio) {
+									$informacion["respuesta"] = "ERROR";
+									$informacion["informacion"] = "Ocurrió un problema al intentar modificar la información!";
+									break;
+								}
+							}
+							$query = "UPDATE cotizacion SET precioTotal = '$total', moneda = 'mxn' WHERE ref = '$refCotizacion'";
+							$resultado = mysqli_query($conexion_usuarios, $query);
+							if (!$resultado) {
+								$informacion["respuesta"] = "ERROR";
+								$informacion["informacion"] = "Ocurrió un problema al intentar modificar la información de la cotización!";
+							}else{
+								$informacion["respuesta"] = "BIEN";
+								$informacion["informacion"] = "La moneda se cambio y la información se modificó correctamente!";
+
+								$query = "SELECT * FROM fletescotizacion WHERE refCotizacion = '$refCotizacion'";
+								$resultado = mysqli_query($conexion_usuarios, $query);
+
+								while($data = mysqli_fetch_assoc($resultado)){
+									$id = $data['id'];
+									$costoFlete = $data['costoFlete'];
+									$costoFlete = $costoFlete * $tipocambio;
+									$queryCambio = "UPDATE fletescotizacion SET costoFlete = '$costoFlete' WHERE id = '$id'";
+									$resultadoCambio = mysqli_query($conexion_usuarios, $queryCambio);
+								}
 							}
 						}
 					}
@@ -320,8 +391,12 @@
 	function numeroguia($numeroguia, $refCotizacion, $numeroPedido, $conexion_usuarios){
 		$query = "UPDATE pedidos SET numeroGuia='$numeroguia' WHERE cotizacionRef ='$refCotizacion' AND numeroPedido='$numeroPedido'";
 		$resultado = mysqli_query($conexion_usuarios, $query);
-		$query = "UPDATE cotizacion SET guia='$numeroguia' WHERE ref ='$refCotizacion'";
-		$resultado = mysqli_query($conexion_usuarios, $query);
+
+		if (mysqli_num_rows($resultado) < 1) {
+			$query = "UPDATE cotizacion SET guia='$numeroguia' WHERE ref ='$refCotizacion'";
+			$resultado = mysqli_query($conexion_usuarios, $query);
+		}
+
 		if (!$resultado) {
 			$informacion["respuesta"] = "ERROR";
 			$informacion["informacion"] = "Ocurrió un problema al guardar el número de guía '".$numeroguia."'!";
@@ -337,10 +412,13 @@
 		if($paqueteria == "NINGUNA"){
 			$paqueteria = "";
 		}
+
 		$query = "UPDATE pedidos SET paqueteria='$paqueteria' WHERE cotizacionRef ='$refCotizacion' AND numeroPedido='$numeroPedido'";
 		$resultado = mysqli_query($conexion_usuarios, $query);
-		$query = "UPDATE cotizacion SET IdPaqueteria='$paqueteria' WHERE ref ='$refCotizacion'";
-		$resultado = mysqli_query($conexion_usuarios, $query);
+		if (mysqli_num_rows($resultado) < 1) {
+			$query = "UPDATE cotizacion SET IdPaqueteria='$paqueteria' WHERE ref ='$refCotizacion'";
+			$resultado = mysqli_query($conexion_usuarios, $query);
+		}
 
 		if (!$resultado) {
 			$informacion["respuesta"] = "ERROR";
@@ -349,89 +427,81 @@
 			$informacion["respuesta"] = "BIEN";
 			$informacion["informacion"] = "La paqueteria se guardó correctamente!";
 		}
+
 		echo json_encode($informacion);
 		mysqli_close($conexion_usuarios);
 	}
 
 	function formapago($formapago, $refCotizacion, $numeroPedido, $conexion_usuarios){
-		$query = "SELECT * FROM pedidos WHERE cotizacionRef = '$refCotizacion' AND numeroPedido = '$numeroPedido'";
+		$query = "UPDATE pedidos SET IdFormaPago='$formapago' WHERE cotizacionRef='$refCotizacion' AND numeroPedido='$numeroPedido'";
 		$resultado = mysqli_query($conexion_usuarios, $query);
-		if(mysqli_num_rows($resultado) != 0){
-			while($data = mysqli_fetch_assoc($resultado)){
-				$idcliente = $data['cliente'];
-			}
-		}else{
+
+		if (mysqli_num_rows($resultado) < 1) {
 			$query = "SELECT * FROM cotizacion WHERE ref = '$refCotizacion' AND NoPedClient = '$numeroPedido'";
 			$resultado = mysqli_query($conexion_usuarios, $query);
 			while($data = mysqli_fetch_assoc($resultado)){
 				$idcliente = $data['cliente'];
 			}
+			$query = "UPDATE contactos SET IdFormaPago='$formapago' WHERE id='$idcliente'";
+			$resultado = mysqli_query($conexion_usuarios, $query);
 		}
 
-		$query = "UPDATE contactos SET IdFormaPago='$formapago' WHERE id='$idcliente'";
-		$resultado = mysqli_query($conexion_usuarios, $query);
 		if (!$resultado) {
 			$informacion["respuesta"] = "ERROR";
-			$informacion["informacion"] = "Ocurrió un problema al actualizar la forma de pago!";
+			$informacion["informacion"] = "Ocurrió un problema al actualizar la forma de pago.";
 		}else{
 			$informacion["respuesta"] = "BIEN";
-			$informacion["informacion"] = "La forma de pago se actualizó correctamente!";
+			$informacion["informacion"] = "La forma de pago se actualizó correctamente.";
 		}
 		echo json_encode($informacion);
 		mysqli_close($conexion_usuarios);
 	}
 
 	function metodopago($metodopago, $refCotizacion, $numeroPedido, $conexion_usuarios){
-		$query = "SELECT * FROM pedidos WHERE cotizacionRef = '$refCotizacion' AND numeroPedido = '$numeroPedido'";
+		$query = "UPDATE pedidos SET IdMetodoPago='$metodopago' WHERE cotizacionRef='$refCotizacion' AND numeroPedido='$numeroPedido'";
 		$resultado = mysqli_query($conexion_usuarios, $query);
-		if(mysqli_num_rows($resultado) != 0){
-			while($data = mysqli_fetch_assoc($resultado)){
-				$idcliente = $data['cliente'];
-			}
-		}else{
+
+		if (mysqli_num_rows($resultado) < 1) {
 			$query = "SELECT * FROM cotizacion WHERE ref = '$refCotizacion' AND NoPedClient = '$numeroPedido'";
 			$resultado = mysqli_query($conexion_usuarios, $query);
 			while($data = mysqli_fetch_assoc($resultado)){
 				$idcliente = $data['cliente'];
 			}
+			$query = "UPDATE contactos SET IdMetodoPago='$metodopago' WHERE id='$idcliente'";
+			$resultado = mysqli_query($conexion_usuarios, $query);
 		}
 
-		$query = "UPDATE contactos SET IdMetodoPago='$metodopago' WHERE id='$idcliente'";
-		$resultado = mysqli_query($conexion_usuarios, $query);
 		if (!$resultado) {
 			$informacion["respuesta"] = "ERROR";
-			$informacion["informacion"] = "Ocurrió un problema al actualizar el método de pago!";
+			$informacion["informacion"] = "Ocurrió un problema al actualizar el método de pago.";
 		}else{
 			$informacion["respuesta"] = "BIEN";
-			$informacion["informacion"] = "El método de pago se actualizó correctamente!";
+			$informacion["informacion"] = "el método de pago se actualizó correctamente.";
 		}
 		echo json_encode($informacion);
 		mysqli_close($conexion_usuarios);
 	}
 
 	function usocfdi($cfdi, $refCotizacion, $numeroPedido, $conexion_usuarios){
-		$query = "SELECT * FROM pedidos WHERE cotizacionRef = '$refCotizacion' AND numeroPedido = '$numeroPedido'";
+		$query = "UPDATE pedidos SET IdUsoCFDI='$cfdi' WHERE cotizacionRef='$refCotizacion' AND numeroPedido='$numeroPedido'";
 		$resultado = mysqli_query($conexion_usuarios, $query);
-		if(mysqli_num_rows($resultado) != 0){
-			while($data = mysqli_fetch_assoc($resultado)){
-				$idcliente = $data['cliente'];
-			}
-		}else{
+
+		if (mysqli_num_rows($resultado) < 1) {
 			$query = "SELECT * FROM cotizacion WHERE ref = '$refCotizacion' AND NoPedClient = '$numeroPedido'";
 			$resultado = mysqli_query($conexion_usuarios, $query);
 			while($data = mysqli_fetch_assoc($resultado)){
 				$idcliente = $data['cliente'];
 			}
+			$query = "UPDATE contactos SET IdUsoCFDI='$cfdi' WHERE id='$idcliente'";
+			$resultado = mysqli_query($conexion_usuarios, $query);
 		}
 
-		$query = "UPDATE contactos SET IdUsoCFDI='$cfdi' WHERE id='$idcliente'";
-		$resultado = mysqli_query($conexion_usuarios, $query);
 		if (!$resultado) {
 			$informacion["respuesta"] = "ERROR";
-			$informacion["informacion"] = "Ocurrió un problema al actualizar el uso de CFDI!";
+			$informacion["informacion"] = "Ocurrió un problema al actualizar el Uso de CFDI.";
 		}else{
 			$informacion["respuesta"] = "BIEN";
-			$informacion["informacion"] = "El CFDI se actualizó correctamente!";
+			$informacion["informacion"] = "El Uso de CFDI se actualizó correctamente";
 		}
 		echo json_encode($informacion);
 		mysqli_close($conexion_usuarios);
@@ -440,19 +510,18 @@
 	function proveedor($proveedor, $refCotizacion, $numeroPedido, $data, $conexion_usuarios){
 		foreach ($data as &$valor) {
 			$id = $valor;
-			if($proveedor == "None" || $proveedor != "ALMACEN"){
-				$fecha = "0000-00-00";
-			}else{
-				$fecha = date("Y-m-d");
-			}
+
 			if ($proveedor == "ALMACEN") {
-				$query2 = "UPDATE cotizacionherramientas SET Proveedor='$proveedor', proveedorFecha='$fecha', enviadoFecha='$fecha', recibidoFecha='$fecha' WHERE id='$id'";
-				$resultado2 = mysqli_query($conexion_usuarios, $query2);
+				$fecha = date("Y-m-d");
+				$query = "UPDATE cotizacionherramientas SET Proveedor='$proveedor', proveedorFecha='$fecha', enviadoFecha='$fecha', recibidoFecha='$fecha' WHERE id='$id'";
+				$resultado = mysqli_query($conexion_usuarios, $query);
 			}else{
-				$query2 = "UPDATE cotizacionherramientas SET Proveedor='$proveedor', proveedorFecha='$fecha', enviadoFecha='$fecha', recibidoFecha='$fecha' WHERE id='$id'";
-				$resultado2 = mysqli_query($conexion_usuarios, $query2);
+				$fecha = "0000-00-00";
+				$query = "UPDATE cotizacionherramientas SET Proveedor='$proveedor', proveedorFecha='$fecha', enviadoFecha='$fecha', recibidoFecha='$fecha' WHERE id='$id'";
+				$resultado = mysqli_query($conexion_usuarios, $query);
 			}
-			if (!$resultado2) {
+
+			if (!$resultado) {
 				$informacion["respuesta"] = "ERROR";
 				$informacion["informacion"] = "Ocurrió un problema al guardar el proveedor ".$proveedor."!";
 			}else{
@@ -464,46 +533,52 @@
 		mysqli_close($conexion_usuarios);
 	}
 
-	function cantidad($cantidad, $refCotizacion, $numeroPedido, $conexion_usuarios){
-		$query = "SELECT id FROM cotizacionherramientas WHERE cotizacionRef='$refCotizacion' AND numeroPedido='$numeroPedido'";
-		$resultado = mysqli_query($conexion_usuarios, $query);
+	function cantidad($cantidad, $refCotizacion, $numeroPedido, $partidas, $conexion_usuarios){
+		foreach ($partidas as &$id) {
+			$query = "UPDATE cotizacionherramientas SET cantidad='$cantidad' WHERE id='$id'";
+			$resultado = mysqli_query($conexion_usuarios, $query);
+		}
 		if (!$resultado) {
 			$informacion["respuesta"] = "ERROR";
-			$informacion["informacion"] = "Ocurrió un problema al buscar datos de las partidas!";
+			$informacion["informacion"] = "Ocurrió un problema al cambiar la cantidad de la(s) partida(s).";
 		}else{
-			while($data = mysqli_fetch_array($resultado)){
-				$id = $data['id'];
-				$query2 = "UPDATE cotizacionherramientas SET cantidad='$cantidad' WHERE id='$id'";
-				$resultado2 = mysqli_query($conexion_usuarios, $query2);
-				if (!$resultado2) {
-					$informacion["respuesta"] = "ERROR";
-					$informacion["informacion"] = "Ocurrió un problema al modificar la cantidad de las partidas!";
-				}else{
-					$informacion["respuesta"] = "BIEN";
-					$informacion["informacion"] = "La cantidad de las partidas se modificó correctamente!";
-				}
+			$query = "SELECT * FROM cotizacionherramientas WHERE cotizacionRef='$refCotizacion' AND numeroPedido='$numeroPedido'";
+			$resultado = mysqli_query($conexion_usuarios, $query);
+
+			while($data = mysqli_fetch_assoc($resultado)){
+				$precioLista = $data['precioLista'];
+				$flete = $data['flete'];
+				$total = $total + ($precioLista * $data['cantidad']);
+			}
+
+			$query = "UPDATE pedidos SET total='$total' WHERE cotizacionRef='$refCotizacion' AND numeroPedido='$numeroPedido'";
+			$resultado = mysqli_query($conexion_usuarios, $query);
+			if (!$resultado) {
+				$informacion["respuesta"] = "ERROR";
+				$informacion["informacion"] = "Ocurrió un problema al modificar la información del pedido!";
+			}else{
+				$informacion["respuesta"] = "BIEN";
+				$informacion["informacion"] = "La cantidad de la(s) partida(s) se modificó correctamente!";
 			}
 		}
 		echo json_encode($informacion);
 		mysqli_close($conexion_usuarios);
 	}
 
-	function editarpartida($id, $claveSat, $noserie, $cantidad, $fechacompromiso, $proveedor, $split, $entregado, $pedimento, $conexion_usuarios){
-		if($proveedor == "None" || $proveedor != "ALMACEN"){
-			$fecha = "0000-00-00";
-		}else{
-			$fecha = date("Y-m-d");
-		}
-		$query = "UPDATE utilidad_pedido SET fecha_entregado = '$entregado', Pedimento = '$pedimento' WHERE id_cotizacion_herramientas =$id";
+	function editarpartida($id, $claveSat, $noserie, $fechacompromiso, $proveedor, $split, $pedimento, $conexion_usuarios){
+		$query = "UPDATE utilidad_pedido SET Pedimento = '$pedimento' WHERE id_cotizacion_herramientas =$id";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 
 		if ($proveedor == "ALMACEN") {
-			$query = "UPDATE cotizacionherramientas SET ClaveProductoSAT='$claveSat', NoSerie='$noserie', cantidad='$cantidad', fechacompromiso='$fechacompromiso', Proveedor='$proveedor', proveedorFecha='$fecha', enviadoFecha='$fecha', recibidoFecha='$fecha', Entregado = '$entregado', Pedimento = '$pedimento' WHERE id =$id";
+			$fecha = date("Y-m-d");
+			$query = "UPDATE cotizacionherramientas SET ClaveProductoSAT='$claveSat', NoSerie='$noserie', fechacompromiso='$fechacompromiso', Proveedor='$proveedor', proveedorFecha='$fecha', enviadoFecha='$fecha', recibidoFecha='$fecha', Pedimento = '$pedimento' WHERE id =$id";
 		}else{
-			$query = "UPDATE cotizacionherramientas SET ClaveProductoSAT='$claveSat', NoSerie='$noserie', cantidad='$cantidad', fechacompromiso='$fechacompromiso', Proveedor='$proveedor', proveedorFecha='$fecha', enviadoFecha='$fecha', recibidoFecha='$fecha', Entregado = '$entregado', Pedimento = '$pedimento' WHERE id =$id";
+			$fecha = "0000-00-00";
+			$query = "UPDATE cotizacionherramientas SET ClaveProductoSAT='$claveSat', NoSerie='$noserie', fechacompromiso='$fechacompromiso', Proveedor='$proveedor', proveedorFecha='$fecha', enviadoFecha='$fecha', recibidoFecha='$fecha', Pedimento = '$pedimento' WHERE id =$id";
 		}
 
 		$resultado = mysqli_query($conexion_usuarios, $query);
+
 		if (!$resultado) {
 			$informacion["respuesta"] = "ERROR";
 			$informacion["informacion"] = "Ocurrió un problema al modificar los datos de la partida!";

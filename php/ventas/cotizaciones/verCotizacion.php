@@ -1048,6 +1048,10 @@
 			$("#frmEliminarFlete #eliminar-flete").focus();
 		});
 
+		$('#modalCambiarPedido').on('shown.bs.modal', function (e) {
+			$("#frmCambiarPedido #numeroPedido").focus();
+		});
+
 		function buscarDatosProducto(){
 			if($("#frmAgregarPartida #marca").val() == "Agregar a marca"){
 				document.frmAgregarPartida.modelo.style.backgroundColor='#99CCFF';

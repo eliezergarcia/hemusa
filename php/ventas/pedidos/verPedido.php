@@ -75,7 +75,7 @@
 												</div>
 												<div class="col-3 form-group">
 													<h4><b>Pedido cliente</b></h4>
-													<label id="ordenCompra"></label>
+													<label id="pedidoCliente"></label>
 												</div>
 												<div class="col-3 form-group">
 													<h4><b>Facturas</b></h4>
@@ -299,10 +299,10 @@
 					      			<label for="noserie" class="control-label col-4">No. Serie</label>
 					      			<input type="text" class="form-control form-control-sm col-7" name="noserie" id="noserie">
 					      		</div>
-					      		<div class="form-group row">
+					      		<!-- <div class="form-group row">
 					      			<label for="cantidad" class="control-label col-4">Cantidad</label>
 					      			<input type="text" class="form-control form-control-sm col-7" name="cantidad" id="cantidad">
-					      		</div>
+					      		</div> -->
 					      		<div class="form-group row">
 					      			<label for="fechacompromiso" class="control-label col-4">Fecha compromiso</label>
 					      			<input type="date" class="form-control form-control-sm col-7" name="fechacompromiso" id="fechacompromiso">
@@ -315,10 +315,10 @@
 					      			<label for="split" class="control-label col-4">Split</label>
 					      			<input type="text" class="form-control form-control-sm col-7" name="split" id="split">
 					      		</div>
-										<div class="form-group row">
+										<!-- <div class="form-group row">
 					      			<label for="entregado" class="control-label col-4">Entregado</label>
 					      			<input type="date" class="form-control form-control-sm col-7" name="entregado" id="entregado">
-					      		</div>
+					      		</div> -->
 										<div class="form-group row">
 					      			<label for="pedimento" class="control-label col-4">Pedimento</label>
 					      			<input type="text" class="form-control form-control-sm col-7" name="pedimento" id="pedimento">
@@ -564,8 +564,7 @@
 			        "language": idioma_espanol,
 			        "dom":
           				"<'row be-datatable-header'<'col-sm-6'><'col-sm-6 text-right'f>>" +
-          				"<'row be-datatable-body'<'col-sm-12'tr>>" +
-          				"<'row be-datatable-footer'<'col-sm-5'i><'col-sm-7'p>>"
+          				"<'row be-datatable-body'<'col-sm-12'tr>>",
 				});
 		})
 
@@ -858,7 +857,6 @@
 						url: "guardar.php",
 						data: frm,
 					}).done( function( info ){
-						console.log(info);
 						var json_info = JSON.parse( info );
 						console.log(json_info);
 						$("#dt_pedido").DataTable().ajax.reload();
@@ -938,7 +936,7 @@
 					document.getElementById("refCotizacion").innerHTML = data.refCotizacion;
 					document.getElementById("fecha").innerHTML = data.fecha;
 					document.getElementById("vendedor").innerHTML = data.vendedor;
-					document.getElementById("ordenCompra").innerHTML = data.pedidocliente;
+					document.getElementById("pedidoCliente").innerHTML = data.pedidoCliente;
 					document.getElementById("factura").innerHTML = data.factura;
 					document.getElementById("pagado").innerHTML = "$ "+data.pagado+" - $"+data.total;
 					document.getElementById("monedatotal").innerHTML = (data.moneda).toUpperCase();
@@ -950,8 +948,8 @@
 					$("#cfdi").val(data.cliente.IdUsoCFDI).change();
 
 					var paqueteria = data.paqueteria;
-					paqueterias(paqueteria);
 					var RFC = data.cliente.RFC;
+					paqueterias(paqueteria);
 					listar_partidas(refCotizacion, numeroPedido, RFC);
 					cambiarproveedorgeneral(refCotizacion, numeroPedido, RFC);
 					cambiarcantidadgeneral(refCotizacion, numeroPedido, RFC);
@@ -1161,38 +1159,57 @@
 							herramienta.push($(this).val());
 						}
 					});
-				}
 					var opcion = "proveedor";
 					console.log(herramienta);
-				$.ajax({
-					method: "POST",
-					url: "guardar.php",
-					data: {"opcion": opcion, "herramienta": JSON.stringify(herramienta), "proveedor": proveedor, "refCotizacion": refCotizacion, "numeroPedido": numeroPedido},
-				}).done( function( info ){
-					var json_info = JSON.parse( info );
-					listar_partidas(refCotizacion, numeroPedido, RFC);
-					mostrar_mensaje(json_info);
-				});
+					$.ajax({
+						method: "POST",
+						url: "guardar.php",
+						data: {"opcion": opcion, "herramienta": JSON.stringify(herramienta), "proveedor": proveedor, "refCotizacion": refCotizacion, "numeroPedido": numeroPedido},
+					}).done( function( info ){
+						var json_info = JSON.parse( info );
+						listar_partidas(refCotizacion, numeroPedido, RFC);
+						mostrar_mensaje(json_info);
+					});
+				}
 			});
 		}
 
 		var cambiarcantidadgeneral = function(refCotizacion, numeroPedido, RFC){
 			$("#cambiarcantidadg").on("click", function(event){
-				event.preventDefault();
-				var opcion = "cantidad";
+				event.preventDefault()
 				var cantidad = $("#cantidadg").val();
 				if (cantidad == 0 || cantidad == "") {
-					alert("Error en cantidad general!");
+					alert("Error en la cantidad.");
+				}else{
+					var verificar = 0;
+					$("input[name=hproveedor]").each(function (index) {
+						if($(this).is(':checked')){
+							verificar++;
+						}
+					});
+					if(verificar == 0){
+						alert("Debes de seleccionar al menos una partida.");
+					}else{
+						var herramienta = new Array();
+						$("input[name=hproveedor]").each(function (index) {
+							if($(this).is(':checked')){
+								herramienta.push($(this).val());
+							}
+						});
+						var opcion = "cantidad";
+						console.log(herramienta);
+						$.ajax({
+							method: "POST",
+							url: "guardar.php",
+							data: {"opcion": opcion, "herramienta": JSON.stringify(herramienta), "refCotizacion": refCotizacion, "numeroPedido": numeroPedido, "cantidad": cantidad},
+						}).done( function( info ){
+							var json_info = JSON.parse( info );
+							$("#cantidadg").val("");
+							listar_partidas(refCotizacion, numeroPedido, RFC);
+							mostrar_mensaje(json_info);
+						});
+					}
 				}
-				$.ajax({
-					method: "POST",
-					url: "guardar.php",
-					data: {"opcion": opcion, "cantidad": cantidad, "refCotizacion": refCotizacion, "numeroPedido": numeroPedido},
-				}).done( function( info ){
-					var json_info = JSON.parse( info );
-					listar_partidas(refCotizacion, numeroPedido, RFC);
-					mostrar_mensaje(json_info);
-				});
 			});
 		}
 

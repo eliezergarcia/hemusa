@@ -65,7 +65,7 @@
 				}
 
 				$informacion['refCotizacion'] = $data['cotizacionRef'];
-				$informacion['ordenCompra'] = $data['ordenCompra'];
+				$informacion['pedidoCliente'] = $data['numeroPedido'];
 				$informacion['fecha'] = $data['fecha'];
 				$informacion['vendedor'] = $data['vendedor'];
 				$informacion['factura'] = $facturas;
@@ -108,7 +108,7 @@
 				$informacion['remision'] = $data['remision'];
 				$informacion['fecha'] = $data['fecha'];
 				$informacion['vendedor'] = $data['vendedor'];
-				$informacion['pedidocliente'] = $data['NoPedClient'];
+				$informacion['pedidoCliente'] = $data['NoPedClient'];
 				$informacion['factura'] = $facturas;
 				$informacion['pagado'] = $data['Pagado'];
 				$informacion['total'] = $data['precioTotal'];
