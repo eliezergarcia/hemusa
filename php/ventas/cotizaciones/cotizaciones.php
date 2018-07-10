@@ -53,7 +53,7 @@
     	</div>
 
 		<!-- Modal Nueva Cotizacion -->
-		 	<form name="agregarCotizacion" action="#" method="POST">
+		 	<form name="agregarCotizacion" id="frmAgregarCotizacion" action="#" method="POST">
 		 		<input type="hidden" id="opcion" name="opcion" value="agregarcotizacion">
 		 		<input type="hidden" id="usuariologin" name="usuariologin">
 		 		<input type="hidden" id="dplogin" name="dplogin">
@@ -265,9 +265,9 @@
 	<script>
 		$(document).ready(function(){
 			App.init();
-      		App.pageCalendar();
-      		App.formElements();
-      		App.uiNotifications();
+  		App.pageCalendar();
+  		App.formElements();
+  		App.uiNotifications();
 			listar_cotizaciones();
 			guardar();
 		});
@@ -354,6 +354,10 @@
 					{
 						text: '<i class="fas fa-file-alt fa-sm" aria-hidden="true"></i> Agregar cotización',
 						"className": "btn btn-lg btn-space btn-secondary",
+						key: {
+                shiftKey: true,
+                key: 'c'
+            },
 						action: function (e, dt, node, config){
 							$('#modalNuevaCotizacion').modal('show');
 						}
@@ -374,6 +378,7 @@
 		}
 
 		$("#modalNuevaCotizacion").on("show.bs.modal", function(){
+			$("#frmAgregarCotizacion #cliente").focus();
 			var opcion = "nuevacotizacion";
 			$.ajax({
 				method: "POST",

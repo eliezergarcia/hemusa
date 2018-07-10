@@ -200,6 +200,7 @@
 
 		<!-- Modal Cambiar a Pedido -->
 			<form id="frmCambiarPedido" action="" method="POST">
+				<input type="hidden" name="opcion" id="opcion" value="cambiarPedido">
 				<div class="modal fade colored-header colored-header-primary" id="modalCambiarPedido" role="dialog" aria-labelledby="modalPedidoExample" aria-hidden="true">
 				  	<div class="modal-dialog modal-lg" role="document">
 				    	<div class="modal-content">
@@ -815,6 +816,7 @@
 						var opcion = "cambiarPedido";
 						var numeroPedido = $("#frmCambiarPedido #numeroPedido").val();
 						console.log(herramienta);
+						console.log(numeroPedido);
 						$("#modalCambiarPedido").modal("hide");
 						$("#mod-success").modal("show");
 						$.ajax({
@@ -1817,23 +1819,27 @@
 		var guardar = function(){
 			$("form").on("submit", function(e){
 				e.preventDefault();
-				$(".modal").modal("hide");
-				var frm = $(this).serialize();
-				console.log(frm);
-				$.ajax({
-					method: "POST",
-					url: "guardar.php",
-					data: frm
-				}).done( function( info ){
-					console.log(info);
-					var json_info = JSON.parse( info );
-					$('#dt_cotizacion').DataTable().ajax.reload();
-					mostrar_mensaje(json_info);
-					limpiar_datos();
-					if (json_info.cotizacion == "partida") {
-						$("#modalAgregarPartida").modal("show");
-					}
-				});
+				var opcion = $("#opcion", this).val();
+				if (opcion != "cambiarPedido") {
+					$(".modal").modal("hide");
+					var frm = $(this).serialize();
+					console.log(frm);
+					$.ajax({
+						method: "POST",
+						url: "guardar.php",
+						data: frm
+					}).done( function( info ){
+						console.log(info);
+						var json_info = JSON.parse( info );
+						$('#dt_cotizacion').DataTable().ajax.reload();
+						mostrar_mensaje(json_info);
+						limpiar_datos();
+						if (json_info.cotizacion == "partida") {
+							$("#modalAgregarPartida").modal("show");
+						}
+					});
+				}
+
 			});
 		}
 

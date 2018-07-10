@@ -39,10 +39,46 @@
 	}
 
 	function buscardatos($refCotizacion, $numeroPedido, $conexion_usuarios){
-		$query = "SELECT * FROM cotizacion WHERE ref='$refCotizacion'";
+		$query = "SELECT * FROM pedidos WHERE cotizacionRef='$refCotizacion' AND numeroPedido = '$numeroPedido'";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 
 		if(mysqli_num_rows($resultado) > 0){
+
+			while($data = mysqli_fetch_assoc($resultado)){
+				$idcliente = $data['cliente'];
+
+				$query2 = "SELECT * FROM contactos WHERE id = '$idcliente'";
+				$res2 = mysqli_query($conexion_usuarios, $query2);
+				while($data2 = mysqli_fetch_assoc($res2)){
+					$informacion['cliente'] = $data2;
+				}
+
+				$query3 = "SELECT DISTINCT factura FROM cotizacioherramientas WHERE cotizacionRef='$refCotizacion' AND numeroPedido = '$numeroPedido'";
+				$resultado3 = mysqli_query($conexion_usuarios, $query3);
+				if (mysqli_num_rows($resultado3) < 1) {
+					$facturas = "";
+				}else{
+					$facturas = "";
+					while($data3 = mysqli_fetch_assoc($resultado3)){
+						$facturas = $data3['factura'].", ".$facturas;
+					}
+				}
+
+				$informacion['refCotizacion'] = $data['cotizacionRef'];
+				$informacion['ordenCompra'] = $data['ordenCompra'];
+				$informacion['fecha'] = $data['fecha'];
+				$informacion['vendedor'] = $data['vendedor'];
+				$informacion['factura'] = $facturas;
+				$informacion['pagado'] = $data['pagado'];
+				$informacion['total'] = $data['total'];
+				$informacion['moneda'] = $data['moneda'];
+				$informacion['paqueteria'] = $data['paqueteria'];
+				$informacion['numeroGuia'] = $data['numeroGuia'];
+			}
+		}else{
+			$query = "SELECT * FROM cotizacion WHERE ref='$refCotizacion'";
+			$resultado = mysqli_query($conexion_usuarios, $query);
+
 			while($data = mysqli_fetch_assoc($resultado)){
 				$idcliente = $data['cliente'];
 
@@ -79,41 +115,6 @@
 				$informacion['moneda'] = $data['moneda'];
 				$informacion['paqueteria'] = $data['IdPaqueteria'];
 				$informacion['numeroGuia'] = $data['guia'];
-			}
-		}else{
-			$query = "SELECT * FROM pedidos WHERE cotizacionRef='$refCotizacion' AND numeroPedido = '$numeroPedido'";
-			$resultado = mysqli_query($conexion_usuarios, $query);
-
-			while($data = mysqli_fetch_assoc($resultado)){
-				$idcliente = $data['cliente'];
-
-				$query2 = "SELECT * FROM contactos WHERE id = '$idcliente'";
-				$res2 = mysqli_query($conexion_usuarios, $query2);
-				while($data2 = mysqli_fetch_assoc($res2)){
-					$informacion['cliente'] = $data2;
-				}
-
-				$query3 = "SELECT DISTINCT cotizacionherramientas.factura, cotizacion.factura FROM cotizacionherramientas LEFT JOIN cotizacion ON cotizacion.id = cotizacionherramientas.factura WHERE cotizacionherramientas.factura != 0 AND cotizacionherramientas.cotizacionRef = '$refCotizacion'";
-				$resultado3 = mysqli_query($conexion_usuarios, $query3);
-				if (mysqli_num_rows($resultado3) < 1) {
-					$facturas = "";
-				}else{
-					$facturas = "";
-					while($data3 = mysqli_fetch_assoc($resultado3)){
-						$facturas = $data3['factura'].", ".$facturas;
-					}
-				}
-
-				$informacion['refCotizacion'] = $data['cotizacionRef'];
-				$informacion['ordenCompra'] = $data['ordenCompra'];
-				$informacion['fecha'] = $data['fecha'];
-				$informacion['vendedor'] = $data['vendedor'];
-				$informacion['factura'] = $facturas;
-				$informacion['pagado'] = $data['pagado'];
-				$informacion['total'] = $data['total'];
-				$informacion['moneda'] = $data['moneda'];
-				$informacion['paqueteria'] = $data['paqueteria'];
-				$informacion['numeroGuia'] = $data['numeroGuia'];
 			}
 		}
 

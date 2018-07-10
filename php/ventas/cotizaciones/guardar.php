@@ -796,7 +796,7 @@
 		mysqli_close($conexion_usuarios);
 	}
 
-	function cambiarPedido($data, $refCotizacion, $numeroPedido, $numeroPartidas, $conexion_usuarios){
+	function cambiarPedido($partidas, $refCotizacion, $numeroPedido, $numeroPartidas, $conexion_usuarios){
 		$fecha = date("Y").'-'.date("m").'-'.date("d");
 		$query = "SELECT * FROM cotizacion WHERE ref='$refCotizacion'";
 		$resultado = mysqli_query($conexion_usuarios, $query);
@@ -810,20 +810,24 @@
 				$moneda = $datos['moneda'];
 			}
 
+			$query = "SELECT * FROM contactos WHERE id='$idcliente'";
+			$resultado = mysqli_query($conexion_usuarios, $query);
+			while($data = mysqli_fetch_assoc($resultado)){
+				$idFormaPago = $data['IdFormaPago'];
+				$idMetodoPago = $data['IdMetodoPago'];
+				$idUsoCFDI = $data['IdUsoCFDI'];
+			}
+
 			$total = 0.000;
-			foreach ($data as &$valor) {
-				$id = $valor;
+			foreach ($partidas as &$id) {
 				$query = "SELECT precioLista,flete,cantidad FROM cotizacionherramientas WHERE id='$id'";
 				$resultado = mysqli_query($conexion_usuarios, $query);
 				while($precio = mysqli_fetch_assoc($resultado)){
 					$total = $total + (($precio['precioLista'] + $precio['flete']) * $precio['cantidad']);
 				}
 			}
-
-			foreach ($data as &$valor) {
-				$id = $valor;
-				$pedido = "si";
-				$query = "UPDATE cotizacionherramientas SET numeroPedido='$numeroPedido', fechaPedido='$fecha', pedidoFecha='$fecha', Pedido ='$pedido' WHERE cotizacionRef='$refCotizacion' AND id=$id";
+			foreach ($partidas as &$id) {
+				$query = "UPDATE cotizacionherramientas SET numeroPedido='$numeroPedido', fechaPedido='$fecha', pedidoFecha='$fecha', Pedido ='si' WHERE id=$id";
 				$resultado = mysqli_query($conexion_usuarios, $query);
 			}
 
@@ -836,7 +840,7 @@
 					$respuesta['respuesta'] = "ERROR 3";
 				}else{
 					$entregado = "0000-00-00";
-					$query = "INSERT INTO pedidos (cotizacionRef, numeroPedido, cliente, contacto, vendedor, fecha, partidas, total, entregado, moneda) VALUES ('$refCotizacion', '$numeroPedido', '$idcliente', '$contacto', '$vendedor', '$fecha', '$numeroPartidas', '$total', '$entregado', '$moneda')";
+					$query = "INSERT INTO pedidos (cotizacionRef, numeroPedido, cliente, contacto, vendedor, fecha, partidas, total, entregado, moneda, IdFormaPago, IdMetodoPago, IdUsoCFDI) VALUES ('$refCotizacion', '$numeroPedido', '$idcliente', '$contacto', '$vendedor', '$fecha', '$numeroPartidas', '$total', '$entregado', '$moneda', '$idFormaPago', '$idMetodoPago', '$idUsoCFDI')";
 					$resultado = mysqli_query($conexion_usuarios, $query);
 					if (!$resultado) {
 						$respuesta['respuesta'] = "ERROR 4";
@@ -847,6 +851,7 @@
 			}
 		}
 		echo json_encode($respuesta);
+		mysqli_close($conexion_usuarios);
 	}
 
 	function verificar_resultado($resultado){
