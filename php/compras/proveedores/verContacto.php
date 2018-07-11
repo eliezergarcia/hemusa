@@ -79,17 +79,17 @@
 																	<table id="dt_listar_sinpedido" class="table table-striped table-hover display compact" cellspacing="0" width="100%">
 																		<thead>
 																			<tr>
+																				<th><input type="checkbox" class="btn btn-outline-primary" name="selg" onclick="seleccionartodo()"></th>
 																				<th>#</th>
 																				<th>Marca</th>
 																				<th>Modelo</th>
 																				<th>Descripcion</th>
 																				<th>Cantidad</th>
 																				<th>Cliente</th>
-																				<th>Precio Proveedor</th>
+																				<th>Costo</th>
 																				<th>Fecha Pedido</th>
 																				<th>Almacen</th>
 																				<th>Utilidad</th>
-																				<th>Quitar</th>
 																			</tr>
 																		</thead>
 																	</table>
@@ -106,8 +106,8 @@
 																	<table id="dt_listar_sinrecibido" class="table table-striped table-hover display compact" cellspacing="0" width="100%">
 																		<thead>
 																			<tr>
-																				<th>#</th>
 																				<th><input type="checkbox" class="btn btn-outline-primary" name="selg" onclick="seleccionartodo()"></th>
+																				<th>#</th>
 																				<th>Enviado</th>
 																				<th>Recibido</th>
 																				<th>Marca</th>
@@ -131,8 +131,8 @@
 																	<table id="dt_listar_sinentregar" class="table table-striped table-hover display compact" cellspacing="0" width="100%">
 																		<thead>
 																			<tr>
-																				<th>#</th>
 																				<th><input type="checkbox" class="btn btn-outline-primary" name="selg" onclick="seleccionartodo()"></th>
+																				<th>#</th>
 																				<th>Enviado</th>
 																				<th>Recibido</th>
 																				<th>Marca</th>
@@ -156,10 +156,11 @@
 																		<thead>
 																			<tr>
 																				<th>#</th>
-																				<th>Número</th>
+																				<th>Orden</th>
 																				<th>Proveedor</th>
 																				<th>Contacto</th>
 																				<th>Fecha</th>
+																				<th>Moneda</th>
 																				<th>Ver</th>
 																		</thead>
 																	</table>
@@ -471,6 +472,14 @@
 				$('input[name=sel]').prop('checked' , false);
 			}
 		});
+
+		$("input[name=hsinpedido]").each(function (index) {
+			if($("input[name=selg]").is(':checked')){
+				$('input[name=hsinpedido]').prop('checked' , true);
+			}else{
+				$('input[name=hsinpedido]').prop('checked' , false);
+			}
+		});
 	}
 
 	function buscarDatosCliente(){
@@ -523,126 +532,140 @@
 		console.log(buscar);
 		console.log(idproveedor);
 		var table = $("#dt_listar_sinpedido").DataTable({
-	        "destroy": true,
+	    "destroy": true,
 			"scrollX": true,
-	        "ajax":{
-	          "method":"POST",
-	          "url":"listar.php" ,
-	          "data": {"idproveedor": idproveedor, "opcion": opcion, "buscar": buscar},
-	        },
-	        "columns":[
-	          {"data": "indice"},
-	          {"data": "marca"},
-	          {"data": "modelo"},
-	          {"data": "descripcion"},
-	          {"data": "cantidad"},
-	          {"data": "cliente"},
-	          {"data": "precioProveedor"},
-	          {"data": "fecha"},
-	          {"data": "almacen"},
-	          {"data": "utilidad"},
-	          {"defaultContent": "<div class='invoice-footer'><button class='quitar btn btn-lg btn-danger'><i class='fas fa-times fa-sm' aria-hidden='true'></i></button></div>"}
-	        ],
-	      "language": idioma_espanol,
-				"dom":
-					"<'row be-datatable-header'<'col-sm-6'B><'col-sm-6 text-right'f>>" +
-					"<'row be-datatable-body'<'col-sm-12'tr>>" +
-					"<'row be-datatable-footer'<'col-sm-5'i><'col-sm-7'p>>",
-				// "footerCallback": function ( row, data, start, end, display ) {
-				// 	var api = this.api();
-				// 	var intVal = function ( i ) {
-				// 		return typeof i === 'string' ?
-				// 		i.replace(/[\$,]/g, '')*1 :
-				// 		typeof i === 'number' ?
-				// 		i : 0;
-				// 	};
-				//
-				// 		var total = api
-				// 				.column( 7 )
-				// 				.data()
-				// 				.reduce( function (a, b) {
-				// 						return intVal(a) + intVal(b);
-				// 				}, 0 );
-				//
-				// 		$("#total").text("$ "+ subtotal.toFixed(2));
-				// 		$("#iva").text("$ "+ (subtotal * .16).toFixed(2));
-				// 		$("#total").text("$ "+ (subtotal + subtotal*.16).toFixed(2));
-				// 	 },
-				"buttons":[
-					{
-						extend: 'collection',
-						text: '<i class="fas fa-table fa-sm"></i> Exportar tabla',
-						"className": "btn btn-lg btn-space btn-secondary",
-						buttons: [
-								{
-									extend:    'excelHtml5',
-									text:      '<i class="fas fa-file-excel fa-lg"></i> Excel',
-									// "className": "btn btn-lg btn-space btn-secondary",
-									exportOptions: {
-										columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ]
-									}
-								},
-								{
-									extend: 'csv',
-									text: '<i class="fas fa-file-alt fa-lg"></i> Csv',
-									// "className": "btn btn-lg btn-space btn-secondary",
-									exportOptions: {
-													columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ]
-									}
-								},
-								{
-									extend:    'pdfHtml5',
-									text:      '<i class="fas fa-file-pdf fa-lg"></i> Pdf',
-									download: 'open',
-									// "className": "btn btn-lg btn-space btn-secondary",
-									exportOptions: {
-										columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ]
-									}
-								},
-								{
-									extend: 'print',
-									text: '<i class="fas fa-print fa-lg"></i> Imprimir',
-									header: 'false',
-									exportOptions: {
-													columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ]
-									},
-									orientation: 'landscape',
-									pageSize: 'LEGAL'
+			"autoWidth": false,
+      "ajax":{
+        "method":"POST",
+        "url":"listar.php" ,
+        "data": {"idproveedor": idproveedor, "opcion": opcion, "buscar": buscar},
+      },
+      "columns":[
+				{"data": "check"},
+        {"data": "indice"},
+        {"data": "marca"},
+        {"data": "modelo"},
+        {"data": "descripcion"},
+        {"data": "cantidad"},
+        {"data": "cliente"},
+        {"data": "precioProveedor"},
+        {"data": "fecha"},
+        {"data": "almacen"},
+        {"data": "utilidad"},
+        // {"defaultContent": "<div class='invoice-footer'><button class='quitar btn btn-lg btn-danger'><i class='fas fa-times fa-sm' aria-hidden='true'></i></button></div>"}
+      ],
+      "language": idioma_espanol,
+			"dom":
+				"<'row be-datatable-header'<'col-sm-6'B><'col-sm-6 text-right'f>>" +
+				"<'row be-datatable-body'<'col-sm-12'tr>>" +
+				"<'row be-datatable-footer'<'col-sm-5'i><'col-sm-7'p>>",
+			"columnDefs": [
+        { "width": "5%", "orderable": false, "targets": 0 },
+        { "width": "3%", "orderable": false, "targets": 1 },
+        { "width": "10%", "targets": 2 },
+        { "width": "10%", "targets": 3 },
+				{ "width": "5%", "targets": 5 },
+				{ "width": "7%", "targets": 7 },
+				{ "width": "10%", "targets": 8 },
+				{ "width": "6%", "targets": 9 },
+        { "width": "6%", "targets": 10 },
+      ],
+			"buttons":[
+				{
+					extend: 'collection',
+					text: '<i class="fas fa-table fa-sm"></i> Exportar tabla',
+					"className": "btn btn-lg btn-space btn-secondary",
+					buttons: [
+							{
+								extend:    'excelHtml5',
+								text:      '<i class="fas fa-file-excel fa-lg"></i> Excel',
+								// "className": "btn btn-lg btn-space btn-secondary",
+								exportOptions: {
+									columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ]
 								}
-						]
+							},
+							{
+								extend: 'csv',
+								text: '<i class="fas fa-file-alt fa-lg"></i> Csv',
+								// "className": "btn btn-lg btn-space btn-secondary",
+								exportOptions: {
+												columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ]
+								}
+							},
+							{
+								extend:    'pdfHtml5',
+								text:      '<i class="fas fa-file-pdf fa-lg"></i> Pdf',
+								download: 'open',
+								// "className": "btn btn-lg btn-space btn-secondary",
+								exportOptions: {
+									columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ]
+								}
+							},
+							{
+								extend: 'print',
+								text: '<i class="fas fa-print fa-lg"></i> Imprimir',
+								header: 'false',
+								exportOptions: {
+												columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ]
+								},
+								orientation: 'landscape',
+								pageSize: 'LEGAL'
+							}
+					]
 				},
+					{
+						 text: '<i class="fas fa-times" aria-hidden="true"></i> Quitar',
+						 "className": "btn btn-lg btn-danger btn-space",
+							action: function ( e, dt, node, config ) {
+								var verificar = 0;
+								$("input[name=hsinpedido]").each(function (index) {
+									if($(this).is(':checked')){
+										verificar++;
+									}
+								});
+							if(verificar == 0){
+								alert("Debes de seleccionar al menos una partida!");
+							}else{
+								var herramienta = new Array();
+								var numeroPartidas = 0;
+								$("input[name=hsinpedido]").each(function (index) {
+									if($(this).is(':checked')){
+										herramienta.push($(this).val());
+										numeroPartidas++;
+									}
+								});
+								var opcion = "quitarproveedor";
+								console.log(herramienta);
+								$.ajax({
+									method: "POST",
+									url: "guardar.php",
+									dataType: "json",
+									data: {"herramienta": JSON.stringify(herramienta), "opcion": opcion},
+								}).done( function( data ){
+									console.log(data);
+									mostrar_mensaje(data);
+									$("#dt_listar_sinpedido").DataTable().ajax.reload();
+									obtener_total(idproveedor);
+								});
+							}
+						}
+					},
           {
-          	text: '<i class="fa fa-cart-plus fa-sm" aria-hidden="true"></i> Crear Orden de Compra',
-          	"className": "btn btn-secondary btn-lg btn-space",
+          	text: '<i class="fa fa-cart-plus fa-sm" aria-hidden="true"></i> Orden de compra',
+          	"className": "btn btn-primary btn-lg btn-space",
           	action: function (e, dt, node, config){
   					$("#modalCrearOC").modal("show");
-  					crearoc();
-  					// $.ajax({
-					// 	method: "POST",
-					// 	url: "buscar.php",
-					// 	dataType: "json",
-					// 	data: {"opcion": opcion},
-					// 	success: function (data) {
-					// 		console.log(data);
-					// 		var direcciones = data;
-					// 		$('select[name=direccionenvio]').empty();
-					// 		for(var i=0;i<direcciones.length;i=i+2){
-			        //    	 		$("select[name=direccionenvio]").append("<option value="+ direcciones[i] +">" + direcciones[i+1] + "</option>");
-			 		// 		};
-			 		// 		$("select[name=direccionenvio]").append("<option>Otra</option>");
-			 		// 		$("#frmCrearOC #idproveedor").val(idproveedor);
-					// 	}
-					// });
+  					crear_orden_compra();
 					}
 		     }
 				]
 	    });
 
-	    obtener_id_quitar("#dt_listar_sinpedido tbody", table, idproveedor);
+	  obtener_id_quitar("#dt_listar_sinpedido tbody", table, idproveedor);
 		obtener_total(idproveedor);
 	}
 
-	var crearoc = function (){
+	var crear_orden_compra = function (){
 		var opcion = "direccionenvio";
 		$.ajax({
 			method: "POST",
@@ -680,16 +703,17 @@
 		var buscar = $("#buscar").val();
 		console.log(idproveedor);
 		var table = $("#dt_listar_sinrecibido").DataTable({
-	        "destroy": true,
+      "destroy": true,
 			"scrollX": true,
-	        "ajax":{
-	          "method":"POST",
-	          "url":"listar.php" ,
-	          "data": {"idproveedor": idproveedor, "opcion": opcion, "buscar": buscar},
-	        },
-	        "columns":[
-			  {"data": "indice"},
+			"autoWidth": false,
+      "ajax":{
+        "method":"POST",
+        "url":"listar.php" ,
+        "data": {"idproveedor": idproveedor, "opcion": opcion, "buscar": buscar},
+      },
+      "columns":[
 				{"data": "check", "sortable": false},
+			  {"data": "indice"},
 			  {"data": "enviado"},
 			  {"data": "recibir"},
 	      {"data": "marca"},
@@ -700,7 +724,7 @@
         {"data": "pedido"},
         {"data": "fecha"},
         {"data": "costo"},
-				{"data": "cantidad",
+				{"data": "cantidad", "sortable": false,
 					"render": function(cantidad){
 						if(cantidad > 1){
 							return "<div class='invoice-footer'><button class='splitSinrecibido btn btn-lg btn-primary'  data-toggle='modal' data-target='#modalSplitSinRecibido'>Split</button></div>";
@@ -711,8 +735,14 @@
 				}
       ],
 			"columnDefs": [
-				{ "width": "15%", "targets": 7 },
-				{ "width": "6%", "targets": 9 }
+				{ "width": "8%", "targets": 2 },
+				{ "width": "8%", "targets": 3 },
+				{ "width": "7%", "targets": 4 },
+				{ "width": "9%", "targets": 5 },
+				{ "width": "7%", "targets": 6 },
+				{ "width": "7%", "targets": 9 },
+				{ "width": "9%", "targets": 10 },
+				{ "width": "7%", "targets": 11 },
 			],
 	        "language": idioma_espanol,
 					"dom":
@@ -894,36 +924,42 @@
 		var buscar = $("#buscar").val();
 		console.log(idproveedor);
 		var table = $("#dt_listar_sinentregar").DataTable({
-	        "destroy":"true",
-	        "ajax":{
-	          "method":"POST",
-	          "url":"listar.php" ,
-	          "data": {"idproveedor": idproveedor, "opcion": opcion, "buscar": buscar},
-	        },
-	        "columns":[
+      "destroy": true,
+			"autoWidth": false,
+      "ajax":{
+        "method":"POST",
+        "url":"listar.php" ,
+        "data": {"idproveedor": idproveedor, "opcion": opcion, "buscar": buscar},
+      },
+      "columns":[
+				{"data": "check", "sortable": false},
 			  {"data": "indice"},
-				{"data": "check"},
 			  {"data": "enviado"},
 			  {"data": "recibir"},
-	          {"data": "marca"},
+	      {"data": "marca"},
 			  {"data": "modelo"},
 			  {"data": "cantidad"},
-	          {"data": "descripcion"},
-	          {"data": "cliente"},
-	          {"data": "pedido"},
-	          {"data": "fecha"},
-	          {"data": "costo"}
-	        ],
+        {"data": "descripcion"},
+        {"data": "cliente"},
+        {"data": "pedido"},
+        {"data": "fecha"},
+        {"data": "costo"}
+	    ],
 			"columnDefs": [
-				{ "width": "6%", "targets": 2 },
-				{ "width": "15%", "targets": 7 },
-				{ "width": "6%", "targets": 9 }
+				{ "width": "8%", "targets": 2 },
+				{ "width": "8%", "targets": 3 },
+				{ "width": "7%", "targets": 4 },
+				{ "width": "9%", "targets": 5 },
+				{ "width": "7%", "targets": 6 },
+				{ "width": "7%", "targets": 9 },
+				{ "width": "9%", "targets": 10 },
+				{ "width": "6%", "targets": 11 },
 			],
-	        "language": idioma_espanol,
-					"dom":
-							"<'row be-datatable-header'<'col-sm-6'B><'col-sm-6 text-right'f>>" +
-							"<'row be-datatable-body'<'col-sm-12'tr>>" +
-							"<'row be-datatable-footer'<'col-sm-5'i><'col-sm-7'p>>",
+      "language": idioma_espanol,
+			"dom":
+				"<'row be-datatable-header'<'col-sm-6'B><'col-sm-6 text-right'f>>" +
+				"<'row be-datatable-body'<'col-sm-12'tr>>" +
+				"<'row be-datatable-footer'<'col-sm-5'i><'col-sm-7'p>>",
 				"buttons":[
 					{
 						extend: 'collection',
@@ -1038,8 +1074,9 @@
 			  {"data": "indice"},
 			  {"data": "ordencompra"},
 			  {"data": "proveedor"},
-	          {"data": "contacto"},
+	      {"data": "contacto"},
 			  {"data": "fecha"},
+				{"data": "moneda"},
 			  {"defaultContent": "<div class='invoice-footer'><button class='verordencompra btn btn-lg btn-primary'><i class='fas fa-edit fa-sm' aria-hidden='true'></i></button></div>"}
 	        ],
 	        "language": idioma_espanol,
@@ -1147,9 +1184,9 @@
 		$("form").on("submit", function(e){
 			e.preventDefault();
 			$(".modal").modal("hide");
-			// $("#mod-success").modal("show");
 			$("form .disabled").attr("disabled", false);
 			var frm = $(this).serialize();
+			console.log(frm);
 			$.ajax({
 				method: "POST",
 				url: "guardar.php",

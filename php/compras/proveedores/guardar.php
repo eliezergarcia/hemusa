@@ -42,7 +42,8 @@
 
 		case 'quitarproveedor':
 			$id = $_POST['id'];
-			quitarproveedor($id, $conexion_usuarios);
+			$data = json_decode($_POST['herramienta']);
+			quitarproveedor($id, $data, $conexion_usuarios);
 			break;
 
 		case 'crearordencompra':
@@ -395,9 +396,12 @@
 		mysqli_close($conexion_usuarios);
 	}
 
-	function quitarproveedor($id, $conexion_usuarios){
-		$query = "UPDATE cotizacionherramientas SET Proveedor = 'None' WHERE id='$id'";
-		$resultado = mysqli_query($conexion_usuarios, $query);
+	function quitarproveedor($id, $data, $conexion_usuarios){
+		foreach ($data as &$id) {
+			$query = "UPDATE cotizacionherramientas SET Proveedor = 'None' WHERE id='$id'";
+			$resultado = mysqli_query($conexion_usuarios, $query);
+		}
+
 		if (!$resultado) {
 			$informacion["respuesta"] = "ERROR";
 			$informacion["informacion"] = "Ocurrió un problema al intentar quitar la herramienta del proveedor!";
@@ -491,7 +495,7 @@
 							$monedaproducto = $data['moneda'];
 						}
 
-						$query4 = "SELECT * FROM factores_proveedores WHERE proveedor ='$idproveedor'";
+						$query4 = "SELECT * FROM factorescosto WHERE proveedor ='$idproveedor'";
 						$resultado4 = mysqli_query($conexion_usuarios, $query4);
 						if(!$resultado4){
 							die("ERROR EN FACTORES");
@@ -503,15 +507,28 @@
 							}
 						}
 
-						if($monedaproducto == "mxn"){
+						if($moneda == "mxn" && $monedaproducto == "mxn"){
 							$costo_mn = $precioProveedor;
-							$venta_mn = $precioventa;
 							$costo_usd = $precioProveedor / $tipocambio;
+							$venta_mn = $precioventa;
 							$venta_usd = $precioventa / $tipocambio;
-						}else{
+						}
+						if($moneda == "mxn" && $monedaproducto == "usd"){
 							$costo_mn = $precioProveedor * $tipocambio;
-							$venta_mn = $precioventa * $tipocambio;
 							$costo_usd = $precioProveedor;
+							$venta_mn = $precioventa;
+							$venta_usd = $precioventa / $tipocambio;
+						}
+						if($moneda == "usd" && $monedaproducto == "usd"){
+							$costo_mn = $precioProveedor * $tipocambio;
+							$costo_usd = $precioProveedor;
+							$venta_mn = $precioventa * $tipocambio;
+							$venta_usd = $precioventa;
+						}
+						if($moneda == "usd" && $monedaproducto == "mxn"){
+							$costo_mn = $precioProveedor;
+							$costo_usd = $precioProveedor / $tipocambio;
+							$venta_mn = $precioventa * $tipocambio;
 							$venta_usd = $precioventa;
 						}
 

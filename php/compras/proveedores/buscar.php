@@ -66,7 +66,7 @@
 						$marca = $dataprecio['marca'];
 					}
 
-					$queryfactor = "SELECT * FROM factores_proveedores WHERE proveedor ='$idproveedor'";
+					$queryfactor = "SELECT * FROM factorescosto WHERE proveedor ='$idproveedor'";
 					$resultadofactor = mysqli_query($conexion_usuarios, $queryfactor);
 					if(!$resultadofactor){
 						die("ERROR EN FACTORES");

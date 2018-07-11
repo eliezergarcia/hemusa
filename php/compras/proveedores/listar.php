@@ -39,14 +39,14 @@
 		$resultado = mysqli_query($conexion_usuarios, $query);
 
 		if (!$resultado) {
-			die("Error!");
+			$arreglo["data"] = 0;
 		}else{
 			while($data = mysqli_fetch_assoc($resultado)){
 				$arreglo["data"][] = array_map("utf8_encode", $data);
 			}
 		}
 
-		echo json_encode($arreglo);
+		echo json_encode($arreglo, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_PARTIAL_OUTPUT_ON_ERROR);
 		mysqli_close($conexion_usuarios);
 	}
 
@@ -60,12 +60,10 @@
 			while($data = mysqli_fetch_assoc($resultado)){
 				$proveedor = $data['nombreEmpresa'];
 				$proveedor = trim($proveedor);
-				// echo $proveedor;
 			}
 
-			$query = "SELECT contactos.*, cotizacionherramientas.* FROM cotizacionherramientas INNER JOIN contactos ON contactos.id = cotizacionherramientas.cliente WHERE (marca LIKE '%$buscar%' OR modelo LIKE '%$buscar%' OR nombreEmpresa LIKE '%$buscar%' OR pedidoFecha LIKE '%$buscar%') AND Pedido = 'si' AND noDePedido = '' AND Proveedor LIKE '%$proveedor%' OR Proveedor ='$idproveedor'";
+			$query = "SELECT contactos.*, cotizacionherramientas.* FROM cotizacionherramientas INNER JOIN contactos ON contactos.id = cotizacionherramientas.cliente WHERE (marca LIKE '%$buscar%' OR modelo LIKE '%$buscar%' OR nombreEmpresa LIKE '%$buscar%' OR pedidoFecha LIKE '%$buscar%') AND Pedido = 'si' AND noDePedido = '' AND (Proveedor LIKE '%$proveedor%' OR Proveedor ='$idproveedor')";
 			$resultado = mysqli_query($conexion_usuarios, $query);
-			$arreglo = array();
 
 			if (mysqli_num_rows($resultado) < 1) {
 				$arreglo['data'] = 0;
@@ -91,7 +89,7 @@
 						$marca = $data['marca'];
 					}
 
-					$queryfactor = "SELECT * FROM factores_proveedores WHERE proveedor ='$idproveedor'";
+					$queryfactor = "SELECT * FROM factorescosto WHERE proveedor ='$idproveedor'";
 					$resultadofactor = mysqli_query($conexion_usuarios, $queryfactor);
 					if(!$resultadofactor){
 						die("ERROR EN FACTORES");
@@ -114,15 +112,18 @@
 						$excepcion = 0;
 					}
 
-					if ($excepcion == 1) {
-						$precio = $precioLista * $factor;
-						$utilidad = (($precio - $precioProveedor)/$precio) * 100;
-					}else{
+					// if ($excepcion == 1) {
+					// 	$precio = $precioLista * $factor;
+					// 	$utilidad = (($precio - $precioProveedor)/$precio) * 100;
+					// }else{
 						$utilidad = (($precioLista - $precioProveedor)/$precioLista) * 100;
-					}
+					// }
+
+					$check = '<input type="checkbox" class="btn btn-outline-primary" name="hsinpedido" value="'.$data['id'].'">';
 
 					$arreglo["data"][] = array(
 							'id' => $data['id'],
+							'check' => $check,
 							'indice' => $i,
 							'marca' => $data['marca'],
 							'modelo' => $data['modelo'],
@@ -137,7 +138,7 @@
 					$i++;
 				}
 			}
-			}
+		}
 
 		echo json_encode($arreglo, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_PARTIAL_OUTPUT_ON_ERROR);
 		mysqli_close($conexion_usuarios);
@@ -193,7 +194,7 @@
 						$almacen = 0;
 					}
 
-					$queryfactor = "SELECT * FROM factores_proveedores WHERE proveedor ='$idproveedor'";
+					$queryfactor = "SELECT * FROM factorescosto WHERE proveedor ='$idproveedor'";
 					$resultadofactor = mysqli_query($conexion_usuarios, $queryfactor);
 					if(!$resultadofactor){
 						die("ERROR EN FACTORES");
@@ -269,7 +270,7 @@
 						$almacen = 0;
 					}
 
-					$queryfactor = "SELECT * FROM factores_proveedores WHERE proveedor ='$idproveedor'";
+					$queryfactor = "SELECT * FROM factorescosto WHERE proveedor ='$idproveedor'";
 					$resultadofactor = mysqli_query($conexion_usuarios, $queryfactor);
 					if(!$resultadofactor){
 						die("ERROR EN FACTORES");
@@ -333,6 +334,7 @@
 							'proveedor' => utf8_encode($proveedor),
 							'contacto' => $data['nombre'],
 							'fecha' => $data['fecha'],
+							'moneda' => strtoupper($data['moneda'])
 						);
 					$i++;
 				}

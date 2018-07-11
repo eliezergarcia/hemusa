@@ -46,7 +46,8 @@
                                   <th>Proveedor</th>
                                   <th>Contacto</th>
                                   <th>Fecha</th>
-                                  <th>Ver Orden</th>
+                                  <th>Moneda</th>
+                                  <th>Ver</th>
                                 </tr>
                               </thead>
                               <tbody>
@@ -231,7 +232,7 @@
       var table = $("#dt_orden_compras").DataTable({
         "destroy":true,
         "scrollX": true,
-        "bDeferRender": true,
+        "autoWidth": false,
         "ajax":{
           "method":"POST",
           "url":"listar.php",
@@ -242,8 +243,17 @@
           {"data":"proveedor"},
           {"data":"contacto"},
           {"data":"fecha"},
+          {"data":"moneda"},
           {"defaultContent": "<div class='invoice-footer'><button class='verOC btn btn-lg btn-primary'><i class='fas fa-edit fa-sm' aria-hidden='true'></i></button></div>"}
         ],
+        // "columnDefs": [
+        //   { "width": "30%", "targets": 0 },
+        //   { "width": "15%", "targets": 1 },
+        //   { "width": "15%", "targets": 2 },
+        //   { "width": "15%", "targets": 3 },
+        //   { "width": "15%", "targets": 4 },
+        //   { "width": "5%", "targets": 5 },
+        // ],
         "order":[[3, "desc"]],
         "language": idioma_espanol,
         "dom":

@@ -31,14 +31,13 @@
                             <table id="dt_proveedores" class="table table-striped table-hover compact" cellspacing="0" width="100%">
                               <thead>
                                 <tr>
-                                  <th>Proveedor</th>
+                                  <th>Nombre empresa</th>
                                   <th>Persona Contacto</th>
-                                  <th>Teléfono 1</th>
-                                  <th>Fáx</th>
+                                  <th>Teléfono #1</th>
                                   <th>Correo electrónico</th>
                                   <th>Página Web</th>
-                                  <th>Ver Proveedor</th>
-                                  <th>Eliminar Proveedor</th>
+                                  <th>Ver</th>
+                                  <th>Eliminar</th>
                                 </tr>
                               </thead>
                             </table>
@@ -226,6 +225,7 @@
         "destroy":true,
         "deferRender": true,
         "scrollX": true,
+        "autoWidth": false,
         "ajax":{
           "method":"POST",
           "url":"listar.php",
@@ -235,13 +235,20 @@
           {"data": "nombreEmpresa"},
           {"data": "personaContacto"},
           {"data": "tlf1"},
-          {"data": "fax"},
           {"data": "correoElectronico"},
           {"data": "paginaWeb"},
           {"defaultContent": "<div class='invoice-footer'><button class='verproveedor btn btn-lg btn-primary'><i class='fas fa-edit fa-sm' aria-hidden='true'></i></button></div>"},
           {"defaultContent": "<div class='invoice-footer'><button class='eliminar btn btn-lg btn-danger' data-toggle='modal' data-target='#modalEliminarProveedor'><i class='fas fa-trash fa-sm' aria-hidden='true'></i></button></div>"}
         ],
-        "order":[[0, "asc"]],
+        "columnDefs": [
+          { "width": "30%", "targets": 0 },
+          { "width": "15%", "targets": 1 },
+          { "width": "15%", "targets": 2 },
+          { "width": "15%", "targets": 3 },
+          { "width": "15%", "targets": 4 },
+          { "width": "5%", "targets": 5 },
+          { "width": "5%", "targets": 6 },
+        ],
         "language": idioma_espanol,
         "lengthChange": false,
         "dom":

@@ -39,7 +39,7 @@
 	}
 
 	function ordenesdecompras($conexion_usuarios){
-		$query = "SELECT ordendecompras.id, ordendecompras.noDePedido, ordendecompras.Fecha, ordendecompras.proveedor,
+		$query = "SELECT ordendecompras.id, ordendecompras.noDePedido, ordendecompras.Fecha, ordendecompras.proveedor, ordendecompras.moneda,
 		contactos.nombreEmpresa, usuarios.nombre, usuarios.apellidos FROM ordendecompras LEFT JOIN contactos on contactos.id=ordendecompras.proveedor
 		INNER JOIN usuarios on usuarios.id=ordendecompras.contacto  ORDER BY id DESC LIMIT 999";
 		$resultado = mysqli_query($conexion_usuarios, $query);
@@ -52,13 +52,15 @@
 					'ordencompra' => $data['noDePedido'],
 					'proveedor' => utf8_encode($data['nombreEmpresa']),
 					'contacto' => $data['nombre']." ".$data['apellidos'],
-					'fecha' => $data['Fecha']
+					'fecha' => $data['Fecha'],
+					'moneda' => strtoupper($data['moneda']),
 				);
 
 			}
 		}
 
 		echo json_encode($arreglo, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_PARTIAL_OUTPUT_ON_ERROR);
+		mysqli_close($conexion_usuarios);
 	}
 
 	function backorder($conexion_usuarios){
@@ -279,6 +281,12 @@
 			$moneda = $data['moneda'];
 		}
 
+		$query = "SELECT tipocambio FROM tipocambio WHERE fecha = '$fechaoc'";
+		$resultado = mysqli_query($conexion_usuarios, $query);
+		while($data = mysqli_fetch_assoc($resultado)){
+			$tipocambio = $data['tipocambio'];
+		}
+
 		$query = "SELECT * FROM contactos WHERE id = '$idproveedor'";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 		while($data = mysqli_fetch_assoc($resultado)){
@@ -292,15 +300,19 @@
 			$subtotal = 0;
 			while($data = mysqli_fetch_assoc($resultado)){
 				if($moneda == "usd"){
+					// $flete = $flete / $tipocambio;
 					$subtotal = $subtotal +  ($data['costo_usd'] * $data['cantidad']);
+					$subtotalventa = $subtotalventa +  ($data['venta_usd'] * $data['cantidad']);
 				}else{
+					// $flete = $flete * $tipocambio;
 					$subtotal = $subtotal + ($data['costo_mn'] * $data['cantidad']);
+					$subtotalventa = $subtotalventa + ($data['venta_mn'] * $data['cantidad']);
 				}
 			}
 
 			$iva = ($subtotal + $flete) * .16;
 			$total = ($subtotal + $flete) * 1.16;
-			$utilidad = (($total - $subtotal)/$total) * 100;
+			$utilidad = (($subtotalventa - $subtotal)/$subtotalventa) * 100;
 
 			$arreglo["data"][] = array(
 				'subtotal' => "$ ".round($subtotal, 2),
@@ -415,6 +427,12 @@
 					$cantfacturada = 0;
 				}
 
+				if ($data['moneda_pedido'] == "usd") {
+					$utilidad = round((($data['venta_usd']-$data['costo_usd'])/$data['venta_usd']) * 100,2);
+				}else{
+					$utilidad = round((($data['venta_mn']-$data['costo_mn'])/$data['venta_mn']) * 100,2);
+				}
+
 				$arreglo["data"][] = array(
 					'indice' => $i,
 					'check' => $check,
@@ -444,8 +462,8 @@
 					'ventausd' => round($data['venta_usd'],2),
 					'totalventamxn' => round($data['venta_mn'] * $data['cantidad'],2),
 					'totalventausd' => round($data['venta_usd'] * $data['cantidad'],2),
-					'moneda' => $data['moneda_pedido'],
-					'utilidad' => "% ".$data['utilidad'],
+					'moneda' => strtoupper($data['moneda_pedido']),
+					'utilidad' => "% ".$utilidad,
 					'folio' => $data['folio'],
 					'pedimento' => $data['Pedimento']
 
@@ -459,19 +477,25 @@
 	}
 
 	function totalesocdescripcion($ordencompra, $conexion_usuarios){
+		$queryflete = "SELECT * FROM ordendecompras WHERE noDePedido = '$ordencompra'";
+		$resultadoflete = mysqli_query($conexion_usuarios, $queryflete);
+		while($dataflete = mysqli_fetch_assoc($resultadoflete)){
+			$flete = $dataflete['flete'];
+			$moneda = $data['moneda'];
+		}
 		$query = "SELECT * FROM utilidad_pedido WHERE orden_compra = '$ordencompra'";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 
 		$costo = 0;
 		$venta = 0;
 		while($data = mysqli_fetch_assoc($resultado)){
-			$costo = $costo + ($data['costo_mn'] * $data['cantidad']);
-			$venta = $venta + ($data['venta_mn'] * $data['cantidad']);
-		}
-		$queryflete = "SELECT * FROM ordendecompras WHERE noDePedido = '$ordencompra'";
-		$resultadoflete = mysqli_query($conexion_usuarios, $queryflete);
-		while($dataflete = mysqli_fetch_assoc($resultadoflete)){
-			$flete = $dataflete['flete'];
+			if ($moneda == "usd") {
+				$costo = $costo + ($data['costo_usd'] * $data['cantidad']);
+				$venta = $venta + ($data['venta_usd'] * $data['cantidad']);
+			}else{
+				$costo = $costo + ($data['costo_mn'] * $data['cantidad']);
+				$venta = $venta + ($data['venta_mn'] * $data['cantidad']);
+			}
 		}
 		$venta = $venta + $flete;
 		$utilidad = (($venta - $costo)/$venta)*100;

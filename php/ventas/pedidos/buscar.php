@@ -65,13 +65,13 @@
 				}
 
 				$informacion['refCotizacion'] = $data['cotizacionRef'];
-				$informacion['pedidoCliente'] = $data['numeroPedido'];
 				$informacion['fecha'] = $data['fecha'];
 				$informacion['vendedor'] = $data['vendedor'];
+				$informacion['pedidoCliente'] = $data['numeroPedido'];
 				$informacion['factura'] = $facturas;
 				$informacion['pagado'] = $data['pagado'];
-				$informacion['total'] = $data['total'];
 				$informacion['moneda'] = $data['moneda'];
+				$informacion['total'] = $data['total'];
 				$informacion['paqueteria'] = $data['paqueteria'];
 				$informacion['numeroGuia'] = $data['numeroGuia'];
 			}
@@ -105,16 +105,16 @@
 
 
 				$informacion['refCotizacion'] = $data['ref'];
-				$informacion['remision'] = $data['remision'];
 				$informacion['fecha'] = $data['fecha'];
 				$informacion['vendedor'] = $data['vendedor'];
 				$informacion['pedidoCliente'] = $data['NoPedClient'];
 				$informacion['factura'] = $facturas;
 				$informacion['pagado'] = $data['Pagado'];
-				$informacion['total'] = $data['precioTotal'];
 				$informacion['moneda'] = $data['moneda'];
 				$informacion['paqueteria'] = $data['IdPaqueteria'];
 				$informacion['numeroGuia'] = $data['guia'];
+				$informacion['remision'] = $data['remision'];
+				$informacion['total'] = $data['precioTotal'];
 			}
 		}
 

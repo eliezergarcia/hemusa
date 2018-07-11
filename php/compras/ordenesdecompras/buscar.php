@@ -104,6 +104,7 @@
 			$informacion['fecha'] = strftime("%d/%m/%Y", strtotime($fecha));
 			$idproveedor = $data['proveedor'];
 			$fechaoc = $data['fecha'];
+			$monedaoc = $data['moneda'];
 		}
 
 		$query = "SELECT * FROM contactos WHERE id = '$idproveedor'";
@@ -141,7 +142,7 @@
 						$almacen = 0;
 					}
 
-					if($monedaproveedor == "usd"){
+					if($moneda == "usd"){
 						$precioUnitario = $data['costo_usd'];
 						$precioTotal = $data['costo_usd'] * $data['cantidad'];
 						$utilidad = (($data['venta_usd'] - $data['costo_usd'])/$data['venta_usd']) * 100;
@@ -239,6 +240,7 @@
 			$flete = $data['flete'];
 			$idproveedor = $data['proveedor'];
 			$fechaoc = $data['fecha'];
+			$monedaoc = $data['moneda'];
 		}
 
 		$query = "SELECT * FROM contactos WHERE id = '$idproveedor'";
@@ -253,7 +255,7 @@
 		if (mysqli_num_rows($resultado) > 0) {
 			$subtotal = 0;
 			while($data = mysqli_fetch_assoc($resultado)){
-				if($monedaproveedor == "usd"){
+				if($monedaoc == "usd"){
 					$subtotal = $subtotal +  ($data['costo_usd'] * $data['cantidad']);
 				}else{
 					$subtotal = $subtotal + ($data['costo_mn'] * $data['cantidad']);

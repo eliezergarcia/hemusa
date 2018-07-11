@@ -107,21 +107,6 @@
 													</div>
 												</div>
 												<div class="col-3 form-group">
-													<h4><b>Proveedor </b><a id="cambiarproveedor" href="#" class="text-primary"><i class="fas fa-sync"></i></a></h4>
-													<div>
-														<select name="proveedorg" id="proveedorg" class="form-control form-control-sm col-10"></select>
-													</div>
-												</div>
-												<div class="col-3 form-group">
-													<h4><b>Cantidad</b></h4>
-													<div class="input-group mb-3">
-														<input type="text" id="cantidadg" class="form-control form-control-sm col-9">
-														<div class="input-group-append">
-															<button id="cambiarcantidadg" type="button" class="btn btn-primary"><i class="fas fa-pencil-alt fa-sm" aria-hidden="true"></i></button>
-														</div>
-													</div>
-												</div>
-												<div class="col-3 form-group">
 													<h4><b>Forma de pago </b><a id="cambiarformapago" href="#" class="text-primary"><i class="fas fa-sync"></i></a></h4>
 													<div>
 												  	<select type="text" id="formapago" name="formapago" class="form-control form-control-sm col-10">
@@ -175,6 +160,21 @@
 															<option value="21">Pagos por servicios educativos (colegiaturas)</option>
 															<option value="22">Por definir</option>
 														</select>
+													</div>
+												</div>
+												<div class="col-3 form-group">
+													<h4><b>Proveedor </b><a id="cambiarproveedor" href="#" class="text-primary"><i class="fas fa-sync"></i></a></h4>
+													<div>
+														<select name="proveedorg" id="proveedorg" class="form-control form-control-sm col-10"></select>
+													</div>
+												</div>
+												<div class="col-3 form-group">
+													<h4><b>Cantidad</b></h4>
+													<div class="input-group mb-3">
+														<input type="text" id="cantidadg" class="form-control form-control-sm col-9">
+														<div class="input-group-append">
+															<button id="cambiarcantidadg" type="button" class="btn btn-primary"><i class="fas fa-pencil-alt fa-sm" aria-hidden="true"></i></button>
+														</div>
 													</div>
 												</div>
 											</div>

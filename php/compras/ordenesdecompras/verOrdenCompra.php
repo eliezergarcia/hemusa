@@ -96,7 +96,7 @@
                                 <th>Almacen</th>
                                 <th>Fecha Compromiso</th>
                                 <th>Utilidad</th>
-                                <th>Ver y Editar</th>
+                                <th>Ver</th>
                               </tr>
                             </thead>
                           </table>
