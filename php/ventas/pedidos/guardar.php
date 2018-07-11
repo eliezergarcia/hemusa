@@ -84,13 +84,17 @@
 			$status = $_POST['status'];
 			$fecha = $_POST['fecha'];
 			$cliente = $_POST['cliente'];
-			guardar_factura($folio, $ordenpedido, $total, $status, $fecha, $cliente, $conexion_usuarios);
+			$uidfactura = $_POST['UIDFactura'];
+			$uuidfactura = $_POST['UUIDFactura'];
+			guardar_factura($folio, $ordenpedido, $total, $status, $fecha, $uidfactura, $uuidfactura, $cliente, $conexion_usuarios);
 			break;
 
 		case 'quitarstock':
 			$numeroPedido = $_POST['numeroPedido'];
 			$refCotizacion = $_POST['refCotizacion'];
-			quitar_stock($numeroPedido, $refCotizacion, $conexion_usuarios);
+			$partidas = json_decode($_POST['herramienta']);
+			$folio = $_POST['folio'];
+			quitar_stock($numeroPedido, $refCotizacion, $partidas, $folio, $conexion_usuarios);
 			break;
 
 		case 'packinglist':
@@ -104,32 +108,36 @@
 			break;
 	}
 
-	function quitar_stock($numeroPedido, $refCotizacion, $conexion_usuarios){
-		$query = "SELECT * FROM cotizacionherramientas WHERE cotizacionRef = '$refCotizacion'";
-		$resultado = mysqli_query($conexion_usuarios, $query);
+	function quitar_stock($numeroPedido, $refCotizacion, $partidas, $folio, $conexion_usuarios){
+		foreach ($partidas as &$id) {
+			$query = "SELECT * FROM cotizacionherramientas WHERE id = '$id'";
+			$resultado = mysqli_query($conexion_usuarios, $query);
+			$fecha = date("Y-m-d");
+			while($data = mysqli_fetch_assoc($resultado)){
+				$id = $data['id'];
+				$marca = $data['marca'];
+				$modelo = $data['modelo'];
+				$cantidadquitar = $data['cantidad'];
+				$entregado = $data['Entregado'];
 
-		$fecha = date("Y-m-d");
-		while($data = mysqli_fetch_assoc($resultado)){
-			$id = $data['id'];
-			$marca = $data['marca'];
-			$modelo = $data['modelo'];
-			$cantidadquitar = $data['cantidad'];
-			$entregado = $data['Entregado'];
+				if ($entregado == "0000-00-00") {
+					$query2 = "UPDATE cotizacionherramientas SET Entregado='$fecha', factura='$folio' WHERE id = '$id'";
+					$resultado2 = mysqli_query($conexion_usuarios, $query2);
 
-			if ($entregado == "0000-00-00") {
-				$query2 = "UPDATE cotizacionherramientas SET Entregado='$fecha' WHERE id = '$id'";
-				$resultado2 = mysqli_query($conexion_usuarios, $query2);
+					$query2 = "UPDATE utilidad_pedido SET fecha_entregado='$fecha', factura_hemusa='$folio' WHERE id_cotizacion_herramientas = '$id'";
+					$resultado2 = mysqli_query($conexion_usuarios, $query2);
 
-				$query3 = "SELECT enReserva FROM productos WHERE marca = '$marca' AND ref = '$modelo'";
-				$resultado3 = mysqli_query($conexion_usuarios, $query3);
-				while($data2 = mysqli_fetch_assoc($resultado3)){
-					$cantidad = $data2['enReserva'];
+					$query3 = "SELECT enReserva FROM productos WHERE marca = '$marca' AND ref = '$modelo'";
+					$resultado3 = mysqli_query($conexion_usuarios, $query3);
+					while($data2 = mysqli_fetch_assoc($resultado3)){
+						$cantidad = $data2['enReserva'];
+					}
+
+					$cantidadstock = $cantidad - $cantidadquitar;
+
+					$query4 = "UPDATE productos SET enReserva = '$cantidadstock' WHERE marca = '$marca' AND ref = '$modelo'";
+					$resultado4 = mysqli_query($conexion_usuarios, $query4);
 				}
-
-				$cantidadstock = $cantidad - $cantidadquitar;
-
-				$query4 = "UPDATE productos SET enReserva = '$cantidadstock' WHERE marca = '$marca' AND ref = '$modelo'";
-				$resultado4 = mysqli_query($conexion_usuarios, $query4);
 			}
 		}
 
@@ -642,19 +650,18 @@
 		mysqli_close($conexion_usuarios);
 	}
 
-	function guardar_factura($folio, $ordenpedido, $total, $status, $fecha, $cliente, $conexion_usuarios){
-		$query = "SELECT * FROM facturas WHERE folio = '$folio'";
-		$resultado = mysqli_query($conexion_usuarios, $query);
-		if(mysqli_num_rows($resultado) == 0){
-			$query = "INSERT INTO facturas (folio, ordenpedido, total, status, fecha, cliente) VALUES ('$folio', '$ordenpedido', '$total', '$status', '$fecha', '$cliente')";
-			$resultado = mysqli_query($conexion_usuarios, $query);
-			$fecha = date("Y-m-d");
-			$query = "UPDATE pedidos SET factura = '$folio', facturaFecha = '$fecha' WHERE numeroPedido = '$ordenpedido'";
-			$resultado = mysqli_query($conexion_usuarios, $query);
+	function guardar_factura($folio, $ordenpedido, $total, $status, $fecha, $uidfactura, $uuidfactura, $cliente, $conexion_usuarios){
+		$folio = str_replace(".","",$folio);
 
-			$query = "UPDATE cotizacion SET factura = '$folio', facturaFecha = '$fecha' WHERE NoPedClient = '$ordenpedido'";
-			$resultado = mysqli_query($conexion_usuarios, $query);
-		}
+		$query = "INSERT INTO facturas (folio, ordenpedido, total, status, fecha, UID, UUID, cliente) VALUES ('$folio', '$ordenpedido', '$total', '$status', '$fecha', '$uidfactura', '$uuidfactura', '$cliente')";
+		$resultado = mysqli_query($conexion_usuarios, $query);
+		$fecha = date("Y-m-d");
+		$query = "UPDATE pedidos SET factura = '$folio', facturaFecha = '$fecha' WHERE numeroPedido = '$ordenpedido'";
+		$resultado = mysqli_query($conexion_usuarios, $query);
+
+		$query = "UPDATE cotizacion SET factura = '$folio', facturaFecha = '$fecha' WHERE NoPedClient = '$ordenpedido'";
+		$resultado = mysqli_query($conexion_usuarios, $query);
+
 		if (!$resultado) {
 			$informacion["respuesta"] = "ERROR";
 			$informacion["informacion"] = "Ocurrió un problema al guardar la factura '".$folio."'!";

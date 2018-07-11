@@ -29,13 +29,45 @@
 		case 'buscarpartidasfacturar':
 			$numeroPedido = $_POST['numeroPedido'];
 			$cotizacionRef = $_POST['refCotizacion'];
-			buscarpartidasfacturar($numeroPedido, $cotizacionRef, $conexion_usuarios);
+			$partidas = json_decode($_POST['herramienta']);
+			buscarpartidasfacturar($partidas, $cotizacionRef, $numeroPedido, $conexion_usuarios);
 			break;
 
 		case 'proveedoressinoc':
 			proveedoressinoc($conexion_usuarios);
 		break;
 
+		case 'partidasfactura':
+			$partidas = json_decode($_POST['herramienta']);
+			partidas_factura($partidas, $conexion_usuarios);
+			break;
+
+	}
+
+	function partidas_factura($partidas, $conexion_usuarios){
+		$i = 1;
+		foreach ($partidas as &$id) {
+			$query = "SELECT * FROM cotizacionherramientas WHERE id='$id'";
+			$resultado = mysqli_query($conexion_usuarios, $query);
+
+			while($data = mysqli_fetch_assoc($resultado)){
+				$arreglo["data"][]=array(
+				'id' => $data['id'],
+				'indice' => $i,
+				'enviado' => $data['enviadoFecha'],
+				'recibido' => $data['recibidoFecha'],
+				'marca' => $data['marca'],
+				'modelo' => $data['modelo'],
+				'cantidad' => $data['cantidad'],
+				'precioUnitario' => "$ ".($data['precioLista'] + $data['flete']),
+				'descripcion' => utf8_encode($data['descripcion']),
+				'precioTotal' => "$ ".($data['precioLista'] + $data['flete']) * $data['cantidad']
+				);
+			}
+			$i++;
+		}
+		echo json_encode($arreglo, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_PARTIAL_OUTPUT_ON_ERROR);
+		mysqli_close($conexion_usuarios);
 	}
 
 	function buscardatos($refCotizacion, $numeroPedido, $conexion_usuarios){
@@ -46,6 +78,7 @@
 
 			while($data = mysqli_fetch_assoc($resultado)){
 				$idcliente = $data['cliente'];
+				$fecha = $data['fecha'];
 
 				$query2 = "SELECT * FROM contactos WHERE id = '$idcliente'";
 				$res2 = mysqli_query($conexion_usuarios, $query2);
@@ -53,15 +86,21 @@
 					$informacion['cliente'] = $data2;
 				}
 
-				$query3 = "SELECT DISTINCT factura FROM cotizacioherramientas WHERE cotizacionRef='$refCotizacion' AND numeroPedido = '$numeroPedido'";
+				$query3 = "SELECT folio FROM facturas WHERE ordenpedido = '$numeroPedido'";
 				$resultado3 = mysqli_query($conexion_usuarios, $query3);
 				if (mysqli_num_rows($resultado3) < 1) {
 					$facturas = "";
 				}else{
 					$facturas = "";
 					while($data3 = mysqli_fetch_assoc($resultado3)){
-						$facturas = $data3['factura'].", ".$facturas;
+						$facturas = $data3['folio'].", ".$facturas;
 					}
+				}
+
+				$query4 = "SELECT tipocambio FROM tipocambio WHERE fecha = '$fecha'";
+				$resultado4 = mysqli_query($conexion_usuarios, $query4);
+				while($data4 = mysqli_fetch_assoc($resultado4)){
+					$tipoCambio = $data4['tipocambio'];
 				}
 
 				$informacion['refCotizacion'] = $data['cotizacionRef'];
@@ -74,6 +113,7 @@
 				$informacion['total'] = $data['total'];
 				$informacion['paqueteria'] = $data['paqueteria'];
 				$informacion['numeroGuia'] = $data['numeroGuia'];
+				$informacion['tipoCambio'] = $tipoCambio;
 			}
 		}else{
 			$query = "SELECT * FROM cotizacion WHERE ref='$refCotizacion'";
@@ -154,68 +194,9 @@
 		mysqli_close($conexion_usuarios);
 	}
 
-	function buscarpartidasfacturar($numeroPedido, $cotizacionRef, $conexion_usuarios){
-		if ($numeroPedido == "") {
-			$numeroPedido = "null";
-		}
-		$query = "SELECT * FROM cotizacionherramientas WHERE numeroPedido = '$numeroPedido'";
-		$resultado = mysqli_query($conexion_usuarios, $query);
-
-		if(mysqli_num_rows($resultado) > 0){
-			while ($data = mysqli_fetch_assoc($resultado)) {
-				$traslados = Array();
-				$traslados['Traslados'][] = array(
-					'Base' => $data['precioLista'] * $data['cantidad'],
-					'Impuesto' => "002",
-					'TipoFactor' => "Tasa",
-					'TasaOCuota' => 0.1600,
-					'Importe' => ($data['precioLista'] * $data['cantidad']) * 0.1600
-				);
-				// $retenidos['Retenidos'][] = array(
-				// 	'Base' => $data['precioLista'] * $data['cantidad'],
-				// 	'Impuesto' => 002,
-				// 	'TipoFactor' => "Tasa",
-				// 	'TasaOCuota' => 0.16,
-				// 	'Importe' => ($data['precioLista'] * $data['cantidad']) + ($data['precioLista'] * $data['cantidad'] * 0.16)
-				// );
-				// $locales['Locales'][] = array(
-				// 	'Base' => $data['precioLista'] * $data['cantidad'],
-				// 	'Impuesto' => 002,
-				// 	'TipoFactor' => "Tasa",
-				// 	'TasaOCuota' => 0.16,
-				// 	'Importe' => ($data['precioLista'] * $data['cantidad']) + ($data['precioLista'] * $data['cantidad'] * 0.16)
-				// );
-				if ($data['Pedimento'] != '') {
-					$Partes = "{}";
-					$arreglo['data'][] = array(
-						'ClaveProdServ' => $data['ClaveProductoSAT'],
-						'NoIdentificacion' => $data['modelo'],
-						'Cantidad' => $data['cantidad'],
-						'ClaveUnidad' => "E48",
-						'Unidad' => "Unidad de servicio",
-						'ValorUnitario' => round($data['precioLista'],2),
-						'Descripcion' => $data['descripcion']." Aduana: Nuevo Laredo, "."Fecha: ".date("d-m-Y"),
-						'Descuento' => 0,
-						'Impuestos' => $traslados,
-						'Aduana' => $data['Pedimento']
-					);
-				}else{
-					$arreglo['data'][] = array(
-						'ClaveProdServ' => $data['ClaveProductoSAT'],
-						'NoIdentificacion' => $data['modelo'],
-						'Cantidad' => $data['cantidad'],
-						'ClaveUnidad' => "E48",
-						'Unidad' => "Unidad de servicio",
-						'ValorUnitario' => round($data['precioLista'],2),
-						'Descripcion' => $data['descripcion'],
-						'Descuento' => 0,
-						'Impuestos' => $traslados
-					);
-				}
-
-			}
-		}else{
-			$query = "SELECT * FROM cotizacionherramientas WHERE cotizacionRef = '$cotizacionRef'";
+	function buscarpartidasfacturar($partidas, $cotizacionRef, $numeroPedido, $conexion_usuarios){
+		foreach ($partidas as &$id) {
+			$query = "SELECT * FROM cotizacionherramientas WHERE id = '$id'";
 			$resultado = mysqli_query($conexion_usuarios, $query);
 			$base = 0;
 			while ($data = mysqli_fetch_assoc($resultado)) {
@@ -265,11 +246,126 @@
 						'Descripcion' => $data['descripcion'],
 						'Descuento' => 0,
 						'Impuestos' => $traslados
-					);
+						);
 				}
 				unset($traslados);
 			}
 		}
+		// if ($numeroPedido == "") {
+		// 	$numeroPedido = "null";
+		// }
+		// $query = "SELECT * FROM cotizacionherramientas WHERE numeroPedido = '$numeroPedido'";
+		// $resultado = mysqli_query($conexion_usuarios, $query);
+		//
+		// if(mysqli_num_rows($resultado) > 0){
+		// 	while ($data = mysqli_fetch_assoc($resultado)) {
+		// 		$traslados = Array();
+		// 		$traslados['Traslados'][] = array(
+		// 			'Base' => $data['precioLista'] * $data['cantidad'],
+		// 			'Impuesto' => "002",
+		// 			'TipoFactor' => "Tasa",
+		// 			'TasaOCuota' => 0.1600,
+		// 			'Importe' => ($data['precioLista'] * $data['cantidad']) * 0.1600
+		// 		);
+		// 		// $retenidos['Retenidos'][] = array(
+		// 		// 	'Base' => $data['precioLista'] * $data['cantidad'],
+		// 		// 	'Impuesto' => 002,
+		// 		// 	'TipoFactor' => "Tasa",
+		// 		// 	'TasaOCuota' => 0.16,
+		// 		// 	'Importe' => ($data['precioLista'] * $data['cantidad']) + ($data['precioLista'] * $data['cantidad'] * 0.16)
+		// 		// );
+		// 		// $locales['Locales'][] = array(
+		// 		// 	'Base' => $data['precioLista'] * $data['cantidad'],
+		// 		// 	'Impuesto' => 002,
+		// 		// 	'TipoFactor' => "Tasa",
+		// 		// 	'TasaOCuota' => 0.16,
+		// 		// 	'Importe' => ($data['precioLista'] * $data['cantidad']) + ($data['precioLista'] * $data['cantidad'] * 0.16)
+		// 		// );
+		// 		if ($data['Pedimento'] != '') {
+		// 			$Partes = "{}";
+		// 			$arreglo['data'][] = array(
+		// 				'ClaveProdServ' => $data['ClaveProductoSAT'],
+		// 				'NoIdentificacion' => $data['modelo'],
+		// 				'Cantidad' => $data['cantidad'],
+		// 				'ClaveUnidad' => "E48",
+		// 				'Unidad' => "Unidad de servicio",
+		// 				'ValorUnitario' => round($data['precioLista'],2),
+		// 				'Descripcion' => $data['descripcion']." Aduana: Nuevo Laredo, "."Fecha: ".date("d-m-Y"),
+		// 				'Descuento' => 0,
+		// 				'Impuestos' => $traslados,
+		// 				'Aduana' => $data['Pedimento']
+		// 			);
+		// 		}else{
+		// 			$arreglo['data'][] = array(
+		// 				'ClaveProdServ' => $data['ClaveProductoSAT'],
+		// 				'NoIdentificacion' => $data['modelo'],
+		// 				'Cantidad' => $data['cantidad'],
+		// 				'ClaveUnidad' => "E48",
+		// 				'Unidad' => "Unidad de servicio",
+		// 				'ValorUnitario' => round($data['precioLista'],2),
+		// 				'Descripcion' => $data['descripcion'],
+		// 				'Descuento' => 0,
+		// 				'Impuestos' => $traslados
+		// 			);
+		// 		}
+		//
+		// 	}
+		// }else{
+		// 	$query = "SELECT * FROM cotizacionherramientas WHERE cotizacionRef = '$cotizacionRef'";
+		// 	$resultado = mysqli_query($conexion_usuarios, $query);
+		// 	$base = 0;
+		// 	while ($data = mysqli_fetch_assoc($resultado)) {
+		// 		$traslados['Traslados'][] = array(
+		// 			'Base' => $data['precioLista'] * $data['cantidad'],
+		// 			'Impuesto' => "002",
+		// 			'TipoFactor' => "Tasa",
+		// 			'TasaOCuota' => 0.1600,
+		// 			'Importe' => ($data['precioLista'] * $data['cantidad']) * 0.1600
+		// 		);
+		// 		// $retenidos['Retenidos'][] = array(
+		// 		// 	'Base' => $data['precioLista'] * $data['cantidad'],
+		// 		// 	'Impuesto' => 002,
+		// 		// 	'TipoFactor' => "Tasa",
+		// 		// 	'TasaOCuota' => 0.16,
+		// 		// 	'Importe' => ($data['precioLista'] * $data['cantidad']) + ($data['precioLista'] * $data['cantidad'] * 0.16)
+		// 		// );
+		// 		// $locales['Locales'][] = array(
+		// 		// 	'Base' => $data['precioLista'] * $data['cantidad'],
+		// 		// 	'Impuesto' => 002,
+		// 		// 	'TipoFactor' => "Tasa",
+		// 		// 	'TasaOCuota' => 0.16,
+		// 		// 	'Importe' => ($data['precioLista'] * $data['cantidad']) + ($data['precioLista'] * $data['cantidad'] * 0.16)
+		// 		// );
+		// 		if ($data['Pedimento'] != '') {
+		// 			$Partes = "{}";
+		// 			$arreglo['data'][] = array(
+		// 				'ClaveProdServ' => $data['ClaveProductoSAT'],
+		// 				'NoIdentificacion' => $data['modelo'],
+		// 				'Cantidad' => $data['cantidad'],
+		// 				'ClaveUnidad' => "E48",
+		// 				'Unidad' => "Unidad de servicio",
+		// 				'ValorUnitario' => round($data['precioLista'],2),
+		// 				'Descripcion' => $data['descripcion']." Aduana: Nuevo Laredo, "."Fecha: ".date("d-m-Y"),
+		// 				'Descuento' => 0,
+		// 				'Impuestos' => $traslados,
+		// 				'Aduana' => $data['Pedimento']
+		// 			);
+		// 		}else{
+		// 			$arreglo['data'][] = array(
+		// 				'ClaveProdServ' => $data['ClaveProductoSAT'],
+		// 				'NoIdentificacion' => $data['modelo'],
+		// 				'Cantidad' => $data['cantidad'],
+		// 				'ClaveUnidad' => "E48",
+		// 				'Unidad' => "Unidad de servicio",
+		// 				'ValorUnitario' => round($data['precioLista'],2),
+		// 				'Descripcion' => $data['descripcion'],
+		// 				'Descuento' => 0,
+		// 				'Impuestos' => $traslados
+		// 			);
+		// 		}
+		// 		unset($traslados);
+		// 	}
+		// }
 
 		$query = "SELECT * FROM pedidos WHERE cotizacionRef = '$cotizacionRef' AND numeroPedido = '$numeroPedido'";
 		$resultado = mysqli_query($conexion_usuarios, $query);
@@ -277,8 +373,9 @@
 		if(mysqli_num_rows($resultado) > 0){
 			while($data = mysqli_fetch_assoc($resultado)){
 				$idcliente = $data['cliente'];
-				$fecha = $data['fecha'];
-				$arreglo['moneda'] = strtoupper($data['moneda']);
+				$idcfdi = $data['IdUsoCFDI'];
+				$idformapago = $data['IdFormaPago'];
+				$idmetodopago = $data['IdMetodoPago'];
 			}
 		}else{
 			$query = "SELECT * FROM cotizacion WHERE ref = '$cotizacionRef'";
@@ -286,7 +383,6 @@
 			while($data = mysqli_fetch_assoc($resultado)){
 				$idcliente = $data['cliente'];
 				$fecha = $data['fecha'];
-				$arreglo['moneda'] = strtoupper($data['moneda']);
 			}
 		}
 
@@ -298,7 +394,7 @@
 			$idmetodopago = $data['IdMetodoPago'];
 			$arreglo['condpago'] = "Pago en ".$data['CondPago']." dias";
 		}
-
+		//
 		$query = "SELECT * FROM usocfdi WHERE IdUsoCFDI = '$idcfdi'";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 		while($data = mysqli_fetch_assoc($resultado)){
@@ -316,14 +412,15 @@
 		while($data = mysqli_fetch_assoc($resultado)){
 			$arreglo['metodopago'] = $data['Clave'];
 		}
-
-		$query = "SELECT * FROM tipocambio WHERE fecha = '$fecha'";
-		$resultado = mysqli_query($conexion_usuarios, $query);
-		while($data = mysqli_fetch_assoc($resultado)){
-			$arreglo['tipocambio'] = $data['tipocambio'];
-		}
+		//
+		// $query = "SELECT * FROM tipocambio WHERE fecha = '$fecha'";
+		// $resultado = mysqli_query($conexion_usuarios, $query);
+		// while($data = mysqli_fetch_assoc($resultado)){
+		// 	$arreglo['tipocambio'] = $data['tipocambio'];
+		// }
 
 		echo json_encode($arreglo, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_PARTIAL_OUTPUT_ON_ERROR);
+		mysqli_close($conexion_usuarios);
 	}
 
 	function proveedoressinoc($conexion_usuarios){

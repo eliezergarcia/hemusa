@@ -380,7 +380,7 @@
 			        		</button>
 			      		</div>
 				      	<div class="modal-body">
-									<h4>Por favor verifique los datos a continuación:</h4>
+									<h4>Por favor verifique los datos del cliente:</h4>
 				        	<form id="frmRegistrarClientePortal" action="" method="POST">
 			        			<div class="row form-group">
 			        				<div class="col">
@@ -453,6 +453,162 @@
 				      	<div class="modal-footer invoice-footer">
 				        	<button type="button" class="btn btn-lg btn-secondary" data-dismiss="modal">Cancelar</button>
 				        	<button type="button" id="registrar-cliente-portal" class="btn btn-lg btn-success">Agregar</button>
+				      	</div>
+			    	</div>
+			  	</div>
+			</div>
+
+		<!-- Modal Información Facturar -->
+			<div class="modal fade colored-header colored-header-success" id="modalInformacionFactura" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			  	<div class="modal-dialog modal-lg" role="document">
+			    	<div class="modal-content">
+			      		<div class="modal-header">
+			        		<h4 class="modal-title" id="exampleModalLabel">Información de factura</h4>
+			        		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			          			<span aria-hidden="true">&times;</span>
+			        		</button>
+			      		</div>
+				      	<div class="modal-body">
+									<h4>Por favor verifique los datos a continuación antes de facturar:</h4>
+				        	<form id="frmInformacionFactura" action="" method="POST">
+			        			<div class="row form-group">
+			        				<div class="col-8">
+			        					<label for="cliente">Cliente <font color="#FF4136">*</font></label>
+			        					<input type="text" id="cliente" name="cliente" class="form-control form-control-sm" disabled required>
+			        				</div>
+			        				<div class="col">
+			        					<label for="tipoDocumento">Tipo de documento <font color="#FF4136">*</font></label>
+			        					<input type="text" id="tipoDocumento" name="tipoDocumento" class="form-control form-control-sm" value="factura" disabled required>
+			        				</div>
+			        			</div>
+			        			<div class="row form-group">
+			        				<div class="col">
+			        					<label for="fecha">Fecha <font color="#FF4136">*</font></label>
+			        					<input type="text" id="fecha" name="fecha" class="form-control form-control-sm" value="<?php echo date("Y-m-d"); ?>" disabled required>
+			        				</div>
+			        				<div class="col">
+			        					<label for="moneda">Moneda <font color="#FF4136">*</font></label>
+			        					<input type="text" id="moneda" name="moneda" class="form-control form-control-sm" disabled required>
+			        				</div>
+											<div class="col">
+												<label for="tipoCambio">Tipo de cambio </label>
+												<input type="text" id="tipoCambio" name="tipoCambio" class="form-control form-control-sm" disabled required>
+											</div>
+											<div class="col">
+												<label for="numeroOrden">Número de orden <font color="#FF4136">*</font></label>
+												<input type="text" id="numeroOrden" name="numeroOrden" class="form-control form-control-sm" required>
+											</div>
+			        			</div>
+			        			<div class="row form-group">
+											<div class="col">
+												<label for="usoCFDI">Uso de CFDI <font color="#FF4136">*</font></label>
+												<!-- <input type="text" id="usoCFDI" name="usoCFDI" class="form-control form-control-sm" disabled required> -->
+												<select id="usoCFDI" name="usoCFDI" class="form-control form-control-sm" disabled>
+													<option value="1">Adquisición de mercancias</option>
+													<option value="2">Devoluciones, descuentos o bonificaciones</option>
+													<option value="3">Gastos en general</option>
+													<option value="4">Construcciones</option>
+													<option value="5">Mobiliario y equipo de oficina por inversiones</option>
+													<option value="6">Equipo de transporte</option>
+													<option value="7">Equipo de computo y accesorios</option>
+													<option value="8">Dados, troqueles, moldes, matrices y herramental</option>
+													<option value="9">Comunicaciones telefónicas</option>
+													<option value="10">Comunicaciones satelitales</option>
+													<option value="11">Otra maquinaria y equipo</option>
+													<option value="12">Horarios médicos, dentales y gastos hospitalarios</option>
+													<option value="13">Gastos médicos por incapacidad o discapacidad</option>
+													<option value="14">Gastos funerales</option>
+													<option value="15">Donativos</option>
+													<option value="16">Intereses reales efectivamente pagados por créditos hipotecarios</option>
+													<option value="17">Aportaciones voluntarias al SAR</option>
+													<option value="18">Primas por seguros de gastos médicos</option>
+													<option value="19">Gastos de transportación escolar obligatoria</option>
+													<option value="20">Depósitos en cuentas para el ahorro, primas que tengan como base planes de pensiones</option>
+													<option value="21">Pagos por servicios educativos (colegiaturas)</option>
+													<option value="22">Por definir</option>
+												</select>
+											</div>
+											<div class="col">
+												<label for="formaPago">Forma de pago <font color="#FF4136">*</font></label>
+												<!-- <input type="text" id="formaPago" name="formaPago" class="form-control form-control-sm" disabled required> -->
+												<select type="text" id="formaPago" name="formaPago" class="form-control form-control-sm" disabled>
+													<option value="1">Efectivo</option>
+													<option value="2">Cheque nominativo</option>
+													<option value="3">Transferencia electrónica de fondos</option>
+													<option value="4">Tarjeta de crédito</option>
+													<option value="5">Monedero electrónico</option>
+													<option value="6">Dinero electrónico</option>
+													<option value="7">Vales de despensa</option>
+													<option value="8">Tarjeta de débito</option>
+													<option value="9">Tarjeta de servicio</option>
+													<option value="10">Otros</option>
+													<option value="11">NA</option>
+												</select>
+											</div>
+			        			</div>
+			        			<div class="row form-group">
+											<div class="col">
+												<label for="metodoPago">Método de pago <font color="#FF4136">*</font></label>
+												<!-- <input type="text" id="metodoPago" name="metodoPago" class="form-control form-control-sm" disabled required> -->
+												<select type="text" id="metodoPago" name="metodoPago" class="form-control form-control-sm" disabled>
+													<option value="1">Pago en una sola exhibición</option>
+													<option value="2">Pago en parcialidades o diferido</option>
+												</select>
+											</div>
+											<div class="col">
+												<label for="condicionesPago">Condiciones de pago <font color="#FF4136">*</font></label>
+												<input type="text" id="condicionesPago" name="condicionesPago" class="form-control form-control-sm" disabled required>
+											</div>
+			        			</div>
+			        			<div class="row form-group">
+											<div class="col-3">
+												<label for="enviarCorreo">Enviar por correo </label>
+												<!-- <input type="text" id="enviarCorreo" name="enviarCorreo" class="form-control form-control-sm" required> -->
+												<select type="text" id="enviarCorreo" name="enviarCorreo" class="form-control form-control-sm" required>
+													<option value="true" selected>Envíar</option>
+													<option value="false">No envíar</option>
+												</select>
+											</div>
+			        			</div>
+				        	</form>
+									<hr>
+									<table id="dt_partidas_facturar" class="table table-hover table-striped display compact" cellspacing="0" width="100%">
+										<thead>
+											<tr>
+												<th>#</th>
+												<th>Marca</th>
+												<th>Modelo</th>
+												<th>Precio Unitario</th>
+												<th>Cantidad</th>
+												<th>Precio Total</th>
+											</tr>
+										</thead>
+									</table>
+									<br>
+									<div class="row justify-content-end">
+										<div class="col-6">
+											<table class="table table-bordered table-striped">
+												<tbody>
+													<tr>
+														<th><h5><b>SUB-TOTAL:</b></h5></th>
+														<th><h5><label style="font-size: 15px;" id="subtotalFactura"></h5></label></th>
+													</tr>
+													<tr>
+														<th><h5><b>IVA (16%):</b></h5></th>
+														<th><h5><label style="font-size: 15px;" id="ivaFactura"></label></h5></th>
+													</tr>
+													<tr>
+														<th><h5><b>TOTAL:</b></h5></th>
+														<th><h5><b><label style="font-size: 18px;" class="text-primary" id="totalFactura"></label></b></h5></th>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+									</div>
+				      	</div>
+				      	<div class="modal-footer invoice-footer">
+				        	<button type="button" class="btn btn-lg btn-secondary" data-dismiss="modal">Cancelar</button>
+				        	<button type="button" class="btn btn-lg btn-success" id="generarFactura">Generar</button>
 				      	</div>
 			    	</div>
 			  	</div>
@@ -774,7 +930,7 @@
 							text: '<i class="fas fa-file-alt fa-sm" aria-hidden="true"></i> Generar factura',
 							"className": "btn btn-lg btn-space btn-primary",
 							action: function ( e, dt, node, config ) {
-								generar_factura(RFC, numeroPedido, refCotizacion);
+								buscar_datos_factura(RFC, numeroPedido, refCotizacion);
 							}
 						}
 					]
@@ -783,6 +939,7 @@
 			proveedores();
 			obtener_data_split("#dt_pedido tbody", table);
 			obtener_data_editar("#dt_pedido tbody", table);
+			buscar_cliente_portal(RFC, numeroPedido, refCotizacion);
 		}
 
 		var entregado = function(refCotizacion, numeroPedido, RFC){
@@ -1252,140 +1409,181 @@
 			});
 		}
 
-		var generar_factura = function(RFC, numeroPedido, refCotizacion){
-			$("#mod-success").modal("show");
-			var request = new XMLHttpRequest();
+		function buscar_datos_factura(RFC, numeroPedido, refCotizacion){
+			var verificar = 0;
+			$("input[name=hproveedor]").each(function (index) {
+				if($(this).is(':checked')){
+					verificar++;
+				}
+			});
+			if(verificar == 0){
+				alert("Debes de seleccionar al menos una partida.");
+			}else{
+				var herramienta = new Array();
+				$("input[name=hproveedor]").each(function (index) {
+					if($(this).is(':checked')){
+						herramienta.push($(this).val());
+					}
+				});
+				console.log(herramienta);
+				$("#modalInformacionFactura").modal("show");
+				var opcion = "partidasfactura";
+				var table = $("#dt_partidas_facturar").DataTable({
+					"destroy":"true",
+					"deferRender": true,
+					"scrollX": true,
+					"autoWidth": false,
+					"ajax":{
+						"url": "buscar.php",
+						"type": "POST",
+						"data": {"herramienta": JSON.stringify(herramienta), "opcion": opcion}
+					},
+					"columns":[
+						{"data": "indice"},
+						{"data": "marca"},
+						{"data": "modelo"},
+						{"data": "precioUnitario"},
+						{"data": "cantidad"},
+						{"data": "precioTotal"}
+					],
+					"columnDefs": [
+						{ "width": "10%", "targets": 0 },
+						{ "width": "20%", "targets": 1 },
+						{ "width": "20%", "targets": 2 },
+						{ "width": "20%", "targets": 3 },
+						{ "width": "10%", "targets": 4 },
+						{ "width": "20%", "targets": 5 },
+					],
+					"order": false,
+					"lengthChange": false,
+					"info": false,
+					"paging": false,
+					"ordering": false,
+					"language": idioma_espanol,
+					"footerCallback": function ( row, data, start, end, display ) {
+						var api = this.api();
+						var intVal = function ( i ) {
+							return typeof i === 'string' ?
+							i.replace(/[\$,]/g, '')*1 :
+							typeof i === 'number' ?
+							i : 0;
+						};
 
-			request.open('GET', apiConfig.enlace+'api/v1/clients/'+RFC);
+						var subtotal = api
+						.column( 5 )
+						.data()
+						.reduce( function (a, b) {
+							return intVal(a) + intVal(b);
+						}, 0 );
 
-			request.setRequestHeader('Content-Type', 'application/json');
-			request.setRequestHeader('F-API-KEY', apiConfig.apiKey);
-			request.setRequestHeader('F-SECRET-KEY', apiConfig.secretKey);
-
-			request.onreadystatechange = function () {
-				if (this.readyState === 4) {
-			    console.log('Status:', this.status);
-		    	console.log('Headers:', this.getAllResponseHeaders());
-		    	console.log('Body:', this.responseText);
-					if (this.status == 0){
-						$(".texto1").fadeOut(300, function(){
-							$(this).html("");
-							$(this).fadeIn(300);
-						});
-						setTimeout(function () {
-							$(".texto1").append("<div class='text-danger'><span class='modal-main-icon mdi mdi-close-circle-o'></span></div>");
-							$(".texto1").append("<h3>Error!</h3>");
-							$(".texto1").append("<h4>Ocurrió un problema al conectar a  portal 'Factura.com'.</h4>");
-							}, 425);
+						$("#subtotalFactura").text("$ "+ subtotal.toFixed(2));
+						$("#ivaFactura").text("$ "+ (subtotal * .16).toFixed(2));
+						$("#totalFactura").text("$ "+ (subtotal + subtotal*.16).toFixed(2));
+					},
+					"dom":
+					"<'row be-datatable-header'<'col-sm-6'><'col-sm-6 text-right'>>" +
+					"<'row be-datatable-body'<'col-sm-12'tr>>",
+					"createdRow": function ( row, data, index ) {
+						if ( data.enviado != '0000-00-00' && data.recibido == '0000-00-00' ) {
+							$('td', row).eq(1).addClass('table-text-enviado');
+							$('td', row).eq(2).addClass('table-text-enviado');
 						}
-						setTimeout( function () {
-							$("#mod-success").modal("hide");
-							$(".texto1").html("");
-							$(".texto1").append("<br><br>");
-							$(".texto1").append("<h3>Espere un momento...</h3>");
-							$(".texto1").append("<h4>Se está generando la factura</h4>");
-							$(".texto1").append("<br>");
-							$(".texto1").append("<div class='text-center'><div class='be-spinner'><svg width='40px' height='40px' viewBox='0 0 66 66' xmlns='http://www.w3.org/2000/svg'><circle fill='none' stroke-width='4' stroke-linecap='round' cx='33' cy='33' r='30' class='circle'></circle></svg></div></div></div>");
-							$(".texto1").append("<br>");
-							$(".texto1").append("<br>");
-						}, 5000);
-					}else{
+
+						if ( data.enviado != '0000-00-00' && data.recibido != '0000-00-00' ) {
+							$('td', row).eq(1).addClass('table-text-recibido');
+							$('td', row).eq(2).addClass('table-text-recibido');
+						}
+						if ( data.enviado == '0000-00-00' && data.recibido == '0000-00-00' ) {
+							$('td', row).eq(1).addClass('text-danger');
+							$('td', row).eq(2).addClass('text-danger');
+						}
+					}
+				});
+			}
+			var opcion = "buscardatos";
+			$.ajax({
+				method: "POST",
+				url: "buscar.php",
+				dataType: "json",
+				data: {"opcion": opcion, "refCotizacion": refCotizacion, "numeroPedido": numeroPedido},
+			}).done( function( info ){
+				console.log(info);
+				$("#frmInformacionFactura #cliente").val(info.cliente.nombreEmpresa);
+				$("#frmInformacionFactura #moneda").val(info.moneda);
+				$("#frmInformacionFactura #tipoCambio").val(info.tipoCambio);
+				$("#frmInformacionFactura #numeroOrden").val(info.pedidoCliente);
+				$("#frmInformacionFactura #usoCFDI").val(info.cliente.IdUsoCFDI);
+				$("#frmInformacionFactura #formaPago").val(info.cliente.IdFormaPago);
+				$("#frmInformacionFactura #metodoPago").val(info.cliente.IdMetodoPago);
+				$("#frmInformacionFactura #condicionesPago").val(info.cliente.CondPago);
+			});
+		}
+
+		function buscar_cliente_portal(RFC, numeroPedido, refCotizacion){
+			$("#generarFactura").on("click", function(){
+				$("#modalInformacionFactura").modal("hide");
+				$("#mod-success").modal("show");
+				var request = new XMLHttpRequest();
+
+				request.open('GET', apiConfig.enlace+'api/v1/clients/'+RFC);
+
+				request.setRequestHeader('Content-Type', 'application/json');
+				request.setRequestHeader('F-API-KEY', apiConfig.apiKey);
+				request.setRequestHeader('F-SECRET-KEY', apiConfig.secretKey);
+
+				request.onreadystatechange = function () {
+					if (this.readyState === 4) {
+				    console.log('Status:', this.status);
+			    	console.log('Headers:', this.getAllResponseHeaders());
+			    	console.log('Body:', this.responseText);
 						var data = JSON.parse(this.responseText);
-						if (data.status == "error"){
+						console.log(data);
+						if (this.status == 0){
 							$(".texto1").fadeOut(300, function(){
 								$(this).html("");
 								$(this).fadeIn(300);
 							});
 							setTimeout(function () {
-								$(".texto1").append("<div class='text-warning'><span class='modal-main-icon mdi mdi-alert-triangle'></span></div>");
-								$(".texto1").append("<h3>Aviso!</h3>");
-								$(".texto1").append("<h4>El cliente no esta registrado en portal 'Factura.com'</h4>");
-								$(".texto1").append("<div class='text-center'>");
-								$(".texto1").append("<p>Registrarlo a continuación para poder facturar.</p>");
-								$(".texto1").append("</div>");
-							}, 425);
-							buscarDatosCliente(RFC);
-						}else{
-							var request = new XMLHttpRequest();
-
-							request.open('POST', apiConfig.enlace+'api/v3/cfdi33/create');
-							request.setRequestHeader('Content-Type', 'application/json');
-							request.setRequestHeader('F-API-KEY', apiConfig.apiKey);
-							request.setRequestHeader('F-SECRET-KEY', apiConfig.secretKey);
-
-							request.onreadystatechange = function () {
-								if (this.readyState === 4) {
-									console.log('Status:', this.status);
-									console.log('Headers:', this.getAllResponseHeaders());
-									console.log('Body:', this.responseText);
-									var data = JSON.parse(this.responseText);
-									if (data.response == "error" && typeof data.message.message != "undefined") {
-										$("#mod-success").modal("hide");
-										$.gritter.add({
-											title: 'Error!',
-											text: data.message.message+'<br>'+data.message.messageDetail,
-											class_name: 'color danger'
-										});
-									}else if (data.response == "error" && typeof data.message != "undefined") {
-										$("#mod-success").modal("hide");
-										$.gritter.add({
-											title: 'Aviso!',
-											text: data.message,
-											class_name: 'color warning'
-										});
-									}else{
-										$(".texto1").fadeOut(300, function(){
-											$(this).html("");
-											$(this).fadeIn(300);
-										});
-										setTimeout(function () {
-											$(".texto1").append("<div class='text-success'><span class='modal-main-icon mdi mdi-check-circle'></span></div>");
-											$(".texto1").append("<h3>Correcto!</h3>");
-											$(".texto1").append("<h4>La factura se generó correctamente en el portal 'Factura.com'.</h4>");
-											$(".texto1").append("<div class='text-center'>");
-												$(".texto1").append("<p>En un momento se descargará el archivo PDF.</p>");
-												$(".texto1").append("</div>");
-											}, 6500);
-											guardarFactura(numeroPedido, refCotizacion);
-										}
-									}
-								};
-
-								var opcion = "buscarpartidasfacturar";
-								$.ajax({
-									method: "POST",
-									url: "buscar.php",
-									dataType: "json",
-									data: {"opcion": opcion, "numeroPedido": numeroPedido, "refCotizacion": refCotizacion}
-								}).done( function( conceptos ){
-									console.log(conceptos);
-									var fecha = "<?php echo date("Y-m-d")."T".date("H:i:s"); ?>";
-									var body = {
-										'Receptor': {
-											'UID': data.Data.UID,
-											'ResidenciaFiscal': '',
-										},
-										'TipoDocumento':'factura',
-										'Conceptos': conceptos.data,
-										'UsoCFDI': conceptos.cfdi,
-										'Serie': '1194',
-										'FormaPago': conceptos.formapago,
-										'MetodoPago': conceptos.metodopago,
-										'CondicionesDePago': conceptos.condpago,
-										'Moneda': conceptos.moneda,
-										'TipoCambio': conceptos.tipocambio,
-										'NumOrder': numeroPedido,
-										'FechaFromAPI': fecha,
-										// 'Comentarios': 'Comentarios para agregar a la factura PDF',
-										'EnviarCorreo': false
-									};
-									console.log(JSON.stringify(body));
-									request.send(JSON.stringify(body));
-								});
+								$(".texto1").append("<div class='text-danger'><span class='modal-main-icon mdi mdi-close-circle-o'></span></div>");
+								$(".texto1").append("<h3>Error!</h3>");
+								$(".texto1").append("<h4>Ocurrió un problema al conectar a  portal 'Factura.com'.</h4>");
+								}, 425);
 							}
+							setTimeout( function () {
+								$("#mod-success").modal("hide");
+								$(".texto1").html("");
+								$(".texto1").append("<br><br>");
+								$(".texto1").append("<h3>Espere un momento...</h3>");
+								$(".texto1").append("<h4>Se está generando la factura</h4>");
+								$(".texto1").append("<br>");
+								$(".texto1").append("<div class='text-center'><div class='be-spinner'><svg width='40px' height='40px' viewBox='0 0 66 66' xmlns='http://www.w3.org/2000/svg'><circle fill='none' stroke-width='4' stroke-linecap='round' cx='33' cy='33' r='30' class='circle'></circle></svg></div></div></div>");
+								$(".texto1").append("<br>");
+								$(".texto1").append("<br>");
+							}, 5000);
+						}else{
+							var data = JSON.parse(this.responseText);
+							if (data.status == "error"){
+								$(".texto1").fadeOut(300, function(){
+									$(this).html("");
+									$(this).fadeIn(300);
+								});
+								setTimeout(function () {
+									$(".texto1").append("<div class='text-warning'><span class='modal-main-icon mdi mdi-alert-triangle'></span></div>");
+									$(".texto1").append("<h3>Aviso!</h3>");
+									$(".texto1").append("<h4>El cliente no esta registrado en portal 'Factura.com'</h4>");
+									$(".texto1").append("<div class='text-center'>");
+									$(".texto1").append("<p>Registrarlo a continuación para poder facturar.</p>");
+									$(".texto1").append("</div>");
+								}, 425);
+								buscarDatosCliente(RFC);
+							}else{
+								var UID = data.Data.UID;
+								generar_factura(RFC, numeroPedido, refCotizacion, UID);
+							}
+						}
 					}
-				}
-			request.send();
+				request.send();
+			});
 		}
 
 		function buscarDatosCliente (RFC) {
@@ -1408,7 +1606,6 @@
 				$("#modalRegistrarClientePortal #estado").val(data.datos.estado);
 				$("#modalRegistrarClientePortal #ciudad").val(data.datos.ciudad);
 				$("#modalRegistrarClientePortal #delegacion").val(data.datos.pais);
-				// alert("El cliente no esta registrado en portal de Factura.com\n\n Registrarlo a continuación");
 				setTimeout( function () {
 					$("#mod-success").modal("hide");
 					$("#modalRegistrarClientePortal").modal("show");
@@ -1422,90 +1619,6 @@
 					$(".texto1").append("<br>");
 				}, 2500);
 			});
-		}
-
-		function guardarFactura(numeroPedido, refCotizacion) {
-			var request = new XMLHttpRequest();
-
-			request.open('GET', apiConfig.enlace+'api/v3/cfdi33/list');
-
-			request.setRequestHeader('Content-Type', 'application/json');
-			request.setRequestHeader('F-API-KEY', apiConfig.apiKey);
-			request.setRequestHeader('F-SECRET-KEY', apiConfig.secretKey);
-
-			request.onreadystatechange = function () {
-				if (this.readyState === 4) {
-					var data = JSON.parse(this.responseText);
-					console.log(data);
-					var totalfacturas = data.total;
-					for (var i = 0; i < totalfacturas; i++) {
-						if (numeroPedido == data.data[i].NumOrder){
-							var folio = data.data[i].Folio;
-							var ordenpedido = data.data[i].NumOrder;
-							var total = data.data[i].Total;
-							var status = data.data[i].Status;
-							var fecha = data.data[i].FechaTimbrado;
-							var cliente = data.data[i].RazonSocialReceptor;
-							var UID = data.data[i].UID;
-							var opcion = "guardarfactura";
-							$.ajax({
-								method: "POST",
-								url: "guardar.php",
-								dataType: "json",
-								data: {"opcion": opcion, "folio": folio, "ordenpedido": ordenpedido, "total": total, "status": status, "fecha": fecha, "cliente": cliente}
-							}).done( function( data ){
-								console.log(data);
-								mostrar_mensaje(data);
-							});
-
-							quitarStock(numeroPedido, refCotizacion);
-							buscardatos(refCotizacion, numeroPedido);
-							descargarPDF(UID);
-						}
-					}
-				}
-			};
-			request.send();
-		}
-
-		function quitarStock(numeroPedido, refCotizacion){
-			$.ajax({
-				method: "POST",
-				url: "guardar.php",
-				dataType: "json",
-				data: {"opcion": opcion = "quitarstock", "numeroPedido": numeroPedido, "refCotizacion": refCotizacion},
-			}).done( function( data ){
-				console.log(data);
-				mostrar_mensaje(data);
-			});
-		}
-
-		function descargarPDF (UID) {
-			var request = new XMLHttpRequest();
-
-			request.open('GET', apiConfig.enlace+'api/v3/cfdi33/'+UID+'/pdf');
-
-			request.setRequestHeader('F-API-KEY', apiConfig.apiKey);
-			request.setRequestHeader('F-SECRET-KEY', apiConfig.secretKey);
-			request.setRequestHeader('Content-Type', 'application/pdf');
-			request.setRequestHeader('Content-Transfer-Encoding', 'Binary');
-			request.setRequestHeader('Content-Disposition', 'attachment: filename=F2222.pdf');
-			request.responseType = 'blob';
-
-			request.onreadystatechange = function () {
-				if (this.readyState === 4) {
-					console.log('Status:', this.status);
-					console.log('Headers:', this.getAllResponseHeaders());
-					console.log('Body:', this.response);
-					var blob = new Blob([this.response], {type: 'application/pdf'});
-					var link = document.createElement('a');
-					link.href = window.URL.createObjectURL(blob);
-					link.download = "factura.pdf";
-					link.click();
-				}
-			};
-
-			request.send();
 		}
 
 		$("#registrar-cliente-portal").on("click", function(){
@@ -1541,7 +1654,7 @@
 			    if (data.status == "success"){
 						$.gritter.add({
 							title: 'Correcto!',
-							text: 'El cliente se registró correctamente en el portal "Factura.com" Intente generar la factura nuevamente.',
+							text: 'El cliente se registró correctamente en el portal "Factura.com", intente generar la factura nuevamente.',
 							class_name: 'color success'
 						});
 
@@ -1572,10 +1685,183 @@
 			  'delegacion': delegacion
 			};
 
-			console.log(JSON.stringify(body));
 			request.send(JSON.stringify(body));
 			$("#modalRegistrarClientePortal").modal("hide");
 		});
+
+		var generar_factura = function(RFC, numeroPedido, refCotizacion, UID){
+			var herramienta = new Array();
+			$("input[name=hproveedor]").each(function (index) {
+				if($(this).is(':checked')){
+					herramienta.push($(this).val());
+				}
+			});
+
+			var request = new XMLHttpRequest();
+
+			request.open('POST', apiConfig.enlace+'api/v3/cfdi33/create');
+			request.setRequestHeader('Content-Type', 'application/json');
+			request.setRequestHeader('F-API-KEY', apiConfig.apiKey);
+			request.setRequestHeader('F-SECRET-KEY', apiConfig.secretKey);
+
+			request.onreadystatechange = function () {
+				if (this.readyState === 4) {
+					console.log('Status:', this.status);
+					console.log('Headers:', this.getAllResponseHeaders());
+					console.log('Body:', this.responseText);
+					var data = JSON.parse(this.responseText);
+					if (data.response == "error" && typeof data.message.message != "undefined") {
+						$("#mod-success").modal("hide");
+						$.gritter.add({
+							title: 'Error!',
+							text: data.message.message+'<br>'+data.message.messageDetail,
+							class_name: 'color danger'
+						});
+					}else if (data.response == "error" && typeof data.message != "undefined") {
+						$("#mod-success").modal("hide");
+						$.gritter.add({
+							title: 'Aviso!',
+							text: data.message,
+							class_name: 'color warning'
+						});
+					}else{
+						var data = JSON.parse(this.responseText);
+						$(".texto1").fadeOut(300, function(){
+							$(this).html("");
+							$(this).fadeIn(300);
+						});
+						setTimeout(function () {
+							$(".texto1").append("<div class='text-success'><span class='modal-main-icon mdi mdi-check-circle'></span></div>");
+							$(".texto1").append("<h3>Correcto!</h3>");
+							$(".texto1").append("<h4>La factura se generó correctamente en el portal 'Factura.com'.</h4>");
+							$(".texto1").append("<div class='text-center'>");
+								$(".texto1").append("<p>En un momento se descargará el archivo PDF.</p>");
+								$(".texto1").append("</div>");
+							}, 6500);
+							console.log(data);
+							var UIDFactura = data.uid;
+							var UUIDFactura = data.UUID;
+							guardarFactura(numeroPedido, refCotizacion, herramienta, UIDFactura, UUIDFactura);
+						}
+					}
+				};
+
+				var opcion = "buscarpartidasfacturar";
+				$.ajax({
+					method: "POST",
+					url: "buscar.php",
+					dataType: "json",
+					data: {"opcion": opcion, "herramienta": JSON.stringify(herramienta), "refCotizacion": refCotizacion, "numeroPedido": numeroPedido}
+				}).done( function( conceptos ){
+					// console.log(conceptos);
+					var fecha = "<?php echo date("Y-m-d")."T".date("H:i:s"); ?>";
+					var body = {
+						'Receptor': {
+							'UID': UID,
+							'ResidenciaFiscal': '',
+						},
+						'TipoDocumento': $("#frmInformacionFactura #tipoDocumento").val(),
+						'Conceptos': conceptos.data,
+						'UsoCFDI': conceptos.cfdi,
+						'Serie': '1194',
+						'FormaPago': conceptos.formapago,
+						'MetodoPago': conceptos.metodopago,
+						'CondicionesDePago': conceptos.condpago,
+						'Moneda': ($("#frmInformacionFactura #moneda").val()).toUpperCase(),
+						'TipoCambio': $("#frmInformacionFactura #tipoCambio").val(),
+						'NumOrder': $("#frmInformacionFactura #numeroOrden").val(),
+						'FechaFromAPI': fecha,
+						// 'Comentarios': 'Comentarios para agregar a la factura PDF',
+						'EnviarCorreo': $("#frmInformacionFactura #enviarCorreo").val()
+					};
+					console.log(JSON.stringify(body));
+					request.send(JSON.stringify(body));
+				});
+			}
+
+		function guardarFactura(numeroPedido, refCotizacion, herramienta, UIDFactura, UUIDFactura) {
+			var request = new XMLHttpRequest();
+
+			request.open('GET', apiConfig.enlace+'api/v3/cfdi33/list');
+
+			request.setRequestHeader('Content-Type', 'application/json');
+			request.setRequestHeader('F-API-KEY', apiConfig.apiKey);
+			request.setRequestHeader('F-SECRET-KEY', apiConfig.secretKey);
+
+			request.onreadystatechange = function () {
+				if (this.readyState === 4) {
+					var data = JSON.parse(this.responseText);
+					console.log(data);
+					var totalfacturas = data.total;
+					for (var i = 0; i < totalfacturas; i++) {
+						if (UIDFactura == data.data[i].UID){
+							var folio = data.data[i].Folio;
+							var ordenpedido = data.data[i].NumOrder;
+							var total = data.data[i].Total;
+							var status = data.data[i].Status;
+							var fecha = data.data[i].FechaTimbrado;
+							var cliente = data.data[i].RazonSocialReceptor;
+							var UID = data.data[i].UID;
+							var opcion = "guardarfactura";
+							$.ajax({
+								method: "POST",
+								url: "guardar.php",
+								dataType: "json",
+								data: {"opcion": opcion, "folio": folio, "ordenpedido": ordenpedido, "total": total, "status": status, "fecha": fecha, "UIDFactura": UIDFactura, "UUIDFactura": UUIDFactura, "cliente": cliente}
+							}).done( function( data ){
+								console.log(data);
+								mostrar_mensaje(data);
+							});
+
+							quitarStock(numeroPedido, refCotizacion, herramienta, folio);
+							buscardatos(refCotizacion, numeroPedido);
+							descargarPDF(UID);
+						}
+					}
+				}
+			};
+			request.send();
+		}
+
+		function quitarStock(numeroPedido, refCotizacion, herramienta, folio){
+			$.ajax({
+				method: "POST",
+				url: "guardar.php",
+				dataType: "json",
+				data: {"opcion": opcion = "quitarstock", "numeroPedido": numeroPedido, "refCotizacion": refCotizacion, "folio": folio, "herramienta": JSON.stringify(herramienta)},
+			}).done( function( data ){
+				console.log(data);
+				mostrar_mensaje(data);
+			});
+		}
+
+		function descargarPDF (UID) {
+			var request = new XMLHttpRequest();
+
+			request.open('GET', apiConfig.enlace+'api/v3/cfdi33/'+UID+'/pdf');
+
+			request.setRequestHeader('F-API-KEY', apiConfig.apiKey);
+			request.setRequestHeader('F-SECRET-KEY', apiConfig.secretKey);
+			request.setRequestHeader('Content-Type', 'application/pdf');
+			request.setRequestHeader('Content-Transfer-Encoding', 'Binary');
+			request.setRequestHeader('Content-Disposition', 'attachment: filename=F2222.pdf');
+			request.responseType = 'blob';
+
+			request.onreadystatechange = function () {
+				if (this.readyState === 4) {
+					console.log('Status:', this.status);
+					console.log('Headers:', this.getAllResponseHeaders());
+					console.log('Body:', this.response);
+					var blob = new Blob([this.response], {type: 'application/pdf'});
+					var link = document.createElement('a');
+					link.href = window.URL.createObjectURL(blob);
+					link.download = "factura.pdf";
+					link.click();
+				}
+			};
+
+			request.send();
+		}
 
 	</script>
 	<script src="<?php echo $ruta; ?>/php/js/idioma_espanol.js"></script>
