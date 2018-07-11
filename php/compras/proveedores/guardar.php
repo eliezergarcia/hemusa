@@ -117,6 +117,68 @@
 			$idherramienta = $_POST['idherramienta'];
 			split_sin_recibido($idherramienta, $cantidadsplit, $conexion_usuarios);
 			break;
+
+		case 'agregarcosto':
+			$factor = $_POST['factor'];
+			$idproveedor = $_POST['idproveedor'];
+			agregar_costo($factor, $idproveedor, $conexion_usuarios);
+			break;
+
+		case 'editarcosto':
+			$idfactor = $_POST['idfactor'];
+			$factor = $_POST['factor'];
+			editar_costo($idfactor, $factor, $conexion_usuarios);
+			break;
+
+		case 'eliminarcosto':
+			$idcosto = $_POST['id'];
+			eliminar_costo($idcosto, $conexion_usuarios);
+			break;
+	}
+
+	function agregar_costo($factor, $idproveedor, $conexion_usuarios){
+		$query = "INSERT INTO factorescosto (proveedor, factor_proveedor) VALUES ('$idproveedor', '$factor')";
+		$resultado = mysqli_query($conexion_usuarios, $query);
+
+		if (!$resultado) {
+			$informacion["respuesta"] = "ERROR";
+			$informacion["informacion"] = "Ocurrió un problema al agregar el factor.";
+		}else{
+			$informacion["respuesta"] = "BIEN";
+			$informacion["informacion"] = "El factor se agregó correctamente.";
+		}
+		echo json_encode($informacion);
+		mysqli_close($conexion_usuarios);
+	}
+
+	function editar_costo($idfactor, $factor, $conexion_usuarios){
+		$query = "UPDATE factorescosto SET factor_proveedor='$factor' WHERE id = '$idfactor'";
+		$resultado = mysqli_query($conexion_usuarios, $query);
+
+		if (!$resultado) {
+			$informacion["respuesta"] = "ERROR";
+			$informacion["informacion"] = "Ocurrió un problema al editar el factor.";
+		}else{
+			$informacion["respuesta"] = "BIEN";
+			$informacion["informacion"] = "El factor se modificó correctamente.";
+		}
+		echo json_encode($informacion);
+		mysqli_close($conexion_usuarios);
+	}
+
+	function eliminar_costo($idcosto, $conexion_usuarios){
+		$query = "DELETE FROM factorescosto WHERE id = $idcosto";
+		$resultado = mysqli_query($conexion_usuarios, $query);
+
+		if (!$resultado) {
+			$informacion["respuesta"] = "ERROR";
+			$informacion["informacion"] = "Ocurrió un problema al eliminar el factor.";
+		}else{
+			$informacion["respuesta"] = "BIEN";
+			$informacion["informacion"] = "El factor se eliminó correctamente.";
+		}
+		echo json_encode($informacion);
+		mysqli_close($conexion_usuarios);
 	}
 
 	function split_sin_recibido($idherramienta, $cantidadsplit, $conexion_usuarios){

@@ -18,6 +18,32 @@
 			$idproveedor = $_POST['idproveedor'];
 			informacion_contacto($idproveedor, $conexion_usuarios);
 			break;
+
+		case 'factorescosto':
+			$idproveedor = $_POST['idproveedor'];
+			factores_costo($idproveedor, $conexion_usuarios);
+			break;
+	}
+
+	function factores_costo($idproveedor, $conexion_usuarios){
+		$query = "SELECT * FROM factorescosto WHERE proveedor = '$idproveedor'";
+		$resultado = mysqli_query($conexion_usuarios, $query);
+
+		if (mysqli_num_rows($resultado) < 1) {
+			$arreglo['data'] = 0;
+		}else{
+			$i = 1;
+			while($data = mysqli_fetch_assoc($resultado)){
+				$arreglo["data"][] = array(
+						'id' => $data['id'],
+						'indice' => $i,
+						'factor' => $data['factor_proveedor']
+					);
+					$i++;
+			}
+		}
+		echo json_encode($arreglo, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_PARTIAL_OUTPUT_ON_ERROR);
+		mysqli_close($conexion_usuarios);
 	}
 
 	function total_sin_pedido($idproveedor, $conexion_usuarios){

@@ -48,8 +48,9 @@
 																		<i class="fa fa-bars" aria-hidden="true"></i>
 																	</button>
 																	<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-																		<button class="dropdown-item" type="button" data-toggle="modal" data-target="#modalEditarInformacion">Editar Información</button>
-																		<button class="dropdown-item" type="button" data-toggle="modal" data-target="#modalCrearOC" onclick="crearoc()">Crear Orden de Compra</button>
+																		<button class="dropdown-item" type="button" data-toggle="modal" data-target="#modalEditarInformacion">Información de proveedor</button>
+																		<button class="dropdown-item" type="button" data-toggle="modal" data-target="#modalCrearOC" onclick="crearoc()">Crear orden de compra</button>
+																		<button class="dropdown-item" type="button" data-toggle="modal" data-target="#modalFactoresCosto">Factores de costo</button>
 																	</div>
 															</div>
 														</div>
@@ -381,7 +382,7 @@
 
 		<!-- Modal OC Pendientes -->
 			<div class="modal fade" id="modalOCPendientes" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-				<div class="modal-dialog" role="document">
+				<div class="modal-dialog colored-header colored-header-primary" role="document">
 					<div class="modal-content">
 						<div class="modal-header">
 							<h5 class="modal-title" id="exampleModalLabel"><i class="fa fa-calendar btn-outline-primary" aria-hidden="true"></i></h5>
@@ -406,10 +407,39 @@
 				</div>
 			</div>
 
+		<!-- Modal Factores Costo -->
+			<div class="modal fade" id="modalFactoresCosto" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				<div class="modal-dialog  colored-header colored-header-primary" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h4 class="modal-title" id="exampleModalLabel"><b>Factores de costo</b></h4>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+							<table id="dt_factores_costo" class="table table-hover table-striped display compact" cellspacing="0" width="100%">
+								<thead>
+									<tr>
+										<th>#</th>
+										<th>Factor</th>
+										<th></th>
+										<th></th>
+									</tr>
+								</thead>
+							</table>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
 			<div id="mod-success" tabindex="-1" role="dialog" style="" class="modal fade" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog">
-          <div class="modal-content">
             <div class="modal-header">
+							<div class="modal-content">
             </div>
             <div class="modal-body">
               <div class="text-center">
@@ -1142,6 +1172,53 @@
 		});
 	}
 
+	$('#modalFactoresCosto').on('show.bs.modal', function (e) {
+		var opcion = "factorescosto";
+		var idproveedor = "<?php echo $_REQUEST['id']; ?>";
+		var table = $("#dt_factores_costo").DataTable({
+			"destroy":"true",
+			"deferRender": true,
+			"scrollX": true,
+			"ajax":{
+				"url": "buscar.php",
+				"type": "POST",
+				"data": {"idproveedor": idproveedor,"opcion": opcion}
+			},
+			"columns":[
+				{"data": "indice"},
+				{"data": "factor"},
+				{"defaultContent": "<div class='invoice-footer'><button type='button' class='editarcosto btn btn-lg btn-primary'><i class='fas fa-edit fa-sm' aria-hidden='true'></i></button></div>"},
+				{"defaultContent": "<div class='invoice-footer'><button type='button' class='eliminarcosto btn btn-lg btn-danger'><i class='fas fa-times fa-sm' aria-hidden='true'></i></button></div>"}
+			],
+			"columnDefs": [
+				{ "width": "20%", "targets": 0 },
+				{ "width": "40%", "targets": 1 },
+				{ "width": "20%", "targets": 2 },
+				{ "width": "20%", "targets": 3 },
+			],
+			"order": false,
+			"lengthChange": false,
+			"info": false,
+			"paging": false,
+			"ordering": false,
+			"language": idioma_espanol,
+			"dom":
+				"<'row be-datatable-header'<'col-sm-6'B><'col-sm-6 text-right'>>" +
+				"<'row be-datatable-body'<'col-sm-12'tr>>",
+			"buttons": [
+				{
+					text: '<i class="fas fa-plus fa-sm" aria-hidden="true"></i> Agregar',
+					"className": "btn btn-lg btn-space btn-success",
+					action: function ( e, dt, node, config ) {
+						agregar_costo(idproveedor);
+					}
+				}
+			]
+		});
+		obtener_data_editar_costo("#dt_factores_costo tbody", table, idproveedor);
+		obtener_data_eliminar_costo("#dt_factores_costo tbody", table, idproveedor);
+	})
+
 	$('#modalEditarInformacion').on('show.bs.modal', function (e) {
 		var opcion = "informacioncontacto";
 		var idproveedor = "<?php echo $_REQUEST['id']; ?>";
@@ -1306,6 +1383,79 @@
 				}).done( function( info ){
 					mostrar_mensaje(info);
 					$("#dt_listar_sinrecibido").DataTable().ajax.reload();
+				});
+			}
+		});
+	}
+
+	var agregar_costo = function(idproveedor){
+		var factor = prompt("Ingresa el factor de costo: ");
+		if (factor == null || factor == "") {
+			alert("Error en el factor de costo.");
+		} else {
+			var opcion = "agregarcosto";
+			$.ajax({
+				method: "POST",
+				url: "guardar.php",
+				data: {"opcion": opcion, "factor": factor, "idproveedor": idproveedor},
+				success: function (data) {
+					var json_info = JSON.parse( data );
+					mostrar_mensaje(json_info);
+					$("#dt_listar_sinpedido").DataTable().ajax.reload();
+					$("#dt_factores_costo").DataTable().ajax.reload();
+					obtener_total(idproveedor);
+				}
+			});
+		}
+	}
+
+	var obtener_data_eliminar_costo = function(tbody, table, idproveedor){
+		$(tbody).on("click", "button.eliminarcosto", function(){
+			var data = table.row( $(this).parents("tr") ).data();
+			console.log(data);
+			if (confirm("Esta seguro(a) de eliminar el factor?")){
+				var id = data.id;
+				var opcion = "eliminarcosto";
+				$.ajax({
+					method: "POST",
+					url: "guardar.php",
+					data: {"opcion": opcion, "id": id},
+					success: function (data) {
+						var json_info = JSON.parse( data );
+						mostrar_mensaje(json_info);
+						$("#dt_listar_sinpedido").DataTable().ajax.reload();
+						$("#dt_factores_costo").DataTable().ajax.reload();
+						obtener_total(idproveedor);
+					}
+				});
+			}else{
+
+			}
+		});
+	}
+
+	var obtener_data_editar_costo = function(tbody, table, idproveedor){
+		$(tbody).on("click", "button.editarcosto", function(){
+			var data = table.row( $(this).parents("tr") ).data();
+			console.log(data);
+			var idfactor = data.id;
+			var factor = data.factor;
+			var factornuevo = prompt("Ingresa el factor de costo: ", factor);
+			if (factornuevo == null || factornuevo == "") {
+				alert("Error en el factor de costo.");
+			} else {
+				var opcion = "editarcosto";
+				$.ajax({
+					method: "POST",
+					url: "guardar.php",
+					data: {"opcion": opcion, "factor": factornuevo, "idfactor": idfactor},
+					success: function (data) {
+						var json_info = JSON.parse( data );
+						mostrar_mensaje(json_info);
+						$("#dt_listar_sinpedido").DataTable().ajax.reload();
+						$("#dt_factores_costo").DataTable().ajax.reload();
+						obtener_total(idproveedor);
+					}
 				});
 			}
 		});
