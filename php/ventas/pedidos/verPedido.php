@@ -1756,7 +1756,7 @@
 					'TipoDocumento': $("#frmInformacionFactura #tipoDocumento").val(),
 					'Conceptos': conceptos.data,
 					'UsoCFDI': conceptos.cfdi,
-					'Serie': '1194',
+					'Serie': '41735',
 					'FormaPago': conceptos.formapago,
 					'MetodoPago': conceptos.metodopago,
 					'CondicionesDePago': conceptos.condpago,
