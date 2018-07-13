@@ -824,6 +824,10 @@
 					},
 					{
 		         text: '<i class="fas fa-check fa-sm" aria-hidden="true"></i> Enviado',
+						 key: {
+                 shiftKey: true,
+                 key: 'e'
+             },
 		         "className": "btn btn-lg btn-secondary btn-space",
 		          action: function ( e, dt, node, config ) {
 		          	var verificar = 0;
@@ -860,6 +864,10 @@
 					},
 						{
 		                text: '<i class="fas fa-check fa-sm" aria-hidden="true"></i> Recibido',
+										key: {
+			                  shiftKey: true,
+			                  key: 'r'
+			              },
 		                "className": "btn btn-lg btn-secondary btn-space",
 		                action: function ( e, dt, node, config ) {
 		                	var verificar = 0;
