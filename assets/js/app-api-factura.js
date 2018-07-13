@@ -1,6 +1,6 @@
 var apiConfig = {
   // Produccion
-  enlace: "http://factura.com/",
+  enlace: "https://factura.com/",
   apiKey: "JDJ5JDEwJHJWelRXTWlJMEd4OS9kS3hRZTJNZy5neFAwV2dzdGttLjVleTcueDIyUHlMOEE0VEY5dUFL",
   secretKey: "JDJ5JDEwJDd3bXhpWENGRXJFMkNvOE1Hblo5Y2VPV3J5WXJxZmJoVEJhQjR0OE1Xa0hrV1lmRXhCWkFt"
 
