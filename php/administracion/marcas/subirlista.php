@@ -218,7 +218,7 @@
 			$("#mod-success").modal("show");
 				var opcion = "subirlista";
 				var lista = data.data;
-				var j = lista.length;
+				var j = 10;
 				setTimeout(function () {
 					$('#numeroj').html(j);
 				}, 5500);
