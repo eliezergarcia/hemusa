@@ -121,6 +121,7 @@
 
 			while($data = mysqli_fetch_assoc($resultado)){
 				$idcliente = $data['cliente'];
+				$fecha = $data['fecha'];
 
 				$query2 = "SELECT * FROM contactos WHERE id = '$idcliente'";
 				$res2 = mysqli_query($conexion_usuarios, $query2);
@@ -143,6 +144,11 @@
 					}
 				}
 
+				$query4 = "SELECT tipocambio FROM tipocambio WHERE fecha = '$fecha'";
+				$resultado4 = mysqli_query($conexion_usuarios, $query4);
+				while($data4 = mysqli_fetch_assoc($resultado4)){
+					$tipoCambio = $data4['tipocambio'];
+				}
 
 				$informacion['refCotizacion'] = $data['ref'];
 				$informacion['fecha'] = $data['fecha'];
@@ -155,6 +161,7 @@
 				$informacion['numeroGuia'] = $data['guia'];
 				$informacion['remision'] = $data['remision'];
 				$informacion['total'] = $data['precioTotal'];
+				$informacion['tipoCambio'] = $tipoCambio;
 			}
 		}
 
