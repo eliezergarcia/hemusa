@@ -29,7 +29,30 @@
 			imprimir_cotizacion($ordencompra, $conexion_usuarios);
 			break;
 
+		case 'mostrarpagado':
+			$ordencompra = $_POST['ordencompra'];
+			mostrar_pagado($ordencompra, $conexion_usuarios);
+			break;
+	}
 
+	function mostrar_pagado($ordencompra, $conexion_usuarios){
+		$query = "SELECT DISTINCT pago_factura, total_factura FROM utilidad_pedido WHERE pagada = 'si' AND orden_compra = '$ordencompra'";
+		$resultado = mysqli_query($conexion_usuarios, $query);
+
+		if(mysqli_num_rows($resultado) < 1){
+			$arreglo['data'] = 0;
+		}else{
+			while($data = mysqli_fetch_assoc($resultado)){
+				if ($data['pago_factura'] == $data['total_factura']) {
+					$informacion['respuesta'] = "si";
+				}else{
+					$informacion['respuesta'] = "no";
+				}
+			}
+		}
+
+			echo json_encode($informacion, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_PARTIAL_OUTPUT_ON_ERROR);
+			mysqli_close($conexion_usuarios);
 	}
 
 	function direccionenvio($conexion_usuarios){

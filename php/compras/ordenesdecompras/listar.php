@@ -22,6 +22,11 @@
 			partidasoc($ordencompra, $conexion_usuarios);
 			break;
 
+		case 'facturasoc':
+			$ordencompra = $_POST['ordencompra'];
+			facturasoc($ordencompra, $conexion_usuarios);
+			break;
+
 		case 'totalesocdescripcion':
 			$ordencompra = $_POST['ordencompra'];
 			totalesocdescripcion($ordencompra, $conexion_usuarios);
@@ -264,6 +269,48 @@
 					);
 					$i++;
 				}
+			}
+		}
+
+		echo json_encode($arreglo, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_PARTIAL_OUTPUT_ON_ERROR);
+		mysqli_close($conexion_usuarios);
+	}
+
+	function facturasoc($ordencompra, $conexion_usuarios){
+		$query = "SELECT DISTINCT factura_proveedor, Tipo_pago, pago_factura, fecha_pago, cuenta, total_factura FROM utilidad_pedido WHERE pagada = 'si' AND orden_compra = '$ordencompra'";
+		$resultado = mysqli_query($conexion_usuarios, $query);
+
+		if(mysqli_num_rows($resultado) < 1){
+			$arreglo['data'] = 0;
+		}else{
+			while($data = mysqli_fetch_assoc($resultado)){
+				$idcuenta = $data['cuenta'];
+
+				if ($data['Tipo_pago'] == "OC") {
+					$referencia = $ordencompra;
+				}else{
+					$referencia = $data['factura_proveedor'];
+				}
+
+				$query2 = "SELECT tipo_cambio FROM pagos_oc WHERE factura='$referencia'";
+				$resultado2 = mysqli_query($conexion_usuarios, $query2);
+				while($data2 = mysqli_fetch_assoc($resultado2)){
+					$tipocambio = $data2['tipo_cambio'];
+				}
+
+				$query3 = "SELECT nombre FROM accounts WHERE id='$idcuenta'";
+				$resultado3 = mysqli_query($conexion_usuarios, $query3);
+				while($data3 = mysqli_fetch_assoc($resultado3)){
+					$cuenta = $data3['nombre'];
+				}
+
+				$arreglo["data"][] = array(
+					'referencia' => $referencia,
+					'cantidad' => "$ ".$data['total_factura'],
+					'fecha' => $data['fecha_pago'],
+					'cuenta' => $cuenta,
+					'tipoCambio' => $tipocambio,
+				);
 			}
 		}
 

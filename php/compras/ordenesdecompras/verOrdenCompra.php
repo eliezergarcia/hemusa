@@ -56,6 +56,27 @@
                           <h3><b>Fecha: </b><?php echo date("d/m/Y", strtotime($fechaoc)); ?></h3>
                         </div>
 
+                        <div class="mostrarpagado">
+
+                        </div>
+                        <div class="facturasOC" id="facturasOC">
+                          <!-- <img src="../../../imagenes/pagado.jpg" alt=""> -->
+                          <div class="row justify-content-center">
+                            <div class="col-6">
+                              <table id="dt_facturas_oc" class="table table-hover display compact" cellspacing="0" width="100%">
+                                <thead>
+                                  <tr>
+                                    <th>Referencia</th>
+                                    <th>Cantidad</th>
+                                    <th>Fecha</th>
+                                    <th>Cuenta</th>
+                                    <th>Tipo cambio</th>
+                                  </tr>
+                                </thead>
+                              </table>
+                            </div>
+                          </div>
+                        </div>
                         <!-- Encabezado -->
                         <br>
                         <div class="row align-items-start">
@@ -226,6 +247,7 @@
           console.log(data);
           listar_partidas(data);
           listar_totales(data);
+          listar_facturas(data);
           agregar_flete(data);
           guardar(data);
         }
@@ -317,6 +339,50 @@
         ]
       });
       obtener_data_partida("#dt_partidas_oc tbody", table);
+    }
+
+    var listar_facturas = function(data){
+      var opcion = "facturasoc";
+      var table = $("#dt_facturas_oc").DataTable({
+        "destroy": true,
+        "autoWidth": false,
+        "ajax":{
+          "method":"POST",
+          "url":"listar.php",
+          "data": {"opcion": opcion, "ordencompra": data.ordendecompra.noDePedido}
+        },
+        "columns":[
+          {"data":'referencia'},
+          {"data":'cantidad'},
+          {"data":'fecha'},
+          {"data":'cuenta'},
+          {"data":'tipoCambio'}
+        ],
+        "searching": false,
+        "info": false,
+        "paging": false,
+        "ordering": false,
+        "language": idioma_espanol,
+        "dom":
+          "<'row be-datatable-header'<'col-sm-6'><'col-sm-6 text-right'f>>" +
+          "<'row be-datatable-body'<'col-sm-12'tr>>"
+      });
+      mostrar_pagado(data);
+    }
+
+    function mostrar_pagado (data) {
+      var opcion = "mostrarpagado";
+      $.ajax({
+        method: "POST",
+        url: "buscar.php",
+        dataType: "json",
+        data: {"opcion" : opcion, "ordencompra": data.ordendecompra.noDePedido},
+      }).done( function( info ){
+        if(info.respuesta == "si"){
+          $(".mostrarpagado").append("<br>");
+          $(".mostrarpagado").append("<div class='text-center'><img src='../../../imagenes/img_pagado.jpg' alt='' width='300pt' height='80pt'></div>");
+        }
+      });
     }
 
     function genPDF(opcionPDF) {
