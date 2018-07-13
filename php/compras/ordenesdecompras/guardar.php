@@ -60,42 +60,6 @@
 	}
 
 	function duplicar($idherramienta, $cantduplicar, $cantidad, $conexion_usuarios){
-		if ($cantduplicar == $cantidad) {
-			$query = "UPDATE utilidad_pedido SET cliente = '611', nombre_cliente = 'ALMACEN' WHERE id = '$idherramienta'";
-			$resultado = mysqli_query($conexion_usuarios, $query);
-			if (!$resultado) {
-				$informacion["respuesta"] = "ERROR";
-				$informacion["informacion"] = "Ocurrió un problema al intentar mover la herramienta a Almacen!";
-			}else{
-				$query = "SELECT * FROM utilidad_pedido WHERE id = '$idherramienta'";
-				$resultado = mysqli_query($conexion_usuarios, $query);
-
-				while($data = mysqli_fetch_assoc($resultado)){
-					$marca = $data['marca'];
-					$modelo = $data['modelo'];
-				}
-
-				$query = "SELECT * FROM productos WHERE marca ='$marca' AND ref ='$modelo'";
-				$resultado = mysqli_query($conexion_usuarios, $query);
-
-				while($data = mysqli_fetch_assoc($resultado)){
-					$stock = $data['enReserva'];
-				}
-
-				$stock = $stock + $cantduplicar;
-
-				$query = "UPDATE productos SET enReserva='$stock' WHERE marca ='$marca' AND ref ='$modelo'";
-				$resultado = mysqli_query($conexion_usuarios, $query);
-
-				if (!$resultado) {
-					$informacion["respuesta"] = "ERROR";
-					$informacion["informacion"] = "Ocurrió un problema al aumentar el stock de la herramienta!";
-				}else{
-					$informacion["respuesta"] = "BIEN";
-					$informacion["informacion"] = "La herramienta se movió al Almacen y se modificó el stock correctamente!";
-				}
-			}
-		}else{
 			$query = "SELECT * FROM utilidad_pedido WHERE id ='$idherramienta'";
 			$resultado = mysqli_query($conexion_usuarios, $query);
 
@@ -127,38 +91,11 @@
 
 			if (!$resultado) {
 				$informacion["respuesta"] = "ERROR";
-				$informacion["informacion"] = "Ocurrió un problema al intentar mover la herramienta a Almacen!";
+				$informacion["informacion"] = "Ocurrió un problema al intentar duplicar la herramienta para Almacen!";
 			}else{
-				$cantidad = $cantidad - $cantduplicar;
-				$query = "UPDATE utilidad_pedido SET cantidad = '$cantidad' WHERE id='$id'";
-				$resultado = mysqli_query($conexion_usuarios, $query);
-
-				if (!$resultado) {
-					$informacion["respuesta"] = "ERROR";
-					$informacion["informacion"] = "Ocurrió un problema al intentar modificar la cantidad de la partida!";
-				}else{
-					$query = "SELECT * FROM productos WHERE marca ='$marca' AND ref ='$modelo'";
-					$resultado = mysqli_query($conexion_usuarios, $query);
-
-					while($data = mysqli_fetch_assoc($resultado)){
-						$stock = $data['enReserva'];
-					}
-
-					$stock = $stock + $cantduplicar;
-
-					$query = "UPDATE productos SET enReserva='$stock' WHERE marca ='$marca' AND ref ='$modelo'";
-					$resultado = mysqli_query($conexion_usuarios, $query);
-
-					if (!$resultado) {
-						$informacion["respuesta"] = "ERROR";
-						$informacion["informacion"] = "Ocurrió un problema al aumentar el stock de la herramienta!";
-					}else{
-						$informacion["respuesta"] = "BIEN";
-						$informacion["informacion"] = "La herramienta se movió al Almacen y se modificó el stock correctamente!";
-					}
-				}
+				$informacion["respuesta"] = "BIEN";
+				$informacion["informacion"] = "La herramienta se duplicó para 'Almacen' correctamente!";
 			}
-		}
 
 		echo json_encode($informacion);
 		mysqli_close($conexion_usuarios);
