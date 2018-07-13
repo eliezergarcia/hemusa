@@ -1760,7 +1760,7 @@
 					'FormaPago': conceptos.formapago,
 					'MetodoPago': conceptos.metodopago,
 					'CondicionesDePago': conceptos.condpago,
-					'Moneda': $("#frmInformacionFactura #moneda").val(),
+					'Moneda': ($("#frmInformacionFactura #moneda").val()).toUpperCase(),
 					'TipoCambio': $("#frmInformacionFactura #tipoCambio").val(),
 					'NumOrder': $("#frmInformacionFactura #numeroOrden").val(),
 					'FechaFromAPI': fecha,
