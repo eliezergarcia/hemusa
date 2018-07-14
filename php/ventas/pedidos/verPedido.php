@@ -1,6 +1,6 @@
 <?php
-	require_once('../../conexion.php'); // Llamada a connect.php para establecer conexi�n con la BD
-	require_once('../../sesion.php'); // Llamada a sesion.php para validar si hay sesi�n inciada
+	require_once('../../conexion.php');
+	require_once('../../sesion.php');
 	error_reporting(0);
 	$resultado = mysqli_query($conexion_usuarios, "SELECT cliente FROM cotizacion WHERE ref='".$_REQUEST['refCotizacion']."'");
 	while($data = mysqli_fetch_array($resultado)){

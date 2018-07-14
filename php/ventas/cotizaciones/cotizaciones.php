@@ -4,6 +4,8 @@
 	error_reporting(0);
 	$vendedor = $usuario.' '.$usuarioApellido;
 	$fecha = date("d").'-'.date("m").'-'.date("Y");
+	$mes = date("m");
+	$ano = date("Y");
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -27,7 +29,55 @@
               	<div class="row full-calendar">
                 	<div class="col-lg-12">
                     	<div class="card card-fullcalendar">
-                      		<div class="card-body">
+                      	<div class="card-body">
+													<div class="row table-filters-container">
+					                  <div class="col-12 col-lg-12 col-xl-6">
+					                    <div class="row">
+					                      <div class="col-12 col-lg-6 table-filters pb-0 pb-xl-4"><span class="table-filter-title">Fecha</span>
+					                        <div class="filter-container">
+																		<form>
+					                            <div class="row">
+					                              <div class="col-6">
+																					<label class="control-label">Mes:</label>
+																					<select class="form-control form-control-sm" name="filtromes" id="filtromes">
+																					<option value="01">Enero</option>
+																					<option value="02">Febrero</option>
+																					<option value="03">Marzo</option>
+																					<option value="04">Abril</option>
+																					<option value="05">Mayo</option>
+																					<option value="06">Junio</option>
+																					<option value="07">Julio</option>
+																					<option value="08">Agosto</option>
+																					<option value="09">Septiembre</option>
+																					<option value="10">Octubre</option>
+																					<option value="11">Noviembre</option>
+																					<option value="12">Diciembre</option>
+																					<option value="todo">Todo</option>
+																				</select>
+					                              </div>
+					                              <div class="col-6">
+																					<label class="control-label">Año:</label>
+																					<select class="form-control form-control-sm" name="filtroano" id="filtroano">
+																						<option value="2017">2017</option>
+																						<option value="2018" selected>2018</option>
+																						<option value="2019">2019</option>
+																						<option value="2020">2020</option>
+																					</select>
+					                              </div>
+					                            </div>
+					                          </form>
+					                        </div>
+					                      </div>
+					                      <!-- <div class="col-12 col-lg-6 table-filters pb-0 pb-xl-4"><span class="table-filter-title">Proyect</span>
+					                        <div class="filter-container">
+					                          <form>
+					                          </form>
+					                        </div>
+					                      </div> -->
+					                    </div>
+					                  </div>
+													</div>
+
                       			<!-- Tabla de Cotizaciones -->
 															<table id="dt_cotizaciones" class="table table-striped table-hover display compact" cellspacing="0" width="100%">
 																<thead>
@@ -268,12 +318,25 @@
   		App.pageCalendar();
   		App.formElements();
   		App.uiNotifications();
-			listar_cotizaciones();
 			guardar();
+			$("#filtromes").val("<?php echo $mes; ?>").change();
+			$("#filtroano").val("<?php echo $ano; ?>").change();
+		});
+
+		$("#filtromes").on("change", function (){
+			listar_cotizaciones();
+		});
+
+		$("#filtroano").on("change", function (){
+			listar_cotizaciones();
 		});
 
 		var listar_cotizaciones = function(){
 			var opcion = "listarcotizaciones";
+			var filtromes = $("#filtromes").val();
+			var filtroano = $("#filtroano").val();
+			console.log(filtroano);
+			console.log(filtromes);
 			var table = $("#dt_cotizaciones").DataTable({
 				"destroy": true,
 				"deferRender": true,
@@ -282,7 +345,7 @@
 				"ajax":{
 					"url": "listar.php",
 					"type": "POST",
-					"data": {"opcion": opcion},
+					"data": {"opcion": opcion, "filtromes": filtromes, "filtroano": filtroano},
 				},
 				"columns":[
 					{"data": "ref"},
@@ -296,18 +359,19 @@
 				],
 				"columnDefs": [
 					{ "width": "10%", "targets": 0 },
-					{ "width": "10%", "targets": 2 },
-					{ "width": "10%", "targets": 3 },
+					{ "width": "13%", "targets": 2 },
+					{ "width": "13%", "targets": 3 },
 					{ "width": "10%", "targets": 4 },
-					{ "width": "10%", "targets": 5 },
+					{ "width": "7%", "targets": 5 },
 					{ "width": "10%", "targets": 6 },
+					{ "width": "5%", "targets": 7 },
 				],
 				"order":[[4, "desc"]],
 				"language": idioma_espanol,
 				"dom":
-          			"<'row be-datatable-header'<'col-sm-6'B><'col-sm-6 text-right'f>>" +
-          			"<'row be-datatable-body'<'col-sm-12'tr>>" +
-          			"<'row be-datatable-footer'<'col-sm-5'i><'col-sm-7'p>>",
+    			"<'row be-datatable-header'<'col-sm-6'B><'col-sm-6 text-right'f>>" +
+    			"<'row be-datatable-body'<'col-sm-12'tr>>" +
+    			"<'row be-datatable-footer'<'col-sm-5'i><'col-sm-7'p>>",
 				"buttons":[
 					{
             extend: 'collection',
@@ -324,7 +388,7 @@
                 },
                 {
                   extend: 'csv',
-                  text: '<i class="fas fa-file-alt fa-lg"></i> Csv',
+                  text: '<i class="fas fa-file-alt fa-lg"></i> CSV',
                   // "className": "btn btn-lg btn-space btn-secondary",
                   exportOptions: {
                           columns: [ 0, 1, 2, 3, 4, 5, 6 ]
@@ -332,7 +396,7 @@
                 },
                 {
                   extend:    'pdfHtml5',
-                  text:      '<i class="fas fa-file-pdf fa-lg"></i> Pdf',
+                  text:      '<i class="fas fa-file-pdf fa-lg"></i> PDF',
                   download: 'open',
                   // "className": "btn btn-lg btn-space btn-secondary",
                   exportOptions: {
@@ -475,40 +539,36 @@
 				$.ajax({
 					method: "POST",
 					url: "guardar.php",
+					dataType: "json",
 					data: frm,
 				}).done( function( info ){
-					var json_info = JSON.parse( info );
-					if (json_info.guardar == "contacto") {
-						mostrar_mensaje(json_info);
+					if (info.guardar == "contacto") {
+						mostrar_mensaje(info);
 						$('#modalAgregarContacto').modal('hide');
 						$('#modalNuevaCotizacion').modal('show');
-						buscarContactos(json_info.idcliente);
+						buscarContactos(info.idcliente);
 					}else{
 						$('.modal').modal('hide');
 						$("#mod-success").modal("show");
-						if (json_info.respuesta == "BIEN") {
-							setTimeout(function () {
-								$(".texto1").fadeOut(300, function(){
-									$(this).html("");
-									$(this).fadeIn(300);
-								});
-							}, 2000);
+						if (info.respuesta == "BIEN") {
+							$(".texto1").fadeOut(300, function(){
+								$(this).html("");
+								$(this).fadeIn(300);
+							});
 							setTimeout(function () {
 								$(".texto1").append("<div class='text-success'><span class='modal-main-icon mdi mdi-check-circle'></span></div>");
 								$(".texto1").append("<h3>Correcto!</h3>");
 								$(".texto1").append("<h4>La cotización se generó correctamente.</h4>");
 								$(".texto1").append("<div class='text-center'>");
-								$(".texto1").append("<p>Esperé un momento será redireccionado...</p>");
+								$(".texto1").append("<p>Espere un momento será redireccionado...</p>");
 								$(".texto1").append("</div>");
-							}, 2500);
+							}, 350);
 							setTimeout(function () {
-								window.location= "verCotizacion.php?numero="+json_info.cotizacion;
-							}, 4000);
+								window.location= "verCotizacion.php?numero="+info.cotizacion;
+							}, 1000);
 						}else{
-							setTimeout(function () {
-								$("#mod-success").modal("hide");
-								mostrar_mensaje(json_info);
-							}, 2000);
+							$("#mod-success").modal("hide");
+							mostrar_mensaje(info);
 						}
 					}
 				});

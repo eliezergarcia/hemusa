@@ -7,7 +7,9 @@
 
 	switch ($opcion) {
 		case 'listarcotizaciones':
-			listarcotizaciones($conexion_usuarios);
+			$filtromes = $_POST['filtromes'];
+			$filtroano = $_POST['filtroano'];
+			listarcotizaciones($filtromes, $filtroano, $conexion_usuarios);
 			break;
 
 		case 'listarpartidas':
@@ -26,12 +28,20 @@
 			break;
 	}
 
-	function listarcotizaciones($conexion_usuarios){
-		$query = "SELECT cotizacion.*, contactos.nombreEmpresa FROM cotizacion INNER JOIN contactos ON contactos.id = cotizacion.cliente WHERE partidaPedido != partidaCantidad ORDER BY id DESC LIMIT 999";
+	function listarcotizaciones($filtromes, $filtroano, $conexion_usuarios){
+		if ($filtromes != "todo") {
+			$fechainicio = $filtroano.'-'.$filtromes.'-01';
+			$fechafin = $filtroano.'-'.$filtromes.'-31';
+		}else{
+			$fechainicio = $filtroano.'-01-01';
+			$fechafin = $filtroano.'-12-31';
+		}
+
+		$query = "SELECT cotizacion.*, contactos.nombreEmpresa FROM cotizacion INNER JOIN contactos ON contactos.id = cotizacion.cliente WHERE fecha >= '$fechainicio' AND fecha <= '$fechafin' AND partidaPedido != partidaCantidad ORDER BY id DESC";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 
-		if(!$resultado){
-			die('Error al listar cotizaciones!');
+		if(mysqli_num_rows($resultado) < 1){
+			$arreglo['data'] = 0;
 		}else{
 			while($data = mysqli_fetch_assoc($resultado)){
 				$arreglo['data'][] = array(
