@@ -297,6 +297,10 @@
           },
           {
             text: '<i class="fas fa-address-card fa-sm"></i> Agregar cliente',
+            key: {
+                shiftKey: true,
+                key: 'c'
+            },
             "className": "btn btn-lg btn-space btn-secondary",
             action: function (e, dt, node, config){
               $("#modalAgregarCliente").modal("show");
@@ -311,6 +315,10 @@
             .search( this.value )
             .draw();
       });
+
+      if ("<?php echo $departamento_usuario; ?>" != "Administracion" && "<?php echo $departamento_usuario; ?>" != "Sistemas" ) {
+        table.columns( [6] ).visible( false );
+      }
 
       obtener_data_ver_cliente("#dt_clientes tbody", table);
       obtener_id_eliminar("#dt_clientes tbody",table);

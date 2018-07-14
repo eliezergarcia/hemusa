@@ -68,12 +68,6 @@
 					                          </form>
 					                        </div>
 					                      </div>
-					                      <!-- <div class="col-12 col-lg-6 table-filters pb-0 pb-xl-4"><span class="table-filter-title">Proyect</span>
-					                        <div class="filter-container">
-					                          <form>
-					                          </form>
-					                        </div>
-					                      </div> -->
 					                    </div>
 					                  </div>
 													</div>

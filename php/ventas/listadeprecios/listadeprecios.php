@@ -15,11 +15,11 @@
 	<?php include('../../header.php'); ?>
 		<div class="be-content">
           	<div class="page-head">
-              	<h2 class="page-head-title">Lista de precios</h2>
+              	<h2 class="page-head-title" style="font-size: 30px;"><b>Lista de precios</b></h2>
               	<nav aria-label="breadcrumb" role="navigation">
 	                <ol class="breadcrumb page-head-nav">
 	                    <li class="breadcrumb-item"><a href="#">Ventas</a></li>
-	                    <li class="breadcrumb-item"><a href="#">Herramientas</a></li>
+	                    <li class="breadcrumb-item"><a href="#">Lista de precios</a></li>
 	                </ol>
               	</nav>
           	</div>
@@ -28,41 +28,78 @@
                 	<div class="col-lg-12">
                     	<div class="card card-fullcalendar">
                       		<div class="card-body">
+														<div class="row table-filters-container">
+						                  <div class="col-12">
+						                    <div class="row">
+						                      <div class="col-4 table-filters pb-0 pb-xl-4"><span class="table-filter-title">Herramienta</span>
+						                        <div class="filter-container">
+																			<form>
+						                            <div class="row align-items-end">
+						                              <div class="col-6">
+																						<label class="control-label">Palabra:</label>
+																						<input id="palabraBusca" name="palabraBusca" type="text" class="form-control form-control-sm"  autofocus required>
+						                              </div>
+						                              <div class="col-4">
+																						<label class="control-label">Marca:</label>
+																						<input id="marcaBuscar" class="awesomplete form-control form-control-sm" list="mylist" />
+																						<datalist id="mylist">
+																							<?php
+																					        	include("../../conexion.php");
+																						        $result = mysqli_query($conexion_usuarios, "SELECT marca FROM marcadeherramientas ORDER BY marca");
+																								// echo '<select id="marcaBuscar" name="marcaBuscar" class="form-control">';
+																								while ($row = mysqli_fetch_array($result)) {
+																									echo '<option value="'.$row['marca'].'">'.$row['marca'].'</option>';
+																									}
+																								echo '<option value="todo" selected="selected">Todo</option>';
+																								echo '</select>';
+																							?>
+																						</datalist>
+						                              </div>
+																					<div class="col-2">
+																						<button id="btn_listar_precios" class="btn btn-lg btn-primary"><i class="fas fa-search fa-sm"></i> Buscar</button>
+																					</div>
+						                            </div>
+						                          </form>
+						                        </div>
+						                      </div>
+						                    </div>
+						                  </div>
+														</div>
                           		<!-- Form buscar en Lista de precios -->
                           			<br>
-									<div>
-								        <h4>Buscar herramienta en lista</h4>
-								      	<form action="#" method="POST">
-								        	<div class="form-group row">
-								          		<label for="palabraBusca" class="col-1 col-form-label">Busca Producto</label>
-								          		<div class="col-2">
-										          	<input id="palabraBusca" name="palabraBusca" type="text" class="form-control form-control-sm"  autofocus required>
-								          		</div>
-								        	</div>
-										    <div class="form-group row align-items-end">
-										    	<label for="marcaBuscar" class="col-1 col-form-label">Marca</label>
-										    	<div class="col-2">
-											    	<input id="marcaBuscar" class="awesomplete form-control form-control-sm" list="mylist" />
-													<datalist id="mylist">
-														<?php
-												        	include("../../conexion.php");
-													        $result = mysqli_query($conexion_usuarios, "SELECT marca FROM marcadeherramientas ORDER BY marca");
-															// echo '<select id="marcaBuscar" name="marcaBuscar" class="form-control">';
-															while ($row = mysqli_fetch_array($result)) {
-																echo '<option value="'.$row['marca'].'">'.$row['marca'].'</option>';
-																}
-															echo '<option value="todo" selected="selected">Todo</option>';
-															echo '</select>';
-														?>
-													</datalist>
-												</div>
-												<div class="invoice-footer">
-											    	<button id="btn_listar_precios" class="btn btn-lg btn-primary"><i class="fas fa-search fa-sm"></i> Buscar</button>
-													</form>
-												</div>
-										    </div>
-								 	</div>
-								 	<br>
+															<!-- <div>
+												        <h4>Buscar herramienta en lista</h4>
+												      	<form action="#" method="POST">
+												        	<div class="form-group row">
+												          		<label for="palabraBusca" class="col-1 col-form-label">Busca Producto</label>
+												          		<div class="col-2">
+														          	<input id="palabraBusca" name="palabraBusca" type="text" class="form-control form-control-sm"  autofocus required>
+												          		</div>
+												        	</div>
+														    <div class="form-group row align-items-end">
+														    	<label for="marcaBuscar" class="col-1 col-form-label">Marca</label>
+														    	<div class="col-2">
+															    	<input id="marcaBuscar" class="awesomplete form-control form-control-sm" list="mylist" />
+																		<datalist id="mylist">
+																			<?php
+																	        	include("../../conexion.php");
+																		        $result = mysqli_query($conexion_usuarios, "SELECT marca FROM marcadeherramientas ORDER BY marca");
+																				// echo '<select id="marcaBuscar" name="marcaBuscar" class="form-control">';
+																				while ($row = mysqli_fetch_array($result)) {
+																					echo '<option value="'.$row['marca'].'">'.$row['marca'].'</option>';
+																					}
+																				echo '<option value="todo" selected="selected">Todo</option>';
+																				echo '</select>';
+																			?>
+																		</datalist>
+																	</div>
+																	<div class="invoice-footer">
+																    	<button id="btn_listar_precios" class="btn btn-lg btn-primary"><i class="fas fa-search fa-sm"></i> Buscar</button>
+																		</form>
+																	</div>
+										    				</div>
+							 								</div> -->
+								 							<br>
 
 								<!-- Tabla Lista de precios -->
 									<table id="dt_precios" class="table table-striped table-hover display compact" cellspacing="0" width="100%">
