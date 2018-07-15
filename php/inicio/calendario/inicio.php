@@ -21,7 +21,7 @@
 		        	<option value="3">Barra oculta</option>
 		        </select>
 	        </div> -->
-      <div class="main-content container-fluid">
+      <div class="container-fluid">
       	<div class="row full-calendar">
         	<div class="col-lg-12">
             <div class="row justify-content-center">
@@ -299,9 +299,20 @@
       App.formElements();
       App.uiNotifications();
       App.init();
+      App.megaMenu();
+      nav_active();
 			buscar_tipo_cambio();
 			// listar_calendario();
 		});
+
+    function nav_active () {
+      $(".nav-item").removeClass("open section-active");
+      $("#home-menu").addClass("open section-active");
+
+      $(".nav-link").removeClass("active");
+			$("#calendario-menu").addClass("active");
+    }
+
 
     var buscar_tipo_cambio = function(){
 			var opcion = "tipocambio";

@@ -1,8 +1,9 @@
 <?php
-	require_once('../../conexion.php'); // Llamada a connect.php para establecer conexi�n con la BD
-	require_once('../../sesion.php'); // Llamada a sesion.php para validar si hay sesi�n inciada
+	require_once('../../conexion.php');
+	require_once('../../sesion.php');
 	error_reporting(0);
-
+	$mes = date("m");
+	$ano = date("Y");
 ?>
 <!DOCTYPE html>
 </html lang="es">
@@ -27,109 +28,121 @@
                 	<div class="col-lg-12">
                     	<div class="card card-fullcalendar">
                       		<div class="card-body">
-                      			<!-- Boton de Buscar -->
-									<form class="form-horizontal row justify-content-center" action="pedidos.php" method="post">
-										<div class="form-group col-12 row justify-content-center">
-											<input type="text" class="form-control form-control-sm col-2" name="buscar" id="buscar" placeholder="Buscar">
-										</div>
-										<!-- <div class="form-group col-12 row justify-content-center">
-											<input class="btn btn-primary" type="submit" value="Buscar" />
-										</div> -->
-									</form>
+														<div class="row table-filters-container">
+						                  <div class="col-12">
+						                    <div class="row">
+						                      <div class="col-3 table-filters"><span class="table-filter-title">Fecha</span>
+						                        <div class="filter-container">
+																			<form>
+						                            <div class="row">
+						                              <div class="col-6">
+																						<label class="control-label">Mes:</label>
+																						<select class="form-control form-control-sm select2" name="filtromes" id="filtromes">
+																							<option value="01">Enero</option>
+																							<option value="02">Febrero</option>
+																							<option value="03">Marzo</option>
+																							<option value="04">Abril</option>
+																							<option value="05">Mayo</option>
+																							<option value="06">Junio</option>
+																							<option value="07">Julio</option>
+																							<option value="08">Agosto</option>
+																							<option value="09">Septiembre</option>
+																							<option value="10">Octubre</option>
+																							<option value="11">Noviembre</option>
+																							<option value="12">Diciembre</option>
+																							<option value="todo">Todo</option>
+																						</select>
+						                              </div>
+						                              <div class="col-6">
+																						<label class="control-label">Año:</label>
+																						<select class="form-control form-control-sm select2" name="filtroano" id="filtroano">
+																							<option value="2017">2017</option>
+																							<option value="2018" selected>2018</option>
+																							<option value="2019">2019</option>
+																							<option value="2020">2020</option>
+																						</select>
+						                              </div>
+						                            </div>
+						                          </form>
+						                        </div>
+						                      </div>
+																	<div class="col-2 table-filters"><span class="table-filter-title">Tipo</span>
+						                        <div class="filter-container">
+																			<form>
+						                            <div class="row">
+						                              <div class="col-6">
+																						<label class="custom-control custom-radio">
+										                          <input class="custom-control-input" type="radio" name="filtrotipo" checked="" value="pedido"><span class="custom-control-label">Pedido</span>
+										                        </label>
+										                        <label class="custom-control custom-radio">
+										                          <input class="custom-control-input" type="radio" name="filtrotipo" value="herramienta"><span class="custom-control-label">Herramienta</span>
+										                        </label>
+						                              </div>
+						                            </div>
+						                          </form>
+						                        </div>
+						                      </div>
+																	<div class="col-3 table-filters"><span class="table-filter-title">Estado</span>
+						                        <div class="filter-container">
+																			<form>
+						                            <div class="row">
+																					<div class="col-6">
+ 																					 <label class="custom-control custom-radio">
+ 																						 <input class="custom-control-input" type="radio" name="filtroestado" value="sinproveedor" checked=""><span class="custom-control-label">Sin proveedor</span>
+ 																					 </label>
+ 																					 <label class="custom-control custom-radio">
+ 																						 <input class="custom-control-input" type="radio" name="filtroestado" value="noentregado"><span class="custom-control-label">No entregado</span>
+ 																					 </label>
+ 																				 	</div>
+																					<div class="col-6">
+																						<label class="custom-control custom-radio">
+										                          <input class="custom-control-input" type="radio" name="filtroestado" value="facturadonopagado"><span class="custom-control-label">Facturado no pagado</span>
+										                        </label>
+										                        <label class="custom-control custom-radio">
+										                          <input class="custom-control-input" type="radio" name="filtroestado" value="terminado"><span class="custom-control-label">Terminado</span>
+										                        </label>
+						                              </div>
+						                            </div>
+						                          </form>
+						                        </div>
+						                      </div>
+																	<div class="col-3 table-filters"><span class="table-filter-title">Referencia</span>
+						                        <div class="filter-container">
+																			<form>
+						                            <div class="row">
+						                              <div class="col-8">
+																						<label class="control-label">Palabra:</label>
+																						<input type="text" class="form-control form-control-sm" name="filtroreferencia" id="filtroreferencia" value="">
+						                              </div>
+						                            </div>
+						                          </form>
+						                        </div>
+						                      </div>
+						                    </div>
+						                  </div>
+														</div>
 
-								<!-- Grupo de botones -->
-									<div class="row justify-content-center btn-toolbar">
-										<div role="group" class="btn-group btn-group-justified mb-2 col-6">
-											<a href="#" id="btnsinproveedor" class="btn btn-primary btn-space" onclick="listar_sinproveedor()">SIN PROVEEDOR</a href="#">
-										  	<a href="#" id="btnnoentregado" class="btn btn-primary btn-space" onclick="listar_noentregado()">NO ENTREGADO</a href="#">
-											<a href="#" id="btnnopagado" class="btn btn-primary btn-space" onclick="listar_nopagado()">FACTURADO NO PAGADO</a href="#">
-											<a href="#" id="btnterminado" class="btn btn-primary btn-space" onclick="listar_terminado()">TERMINADO</a href="#">
-										</div>
-									</div>
 
-								<!-- Tabla de No entregado -->
-									<div id="noentregado">
-										<br>
-										<center><h4><b>Pedidos con herramienta sin entregar</b></h4></center><br>
-										<table id="dt_noentregado" class="table table-striped display compact" cellspacing="0" width="100%">
-											<thead>
-												<tr>
-													<th>Cotizacion</th>
-													<th>Pedido</th>
-													<th>Cliente</th>
-													<th>Contacto</th>
-													<th>Vendedor</th>
-													<th>Fecha</th>
-													<th>Partidas</th>
-													<th>Total</th>
-													<th>Ver</th>
-												</tr>
-											</thead>
-										</table>
-									</div>
-
-								<!-- Tabla de sin proveedor -->
-									<div id="sinproveedor">
-										<br>
-										<center><h4><b>Pedidos con herramienta sin proveedor</b></h4></center><br>
-										<table id="dt_sinproveedor" class="table table-striped display compact" cellspacing="0" width="100%">
-											<thead>
-												<tr>
-													<th>Cotizacion</th>
-													<th>Pedido</th>
-													<th>Cliente</th>
-													<th>Contacto</th>
-													<th>Vendedor</th>
-													<th>Fecha</th>
-													<th>Partidas</th>
-													<th>Total</th>
-													<th>Ver</th>
-												</tr>
-											</thead>
-										</table>
-									</div>
-
-								<!-- Tabla de nopagado -->
-									<div id="nopagado">
-										<br>
-										<center><h4><b>Pedidos facturados no pagados</b></h4></center><br>
-										<table id="dt_nopagado" class="table table-striped display compact" cellspacing="0" width="100%">
-											<thead>
-												<tr>
-													<th>Cotizacion</th>
-													<th>Pedido</th>
-													<th>Cliente</th>
-													<th>Contacto</th>
-													<th>Vendedor</th>
-													<th>Fecha</th>
-													<th>Partidas</th>
-													<th>Total</th>
-													<th>Ver</th>
-												</tr>
-											</thead>
-										</table>
-									</div>
-
-								<!-- Tabla de terminado -->
-									<div id="terminado">
-										<br>
-										<center><h4><b>Pedidos terminados</b></h4></center><br>
-										<table id="dt_terminado" class="table table-striped display compact" cellspacing="0" width="100%">
-											<thead>
-												<tr>
-													<th>Cotizacion</th>
-													<th>Pedido</th>
-													<th>Cliente</th>
-													<th>Contacto</th>
-													<th>Vendedor</th>
-													<th>Fecha</th>
-													<th>Partidas</th>
-													<th>Total</th>
-													<th>Ver</th>
-												</tr>
-											</thead>
-										</table>
-									</div>
+														<!-- Tabla de pedidos -->
+															<table id="dt_pedidos" class="table table-striped display compact" cellspacing="0" width="100%">
+																<thead>
+																	<tr>
+																		<th>Cotizacion</th>
+																		<th>Pedido</th>
+																		<th>Cliente</th>
+																		<th>Contacto</th>
+																		<th>Vendedor</th>
+																		<th>Fecha</th>
+																		<th>Partidas</th>
+																		<th>Total</th>
+																		<th>Marca</th>
+																		<th>Modelo</th>
+																		<th>Descripcion</th>
+																		<th>Precio Unitario</th>
+																		<th>Ver</th>
+																	</tr>
+																</thead>
+															</table>
                       		</div>
                     	</div>
                 	</div>
@@ -168,11 +181,193 @@
 	<script>
 		$(document).ready(function(){
 			App.init();
-      		App.pageCalendar();
-      		App.formElements();
-      		App.uiNotifications();
+			App.megaMenu();
+  		App.pageCalendar();
+  		App.formElements();
+  		App.uiNotifications();
+			nav_active();
+			prettyPrint();
 			listar_sinproveedor();
+			$("#filtromes").val("<?php echo $mes; ?>").change();
+			$("#filtroano").val("<?php echo $ano; ?>").change();
 		});
+
+		function nav_active () {
+      $(".nav-item").removeClass("open section-active");
+      $("#ventas-menu").addClass("open section-active");
+
+      $(".nav-link").removeClass("active");
+			$("#pedidos-menu").addClass("active");
+    }
+
+		$("#filtromes").on("change", function (){
+			listar_pedidos();
+		});
+
+		$("#filtroano").on("change", function (){
+			listar_pedidos();
+		});
+
+		$('input[name=filtrotipo]').change(function() {
+			listar_pedidos();
+		});
+
+		$('input[name=filtroestado]').change(function() {
+			listar_pedidos();
+		});
+
+		$("#filtroreferencia").on("change", function (){
+			listar_pedidos();
+		});
+
+		function listar_pedidos () {
+			var filtromes = $("#filtromes").val();
+			var filtroano = $("#filtroano").val();
+			var filtrotipo = $("input[name=filtrotipo]:checked").val();
+			var filtroestado = $("input[name=filtroestado]:checked").val();
+			var filtroreferencia = $("#filtroreferencia").val();
+			console.log(filtroano);
+			console.log(filtromes);
+			console.log(filtrotipo);
+			console.log(filtroestado);
+			console.log(filtroreferencia);
+			var table = $("#dt_pedidos").DataTable({
+				"destroy":"true",
+				"deferRender": true,
+				"scrollX": true,
+				"autoWidth": false,
+				"ajax":{
+					"url": "listar.php",
+					"type": "POST",
+					"data": {"opcion": filtroestado, "filtromes": filtromes, "filtroano": filtroano, "filtrotipo": filtrotipo, "buscar": filtroreferencia}
+				},
+				"columns":[
+					{"data": "cotizacionRef"},
+					{"data": "numeroPedido"},
+					{"data": "nombreEmpresa"},
+					{"data": "contacto"},
+					{"data": "vendedor"},
+					{"data": "fecha"},
+					{"data": "partidas"},
+					{"data": "total"},
+					{"data": "marca",
+						"render": function (data) {
+							if (filtrotipo == "pedido") {
+								return "";
+							}else{
+								return data;
+							}
+						},
+					},
+					{"data": "modelo",
+						"render": function (data) {
+							if (filtrotipo == "pedido") {
+								return "";
+							}else{
+								return data;
+							}
+						},
+					},
+					{"data": "descripcion",
+						"render": function (data) {
+							if (filtrotipo == "pedido") {
+								return "";
+							}else{
+								return data;
+							}
+						},
+					},
+					{"data": "precioUnitario",
+						"render": function (data) {
+							if (filtrotipo == "pedido") {
+								return "";
+							}else{
+								return data;
+							}
+						},
+					},
+					{"defaultContent": "<div class='invoice-footer'><button class='verpedido btn btn-lg btn-primary'><i class='fas fa-edit fa-sm' aria-hidden='true'></i></button></div>"}
+				],
+				"columnDefs": [
+					{ "width": "10%", "targets": 0 },
+					{ "width": "10%", "targets": 1 },
+					{ "width": "10%", "targets": 3 },
+					{ "width": "10%", "targets": 4 },
+					{ "width": "10%", "targets": 5 },
+					{ "width": "7%", "targets": 6 },
+					{ "width": "7%", "targets": 7 },
+					{ "width": "10%", "targets": 8 },
+					{ "width": "10%", "targets": 9 },
+					{ "width": "20%", "targets": 10 },
+					{ "width": "10%", "targets": 11 },
+					{ "width": "5%", "targets": 12 },
+				],
+				"order": [5, "desc"],
+        "language": idioma_espanol,
+        "dom":
+      			"<'row be-datatable-header'<'col-sm-6'B><'col-sm-6 text-right'f>>" +
+      			"<'row be-datatable-body'<'col-sm-12'tr>>" +
+      			"<'row be-datatable-footer'<'col-sm-5'i><'col-sm-7'p>>",
+				"buttons":[
+          {
+            extend: 'collection',
+            text: '<i class="fas fa-table fa-sm"></i> Exportar tabla',
+            "className": "btn btn-lg btn-space btn-secondary",
+            buttons: [
+                {
+                  extend:    'excelHtml5',
+                  text:      '<i class="fas fa-file-excel fa-lg"></i> Excel',
+                  // "className": "btn btn-lg btn-space btn-secondary",
+                  exportOptions: {
+                    columns: [ 0, 1, 2, 3, 4, 5, 6, 7 ]
+                  }
+                },
+                {
+                  extend: 'csv',
+                  text: '<i class="fas fa-file-alt fa-lg"></i> Csv',
+                  // "className": "btn btn-lg btn-space btn-secondary",
+                  exportOptions: {
+                          columns: [ 0, 1, 2, 3, 4, 5, 6, 7 ]
+                  }
+                },
+                {
+                  extend:    'pdfHtml5',
+                  text:      '<i class="fas fa-file-pdf fa-lg"></i> Pdf',
+                  download: 'open',
+                  // "className": "btn btn-lg btn-space btn-secondary",
+                  exportOptions: {
+                    columns: [ 0, 1, 2, 3, 4, 5, 6, 7 ]
+                  }
+                },
+                {
+                  extend: 'print',
+                  text: '<i class="fas fa-print fa-lg"></i> Imprimir',
+                  header: 'false',
+                  exportOptions: {
+                          columns: [ 0, 1, 2, 3, 4, 5, 6, 7 ]
+                  },
+                  orientation: 'landscape',
+                  pageSize: 'LEGAL'
+                }
+            	],
+						}
+					]
+				});
+
+			if (filtrotipo == "pedido") {
+        table.columns( [8] ).visible( false );
+				table.columns( [9] ).visible( false );
+				table.columns( [10] ).visible( false );
+				table.columns( [11] ).visible( false );
+      }else{
+				table.columns( [3] ).visible( false );
+				table.columns( [4] ).visible( false );
+				table.columns( [5] ).visible( false );
+				table.columns( [6] ).visible( false );
+				table.columns( [7] ).visible( false );
+			}
+			verpedido("#dt_pedidos tbody", table);
+		}
 
 		var listar_sinproveedor = function(){
 			$("#noentregado").slideUp("slow");

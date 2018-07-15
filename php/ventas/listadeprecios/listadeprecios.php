@@ -179,7 +179,7 @@
 			  		<div class="modal-dialog modal-lg" role="document">
 			    		<div class="modal-content">
 			      			<div class="modal-header">
-			        			<h4 class="modal-title" id="exampleModalLabel"><i class="icon fas fa-edit" aria-hidden="true"></i> Información de herramienta</h4>
+			        			<h4 class="modal-title" id="exampleModalLabel"><b>Información de herramienta</b></h4>
 			        			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 			          				<span aria-hidden="true">&times;</span>
 			        			</button>
@@ -229,12 +229,23 @@
 	<script>
 		$(document).ready(function(){
 			App.init();
+			App.megaMenu();
   		App.pageCalendar();
   		App.formElements();
   		App.uiNotifications();
+			nav_active();
+			prettyPrint();
 			guardar();
 			$("#csv-file").change(handleFileSelect);
 		});
+
+		function nav_active () {
+			$(".nav-item").removeClass("open section-active");
+      $("#ventas-menu").addClass("open section-active");
+
+      $(".nav-link").removeClass("active");
+			$("#listaprecios-menu").addClass("active");
+    }
 
 		var data;
 

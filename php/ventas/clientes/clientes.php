@@ -40,7 +40,6 @@
                                 </tr>
                               </thead>
                             </table>
-
                           <br>
                       </div>
                     </div>
@@ -56,7 +55,7 @@
           <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
               <div class="modal-header">
-                <h4 class="modal-title" id="exampleModalLabel">Registro de cliente</h4>
+                <h4 class="modal-title" id="exampleModalLabel"><b>Registro de cliente</b></h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
@@ -212,11 +211,23 @@
   <script type="text/javascript">
     $(document).ready(function(){
       App.init();
-      App.formElements();
-      App.uiNotifications();
+			App.megaMenu();
+  		App.pageCalendar();
+  		App.formElements();
+  		App.uiNotifications();
+			nav_active();
+			prettyPrint();
       listar_clientes();
       guardar();
     });
+
+    function nav_active () {
+      $(".nav-item").removeClass("open section-active");
+      $("#ventas-menu").addClass("open section-active");
+
+      $(".nav-link").removeClass("active");
+			$("#clientes-menu").addClass("active");
+    }
 
     var listar_clientes = function(){
       var opcion = "clientes";

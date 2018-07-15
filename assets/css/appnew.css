@@ -1,3 +1,30 @@
+:root {
+    --color-primario-entorno: #3F51B5;
+    --color-menu-lateral: #f5f5f5;
+    --color-texto-menu-lateral: #646464;
+    --color-submenu-lateral: #eeeeee;
+    --color-hover-menu-lateral: #3d3d3d;
+    --color-hover-submenu: #e7e7e7;
+    --color-encabezado-menu: #b0b0b0;
+    --color-bordes-menu: #e6e6e6;
+    --color-primario: #4285f4;
+    --color-hover-primario: #4c8bf5;
+    --color-borde-primario: #1266f1;
+    /* --color-secundario: ;
+    --color-hover-secundario: ;
+    --color-borde-secundario: ; */
+    --color-success: #34a853;
+    --color-hover-success: #36b057;
+    --color-borde-success: #288140;
+    --color-warning: #fbbc05;
+    --color-hover-warning: #fbbf0f;
+    --color-borde-warning: #ca9703;
+    --color-danger: #ea4335;
+    --color-hover-danger: #e72919;
+    --color-borde-danger: #d62516;
+}
+
+
 @charset "UTF-8";
 @media print {
   *,
@@ -105,8 +132,8 @@ article, aside, figcaption, figure, footer, header, hgroup, main, nav, section {
 
 body {
   margin: 0;
-  font-family: "Roboto", Arial, sans-serif;
-  font-size: 1rem;
+  font-family: Arial, sans-serif;
+  font-size: 1.1rem;
   font-weight: 400;
   line-height: 1.428571;
   color: #404040;
@@ -2150,7 +2177,7 @@ select.form-control:focus::-ms-value {
   padding: 0.25rem 8px;
   font-size: 0.85rem;
   line-height: 1.6;
-  border-radius: 2px;
+  border-radius: 4px;
 }
 
 select.form-control-sm:not([size]):not([multiple]), .input-group-sm > select.form-control:not([size]):not([multiple]),
@@ -2158,7 +2185,7 @@ select.form-control-sm:not([size]):not([multiple]), .input-group-sm > select.for
 .input-group-sm > .input-group-append > select.input-group-text:not([size]):not([multiple]),
 .input-group-sm > .input-group-prepend > select.btn:not([size]):not([multiple]),
 .input-group-sm > .input-group-append > select.btn:not([size]):not([multiple]) {
-  height: 2.3125rem;
+  height: 37px;
 }
 
 .form-control-lg, .input-group-lg > .form-control,
@@ -3512,7 +3539,7 @@ input[type="button"].btn-block {
 .dropdown-item.active, .dropdown-item:active {
   color: #FFFFFF;
   text-decoration: none;
-  background-color: #4285f4;
+  background-color: #dee2e6;
 }
 
 .dropdown-item.disabled, .dropdown-item:disabled {
@@ -10137,9 +10164,9 @@ a.text-grey:hover, a.text-grey:focus {
 }
 
 /* General styles for the modal */
-/* 
+/*
 Styles for the html/body for special modal where we want 3d effects
-Note that we need a container wrapping all content on the page for the 
+Note that we need a container wrapping all content on the page for the
 perspective effects (not including the modals and the overlay).
 */
 .modal-open {
@@ -10910,10 +10937,10 @@ canvas {
 	[Top header]
 */
 .be-top-header {
-  background-color: #FFFFFF;
+  background-color: var(--color-primario-entorno);
   border: 0;
   margin-bottom: 0;
-  border-bottom: 1px solid #e6e6e6;
+  border-bottom: 2px solid #e6e6e6;
   padding: 0;
 }
 
@@ -11013,7 +11040,7 @@ canvas {
   text-align: center;
   line-height: 60px;
   float: right;
-  padding: 0 15px;
+  padding: 0 0px;
 }
 
 .be-top-header .be-navbar-header .be-toggle-left-sidebar .icon {
@@ -11465,8 +11492,8 @@ canvas {
 }
 
 .be-color-header .be-top-header {
-  background-color: #4285f4;
-  border-bottom-color: #4285f4;
+  background-color: var(--color-primario-entorno);
+  border-bottom-color: var(--color-primario-entorno);
 }
 
 .be-color-header .be-top-header .be-navbar-header .navbar-brand {
@@ -11781,8 +11808,8 @@ canvas {
 }
 
 .be-user-nav > li.dropdown > a img {
-  max-width: 32px;
-  max-height: 32px;
+  max-width: 50px;
+  max-height: 50px;
   border-radius: 50%;
 }
 
@@ -11834,7 +11861,7 @@ canvas {
 }
 
 .be-user-nav > li.dropdown .dropdown-menu .user-info {
-  background-color: #4285f4;
+  background-color: var(--color-primario-entorno);
   color: #FFFFFF;
   overflow: hidden;
   padding: 20px 15px 14px;
@@ -11896,7 +11923,7 @@ canvas {
 .be-top-header .be-user-nav > li.dropdown .dropdown-menu:after {
   left: auto;
   right: 13px;
-  border-bottom-color: #4285f4;
+  border-bottom-color: var(--color-primario-entorno);
 }
 
 .be-top-header .be-user-nav > li.dropdown .dropdown-menu:before {
@@ -12183,7 +12210,7 @@ canvas {
 	[Left sidebar]
 */
 .be-left-sidebar {
-  background-color: #f5f5f5;
+  background-color: #ffffff;
   width: 230px;
   left: 0;
   position: absolute;
@@ -12384,7 +12411,7 @@ canvas {
     table-layout: fixed;
     position: fixed;
     left: 60px;
-    top: 61px;
+    top: 62px;
     height: 100%;
     z-index: 1031;
     padding: 0 0 61px;
@@ -12745,7 +12772,7 @@ canvas {
 }
 
 .be-fixed-sidebar.be-offcanvas-menu .be-left-sidebar {
-  margin-top: 61px;
+  margin-top: 62px;
   padding-bottom: 61px;
 }
 
@@ -13504,7 +13531,7 @@ canvas {
 .be-content {
   position: relative;
   left: 0;
-  margin-left: 230px;
+  /* margin-left: 230px; */
   min-height: 100%;
 }
 
@@ -14435,9 +14462,9 @@ canvas {
   border-color: #e3e3e3;
   border-width: 0;
   border-bottom: 1px solid #e6e6e6;
-  background-color: #4285f4;
+  background-color: var(--color-primario-entorno);
   padding: 0 0 50px;
-  margin-bottom: 18px;
+  /* margin-bottom: 18px; */
 }
 
 @media (max-width: 767.98px) {
@@ -14548,8 +14575,8 @@ canvas {
 
 .be-sub-header .navbar-nav > .nav-item > .nav-link {
   font-family: "Roboto", Arial, sans-serif;
-  font-size: 1.1rem;
-  line-height: 40px;
+  font-size: 1.2rem;
+  line-height: 46px;
   min-width: 100px;
   padding: 0 17px;
   text-align: center;
@@ -14635,7 +14662,7 @@ canvas {
 }
 
 .be-sub-header .navbar-nav > .nav-item.open > a, .be-sub-header .navbar-nav > .nav-item.open:hover > a {
-  color: #4285f4;
+  color: var(--color-primario-entorno);
   background-color: #FFFFFF;
 }
 
@@ -14745,7 +14772,7 @@ canvas {
 }
 
 .be-nav-tabs-sub > .nav-item > .nav-link.active {
-  color: #4285f4;
+  color: var(--color-primario-entorno);
 }
 
 .be-nav-tabs-sub > .nav-item.parent > .nav-link {
@@ -16806,7 +16833,7 @@ li.L9 {
 }
 
 .invoice-footer .btn {
-  min-width: 96px;
+  min-width: 75px;
   font-size: 1.077rem;
 }
 
@@ -19521,7 +19548,7 @@ fieldset[disabled] .btn-color.btn-evernote.active {
 
 .card-subtitle {
   display: block;
-  font-size: 1rem;
+  font-size: 1.1rem;
   color: #707070;
   margin-top: 0;
   margin-bottom: 0.4615rem;
@@ -21038,7 +21065,7 @@ fieldset[disabled] .btn-color.btn-evernote.active {
 .colored-header .modal-content .modal-header {
   background-color: #e6e6e6;
   color: #FFFFFF;
-  padding: 30px 20px;
+  padding: 15px 20px;
   border-top-left-radius: 0;
   border-top-right-radius: 0;
 }
@@ -24818,13 +24845,13 @@ fieldset[disabled] .full-calendar .fc-button.active {
 }
 
 .select2-container--default .select2-selection--single {
-  height: 3.692rem;
+  height: 37px;
 }
 
 .select2-container--default .select2-selection--single .select2-selection__rendered {
   padding: 0 15px;
-  height: 3.53816rem;
-  line-height: 3.53816rem;
+  height: 37px;
+  line-height: 37px;
   font-size: 1.077rem;
   color: #404040;
 }
@@ -24853,7 +24880,7 @@ fieldset[disabled] .full-calendar .fc-button.active {
   font-family: "Material Icons";
   font-size: 1.923rem;
   font-weight: normal;
-  line-height: 3.5382rem;
+  line-height: 37px;
   color: #404040;
 }
 

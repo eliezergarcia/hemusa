@@ -59,7 +59,7 @@
 																<div class="col-4 row justify-content-center">
 																	<div class="col">
 																		<div class="form-group">
-																			<h4><b>Cliente</b></h4>
+																			<h4 class="card-subtitle mb-2 text-muted">Cliente</h4>
 																			<h5 style="font-size: 17px;"><?php echo $cliente; ?></h5>
 																		</div>
 																		<div class="form-group">
@@ -77,39 +77,39 @@
 																	</div>
 																</div>
 																<div class="col row justify-content-start">
-																	<div class="col-4 form-group">
-																		<h4><b>Contacto</b></h4>
-																		<h5 style="font-size: 15px;"><?php echo $contacto; ?></h5>
+																	<div class="form-group col-4">
+																		<h4 class="card-subtitle mb-2 text-muted">Contacto</h4>
+																		<h5 style="font-size: 17px;"><?php echo $contacto; ?></h5>
 																	</div>
-																	<div class="col-4 form-group">
-																	  	<h4><b>Número cotización</b></h4>
-																		<h5 style="font-size: 15px;"><?php echo $numerocotizacion; ?></h5><br>
+																	<div class="form-group col-4">
+																	  	<h4 class="card-subtitle mb-2 text-muted">Cotización</h4>
+																		<h5 style="font-size: 17px;"><?php echo $numerocotizacion; ?></h5><br>
 																	</div>
-																	<div class="col-4 form-group">
-																	  	<h4><b>Fecha</b></h4>
-																		<h5 style="font-size: 15px;"><?php echo strftime("%d/%m/%Y", strtotime($fecha)); ?></h5><br>
+																	<div class="form-group col-4">
+																	  	<h4 class="card-subtitle mb-2 text-muted">Fecha</h4>
+																		<h5 style="font-size: 17px;"><?php echo strftime("%d/%m/%Y", strtotime($fecha)); ?></h5><br>
 																	</div>
-																	<div class="col-4 form-group">
-																	  	<h4><b>Vendedor</b></h4>
-																		<h5 style="font-size: 15px;"><?php echo $vendedor; ?></h5>
+																	<div class="form-group col-4">
+																	  	<h4 class="card-subtitle mb-2 text-muted">Vendedor</h4>
+																		<h5 style="font-size: 17px;"><?php echo $vendedor; ?></h5>
 																	</div>
-																	<div class="col-4 form-group">
-																		<h4><b>Condiciones de pago <a id="cambiarcondpago" href="#" class="text-primary"><i class="fas fa-sync"></i></a></b></h4>
+																	<div class="form-group col-4">
+																		<h4 class="card-subtitle mb-2 text-muted">Condiciones de pago <a id="cambiarcondpago" href="#" class="text-primary"><i class="fas fa-sync"></i></a></h4>
 																		<input id="condpago" class="form-control form-control-sm col-7">
 																	</div>
-																	<div class="col-4 form-group">
-																	  <h4><b>Tiempo de entrega <a id="cambiartiempoentrega" href="#" class="text-primary"><i class="fas fa-sync"></i></a></b></h4>
+																	<div class="form-group col-4">
+																	  <h4 class="card-subtitle mb-2 text-muted">Tiempo de entrega <a id="cambiartiempoentrega" href="#" class="text-primary"><i class="fas fa-sync"></i></a></h4>
 																		<input id="tiempoentrega" class="form-control form-control-sm col-7">
 																	</div>
-																	<div class="col-4 form-group">
-																		<h4><b>Moneda </b> <a id="cambiarmoneda" href="#" class="text-primary"><i class="fas fa-sync"></i></a></h4>
+																	<div class="form-group col-4">
+																		<h4 class="card-subtitle mb-2 text-muted">Moneda</b> <a id="cambiarmoneda" href="#" class="text-primary"><i class="fas fa-sync"></i></a></h4>
 																		<select id="moneda" class="form-control form-control-sm col-7">
 																			<option value="usd" selected>USD</option>
 																			<option value="mxn">MXN</option>
 																		</select>
 																	</div>
-																	<div class="col-4 form-group">
-																	  <h4><b>Clasificación de cliente <a id="cambiarclasificacion" href="#" class="text-primary"><i class="fas fa-sync"></i></a></b></h4>
+																	<div class="form-group col-4">
+																	  <h4 class="card-subtitle mb-2 text-muted">Clasificación de cliente <a id="cambiarclasificacion" href="#" class="text-primary"><i class="fas fa-sync"></i></a></h4>
 																		<select id="clasificacion" class="form-control form-control-sm col-7">
 																			<option value="1.20">16 %</option>
 																			<option value="1.25">20 %</option>
@@ -661,9 +661,12 @@
 	<script type="text/javascript">
 		$(document).ready(function(){
 			App.init();
+			App.megaMenu();
   		App.pageCalendar();
   		App.formElements();
   		App.uiNotifications();
+			nav_active();
+			prettyPrint();
 			var refCotizacion = "<?php echo $_REQUEST['numero']; ?>";
 			guardar();
 			buscarClasCliente(refCotizacion);
@@ -673,6 +676,14 @@
 			eliminarFlete(refCotizacion);
 			cambiarPedido(refCotizacion);
 		});
+
+		function nav_active () {
+      $(".nav-item").removeClass("open section-active");
+      $("#ventas-menu").addClass("open section-active");
+
+      $(".nav-link").removeClass("active");
+			$("#cotizaciones-menu").addClass("active");
+    }
 
 		function buscarClasCliente(refCotizacion){
 			var opcion = "buscarclascliente";

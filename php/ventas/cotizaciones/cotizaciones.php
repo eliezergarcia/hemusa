@@ -39,7 +39,7 @@
 					                            <div class="row">
 					                              <div class="col-6">
 																					<label class="control-label">Mes:</label>
-																					<select class="form-control form-control-sm" name="filtromes" id="filtromes">
+																					<select class="form-control form-control-sm select2" name="filtromes" id="filtromes">
 																					<option value="01">Enero</option>
 																					<option value="02">Febrero</option>
 																					<option value="03">Marzo</option>
@@ -57,7 +57,7 @@
 					                              </div>
 					                              <div class="col-6">
 																					<label class="control-label">Año:</label>
-																					<select class="form-control form-control-sm" name="filtroano" id="filtroano">
+																					<select class="form-control form-control-sm select2" name="filtroano" id="filtroano">
 																						<option value="2017">2017</option>
 																						<option value="2018" selected>2018</option>
 																						<option value="2019">2019</option>
@@ -105,7 +105,7 @@
 					<div class="modal-dialog modal-lg" role="document">
 						<div class="modal-content">
 							<div class="modal-header">
-								<h4 class="modal-title" id="modalNuevaCotizacionLabel">Nueva cotización</h4>
+								<h4 class="modal-title" id="modalNuevaCotizacionLabel"><b>Nueva cotización</b></h4>
 								<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 							</div>
 							<div class="modal-body container">
@@ -180,7 +180,7 @@
 					<div class="modal-dialog modal-lg" role="document">
 						<div class="modal-content">
 							<div class="modal-header">
-								<h4 class="modal-title" id="modalNuevaCotizacionLabel">Registro de contacto</h4>
+								<h4 class="modal-title" id="modalNuevaCotizacionLabel"><b>Registro de contacto</b></h4>
 								<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 							</div>
 							<div class="modal-body container">
@@ -309,13 +309,24 @@
 	<script>
 		$(document).ready(function(){
 			App.init();
+			App.megaMenu();
   		App.pageCalendar();
   		App.formElements();
   		App.uiNotifications();
+			nav_active();
+			prettyPrint();
 			guardar();
 			$("#filtromes").val("<?php echo $mes; ?>").change();
 			$("#filtroano").val("<?php echo $ano; ?>").change();
 		});
+
+		function nav_active () {
+      $(".nav-item").removeClass("open section-active");
+      $("#ventas-menu").addClass("open section-active");
+
+      $(".nav-link").removeClass("active");
+			$("#cotizaciones-menu").addClass("active");
+    }
 
 		$("#filtromes").on("change", function (){
 			listar_cotizaciones();
