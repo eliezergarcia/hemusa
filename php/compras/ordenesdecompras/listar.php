@@ -5,8 +5,19 @@
 	$opcion = $_POST['opcion'];
 
 	switch ($opcion) {
-		case 'ordenesdecompras':
-			ordenesdecompras($conexion_usuarios);
+			case 'ordenesdecompras':
+			$buscar = $_POST['buscar'];
+			$filtromes = $_POST['filtromes'];
+			$filtroano = $_POST['filtroano'];
+			if ($filtromes != "todo") {
+				$fechainicio = $filtroano.'-'.$filtromes.'-01';
+				$fechafin = $filtroano.'-'.$filtromes.'-31';
+			}else{
+				$fechainicio = $filtroano.'-01-01';
+				$fechafin = $filtroano.'-12-31';
+			}
+			$filtrotipo = $_POST['filtrotipo'];
+			ordenesdecompras($buscar, $fechainicio, $fechafin, $filtrotipo, $conexion_usuarios);
 			break;
 
 		case 'backorder':
@@ -43,25 +54,46 @@
 			break;
 	}
 
-	function ordenesdecompras($conexion_usuarios){
-		$query = "SELECT ordendecompras.id, ordendecompras.noDePedido, ordendecompras.Fecha, ordendecompras.proveedor, ordendecompras.moneda,
-		contactos.nombreEmpresa, usuarios.nombre, usuarios.apellidos FROM ordendecompras LEFT JOIN contactos on contactos.id=ordendecompras.proveedor
-		INNER JOIN usuarios on usuarios.id=ordendecompras.contacto  ORDER BY id DESC LIMIT 999";
-		$resultado = mysqli_query($conexion_usuarios, $query);
+	function ordenesdecompras($buscar, $fechainicio, $fechafin, $filtrotipo, $conexion_usuarios){
+		if ($filtrotipo == "pedido") {
+			$query = "SELECT ordendecompras.*, contactos.nombreEmpresa, usuarios.nombre, usuarios.apellidos FROM ordendecompras LEFT JOIN contactos on contactos.id=ordendecompras.proveedor
+			INNER JOIN usuarios on usuarios.id=ordendecompras.contacto WHERE fecha >='$fechainicio' AND fecha <='$fechafin' ORDER BY id DESC";
+			$resultado = mysqli_query($conexion_usuarios, $query);
 
-		if(!$resultado){
-			die('Error');
-		}else{
-			while($data = mysqli_fetch_assoc($resultado)){
-				$arreglo["data"][] = array(
-					'ordencompra' => $data['noDePedido'],
-					'proveedor' => utf8_encode($data['nombreEmpresa']),
-					'contacto' => $data['nombre']." ".$data['apellidos'],
-					'fecha' => $data['Fecha'],
-					'moneda' => strtoupper($data['moneda']),
-				);
-
+			if(mysqli_num_rows($resultado) < 1){
+				$arreglo['data'] = 0;
+			}else{
+				while($data = mysqli_fetch_assoc($resultado)){
+					$arreglo["data"][] = array(
+						'ordencompra' => $data['noDePedido'],
+						'proveedor' => utf8_encode($data['nombreEmpresa']),
+						'contacto' => $data['nombre']." ".$data['apellidos'],
+						'fecha' => $data['fecha'],
+						'moneda' => strtoupper($data['moneda']),
+					);
+				}
 			}
+		}else{
+			// $query = "SELECT ordendecompras.*, contactos.nombreEmpresa, usuarios.nombre, usuarios.apellidos FROM ordendecompras LEFT JOIN contactos on contactos.id=ordendecompras.proveedor
+			// INNER JOIN usuarios on usuarios.id=ordendecompras.contacto WHERE fecha >='$fechainicio' AND fecha <='$fechafin' ORDER BY id DESC";
+			// $resultado = mysqli_query($conexion_usuarios, $query);
+			//
+			// if(mysqli_num_rows($resultado) < 1){
+			// 	$arreglo['data'] = 0;
+			// }else{
+			// 	while($data = mysqli_fetch_assoc($resultado)){
+			// 		$arreglo["data"][] = array(
+			// 			'ordencompra' => $data['noDePedido'],
+			// 			'proveedor' => utf8_encode($data['nombreEmpresa']),
+			// 			'contacto' => $data['nombre']." ".$data['apellidos'],
+			// 			'fecha' => $data['fecha'],
+			// 			'moneda' => strtoupper($data['moneda']),
+			// 			'fecha' => $data['fecha'],
+			// 			'fecha' => $data['fecha'],
+			// 			'fecha' => $data['fecha'],
+			// 		);
+			// 	}
+			// }
 		}
 
 		echo json_encode($arreglo, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_PARTIAL_OUTPUT_ON_ERROR);

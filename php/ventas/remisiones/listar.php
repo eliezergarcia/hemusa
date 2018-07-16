@@ -1,14 +1,22 @@
 <?php
-
 	include("../../conexion.php");
-	ini_set('max_execution_time', 300);
 
 	$opcion = $_POST['opcion'];
 	$informacion[] = "";
 
 	switch ($opcion) {
 		case 'listarremisiones':
-			remisiones($conexion_usuarios);
+			$buscar = $_POST['buscar'];
+			$filtromes = $_POST['filtromes'];
+			$filtroano = $_POST['filtroano'];
+			if ($filtromes != "todo") {
+				$fechainicio = $filtroano.'-'.$filtromes.'-01';
+				$fechafin = $filtroano.'-'.$filtromes.'-31';
+			}else{
+				$fechainicio = $filtroano.'-01-01';
+				$fechafin = $filtroano.'-12-31';
+			}
+			remisiones($buscar, $fechainicio, $fechafin, $conexion_usuarios);
 			break;
 
 		case 'listarpartidas':
@@ -22,21 +30,14 @@
 			break;
 	}
 
-	function remisiones($conexion_usuarios){
-		$ano=date('Y'); //2017
-		$mes=date('m');//01
-		$dia=date('d');//14
-
-	  $ano_inicio=$ano."-".$mes."-".$dia;
-		$ano_fin=($ano-1)."-".$mes."-".$dia;
-
+	function remisiones($buscar, $fechainicio, $fechafin, $conexion_usuarios){
 		$query = "SELECT cotizacion.*, contactos.nombreEmpresa, remisiones.remision as r , case when remisiones.efectivo is null then 0 else remisiones.Efectivo end as 'Efectivo' FROM cotizacion LEFT JOIN contactos on
 		contactos.id=cotizacion.cliente LEFT JOIN remisiones on remisiones.remision=cotizacion.remision WHERE cotizacion.Comentario='' AND cotizacion.remision!=0 AND
-		cotizacion.remisionFactura=0 AND cotizacion.remisionFecha <= '$ano_inicio' AND cotizacion.remisionFecha >='$ano_fin' ORDER BY cotizacion.remision DESC LIMIT 100";
+		cotizacion.remisionFactura=0 AND cotizacion.remisionFecha >= '$fechainicio' AND cotizacion.remisionFecha <='$fechafin' ORDER BY cotizacion.remision DESC LIMIT 100";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 
-		if(!$resultado){
-			die("Error al buscar remisiones!");
+		if(mysqli_num_rows($resultado) < 1){
+			$arreglo['data'] = 0;
 		}else{
 			$i = 1;
 			while($data = mysqli_fetch_assoc($resultado)){

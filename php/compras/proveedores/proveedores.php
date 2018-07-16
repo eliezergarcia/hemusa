@@ -212,12 +212,23 @@
   <script>
     $(document).ready(function(){
       App.init();
-      App.pageCalendar();
-      App.formElements();
-      App.uiNotifications();
+			App.megaMenu();
+  		App.pageCalendar();
+  		App.formElements();
+  		App.uiNotifications();
+			nav_active();
+			prettyPrint();
       listar_proveedores();
       guardar();
     });
+
+    function nav_active () {
+      $(".nav-item").removeClass("open section-active");
+      $("#compras-menu").addClass("open section-active");
+
+      $(".nav-link").removeClass("active");
+			$("#proveedores-menu").addClass("active");
+    }
 
     var  listar_proveedores = function(){
       var opcion = "proveedores";

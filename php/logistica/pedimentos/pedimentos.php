@@ -191,11 +191,22 @@
   <script>
     $(document).ready(function(){
       App.init();
-      App.pageCalendar();
-      App.formElements();
-      App.uiNotifications();
+			App.megaMenu();
+  		App.pageCalendar();
+  		App.formElements();
+  		App.uiNotifications();
+			nav_active();
+			prettyPrint();
       guardar();
     });
+
+    function nav_active () {
+      $(".nav-item").removeClass("open section-active");
+      $("#logistica-menu").addClass("open section-active");
+
+      $(".nav-link").removeClass("active");
+			$("#pedimentos-menu").addClass("active");
+    }
 
     var listar = function(){
       var fechaInicio = $("#fechaInicio").val(),

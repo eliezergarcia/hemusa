@@ -470,13 +470,24 @@
 	<script>
 	$(document).ready(function(){
 		App.init();
+		App.megaMenu();
 		App.pageCalendar();
 		App.formElements();
 		App.uiNotifications();
+		nav_active();
+		prettyPrint();
 		var idproveedor = "<?php echo $_REQUEST['id']; ?>";
 		listar_sinpedido();
 		guardar();
 	});
+
+	function nav_active () {
+		$(".nav-item").removeClass("open section-active");
+		$("#compras-menu").addClass("open section-active");
+
+		$(".nav-link").removeClass("active");
+		$("#proveedores-menu").addClass("active");
+	}
 
 	function seleccionartodo(){
 		$("input[name=enviado]").each(function (index) {

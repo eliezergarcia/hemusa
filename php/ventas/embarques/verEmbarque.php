@@ -53,12 +53,23 @@
 	<?php include('../../enlacesjs.php'); ?>
 	<script>
 		$(document).ready(function(){
-			App.init();
-	      	App.pageCalendar();
-	      	App.formElements();
-	      	App.uiNotifications();
+      App.init();
+			App.megaMenu();
+  		App.pageCalendar();
+  		App.formElements();
+  		App.uiNotifications();
+			nav_active();
+			prettyPrint();
 			listar();
 		});
+
+    function nav_active () {
+      $(".nav-item").removeClass("open section-active");
+      $("#facturacion-menu").addClass("open section-active");
+
+      $(".nav-link").removeClass("active");
+			$("#embarques-menu").addClass("active");
+    }
 
 		var  listar = function(){
 			var folio = "<?php echo $_REQUEST['embarque']; ?>";

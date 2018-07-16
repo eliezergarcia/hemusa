@@ -184,15 +184,26 @@
   <script>
     $(document).ready(function(){
       App.init();
-      App.pageCalendar();
-      App.formElements();
-      App.uiNotifications();
+			App.megaMenu();
+  		App.pageCalendar();
+  		App.formElements();
+  		App.uiNotifications();
+			nav_active();
+			prettyPrint();
       var ordencompra = "<?php echo $_REQUEST['ordenCompra']; ?>";
       var opcion = "datosordencompra";
       listar_partidas(ordencompra);
       listar_totales(ordencompra);
       guardar(ordencompra);
     });
+
+    function nav_active () {
+      $(".nav-item").removeClass("open section-active");
+      $("#compras-menu").addClass("open section-active");
+
+      $(".nav-link").removeClass("active");
+			$("#ordenesdecompras-menu").addClass("active");
+    }
 
     function seleccionartodo(){
       $("input[name=hcheck]").each(function (index) {

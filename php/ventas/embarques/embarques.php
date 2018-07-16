@@ -2,6 +2,8 @@
   require_once('../../conexion.php'); // Llamada a connect.php para establecer conexión con la BD
   require_once('../../sesion.php'); // Llamada a sesion.php para validar si hay sesión inciada
   error_reporting(0);
+  $mes = date("m");
+	$ano = date("Y");
 ?>
 <!DOCTYPE html>
 <head>
@@ -25,6 +27,60 @@
                 	<div class="col-lg-12">
                     	<div class="card card-fullcalendar">
                       		<div class="card-body">
+                            <div class="row table-filters-container">
+						                  <div class="col-12">
+						                    <div class="row">
+						                      <div class="col-3 table-filters"><span class="table-filter-title">Fecha</span>
+						                        <div class="filter-container">
+																			<form>
+						                            <div class="row">
+						                              <div class="col-6">
+																						<label class="control-label">Mes:</label>
+																						<select class="form-control form-control-sm select2" name="filtromes" id="filtromes">
+																							<option value="01">Enero</option>
+																							<option value="02">Febrero</option>
+																							<option value="03">Marzo</option>
+																							<option value="04">Abril</option>
+																							<option value="05">Mayo</option>
+																							<option value="06">Junio</option>
+																							<option value="07">Julio</option>
+																							<option value="08">Agosto</option>
+																							<option value="09">Septiembre</option>
+																							<option value="10">Octubre</option>
+																							<option value="11">Noviembre</option>
+																							<option value="12">Diciembre</option>
+																							<option value="todo">Todo</option>
+																						</select>
+						                              </div>
+						                              <div class="col-6">
+																						<label class="control-label">Año:</label>
+																						<select class="form-control form-control-sm select2" name="filtroano" id="filtroano">
+																							<option value="2017">2017</option>
+																							<option value="2018" selected>2018</option>
+																							<option value="2019">2019</option>
+																							<option value="2020">2020</option>
+																						</select>
+						                              </div>
+						                            </div>
+						                          </form>
+						                        </div>
+						                      </div>
+																	<div class="col-3 table-filters"><span class="table-filter-title">Referencia</span>
+						                        <div class="filter-container">
+																			<form>
+						                            <div class="row">
+						                              <div class="col-8">
+																						<label class="control-label">Palabra:</label>
+																						<input type="text" class="form-control form-control-sm" name="filtroreferencia" id="filtroreferencia" value="">
+						                              </div>
+						                            </div>
+						                          </form>
+						                        </div>
+						                      </div>
+						                    </div>
+						                  </div>
+														</div>
+
                           	<!-- Tabla de embarques -->
                 							<table id="dt_embarques" class="table table-striped table-hover display compact" cellspacing="0" width="100%">
                 								<thead>
@@ -138,15 +194,56 @@
 	<?php include('../../enlacesjs.php'); ?>
 	<script>
 		$(document).ready(function(){
-			App.init();
-    	App.pageCalendar();
-    	App.formElements();
-    	App.uiNotifications();
+      App.init();
+			App.megaMenu();
+  		App.pageCalendar();
+  		App.formElements();
+  		App.uiNotifications();
+			nav_active();
+			prettyPrint();
 			listar();
 			guardar();
+      $("#filtromes").val("<?php echo $mes; ?>").change();
+      $("#filtroano").val("<?php echo $ano; ?>").change();
 		});
 
+    $("#filtromes").on("change", function (){
+			listar();
+			$('#dt_embarques').DataTable().ajax.reload();
+		});
+
+		$("#filtroano").on("change", function (){
+			listar();
+			$('#dt_embarques').DataTable().ajax.reload();
+		});
+
+		$('input[name=filtrotipo]').change(function() {
+			listar();
+			$('#dt_embarques').DataTable().ajax.reload();
+		});
+
+		$('input[name=filtroestado]').change(function() {
+			listar();
+			$('#dt_embarques').DataTable().ajax.reload();
+		});
+
+		$("#filtroreferencia").on("change", function (){
+			listar();
+			$('#dt_embarques').DataTable().ajax.reload();
+		});
+
+    function nav_active () {
+      $(".nav-item").removeClass("open section-active");
+      $("#facturacion-menu").addClass("open section-active");
+
+      $(".nav-link").removeClass("active");
+			$("#embarques-menu").addClass("active");
+    }
+
 		var  listar = function(){
+      var filtromes = $("#filtromes").val();
+			var filtroano = $("#filtroano").val();
+			var filtroreferencia = $("#filtroreferencia").val();
       var opcion = "embarques";
 			var table = $("#dt_embarques").DataTable({
 				"destroy": true,
@@ -155,7 +252,7 @@
 				"ajax":{
 					"method":"POST",
 					"url":"listar.php",
-          "data": {"opcion": opcion},
+          "data": {"opcion": opcion, "filtromes": filtromes, "filtroano": filtroano, "buscar": filtroreferencia}
 				},
 				"columns":[
 					{"data":"folio"},

@@ -186,11 +186,22 @@
   <script>
     $(document).ready(function(){
       App.init();
-      App.pageCalendar();
-      App.formElements();
-      App.uiNotifications();
+			App.megaMenu();
+  		App.pageCalendar();
+  		App.formElements();
+  		App.uiNotifications();
+			nav_active();
+			prettyPrint();
       guardar();
     });
+
+    function nav_active () {
+      $(".nav-item").removeClass("open section-active");
+      $("#logistica-menu").addClass("open section-active");
+
+      $(".nav-link").removeClass("active");
+			$("#ordenesdecompraslogisitca-menu").addClass("active");
+    }
 
     function seleccionartodo(){
       $("input[name=hcheck]").each(function (index) {

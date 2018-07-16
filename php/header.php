@@ -461,37 +461,37 @@ if ($tipomenu != 4){
 	                    </li>
                       <li id="compras-menu" class="nav-item parent"><a class="nav-link" href="#" role="button" aria-expanded="false"><span class="icon fas fa-shopping-cart"></span><span>Compras</span></a>
                         <ul class="be-nav-tabs-sub be-sub-nav nav">
-													<li class="nav-item"><a class="nav-link" href="<?php echo $ruta; ?>php/compras/proveedores/proveedores.php"><i class="fas fa-address-book"></i> Proveedores</a>
+													<li class="nav-item"><a id="proveedores-menu" class="nav-link" href="<?php echo $ruta; ?>php/compras/proveedores/proveedores.php"><i class="fas fa-address-book"></i> Proveedores</a>
 													</li>
-													<li class="nav-item"><a class="nav-link" href="<?php echo $ruta; ?>php/compras/ordenesdecompras/ordenesdecompras.php"><i class="fas fa-cart-arrow-down"></i> Ordenes de compras</a>
+													<li class="nav-item"><a id="ordenesdecompras-menu" class="nav-link" href="<?php echo $ruta; ?>php/compras/ordenesdecompras/ordenesdecompras.php"><i class="fas fa-cart-arrow-down"></i> Ordenes de compras</a>
 													</li>
                         </ul>
                       </li>
                       <li id="logistica-menu" class="nav-item parent"><a class="nav-link" href="#" role="button" aria-expanded="false"><span class="icon fas fa-cubes"></span><span>Logística</span></a>
                         <ul class="be-nav-tabs-sub be-sub-nav nav">
-													<li class="nav-item"><a class="nav-link" href="<?php echo $ruta; ?>php/logistica/pedimentos/pedimentos.php"><i class="fas fa-warehouse"></i> Pedimentos</a>
+													<li class="nav-item"><a id="pedimentos-menu" class="nav-link" href="<?php echo $ruta; ?>php/logistica/pedimentos/pedimentos.php"><i class="fas fa-warehouse"></i> Pedimentos</a>
 													</li>
-													<li class="nav-item"><a class="nav-link" href="<?php echo $ruta; ?>php/logistica/controldesalida/controldesalida.php"><i class="fas fa-dolly"></i> Control de salida</a>
+													<li class="nav-item"><a id="controldesalida-menu" class="nav-link" href="<?php echo $ruta; ?>php/logistica/controldesalida/controldesalida.php"><i class="fas fa-dolly"></i> Control de salida</a>
 													</li>
-													<li class="nav-item"><a class="nav-link" href="<?php echo $ruta; ?>php/logistica/ordenesdecompras/descripcionPedido.php"><i class="fas fa-cart-arrow-down"></i> Ordenes de compras</a>
+													<li class="nav-item"><a id="ordenesdecompraslogisitca-menu" class="nav-link" href="<?php echo $ruta; ?>php/logistica/ordenesdecompras/descripcionPedido.php"><i class="fas fa-cart-arrow-down"></i> Ordenes de compras</a>
 													</li>
                         </ul>
                       </li>
                       <li id="cobranza-menu" class="nav-item parent"><a class="nav-link" href="#" role="button" aria-expanded="false"><span class="icon fas fa-credit-card"></span><span>Créditos y cobranza</span></a>
                         <ul class="be-nav-tabs-sub be-sub-nav nav">
-													<li class="nav-item"><a class="nav-link" href="<?php echo $ruta; ?>php/cobranza/pagos/pagos.php"><i class="fab fa-cc-amazon-pay"></i> Pagos de cliente</a>
+													<li class="nav-item"><a id="pagoscliente-menu" class="nav-link" href="<?php echo $ruta; ?>php/cobranza/pagos/pagos.php"><i class="fab fa-cc-amazon-pay"></i> Pagos de cliente</a>
 													</li>
-													<li class="nav-item"><a class="nav-link" href="<?php echo $ruta; ?>php/cobranza/pagos/pagosproveedor.php"><i class="fab fa-cc-amazon-pay"></i> Pagos de proveedor</a>
+													<li class="nav-item"><a id="pagosproveedor-menu" class="nav-link" href="<?php echo $ruta; ?>php/cobranza/pagos/pagosproveedor.php"><i class="fab fa-cc-amazon-pay"></i> Pagos de proveedor</a>
 													</li>
                         </ul>
                       </li>
 											<li id="facturacion-menu" class="nav-item parent"><a class="nav-link" href="#" role="button" aria-expanded="false"><span class="icon far fa-file-alt"></span><span>Facturación</span></a>
                         <ul class="be-nav-tabs-sub be-sub-nav nav">
-													<li class="nav-item"><a class="nav-link" href="<?php echo $ruta; ?>php/ventas/remisiones/remisiones.php"><i class="fas fa-file"></i> Remisiones</a>
+													<li class="nav-item"><a id="remisiones-menu" class="nav-link" href="<?php echo $ruta; ?>php/ventas/remisiones/remisiones.php"><i class="fas fa-file"></i> Remisiones</a>
 													</li>
-													<li class="nav-item"><a class="nav-link" href="<?php echo $ruta; ?>php/ventas/embarques/embarques.php"><i class="fas fa-dolly"></i> Embarques</a>
+													<li class="nav-item"><a id="embarques-menu" class="nav-link" href="<?php echo $ruta; ?>php/ventas/embarques/embarques.php"><i class="fas fa-dolly"></i> Embarques</a>
 													</li>
-													<li class="nav-item"><a class="nav-link" href="<?php echo $ruta; ?>php/facturacion/facturas/facturas.php"><i class="fas fa-file-alt"></i> Facturas</a>
+													<li class="nav-item"><a id="facturas-menu" class="nav-link" href="<?php echo $ruta; ?>php/facturacion/facturas/facturas.php"><i class="fas fa-file-alt"></i> Facturas</a>
 													</li>
                         </ul>
                       </li>

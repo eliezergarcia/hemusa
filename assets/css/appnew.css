@@ -80,6 +80,7 @@
   .badge {
     border: 1px solid #000000;
   }
+
   .table {
     border-collapse: collapse !important;
   }
@@ -6803,6 +6804,48 @@ button.bg-grey:focus {
   display: -ms-inline-flexbox !important;
   display: inline-flex !important;
 }
+
+.table-text-claseE {
+  color: var(--color-primario) !important; }
+
+.table-text-claseD {
+  color: var(--color-danger) !important; }
+
+.table-text-enviado {
+  color: #FFB20B !important; }
+
+.table-text-recibido {
+  color: #009000 !important; }
+
+.table-text-proveedor {
+  background-color: #B1C9FF !important; }
+
+.table-text-cliente {
+  background-color: #B1C9FF !important; }
+
+.table-text-cliente {
+  background-color: #9CDAFA !important; }
+
+.table-text-facturap {
+  background-color: #B0FFE5 !important; }
+
+.table-text-facturah {
+  background-color: #8BE6E3 !important; }
+
+.table-text-remision {
+  background-color: #49ACBF !important; }
+
+.table-text-totalventamxn {
+background-color: #FFB6BA !important; }
+
+.table-text-totalventausd {
+  background-color: #FF7D83 !important; }
+
+.table-text-folio {
+background-color: #7F9D90 !important; }
+
+.table-text-pedimento {
+  background-color: #B8DCC9 !important; }
 
 @media (min-width: 576px) {
   .d-sm-none {

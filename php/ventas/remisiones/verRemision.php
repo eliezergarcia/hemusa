@@ -541,9 +541,12 @@
 	<script>
 		$(document).ready(function(){
 			App.init();
-    	App.pageCalendar();
-    	App.formElements();
-    	App.uiNotifications();
+			App.megaMenu();
+  		App.pageCalendar();
+  		App.formElements();
+  		App.uiNotifications();
+			nav_active();
+			prettyPrint();
 			var remision = "<?php echo $_REQUEST['remision']; ?>";
 			buscardatos(remision);
 			cambiarnumeroguia(remision);
@@ -557,6 +560,14 @@
 			agregarHerramienta(remision);
 			packinglist();
 		});
+
+		function nav_active () {
+      $(".nav-item").removeClass("open section-active");
+      $("#facturacion-menu").addClass("open section-active");
+
+      $(".nav-link").removeClass("active");
+			$("#remisiones-menu").addClass("active");
+    }
 
 		function buscardatos(remision){
 			var opcion = "buscardatos";

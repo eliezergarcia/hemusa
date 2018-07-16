@@ -4,7 +4,17 @@
 
 	switch ($opcion) {
     case 'embarques':
-			embarques($conexion_usuarios);
+      $buscar = $_POST['buscar'];
+      $filtromes = $_POST['filtromes'];
+      $filtroano = $_POST['filtroano'];
+      if ($filtromes != "todo") {
+        $fechainicio = $filtroano.'-'.$filtromes.'-01';
+        $fechafin = $filtroano.'-'.$filtromes.'-31';
+      }else{
+        $fechainicio = $filtroano.'-01-01';
+        $fechafin = $filtroano.'-12-31';
+      }
+			embarques($buscar, $fechainicio, $fechafin, $conexion_usuarios);
       break;
 
     case 'partidasembarque':
@@ -23,14 +33,12 @@
       break;
 	}
 
-  function embarques($conexion_usuarios){
-    $query="SELECT embarques.folio_embarque, embarques.cliente, embarques.fecha_embarque, embarques.usuario, contactos.nombreEmpresa
-  	FROM embarques LEFT JOIN contactos on contactos.id=embarques.cliente WHERE folio_embarque >  '2666' ORDER BY folio_embarque DESC
-  	LIMIT 150 ";
+  function embarques($buscar, $fechainicio, $fechafin, $conexion_usuarios){
+    $query="SELECT embarques.*, contactos.nombreEmpresa FROM embarques LEFT JOIN contactos on contactos.id=embarques.cliente WHERE (folio_embarque LIKE '%$buscar%' OR nombreEmpresa LIKE '%$buscar%' OR fecha_embarque LIKE '%$buscar%' OR usuario LIKE '%$buscar%') AND fecha_embarque >= '$fechainicio' AND fecha_embarque <= '$fechafin' ORDER BY folio_embarque DESC";
   	$resultado = mysqli_query($conexion_usuarios, $query);
 
-  	if(!$resultado){
-  		die('Error');
+  	if(mysqli_num_rows($resultado) < 1){
+  		$arreglo['data'] = 0;
   	}else{
   		while($data = mysqli_fetch_assoc($resultado)){
   			$arreglo['data'][] = array(
@@ -43,6 +51,7 @@
   	}
 
   	echo json_encode($arreglo, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_PARTIAL_OUTPUT_ON_ERROR);
+    mysqli_close($conexion_usuarios);
   }
 
 	function imprimir_embarque($folio, $conexion_usuarios){

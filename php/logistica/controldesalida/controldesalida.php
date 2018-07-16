@@ -71,12 +71,23 @@
 <?php include('../../enlacesjs.php'); ?>
 	<script type="text/javascript">
 		$(document).ready(function(){
-			App.init();
-			App.pageCalendar();
-			App.formElements();
-			App.uiNotifications();
+      App.init();
+			App.megaMenu();
+  		App.pageCalendar();
+  		App.formElements();
+  		App.uiNotifications();
+			nav_active();
+			prettyPrint();
 			listar_nacional();
 		});
+
+    function nav_active () {
+      $(".nav-item").removeClass("open section-active");
+      $("#logistica-menu").addClass("open section-active");
+
+      $(".nav-link").removeClass("active");
+			$("#controldesalida-menu").addClass("active");
+    }
 
 		var listar_nacional = function(){
 			$("#nacional").slideDown("slow");
