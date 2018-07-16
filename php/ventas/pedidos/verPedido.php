@@ -36,7 +36,7 @@
 			    	<li class="breadcrumb-item">Ventas</li>
 			    	<li class="breadcrumb-item"><a id="toolTipVerCotizaciones" href="pedidos.php" class="text-primary">Pedidos</a></li>
 			    	<li id="breadcrumb" class="breadcrumb-item acti ve" aria-current="page">
-			    		Cliente: <a id="toolTipVerCliente" href="<?php echo $ruta; ?>php/ventas/clientes/verContacto.php?id=<?php echo $idcliente; ?>" class="text-primary"><?php echo $nombrecliente; ?></a> - Ref. Cotizacion: <a href="<?php echo $ruta; ?>php/ventas/cotizaciones/verCotizacion.php?numero=<?php echo $_REQUEST['refCotizacion']; ?>" class="text-primary"><?php echo $_REQUEST['refCotizacion']; ?></a> - No. Pedido: <?php echo $_REQUEST['numeroPedido']; ?>
+			    		Cliente: <a id="toolTipVerCliente" href="<?php echo $ruta; ?>php/ventas/clientes/verContacto.php?id=<?php echo $idcliente; ?>" class="text-primary"><?php echo $nombrecliente; ?></a> - Referencia cotizacion: <a href="<?php echo $ruta; ?>php/ventas/cotizaciones/verCotizacion.php?numero=<?php echo $_REQUEST['refCotizacion']; ?>" class="text-primary"><?php echo $_REQUEST['refCotizacion']; ?></a> - Pedido cliente: <?php echo $_REQUEST['numeroPedido']; ?>
 			    	</li>
 			  	</ol>
 				</nav>
@@ -50,55 +50,63 @@
 										<div class="row align-items-start justify-content-around">
 											<div class="col-4 row justify-content-center">
 												<div class="col">
-														<h4><b>Cliente</b></h4>
+													<div class="form-group">
+														<h4 class="card-subtitle mb-2 text-muted">Cliente</h4>
 														<h5 style="font-size: 17px;"><?php echo $nombrecliente; ?></h5>
+													</div>
+													<div class="form-group">
 														<h4 class="card-subtitle mb-2 text-muted">RFC</h4>
 														<h5 style="font-size: 17px;"><?php echo $rfc; ?></h5>
+													</div>
+													<div class="form-group">
 														<h4 class="card-subtitle mb-2 text-muted">Calle, colonia</h4>
 														<h5 style="font-size: 17px;"><?php echo $calle.", ".$colonia; ?></h5>
+													</div>
+													<div class="form-group">
 														<h4 class="card-subtitle mb-2 text-muted">Ciudad, estado, c.p.</h4>
 														<h5 style="font-size: 17px;"><?php echo $ciudad.", ".$estado.", ".$cp; ?></h5><br><br>
+													</div>
 												</div>
 											</div>
 											<div class="col row justify-content-start">
 												<div class="col-3 form-group">
-													<h4><b>Ref. Cotización</b></h4>
+													<h4 class="card-subtitle mb-2 text-muted">Referencia cotización</h4>
 													<label id="refCotizacion"></label>
 												</div>
 												<div class="col-3 form-group">
-													<h4><b>Fecha</b></h4>
+													<h4 class="card-subtitle mb-2 text-muted">Fecha</h4>
 													<label id="fecha"></label>
 												</div>
 												<div class="col-3 form-group">
-													<h4><b>Vendedor</b></h4>
+													<h4 class="card-subtitle mb-2 text-muted">Vendedor</h4>
 													<label id="vendedor"></label>
 												</div>
 												<div class="col-3 form-group">
-													<h4><b>Pedido cliente</b></h4>
+													<h4 class="card-subtitle mb-2 text-muted">Pedido cliente</h4>
 													<label id="pedidoCliente"></label>
 												</div>
 												<div class="col-3 form-group">
-													<h4><b>Facturas</b></h4>
+													<h4 class="card-subtitle mb-2 text-muted">Facturas</h4>
 													<label id="factura"></label>
 												</div>
 												<div class="col-3 form-group">
-													<h4><b>Pagado</b></h4>
+													<h4 class="card-subtitle mb-2 text-muted">Pagado</h4>
 													<label id="pagado"></label>
 												</div>
 												<div class="col-3 form-group">
-													<h4><b>Moneda </b> <a id="cambiarmoneda" href="#" class="text-primary"><i class="fas fa-sync"></i></a></h4>
+													<h4 class="card-subtitle mb-2 text-muted">Moneda <a id="cambiarmoneda" href="#" class="text-primary"><i class="fas fa-sync"></i></a></h4>
 													<select id="moneda" class="form-control form-control-sm col-10">
 														<option value="usd" selected>USD</option>
 														<option value="mxn">MXN</option>
 													</select>
 												</div>
 												<div class="col-3 form-group">
-													<h4><b>Paquetería </b><a id="cambiarpaqueteria" href="#" class="text-primary"><i class="fas fa-sync"></i></a></h4>
+													<h4 class="card-subtitle mb-2 text-muted">Paquetería <a id="cambiarpaqueteria" href="#" class="text-primary"><i class="fas fa-sync"></i></a></h4>
 													<select id="paqueteria" class="form-control form-control-sm col-10">
 													</select>
 												</div>
 												<div class="col-3 form-group">
-													<h4><b>No. de guía</b></h4>
+													<h4 class="card-subtitle mb-2 text-muted">No. guía</h4>
 													<div class="input-group mb-3">
 														<input type="text" id="numeroGuia" class="form-control form-control-sm col-9">
 														<div class="input-group-append">
@@ -107,7 +115,7 @@
 													</div>
 												</div>
 												<div class="col-3 form-group">
-													<h4><b>Forma de pago </b><a id="cambiarformapago" href="#" class="text-primary"><i class="fas fa-sync"></i></a></h4>
+													<h4 class="card-subtitle mb-2 text-muted">Forma de pago <a id="cambiarformapago" href="#" class="text-primary"><i class="fas fa-sync"></i></a></h4>
 													<div>
 												  	<select type="text" id="formapago" name="formapago" class="form-control form-control-sm col-10">
 														<option value="1">Efectivo</option>
@@ -125,7 +133,7 @@
 									      	</div>
 												</div>
 												<div class="col-3 form-group">
-													<h4><b>Método de pago </b><a id="cambiarmetodopago" href="#" class="text-primary"><i class="fas fa-sync"></i></a></h4>
+													<h4 class="card-subtitle mb-2 text-muted">Método de pago <a id="cambiarmetodopago" href="#" class="text-primary"><i class="fas fa-sync"></i></a></h4>
 													<div>
 														<select type="text" id="metodopago" name="metodopago" class="form-control form-control-sm col-10">
 															<option value="1">Pago en una sola exhibición</option>
@@ -134,7 +142,7 @@
 													</div>
 												</div>
 												<div class="col-3 form-group">
-													<h4><b>Uso de CFDI </b><a id="cambiarusocfdi" href="#" class="text-primary"><i class="fas fa-sync"></i></a></h4>
+													<h4 class="card-subtitle mb-2 text-muted">Uso de CFDI <a id="cambiarusocfdi" href="#" class="text-primary"><i class="fas fa-sync"></i></a></h4>
 													<div>
 														<select id="cfdi" name="cfdi" class="form-control form-control-sm col-10">
 															<option value="1">Adquisición de mercancias</option>
@@ -163,13 +171,13 @@
 													</div>
 												</div>
 												<div class="col-3 form-group">
-													<h4><b>Proveedor </b><a id="cambiarproveedor" href="#" class="text-primary"><i class="fas fa-sync"></i></a></h4>
+													<h4 class="card-subtitle mb-2 text-muted">Proveedor <a id="cambiarproveedor" href="#" class="text-primary"><i class="fas fa-sync"></i></a></h4>
 													<div>
 														<select name="proveedorg" id="proveedorg" class="form-control form-control-sm col-10"></select>
 													</div>
 												</div>
 												<div class="col-3 form-group">
-													<h4><b>Cantidad</b></h4>
+													<h4 class="card-subtitle mb-2 text-muted">Cantidad</h4>
 													<div class="input-group mb-3">
 														<input type="text" id="cantidadg" class="form-control form-control-sm col-9">
 														<div class="input-group-append">
@@ -185,7 +193,11 @@
 				    				<table id="dt_pedido" class="table table-striped table-hover table-fw-widget" width="100%">
 											<thead>
 												<tr>
-													<th><input type="checkbox" class="btn btn-outline-primary" name="selprovg" onclick="seleccionartodo()"></th>
+													<th>
+														<label class="custom-control custom-control-sm custom-checkbox">
+                              <input class="custom-control-input" name="selprovg" type="checkbox" onclick="seleccionartodo()"><span class="custom-control-label"></span>
+                            </label>
+													</th>
 													<th>#</th>
 													<th>Marca</th>
 													<th>Modelo</th>
@@ -250,7 +262,7 @@
 				<div class="modal-dialog modal-lg" role="document">
 					<div class="modal-content">
 						<div class="modal-header">
-							<h4 class="modal-title" id="exampleModalLabel">Packing List</h4>
+							<h4 class="modal-title" id="exampleModalLabel"><b>Lista de embarque</b></h4>
 							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 								<span aria-hidden="true">&times;</span>
 							</button>
@@ -285,7 +297,7 @@
 				  	<div class="modal-dialog" role="document">
 				    	<div class="modal-content">
 				      		<div class="modal-header">
-				        		<h4 class="modal-title" id="exampleModalLabel">Información de partida</h4>
+				        		<h4 class="modal-title" id="exampleModalLabel"><b>Información de partida</b></h4>
 				        		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 				          			<span aria-hidden="true">&times;</span>
 				        		</button>
@@ -315,10 +327,10 @@
 					      			<label for="split" class="control-label col-4">Split</label>
 					      			<input type="text" class="form-control form-control-sm col-7" name="split" id="split">
 					      		</div>
-										<!-- <div class="form-group row">
+										<div class="form-group row">
 					      			<label for="entregado" class="control-label col-4">Entregado</label>
 					      			<input type="date" class="form-control form-control-sm col-7" name="entregado" id="entregado">
-					      		</div> -->
+					      		</div>
 										<div class="form-group row">
 					      			<label for="pedimento" class="control-label col-4">Pedimento</label>
 					      			<input type="text" class="form-control form-control-sm col-7" name="pedimento" id="pedimento">
@@ -374,7 +386,7 @@
 			  	<div class="modal-dialog modal-lg" role="document">
 			    	<div class="modal-content">
 			      		<div class="modal-header">
-			        		<h4 class="modal-title" id="exampleModalLabel">Registro de cliente en portal Factura.com</h4>
+			        		<h4 class="modal-title" id="exampleModalLabel"><b>Registro de cliente en portal Factura.com</b></h4>
 			        		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 			          			<span aria-hidden="true">&times;</span>
 			        		</button>
@@ -463,7 +475,7 @@
 			  	<div class="modal-dialog modal-lg" role="document">
 			    	<div class="modal-content">
 			      		<div class="modal-header">
-			        		<h4 class="modal-title" id="exampleModalLabel">Información de factura</h4>
+			        		<h4 class="modal-title" id="exampleModalLabel"><b>Información de factura</b></h4>
 			        		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 			          			<span aria-hidden="true">&times;</span>
 			        		</button>
@@ -478,7 +490,12 @@
 			        				</div>
 			        				<div class="col">
 			        					<label for="tipoDocumento">Tipo de documento <font color="#FF4136">*</font></label>
-			        					<input type="text" id="tipoDocumento" name="tipoDocumento" class="form-control form-control-sm" value="factura" disabled required>
+			        					<!-- <input type="text" id="tipoDocumento" name="tipoDocumento" class="form-control form-control-sm" value="factura" disabled required> -->
+												<select type="text" id="tipoDocumento" name="tipoDocumento" class="form-control form-control-sm">
+													<option value="factura">Factura</option>
+													<option value="factura/pagoanticipado">Factura/Pago anticipado</option>
+													<!-- <option value="refacturacion">Refacturación</option> -->
+												</select>
 			        				</div>
 			        			</div>
 			        			<div class="row form-group">
@@ -675,9 +692,12 @@
 	<script>
 		$(document).ready(function(){
 			App.init();
+			App.megaMenu();
   		App.pageCalendar();
   		App.formElements();
   		App.uiNotifications();
+			nav_active();
+			prettyPrint();
 			var refCotizacion = "<?php echo $_REQUEST['refCotizacion']; ?>";
 			var numeroPedido = "<?php echo $_REQUEST['numeroPedido']; ?>";
 			buscardatos(refCotizacion, numeroPedido);
@@ -690,6 +710,14 @@
 			editarPartida(refCotizacion, numeroPedido);
 			packinglist();
 		});
+
+		function nav_active () {
+      $(".nav-item").removeClass("open section-active");
+      $("#ventas-menu").addClass("open section-active");
+
+      $(".nav-link").removeClass("active");
+			$("#pedidos-menu").addClass("active");
+    }
 
 		$('#modalPackingList').on('show.bs.modal', function (e) {
 			var opcion = "listarpartidas";
@@ -818,7 +846,11 @@
 						"data": {"refCotizacion": refCotizacion, "numeroPedido": numeroPedido, "opcion": opcion}
 					},
 					"columns":[
-						{"data": "check"},
+						{"data": "check",
+							"render": function (data) {
+								return "<label class='custom-control custom-control-sm custom-checkbox'><input name='hproveedor' value='"+data+"' class='custom-control-input' type='checkbox'><span class='custom-control-label'></span></label>";
+							},
+						},
 						{"data": "indice"},
 						{"data": "marca"},
 						{"data": "modelo"},
@@ -838,9 +870,8 @@
 					"columnDefs": [
 						{ "width": "2%", "targets": 0 },
 						{ "width": "2%", "targets": 1 },
-						{ "width": "10%", "targets": 2 },
-						{ "width": "10%", "targets": 3 },
-						// { "width": "10%", "targets": 4 },
+						{ "width": "7%", "targets": 2 },
+						{ "width": "7%", "targets": 3 },
 						{ "visible": false, "targets": 5 },
 						{ "width": "8%", "targets": 6 },
 						{ "width": "5%", "targets": 7 },
@@ -906,13 +937,6 @@
             //   	listar_devolucion(refCotizacion, numeroPedido);
             //   }
             // },
-						// {
-						// 	text: '<i class="fas fa-check-circle fa-sm" aria-hidden="true"></i> Entregado',
-						// 	"className": "btn btn-lg btn-space btn-secondary",
-						// 	action: function ( e, dt, node, config ) {
-						// 		entregado(refCotizacion, numeroPedido, RFC);
-						// 	}
-						// },
 						{
 							extend: 'colvis',
 							columns: ':not(.noVis)',
@@ -926,6 +950,13 @@
                 	$('#modalPackingList').modal('show');
                 }
             },
+						{
+							text: '<i class="fas fa-check-circle fa-sm" aria-hidden="true"></i> Entregado',
+							"className": "btn btn-lg btn-space btn-secondary",
+							action: function ( e, dt, node, config ) {
+								entregado(refCotizacion, numeroPedido, RFC);
+							}
+						},
 						{
 							text: '<i class="fas fa-file-alt fa-sm" aria-hidden="true"></i> Generar factura',
 							"className": "btn btn-lg btn-space btn-primary",
@@ -944,7 +975,7 @@
 
 		var entregado = function(refCotizacion, numeroPedido, RFC){
 			var verificar = 0;
-			$("input[name=hentregado]").each(function (index) {
+			$("input[name=hproveedor]").each(function (index) {
 				if($(this).is(':checked')){
 					verificar++;
 				}
@@ -953,7 +984,7 @@
 				alert("Debes de seleccionar al menos una partida!");
 			}else{
 				var herramienta = new Array();
-				$("input[name=hentregado]").each(function (index) {
+				$("input[name=hproveedor]").each(function (index) {
 					if($(this).is(':checked')){
 						herramienta.push($(this).val());
 					}
@@ -1115,7 +1146,7 @@
 
 					request.open('GET', apiConfig.enlace + 'api/v3/cfdi33/list');
 
-					request.setRequestHeader('Access-Control-Allow-Origin', '*');
+					// request.setRequestHeader('Access-Control-Allow-Origin', '*');
 					request.setRequestHeader('Content-Type', 'application/json');
 					request.setRequestHeader('F-API-KEY', apiConfig.apiKey);
 					request.setRequestHeader('F-SECRET-KEY', apiConfig.secretKey);
@@ -1318,15 +1349,15 @@
 					});
 					var opcion = "proveedor";
 					console.log(herramienta);
-					$.ajax({
-						method: "POST",
-						url: "guardar.php",
-						data: {"opcion": opcion, "herramienta": JSON.stringify(herramienta), "proveedor": proveedor, "refCotizacion": refCotizacion, "numeroPedido": numeroPedido},
-					}).done( function( info ){
-						var json_info = JSON.parse( info );
-						listar_partidas(refCotizacion, numeroPedido, RFC);
-						mostrar_mensaje(json_info);
-					});
+					// $.ajax({
+					// 	method: "POST",
+					// 	url: "guardar.php",
+					// 	data: {"opcion": opcion, "herramienta": JSON.stringify(herramienta), "proveedor": proveedor, "refCotizacion": refCotizacion, "numeroPedido": numeroPedido},
+					// }).done( function( info ){
+					// 	var json_info = JSON.parse( info );
+					// 	listar_partidas(refCotizacion, numeroPedido, RFC);
+					// 	mostrar_mensaje(json_info);
+					// });
 				}
 			});
 		}
@@ -1531,12 +1562,47 @@
 				request.setRequestHeader('F-API-KEY', apiConfig.apiKey);
 				request.setRequestHeader('F-SECRET-KEY', apiConfig.secretKey);
 
+				request.onload = function() {
+					var responseText = request.responseText;
+					console.log(responseText);
+				};
+
+				request.onerror = function(xhr) {
+					$.gritter.add({
+						title: 'Error!',
+						text: 'Ocurrió un problema en la conexión de "Factura.com".',
+						class_name: 'color danger'
+					});
+					$(".texto1").fadeOut(300, function(){
+						$(this).html("");
+						$(this).fadeIn(300);
+					});
+					setTimeout(function () {
+						$(".texto1").append("<div class='text-danger'><span class='modal-main-icon mdi mdi-close-circle-o'></span></div>");
+						$(".texto1").append("<h3>Error!</h3>");
+						$(".texto1").append("<h4>Ocurrió un problema al conectar a  portal 'Factura.com'.</h4>");
+					}, 350);
+					setTimeout( function () {
+						$("#mod-success").modal("hide");
+						$(".texto1").html("");
+						$(".texto1").append("<br><br>");
+						$(".texto1").append("<h3>Espere un momento...</h3>");
+						$(".texto1").append("<h4>Se está generando la factura</h4>");
+						$(".texto1").append("<br>");
+						$(".texto1").append("<div class='text-center'><div class='be-spinner'><svg width='40px' height='40px' viewBox='0 0 66 66' xmlns='http://www.w3.org/2000/svg'><circle fill='none' stroke-width='4' stroke-linecap='round' cx='33' cy='33' r='30' class='circle'></circle></svg></div></div></div>");
+						$(".texto1").append("<br>");
+						$(".texto1").append("<br>");
+					}, 3000);
+				};
+
 				request.onreadystatechange = function () {
 					if (this.readyState === 4) {
 				    console.log('Status:', this.status);
 			    	console.log('Headers:', this.getAllResponseHeaders());
 			    	console.log('Body:', this.responseText);
 						var data = JSON.parse(this.responseText);
+
+
 						if (data.status == 0){
 							$(".texto1").fadeOut(300, function(){
 								$(this).html("");
@@ -1546,7 +1612,7 @@
 								$(".texto1").append("<div class='text-danger'><span class='modal-main-icon mdi mdi-close-circle-o'></span></div>");
 								$(".texto1").append("<h3>Error!</h3>");
 								$(".texto1").append("<h4>Ocurrió un problema al conectar a  portal 'Factura.com'.</h4>");
-							}, 425);
+							}, 350);
 							setTimeout( function () {
 								$("#mod-success").modal("hide");
 								$(".texto1").html("");
@@ -1557,7 +1623,7 @@
 								$(".texto1").append("<div class='text-center'><div class='be-spinner'><svg width='40px' height='40px' viewBox='0 0 66 66' xmlns='http://www.w3.org/2000/svg'><circle fill='none' stroke-width='4' stroke-linecap='round' cx='33' cy='33' r='30' class='circle'></circle></svg></div></div></div>");
 								$(".texto1").append("<br>");
 								$(".texto1").append("<br>");
-							}, 5000);
+							}, 3000);
 						}else if (data.status == "error") {
 							$(".texto1").fadeOut(300, function(){
 								$(this).html("");
@@ -1720,21 +1786,22 @@
 							class_name: 'color warning'
 						});
 					}else{
-						// $(".texto1").fadeOut(300, function(){
-						// 	$(this).html("");
-						// 	$(this).fadeIn(300);
-						// });
-						// setTimeout(function () {
-						// 	$(".texto1").append("<div class='text-success'><span class='modal-main-icon mdi mdi-check-circle'></span></div>");
-						// 	$(".texto1").append("<h3>Correcto!</h3>");
-						// 	$(".texto1").append("<h4>La factura se generó correctamente en el portal 'Factura.com'.</h4>");
-						// 	$(".texto1").append("<div class='text-center'>");
-						// 	$(".texto1").append("<p>En un momento se descargará el archivo PDF.</p>");
-						// 	$(".texto1").append("</div>");
-						// }, 500);
+						$(".texto1").fadeOut(300, function(){
+							$(this).html("");
+							$(this).fadeIn(300);
+						});
+						setTimeout(function () {
+							$(".texto1").append("<div class='text-success'><span class='modal-main-icon mdi mdi-check-circle'></span></div>");
+							$(".texto1").append("<h3>Correcto!</h3>");
+							$(".texto1").append("<h4>La factura se generó correctamente en el portal 'Factura.com'.</h4>");
+							$(".texto1").append("<div class='text-center'>");
+							$(".texto1").append("<p>En un momento se descargará el archivo PDF.</p>");
+							$(".texto1").append("</div>");
+						}, 350);
 						var UIDFactura = data.uid;
 						var UUIDFactura = data.UUID;
-						guardarFactura(numeroPedido, refCotizacion, herramienta, UIDFactura, UUIDFactura);
+						var tipoDocumento = $("#frmInformacionFactura #tipoDocumento").val();
+						guardarFactura(numeroPedido, refCotizacion, herramienta, tipoDocumento, UIDFactura, UUIDFactura);
 					}
 				}
 			};
@@ -1746,14 +1813,17 @@
 				dataType: "json",
 				data: {"opcion": opcion, "herramienta": JSON.stringify(herramienta), "refCotizacion": refCotizacion, "numeroPedido": numeroPedido}
 			}).done( function( conceptos ){
-				// console.log(conceptos);
+				var tipoDocumento = $("#frmInformacionFactura #tipoDocumento").val();
+				if (tipoDocumento == "factura" || tipoDocumento == "factura/pagoanticipado") {
+					tipoDocumento = "factura";
+				}
 				var fecha = "<?php echo date("Y-m-d")."T".date("H:i:s"); ?>";
 				var body = {
 					'Receptor': {
 						'UID': UID,
 						'ResidenciaFiscal': '',
 					},
-					'TipoDocumento': $("#frmInformacionFactura #tipoDocumento").val(),
+					'TipoDocumento': tipoDocumento,
 					'Conceptos': conceptos.data,
 					'UsoCFDI': conceptos.cfdi,
 					'Serie': apiConfig.serie,
@@ -1772,7 +1842,7 @@
 			});
 		}
 
-		function guardarFactura(numeroPedido, refCotizacion, herramienta, UIDFactura, UUIDFactura) {
+		function guardarFactura(numeroPedido, refCotizacion, herramienta, tipoDocumento, UIDFactura, UUIDFactura) {
 			var request = new XMLHttpRequest();
 
 			request.open('GET', apiConfig.enlace+'api/v3/cfdi33/list');
@@ -1800,13 +1870,13 @@
 								method: "POST",
 								url: "guardar.php",
 								dataType: "json",
-								data: {"opcion": opcion, "folio": folio, "ordenpedido": ordenpedido, "total": total, "status": status, "fecha": fecha, "UIDFactura": UIDFactura, "UUIDFactura": UUIDFactura, "cliente": cliente}
+								data: {"opcion": opcion, "folio": folio, "ordenpedido": ordenpedido, "total": total, "status": status, "fecha": fecha, "tipoDocumento": tipoDocumento, "UIDFactura": UIDFactura, "UUIDFactura": UUIDFactura, "cliente": cliente}
 							}).done( function( data ){
 								console.log(data);
 								mostrar_mensaje(data);
 							});
 
-							quitarStock(numeroPedido, refCotizacion, herramienta, folio);
+							quitarStock(numeroPedido, refCotizacion, herramienta, folio, tipoDocumento);
 							buscardatos(refCotizacion, numeroPedido);
 							descargarPDF(UID);
 						}
@@ -1816,12 +1886,12 @@
 			request.send();
 		}
 
-		function quitarStock(numeroPedido, refCotizacion, herramienta, folio){
+		function quitarStock(numeroPedido, refCotizacion, herramienta, folio, tipoDocumento){
 			$.ajax({
 				method: "POST",
 				url: "guardar.php",
 				dataType: "json",
-				data: {"opcion": opcion = "quitarstock", "numeroPedido": numeroPedido, "refCotizacion": refCotizacion, "folio": folio, "herramienta": JSON.stringify(herramienta)},
+				data: {"opcion": opcion = "quitarstock", "numeroPedido": numeroPedido, "refCotizacion": refCotizacion, "folio": folio, "herramienta": JSON.stringify(herramienta), "tipoDocumento": tipoDocumento},
 			}).done( function( data ){
 				console.log(data);
 				mostrar_mensaje(data);

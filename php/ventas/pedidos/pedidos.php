@@ -90,14 +90,14 @@
  																					 <label class="custom-control custom-radio">
  																						 <input class="custom-control-input" type="radio" name="filtroestado" value="sinproveedor" checked=""><span class="custom-control-label">Sin proveedor</span>
  																					 </label>
- 																					 <label class="custom-control custom-radio">
- 																						 <input class="custom-control-input" type="radio" name="filtroestado" value="noentregado"><span class="custom-control-label">No entregado</span>
- 																					 </label>
+																					 <label class="custom-control custom-radio">
+																						 <input class="custom-control-input" type="radio" name="filtroestado" value="facturadonopagado"><span class="custom-control-label">Facturado no pagado</span>
+																					 </label>
  																				 	</div>
 																					<div class="col-6">
 																						<label class="custom-control custom-radio">
-										                          <input class="custom-control-input" type="radio" name="filtroestado" value="facturadonopagado"><span class="custom-control-label">Facturado no pagado</span>
-										                        </label>
+																							<input class="custom-control-input" type="radio" name="filtroestado" value="noentregado"><span class="custom-control-label">No entregado</span>
+																						</label>
 										                        <label class="custom-control custom-radio">
 										                          <input class="custom-control-input" type="radio" name="filtroestado" value="terminado"><span class="custom-control-label">Terminado</span>
 										                        </label>
@@ -187,9 +187,9 @@
   		App.uiNotifications();
 			nav_active();
 			prettyPrint();
-			listar_sinproveedor();
 			$("#filtromes").val("<?php echo $mes; ?>").change();
 			$("#filtroano").val("<?php echo $ano; ?>").change();
+			listar_pedidos();
 		});
 
 		function nav_active () {
@@ -202,22 +202,27 @@
 
 		$("#filtromes").on("change", function (){
 			listar_pedidos();
+			$('#dt_pedidos').DataTable().ajax.reload();
 		});
 
 		$("#filtroano").on("change", function (){
 			listar_pedidos();
+			$('#dt_pedidos').DataTable().ajax.reload();
 		});
 
 		$('input[name=filtrotipo]').change(function() {
 			listar_pedidos();
+			$('#dt_pedidos').DataTable().ajax.reload();
 		});
 
 		$('input[name=filtroestado]').change(function() {
 			listar_pedidos();
+			$('#dt_pedidos').DataTable().ajax.reload();
 		});
 
 		$("#filtroreferencia").on("change", function (){
 			listar_pedidos();
+			$('#dt_pedidos').DataTable().ajax.reload();
 		});
 
 		function listar_pedidos () {
@@ -286,7 +291,11 @@
 							}
 						},
 					},
-					{"defaultContent": "<div class='invoice-footer'><button class='verpedido btn btn-lg btn-primary'><i class='fas fa-edit fa-sm' aria-hidden='true'></i></button></div>"}
+					{"defaultContent": "",
+						"render": function (data) {
+							return "<div class='invoice-footer'><button class='verpedido btn btn-lg btn-primary'><i class='fas fa-edit fa-sm' aria-hidden='true'></i></button></div>";
+						},
+					}
 				],
 				"columnDefs": [
 					{ "width": "10%", "targets": 0 },

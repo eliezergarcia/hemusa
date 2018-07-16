@@ -110,7 +110,7 @@
 				$informacion['factura'] = $facturas;
 				$informacion['pagado'] = $data['pagado'];
 				$informacion['moneda'] = $data['moneda'];
-				$informacion['total'] = $data['total'];
+				$informacion['total'] = round($data['total'] + ($data['total']*.16),2);
 				$informacion['paqueteria'] = $data['paqueteria'];
 				$informacion['numeroGuia'] = $data['numeroGuia'];
 				$informacion['tipoCambio'] = $tipoCambio;
@@ -203,7 +203,7 @@
 
 	function buscarpartidasfacturar($partidas, $cotizacionRef, $numeroPedido, $conexion_usuarios){
 		foreach ($partidas as &$id) {
-			$query = "SELECT * FROM cotizacionherramientas WHERE id = '$id'";
+			$query = "SELECT cotizacionherramientas.*, unidades.Clave FROM cotizacionherramientas INNER JOIN unidades ON unidades.descripcion=cotizacionherramientas.Unidad WHERE id = '$id'";
 			$resultado = mysqli_query($conexion_usuarios, $query);
 			$base = 0;
 			while ($data = mysqli_fetch_assoc($resultado)) {
@@ -234,10 +234,10 @@
 						'ClaveProdServ' => $data['ClaveProductoSAT'],
 						'NoIdentificacion' => $data['modelo'],
 						'Cantidad' => $data['cantidad'],
-						'ClaveUnidad' => "E48",
-						'Unidad' => "Unidad de servicio",
+						'ClaveUnidad' => $data['Clave'],
+						'Unidad' => $data['Unidad'],
 						'ValorUnitario' => round($data['precioLista'],2),
-						'Descripcion' => $data['descripcion']." Aduana: Nuevo Laredo, "."Fecha: ".date("d-m-Y"),
+						'Descripcion' => utf8_encode($data['descripcion'])." Aduana: Nuevo Laredo, "."Fecha: ".date("d-m-Y"),
 						'Descuento' => 0,
 						'Impuestos' => $traslados,
 						'Aduana' => $data['Pedimento']
@@ -247,10 +247,10 @@
 						'ClaveProdServ' => $data['ClaveProductoSAT'],
 						'NoIdentificacion' => $data['modelo'],
 						'Cantidad' => $data['cantidad'],
-						'ClaveUnidad' => "E48",
-						'Unidad' => "Unidad de servicio",
+						'ClaveUnidad' => $data['Clave'],
+						'Unidad' => $data['Unidad'],
 						'ValorUnitario' => round($data['precioLista'],2),
-						'Descripcion' => $data['descripcion'],
+						'Descripcion' => utf8_encode($data['descripcion']),
 						'Descuento' => 0,
 						'Impuestos' => $traslados
 						);
@@ -399,7 +399,11 @@
 			$idcfdi = $data['IdUsoCFDI'];
 			$idformapago = $data['IdFormaPago'];
 			$idmetodopago = $data['IdMetodoPago'];
-			$arreglo['condpago'] = "Pago en ".$data['CondPago']." dias";
+			if ($data['CondPago'] == 0 || $data['CondPago'] == "") {
+				$arreglo['condpago'] = "Contado";
+			}else{
+				$arreglo['condpago'] = "Pago en ".$data['CondPago']." dias";
+			}
 		}
 		//
 		$query = "SELECT * FROM usocfdi WHERE IdUsoCFDI = '$idcfdi'";

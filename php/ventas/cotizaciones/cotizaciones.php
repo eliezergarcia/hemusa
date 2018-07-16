@@ -570,7 +570,7 @@
 							}, 350);
 							setTimeout(function () {
 								window.location= "verCotizacion.php?numero="+info.cotizacion;
-							}, 1000);
+							}, 2000);
 						}else{
 							$("#mod-success").modal("hide");
 							mostrar_mensaje(info);

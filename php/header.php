@@ -434,7 +434,7 @@ if ($tipomenu != 4){
         </div>
       </nav>
       <nav class="navbar navbar-expand-lg be-sub-header row justify-content-center">
-        <div class="col-9" style="padding: 10px 20px 0;">
+        <div class="col-8" style="padding: 10px 20px 0;">
           <!--+mega-menu('dashboard1','home')-->
                 <!-- Mega Menu structure-->
                 <nav class="navbar navbar-expand-md">
