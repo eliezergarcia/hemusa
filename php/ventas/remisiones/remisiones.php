@@ -290,7 +290,6 @@
   		App.uiNotifications();
 			nav_active();
 			prettyPrint();
-			listar();
 			guardar();
 			// eliminar();
       $("#filtromes").val("<?php echo $mes; ?>").change();
@@ -307,30 +306,30 @@
 
     $("#filtromes").on("change", function (){
 			listar();
-			$('#dt_remisiones').DataTable().ajax.reload();
+			// $('#dt_remisiones').DataTable().ajax.reload();
 		});
 
 		$("#filtroano").on("change", function (){
 			listar();
-			$('#dt_remisiones').DataTable().ajax.reload();
+			// $('#dt_remisiones').DataTable().ajax.reload();
 		});
 
 		$('input[name=filtrotipo]').change(function() {
 			listar();
-			$('#dt_remisiones').DataTable().ajax.reload();
+			// $('#dt_remisiones').DataTable().ajax.reload();
 		});
 
 		$('input[name=filtroestado]').change(function() {
 			listar();
-			$('#dt_remisiones').DataTable().ajax.reload();
+			// $('#dt_remisiones').DataTable().ajax.reload();
 		});
 
 		$("#filtroreferencia").on("change", function (){
 			listar();
-			$('#dt_remisiones').DataTable().ajax.reload();
+			// $('#dt_remisiones').DataTable().ajax.reload();
 		});
 
-		var  listar = function(){
+		var listar = function(){
       var filtromes = $("#filtromes").val();
 			var filtroano = $("#filtroano").val();
 			var filtroreferencia = $("#filtroreferencia").val();
@@ -351,7 +350,10 @@
 					{"data": "cantidad"},
 					{"data": "suma"},
 					{"data": "facturas"},
-					{"defaultContent": "<div class='invoice-footer'><button class='verRemision btn btn-lg btn-primary'><i class='fas fa-edit fa-sm' aria-hidden='true'></i></button></div>"}
+					{"defaultContent": null,
+            "render": function (data, type, row) {
+              return "<div class='invoice-footer'><button class='verRemision btn btn-lg btn-primary'><i class='fas fa-edit fa-sm' aria-hidden='true'></i></button></div>"},
+            }
 				],
         "createdRow": function ( row, data, index ) {
           if ( data.facturas == "Pendiente" ) {
@@ -545,12 +547,10 @@
             $('.modal').modal('hide');
             $("#mod-success").modal("show");
             if (info.respuesta == "BIEN") {
-              setTimeout(function () {
-                $(".texto1").fadeOut(300, function(){
-                  $(this).html("");
-                  $(this).fadeIn(300);
-                });
-              }, 2000);
+              $(".texto1").fadeOut(300, function(){
+                $(this).html("");
+                $(this).fadeIn(300);
+              });
               setTimeout(function () {
                 $(".texto1").append("<div class='text-success'><span class='modal-main-icon mdi mdi-check-circle'></span></div>");
                 $(".texto1").append("<h3>Correcto!</h3>");
@@ -558,15 +558,13 @@
                 $(".texto1").append("<div class='text-center'>");
                 $(".texto1").append("<p>Esperé un momento será redireccionado...</p>");
                 $(".texto1").append("</div>");
-              }, 2500);
+              }, 350);
               setTimeout(function () {
                 window.location= "verRemision.php?remision="+info.remision;
-              }, 4000);
-            }else{
-              setTimeout(function () {
-                $("#mod-success").modal("hide");
-                mostrar_mensaje(info);
               }, 2000);
+            }else{
+              $("#mod-success").modal("hide");
+              mostrar_mensaje(info);
             }
           }
 				});

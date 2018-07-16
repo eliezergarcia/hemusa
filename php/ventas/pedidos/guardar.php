@@ -673,9 +673,9 @@
 	}
 
 	function guardar_factura($folio, $ordenpedido, $total, $status, $fecha, $tipoDocumento, $uidfactura, $uuidfactura, $cliente, $conexion_usuarios){
-		$folio = str_replace(".","",$folio);
-		$folio = str_replace(",","",$folio);
-		$folio = str_replace("OC","",$folio);
+		$ordenpedido = str_replace(".","",$ordenpedido);
+		$ordenpedido = str_replace(",","",$ordenpedido);
+		$ordenpedido = str_replace("OC","",$ordenpedido);
 
 		$query = "INSERT INTO facturas (folio, tipoDocumento, ordenpedido, total, status, fecha, UID, UUID, cliente) VALUES ('$folio', '$tipoDocumento', '$ordenpedido', '$total', '$status', '$fecha', '$uidfactura', '$uuidfactura', '$cliente')";
 		$resultado = mysqli_query($conexion_usuarios, $query);

@@ -1,10 +1,17 @@
 <?php
-	require_once('../../conexion.php'); // Llamada a connect.php para establecer conexi�n con la BD
-	require_once('../../sesion.php'); // Llamada a sesion.php para validar si hay sesi�n inciada
+	require_once('../../conexion.php');
+	require_once('../../sesion.php');
 	error_reporting(0);
-	$resultado = mysqli_query($conexion_usuarios, "SELECT cliente FROM cotizacion WHERE remision='".$_REQUEST['remision']."'");
+
+	$resultado = mysqli_query($conexion_usuarios, "SELECT cliente FROM remisiones WHERE remision='".$_REQUEST['remision']."'");
 	while($data = mysqli_fetch_array($resultado)){
 		$idcliente = $data['cliente'];
+	}
+	if (mysqli_num_rows($resultado) < 1) {
+		$resultado = mysqli_query($conexion_usuarios, "SELECT cliente FROM cotizacion WHERE remision='".$_REQUEST['remision']."'");
+		while($data = mysqli_fetch_array($resultado)){
+			$idcliente = $data['cliente'];
+		}
 	}
 	$resultado = mysqli_query($conexion_usuarios, "SELECT * FROM contactos WHERE id='".$idcliente."'");
 	while($data = mysqli_fetch_array($resultado)){
@@ -23,7 +30,7 @@
 </html>
 <html>
 <head>
-	<title>Pedido</title>
+	<title>Remisión</title>
 	<?php include('../../enlacescss.php'); ?>
 </head>
 <body>
@@ -41,200 +48,220 @@
 			  	</ol>
 				</nav>
       </div>
-      <div class="main-content container-fluid">
-				<div class="row full-calendar">
+			<div class="main-content container-fluid">
+      	<div class="row full-calendar">
         	<div class="col-lg-12">
-            <div class="card card-fullcalendar">
-              <div class="card-body">
-								<br>
-								<div class="row align-items-start justify-content-around">
-									<div class="col-4 row justify-content-center">
-										<div class="col">
-												<h4><b>Cliente</b></h4>
-												<h5 style="font-size: 17px;"><?php echo $nombrecliente; ?></h5>
-												<h4 class="card-subtitle mb-2 text-muted">RFC</h4>
-												<h5 style="font-size: 17px;"><?php echo $rfc; ?></h5>
-												<h4 class="card-subtitle mb-2 text-muted">Calle, colonia</h4>
-												<h5 style="font-size: 17px;"><?php echo $calle.", ".$colonia; ?></h5>
-												<h4 class="card-subtitle mb-2 text-muted">Ciudad, estado, c.p.</h4>
-												<h5 style="font-size: 17px;"><?php echo $ciudad.", ".$estado.", ".$cp; ?></h5><br><br>
-										</div>
-									</div>
-									<div class="col row justify-content-start">
-										<div class="col-3 form-group">
-											<h4><b>Ref. Cotización</b></h4>
-											<label id="refCotizacion"></label>
-										</div>
-										<div class="col-3 form-group">
-											<h4><b>Fecha</b></h4>
-											<label id="fecha"></label>
-										</div>
-										<div class="col-3 form-group">
-											<h4><b>Vendedor</b></h4>
-											<label id="vendedor"></label>
-										</div>
-										<div class="col-3 form-group">
-											<h4><b>Orden de Compra</b></h4>
-											<label id="ordenCompra"></label>
-										</div>
-										<div class="col-3 form-group">
-											<h4><b>Factura</b></h4>
-											<label id="factura"></label>
-										</div>
-										<div class="col-3 form-group">
-											<h4><b>Pagado</b></h4>
-											<label id="pagado"></label>
-										</div>
-										<div class="col-3 form-group">
-											<h4><b>Moneda </b> <a id="cambiarmoneda" href="#" class="text-primary"><i class="fas fa-sync"></i></a></h4>
-											<select id="moneda" class="form-control form-control-sm select2">
-												<option value="usd" selected>USD</option>
-												<option value="mxn">MXN</option>
-											</select>
-										</div>
-										<div class="col-3 form-group">
-											<h4><b>Paquetería </b><a id="cambiarpaqueteria" href="#" class="text-primary"><i class="fas fa-sync"></i></a></h4>
-											<select id="paqueteria" class="form-control form-control-sm select2">
-											</select>
-										</div>
-										<div class="col-3 form-group">
-											<h4><b>No. de guía</b></h4>
-											<div class="input-group mb-3">
-												<input type="text" id="numeroGuia" class="form-control form-control-sm">
-												<div class="input-group-append">
-													<button id="cambiarng" type="button" class="btn btn-primary"><i class="fas fa-pencil-alt fa-sm" aria-hidden="true"></i></button>
+            	<div class="card card-fullcalendar">
+              		<div class="card-body">
+              			<br>
+										<div class="row align-items-start justify-content-around">
+											<div class="col-4 row justify-content-center">
+												<div class="col">
+													<div class="form-group">
+														<h4 class="card-subtitle mb-2 text-muted">Cliente</h4>
+														<h5 style="font-size: 17px;"><?php echo $nombrecliente; ?></h5>
+													</div>
+													<div class="form-group">
+														<h4 class="card-subtitle mb-2 text-muted">RFC</h4>
+														<h5 style="font-size: 17px;"><?php echo $rfc; ?></h5>
+													</div>
+													<div class="form-group">
+														<h4 class="card-subtitle mb-2 text-muted">Calle, colonia</h4>
+														<h5 style="font-size: 17px;"><?php echo $calle.", ".$colonia; ?></h5>
+													</div>
+													<div class="form-group">
+														<h4 class="card-subtitle mb-2 text-muted">Ciudad, estado, c.p.</h4>
+														<h5 style="font-size: 17px;"><?php echo $ciudad.", ".$estado.", ".$cp; ?></h5><br><br>
+													</div>
 												</div>
 											</div>
-										</div>
-										<div class="col-3 form-group">
-											<h4><b>Proveedor </b><a id="cambiarproveedor" href="#" class="text-primary"><i class="fas fa-sync"></i></a></h4>
-											<div>
-												<select name="proveedorg" id="proveedorg" class="form-control form-control-sm select2"></select>
-											</div>
-										</div>
-										<div class="col-3 form-group">
-											<h4><b>Cantidad</b></h4>
-											<div class="input-group mb-3">
-												<input type="text" id="cantidadg" class="form-control form-control-sm">
-												<div class="input-group-append">
-													<button id="cambiarcantidadg" type="button" class="btn btn-primary"><i class="fas fa-pencil-alt fa-sm" aria-hidden="true"></i></button>
+											<div class="col row justify-content-start">
+												<div class="col-3 form-group">
+													<h4 class="card-subtitle mb-2 text-muted">Referencia cotización</h4>
+													<label id="refCotizacion"></label>
 												</div>
+												<div class="col-3 form-group">
+													<h4 class="card-subtitle mb-2 text-muted">Fecha</h4>
+													<label id="fecha"></label>
+												</div>
+												<div class="col-3 form-group">
+													<h4 class="card-subtitle mb-2 text-muted">Vendedor</h4>
+													<label id="vendedor"></label>
+												</div>
+												<div class="col-3 form-group">
+													<h4 class="card-subtitle mb-2 text-muted">Remisión</h4>
+													<label id="remision"></label>
+												</div>
+												<div class="col-3 form-group">
+													<h4 class="card-subtitle mb-2 text-muted">Facturas</h4>
+													<label id="factura"></label>
+												</div>
+												<div class="col-3 form-group">
+													<h4 class="card-subtitle mb-2 text-muted">Pagado</h4>
+													<label id="pagado"></label>
+												</div>
+												<div class="col-3 form-group">
+													<h4 class="card-subtitle mb-2 text-muted">Moneda <a id="cambiarmoneda" href="#" class="text-primary"><i class="fas fa-sync"></i></a></h4>
+													<select id="moneda" class="form-control form-control-sm col-10">
+														<option value="usd" selected>USD</option>
+														<option value="mxn">MXN</option>
+													</select>
+												</div>
+												<div class="col-3 form-group">
+													<h4 class="card-subtitle mb-2 text-muted">Paquetería <a id="cambiarpaqueteria" href="#" class="text-primary"><i class="fas fa-sync"></i></a></h4>
+													<select id="paqueteria" class="form-control form-control-sm col-10">
+													</select>
+												</div>
+												<div class="col-3 form-group">
+													<h4 class="card-subtitle mb-2 text-muted">No. guía</h4>
+													<div class="input-group mb-3">
+														<input type="text" id="numeroGuia" class="form-control form-control-sm col-9">
+														<div class="input-group-append">
+															<button id="cambiarng" type="button" class="btn btn-primary"><i class="fas fa-pencil-alt fa-sm" aria-hidden="true"></i></button>
+														</div>
+													</div>
+												</div>
+												<div class="col-3 form-group">
+													<h4 class="card-subtitle mb-2 text-muted">Forma de pago <a id="cambiarformapago" href="#" class="text-primary"><i class="fas fa-sync"></i></a></h4>
+													<div>
+												  	<select type="text" id="formapago" name="formapago" class="form-control form-control-sm col-10">
+														<option value="1">Efectivo</option>
+														<option value="2">Cheque nominativo</option>
+														<option value="3">Transferencia electrónica de fondos</option>
+														<option value="4">Tarjeta de crédito</option>
+														<option value="5">Monedero electrónico</option>
+														<option value="6">Dinero electrónico</option>
+														<option value="7">Vales de despensa</option>
+														<option value="8">Tarjeta de débito</option>
+														<option value="9">Tarjeta de servicio</option>
+														<option value="10">Otros</option>
+														<option value="11">NA</option>
+													</select>
+									      	</div>
+												</div>
+												<div class="col-3 form-group">
+													<h4 class="card-subtitle mb-2 text-muted">Método de pago <a id="cambiarmetodopago" href="#" class="text-primary"><i class="fas fa-sync"></i></a></h4>
+													<div>
+														<select type="text" id="metodopago" name="metodopago" class="form-control form-control-sm col-10">
+															<option value="1">Pago en una sola exhibición</option>
+															<option value="2">Pago en parcialidades o diferido</option>
+														</select>
+													</div>
+												</div>
+												<div class="col-3 form-group">
+													<h4 class="card-subtitle mb-2 text-muted">Uso de CFDI <a id="cambiarusocfdi" href="#" class="text-primary"><i class="fas fa-sync"></i></a></h4>
+													<div>
+														<select id="cfdi" name="cfdi" class="form-control form-control-sm col-10">
+															<option value="1">Adquisición de mercancias</option>
+															<option value="2">Devoluciones, descuentos o bonificaciones</option>
+															<option value="3">Gastos en general</option>
+															<option value="4">Construcciones</option>
+															<option value="5">Mobiliario y equipo de oficina por inversiones</option>
+															<option value="6">Equipo de transporte</option>
+															<option value="7">Equipo de computo y accesorios</option>
+															<option value="8">Dados, troqueles, moldes, matrices y herramental</option>
+															<option value="9">Comunicaciones telefónicas</option>
+															<option value="10">Comunicaciones satelitales</option>
+															<option value="11">Otra maquinaria y equipo</option>
+															<option value="12">Horarios médicos, dentales y gastos hospitalarios</option>
+															<option value="13">Gastos médicos por incapacidad o discapacidad</option>
+															<option value="14">Gastos funerales</option>
+															<option value="15">Donativos</option>
+															<option value="16">Intereses reales efectivamente pagados por créditos hipotecarios</option>
+															<option value="17">Aportaciones voluntarias al SAR</option>
+															<option value="18">Primas por seguros de gastos médicos</option>
+															<option value="19">Gastos de transportación escolar obligatoria</option>
+															<option value="20">Depósitos en cuentas para el ahorro, primas que tengan como base planes de pensiones</option>
+															<option value="21">Pagos por servicios educativos (colegiaturas)</option>
+															<option value="22">Por definir</option>
+														</select>
+													</div>
+												</div>
+												<!-- <div class="col-3 form-group">
+													<h4 class="card-subtitle mb-2 text-muted">Proveedor <a id="cambiarproveedor" href="#" class="text-primary"><i class="fas fa-sync"></i></a></h4>
+													<div>
+														<select name="proveedorg" id="proveedorg" class="form-control form-control-sm col-10"></select>
+													</div>
+												</div>
+												<div class="col-3 form-group">
+													<h4 class="card-subtitle mb-2 text-muted">Cantidad</h4>
+													<div class="input-group mb-3">
+														<input type="text" id="cantidadg" class="form-control form-control-sm col-9">
+														<div class="input-group-append">
+															<button id="cambiarcantidadg" type="button" class="btn btn-primary"><i class="fas fa-pencil-alt fa-sm" aria-hidden="true"></i></button>
+														</div>
+													</div>
+												</div> -->
 											</div>
 										</div>
-										<div class="col-3 form-group">
-											<h4><b>Forma de pago </b><a id="cambiarformapago" href="#" class="text-primary"><i class="fas fa-sync"></i></a></h4>
-											<div>
-												<select type="text" id="formapago" name="formapago" class="form-control form-control-sm select2">
-												<option value="1">Efectivo</option>
-												<option value="2">Cheque nominativo</option>
-												<option value="3">Transferencia electrónica de fondos</option>
-												<option value="4">Tarjeta de crédito</option>
-												<option value="5">Monedero electrónico</option>
-												<option value="6">Dinero electrónico</option>
-												<option value="7">Vales de despensa</option>
-												<option value="8">Tarjeta de débito</option>
-												<option value="9">Tarjeta de servicio</option>
-												<option value="10">Otros</option>
-												<option value="11">NA</option>
-											</select>
-											</div>
-										</div>
-										<div class="col-3 form-group">
-											<h4><b>Método de pago </b><a id="cambiarmetodopago" href="#" class="text-primary"><i class="fas fa-sync"></i></a></h4>
-											<div>
-												<select type="text" id="metodopago" name="metodopago" class="form-control form-control-sm select2">
-													<option value="1">Pago en una sola exhibición</option>
-													<option value="2">Pago en parcialidades o diferido</option>
-												</select>
-											</div>
-										</div>
-										<div class="col-3 form-group">
-											<h4><b>Uso de CFDI </b><a id="cambiarusocfdi" href="#" class="text-primary"><i class="fas fa-sync"></i></a></h4>
-											<div>
-												<select id="cfdi" name="cfdi" class="form-control form-control-sm select2">
-													<option value="1">Adquisición de mercancias</option>
-													<option value="2">Devoluciones, descuentos o bonificaciones</option>
-													<option value="3">Gastos en general</option>
-													<option value="4">Construcciones</option>
-													<option value="5">Mobiliario y equipo de oficina por inversiones</option>
-													<option value="6">Equipo de transporte</option>
-													<option value="7">Equipo de computo y accesorios</option>
-													<option value="8">Dados, troqueles, moldes, matrices y herramental</option>
-													<option value="9">Comunicaciones telefónicas</option>
-													<option value="10">Comunicaciones satelitales</option>
-													<option value="11">Otra maquinaria y equipo</option>
-													<option value="12">Horarios médicos, dentales y gastos hospitalarios</option>
-													<option value="13">Gastos médicos por incapacidad o discapacidad</option>
-													<option value="14">Gastos funerales</option>
-													<option value="15">Donativos</option>
-													<option value="16">Intereses reales efectivamente pagados por créditos hipotecarios</option>
-													<option value="17">Aportaciones voluntarias al SAR</option>
-													<option value="18">Primas por seguros de gastos médicos</option>
-													<option value="19">Gastos de transportación escolar obligatoria</option>
-													<option value="20">Depósitos en cuentas para el ahorro, primas que tengan como base planes de pensiones</option>
-													<option value="21">Pagos por servicios educativos (colegiaturas)</option>
-													<option value="22">Por definir</option>
-												</select>
-											</div>
-										</div>
-									</div>
-								</div>
-								<hr>
+										<hr>
+				    			<!-- Tabla de partidas -->
+				    				<br><br><br>
+				    				<table id="dt_pedido" class="table table-striped table-hover table-fw-widget" width="100%">
+											<thead>
+												<tr>
+													<th>
+														<label class="custom-control custom-control-sm custom-checkbox">
+                              <input class="custom-control-input" name="selprovg" type="checkbox" onclick="seleccionartodo()"><span class="custom-control-label"></span>
+                            </label>
+													</th>
+													<th>#</th>
+													<th>Marca</th>
+													<th>Modelo</th>
+													<th>Descripcion</th>
+													<th>No. Serie</th>
+													<th>Precio Unidad</th>
+													<th>Cantidad</th>
+													<th>Precio Total</th>
+													<th>Fecha Compromiso</th>
+													<th>Clave SAT</th>
+													<th>Proveedor</th>
+													<th>Almacen</th>
+													<th>Factura</th>
+													<!-- <th>Entregado <input type="checkbox" class="btn btn-outline-primary" name="sel" onclick="seleccionartodo()"></th> -->
+													<th>Editar</th>
+												</tr>
+											</thead>
+										</table>
 
-			    			<!-- Tabla de partidas -->
-			    				<br><br><br>
-			    				<table id="dt_pedido" class="table table-striped table-hover display compact" cellspacing="0" width="100%">
-										<thead>
-											<tr>
-												<th>#</th>
-												<th>Marca</th>
-												<th>Modelo</th>
-												<th>Descripcion</th>
-												<th>No. Serie</th>
-												<th>Precio Unidad</th>
-												<th>Cantidad</th>
-												<th>Precio Total</th>
-												<th>Fecha Compromiso</th>
-												<th>Clave SAT</th>
-												<th>Proveedor</th>
-												<th>Almacen</th>
-												<th>Editar</th>
-												<th>Quitar</th>
-											</tr>
-										</thead>
-									</table>
+				    			<!-- Tabla de totales -->
+				    				<br><br><br>
+				    				<div class="col-12 row justify-content-end align-items-start">
+										<div class="col row justify-content-start">
 
-									<br>
-									<div class="row justify-content-end">
+										</div>
 										<div class="col-3">
-											<table class="table table-bordered table-striped">
-												<tbody>
-													<tr>
-														<th><h5><b>SUB-TOTAL:</b></h5></th>
-														<th><h5><label style="font-size: 15px;" id="subtotal"></h5></label></th>
-													</tr>
-													<tr>
-														<th><h5><b>IVA (16%):</b></h5></th>
-														<th><h5><label style="font-size: 15px;" id="iva"></label></h5></th>
-													</tr>
-													<tr>
-														<th><h5><b>TOTAL:</b></h5></th>
-														<th><h5><b><label style="font-size: 18px;" class="text-primary" id="total"></label></b></h5></th>
-													</tr>
-													<tr>
-														<th><h5><b>MONEDA:</b></h5></th>
-														<th><h5><label style="font-size: 15px;" id="monedatotal"></label></h5></th>
-													</tr>
-												</tbody>
-											</table>
+											<div class="row justify-content-center">
+												<table class="table table-bordered table-striped">
+													<tbody>
+														<tr>
+															<th><h5><b>SUB-TOTAL:</b></h5></th>
+															<th><h5><label style="font-size: 15px;" id="subtotal"></h5></label></th>
+														</tr>
+														<tr>
+															<th><h5><b>IVA (16%):</b></h5></th>
+															<th><h5><label style="font-size: 15px;" id="iva"></label></h5></th>
+														</tr>
+														<tr>
+															<th><h5><b>TOTAL:</b></h5></th>
+															<th><h5><b><label style="font-size: 18px;" class="text-primary" id="total"></label></b></h5></th>
+														</tr>
+														<tr>
+															<th><h5><b>MONEDA:</b></h5></th>
+															<th><h5><label style="font-size: 15px;" id="monedatotal"></label></h5></th>
+														</tr>
+													</tbody>
+												</table>
+											</div>
 										</div>
 									</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+									<br><br>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 
 	<!-- Modal Editar Partidas -->
 		<form id="frmEditar" action="" class="form-horizontal" method="POST">
@@ -471,7 +498,7 @@
 			</div>
 		</div>
 
-	<!-- Modal Nueva Remision -->
+	<!-- Modal Agregar Herramienta a Remision -->
 		<form id="frmAgregarHerramienta" action="" method="POST">
 			<div class="modal fade colored-header colored-header-success" id="modalAgregarHerramienta" role="dialog" aria-labelledby="modalPedidoExample" aria-hidden="true">
 				<div class="modal-dialog full-width" role="document">
@@ -493,7 +520,12 @@
 										<th>Precio Total</th>
 										<th>Ref.</th>
 										<th>Pedido</th>
-										<th><input type="checkbox" class="btn btn-outline-primary" name="sel" onclick="seleccionartodo()"></th>
+										<th>Moneda</th>
+										<th>
+											<label class="custom-control custom-control-sm custom-checkbox">
+												<input class="custom-control-input" name="sel" type="checkbox" onclick="seleccionartodo()"><span class="custom-control-label"></span>
+											</label>
+										</th>
 									</tr>
 								</thead>
 							</table>
@@ -506,6 +538,167 @@
 				</div>
 			</div>
 		</form>
+
+		<!-- Modal Información Facturar -->
+			<div class="modal fade colored-header colored-header-success" id="modalInformacionFactura" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			  	<div class="modal-dialog modal-lg" role="document">
+			    	<div class="modal-content">
+			      		<div class="modal-header">
+			        		<h4 class="modal-title" id="exampleModalLabel"><b>Información de factura</b></h4>
+			        		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			          			<span aria-hidden="true">&times;</span>
+			        		</button>
+			      		</div>
+				      	<div class="modal-body">
+									<h4>Por favor verifique los datos a continuación antes de facturar:</h4>
+				        	<form id="frmInformacionFactura" action="" method="POST">
+			        			<div class="row form-group">
+			        				<div class="col-8">
+			        					<label for="cliente">Cliente <font color="#FF4136">*</font></label>
+			        					<input type="text" id="cliente" name="cliente" class="form-control form-control-sm" disabled required>
+			        				</div>
+			        				<div class="col">
+			        					<label for="tipoDocumento">Tipo de documento <font color="#FF4136">*</font></label>
+			        					<!-- <input type="text" id="tipoDocumento" name="tipoDocumento" class="form-control form-control-sm" value="factura" disabled required> -->
+												<select type="text" id="tipoDocumento" name="tipoDocumento" class="form-control form-control-sm">
+													<option value="factura">Factura</option>
+													<option value="factura/pagoanticipado">Factura/Pago anticipado</option>
+													<!-- <option value="refacturacion">Refacturación</option> -->
+												</select>
+			        				</div>
+			        			</div>
+			        			<div class="row form-group">
+			        				<div class="col">
+			        					<label for="fecha">Fecha <font color="#FF4136">*</font></label>
+			        					<input type="text" id="fecha" name="fecha" class="form-control form-control-sm" value="<?php echo date("Y-m-d"); ?>" disabled required>
+			        				</div>
+			        				<div class="col">
+			        					<label for="moneda">Moneda <font color="#FF4136">*</font></label>
+			        					<input type="text" id="moneda" name="moneda" class="form-control form-control-sm" disabled required>
+			        				</div>
+											<div class="col">
+												<label for="tipoCambio">Tipo de cambio </label>
+												<input type="text" id="tipoCambio" name="tipoCambio" class="form-control form-control-sm" disabled required>
+											</div>
+											<div class="col">
+												<label for="numeroOrden">Número de orden <font color="#FF4136">*</font></label>
+												<input type="text" id="numeroOrden" name="numeroOrden" class="form-control form-control-sm" required>
+											</div>
+			        			</div>
+			        			<div class="row form-group">
+											<div class="col">
+												<label for="usoCFDI">Uso de CFDI <font color="#FF4136">*</font></label>
+												<!-- <input type="text" id="usoCFDI" name="usoCFDI" class="form-control form-control-sm" disabled required> -->
+												<select id="usoCFDI" name="usoCFDI" class="form-control form-control-sm" disabled>
+													<option value="1">Adquisición de mercancias</option>
+													<option value="2">Devoluciones, descuentos o bonificaciones</option>
+													<option value="3">Gastos en general</option>
+													<option value="4">Construcciones</option>
+													<option value="5">Mobiliario y equipo de oficina por inversiones</option>
+													<option value="6">Equipo de transporte</option>
+													<option value="7">Equipo de computo y accesorios</option>
+													<option value="8">Dados, troqueles, moldes, matrices y herramental</option>
+													<option value="9">Comunicaciones telefónicas</option>
+													<option value="10">Comunicaciones satelitales</option>
+													<option value="11">Otra maquinaria y equipo</option>
+													<option value="12">Horarios médicos, dentales y gastos hospitalarios</option>
+													<option value="13">Gastos médicos por incapacidad o discapacidad</option>
+													<option value="14">Gastos funerales</option>
+													<option value="15">Donativos</option>
+													<option value="16">Intereses reales efectivamente pagados por créditos hipotecarios</option>
+													<option value="17">Aportaciones voluntarias al SAR</option>
+													<option value="18">Primas por seguros de gastos médicos</option>
+													<option value="19">Gastos de transportación escolar obligatoria</option>
+													<option value="20">Depósitos en cuentas para el ahorro, primas que tengan como base planes de pensiones</option>
+													<option value="21">Pagos por servicios educativos (colegiaturas)</option>
+													<option value="22">Por definir</option>
+												</select>
+											</div>
+											<div class="col">
+												<label for="formaPago">Forma de pago <font color="#FF4136">*</font></label>
+												<!-- <input type="text" id="formaPago" name="formaPago" class="form-control form-control-sm" disabled required> -->
+												<select type="text" id="formaPago" name="formaPago" class="form-control form-control-sm" disabled>
+													<option value="1">Efectivo</option>
+													<option value="2">Cheque nominativo</option>
+													<option value="3">Transferencia electrónica de fondos</option>
+													<option value="4">Tarjeta de crédito</option>
+													<option value="5">Monedero electrónico</option>
+													<option value="6">Dinero electrónico</option>
+													<option value="7">Vales de despensa</option>
+													<option value="8">Tarjeta de débito</option>
+													<option value="9">Tarjeta de servicio</option>
+													<option value="10">Otros</option>
+													<option value="11">NA</option>
+												</select>
+											</div>
+			        			</div>
+			        			<div class="row form-group">
+											<div class="col">
+												<label for="metodoPago">Método de pago <font color="#FF4136">*</font></label>
+												<!-- <input type="text" id="metodoPago" name="metodoPago" class="form-control form-control-sm" disabled required> -->
+												<select type="text" id="metodoPago" name="metodoPago" class="form-control form-control-sm" disabled>
+													<option value="1">Pago en una sola exhibición</option>
+													<option value="2">Pago en parcialidades o diferido</option>
+												</select>
+											</div>
+											<div class="col">
+												<label for="condicionesPago">Condiciones de pago <font color="#FF4136">*</font></label>
+												<input type="text" id="condicionesPago" name="condicionesPago" class="form-control form-control-sm" disabled required>
+											</div>
+			        			</div>
+			        			<div class="row form-group">
+											<div class="col-3">
+												<label for="enviarCorreo">Enviar por correo </label>
+												<!-- <input type="text" id="enviarCorreo" name="enviarCorreo" class="form-control form-control-sm" required> -->
+												<select type="text" id="enviarCorreo" name="enviarCorreo" class="form-control form-control-sm" required>
+													<option value="true" selected>Envíar</option>
+													<option value="false">No envíar</option>
+												</select>
+											</div>
+			        			</div>
+				        	</form>
+									<hr>
+									<table id="dt_partidas_facturar" class="table table-hover table-striped display compact" cellspacing="0" width="100%">
+										<thead>
+											<tr>
+												<th>#</th>
+												<th>Marca</th>
+												<th>Modelo</th>
+												<th>Precio Unitario</th>
+												<th>Cantidad</th>
+												<th>Precio Total</th>
+											</tr>
+										</thead>
+									</table>
+									<br>
+									<div class="row justify-content-end">
+										<div class="col-6">
+											<table class="table table-bordered table-striped">
+												<tbody>
+													<tr>
+														<th><h5><b>SUB-TOTAL:</b></h5></th>
+														<th><h5><label style="font-size: 15px;" id="subtotalFactura"></h5></label></th>
+													</tr>
+													<tr>
+														<th><h5><b>IVA (16%):</b></h5></th>
+														<th><h5><label style="font-size: 15px;" id="ivaFactura"></label></h5></th>
+													</tr>
+													<tr>
+														<th><h5><b>TOTAL:</b></h5></th>
+														<th><h5><b><label style="font-size: 18px;" class="text-primary" id="totalFactura"></label></b></h5></th>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+									</div>
+				      	</div>
+				      	<div class="modal-footer invoice-footer">
+				        	<button type="button" class="btn btn-lg btn-secondary" data-dismiss="modal">Cancelar</button>
+				        	<button type="button" class="btn btn-lg btn-success" id="generarFactura">Generar</button>
+				      	</div>
+			    	</div>
+			  	</div>
+			</div>
 
 		<div id="mod-success" tabindex="-1" role="dialog" style="" class="modal fade" data-backdrop="static">
 			<div class="modal-dialog">
@@ -581,7 +774,7 @@
 					document.getElementById("refCotizacion").innerHTML = data.refCotizacion;
 					document.getElementById("fecha").innerHTML = data.fecha;
 					document.getElementById("vendedor").innerHTML = data.vendedor;
-					document.getElementById("ordenCompra").innerHTML = data.pedidocliente;
+					document.getElementById("remision").innerHTML = data.remision;
 					document.getElementById("factura").innerHTML = data.factura;
 					document.getElementById("pagado").innerHTML = "$ "+data.pagado+" - $"+data.total;
 					document.getElementById("monedatotal").innerHTML = (data.moneda).toUpperCase();
@@ -601,27 +794,39 @@
 
 					request.open('GET', apiConfig.enlace + 'api/v3/cfdi33/list');
 
+					// request.setRequestHeader('Access-Control-Allow-Origin', '*');
 					request.setRequestHeader('Content-Type', 'application/json');
 					request.setRequestHeader('F-API-KEY', apiConfig.apiKey);
 					request.setRequestHeader('F-SECRET-KEY', apiConfig.secretKey);
 
-					request.onreadystatechange = function () {
-						if (this.readyState === 4) {
-							console.log('Status:', this.status);
-							console.log('Headers:', this.getAllResponseHeaders());
-							var data = JSON.parse(this.responseText);
-							console.log(data);
-							var total = data.total;
-							for (var i = 0; i < total; i++) {
-								if (remision == data.data[i].NumOrder){
-									document.getElementById("factura").innerHTML = data.data[i].Folio;
-								}
-							}
-						}
+					request.onload = function() {
+					 var responseText = request.responseText;
+					 console.log(responseText);
 					};
 
-					request.send();
+					request.onerror = function(xhr) {
+						$.gritter.add({
+			        title: 'Error!',
+			        text: 'Ocurrió un problema en la conexión de "Factura.com".',
+			        class_name: 'color danger'
+			      });
+					};
 
+					// request.onreadystatechange = function () {
+					// 	if (this.readyState === 4) {
+					// 		console.log('Status:', this.status);
+					// 		console.log('Headers:', this.getAllResponseHeaders());
+					// 		var data = JSON.parse(this.responseText);
+					// 		console.log(data);
+					// 		var total = data.total;
+					// 		for (var i = 0; i < total; i++) {
+					// 			if (numeroPedido == data.data[i].NumOrder){
+					// 				document.getElementById("factura").innerHTML = data.data[i].Folio;
+					// 			}
+					// 		}
+					// 	}
+					// };
+					// request.send();
 	   		}
 			});
 		}
@@ -663,6 +868,11 @@
 						"data": {"remision": remision, "opcion": opcion}
 					},
 					"columns":[
+						{"data": "id",
+							"render": function (data) {
+								return "<label class='custom-control custom-control-sm custom-checkbox'><input name='hproveedor' value='"+data+"' class='custom-control-input' type='checkbox'><span class='custom-control-label'></span></label>";
+							},
+						},
 						{"data": "indice"},
 						{"data": "marca"},
 						{"data": "modelo"},
@@ -675,57 +885,84 @@
 						{"data": "claveSat"},
 						{"data": "proveedor"},
 						{"data": "almacen"},
-						{"defaultContent": "<div class='invoice-footer'><button type='button' class='editar btn btn-lg btn-primary' data-toggle='modal' data-target='#modalEditar'><i class='fas fa-edit fa-sms' aria-hidden='true'></i></button></div>"},
-						{"defaultContent": "<div class='invoice-footer'><button class='quitar btn btn-lg btn-danger'><i class='fas fa-times fa-sm' aria-hidden='true'></i></button></div>"}
+						{"data": "factura"},
+						{"defaultContent": "<div class='invoice-footer'><button type='button' class='editar btn btn-lg btn-primary' data-toggle='modal' data-target='#modalEditar'><i class='fas fa-edit fa-sm' aria-hidden='true'></i></button></div>"}
+					],
+					"columnDefs": [
+						{ "width": "2%", "targets": 0 },
+						{ "width": "2%", "targets": 1 },
+						{ "width": "7%", "targets": 2 },
+						{ "width": "7%", "targets": 3 },
+						{ "visible": false, "targets": 5 },
+						{ "width": "8%", "targets": 6 },
+						{ "width": "5%", "targets": 7 },
+						{ "width": "8%", "targets": 8 },
+						{ "visible": false, "targets": 9 },
+						{ "visible": false, "targets": 10 },
+						{ "width": "15%", "targets": 11 },
+						{ "width": "2%", "targets": 12 },
+						// { "width": "2%", "targets": 13 },
+						{ "width": "5%", "targets": 13 },
+						{ "width": "5%", "targets": 14 },
 					],
 					"order": false,
-			        "lengthChange": false,
-			        "info": false,
-			        "paging": false,
-			        "ordering": false,
-			        "language": idioma_espanol,
-							"footerCallback": function ( row, data, start, end, display ) {
-			            var api = this.api();
-			            var intVal = function ( i ) {
-			                return typeof i === 'string' ?
-			                    i.replace(/[\$,]/g, '')*1 :
-			                    typeof i === 'number' ?
-			                        i : 0;
-			            };
+	        "lengthChange": false,
+	        "info": false,
+	        "paging": false,
+	        "ordering": false,
+	        "language": idioma_espanol,
+			    "footerCallback": function ( row, data, start, end, display ) {
+            var api = this.api();
+            var intVal = function ( i ) {
+                return typeof i === 'string' ?
+                    i.replace(/[\$,]/g, '')*1 :
+                    typeof i === 'number' ?
+                        i : 0;
+            };
 
-			            var subtotal = api
-			                .column( 7 )
-			                .data()
-			                .reduce( function (a, b) {
-			                    return intVal(a) + intVal(b);
-			                }, 0 );
+            var subtotal = api
+                .column( 8 )
+                .data()
+                .reduce( function (a, b) {
+                    return intVal(a) + intVal(b);
+                }, 0 );
 
-			            $("#subtotal").text("$ "+ subtotal.toFixed(2));
-									$("#iva").text("$ "+ (subtotal * .16).toFixed(2));
-									$("#total").text("$ "+ (subtotal + subtotal*.16).toFixed(2));
-			        },
-			        "dom":
-		    				"<'row be-datatable-header'<'col-sm-6'B><'col-sm-6 text-right'f>>" +
-		    				"<'row be-datatable-body'<'col-sm-12'tr>>",
-								"createdRow": function ( row, data, index ) {
-				          if ( data.enviado != '0000-00-00' && data.recibido == '0000-00-00' ) {
-				            $('td', row).eq(1).addClass('table-text-enviado');
-				            $('td', row).eq(2).addClass('table-text-enviado');
-				          }
+			      $("#subtotal").text("$ "+ subtotal.toFixed(2));
+						$("#iva").text("$ "+ (subtotal * .16).toFixed(2));
+						$("#total").text("$ "+ (subtotal + subtotal*.16).toFixed(2));
+			     },
+	        "dom":
+      			"<'row be-datatable-header'<'col-sm-6'B><'col-sm-6 text-right'f>>" +
+      			"<'row be-datatable-body'<'col-sm-12'tr>>",
+					"createdRow": function ( row, data, index ) {
+						if ( data.enviado != '0000-00-00' && data.recibido == '0000-00-00' ) {
+							$('td', row).eq(2).addClass('table-text-enviado');
+							$('td', row).eq(3).addClass('table-text-enviado');
+						}
 
-				          if ( data.enviado != '0000-00-00' && data.recibido != '0000-00-00' ) {
-				            $('td', row).eq(1).addClass('table-text-recibido');
-				            $('td', row).eq(2).addClass('table-text-recibido');
-				          }
-				        },
+						if ( data.enviado != '0000-00-00' && data.recibido != '0000-00-00' ) {
+							$('td', row).eq(2).addClass('table-text-recibido');
+							$('td', row).eq(3).addClass('table-text-recibido');
+						}
+						if ( data.enviado == '0000-00-00' && data.recibido == '0000-00-00' ) {
+							$('td', row).eq(2).addClass('text-danger');
+							$('td', row).eq(3).addClass('text-danger');
+						}
+					},
 					"buttons":[
+						{
+							extend: 'colvis',
+							columns: ':not(.noVis)',
+							text: '<i class="fas fa-columns fa-sm"></i> Columnas',
+							"className": "btn btn-lg btn-space btn-secondary",
+						},
 						{
 							extend: 'collection',
 							text: '<i class="fas fa-file fa-sm"></i> Exportar remisión',
 							"className": "btn btn-lg btn-space btn-secondary",
 							buttons: [
 								{
-									text: '<i class="fas fa-file-pdf fa-lg"></i> Pdf',
+									text: '<i class="fas fa-file-pdf fa-lg"></i> PDF',
 									// "className": "btn btn-danger",
 									action: function (e, dt, node, config){
 										var opcion = "pdf";
@@ -751,7 +988,7 @@
 						// 	}
 						// },
 						{
-							text: '<i class="fas fa-list fa-sm" aria-hidden="true"></i> Packing list',
+							text: '<i class="fas fa-list fa-sm" aria-hidden="true"></i> Lista de embarque',
 							"className": "btn btn-lg btn-space btn-secondary",
 							action: function ( e, dt, node, config ) {
 								$('#modalPackingList').modal('show');
@@ -764,19 +1001,20 @@
 								$('#modalAgregarHerramienta').modal('show');
 							}
 						},
-            {
-              text: '<i class="fas fa-file fa-sm" aria-hidden="true"></i> Generar factura',
-              "className": "btn btn-lg btn-space btn-primary",
-              action: function ( e, dt, node, config ) {
-              	generar_factura(RFC, remision);
-              }
-            }
+						{
+							text: '<i class="fas fa-file-alt fa-sm" aria-hidden="true"></i> Generar factura',
+							"className": "btn btn-lg btn-space btn-primary",
+							action: function ( e, dt, node, config ) {
+								buscar_datos_factura(RFC, remision);
+							}
+						}
 					]
 				});
 
 			proveedores();
 			obtener_data_editar("#dt_pedido tbody", table);
 			obtener_data_quitar("#dt_pedido tbody", table, remision);
+			buscar_cliente_portal(RFC, remision);
 		}
 
 		$('#modalPackingList').on('show.bs.modal', function (e) {
@@ -1036,7 +1274,16 @@
 					{"data": "precioTotal"},
 					{"data": "cotizacion"},
 					{"data": "numeroPedido"},
-					{"data": "input"}
+					{"data": "moneda"},
+					{"data": null,
+						"render": function (data, type, row) {
+							if (data.moneda == "") {
+								return "";
+							}else{
+								return "<label class='custom-control custom-control-sm custom-checkbox'><input name='hremision' value='"+data.id+"' class='custom-control-input' type='checkbox'><span class='custom-control-label'></span></label>";
+							}
+						},
+					}
 				],
 				"createdRow": function ( row, data, index ) {
 					if ( data.enviado != '0000-00-00' && data.recibido == '0000-00-00' ) {
@@ -1051,8 +1298,7 @@
 				},
 				"dom":
       				"<'row be-datatable-header'<'col-sm-6'><'col-sm-6 text-right'f>>" +
-      				"<'row be-datatable-body'<'col-sm-12'tr>>" +
-      				"<'row be-datatable-footer'<'col-sm-5'i><'col-sm-7'p>>",
+      				"<'row be-datatable-body'<'col-sm-12'tr>>",
 				"order": false,
 		        "lengthChange": false,
 		        "info": false,
@@ -1084,6 +1330,14 @@
 					$('input[name=hentregado]').prop('checked' , true);
 				}else{
 					$('input[name=hentregado]').prop('checked' , false);
+				}
+			});
+
+			$("input[name=hproveedor]").each(function (index) {
+				if($("input[name=selprovg]").is(':checked')){
+					$('input[name=hproveedor]').prop('checked' , true);
+				}else{
+					$('input[name=hproveedor]').prop('checked' , false);
 				}
 			});
 		}
@@ -1285,291 +1539,6 @@
 			});
 		}
 
-		var generar_factura = function(RFC, remision){
-			$("#mod-success").modal("show");
-			var request = new XMLHttpRequest();
-
-			request.open('GET', apiConfig.enlace+'api/v1/clients/'+RFC);
-
-			request.setRequestHeader('Content-Type', 'application/json');
-			request.setRequestHeader('F-API-KEY', apiConfig.apiKey);
-			request.setRequestHeader('F-SECRET-KEY', apiConfig.secretKey);
-
-			request.onreadystatechange = function () {
-				if (this.readyState === 4) {
-			    console.log('Status:', this.status);
-		    	console.log('Headers:', this.getAllResponseHeaders());
-		    	console.log('Body:', this.responseText);
-		    	var data = JSON.parse(this.responseText);
-			    if (data.status == "error"){
-							$(".texto1").fadeOut(300, function(){
-								$(this).html("");
-								$(this).fadeIn(300);
-							});
-						setTimeout(function () {
-							$(".texto1").append("<div class='text-warning'><span class='modal-main-icon mdi mdi-alert-triangle'></span></div>");
-							$(".texto1").append("<h3>Aviso!</h3>");
-							$(".texto1").append("<h4>El cliente no esta registrado en portal 'Factura.com'</h4>");
-							$(".texto1").append("<div class='text-center'>");
-							$(".texto1").append("<p>Registrarlo a continuación para poder facturar.</p>");
-							$(".texto1").append("</div>");
-						}, 425);
-						buscarDatosCliente(RFC);
-			    }else{
-						var request = new XMLHttpRequest();
-
-						request.open('POST', apiConfig.enlace+'api/v3/cfdi33/create');
-						request.setRequestHeader('Content-Type', 'application/json');
-						request.setRequestHeader('F-API-KEY', apiConfig.apiKey);
-						request.setRequestHeader('F-SECRET-KEY', apiConfig.secretKey);
-
-						request.onreadystatechange = function () {
-							if (this.readyState === 4) {
-								console.log('Status:', this.status);
-						    console.log('Headers:', this.getAllResponseHeaders());
-						    console.log('Body:', this.responseText);
-						    var data = JSON.parse(this.responseText);
-						    if (data.response == "error" && typeof data.message.message != "undefined") {
-									$("#mod-success").modal("hide");
-									$.gritter.add({
-					        	title: 'Error!',
-					        	text: data.message.message+'<br>'+data.message.messageDetail,
-					        	class_name: 'color danger'
-					      	});
-								}else if (data.response == "error" && typeof data.message != "undefined") {
-									$("#mod-success").modal("hide");
-									$.gritter.add({
-										title: 'Aviso!',
-										text: data.message,
-										class_name: 'color warning'
-									});
-						    }else{
-									$(".texto1").fadeOut(300, function(){
-										$(this).html("");
-										$(this).fadeIn(300);
-									});
-									setTimeout(function () {
-										$(".texto1").append("<div class='text-success'><span class='modal-main-icon mdi mdi-check-circle'></span></div>");
-										$(".texto1").append("<h3>Correcto!</h3>");
-										$(".texto1").append("<h4>La factura se generó correctamente en el portal 'Factura.com'.</h4>");
-										$(".texto1").append("<div class='text-center'>");
-										$(".texto1").append("<p>En un momento se descargará el archivo PDF.</p>");
-										$(".texto1").append("</div>");
-									}, 425);
-									guardarFactura(remision);
-					 			}
-							}
-						};
-
-						var opcion = "buscarpartidasfacturar";
-						$.ajax({
-							method: "POST",
-							url: "buscar.php",
-							dataType: "json",
-							data: {"opcion": opcion, "remision": remision}
-						}).done( function( conceptos ){
-								console.log(conceptos);
-								var fecha = "<?php echo date("Y-m-d")."T".date("H:i:s"); ?>";
-								var body = {
-							    'Receptor': {
-							        'UID': data.Data.UID,
-							        'ResidenciaFiscal': '',
-							    },
-							    'TipoDocumento':'factura',
-							    'Conceptos': conceptos.data,
-							    'UsoCFDI': conceptos.cfdi,
-							    'Serie':'1194',
-							    'FormaPago': conceptos.formapago,
-							    'MetodoPago': conceptos.metodopago,
-							    'CondicionesDePago': conceptos.condpago,
-							    'Moneda': conceptos.moneda,
-							    'TipoCambio': conceptos.tipocambio,
-							    'NumOrder': remision,
-							    'FechaFromAPI': fecha,
-							    // 'Comentarios': 'Comentarios para agregar a la factura PDF',
-							    'EnviarCorreo': false
-								};
-								console.log(JSON.stringify(body));
-								request.send(JSON.stringify(body));
-						});
-					}
-				}
-			};
-			request.send();
-		}
-
-		function buscarDatosCliente (RFC) {
-			var opcion = "datosRFC";
-			$.ajax({
-				method: "POST",
-				url: "buscar.php",
-				dataType: "json",
-				data: {"opcion": opcion, "rfc": RFC},
-			}).done( function( data ){
-				$("#modalRegistrarClientePortal #email").val(data.datos.correoElectronico);
-				$("#modalRegistrarClientePortal #telefono").val(data.datos.tlf1);
-				$("#modalRegistrarClientePortal #razons").val(data.datos.nombreEmpresa);
-				$("#modalRegistrarClientePortal #rfc").val(data.datos.RFC);
-				$("#modalRegistrarClientePortal #numero_exterior").val(data.datos.NumExt);
-				$("#modalRegistrarClientePortal #numero_interior").val(data.datos.NumInt);
-				$("#modalRegistrarClientePortal #codpos").val(data.datos.cp);
-				$("#modalRegistrarClientePortal #calle").val(data.datos.calle);
-				$("#modalRegistrarClientePortal #colonia").val(data.datos.colonia);
-				$("#modalRegistrarClientePortal #estado").val(data.datos.estado);
-				$("#modalRegistrarClientePortal #ciudad").val(data.datos.ciudad);
-				$("#modalRegistrarClientePortal #delegacion").val(data.datos.pais);
-				// alert("El cliente no esta registrado en portal de Factura.com\n\n Registrarlo a continuación");
-				setTimeout( function () {
-					$("#mod-success").modal("hide");
-					$("#modalRegistrarClientePortal").modal("show");
-					$(".texto1").html("");
-					$(".texto1").append("<br><br>");
-					$(".texto1").append("<h3>Espere un momento...</h3>");
-					$(".texto1").append("<h4>Se está generando la factura</h4>");
-					$(".texto1").append("<br>");
-					$(".texto1").append("<div class='text-center'><div class='be-spinner'><svg width='40px' height='40px' viewBox='0 0 66 66' xmlns='http://www.w3.org/2000/svg'><circle fill='none' stroke-width='4' stroke-linecap='round' cx='33' cy='33' r='30' class='circle'></circle></svg></div></div></div>");
-					$(".texto1").append("<br>");
-					$(".texto1").append("<br>");
-				}, 2500);
-			});
-		}
-
-		function guardarFactura(remision) {
-			var request = new XMLHttpRequest();
-
-			request.open('GET', apiConfig.enlace+'api/v3/cfdi33/list');
-
-			request.setRequestHeader('Content-Type', 'application/json');
-			request.setRequestHeader('F-API-KEY', apiConfig.apiKey);
-			request.setRequestHeader('F-SECRET-KEY', apiConfig.secretKey);
-
-			request.onreadystatechange = function () {
-				if (this.readyState === 4) {
-					var data = JSON.parse(this.responseText);
-					console.log(data);
-					var totalfacturas = data.total;
-					for (var i = 0; i < totalfacturas; i++) {
-						if (remision == data.data[i].NumOrder){
-							var folio = data.data[i].Folio;
-							var ordenpedido = data.data[i].NumOrder;
-							var total = data.data[i].Total;
-							var status = data.data[i].Status;
-							var fecha = data.data[i].FechaTimbrado;
-							var cliente = data.data[i].RazonSocialReceptor;
-							var UID = data.data[i].UID;
-							var opcion = "guardarfactura";
-							$.ajax({
-								method: "POST",
-								url: "guardar.php",
-								dataType: "json",
-								data: {"opcion": opcion, "folio": folio, "ordenpedido": ordenpedido, "total": total, "status": status, "fecha": fecha, "cliente": cliente}
-							}).done( function( data ){
-								console.log(data);
-								mostrar_mensaje(data);
-							});
-
-							descargarPDF(UID);
-						}
-					}
-				}
-			};
-			request.send();
-		}
-
-		function descargarPDF (UID) {
-			var request = new XMLHttpRequest();
-
-			request.open('GET', apiConfig.enlace+'api/v3/cfdi33/'+UID+'/pdf');
-
-			request.setRequestHeader('F-API-KEY', apiConfig.apiKey);
-			request.setRequestHeader('F-SECRET-KEY', apiConfig.secretKey);
-			request.setRequestHeader('Content-Type', 'application/pdf');
-			request.setRequestHeader('Content-Transfer-Encoding', 'Binary');
-			request.setRequestHeader('Content-Disposition', 'attachment: filename=F2222.pdf');
-			request.responseType = 'blob';
-
-			request.onreadystatechange = function () {
-				if (this.readyState === 4) {
-					console.log('Status:', this.status);
-					console.log('Headers:', this.getAllResponseHeaders());
-					console.log('Body:', this.response);
-					var blob = new Blob([this.response], {type: 'application/pdf'});
-					var link = document.createElement('a');
-					link.href = window.URL.createObjectURL(blob);
-					link.download = "factura.pdf";
-					link.click();
-				}
-			};
-
-			request.send();
-		}
-
-		$("#registrar-cliente-portal").on("click", function(){
-			var nombre = $("#modalRegistrarClientePortal #nombre").val();
-			var apellidos = $("#modalRegistrarClientePortal #apellidos").val();
-			var email = $("#modalRegistrarClientePortal #email").val();
-			var telefono = $("#modalRegistrarClientePortal #telefono").val();
-			var razons = $("#modalRegistrarClientePortal #razons").val();
-			var rfc = $("#modalRegistrarClientePortal #rfc").val();
-			var numero_exterior = $("#modalRegistrarClientePortal #numero_exterior").val();
-			var numero_interior = $("#modalRegistrarClientePortal #numero_interior").val();
-			var codpos = $("#modalRegistrarClientePortal #codpos").val();
-			var calle = $("#modalRegistrarClientePortal #calle").val();
-			var colonia = $("#modalRegistrarClientePortal #colonia").val();
-			var estado = $("#modalRegistrarClientePortal #estado").val();
-			var ciudad = $("#modalRegistrarClientePortal #ciudad").val();
-			var delegacion = $("#modalRegistrarClientePortal #delegacion").val();
-
-			var request = new XMLHttpRequest();
-
-			request.open('POST', 'http://factura.com/api/v1/clients/create');
-
-			request.setRequestHeader('Content-Type', 'application/json');
-			request.setRequestHeader('F-API-KEY', 'JDJ5JDEwJHJWelRXTWlJMEd4OS9kS3hRZTJNZy5neFAwV2dzdGttLjVleTcueDIyUHlMOEE0VEY5dUFL');
-			request.setRequestHeader('F-SECRET-KEY', 'JDJ5JDEwJDd3bXhpWENGRXJFMkNvOE1Hblo5Y2VPV3J5WXJxZmJoVEJhQjR0OE1Xa0hrV1lmRXhCWkFt');
-
-			request.onreadystatechange = function () {
-			  if (this.readyState === 4) {
-			    console.log('Status:', this.status);
-			    console.log('Headers:', this.getAllResponseHeaders());
-			    console.log('Body:', this.responseText);
-			    var data = JSON.parse(this.responseText);
-			    if (data.status == "success"){
-			    	texto = "<div class='alert alert-success alert-dismissible fade show' role='alert'><strong>Bien!</strong> El cliente se registro correctamente en el portal! <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></i></div>";
-					color = "#379911";
-
-					$(".mensaje").html( texto );
-			    }else{
-			    	texto = "<div class='alert alert-warning alert-dismissible fade show' role='alert'><strong>Error!</strong> "+ data.message + "<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button></i></div>";
-					color = "#C9302C";
-
-					$(".mensaje").html( texto );
-			    }
-			  }
-			};
-
-			var body = {
-			  'nombre': nombre,
-			  'apellidos': apellidos,
-			  'email': email,
-			  'telefono': telefono,
-			  'razons': razons,
-			  'rfc': rfc,
-			  'calle': calle,
-			  'numero_exterior': numero_exterior,
-			  'numero_interior': numero_interior,
-			  'codpos': codpos,
-			  'colonia': colonia,
-			  'estado': estado,
-			  'ciudad': ciudad,
-			  'delegacion': delegacion
-			};
-
-			console.log(JSON.stringify(body));
-			request.send(JSON.stringify(body));
-			$("#modalRegistrarClientePortal").modal("hide");
-		});
-
 		function ocultarcolumnas(){
 			var columnaentregado=document.getElementById('columnaentregado');
 			columnaentregado.click();
@@ -1611,6 +1580,7 @@
 					}).done( function( data ){
 						$(".modal").modal("hide");
 						mostrar_mensaje(data);
+						buscardatos(remision);
 						$("#dt_pedido").DataTable().ajax.reload();
 					});
 				}
@@ -1727,6 +1697,494 @@
 				// });
 			});
 		}
+
+		function buscar_datos_factura(RFC, remision){
+			var verificar = 0;
+			$("input[name=hproveedor]").each(function (index) {
+				if($(this).is(':checked')){
+					verificar++;
+				}
+			});
+			if(verificar == 0){
+				alert("Debes de seleccionar al menos una partida.");
+			}else{
+				var herramienta = new Array();
+				$("input[name=hproveedor]").each(function (index) {
+					if($(this).is(':checked')){
+						herramienta.push($(this).val());
+					}
+				});
+				console.log(herramienta);
+				$("#modalInformacionFactura").modal("show");
+				var opcion = "partidasfactura";
+				var table = $("#dt_partidas_facturar").DataTable({
+					"destroy":"true",
+					"deferRender": true,
+					"scrollX": true,
+					"autoWidth": false,
+					"ajax":{
+						"url": "buscar.php",
+						"type": "POST",
+						"data": {"herramienta": JSON.stringify(herramienta), "opcion": opcion}
+					},
+					"columns":[
+						{"data": "indice"},
+						{"data": "marca"},
+						{"data": "modelo"},
+						{"data": "precioUnitario"},
+						{"data": "cantidad"},
+						{"data": "precioTotal"}
+					],
+					"columnDefs": [
+						{ "width": "10%", "targets": 0 },
+						{ "width": "20%", "targets": 1 },
+						{ "width": "20%", "targets": 2 },
+						{ "width": "20%", "targets": 3 },
+						{ "width": "10%", "targets": 4 },
+						{ "width": "20%", "targets": 5 },
+					],
+					"order": false,
+					"lengthChange": false,
+					"info": false,
+					"paging": false,
+					"ordering": false,
+					"language": idioma_espanol,
+					"footerCallback": function ( row, data, start, end, display ) {
+						var api = this.api();
+						var intVal = function ( i ) {
+							return typeof i === 'string' ?
+							i.replace(/[\$,]/g, '')*1 :
+							typeof i === 'number' ?
+							i : 0;
+						};
+
+						var subtotal = api
+						.column( 5 )
+						.data()
+						.reduce( function (a, b) {
+							return intVal(a) + intVal(b);
+						}, 0 );
+
+						$("#subtotalFactura").text("$ "+ subtotal.toFixed(2));
+						$("#ivaFactura").text("$ "+ (subtotal * .16).toFixed(2));
+						$("#totalFactura").text("$ "+ (subtotal + subtotal*.16).toFixed(2));
+					},
+					"dom":
+					"<'row be-datatable-header'<'col-sm-6'><'col-sm-6 text-right'>>" +
+					"<'row be-datatable-body'<'col-sm-12'tr>>",
+					"createdRow": function ( row, data, index ) {
+						if ( data.enviado != '0000-00-00' && data.recibido == '0000-00-00' ) {
+							$('td', row).eq(1).addClass('table-text-enviado');
+							$('td', row).eq(2).addClass('table-text-enviado');
+						}
+
+						if ( data.enviado != '0000-00-00' && data.recibido != '0000-00-00' ) {
+							$('td', row).eq(1).addClass('table-text-recibido');
+							$('td', row).eq(2).addClass('table-text-recibido');
+						}
+						if ( data.enviado == '0000-00-00' && data.recibido == '0000-00-00' ) {
+							$('td', row).eq(1).addClass('text-danger');
+							$('td', row).eq(2).addClass('text-danger');
+						}
+					}
+				});
+			}
+			var opcion = "buscardatos";
+			$.ajax({
+				method: "POST",
+				url: "buscar.php",
+				dataType: "json",
+				data: {"opcion": opcion, "remision": remision},
+			}).done( function( info ){
+				console.log(info);
+				$("#frmInformacionFactura #cliente").val(info.cliente.nombreEmpresa);
+				$("#frmInformacionFactura #moneda").val(info.moneda);
+				$("#frmInformacionFactura #tipoCambio").val(info.tipoCambio);
+				$("#frmInformacionFactura #numeroOrden").val(info.pedidoCliente);
+				$("#frmInformacionFactura #usoCFDI").val(info.cliente.IdUsoCFDI);
+				$("#frmInformacionFactura #formaPago").val(info.cliente.IdFormaPago);
+				$("#frmInformacionFactura #metodoPago").val(info.cliente.IdMetodoPago);
+				$("#frmInformacionFactura #condicionesPago").val(info.cliente.CondPago);
+			});
+		}
+
+		function buscar_cliente_portal(RFC, remision){
+			$("#generarFactura").on("click", function(){
+				$("#modalInformacionFactura").modal("hide");
+				$("#mod-success").modal("show");
+				var request = new XMLHttpRequest();
+
+				request.open('GET', apiConfig.enlace+'api/v1/clients/'+RFC);
+
+				request.setRequestHeader('Content-Type', 'application/json');
+				request.setRequestHeader('F-API-KEY', apiConfig.apiKey);
+				request.setRequestHeader('F-SECRET-KEY', apiConfig.secretKey);
+
+				request.onload = function() {
+					var responseText = request.responseText;
+					console.log(responseText);
+				};
+
+				request.onerror = function(xhr) {
+					$.gritter.add({
+						title: 'Error!',
+						text: 'Ocurrió un problema en la conexión de "Factura.com".',
+						class_name: 'color danger'
+					});
+					$(".texto1").fadeOut(300, function(){
+						$(this).html("");
+						$(this).fadeIn(300);
+					});
+					setTimeout(function () {
+						$(".texto1").append("<div class='text-danger'><span class='modal-main-icon mdi mdi-close-circle-o'></span></div>");
+						$(".texto1").append("<h3>Error!</h3>");
+						$(".texto1").append("<h4>Ocurrió un problema al conectar a  portal 'Factura.com'.</h4>");
+					}, 350);
+					setTimeout( function () {
+						$("#mod-success").modal("hide");
+						$(".texto1").html("");
+						$(".texto1").append("<br><br>");
+						$(".texto1").append("<h3>Espere un momento...</h3>");
+						$(".texto1").append("<h4>Se está generando la factura</h4>");
+						$(".texto1").append("<br>");
+						$(".texto1").append("<div class='text-center'><div class='be-spinner'><svg width='40px' height='40px' viewBox='0 0 66 66' xmlns='http://www.w3.org/2000/svg'><circle fill='none' stroke-width='4' stroke-linecap='round' cx='33' cy='33' r='30' class='circle'></circle></svg></div></div></div>");
+						$(".texto1").append("<br>");
+						$(".texto1").append("<br>");
+					}, 3000);
+				};
+
+				request.onreadystatechange = function () {
+					if (this.readyState === 4) {
+				    console.log('Status:', this.status);
+			    	console.log('Headers:', this.getAllResponseHeaders());
+			    	console.log('Body:', this.responseText);
+						var data = JSON.parse(this.responseText);
+
+
+						if (data.status == 0){
+							$(".texto1").fadeOut(300, function(){
+								$(this).html("");
+								$(this).fadeIn(300);
+							});
+							setTimeout(function () {
+								$(".texto1").append("<div class='text-danger'><span class='modal-main-icon mdi mdi-close-circle-o'></span></div>");
+								$(".texto1").append("<h3>Error!</h3>");
+								$(".texto1").append("<h4>Ocurrió un problema al conectar a  portal 'Factura.com'.</h4>");
+							}, 350);
+							setTimeout( function () {
+								$("#mod-success").modal("hide");
+								$(".texto1").html("");
+								$(".texto1").append("<br><br>");
+								$(".texto1").append("<h3>Espere un momento...</h3>");
+								$(".texto1").append("<h4>Se está generando la factura</h4>");
+								$(".texto1").append("<br>");
+								$(".texto1").append("<div class='text-center'><div class='be-spinner'><svg width='40px' height='40px' viewBox='0 0 66 66' xmlns='http://www.w3.org/2000/svg'><circle fill='none' stroke-width='4' stroke-linecap='round' cx='33' cy='33' r='30' class='circle'></circle></svg></div></div></div>");
+								$(".texto1").append("<br>");
+								$(".texto1").append("<br>");
+							}, 3000);
+						}else if (data.status == "error") {
+							$(".texto1").fadeOut(300, function(){
+								$(this).html("");
+								$(this).fadeIn(300);
+							});
+							setTimeout(function () {
+								$(".texto1").append("<div class='text-warning'><span class='modal-main-icon mdi mdi-alert-triangle'></span></div>");
+								$(".texto1").append("<h3>Aviso!</h3>");
+								$(".texto1").append("<h4>El cliente no esta registrado en portal 'Factura.com'</h4>");
+								$(".texto1").append("<div class='text-center'>");
+								$(".texto1").append("<p>Registrarlo a continuación para poder facturar.</p>");
+								$(".texto1").append("</div>");
+							}, 425);
+							buscarDatosCliente(RFC);
+						}else{
+							var UID = data.Data.UID;
+							generar_factura(RFC, remision, UID);
+						}
+					}
+				}
+				request.send();
+			});
+		}
+
+		function buscarDatosCliente (RFC) {
+			var opcion = "datosRFC";
+			$.ajax({
+				method: "POST",
+				url: "buscar.php",
+				dataType: "json",
+				data: {"opcion": opcion, "rfc": RFC},
+			}).done( function( data ){
+				$("#modalRegistrarClientePortal #email").val(data.datos.correoElectronico);
+				$("#modalRegistrarClientePortal #telefono").val(data.datos.tlf1);
+				$("#modalRegistrarClientePortal #razons").val(data.datos.nombreEmpresa);
+				$("#modalRegistrarClientePortal #rfc").val(data.datos.RFC);
+				$("#modalRegistrarClientePortal #numero_exterior").val(data.datos.NumExt);
+				$("#modalRegistrarClientePortal #numero_interior").val(data.datos.NumInt);
+				$("#modalRegistrarClientePortal #codpos").val(data.datos.cp);
+				$("#modalRegistrarClientePortal #calle").val(data.datos.calle);
+				$("#modalRegistrarClientePortal #colonia").val(data.datos.colonia);
+				$("#modalRegistrarClientePortal #estado").val(data.datos.estado);
+				$("#modalRegistrarClientePortal #ciudad").val(data.datos.ciudad);
+				$("#modalRegistrarClientePortal #delegacion").val(data.datos.pais);
+				setTimeout( function () {
+					$("#mod-success").modal("hide");
+					$("#modalRegistrarClientePortal").modal("show");
+					$(".texto1").html("");
+					$(".texto1").append("<br><br>");
+					$(".texto1").append("<h3>Espere un momento...</h3>");
+					$(".texto1").append("<h4>Se está generando la factura</h4>");
+					$(".texto1").append("<br>");
+					$(".texto1").append("<div class='text-center'><div class='be-spinner'><svg width='40px' height='40px' viewBox='0 0 66 66' xmlns='http://www.w3.org/2000/svg'><circle fill='none' stroke-width='4' stroke-linecap='round' cx='33' cy='33' r='30' class='circle'></circle></svg></div></div></div>");
+					$(".texto1").append("<br>");
+					$(".texto1").append("<br>");
+				}, 2500);
+			});
+		}
+
+		$("#registrar-cliente-portal").on("click", function(){
+			var nombre = $("#modalRegistrarClientePortal #nombre").val();
+			var apellidos = $("#modalRegistrarClientePortal #apellidos").val();
+			var email = $("#modalRegistrarClientePortal #email").val();
+			var telefono = $("#modalRegistrarClientePortal #telefono").val();
+			var razons = $("#modalRegistrarClientePortal #razons").val();
+			var rfc = $("#modalRegistrarClientePortal #rfc").val();
+			var numero_exterior = $("#modalRegistrarClientePortal #numero_exterior").val();
+			var numero_interior = $("#modalRegistrarClientePortal #numero_interior").val();
+			var codpos = $("#modalRegistrarClientePortal #codpos").val();
+			var calle = $("#modalRegistrarClientePortal #calle").val();
+			var colonia = $("#modalRegistrarClientePortal #colonia").val();
+			var estado = $("#modalRegistrarClientePortal #estado").val();
+			var ciudad = $("#modalRegistrarClientePortal #ciudad").val();
+			var delegacion = $("#modalRegistrarClientePortal #delegacion").val();
+
+			var request = new XMLHttpRequest();
+
+			request.open('POST', apiConfig.enlace+'api/v1/clients/create');
+
+			request.setRequestHeader('Content-Type', 'application/json');
+			request.setRequestHeader('F-API-KEY', apiConfig.apiKey);
+			request.setRequestHeader('F-SECRET-KEY', apiConfig.secretKey);
+
+			request.onreadystatechange = function () {
+			  if (this.readyState === 4) {
+			    console.log('Status:', this.status);
+			    console.log('Headers:', this.getAllResponseHeaders());
+			    console.log('Body:', this.responseText);
+			    var data = JSON.parse(this.responseText);
+			    if (data.status == "success"){
+						$.gritter.add({
+							title: 'Correcto!',
+							text: 'El cliente se registró correctamente en el portal "Factura.com", intente generar la factura nuevamente.',
+							class_name: 'color success'
+						});
+			    }else{
+						$.gritter.add({
+							title: 'Error!',
+							text: data.message,
+							class_name: 'color danger'
+						});
+					}
+			  }
+			};
+
+			var body = {
+			  'nombre': nombre,
+			  'apellidos': apellidos,
+			  'email': email,
+			  'telefono': telefono,
+			  'razons': razons,
+			  'rfc': rfc,
+			  'calle': calle,
+			  'numero_exterior': numero_exterior,
+			  'numero_interior': numero_interior,
+			  'codpos': codpos,
+			  'colonia': colonia,
+			  'estado': estado,
+			  'ciudad': ciudad,
+			  'delegacion': delegacion
+			};
+
+			request.send(JSON.stringify(body));
+			$("#modalRegistrarClientePortal").modal("hide");
+		});
+
+		var generar_factura = function(RFC, remision, UID){
+			var herramienta = new Array();
+			$("input[name=hproveedor]").each(function (index) {
+				if($(this).is(':checked')){
+					herramienta.push($(this).val());
+				}
+			});
+			console.log(herramienta);
+			var request = new XMLHttpRequest();
+
+			request.open('POST', apiConfig.enlace+'api/v3/cfdi33/create');
+			request.setRequestHeader('Content-Type', 'application/json');
+			request.setRequestHeader('F-API-KEY', apiConfig.apiKey);
+			request.setRequestHeader('F-SECRET-KEY', apiConfig.secretKey);
+
+			request.onreadystatechange = function () {
+				if (this.readyState === 4) {
+					console.log('Status:', this.status);
+					console.log('Headers:', this.getAllResponseHeaders());
+					console.log('Body:', this.responseText);
+					var data = JSON.parse(this.responseText);
+					if (data.response == "error" && typeof data.message.message != "undefined") {
+						$("#mod-success").modal("hide");
+						$.gritter.add({
+							title: 'Error!',
+							text: data.message.message+'<br>'+data.message.messageDetail,
+							class_name: 'color danger'
+						});
+					}else if (data.response == "error" && typeof data.message != "undefined") {
+						$("#mod-success").modal("hide");
+						$.gritter.add({
+							title: 'Aviso!',
+							text: data.message,
+							class_name: 'color warning'
+						});
+					}else{
+						$(".texto1").fadeOut(300, function(){
+							$(this).html("");
+							$(this).fadeIn(300);
+						});
+						setTimeout(function () {
+							$(".texto1").append("<div class='text-success'><span class='modal-main-icon mdi mdi-check-circle'></span></div>");
+							$(".texto1").append("<h3>Correcto!</h3>");
+							$(".texto1").append("<h4>La factura se generó correctamente en el portal 'Factura.com'.</h4>");
+							$(".texto1").append("<div class='text-center'>");
+							$(".texto1").append("<p>En un momento se descargará el archivo PDF.</p>");
+							$(".texto1").append("</div>");
+						}, 350);
+						var UIDFactura = data.uid;
+						var UUIDFactura = data.UUID;
+						var tipoDocumento = $("#frmInformacionFactura #tipoDocumento").val();
+						guardarFactura(remision, herramienta, tipoDocumento, UIDFactura, UUIDFactura);
+					}
+				}
+			};
+
+			var opcion = "buscarpartidasfacturar";
+			$.ajax({
+				method: "POST",
+				url: "buscar.php",
+				dataType: "json",
+				data: {"opcion": opcion, "herramienta": JSON.stringify(herramienta), "remision": remision}
+			}).done( function( conceptos ){
+				var tipoDocumento = $("#frmInformacionFactura #tipoDocumento").val();
+				if (tipoDocumento == "factura" || tipoDocumento == "factura/pagoanticipado") {
+					tipoDocumento = "factura";
+				}
+				var fecha = "<?php echo date("Y-m-d")."T".date("H:i:s"); ?>";
+				var body = {
+					'Receptor': {
+						'UID': UID,
+						'ResidenciaFiscal': '',
+					},
+					'TipoDocumento': tipoDocumento,
+					'Conceptos': conceptos.data,
+					'UsoCFDI': conceptos.cfdi,
+					'Serie': apiConfig.serie,
+					'FormaPago': conceptos.formapago,
+					'MetodoPago': conceptos.metodopago,
+					'CondicionesDePago': conceptos.condpago,
+					'Moneda': ($("#frmInformacionFactura #moneda").val()).toUpperCase(),
+					'TipoCambio': $("#frmInformacionFactura #tipoCambio").val(),
+					'NumOrder': $("#frmInformacionFactura #numeroOrden").val(),
+					'FechaFromAPI': fecha,
+					// 'Comentarios': 'Comentarios para agregar a la factura PDF',
+					'EnviarCorreo': $("#frmInformacionFactura #enviarCorreo").val()
+				};
+				console.log(JSON.stringify(body));
+				request.send(JSON.stringify(body));
+			});
+		}
+
+		function guardarFactura(remision, herramienta, tipoDocumento, UIDFactura, UUIDFactura) {
+			var request = new XMLHttpRequest();
+
+			request.open('GET', apiConfig.enlace+'api/v3/cfdi33/list');
+
+			request.setRequestHeader('Content-Type', 'application/json');
+			request.setRequestHeader('F-API-KEY', apiConfig.apiKey);
+			request.setRequestHeader('F-SECRET-KEY', apiConfig.secretKey);
+
+			request.onreadystatechange = function () {
+				if (this.readyState === 4) {
+					var data = JSON.parse(this.responseText);
+					console.log(data);
+					var totalfacturas = data.total;
+					for (var i = 0; i < totalfacturas; i++) {
+						if (UIDFactura == data.data[i].UID){
+							var folio = data.data[i].Folio;
+							// var ordenpedido = data.data[i].NumOrder;
+							var total = data.data[i].Total;
+							var status = data.data[i].Status;
+							var fecha = data.data[i].FechaTimbrado;
+							var cliente = data.data[i].RazonSocialReceptor;
+							var UID = data.data[i].UID;
+							var opcion = "guardarfactura";
+							$.ajax({
+								method: "POST",
+								url: "guardar.php",
+								dataType: "json",
+								data: {"opcion": opcion, "folio": folio, "remision": remision, "total": total, "status": status, "fecha": fecha, "tipoDocumento": tipoDocumento, "UIDFactura": UIDFactura, "UUIDFactura": UUIDFactura, "cliente": cliente}
+							}).done( function( data ){
+								console.log(data);
+								mostrar_mensaje(data);
+							});
+
+							quitarStock(remision, herramienta, folio, tipoDocumento);
+							buscardatos(remision);
+							descargarPDF(UID);
+						}
+					}
+				}
+			};
+			request.send();
+		}
+
+		function quitarStock(remision, herramienta, folio, tipoDocumento){
+			console.log(folio);
+			$.ajax({
+				method: "POST",
+				url: "guardar.php",
+				dataType: "json",
+				data: {"opcion": opcion = "quitarstock", "remision": remision, "folio": folio, "herramienta": JSON.stringify(herramienta), "tipoDocumento": tipoDocumento},
+			}).done( function( data ){
+				console.log(data);
+				mostrar_mensaje(data);
+			});
+		}
+
+		function descargarPDF (UID) {
+			var request = new XMLHttpRequest();
+
+			request.open('GET', apiConfig.enlace+'api/v3/cfdi33/'+UID+'/pdf');
+
+			request.setRequestHeader('F-API-KEY', apiConfig.apiKey);
+			request.setRequestHeader('F-SECRET-KEY', apiConfig.secretKey);
+			request.setRequestHeader('Content-Type', 'application/pdf');
+			request.setRequestHeader('Content-Transfer-Encoding', 'Binary');
+			request.setRequestHeader('Content-Disposition', 'attachment: filename=F2222.pdf');
+			request.responseType = 'blob';
+
+			request.onreadystatechange = function () {
+				if (this.readyState === 4) {
+					console.log('Status:', this.status);
+					console.log('Headers:', this.getAllResponseHeaders());
+					console.log('Body:', this.response);
+					var blob = new Blob([this.response], {type: 'application/pdf'});
+					var link = document.createElement('a');
+					link.href = window.URL.createObjectURL(blob);
+					link.download = "factura.pdf";
+					link.click();
+				}
+			};
+
+			request.send();
+		}
+
 	</script>
 	<script src="<?php echo $ruta; ?>/php/js/idioma_espanol.js"></script>
 	<script src="<?php echo $ruta; ?>/php/js/mensajes_cambios.js"></script>

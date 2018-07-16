@@ -30,9 +30,15 @@
 			datosrfc($rfc, $conexion_usuarios);
 			break;
 
+		case 'partidasfactura':
+			$partidas = json_decode($_POST['herramienta']);
+			partidas_factura($partidas, $conexion_usuarios);
+			break;
+
 		case 'buscarpartidasfacturar':
 			$remision = $_POST['remision'];
-			buscarpartidasfacturar($remision, $conexion_usuarios);
+			$partidas = json_decode($_POST['herramienta']);
+			buscarpartidasfacturar($remision, $partidas, $conexion_usuarios);
 			break;
 
 		case 'buscarClientes':
@@ -57,6 +63,32 @@
 			$remision = $_POST['remision'];
 			imprimir_cotizacion($remision, $conexion_usuarios);
 			break;
+	}
+
+	function partidas_factura($partidas, $conexion_usuarios){
+		$i = 1;
+		foreach ($partidas as &$id) {
+			$query = "SELECT * FROM cotizacionherramientas WHERE id='$id'";
+			$resultado = mysqli_query($conexion_usuarios, $query);
+
+			while($data = mysqli_fetch_assoc($resultado)){
+				$arreglo["data"][]=array(
+				'id' => $data['id'],
+				'indice' => $i,
+				'enviado' => $data['enviadoFecha'],
+				'recibido' => $data['recibidoFecha'],
+				'marca' => $data['marca'],
+				'modelo' => $data['modelo'],
+				'cantidad' => $data['cantidad'],
+				'precioUnitario' => "$ ".($data['precioLista'] + $data['flete']),
+				'descripcion' => utf8_encode($data['descripcion']),
+				'precioTotal' => "$ ".($data['precioLista'] + $data['flete']) * $data['cantidad']
+				);
+			}
+			$i++;
+		}
+		echo json_encode($arreglo, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_PARTIAL_OUTPUT_ON_ERROR);
+		mysqli_close($conexion_usuarios);
 	}
 
 	function imprimir_cotizacion($remision, $conexion_usuarios){
@@ -186,13 +218,14 @@
 	}
 
 	function buscardatos($remision, $conexion_usuarios){
-
-		$query = "SELECT * FROM cotizacion WHERE remision='$remision'";
+		$query = "SELECT * FROM remisiones WHERE remision='$remision'";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 
 		if(mysqli_num_rows($resultado) > 0){
+
 			while($data = mysqli_fetch_assoc($resultado)){
 				$idcliente = $data['cliente'];
+				$fecha = $data['fecha'];
 
 				$query2 = "SELECT * FROM contactos WHERE id = '$idcliente'";
 				$res2 = mysqli_query($conexion_usuarios, $query2);
@@ -200,39 +233,82 @@
 					$informacion['cliente'] = $data2;
 				}
 
-				$informacion['refCotizacion'] = $data['ref'];
-
-				if ($data['vendedor'] == "") {
-					$informacion['vendedor'] = $data['vendedor'];
+				$query3 = "SELECT folio FROM facturas WHERE remision = '$remision'";
+				$resultado3 = mysqli_query($conexion_usuarios, $query3);
+				if (mysqli_num_rows($resultado3) < 1) {
+					$facturas = "";
 				}else{
-					$informacion['vendedor'] = $data['contacto'];
+					$facturas = "";
+					while($data3 = mysqli_fetch_assoc($resultado3)){
+						$facturas = $data3['folio'].", ".$facturas;
+					}
 				}
 
-				
-				$query3 = "SELECT DISTINCT factura FROM cotizacionherramientas WHERE remision = '$remision'";
-				$res3 = mysqli_query($conexion_usuarios, $query3);
-				while($data3 = mysqli_fetch_assoc($res3)){
-					$cotizacionRef = $data3['factura'];
-				}
-
-				$query4 = "SELECT * FROM cotizacion WHERE id='$cotizacionRef'";
+				$query4 = "SELECT tipocambio FROM tipocambio WHERE fecha = '$fecha'";
 				$resultado4 = mysqli_query($conexion_usuarios, $query4);
 				while($data4 = mysqli_fetch_assoc($resultado4)){
-					$vendedor = $data4['vendedor'];
-					$factura = $data4['factura'];
-					$pedidocliente = $data4['NoPedClient'];
+					$tipoCambio = $data4['tipocambio'];
 				}
 
-				$informacion['factura'] = $factura;
-				$informacion['pedidocliente'] = $pedidocliente;
-
-				$informacion['remision'] = $data['remision'];
+				$informacion['refCotizacion'] = $data['cotizacionRef'];
 				$informacion['fecha'] = $data['fecha'];
-				$informacion['pagado'] = $data['Pagado'];
-				$informacion['total'] = $data['precioTotal'];
+				$informacion['vendedor'] = $data['vendedor'];
+				$informacion['remision'] = $data['remision'];
+				$informacion['factura'] = $facturas;
+				$informacion['pagado'] = $data['pagado'];
 				$informacion['moneda'] = $data['moneda'];
-				$informacion['paqueteria'] = $data['IdPaqueteria'];
-				$informacion['numeroGuia'] = $data['guia'];
+				$informacion['total'] = round($data['total'] + ($data['total']*.16),2);
+				$informacion['paqueteria'] = $data['paqueteria'];
+				$informacion['numeroGuia'] = $data['numeroGuia'];
+				$informacion['tipoCambio'] = $tipoCambio;
+			}
+		}else{
+			$query = "SELECT * FROM cotizacion WHERE remision='$remision'";
+			$resultado = mysqli_query($conexion_usuarios, $query);
+
+			if(mysqli_num_rows($resultado) > 0){
+				while($data = mysqli_fetch_assoc($resultado)){
+					$idcliente = $data['cliente'];
+
+					$query2 = "SELECT * FROM contactos WHERE id = '$idcliente'";
+					$res2 = mysqli_query($conexion_usuarios, $query2);
+					while($data2 = mysqli_fetch_assoc($res2)){
+						$informacion['cliente'] = $data2;
+					}
+
+					$informacion['refCotizacion'] = $data['ref'];
+
+					if ($data['vendedor'] == "") {
+						$informacion['vendedor'] = $data['vendedor'];
+					}else{
+						$informacion['vendedor'] = $data['contacto'];
+					}
+
+
+					$query3 = "SELECT DISTINCT factura FROM cotizacionherramientas WHERE remision = '$remision'";
+					$res3 = mysqli_query($conexion_usuarios, $query3);
+					while($data3 = mysqli_fetch_assoc($res3)){
+						$cotizacionRef = $data3['factura'];
+					}
+
+					$query4 = "SELECT * FROM cotizacion WHERE id='$cotizacionRef'";
+					$resultado4 = mysqli_query($conexion_usuarios, $query4);
+					while($data4 = mysqli_fetch_assoc($resultado4)){
+						$vendedor = $data4['vendedor'];
+						$factura = $data4['factura'];
+						$pedidocliente = $data4['NoPedClient'];
+					}
+
+					$informacion['factura'] = $factura;
+					$informacion['pedidocliente'] = $pedidocliente;
+					$informacion['remision'] = $data['remision'];
+					$informacion['fecha'] = $data['fecha'];
+					$informacion['pagado'] = $data['Pagado'];
+					$informacion['total'] = $data['precioTotal'];
+					$informacion['moneda'] = $data['moneda'];
+					$informacion['paqueteria'] = $data['IdPaqueteria'];
+					$informacion['numeroGuia'] = $data['guia'];
+				}
 			}
 		}
 
@@ -301,77 +377,82 @@
 		mysqli_close($conexion_usuarios);
 	}
 
-	function buscarpartidasfacturar($remision, $conexion_usuarios){
-		$query = "SELECT * FROM cotizacionherramientas WHERE remision = '$remision'";
-		$resultado = mysqli_query($conexion_usuarios, $query);
-		$arreglo = Array();
-
-		while ($data = mysqli_fetch_assoc($resultado)) {
-			$traslados = Array();
-			$traslados['Traslados'][] = array(
-				'Base' => $data['precioLista'] * $data['cantidad'],
-				'Impuesto' => "002",
-				'TipoFactor' => "Tasa",
-				'TasaOCuota' => 0.1600,
-				'Importe' => ($data['precioLista'] * $data['cantidad']) * 0.1600
-			);
-			// $retenidos['Retenidos'][] = array(
-			// 	'Base' => $data['precioLista'] * $data['cantidad'],
-			// 	'Impuesto' => 002,
-			// 	'TipoFactor' => "Tasa",
-			// 	'TasaOCuota' => 0.16,
-			// 	'Importe' => ($data['precioLista'] * $data['cantidad']) + ($data['precioLista'] * $data['cantidad'] * 0.16)
-			// );
-			// $locales['Locales'][] = array(
-			// 	'Base' => $data['precioLista'] * $data['cantidad'],
-			// 	'Impuesto' => 002,
-			// 	'TipoFactor' => "Tasa",
-			// 	'TasaOCuota' => 0.16,
-			// 	'Importe' => ($data['precioLista'] * $data['cantidad']) + ($data['precioLista'] * $data['cantidad'] * 0.16)
-			// );
-			if ($data['Pedimento'] != '') {
-				$Partes = "{}";
-				$arreglo['data'][] = array(
-					'ClaveProdServ' => $data['ClaveProductoSAT'],
-					'NoIdentificacion' => $data['modelo'],
-					'Cantidad' => $data['cantidad'],
-					'ClaveUnidad' => "E48",
-					'Unidad' => "Unidad de servicio",
-					'ValorUnitario' => $data['precioLista'],
-					'Descripcion' => $data['descripcion'],
-					'Descuento' => 0,
-					// 'Impuestos' => "{
-					// 	            'Traslados':[{'Base' : 15000, 'Impuesto': '002', 'TipoFactor': 'Tasa', 'TasaOCuota': 0.16, 'Importe': 2400}],
-					// 	            'Retenidos':[{'Base' : 15000, 'Impuesto': '001', 'TipoFactor': 'Tasa', 'TasaOCuota': 0.10, 'Importe': 1500}],
-					// 	            'Locales':[{'Impuesto': 'ISH', 'TasaOCuota': 0.03}]
-					// 	        }",
-					'Impuestos' => $traslados,
-					'Aduana' => $data['Pedimento']
-					// 'Predial' => "487842327ee",
-					// 'Partes' => $Partes
+	function buscarpartidasfacturar($remision, $partidas, $conexion_usuarios){
+		foreach ($partidas as &$id) {
+			$query = "SELECT cotizacionherramientas.*, unidades.Clave FROM cotizacionherramientas INNER JOIN unidades ON unidades.descripcion=cotizacionherramientas.Unidad WHERE id = '$id'";
+			$resultado = mysqli_query($conexion_usuarios, $query);
+			$base = 0;
+			while ($data = mysqli_fetch_assoc($resultado)) {
+				$traslados['Traslados'][] = array(
+					'Base' => $data['precioLista'] * $data['cantidad'],
+					'Impuesto' => "002",
+					'TipoFactor' => "Tasa",
+					'TasaOCuota' => 0.1600,
+					'Importe' => ($data['precioLista'] * $data['cantidad']) * 0.1600
 				);
-			}else{
-				$arreglo['data'][] = array(
-					'ClaveProdServ' => $data['ClaveProductoSAT'],
-					'NoIdentificacion' => $data['modelo'],
-					'Cantidad' => $data['cantidad'],
-					'ClaveUnidad' => "E48",
-					'Unidad' => "Unidad de servicio",
-					'ValorUnitario' => $data['precioLista'],
-					'Descripcion' => $data['descripcion'],
-					'Descuento' => 0,
-					'Impuestos' => $traslados
-				);
+				// $retenidos['Retenidos'][] = array(
+				// 	'Base' => $data['precioLista'] * $data['cantidad'],
+				// 	'Impuesto' => 002,
+				// 	'TipoFactor' => "Tasa",
+				// 	'TasaOCuota' => 0.16,
+				// 	'Importe' => ($data['precioLista'] * $data['cantidad']) + ($data['precioLista'] * $data['cantidad'] * 0.16)
+				// );
+				// $locales['Locales'][] = array(
+				// 	'Base' => $data['precioLista'] * $data['cantidad'],
+				// 	'Impuesto' => 002,
+				// 	'TipoFactor' => "Tasa",
+				// 	'TasaOCuota' => 0.16,
+				// 	'Importe' => ($data['precioLista'] * $data['cantidad']) + ($data['precioLista'] * $data['cantidad'] * 0.16)
+				// );
+				if ($data['Pedimento'] != '') {
+					$Partes = "{}";
+					$arreglo['data'][] = array(
+						'ClaveProdServ' => $data['ClaveProductoSAT'],
+						'NoIdentificacion' => $data['modelo'],
+						'Cantidad' => $data['cantidad'],
+						'ClaveUnidad' => $data['Clave'],
+						'Unidad' => $data['Unidad'],
+						'ValorUnitario' => round($data['precioLista'],2),
+						'Descripcion' => utf8_encode($data['descripcion'])." Aduana: Nuevo Laredo, "."Fecha: ".date("d-m-Y"),
+						'Descuento' => 0,
+						'Impuestos' => $traslados,
+						'Aduana' => $data['Pedimento']
+					);
+				}else{
+					$arreglo['data'][] = array(
+						'ClaveProdServ' => $data['ClaveProductoSAT'],
+						'NoIdentificacion' => $data['modelo'],
+						'Cantidad' => $data['cantidad'],
+						'ClaveUnidad' => $data['Clave'],
+						'Unidad' => $data['Unidad'],
+						'ValorUnitario' => round($data['precioLista'],2),
+						'Descripcion' => utf8_encode($data['descripcion']),
+						'Descuento' => 0,
+						'Impuestos' => $traslados
+						);
+				}
+				unset($traslados);
 			}
-
 		}
 
-		$query = "SELECT * FROM cotizacion WHERE remision = '$remision'";
+		$query = "SELECT * FROM remisiones WHERE remision = '$remision'";
 		$resultado = mysqli_query($conexion_usuarios, $query);
-		while($data = mysqli_fetch_assoc($resultado)){
-			$idcliente = $data['cliente'];
-			$fecha = $data['fecha'];
-			$arreglo['moneda'] = strtoupper($data['moneda']);
+
+		if (mysqli_num_rows($resultado) > 0) {
+			while($data = mysqli_fetch_assoc($resultado)){
+				$idcliente = $data['cliente'];
+				$fecha = $data['fecha'];
+				$arreglo['moneda'] = strtoupper($data['moneda']);
+			}
+		}else{
+			$query = "SELECT * FROM cotizacion WHERE remision = '$remision'";
+			$resultado = mysqli_query($conexion_usuarios, $query);
+
+			while($data = mysqli_fetch_assoc($resultado)){
+				$idcliente = $data['cliente'];
+				$fecha = $data['fecha'];
+				$arreglo['moneda'] = strtoupper($data['moneda']);
+			}
 		}
 
 		$query = "SELECT * FROM contactos WHERE id = '$idcliente'";
@@ -407,8 +488,7 @@
 			$arreglo['tipocambio'] = $data['tipocambio'];
 		}
 
-		echo json_encode($arreglo);
+		echo json_encode($arreglo, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_PARTIAL_OUTPUT_ON_ERROR);
+		mysqli_close($conexion_usuarios);
 	}
-
-
 ?>

@@ -153,7 +153,8 @@
 					'cantidad' => $data['cantidad'],
 					'preciototal' => "$ ".($data['precioLista'] + $data['flete']) * $data['cantidad'],
 					'fechacompromiso' => $fechacompromiso,
-					'almacen' => $almacen
+					'almacen' => $almacen,
+					'factura' => $data['factura'],
 				);
 				$i++;
 			}
@@ -167,27 +168,31 @@
 		$query = "SELECT * FROM cotizacionherramientas WHERE Pedido='si' AND cliente='$idcontacto' AND Entregado='0000-00-00' AND factura = '0' AND remision = '' ORDER BY modelo";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 
-		$i = 1;
-
-		while($data = mysqli_fetch_assoc($resultado)){
-			$input = '<input type="checkbox" class="btn btn-outline-primary" name="hremision" value="'.$data['id'].'">';
-			$arreglo['data'][] = array(
-				'indice' => $i,
-				'id' => $data['id'],
-				'enviado' => $data['enviadoFecha'],
-				'recibido' => $data['recibidoFecha'],
-				'marca' => $data['marca'],
-				'modelo' => $data['modelo'],
-				'descripcion' => utf8_encode($data['descripcion']),
-				'cantidad' => $data['cantidad'],
-				'precioTotal' => round($data['precioLista'] * $data['cantidad'],2),
-				'cotizacion' => $data['cotizacionRef'],
-				'numeroPedido' => $data['numeroPedido'],
-				'input' => $input
-			);
-			$i++;
+		if (mysqli_num_rows($resultado) < 1) {
+			$arreglo['data'] = 0;
+		}else{
+			$i = 1;
+			while($data = mysqli_fetch_assoc($resultado)){
+				// $input = '<input type="checkbox" class="btn btn-outline-primary" name="hremision" value="'.$data['id'].'">';
+				$arreglo['data'][] = array(
+					'indice' => $i,
+					'id' => $data['id'],
+					'enviado' => $data['enviadoFecha'],
+					'recibido' => $data['recibidoFecha'],
+					'marca' => $data['marca'],
+					'modelo' => $data['modelo'],
+					'moneda' => $data['moneda'],
+					'descripcion' => utf8_encode($data['descripcion']),
+					'cantidad' => $data['cantidad'],
+					'precioTotal' => round($data['precioLista'] * $data['cantidad'],2),
+					'cotizacion' => $data['cotizacionRef'],
+					'numeroPedido' => $data['numeroPedido']
+				);
+				$i++;
+			}
 		}
 
-		echo json_encode($arreglo);
+		echo json_encode($arreglo, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_PARTIAL_OUTPUT_ON_ERROR);
+		mysqli_close($conexion_usuarios);
 	}
 ?>

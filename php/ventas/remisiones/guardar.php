@@ -87,24 +87,23 @@
 
 		case 'guardarfactura':
 			$folio = $_POST['folio'];
-			$ordenpedido = $_POST['ordenpedido'];
+			$remision = $_POST['remision'];
 			$total = $_POST['total'];
 			$status = $_POST['status'];
 			$fecha = $_POST['fecha'];
 			$cliente = $_POST['cliente'];
-			guardar_factura($folio, $ordenpedido, $total, $status, $fecha, $cliente, $conexion_usuarios);
+			$tipoDocumento = $_POST['tipoDocumento'];
+			$uidfactura = $_POST['UIDFactura'];
+			$uuidfactura = $_POST['UUIDFactura'];
+			guardar_factura($folio, $remision, $total, $status, $fecha, $tipoDocumento, $uidfactura, $uuidfactura, $cliente, $conexion_usuarios);
 			break;
 
-		case 'nuevaremision':
-			$numeroCotizacion= $_POST['numeroCotizacion'];
+		case 'quitarstock':
 			$remision = $_POST['remision'];
-			$fechaCotizacion = $_POST['fechaCotizacion'];
-			$vendedor = $_POST['vendedor'];
-			$cliente = $_POST['cliente'];
-			$contactoCliente = $_POST['contactoCliente'];
-			$moneda = $_POST['moneda'];
-			$comentarios = $_POST['comentarios'];
-			nuevaremision($numeroCotizacion, $remision, $fechaCotizacion, $vendedor, $cliente, $contactoCliente, $moneda, $comentarios, $conexion_usuarios);
+			$partidas = json_decode($_POST['herramienta']);
+			$folio = $_POST['folio'];
+			$tipoDocumento = $_POST['tipoDocumento'];
+			quitar_stock($remision, $partidas, $folio, $tipoDocumento, $conexion_usuarios);
 			break;
 
 		case 'agregarherramientaremision':
@@ -128,6 +127,57 @@
 			$data = json_decode($_POST['herramienta']);
 			entregado($data, $conexion_usuarios);
 			break;
+
+		case 'nuevaremision':
+			$numeroCotizacion= $_POST['numeroCotizacion'];
+			$remision = $_POST['remision'];
+			$fechaCotizacion = $_POST['fechaCotizacion'];
+			$vendedor = $_POST['vendedor'];
+			$cliente = $_POST['cliente'];
+			$contactoCliente = $_POST['contactoCliente'];
+			$moneda = $_POST['moneda'];
+			$comentarios = $_POST['comentarios'];
+			nuevaremision($numeroCotizacion, $remision, $fechaCotizacion, $vendedor, $cliente, $contactoCliente, $moneda, $comentarios, $conexion_usuarios);
+			break;
+	}
+
+	function quitar_stock($remision, $partidas, $folio, $tipoDocumento, $conexion_usuarios){
+		foreach ($partidas as &$id) {
+			$query = "SELECT * FROM cotizacionherramientas WHERE id = '$id'";
+			$resultado = mysqli_query($conexion_usuarios, $query);
+			$fecha = date("Y-m-d");
+			while($data = mysqli_fetch_assoc($resultado)){
+				$id = $data['id'];
+				$marca = $data['marca'];
+				$modelo = $data['modelo'];
+				$cantidadquitar = $data['cantidad'];
+				$entregado = $data['Entregado'];
+
+				if ($tipoDocumento == "factura/pagoanticipado") {
+						$query2 = "UPDATE cotizacionherramientas SET factura='$folio' WHERE id = '$id'";
+						$resultado2 = mysqli_query($conexion_usuarios, $query2);
+
+						$query2 = "UPDATE utilidad_pedido SET factura_hemusa='$folio' WHERE id_cotizacion_herramientas = '$id'";
+						$resultado2 = mysqli_query($conexion_usuarios, $query2);
+				}else{
+						$query2 = "UPDATE cotizacionherramientas SET Entregado='$fecha', factura='$folio' WHERE id = '$id'";
+						$resultado2 = mysqli_query($conexion_usuarios, $query2);
+
+						$query2 = "UPDATE utilidad_pedido SET fecha_entregado='$fecha', factura_hemusa='$folio' WHERE id_cotizacion_herramientas = '$id'";
+						$resultado2 = mysqli_query($conexion_usuarios, $query2);
+				}
+			}
+		}
+
+		if (!$resultado) {
+			$informacion["respuesta"] = "ERROR";
+			$informacion["informacion"] = "Ocurrió un problema al intentar modificar el estado de la herramienta!";
+		}else{
+			$informacion["respuesta"] = "BIEN";
+			$informacion["informacion"] = "La herramienta se modificó correctamente!";
+		}
+		echo json_encode($informacion);
+		mysqli_close($conexion_usuarios);
 	}
 
 	function cambiar_moneda($remision, $conexion_usuarios){
@@ -333,15 +383,22 @@
 	}
 
 	function nuevaremision($numeroCotizacion, $remision, $fechaCotizacion, $vendedor, $cliente, $contactoCliente, $moneda, $comentarios, $conexion_usuarios){
-		$query = "SELECT id FROM contactos WHERE nombreEmpresa LIKE '%$cliente%' LIMIT 1";
+		$query = "SELECT * FROM contactos WHERE nombreEmpresa LIKE '%$cliente%' LIMIT 1";
 		$resultado = mysqli_query($conexion_usuarios, $query);
-		if (!$resultado) {
-			verificar_resultado($resultado);
+		if (mysqli_num_rows($resultado) < 1) {
+			$informacion["respuesta"] = "ERROR";
+			$informacion["remision"] = "Ocurrió un error al buscar información de contacto.";
 		}else{
 			while($data = mysqli_fetch_array($resultado)){
 				$idCliente = $data['id'];
+				$idFormaPago = $data['IdFormaPago'];
+				$idMetodoPago = $data['IdMetodoPago'];
+				$idUsoCFDI = $data['IdUsoCFDI'];
 			}
 			$query = "INSERT INTO cotizacion (ref, cliente, contacto, vendedor, fecha, moneda, Otra, remision, remisionFecha) VALUES ('$numeroCotizacion', '$idCliente', '$contactoCliente', '$vendedor', '$fechaCotizacion', '$moneda', '$comentarios', '$remision', '$fechaCotizacion')";
+			$resultado = mysqli_query($conexion_usuarios, $query);
+
+			$query = "INSERT INTO remisiones (remision, cotizacionRef, contacto, vendedor, fecha, cliente, moneda, IdFormaPago, IdMetodoPago, IdUsoCFDI) VALUES ('$remision', '$numeroCotizacion', '$contactoCliente', '$vendedor', '$fechaCotizacion', '$idCliente', '$moneda', '$idFormaPago', '$idMetodoPago', '$idUsoCFDI')";
 			$resultado = mysqli_query($conexion_usuarios, $query);
 			if (!$resultado) {
 				verificar_resultado($resultado);
@@ -355,8 +412,7 @@
 
 	function agregar_herramienta($herramienta, $remision, $conexion_usuarios){
 		$fecha = date("Y-m-d");
-		foreach ($herramienta as &$valor) {
-			$id = $valor;
+		foreach ($herramienta as &$id) {
 			$query = "UPDATE utilidad_pedido SET remision = '$remision', fecha_entregado='$fecha' WHERE id_cotizacion_herramientas = '$id'";
 			$resultado = mysqli_query($conexion_usuarios, $query);
 
@@ -381,30 +437,56 @@
 		$total = 0;
 		$i = 0;
 
-		foreach ($herramienta as &$valor) {
-			$id = $valor;
-			$query = "SELECT precioLista, cantidad, moneda FROM cotizacionherramientas WHERE id = '$id'";
+		foreach ($herramienta as &$id) {
+			$query = "SELECT marca, modelo, precioLista, cantidad, moneda FROM cotizacionherramientas WHERE id = '$id'";
 			$resultado = mysqli_query($conexion_usuarios, $query);
 			while($data2 = mysqli_fetch_assoc($resultado)){
+				$precioUnitario = $data2['precioLista'];
 				$precioLista = $data2['precioLista'] * $data2['cantidad'];
 				$moneda = $data2['moneda'];
+				$marca = $data2['marca'];
+				$modelo = $data2['modelo'];
+				$cantidadquitar = $data2['cantidad'];
 			}
 
+			$query = "SELECT enReserva FROM productos WHERE marca = '$marca' AND ref = '$modelo'";
+			$resultado = mysqli_query($conexion_usuarios, $query);
+			while($data2 = mysqli_fetch_assoc($resultado)){
+				$cantidad = $data2['enReserva'];
+			}
+
+			$cantidadstock = $cantidad - $cantidadquitar;
+
+			$query = "UPDATE productos SET enReserva = '$cantidadstock' WHERE marca = '$marca' AND ref = '$modelo'";
+			$resultado = mysqli_query($conexion_usuarios, $query);
+
+
 			if($monedaremision == "usd" && $moneda == "usd"){
+				$precioUnitario = $precioUnitario;
 				$total = $total + $precioLista;
 			}else if($monedaremision == "usd" && $moneda == "mxn"){
+				$precioUnitario = $precioUnitario / $tipocambio;
 				$total = $total + ($precioLista / $tipocambio );
 			}else if($monedaremision == "mxn" && $moneda == "mxn"){
+				$precioUnitario = $precioUnitario;
 				$total = $total + $precioLista;
 			}else if($monedaremision == "mxn" && $moneda == "usd"){
+				$precioUnitario = $precioUnitario * $tipocambio;
 				$total = $total + ($precioLista * $tipocambio );
 			}
+
 			$i++;
+			$query = "UPDATE cotizacionherramientas SET precioLista = '$precioUnitario', moneda = '$monedaremision' WHERE id = '$id'";
+			$resultado = mysqli_query($conexion_usuarios, $query);
 		}
 		$partidas = $partidas + $i;
 		$totalcotizacion = $totalcotizacion + $total;
+		$query = "UPDATE remisiones SET total = '$totalcotizacion', partidas = '$partidas' WHERE remision = '$remision'";
+		$resultado = mysqli_query($conexion_usuarios, $query);
+
 		$query = "UPDATE cotizacion SET precioTotal = '$totalcotizacion', partidaCantidad = '$partidas' WHERE remision = '$remision'";
 		$resultado = mysqli_query($conexion_usuarios, $query);
+
 
 		if (!$resultado) {
 			$informacion["respuesta"] = "ERROR";
@@ -470,6 +552,9 @@
 	}
 
 	function numeroguia($numeroguia, $remision, $conexion_usuarios){
+		$query = "UPDATE remisiones SET numeroGuia='$numeroguia' WHERE remision ='$remision'";
+		$resultado = mysqli_query($conexion_usuarios, $query);
+
 		$query = "UPDATE cotizacion SET guia='$numeroguia' WHERE remision ='$remision'";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 		if (!$resultado) {
@@ -487,6 +572,9 @@
 		if($paqueteria == "NINGUNA"){
 			$paqueteria = 0;
 		}
+		$query = "UPDATE remisiones SET paqueteria='$paqueteria' WHERE remision = '$remision'";
+		$resultado = mysqli_query($conexion_usuarios, $query);
+
 		$query = "UPDATE cotizacion SET IdPaqueteria='$paqueteria' WHERE remision ='$remision'";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 
@@ -553,6 +641,9 @@
 	}
 
 	function formapago($formapago, $remision, $conexion_usuarios){
+		$query = "UPDATE remisiones SET IdFormaPago='$formapago' WHERE remision='$remision'";
+		$resultado = mysqli_query($conexion_usuarios, $query);
+
 		$query = "SELECT * FROM cotizacion WHERE remision = '$remision'";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 		while($data = mysqli_fetch_assoc($resultado)){
@@ -574,6 +665,9 @@
 	}
 
 	function metodopago($metodopago, $remision, $conexion_usuarios){
+		$query = "UPDATE remisiones SET IdMetodoPago='$metodopago' WHERE remision='$remision'";
+		$resultado = mysqli_query($conexion_usuarios, $query);
+
 		$query = "SELECT * FROM cotizacion WHERE remision = '$remision'";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 		while($data = mysqli_fetch_assoc($resultado)){
@@ -594,6 +688,9 @@
 	}
 
 	function usocfdi($cfdi, $remision, $conexion_usuarios){
+		$query = "UPDATE remisiones SET IdUsoCFDI='$cfdi' WHERE remision='$remision'";
+		$resultado = mysqli_query($conexion_usuarios, $query);
+
 		$query = "SELECT * FROM cotizacion WHERE remision = '$remision'";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 		while($data = mysqli_fetch_assoc($resultado)){
@@ -688,17 +785,14 @@
 		mysqli_close($conexion_usuarios);
 	}
 
-	function guardar_factura($folio, $ordenpedido, $total, $status, $fecha, $cliente, $conexion_usuarios){
-		$query = "SELECT * FROM facturas WHERE folio = '$folio'";
+	function guardar_factura($folio, $remision, $total, $status, $fecha, $tipoDocumento, $uidfactura, $uuidfactura, $cliente, $conexion_usuarios){
+		$query = "INSERT INTO facturas (folio, tipoDocumento, remision, total, status, fecha, UID, UUID, cliente) VALUES ('$folio', '$tipoDocumento', '$remision', '$total', '$status', '$fecha', '$uidfactura', '$uuidfactura', '$cliente')";
 		$resultado = mysqli_query($conexion_usuarios, $query);
-		if(mysqli_num_rows($resultado) == 0){
-			$query = "INSERT INTO facturas (folio, ordenpedido, total, status, fecha, cliente) VALUES ('$folio', '$ordenpedido', '$total', '$status', '$fecha', '$cliente')";
-			$resultado = mysqli_query($conexion_usuarios, $query);
-			$fecha = date("Y-m-d");
+		$fecha = date("Y-m-d");
 
-			$query = "UPDATE cotizacion SET factura = '$folio', facturaFecha = '$fecha' WHERE remision = '$ordenpedido'";
-			$resultado = mysqli_query($conexion_usuarios, $query);
-		}
+		$query = "UPDATE cotizacion SET factura = '$folio', facturaFecha = '$fecha' WHERE NoPedClient = '$ordenpedido'";
+		$resultado = mysqli_query($conexion_usuarios, $query);
+
 		if (!$resultado) {
 			$informacion["respuesta"] = "ERROR";
 			$informacion["informacion"] = "Ocurrió un problema al guardar la factura '".$folio."'!";

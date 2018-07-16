@@ -1,6 +1,6 @@
 <?php
-	require_once('../../conexion.php'); // Llamada a connect.php para establecer conexi�n con la BD
-	require_once('../../sesion.php'); // Llamada a sesion.php para validar si hay sesi�n inciada
+	require_once('../../conexion.php');
+	require_once('../../sesion.php');
 	error_reporting(0);
 	$idContacto = $_REQUEST['id'];
 	$fecha = date("d").'-'.date("m").'-'.date("Y");
@@ -1458,12 +1458,10 @@
 					}else if (info.respuesta == "agregarcotizacion") {
 						$(".modal").modal("hide");
 						$("#mod-cotizacion").modal("show");
-						setTimeout(function () {
-							$(".texto1").fadeOut(300, function(){
-								$(this).html("");
-								$(this).fadeIn(300);
-							});
-						}, 2000);
+						$(".texto1").fadeOut(300, function(){
+							$(this).html("");
+							$(this).fadeIn(300);
+						});
 						setTimeout(function () {
 							$(".texto1").append("<div class='text-success'><span class='modal-main-icon mdi mdi-check-circle'></span></div>");
 							$(".texto1").append("<h3>Correcto!</h3>");
@@ -1471,19 +1469,17 @@
 							$(".texto1").append("<div class='text-center'>");
 							$(".texto1").append("<p>Esperé un momento será redireccionado...</p>");
 							$(".texto1").append("</div>");
-						}, 2500);
+						}, 350);
 						setTimeout(function () {
 							window.location= "../cotizaciones/verCotizacion.php?numero="+info.numero;
-						}, 4000);
+						}, 2000);
 					}else if(info.respuesta == "nuevaremision"){
 						$(".modal").modal("hide");
 						$("#mod-remision").modal("show");
-						setTimeout(function () {
-							$(".texto1").fadeOut(300, function(){
-								$(this).html("");
-								$(this).fadeIn(300);
-							});
-						}, 2000);
+						$(".texto1").fadeOut(300, function(){
+							$(this).html("");
+							$(this).fadeIn(300);
+						});
 						setTimeout(function () {
 							$(".texto1").append("<div class='text-success'><span class='modal-main-icon mdi mdi-check-circle'></span></div>");
 							$(".texto1").append("<h3>Correcto!</h3>");
@@ -1491,10 +1487,10 @@
 							$(".texto1").append("<div class='text-center'>");
 							$(".texto1").append("<p>Esperé un momento será redireccionado...</p>");
 							$(".texto1").append("</div>");
-						}, 2500);
+						}, 350);
 						setTimeout(function () {
 							window.location= "../remisiones/verRemision.php?remision="+info.remision;
-						}, 4000);
+						}, 2000);
 					}else{
 						$("#mod-cotizacion").modal("hide");
 						$("#mod-remision").modal("hide");
