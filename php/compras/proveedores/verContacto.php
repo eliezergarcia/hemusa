@@ -611,6 +611,7 @@
 				{ "width": "6%", "targets": 9 },
         { "width": "6%", "targets": 10 },
       ],
+			"paging": false,
 			"buttons":[
 				{
 					extend: 'collection',
@@ -785,6 +786,7 @@
 				{ "width": "9%", "targets": 10 },
 				{ "width": "7%", "targets": 11 },
 			],
+			"paging": false,
 	        "language": idioma_espanol,
 					"dom":
 							"<'row be-datatable-header'<'col-sm-6'B><'col-sm-6 text-right'f>>" +
@@ -1004,6 +1006,7 @@
 				{ "width": "9%", "targets": 10 },
 				{ "width": "6%", "targets": 11 },
 			],
+			"paging": false,
       "language": idioma_espanol,
 			"dom":
 				"<'row be-datatable-header'<'col-sm-6'B><'col-sm-6 text-right'f>>" +
