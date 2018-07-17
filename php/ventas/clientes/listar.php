@@ -52,7 +52,7 @@
 			$arreglo["data"] = 0;
 		}else{
 			while($data = mysqli_fetch_assoc($resultado)){
-				$arreglo["data"][] = $data;
+				$arreglo["data"][] = array_map("utf8_encode", $data);
 			}
 		}
 
