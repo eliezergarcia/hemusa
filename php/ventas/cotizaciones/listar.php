@@ -1,6 +1,6 @@
 <?php
 	include("../../conexion.php");
-	error_reporting(0);
+	// error_reporting(0);
 
 	$opcion = $_POST['opcion'];
 	$informacion = [];
