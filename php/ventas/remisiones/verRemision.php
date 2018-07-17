@@ -1169,13 +1169,13 @@
 				doc.setFontSize(13);
 				doc.setFontStyle('bold');
 				doc.text("REMISION", 270, 110);
+				doc.text("FOLIO N° "+data.cotizacion.remision, 255, 126);
 				doc.setFontSize(10);
 				doc.setFontStyle('bold');
-				doc.text("Folio:", 385, 135);
+				// doc.text("Folio:", 385, 135);
 				doc.text("Fecha:", 385, 150);
 				doc.text("Hecho por:", 385, 165);
 				doc.setFontStyle('normal');
-				doc.text(data.cotizacion.remision, 475, 135);
 				doc.text(data.cotizacion.fecha, 475, 150);
 				if(data.cotizacion.vendedor == ''){
 					doc.text(data.cotizacion.contacto, 475, 165);
@@ -1184,25 +1184,25 @@
 				}
 				doc.setFontSize(10);
 				doc.setFontStyle('bold');
-				doc.text("Cliente", 20, 135);
-				doc.text("Condiciones de pago", 395, 230);
+				doc.text("Cliente", 20, 150);
+				doc.text("Condiciones de pago", 395, 245);
 				doc.setFontSize(10);
 				doc.setFontStyle('normal');
-				doc.text(data.cliente.nombreEmpresa, 20, 150);
+				doc.text(data.cliente.nombreEmpresa, 20, 165);
 				if (data.cotizacion.CondPago == 0) {
-					doc.text("Contado", 435, 245);
+					doc.text("Contado", 425, 260);
 				}else{
-					doc.text(data.cotizacion.CondPago + " días", 435, 245);
+					doc.text(data.cotizacion.CondPago + " días", 435, 260);
 				}
-				doc.text(data.cliente.RFC, 20, 165);
+				doc.text(data.cliente.RFC, 20, 180);
 				doc.setFontStyle('bold');
 				doc.setFontSize(10);
-				doc.text("Contacto", 425, 195);
+				doc.text("Contacto", 425, 210);
 				doc.setFontSize(10);
 				doc.setFontStyle('normal');
-				doc.text(data.cotizacion.contacto, 420, 210);
-				doc.text(data.cliente.calle + ", " + data.cliente.colonia, 20, 180);
-				doc.text(data.cliente.ciudad + ", " + data.cliente.estado + ", C.P." + data.cliente.cp, 20, 195);
+				doc.text(data.cotizacion.contacto, 420, 225);
+				doc.text(data.cliente.calle + ", " + data.cliente.colonia, 20, 195);
+				doc.text(data.cliente.ciudad + ", " + data.cliente.estado + ", C.P." + data.cliente.cp, 20, 210);
 
 	        doc.autoTable(columns, rows, {
 	          theme: 'grid',
