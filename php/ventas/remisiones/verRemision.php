@@ -1171,17 +1171,17 @@
 				doc.text("REMISION", 270, 110);
 				doc.setFontSize(10);
 				doc.setFontStyle('bold');
-				doc.text("Fecha:", 385, 135);
-				doc.text("Hecho por:", 385, 150);
-				doc.text("Folio:", 385, 165);
+				doc.text("Folio:", 385, 135);
+				doc.text("Fecha:", 385, 150);
+				doc.text("Hecho por:", 385, 165);
 				doc.setFontStyle('normal');
-				doc.text(data.cotizacion.fecha, 475, 135);
+				doc.text(data.cotizacion.remision, 475, 135);
+				doc.text(data.cotizacion.fecha, 475, 150);
 				if(data.cotizacion.vendedor == ''){
-					doc.text(data.cotizacion.contacto, 475, 150);
+					doc.text(data.cotizacion.contacto, 475, 165);
 				}else{
-					doc.text(data.cotizacion.vendedor, 475, 150);
+					doc.text(data.cotizacion.vendedor, 475, 165);
 				}
-				doc.text(data.cotizacion.remision, 475, 165);
 				doc.setFontSize(10);
 				doc.setFontStyle('bold');
 				doc.text("Cliente", 20, 135);
@@ -1228,23 +1228,23 @@
 	          styles: {overflow: 'linebreak', cellPadding: 6, fontSize: 8, rowHeight: 15, pageBreak: 'always', columnWidth: 'auto'},
 	        });
 
-					doc.setFontSize(10);
-	        doc.setFontStyle('bold');
-	      doc.text("Recibí de conformidad:", 130, doc.autoTable.previous.finalY  + 50);
-				doc.text("Surtido por:", 350, doc.autoTable.previous.finalY  + 50);
+			doc.setFontSize(10);
+	    doc.setFontStyle('bold');
+	    doc.text("Recibí de conformidad:", 350, doc.autoTable.previous.finalY  + 50);
+			doc.text("Surtido por:", 130, doc.autoTable.previous.finalY  + 50);
 			doc.setFontStyle('normal');
 			doc.setFontSize(9);
-	        doc.text("Nombre:", 130, doc.autoTable.previous.finalY  + 70);
-			doc.text("Firma:", 130, doc.autoTable.previous.finalY  + 90);
-	        doc.setFontStyle('bold');
-			doc.setFontStyle('normal');
-	        doc.text("Nombre:", 350, doc.autoTable.previous.finalY  + 70);
+	    doc.text("Nombre:", 130, doc.autoTable.previous.finalY  + 70);
+			// doc.text("Firma:", 350, doc.autoTable.previous.finalY  + 90);
 			if(data.cotizacion.vendedor == ""){
-				doc.text(data.cotizacion.contacto, 390, doc.autoTable.previous.finalY  + 70);
+				doc.text(data.cotizacion.contacto, 170, doc.autoTable.previous.finalY  + 70);
 			}else{
-				doc.text(data.cotizacion.vendedor, 390, doc.autoTable.previous.finalY  + 70);
+				doc.text(data.cotizacion.vendedor, 170, doc.autoTable.previous.finalY  + 70);
 			}
-			doc.text("Firma:", 350, doc.autoTable.previous.finalY  + 90);
+	    doc.setFontStyle('bold');
+			doc.setFontStyle('normal');
+	    // doc.text("Nombre:", 130, doc.autoTable.previous.finalY  + 70);
+			doc.text("Firma:", 350, doc.autoTable.previous.finalY  + 70);
 			doc.setLineWidth(1)
 			doc.setDrawColor(0,0,0);
 			doc.setFontStyle('normal');
