@@ -1880,7 +1880,7 @@
 					'TipoCambio': $("#frmInformacionFactura #tipoCambio").val(),
 					'NumOrder': $("#frmInformacionFactura #numeroOrden").val(),
 					'FechaFromAPI': fecha,
-					// 'Comentarios': 'Comentarios para agregar a la factura PDF',
+					'Comentarios': "Condiciones de pago: "+conceptos.condpago,
 					'EnviarCorreo': $("#frmInformacionFactura #enviarCorreo").val()
 				};
 				console.log(JSON.stringify(body));
