@@ -1,6 +1,5 @@
 <?php
   require_once('php/conexion.php');
-
   // sleep(5);
 
   if (!isset($_SESSION)) {
@@ -78,6 +77,7 @@
                   <div class="form-group">
                     <input id="user" name="user" type="text" placeholder="Usuario" autocomplete="off" class="form-control">
                   </div>
+                  <?php echo "Hola"; ?>
                   <div class="form-group">
                     <input id="password" name="password" type="password" placeholder="Contraseña" class="form-control">
                   </div>
