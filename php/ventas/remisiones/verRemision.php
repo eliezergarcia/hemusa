@@ -552,6 +552,15 @@
 				      	<div class="modal-body">
 									<h4>Por favor verifique los datos a continuación antes de facturar:</h4>
 				        	<form id="frmInformacionFactura" action="" method="POST">
+										<div class="row form-group">
+											<div class="col-4">
+												<label for="entorno">Seleccione el entorno: <font color="#FF4136">*</font></label>
+												<select type="text" id="entorno" name="entorno" class="form-control form-control-sm">
+													<option value="produccion">Produccion</option>
+													<option value="pruebas">Pruebas</option>
+												</select>
+											</div>
+										</div>
 			        			<div class="row form-group">
 			        				<div class="col-8">
 			        					<label for="cliente">Cliente <font color="#FF4136">*</font></label>
@@ -1810,6 +1819,13 @@
 
 		function buscar_cliente_portal(RFC, remision){
 			$("#generarFactura").on("click", function(){
+				apiConfig.opcion = $("#frmInformacionFactura #entorno").val();
+				if (apiConfig.opcion == "pruebas") {
+					apiConfig.enlace = "http://devfactura.in/",
+				  apiConfig.apiKey = "JDJ5JDEwJDNtc1I3Z2JySG5pcUs0VWtQTlVxbmVsaFdyWUl6Ym5kQ1FKcmE2UGNIMG1WeGs5aEtXU3dp",
+				  apiConfig.secretKey = "JDJ5JDEwJERYUXBSWGo5R0VINzE4UlRiY25oc09SUWhnMU9vRWdYSTQwOWJuTDZXUlhYR1E0Vmp5ZUFX",
+				  apiConfig.serie = "1194"
+				}
 				$("#modalInformacionFactura").modal("hide");
 				$("#mod-success").modal("show");
 				var request = new XMLHttpRequest();
@@ -2059,7 +2075,36 @@
 						var UIDFactura = data.uid;
 						var UUIDFactura = data.UUID;
 						var tipoDocumento = $("#frmInformacionFactura #tipoDocumento").val();
-						guardarFactura(remision, herramienta, tipoDocumento, UIDFactura, UUIDFactura);
+						apiConfig.opcion = $("#frmInformacionFactura #entorno").val();
+						if (apiConfig.opcion == "produccion"){
+							guardarFactura(remision, herramienta, tipoDocumento, UIDFactura, UUIDFactura);
+						}else{
+							var request = new XMLHttpRequest();
+
+							request.open('GET', apiConfig.enlace+'api/v3/cfdi33/'+UIDFactura+'/pdf');
+
+							request.setRequestHeader('F-API-KEY', apiConfig.apiKey);
+							request.setRequestHeader('F-SECRET-KEY', apiConfig.secretKey);
+							request.setRequestHeader('Content-Type', 'application/pdf');
+							request.setRequestHeader('Content-Transfer-Encoding', 'Binary');
+							request.setRequestHeader('Content-Disposition', 'attachment: filename=F2222.pdf');
+							request.responseType = 'blob';
+
+							request.onreadystatechange = function () {
+								if (this.readyState === 4) {
+									console.log('Status:', this.status);
+									console.log('Headers:', this.getAllResponseHeaders());
+									console.log('Body:', this.response);
+									var blob = new Blob([this.response], {type: 'application/pdf'});
+									var link = document.createElement('a');
+									link.href = window.URL.createObjectURL(blob);
+									link.download = "factura.pdf";
+									link.click();
+								}
+							};
+
+							request.send();
+						}
 					}
 				}
 			};

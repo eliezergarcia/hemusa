@@ -130,7 +130,6 @@
   		App.uiNotifications();
 			nav_active();
 			prettyPrint();
-			listar_facturas();
 			$("#filtromes").val("<?php echo $mes; ?>").change();
       $("#filtroano").val("<?php echo $ano; ?>").change();
 		});
@@ -145,27 +144,27 @@
 
 		$("#filtromes").on("change", function (){
 			listar_facturas();
-			$('#dt_facturas').DataTable().ajax.reload();
+			// $('#dt_facturas').DataTable().ajax.reload();
 		});
 
 		$("#filtroano").on("change", function (){
 			listar_facturas();
-			$('#dt_facturas').DataTable().ajax.reload();
+			// $('#dt_facturas').DataTable().ajax.reload();
 		});
 
 		$('input[name=filtrotipo]').change(function() {
 			listar_facturas();
-			$('#dt_facturas').DataTable().ajax.reload();
+			// $('#dt_facturas').DataTable().ajax.reload();
 		});
 
 		$('input[name=filtroestado]').change(function() {
 			listar_facturas();
-			$('#dt_facturas').DataTable().ajax.reload();
+			// $('#dt_facturas').DataTable().ajax.reload();
 		});
 
 		$("#filtroreferencia").on("change", function (){
 			listar_facturas();
-			$('#dt_facturas').DataTable().ajax.reload();
+			// $('#dt_facturas').DataTable().ajax.reload();
 		});
 
 		var listar_facturas = function(){
@@ -277,17 +276,18 @@
 	  }
 
 		var obtener_pdf_factura = function(tbody, table){
-	      $(tbody).on("click", "button.pdf", function(){
-					$("#mod-spinner").modal("show");
-	        var data = table.row( $(this).parents("tr") ).data();
-	        var ordenpedido = data.ordenpedido;
-	        // console.log(ordenpedido);
-	        var RFC = data.rfc;
+      $(tbody).on("click", "button.pdf", function(){
+				$("#mod-spinner").modal("show");
+        var data = table.row( $(this).parents("tr") ).data();
+        var ordenpedido = data.ordenpedido;
+        // console.log(ordenpedido);
+        var RFC = data.rfc;
 
-	        var request = new XMLHttpRequest();
+        var request = new XMLHttpRequest();
 
 			request.open('GET', apiConfig.enlace+'api/v3/cfdi33/list');
 
+			request.setRequestHeader('Access-Control-Allow-Headers', 'http://devfactura.in/api/v3/cfdi33/list');
 			request.setRequestHeader('Content-Type', 'application/json');
 			request.setRequestHeader('F-API-KEY', apiConfig.apiKey);
 			request.setRequestHeader('F-SECRET-KEY', apiConfig.secretKey);
