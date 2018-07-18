@@ -111,14 +111,14 @@
 
 				// $descripcion = str_replace($data['descripcion'], "", "(", 5);
 				$descripcion = utf8_encode($data['descripcion']);
-				$datadescripcion = explode('(', $descripcion);
-				$desc = $datadescripcion[0];
+				// $datadescripcion = explode('(', $descripcion);
+				// $desc = $datadescripcion[0];
 
 				$arreglo["partidas"][]=array(
 					'indice' => $i,
 					'marca' => $data['marca'],
 					'modelo' => $data['modelo'],
-					'descripcion' => utf8_encode($desc),
+					'descripcion' => utf8_encode($descripcion),
 					'pedidoCliente' => $pedidoCliente,
 					'cantidad' => $data['cantidad'],
 					'precioUnitario' => "$ ".round($data['precioLista'],2),
