@@ -368,8 +368,7 @@
 	}
 
 	function packinglist($data, $conexion_usuarios){
-		foreach ($data as &$valor) {
-			$id = $valor;
+		foreach ($data as &$id) {
 			$query = "UPDATE cotizacionherramientas SET embarque='pendiente' WHERE id=$id";
 			$resultado = mysqli_query($conexion_usuarios, $query);
 		}

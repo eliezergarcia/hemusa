@@ -72,13 +72,19 @@
           $paqueteria = $datapaqueteria['nombre'];
         }
 
+        if ($data['factura'] != "0") {
+          $factura = str_replace("H ", "", $data['factura']);
+        }else{
+          $factura = "";
+        }
+
         $arreglo['partidas'][] = array(
           'indice' => $i,
           'marca' => $data['marca'],
           'modelo' => $data['modelo'],
           'descripcion' => $data['descripcion'],
           'cantidad' => $data['cantidad'],
-          'factura' => $data['factura'],
+          'factura' => $factura,
           'ordencompra' => $data['NoPedClient'],
           'paqueteria' => utf8_encode($paqueteria),
           'guia' => $data['guia']
@@ -109,8 +115,8 @@
       INNER JOIN cotizacion ON cotizacion.ref = cotizacionherramientas.cotizacionRef WHERE folio_embarque = '$folio'";
     $resultado = mysqli_query($conexion_usuarios, $query);
 
-    if(!$resultado){
-      die('Error');
+    if(mysqli_num_rows($resultado) < 1){
+      $arreglo['data'] = 0;
     }else{
       $i = 1;
       while($data = mysqli_fetch_assoc($resultado)){
@@ -122,13 +128,19 @@
           $paqueteria = $datapaqueteria['nombre'];
         }
 
+        if ($data['factura'] != "0") {
+          $factura = str_replace("H ", "", $data['factura']);
+        }else{
+          $factura = "";
+        }
+
         $arreglo['data'][] = array(
           'indice' => $i,
           'marca' => $data['marca'],
           'modelo' => $data['modelo'],
           'descripcion' => $data['descripcion'],
           'cantidad' => $data['cantidad'],
-          'factura' => $data['factura'],
+          'factura' => $factura,
           'ordencompra' => $data['NoPedClient'],
           'paqueteria' => utf8_encode($paqueteria),
           'guia' => $data['guia']

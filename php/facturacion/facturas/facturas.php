@@ -107,6 +107,44 @@
 			</div>
 		</div>
 
+		<!-- Modal Cancelar Factura -->
+      <form id="frmCancelarFactura" action="" method="POST">
+        <input type="hidden" id="opcion" name="opcion" value="cancelarfactura">
+        <input type="hidden" id="uidFactura" name="uidFactura" value="">
+        <div class="modal fade" id="modalCancelarFactura" tabindex="-1" role="dialog">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" data-dismiss="modal" aria-hidden="true" class="close"><span class="mdi mdi-close"></span></button>
+              </div>
+              <div class="modal-body">
+                <div class="text-center">
+                  <div class="text-danger"><span class="modal-main-icon mdi mdi-close-circle-o"></span></div>
+                  <h4>Selecciona el motivo de cancelación de la factura: <h4 id="foliocancelacion"></h4></h4>
+                  <div class="row justify-content-center">
+										<div class="col-10">
+											<select class="form-control form-control-sm select2" name="motivoCancelacion" id="motivoCancelacion">
+												<option>Error en datos fiscales (RFC, domicilio, nombre o razón social)</option>
+												<option>Error en forma o método de pago (contado, parcialidad, efectivo, transferencia)</option>
+												<option>Error en los montos (facturar de más o de menos)</option>
+												<option>No pago de la factura electrónica</option>
+												<option>Productos y Servicios (error en el concepto)</option>
+												<option>Impuestos aplicables en la factura electrónica</option>
+											</select>
+										</div>
+									</div>
+                  <div class="mt-8 invoice-footer">
+                    <button type="button" class="btn btn-lg btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="button" onclick="cancelar_factura()" class="btn btn-lg btn-danger">Hecho</button>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer"></div>
+            </div>
+          </div>
+        </div>
+      </form>
+
 		<div id="mod-spinner" tabindex="-1" role="dialog" style="" class="modal fade" data-backdrop="static" data-keyboard="false">
       <div class="modal-dialog" style="top: 400px;">
 				<div class="text-center">
@@ -131,7 +169,6 @@
 			nav_active();
 			prettyPrint();
 			$("#filtromes").val("<?php echo $mes; ?>").change();
-      $("#filtroano").val("<?php echo $ano; ?>").change();
 		});
 
 		function nav_active () {
@@ -279,213 +316,126 @@
       $(tbody).on("click", "button.pdf", function(){
 				$("#mod-spinner").modal("show");
         var data = table.row( $(this).parents("tr") ).data();
-        var ordenpedido = data.ordenpedido;
-        // console.log(ordenpedido);
-        var RFC = data.rfc;
+				console.log(data);
+        var UIDfactura = data.uid;
+        console.log(UIDfactura);
 
-        var request = new XMLHttpRequest();
+				var request = new XMLHttpRequest();
 
-			request.open('GET', apiConfig.enlace+'api/v3/cfdi33/list');
+				request.open('GET', apiConfig.enlace+'api/v3/cfdi33/'+UIDfactura+'/pdf');
 
-			request.setRequestHeader('Access-Control-Allow-Headers', 'http://devfactura.in/api/v3/cfdi33/list');
-			request.setRequestHeader('Content-Type', 'application/json');
-			request.setRequestHeader('F-API-KEY', apiConfig.apiKey);
-			request.setRequestHeader('F-SECRET-KEY', apiConfig.secretKey);
+				request.setRequestHeader('F-API-KEY', apiConfig.apiKey);
+				request.setRequestHeader('F-SECRET-KEY', apiConfig.secretKey);
+				request.setRequestHeader('Content-Type', 'application/pdf');
+				request.setRequestHeader('Content-Transfer-Encoding', 'Binary');
+				request.responseType = 'blob';
 
-			request.onreadystatechange = function () {
-			  if (this.readyState === 4) {
-			    var data = JSON.parse(this.responseText);
-			    console.log(data);
-			    // console.log(ordenpedido);
-			    var totalfacturas = data.total;
-			    for (var i = 0; i < totalfacturas; i++) {
-			    	if (ordenpedido == data.data[i].NumOrder){
-			    		console.log(data.data[i]);
-			    		var UIDfactura = data.data[i].UID;
-
-			    		var request = new XMLHttpRequest();
-
-						request.open('GET', apiConfig.enlace+'api/v3/cfdi33/'+UIDfactura+'/pdf');
-
-							request.setRequestHeader('F-API-KEY', apiConfig.apiKey);
-							request.setRequestHeader('F-SECRET-KEY', apiConfig.secretKey);
-							request.setRequestHeader('Content-Type', 'application/pdf');
-							request.setRequestHeader('Content-Transfer-Encoding', 'Binary');
-							request.setRequestHeader('Content-Disposition', 'attachment: filename=F2222.pdf');
-							request.setRequestHeader('Access-Control-Allow-Headers', '*');
-							request.setRequestHeader('Allow-Control-Allow-Origin', '*');
-							request.setRequestHeader('Access-Control-Allow-Credentials', 'true');
-							request.responseType = 'blob';
-							// header('Content-Type: application/pdf');
-							// header("Content-Transfer-Encoding: Binary");
-							// header("Content-disposition: attachment; filename=F2222.pdf");
-
-							request.onreadystatechange = function () {
-							  	if (this.readyState === 4) {
-							    	console.log('Status:', this.status);
-							    	console.log('Headers:', this.getAllResponseHeaders());
-							    	console.log('Body:', this.response);
-										$("#mod-spinner").modal("hide");
-							    	var blob = new Blob([this.response], {type: 'application/pdf'});
-							        var link = document.createElement('a');
-							        link.href = window.URL.createObjectURL(blob);
-							        link.download = "factura.pdf";
-							        link.click();
-						        }
-							};
-
-							request.send();
-
+				request.onreadystatechange = function () {
+						if (this.readyState === 4) {
+							console.log('Status:', this.status);
+							console.log('Headers:', this.getAllResponseHeaders());
+							console.log('Body:', this.response);
+							$("#mod-spinner").modal("hide");
+							var blob = new Blob([this.response], {type: 'application/pdf'});
+							var link = document.createElement('a');
+							link.href = window.URL.createObjectURL(blob);
+							link.download = "factura.pdf";
+							link.click();
 						}
-			    }
-			  }
-			}
+				};
 
-			request.send();
-	      });
+				request.send();
+
+	     });
 	  }
 
 		var obtener_xml_factura = function(tbody, table){
-	      $(tbody).on("click", "button.xml", function(){
-					$("#mod-spinner").modal("show");
-	        var data = table.row( $(this).parents("tr") ).data();
-	        var ordenpedido = data.ordenpedido;
-	        // console.log(ordenpedido);
-	        var RFC = data.rfc;
+	    $(tbody).on("click", "button.xml", function(){
+				$("#mod-spinner").modal("show");
+        var data = table.row( $(this).parents("tr") ).data();
+        var UIDfactura = data.uid;
 
-	        var request = new XMLHttpRequest();
+				var request = new XMLHttpRequest();
 
-			request.open('GEt', apiConfig.enlace+'api/v3/cfdi33/list');
+				request.open('GET', apiConfig.enlace+'api/v3/cfdi33/'+UIDfactura+'/xml');
 
-			request.setRequestHeader('Content-Type', 'application/json');
-			request.setRequestHeader('F-API-KEY', apiConfig.apiKey);
-			request.setRequestHeader('F-SECRET-KEY', apiConfig.secretKey);
+				// request.setRequestHeader('Content-Type', 'application/json');
+				request.setRequestHeader('Content-type', '"text/xml"; charset="utf8"');
+				request.setRequestHeader('F-API-KEY', apiConfig.apiKey);
+				request.setRequestHeader('F-SECRET-KEY', apiConfig.secretKey);
 
-			request.onreadystatechange = function () {
-			  if (this.readyState === 4) {
-			    var data = JSON.parse(this.responseText);
-			    console.log(data);
-			    // console.log(ordenpedido);
-			    var totalfacturas = data.total;
-			    for (var i = 0; i < totalfacturas; i++) {
-			    	if (ordenpedido == data.data[i].NumOrder){
-			    		console.log(data.data[i]);
-			    		var UIDfactura = data.data[i].UID;
-
-			    		var request = new XMLHttpRequest();
-
-						request.open('GET', apiConfig.enlace+'api/v3/cfdi33/'+UIDfactura+'/xml');
-
-							// request.setRequestHeader('Content-Type', 'application/json');
-							request.setRequestHeader('Content-type', '"text/xml"; charset="utf8"');
-							request.setRequestHeader('Content-disposition', 'attachment; filename="F2222.xml"');
-							request.setRequestHeader('F-API-KEY', apiConfig.apiKey);
-							request.setRequestHeader('F-SECRET-KEY', apiConfig.secretKey);
-
-							request.onreadystatechange = function () {
-							  if (this.readyState === 4) {
-							    console.log('Status:', this.status);
-							    console.log('Headers:', this.getAllResponseHeaders());
-							    console.log('Body:', this.responseText);
-									$("#mod-spinner").modal("hide");
-							    var blob = new Blob([this.responseText], {type: 'application/xml'});
-						        var link = document.createElement('a');
-						        link.href = window.URL.createObjectURL(blob);
-						        link.download = "factura.xml";
-						        link.click();
-							  }
-							};
-							request.send();
-						}
-			    }
-			  }
-			}
-
-			request.send();
-	      });
+				request.onreadystatechange = function () {
+					if (this.readyState === 4) {
+						console.log('Status:', this.status);
+						console.log('Headers:', this.getAllResponseHeaders());
+						console.log('Body:', this.responseText);
+						$("#mod-spinner").modal("hide");
+						var blob = new Blob([this.responseText], {type: 'application/xml'});
+						var link = document.createElement('a');
+						link.href = window.URL.createObjectURL(blob);
+						link.download = "factura.xml";
+						link.click();
+					}
+				};
+				request.send();
+	    });
 	  }
 
 		var obtener_cancelar_factura = function(tbody, table){
-	      $(tbody).on("click", "button.cancelar", function(){
-					$("#mod-spinner").modal("show");
-	        var data = table.row( $(this).parents("tr") ).data();
-	        var ordenpedido = data.ordenpedido;
-	        // console.log(ordenpedido);
-	        var RFC = data.rfc;
+	   $(tbody).on("click", "button.cancelar", function(){
+	      var data = table.row( $(this).parents("tr") ).data();
+	      $("#uidFactura").val(data.uid);
+				$("#foliocancelacion").val(data.folio);
+				$("#modalCancelarFactura").modal("show");
+	    });
+	  }
 
-	        var request = new XMLHttpRequest();
+		function cancelar_factura () {
+			$("#modalCancelarFactura").modal("hide");
+			$("#mod-spinner").modal("show");
+			var frm = $("#frmCancelarFactura").serialize();
+			var UIDfactura = $("#uidFactura").val();
+			console.log(frm);
+			console.log(UIDfactura);
+			var request = new XMLHttpRequest();
 
-			request.open('GEt', apiConfig.enlace+'api/v3/cfdi33/list');
+			request.open('GET', apiConfig.enlace+'api/v3/cfdi33/'+UIDfactura+'/cancel');
 
 			request.setRequestHeader('Content-Type', 'application/json');
 			request.setRequestHeader('F-API-KEY', apiConfig.apiKey);
 			request.setRequestHeader('F-SECRET-KEY', apiConfig.secretKey);
 
 			request.onreadystatechange = function () {
-			  if (this.readyState === 4) {
-			    var data = JSON.parse(this.responseText);
-			    console.log(data);
-			    console.log(ordenpedido);
-			    var totalfacturas = data.total;
-			    for (var i = 0; i < totalfacturas; i++) {
-			    	if (ordenpedido == data.data[i].NumOrder){
-			    		console.log(data.data[i]);
-			    		var UIDfactura = data.data[i].UID;
-			    		var folio = data.data[i].Folio;
+				if (this.readyState === 4) {
+					console.log('Status:', this.status);
+					console.log('Headers:', this.getAllResponseHeaders());
+					console.log('Body:', this.responseText);
+					var data = JSON.parse(this.responseText);
 
-			    		var request = new XMLHttpRequest();
-
-						request.open('GET', apiConfig.enlace+'api/v3/cfdi33/'+UIDfactura+'/cancel');
-
-							request.setRequestHeader('Content-Type', 'application/json');
-							request.setRequestHeader('F-API-KEY', apiConfig.apiKey);
-							request.setRequestHeader('F-SECRET-KEY', apiConfig.secretKey);
-
-							request.onreadystatechange = function () {
-							  if (this.readyState === 4) {
-							    console.log('Status:', this.status);
-							    console.log('Headers:', this.getAllResponseHeaders());
-							    console.log('Body:', this.responseText);
-							    var data = JSON.parse(this.responseText);
-
-							    if (data.response == "error") {
-										$.gritter.add({
-						        	title: 'Error!',
-						        	text: data.message,
-						        	class_name: 'color danger'
-						      	});
-							    }else if(data.response = "success"){
-										$.gritter.add({
-						        	title: 'Error!',
-						        	text: data.message,
-						        	class_name: 'color success'
-						      	});
-
-									var opcion = "cancelarfactura";
-									$.ajax({
-										method: "POST",
-										url: "guardar.php",
-										dataType: "json",
-										data: {"opcion": opcion, "folio": folio},
-									}).done( function( info ){
-										$("#mod-spinner").modal("show");
-										mostrar_mensaje(info);
-										listar_facturas();
-									});
-							  	}
-							  }
-							};
-
-							request.send();
-
-						}
-			    	}
-			    }
-			}
+					if (data.response == "error") {
+						$.gritter.add({
+							title: 'Error!',
+							text: data.message,
+							class_name: 'color danger'
+						});
+					}else if(data.response = "success"){
+						var opcion = "cancelarfactura";
+						$.ajax({
+							method: "POST",
+							url: "guardar.php",
+							dataType: "json",
+							data: frm,
+						}).done( function( info ){
+							$("#mod-spinner").modal("hide");
+							mostrar_mensaje(info);
+							listar_facturas();
+						});
+					}
+				}
+			};
 
 			request.send();
-	      });
-	  }
+		}
 
 	</script>
 	<script type="text/javascript" src="<?php echo $ruta; ?>php/js/idioma_espanol.js"></script>

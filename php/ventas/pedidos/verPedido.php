@@ -276,7 +276,11 @@
 										<th>Modelo</th>
 										<th>Cantidad</th>
 										<th>Descripción</th>
-										<th><input type="checkbox" class="btn btn-outline-primary" name="sel" onclick="seleccionartodo()"></th>
+										<th>
+											<label class="custom-control custom-control-sm custom-checkbox">
+												<input class="custom-control-input" name="sel" type="checkbox" onclick="seleccionartodo()"><span class="custom-control-label"></span>
+											</label>
+										</th>
 									</tr>
 								</thead>
 							</table>
@@ -733,32 +737,36 @@
 			var refCotizacion = "<?php echo $_REQUEST['refCotizacion']; ?> ";
 			var numeroPedido = "<?php echo $_REQUEST['numeroPedido']; ?> ";
 			var table = $("#dt_packing_list").DataTable({
-					"destroy":"true",
-					"deferRender": true,
-					"scrollX": true,
-					"ajax":{
-						"url": "listar.php",
-						"type": "POST",
-						"data": {"refCotizacion": refCotizacion, "numeroPedido": numeroPedido, "opcion": opcion}
+				"destroy":"true",
+				"deferRender": true,
+				"scrollX": true,
+				"ajax":{
+					"url": "listar.php",
+					"type": "POST",
+					"data": {"refCotizacion": refCotizacion, "numeroPedido": numeroPedido, "opcion": opcion}
+				},
+				"columns":[
+					{"data": "indice"},
+					{"data": "marca"},
+					{"data": "modelo"},
+					{"data": "cantidad"},
+					{"data": "descripcion"},
+					{"data": null,
+						"render": function (data, row) {
+							return "<label class='custom-control custom-control-sm custom-checkbox'><input name='hpacking' value='"+data.id+"' class='custom-control-input' type='checkbox'><span class='custom-control-label'></span></label>";
+						},
 					},
-					"columns":[
-						{"data": "indice"},
-						{"data": "marca"},
-						{"data": "modelo"},
-						{"data": "cantidad"},
-						{"data": "descripcion"},
-						{"data": "check"},
-					],
-					"order": false,
-			        "lengthChange": false,
-			        "info": false,
-			        "paging": false,
-			        "ordering": false,
-			        "language": idioma_espanol,
-			        "dom":
-          				"<'row be-datatable-header'<'col-sm-6'><'col-sm-6 text-right'f>>" +
-          				"<'row be-datatable-body'<'col-sm-12'tr>>",
-				});
+				],
+				"order": false,
+        "lengthChange": false,
+        "info": false,
+        "paging": false,
+        "ordering": false,
+        "language": idioma_espanol,
+        "dom":
+    				"<'row be-datatable-header'<'col-sm-6'><'col-sm-6 text-right'f>>" +
+    				"<'row be-datatable-body'<'col-sm-12'tr>>",
+			});
 		})
 
 		var packinglist = function(){
