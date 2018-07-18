@@ -82,7 +82,7 @@
           'indice' => $i,
           'marca' => $data['marca'],
           'modelo' => $data['modelo'],
-          'descripcion' => $data['descripcion'],
+          'descripcion' => utf8_encode($data['descripcion']),
           'cantidad' => $data['cantidad'],
           'factura' => $factura,
           'ordencompra' => $data['NoPedClient'],
@@ -138,7 +138,7 @@
           'indice' => $i,
           'marca' => $data['marca'],
           'modelo' => $data['modelo'],
-          'descripcion' => $data['descripcion'],
+          'descripcion' => utf8_encode($data['descripcion']),
           'cantidad' => $data['cantidad'],
           'factura' => $factura,
           'ordencompra' => $data['NoPedClient'],
@@ -156,6 +156,7 @@
     }
 
     echo json_encode($arreglo, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_PARTIAL_OUTPUT_ON_ERROR);
+    mysqli_close($conexion_usuarios);
   }
 
   function partidas_embarque($idcliente, $conexion_usuarios){
@@ -182,6 +183,7 @@
     }
 
     echo json_encode($arreglo, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_PARTIAL_OUTPUT_ON_ERROR);
+    mysqli_close($conexion_usuarios);
   }
 
  ?>

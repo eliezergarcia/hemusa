@@ -1,6 +1,6 @@
 <?php
 	include ('../../conexion.php');
-	
+
 	$opcion = $_POST['opcion'];
 
 	switch ($opcion) {
@@ -23,7 +23,7 @@
 			$pedidos = json_decode($_POST['pedidos']);
 			buscar_total_pedidos_cliente($idcliente, $pedidos, $conexion_usuarios);
 			break;
-		
+
 		case 'buscartotalpedidos':
 			$idproveedor = $_POST['idproveedor'];
 			$pedidos = json_decode($_POST['pedidos']);
@@ -32,19 +32,37 @@
 	}
 
 	function buscar_total_pedidos_cliente($idproveedor, $pedidos, $conexion_usuarios){
+		$query = "SELECT id FROM contactos WHERE tipo='Cliente' AND nombreEmpresa LIKE '%$cliente%' LIMIT 1";
+		$resultado = mysqli_query($conexion_usuarios, $query);
+		while($data = mysqli_fetch_assoc($resultado)){
+			$idcliente = $data['id'];
+		}
+
 		$total = 0;
-		foreach ($pedidos as &$valor) {
-			$factura = $valor;
-			$query = "SELECT * FROM cotizacion WHERE id = '$factura'";
+		foreach ($pedidos as &$idpedido) {
+			$query = "SELECT * FROM facturas WHERE id = '$idpedido'";
 			$resultado = mysqli_query($conexion_usuarios, $query);
 
-			while($data = mysqli_fetch_assoc($resultado)){
-				$total = $total + ($data['precioTotal'] * 1.16);
+			if (mysqli_num_rows($resultado) < 1 || !$resultado) {
+				$query2 = "SELECT * FROM cotizacion WHERE id = '$idpedido'";
+				$resultado2 = mysqli_query($conexion_usuarios, $query2);
+
+				while($data2 = mysqli_fetch_assoc($resultado2)){
+					$total = $total + ($data2['precioTotal'] * 1.16);
+				}
+			}else{
+				while($data = mysqli_fetch_assoc($resultado)){
+					$total = $total + $data['total'];
+				}
 			}
 		}
 
+		// foreach ($pedidos as &$idpedido) {
+		// }
+
 		$arreglo['total'] = round($total,2);
 		echo json_encode($arreglo);
+		mysqli_close($conexion_usuarios);
 	}
 
 	function buscar_total_pedidos($idproveedor, $pedidos, $conexion_usuarios){
@@ -74,19 +92,14 @@
 	}
 
 	function clientes($conexion_usuarios){
-		$query = "SELECT * FROM contactos WHERE tipo = 'Cliente' AND nombreEmpresa != '' ORDER BY nombreEmpresa";
+		$query = "SELECT nombreEmpresa FROM contactos WHERE tipo = 'Cliente' AND nombreEmpresa != ''";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 
-		if (!$resultado) {
-			verificar_resultado($resultado);
-		}else{
-			while($data = mysqli_fetch_array($resultado)){
-				$arreglo[] = $data['id'];
-				$arreglo[] = utf8_decode($data['nombreEmpresa']);
- 			}
+		while($data = mysqli_fetch_array($resultado)){
+			$informacion[] = utf8_encode($data['nombreEmpresa']);
 		}
 
-		echo json_encode($arreglo);
+		echo json_encode($informacion);
 		mysqli_close($conexion_usuarios);
 	}
 

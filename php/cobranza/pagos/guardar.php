@@ -1,4 +1,4 @@
-<?php 
+<?php
 	include('../../conexion.php');
 
 	$opcion = $_POST["opcion"];
@@ -21,7 +21,7 @@
 			// }else{
 			// }
 				registrar($cliente, $tipo, $facoc, $fecha, $monto, $cuenta, $tipocambio, $numeropagos, $conexion_usuarios);
-			
+
 			break;
 
 		case 'registrarpagoscliente':
@@ -57,7 +57,7 @@
 			$cuenta = $_POST['cuenta'];
 			$tipocambio = $_POST['tipocambio'];
 			registrarproveedor($cliente, $tipo, $facoc, $fecha, $monto, $cuenta, $tipocambio, $conexion_usuarios);
-			
+
 			break;
 		case 'registrarpagosproveedor':
 			$proveedor = $_POST['cliente'];
@@ -82,8 +82,8 @@
 		return $existe_pago;
 	}
 
-	function registrar($cliente, $tipo, $facoc, $fecha, $monto, $cuenta, $tipocambio, $numeropagos, $conexion_usuarios){	
-		for ($i=0; $i < $numeropagos ; $i++) { 
+	function registrar($cliente, $tipo, $facoc, $fecha, $monto, $cuenta, $tipocambio, $numeropagos, $conexion_usuarios){
+		for ($i=0; $i < $numeropagos ; $i++) {
 			$clien = $cliente[$i];
 			$tip = $tipo[$i];
 			$fac = $facoc[$i];
@@ -104,7 +104,7 @@
 				// 		$clien = $data['cliente'];
 				// 	}
 				// 	$query = "INSERT INTO pagos (cliente,tipo,factura,fecha,monto,cuenta,tipoCambio) VALUES('$clien', '$tip', '$fac', '$fec', '$mon', '$cuen', '$tipoca')";
-				// 	$resultado = mysqli_query($conexion_usuarios, $query);		
+				// 	$resultado = mysqli_query($conexion_usuarios, $query);
 				// }
 
 			}else{
@@ -112,89 +112,148 @@
 				$resultado = mysqli_query($conexion_usuarios, $query);
 				// $query = "SELECT * FROM pedidos WHERE numeroPedido = '$fac'";
 				// $resultado = mysqli_query($conexion_usuarios, $query);
-				
+
 				// while($data = mysqli_fetch_assoc($resultado){
 				// 	$clien = $data['cliente'];
 				// }
 
 				// $query2 = "INSERT INTO pagos (cliente,tipo,ordenCompra,fecha,monto,cuenta,tipoCambio) VALUES('$clien', '$tip', '$fac', '$fec', '$mon', '$cuen', '$tipoca')";
-				// $resultado2 = mysqli_query($conexion_usuarios, $query2);		
+				// $resultado2 = mysqli_query($conexion_usuarios, $query2);
 			}
 
 		}
 		verificar_resultado($resultado);
-		
+
 		// cerrar($conexion_usuarios);
 	}
 
 	function registrar_pagos_cliente($cliente, $fecha, $cuenta, $tipocambio, $numeropartidas, $pagos, $conexion_usuarios){
-		$totalpagar = 0;
-		foreach ($pagos as &$valor) {
-			$idpedido = $valor;
+		$query = "SELECT id FROM contactos WHERE tipo='Cliente' AND nombreEmpresa LIKE '%$cliente%' LIMIT 1";
+		$resultado = mysqli_query($conexion_usuarios, $query);
+
+		if (mysqli_num_rows($resultado) < 1 || !$resultado) {
+			$informacion["respuesta"] = "ERROR";
+			$informacion["informacion"] = "Ocurrió un problema al buscar información del cliente.";
+		}else{
+			while($data = mysqli_fetch_assoc($resultado)){
+				$idcliente = $data['id'];
+			}
+		}
+
+		$query = "SELECT max(idpago) AS ultimoidpago FROM payments";
+		$resultado = mysqli_query($conexion_usuarios, $query);
+
+		if (mysqli_num_rows($resultado) < 1 || !$resultado) {
+			$informacion["respuesta"] = "ERROR";
+			$informacion["informacion"] = "Ocurrió un problema al buscar información de facturas.";
+		}else{
+			while($data = mysqli_fetch_assoc($resultado)){
+				$idpago = $data['ultimoidpago'] + 1;
+			}
+		}
+
+		switch ($cuenta) {
+			case 1:
+				$monedacuenta = "mxn";
+				break;
+
+			case 2:
+				$monedacuenta = "mxn";
+				break;
+
+			case 3:
+				$monedacuenta = "usd";
+				break;
+
+			case 4:
+				$monedacuenta = "usd";
+				break;
+		}
+
+		foreach ($pagos as &$idpedido) {
 			$query = "SELECT * FROM cotizacion WHERE id ='$idpedido'";
 			$resultado = mysqli_query($conexion_usuarios, $query);
 
-			if (!$resultado) {
-				verificar_resultado($resultado);
-			}else{
-
-				while($data = mysqli_fetch_assoc($resultado)){					
+			if (mysqli_num_rows($resultado) < 1 || !$resultado) {
+				$query = "SELECT * FROM facturas WHERE id ='$idpedido'";
+				$resultado = mysqli_query($conexion_usuarios, $query);
+				while($data = mysqli_fetch_assoc($resultado)){
 					$moneda = $data['moneda'];
-					$total = $data['precioTotal'] * 1.16;
-					$pagado = $data['Pagado'];
+					$total = $data['total'];
+					$pagado = $data['pagado'];
 					$monto = $total - $pagado;
+					$factura = $data['folio'];
 
-					if ($moneda == "usd") {
+					if ($moneda == "usd" && $tipocambio != 1) {
 						$monto = $monto * $tipocambio;
 					}
 				}
 
-				$totalpagar = $totalpagar + $monto;
-			}
-		}
-
-		$query = "INSERT INTO payments (client, date, amount, account, exchangeRate) VALUES ('$cliente', '$fecha', '$totalpagar', '$cuenta', '$tipocambio')";
-		$resultado = mysqli_query($conexion_usuarios, $query);
-		if (!$resultado) {
-			verificar_resultado($resultado);
-		}else{
-			foreach ($pagos as &$valor) {
-				$idpedido = $valor;
-				$total = 0;
-				$query = "SELECT * FROM cotizacion WHERE id = '$idpedido'";
-				$resultado = mysqli_query($conexion_usuarios, $query);
-				if(!$resultado){
-					verificar_resultado($resultado);
-				}else{
-					while($data = mysqli_fetch_assoc($resultado)){
-						$total = $data['precioTotal'] * 1.16;
-						$query2 = "UPDATE cotizacion SET Pagado = '$total' WHERE id='$idpedido'";
-						$resultado2 = mysqli_query($conexion_usuarios, $query2);
-					}
-				}
-			}
-
-			if (!$resultado2) {
-				verificar_resultado($resultado2);
-			}else{
-				$query = "SELECT * FROM payments ORDER BY id DESC LIMIT 1";
+				$query = "INSERT INTO payments (client, factura, date, amount, account, currency, exchangeRate, idpago) VALUES ('$idcliente', '$factura', '$fecha', '$monto', '$cuenta', '$monedacuenta', '$tipocambio', '$idpago')";
 				$resultado = mysqli_query($conexion_usuarios, $query);
 				if (!$resultado) {
-					verificar_resultado($resultado);
+					$informacion["respuesta"] = "ERROR";
+					$informacion["informacion"] = "Ocurrió un problema al intentar registrar el pago.";
 				}else{
+					$query = "SELECT * FROM facturas WHERE id ='$idpedido'";
+					$resultado = mysqli_query($conexion_usuarios, $query);
 					while($data = mysqli_fetch_assoc($resultado)){
-						$idpago = $data['id'];
+						$moneda = $data['moneda'];
+						$total = $data['total'];
 					}
 
-					foreach ($pagos as &$valor) {
-						$idpedido = $valor;
-						$query = "UPDATE cotizacion SET idpago = '$idpago' WHERE id = '$idpedido'";
-						$resultado = mysqli_query($conexion_usuarios, $query);
+					$query = "UPDATE facturas SET pagado='$total', status='pagada' WHERE id ='$idpedido'";
+					$resultado = mysqli_query($conexion_usuarios, $query);
+
+					if (!$resultado) {
+						$informacion["respuesta"] = "ERROR";
+						$informacion["informacion"] = "Ocurrió un problema al actualizar la información de la factura.";
+					}else{
+						$informacion["respuesta"] = "BIEN";
+						$informacion["informacion"] = "La información de la(s) factura(s) se actualizó correctamente.";
 					}
-					verificar_resultado($resultado);
+				}
+			}else{
+				while($data = mysqli_fetch_assoc($resultado)){
+					$moneda = $data['moneda'];
+					$total = $data['precioTotal'] * 1.16;
+					$pagado = $data['Pagado'];
+					$monto = $total - $pagado;
+					$factura = $data['factura'];
+
+					if ($moneda == "usd" && $tipocambio != 1) {
+						$monto = $monto * $tipocambio;
+					}
+				}
+
+				$query = "INSERT INTO payments (client, factura, date, amount, account, currency, exchangeRate, idpago) VALUES ('$idcliente', '$factura', '$fecha', '$monto', '$cuenta', '$monedacuenta', '$tipocambio', '$idpago')";
+				$resultado = mysqli_query($conexion_usuarios, $query);
+				if (!$resultado) {
+					$informacion["respuesta"] = "ERROR";
+					$informacion["informacion"] = "Ocurrió un problema al intentar registrar el pago.";
+				}else{
+					$query = "SELECT * FROM cotizacion WHERE id ='$idpedido'";
+					$resultado = mysqli_query($conexion_usuarios, $query);
+					while($data = mysqli_fetch_assoc($resultado)){
+						$moneda = $data['moneda'];
+						$total = $data['precioTotal'] * 1.16;
+					}
+
+					$query = "UPDATE cotizacion SET Pagado='$total' WHERE id ='$idpedido'";
+					$resultado = mysqli_query($conexion_usuarios, $query);
+
+					if (!$resultado) {
+						$informacion["respuesta"] = "ERROR";
+						$informacion["informacion"] = "Ocurrió un problema al actualizar la información de la factura.";
+					}else{
+						$informacion["respuesta"] = "BIEN";
+						$informacion["informacion"] = "La información de la(s) factura(s) se actualizó correctamente.";
+					}
 				}
 			}
 		}
+		echo json_encode($informacion);
+		mysqli_close($conexion_usuarios);
 	}
 
 	function editar_pago_cliente($idpago, $fechapago, $tcpago, $bancopago, $conexion_usuarios){
@@ -271,7 +330,7 @@
 		}
 	}
 
-	function registrarproveedor($cliente, $tipo, $facoc, $fecha, $monto, $cuenta, $tipocambio, $conexion_usuarios){	
+	function registrarproveedor($cliente, $tipo, $facoc, $fecha, $monto, $cuenta, $tipocambio, $conexion_usuarios){
 		$monto = $monto * 1.16;
 		$query = "SELECT id,moneda FROM contactos WHERE nombreEmpresa LIKE '%$cliente%' LIMIT 1";
 		$resultado = mysqli_query($conexion_usuarios, $query);
@@ -290,7 +349,7 @@
 			$resultado = mysqli_query($conexion_usuarios, $query);
 		}else{
 			$query = "INSERT INTO pagos_oc (proveedor, monto,fecha,cuenta,orden_compra,tipo_cambio) VALUES('$idproveedor', '$monto', '$fecha', '$cuenta', '$facoc', '$tipocambio')";
-			$resultado = mysqli_query($conexion_usuarios, $query);	
+			$resultado = mysqli_query($conexion_usuarios, $query);
 
 			$query = "UPDATE utilidad_pedido SET pagada = 'si', pago_factura =  '$monto', fecha_pago = '$fecha', total_factura = '$monto' WHERE orden_compra = '$facoc'";
 			$resultado = mysqli_query($conexion_usuarios, $query);
@@ -335,7 +394,7 @@
 	function verificar_resultado($resultado){
 		if(!$resultado){
 			$informacion["respuesta"] = "ERROR";
-		}else{ 
+		}else{
 			$informacion["respuesta"] = "BIEN";
 		}
 		echo json_encode($informacion);

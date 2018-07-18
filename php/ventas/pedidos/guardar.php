@@ -85,9 +85,10 @@
 			$fecha = $_POST['fecha'];
 			$cliente = $_POST['cliente'];
 			$tipoDocumento = $_POST['tipoDocumento'];
+			$moneda = $_POST['moneda'];
 			$uidfactura = $_POST['UIDFactura'];
 			$uuidfactura = $_POST['UUIDFactura'];
-			guardar_factura($folio, $ordenpedido, $total, $status, $fecha, $tipoDocumento, $uidfactura, $uuidfactura, $cliente, $conexion_usuarios);
+			guardar_factura($folio, $ordenpedido, $total, $status, $fecha, $tipoDocumento, $moneda, $uidfactura, $uuidfactura, $cliente, $conexion_usuarios);
 			break;
 
 		case 'quitarstock':
@@ -671,12 +672,12 @@
 		mysqli_close($conexion_usuarios);
 	}
 
-	function guardar_factura($folio, $ordenpedido, $total, $status, $fecha, $tipoDocumento, $uidfactura, $uuidfactura, $cliente, $conexion_usuarios){
+	function guardar_factura($folio, $ordenpedido, $total, $status, $fecha, $tipoDocumento, $moneda, $uidfactura, $uuidfactura, $cliente, $conexion_usuarios){
 		$ordenpedido = str_replace(".","",$ordenpedido);
 		$ordenpedido = str_replace(",","",$ordenpedido);
 		$ordenpedido = str_replace("OC","",$ordenpedido);
 
-		$query = "INSERT INTO facturas (folio, tipoDocumento, ordenpedido, total, status, fecha, UID, UUID, cliente) VALUES ('$folio', '$tipoDocumento', '$ordenpedido', '$total', '$status', '$fecha', '$uidfactura', '$uuidfactura', '$cliente')";
+		$query = "INSERT INTO facturas (folio, tipoDocumento, ordenpedido, total, moneda, status, fecha, UID, UUID, cliente) VALUES ('$folio', '$tipoDocumento', '$ordenpedido', '$total','$moneda', '$status', '$fecha', '$uidfactura', '$uuidfactura', '$cliente')";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 		$fecha = date("Y-m-d");
 		$query = "UPDATE pedidos SET factura = '$folio', facturaFecha = '$fecha' WHERE numeroPedido = '$ordenpedido'";

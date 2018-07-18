@@ -1,5 +1,5 @@
-<?php 
-	
+<?php
+
 	include("../../conexion.php");
 
 	$idcliente = $_POST['idcliente'];
@@ -7,14 +7,14 @@
 	$query = "SELECT * FROM payments WHERE client = '$idcliente' ORDER BY date DESC LIMIT 50";
 	$resultado = mysqli_query($conexion_usuarios, $query);
 
-	if (!$resultado) {
-		die("Error!");
+	if (mysqli_num_rows($resultado) < 1) {
+		$arreglo['data'] = 0;
 	}else{
 		while($data = mysqli_fetch_assoc($resultado)){
 			$idcliente = $data['client'];
 			$idpago = $data['id'];
 			$cuenta = $data['account'];
-			
+
 			$querycliente = "SELECT nombreEmpresa FROM contactos WHERE id='$idcliente'";
 			$resultadocliente = mysqli_query($conexion_usuarios, $querycliente);
 			while($datacliente = mysqli_fetch_assoc($resultadocliente)){

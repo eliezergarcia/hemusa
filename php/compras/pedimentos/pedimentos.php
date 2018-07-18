@@ -25,17 +25,37 @@
                 <div class="col-lg-12">
                     <div class="card card-fullcalendar">
                         <div class="card-body">
+                          <div class="row table-filters-container">
+					                  <div class="col-12 col-lg-12 col-xl-6">
+					                    <div class="row">
+					                      <div class="col-12 col-lg-6 table-filters pb-0 pb-xl-4"><span class="table-filter-title">Fecha</span>
+					                        <div class="filter-container">
+																		<form>
+					                            <div class="row">
+					                              <div class="col-6">
+                                          <label class="control-label">Fecha inicio:</label>
+                                          <input type="date" class="form-control form-control-sm row justify-content-center" name="fechaInicio" id="fechaInicio">
+																				</select>
+					                              </div>
+					                              <div class="col-6">
+																					<label class="control-label">Fecha fin</label>
+                                          <input type="date" class="form-control form-control-sm" name="fechaFin" id="fechaFin">
+					                              </div>
+					                            </div>
+					                          </form>
+					                        </div>
+					                      </div>
+					                    </div>
+					                  </div>
+													</div>
+
                            <!-- Form buscar pedimentos -->
                             <div class="col-12">
                               <div class="row justify-content-center">
                                 <div>
                                   <div class="row justify-content-center form-group">
-                                    <label for="fechaInicio">Fecha Inicio:</label>
-                                    <input type="date" class="form-control form-control-sm row justify-content-center" name="fechaInicio" id="fechaInicio">
                                   </div>
                                   <div class="row justify-content-center form-group">
-                                    <label for="fechaInicio">Fecha Fin:</label>
-                                    <input type="date" class="form-control form-control-sm" name="fechaFin" id="fechaFin">
                                   </div>
                                   <div class="row justify-content-center form-group">
                                     <button class="btn btn-lg btn-primary" onclick="listar()"><i class="fas fa-search fa-sm"></i> Buscar</button>

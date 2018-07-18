@@ -481,8 +481,8 @@ if ($tipomenu != 4){
                         <ul class="be-nav-tabs-sub be-sub-nav nav">
 													<li class="nav-item"><a id="pagoscliente-menu" class="nav-link" href="<?php echo $ruta; ?>php/cobranza/pagos/pagos.php"><i class="fab fa-cc-amazon-pay"></i> Pagos de cliente</a>
 													</li>
-													<li class="nav-item"><a id="pagosproveedor-menu" class="nav-link" href="<?php echo $ruta; ?>php/cobranza/pagos/pagosproveedor.php"><i class="fab fa-cc-amazon-pay"></i> Pagos de proveedor</a>
-													</li>
+													<!-- <li class="nav-item"><a id="pagosproveedor-menu" class="nav-link" href="<?php echo $ruta; ?>php/cobranza/pagos/pagosproveedor.php"><i class="fab fa-cc-amazon-pay"></i> Pagos de proveedor</a>
+													</li> -->
                         </ul>
                       </li>
 											<li id="facturacion-menu" class="nav-item parent"><a class="nav-link" href="#" role="button" aria-expanded="false"><span class="icon far fa-file-alt"></span><span>Facturación</span></a>

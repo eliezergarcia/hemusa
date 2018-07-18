@@ -27,33 +27,50 @@
 					<div class="col-lg-12">
 						<div class="card card-fullcalendar">
 							<div class="card-body">
-								<!-- Buscar cliente -->
-								<div class="col-12 row justify-content-center">
-									<div class="form-group col-12 row justify-content-center">
-										<label for="buscarProveedor" class="">Buscar cliente:</label>
-									</div>
-									<div class="form-group col-12 row justify-content-center">
-										<input id="idclientebuscar" class="form-control form-control-sm col-2" list="mylist" />
-										<datalist id="mylist">
-											<?php
-											include("../../conexion.php");
-											$result = mysqli_query($conexion_usuarios, "SELECT id,nombreEmpresa FROM contactos WHERE tipo = 'Cliente'");
-											while ($row = mysqli_fetch_array($result)) {
-												echo '<option value="'.$row['id'].'">'.utf8_encode($row['nombreEmpresa']).'</option>';
-											}
-											?>
-										</datalist>
-									</div>
-									<div class="form-group col-12 row justify-content-center">
-										<button type="button" name="buscar" id="buscarPagosCliente" class="btn btn-primary btn-lg btn-space">Buscar pendientes</button>
-										<button type="button" name="buscar" id="buscarPagadosCliente" class="btn btn-primary btn-lg btn-space">Consultar pagados</button>
+								<div class="row table-filters-container">
+									<div class="col-12">
+										<div class="row align-items-end">
+											<div class="col-2 table-filters"><span class="table-filter-title">Cliente</span>
+												<div class="filter-container">
+													<form>
+														<div class="row">
+															<div class="col-12">
+																<input placeholder="Busca un cliente" class="form-control form-control-sm" list="clientes" id="clientes" name="clientes" type="text" required >
+																<!-- <datalist id="mylist">
+																	<?php
+																	include("../../conexion.php");
+																	$result = mysqli_query($conexion_usuarios, "SELECT id,nombreEmpresa FROM contactos WHERE tipo = 'Cliente'");
+																	while ($row = mysqli_fetch_array($result)) {
+																		echo '<option value="'.$row['id'].'">'.utf8_encode($row['nombreEmpresa']).'</option>';
+																	}
+																	?>
+																</datalist> -->
+															</div>
+														</div>
+													</form>
+												</div>
+											</div>
+											<div class="col-3 table-filters">
+												<div class="filter-container">
+													<form>
+														<div class="row">
+															<div class="col-4">
+																<button type="button" name="buscar" id="buscarPagosCliente" class="btn btn-primary btn-lg btn-space">Buscar pendientes</button>
+															</div>
+															<div class="col">
+																<button type="button" name="buscar" id="buscarPagadosCliente" class="btn btn-primary btn-lg btn-space">Consultar pagados</button>
+															</div>
+														</div>
+													</form>
+												</div>
+											</div>
+										</div>
 									</div>
 								</div>
-								<br>
 
 								<!-- Tabla de pagos -->
-								<div id="pagos">
-									<div class="col-12 row justify-content-center">
+								<!-- <div id="pagos"> -->
+									<!-- <div class="col-12 row justify-content-center">
 										<table id="dt_pagos" class="table table-striped display dt_pagos" cellspacing="0" width="100%">
 											<thead></tr>
 												<tr>
@@ -103,82 +120,86 @@
 												</form>
 											</tbody>
 										</table>
-									</div>
+									</div> -->
 
 									<!-- <div class="col-12 row justify-content-end align-items-center">
 									<label for="total" class="label-control">Total a registrar: $ </label>
 									<input type="text" id="total" name="total" class="form-control col-1">
 								</div> -->
-									<div class="col-11 row justify-content-end">
+									<!-- <div class="col-11 row justify-content-end">
 										<input id="registrar-pagos" type="button" class="form-control btn btn-success col-1" value="Registrar">
 									</div>
-								</div>
+								</div> -->
 
 								<!-- Tabla de pagos cliente -->
+								<br>
 								<div id="pagos_cliente">
-									<div class="col-12 row justify-content-around">
-										<div>
+									<div class="row justify-content-around">
+										<div class="col-2">
 											<label>Fecha</label>
 											<input type="date" name="fechacliente" id="fechacliente" class="form-control form-control-sm" value="<?php echo date("Y-m-d");?>">
 										</div>
-										<div>
+										<div class="col-2">
 											<label>Cuenta</label>
 											<!-- <input type="text" name="cuentacliente" id="cuentacliente" class="form-control form-control-sm"> -->
 											<select name="cuenta" id="cuentacliente" class="form-control form-control-sm limpiar" required>
 											</select>
 										</div>
-										<div>
+										<div class="col-2">
 											<label>Tipo de cambio</label>
-											<input type="text" name="tipocambiocliente" id="tipocambiocliente" class="form-control form-control-sm">
+											<input type="text" name="tipocambiocliente" id="tipocambiocliente" class="form-control form-control-sm" value="1.00">
+										</div>
+									</div>
+									<br><br>
+									<table id="dt_pagos_cliente" class="table table-bordered table-striped display" cellspacing="0" width="100%">
+										<thead></tr>
+											<tr>
+												<th>
+													<label class="custom-control custom-control-sm custom-checkbox">
+														<input class="custom-control-input" name="seleccionartodo" id="seleccionartodo" type="checkbox"><span class="custom-control-label"></span>
+													</label>
+												</th>
+												<!-- <th>Cliente</th> -->
+												<th>Factura</th>
+												<th>Orden Compra</th>
+												<th>Moneda</th>
+												<th>Abonado</th>
+												<th>Pendiente</th>
+												<th>Total</th>
+												<th></th>
+											</tr>
+										</thead>
+									</table>
+									<br>
+									<div class="row justify-content-end">
+										<div class="col-1">
+											<label for="total" class="label-control">Total a registrar: $ </label>
+											<input type="text" id="total" name="total" class="form-control col-12">
 										</div>
 									</div>
 									<br>
-									<div class="col-12 row justify-content-center">
-										<table id="dt_pagos_cliente" class="table table-bordered table-striped display" cellspacing="0" width="100%">
-											<thead></tr>
-												<tr>
-													<th><input type="checkbox" name="seleccionartodo" id="seleccionartodo" class="form-control"></th>
-													<th>Cliente</th>
-													<th>Factura</th>
-													<th>Orden Compra</th>
-													<th>Moneda</th>
-													<th>Abonado</th>
-													<th>Pendiente</th>
-													<th>Total</th>
-												</tr>
-											</thead>
-										</table>
-									</div>
-									<div class="col-12">
-										<div class="col-12">
-											<div class="col-12 row justify-content-end align-items-center">
-												<label for="total" class="label-control">Total a registrar: $ </label>
-												<input type="text" id="total" name="total" class="form-control col-1">
-											</div>
-											<div class="col-12 row justify-content-end">
-												<input id="registrar-pagos-cliente" type="button" class="form-control btn btn-success col-1" value="Registrar">
-											</div>
+									<div class="row justify-content-end">
+										<div class="col-1">
+											<input id="registrar-pagos-cliente" type="button" class="form-control btn btn-success col-12" value="Registrar">
 										</div>
 									</div>
 								</div>
 
 								<!-- Tabla de pagados cliente -->
 								<div id="pagados_cliente">
-									<div class="col-12 row justify-content-center">
-										<table id="dt_pagados_cliente" class="table table-bordered table-striped display" cellspacing="0" width="100%">
-											<thead></tr>
-												<tr>
-													<th>Fecha</th>
-													<th>Facturas</th>
-													<th>Cliente</th>
-													<th>Banco</th>
-													<th>Total</th>
-													<th>Ver y Editar</th>
-													<th>Desglosar Facturas</th>
-												</tr>
-											</thead>
-										</table>
-									</div>
+									<table id="dt_pagados_cliente" class="table table-bordered table-striped display" cellspacing="0" width="100%">
+										<thead></tr>
+											<tr>
+												<th>Fecha</th>
+												<th>Facturas</th>
+												<th>Cliente</th>
+												<th>Banco</th>
+												<th>Total</th>
+												<th>Ver y Editar</th>
+												<th>Desglosar Facturas</th>
+											</tr>
+										</thead>
+									</table>
 								</div>
 
 								<!-- Tabla de desglose de facturas -->
@@ -211,6 +232,56 @@
 					</div>
 				</div>
 			</div>
+		</div>
+
+		<!-- Modal Abono Cliente -->
+		<div class="modal fade colored-header colored-header-success" id="modalAbonoCliente" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				<div class="modal-dialog modal-lg" role="document">
+					<div class="modal-content">
+							<div class="modal-header">
+								<h4 class="modal-title" id="exampleModalLabel"><b>Información de factura</b></h4>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body">
+								<form id="frmAbonoCliente" action="" method="POST">
+									<input type="hidden" id="opcion" name="opcion" required>
+									<input type="hidden" id="idfactura" name="idfactura" required>
+									<div class="row form-group">
+										<div class="col">
+											<label for="factura">Factura</label>
+											<input type="text" id="factura" name="factura" class="form-control form-control-sm disabled" disabled required>
+										</div>
+										<div class="col">
+											<label for="abonado">Abonado</label>
+											<input type="text" id="abonado" name="abonado" class="form-control form-control-sm disabled" disabled required>
+										</div>
+									</div>
+									<div class="row form-group">
+										<div class="col">
+											<label for="pendiente">Pendiente </label>
+											<input type="text" id="pendiente" name="pendiente" class="form-control form-control-sm disabled" disabled required>
+										</div>
+										<div class="col">
+											<label for="total">Total</label>
+											<input type="text" id="total" name="total" class="form-control form-control-sm disabled" disabled required>
+										</div>
+									</div>
+									<div class="row form-group">
+										<div class="col-6">
+											<label for="cantidadabono">Cantidad a abonar: </label>
+											<input type="text" id="cantidadabono" name="cantidadabono" class="form-control form-control-sm" required>
+										</div>
+									</div>
+								</form>
+							</div>
+							<div class="modal-footer invoice-footer">
+								<button type="button" class="btn btn-lg btn-secondary" data-dismiss="modal">Cancelar</button>
+								<button type="button" class="btn btn-lg btn-success" id="abonarcliente">Registrar</button>
+							</div>
+					</div>
+				</div>
 		</div>
 
 		<!-- Modal Editar Pago -->
@@ -261,13 +332,42 @@
 	<script>
 		$(document).ready(function(){
 			App.init();
-      App.pageCalendar();
-      App.formElements();
-      App.uiNotifications();
+			App.megaMenu();
+  		App.pageCalendar();
+  		App.formElements();
+  		App.uiNotifications();
+			nav_active();
+			prettyPrint();
 			buscar_cuentas();
 			listar_pagos();
 			registrar_pagos();
+			buscar_clientes();
 		});
+
+		function nav_active () {
+      $(".nav-item").removeClass("open section-active");
+      $("#cobranza-menu").addClass("open section-active");
+
+      $(".nav-link").removeClass("active");
+			$("#pagoscliente-menu").addClass("active");
+    }
+
+		function buscar_clientes () {
+			opcion = "buscarclientes";
+			$.ajax({
+				method: "POST",
+				url: "buscar.php",
+				dataType: "json",
+				data: {"opcion": opcion},
+				success : function(data) {
+					var clientes = data;
+					console.log(clientes);
+					var input = document.getElementById("clientes");
+					var awesomplete = new Awesomplete(input);
+					awesomplete.list = clientes;
+				}
+			});
+		}
 
 		var listar_pagos = function(){
 			$("#pagos_cliente").slideUp("slow");
@@ -369,10 +469,10 @@
 				data: {"opcion": opcion},
 				success : function(data) {
 					var cuentas = data;
-					for(var i=0;i<=4;i++){
-		               	$("select[name=cuenta]").append("<option value='"+ cuentas.data[i].id + "'>" + cuentas.data[i].nombre + "</option>");
-		     		};
-	   			}
+					for(var i=0;i<=2;i++){
+		         $("select[name=cuenta]").append("<option value='"+ cuentas.data[i].id + "'>" + cuentas.data[i].nombre + "</option>");
+		     	};
+	   		}
 			});
 		}
 
@@ -463,7 +563,7 @@
 		}
 
 		$("#buscarPagosCliente").on("click", function(){
-			var idcliente = $("#idclientebuscar").val();
+			var idcliente = $("#clientes").val();
 			if (idcliente == "") {
 				alert("Debes de ingresar un cliente!");
 			}else{
@@ -480,35 +580,71 @@
 			var table = $('#dt_pagos_cliente').DataTable({
 				"order": false,
 				"ordering": false,
-		        "lengthChange": false,
-		        "info": false,
-		        "paging": false,
-		        // "searching": false,
-		        "destroy":"true",
+        "lengthChange": false,
+        "info": false,
+        "paging": false,
+        // "searching": false,
+        "destroy":"true",
 				"ajax":{
 					"method":"POST",
 					"url":"listar_pagos_cliente.php",
 					"data":{"idcliente": idcliente},
 				},
 				"columns":[
-					{"data":"check"},
-					{"data":"cliente"},
+					// {"data":"check"},
+					{"data": null,
+						"render": function (data, row) {
+							return "<label class='custom-control custom-control-sm custom-checkbox'><input name='pedido' value='"+data.id+"' class='custom-control-input' type='checkbox' onclick='cambiar_total()'><span class='custom-control-label'></span></label>";
+						},
+					},
+					// {"data":"cliente"},
 					{"data":"factura"},
 					{"data":"ordencompra"},
 					{"data":"moneda"},
 					{"data":"abonado"},
 					{"data":"pendiente"},
-					{"data":"total"}
+					{"data":"total"},
+					{"defaultContent": "<div class='invoice-footer'><button class='abonocliente btn btn-space btn-lg btn-primary'><i class='fas fa-money-bill fa-sm'></i> Abono</button></div>"}
 				],
+				// "columnDefs": [
+				// 	{ "width": "2%", "targets": 0 },
+				// 	// { "width": "13%", "targets": 1 },
+				// 	{ "width": "5%", "targets": 2 },
+				// 	{ "width": "8%", "targets": 3 },
+				// 	{ "width": "5%", "targets": 4 },
+				// 	{ "width": "8%", "targets": 5 },
+				// 	{ "width": "8%", "targets": 6 },
+				// 	{ "width": "8%", "targets": 7 },
+				// 	{ "width": "5%", "targets": 8 },
+				// ],
 				"language": idioma_espanol,
 				"dom":
-				"<'container row col-12 row'<'row justify-content-end col-12 buttons'f>>" +
-				"<'container row col-12 row'<'justify-content-center col-12 buttons'tr>>" +
-				"<'container row col-12 row'<'row justify-content-center col-4 buttons'i><'row justify-content-end col-8 buttons'p>>"
-
+    			"<'row'<'col-sm-6'><'col-sm-6 text-right'>>" +
+    			"<'row be-datatable-body justify-content-center'<'col-sm-8'tr>>"
+    			// "<'row be-datatable-footer'<'col-sm-5'i><'col-sm-7'p>>"
 			});
 
+			obtener_data_factura("#dt_pagos_cliente tbody", table)
 		}
+
+		var obtener_data_factura = function(tbody, table){
+			$(tbody).on("click", "button.abonocliente", function(){
+				var data = table.row( $(this).parents("tr") ).data();
+				console.log(data);
+				$("#frmAbonoCliente #idfactura").val(data.id);
+				$("#frmAbonoCliente #factura").val(data.factura);
+				$("#frmAbonoCliente #abonado").val(data.abonado);
+				$("#frmAbonoCliente #pendiente").val(data.pendiente);
+				$("#frmAbonoCliente #total").val(data.total);
+				$("#modalAbonoCliente").modal("show");
+			});
+		}
+
+		$("#abonarcliente").on("click", function () {
+			$('#frmAbonoCliente .disabled').attr('disabled', false);
+			var frm = $("#frmAbonoCliente").serialize();
+			console.log(frm);
+		});
 
 		$("#seleccionartodo").on("click", function(){
 			$("input[name=pedido]").each(function (index) {
@@ -540,7 +676,7 @@
 						numeroPartidas++;
 					}
 				});
-				var cliente = $("#idclientebuscar").val();
+				var cliente = $("#clientes").val();
 				var fecha = $("#fechacliente").val();
 				var cuenta = $("#cuentacliente").val();
 				var tipocambio = $("#tipocambiocliente").val();
@@ -559,6 +695,8 @@
 					data: {"cliente": cliente, "fecha": fecha, "cuenta": cuenta, "tipocambio": tipocambio, "opcion": opcion, "numeroPartidas": numeroPartidas, "pagos": JSON.stringify(pagos)},
 				}).done( function( data ){
 					console.log(data);
+					$('#dt_pagos_cliente').DataTable().ajax.reload();
+					$("#total").val("");
 					mostrar_mensaje(data);
 				});
 			}
@@ -582,12 +720,12 @@
 			var table = $('#dt_pagados_cliente').DataTable({
 				"order": false,
 				"ordering": false,
-		        "lengthChange": false,
-		        "info": false,
-		        // "paging": false,
-		        // "searching": false,
-		        "destroy":"true",
-		        "scrollX": true,
+        "lengthChange": false,
+        "info": false,
+        // "paging": false,
+        // "searching": false,
+        "destroy":"true",
+        "scrollX": true,
 				"ajax":{
 					"method":"POST",
 					"url":"listar_pagados_cliente.php",
@@ -604,9 +742,9 @@
 				],
 				"language": idioma_espanol,
 				"dom":
-				"<'container row col-8 row'<'row justify-content-end col-12 buttons'f>>" +
-				"<'container row col-8 row'<'justify-content-center col-12 buttons'tr>>" +
-				"<'container row col-8 row'<'row justify-content-center col-4 buttons'i><'row justify-content-end col-8 buttons'p>>"
+    			"<'row be-datatable-header'<'col-sm-6'><'col-sm-6 text-right'f>>" +
+    			"<'row be-datatable-body'<'col-sm-12'tr>>"
+    			// "<'row be-datatable-footer'<'col-sm-5'i><'col-sm-7'p>>"
 			});
 
 			obtener_data_editar_pago("#dt_pagados_cliente tbody", table);

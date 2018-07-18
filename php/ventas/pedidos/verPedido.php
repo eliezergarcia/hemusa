@@ -753,7 +753,7 @@
 					{"data": "descripcion"},
 					{"data": null,
 						"render": function (data, row) {
-							return "<label class='custom-control custom-control-sm custom-checkbox'><input name='hpacking' value='"+data.id+"' class='custom-control-input' type='checkbox'><span class='custom-control-label'></span></label>";
+							return "<label class='custom-control custom-control-sm custom-checkbox'><input name='pedido' value='"+data.id+"' class='custom-control-input' type='checkbox' onclick='cambiar_total()'><span class='custom-control-label'></span></label>";
 						},
 					},
 				],
@@ -1826,9 +1826,10 @@
 						var UIDFactura = data.uid;
 						var UUIDFactura = data.UUID;
 						var tipoDocumento = $("#frmInformacionFactura #tipoDocumento").val();
+						var moneda = $("#frmInformacionFactura #moneda").val();
 						apiConfig.opcion = $("#frmInformacionFactura #entorno").val();
 						if (apiConfig.opcion == "produccion"){
-							guardarFactura(numeroPedido, refCotizacion, herramienta, tipoDocumento, UIDFactura, UUIDFactura);
+							guardarFactura(numeroPedido, refCotizacion, herramienta, tipoDocumento, moneda, UIDFactura, UUIDFactura);
 						}else{
 							var request = new XMLHttpRequest();
 
@@ -1896,7 +1897,7 @@
 			});
 		}
 
-		function guardarFactura(numeroPedido, refCotizacion, herramienta, tipoDocumento, UIDFactura, UUIDFactura) {
+		function guardarFactura(numeroPedido, refCotizacion, herramienta, tipoDocumento, moneda, UIDFactura, UUIDFactura) {
 			var request = new XMLHttpRequest();
 
 			request.open('GET', apiConfig.enlace+'api/v3/cfdi33/list');
@@ -1924,7 +1925,7 @@
 								method: "POST",
 								url: "guardar.php",
 								dataType: "json",
-								data: {"opcion": opcion, "folio": folio, "ordenpedido": ordenpedido, "total": total, "status": status, "fecha": fecha, "tipoDocumento": tipoDocumento, "UIDFactura": UIDFactura, "UUIDFactura": UUIDFactura, "cliente": cliente}
+								data: {"opcion": opcion, "folio": folio, "ordenpedido": ordenpedido, "total": total, "status": status, "fecha": fecha, "tipoDocumento": tipoDocumento, "moneda": moneda, "UIDFactura": UIDFactura, "UUIDFactura": UUIDFactura, "cliente": cliente}
 							}).done( function( data ){
 								console.log(data);
 								mostrar_mensaje(data);

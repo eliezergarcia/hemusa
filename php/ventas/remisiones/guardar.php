@@ -55,6 +55,7 @@
 
 		case 'editarpartida':
 			$id = $_POST['id'];
+			$descripcion = $_POST['descripcion'];
 			$claveSat = $_POST['claveSat'];
 			$noserie = $_POST['noserie'];
 			$cantidad = $_POST['cantidad'];
@@ -66,7 +67,7 @@
 			}else{
 				$split = 0;
 			}
-			editarpartida($id, $claveSat, $noserie, $cantidad, $fechacompromiso, $proveedor, $split, $entregado, $conexion_usuarios);
+			editarpartida($id, $descripcion, $claveSat, $noserie, $cantidad, $fechacompromiso, $proveedor, $split, $entregado, $conexion_usuarios);
 			break;
 
 		case 'agregarcontacto':
@@ -93,9 +94,10 @@
 			$fecha = $_POST['fecha'];
 			$cliente = $_POST['cliente'];
 			$tipoDocumento = $_POST['tipoDocumento'];
+			$moneda = $_POST['moneda'];
 			$uidfactura = $_POST['UIDFactura'];
 			$uuidfactura = $_POST['UUIDFactura'];
-			guardar_factura($folio, $remision, $total, $status, $fecha, $tipoDocumento, $uidfactura, $uuidfactura, $cliente, $conexion_usuarios);
+			guardar_factura($folio, $remision, $total, $status, $fecha, $tipoDocumento, $moneda, $uidfactura, $uuidfactura, $cliente, $conexion_usuarios);
 			break;
 
 		case 'quitarstock':
@@ -342,8 +344,7 @@
 	}
 
 	function packinglist($data, $conexion_usuarios){
-		foreach ($data as &$valor) {
-			$id = $valor;
+		foreach ($data as &$id) {
 			$query = "UPDATE cotizacionherramientas SET embarque='pendiente' WHERE id=$id";
 			$resultado = mysqli_query($conexion_usuarios, $query);
 		}
@@ -710,7 +711,7 @@
 		mysqli_close($conexion_usuarios);
 	}
 
-	function editarpartida($id, $claveSat, $noserie, $cantidad, $fechacompromiso, $proveedor, $split, $entregado, $conexion_usuarios){
+	function editarpartida($id, $descripcion, $claveSat, $noserie, $cantidad, $fechacompromiso, $proveedor, $split, $entregado, $conexion_usuarios){
 		if($proveedor == "None"){
 			$fecha = "0000-00-00";
 		}else{
@@ -719,7 +720,7 @@
 		$query = "UPDATE utilidad_pedido SET fecha_entregado = '$entregado' WHERE id_cotizacion_herramientas =$id";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 
-		$query = "UPDATE cotizacionherramientas SET ClaveProductoSAT='$claveSat', NoSerie='$noserie', cantidad='$cantidad', fechacompromiso='$fechacompromiso', Proveedor='$proveedor', proveedorFecha='$fecha', Entregado = '$entregado' WHERE id =$id";
+		$query = "UPDATE cotizacionherramientas SET descripcion='$descripcion', ClaveProductoSAT='$claveSat', NoSerie='$noserie', cantidad='$cantidad', fechacompromiso='$fechacompromiso', Proveedor='$proveedor', proveedorFecha='$fecha', Entregado = '$entregado' WHERE id =$id";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 		if (!$resultado) {
 			$informacion["respuesta"] = "ERROR";
@@ -785,8 +786,8 @@
 		mysqli_close($conexion_usuarios);
 	}
 
-	function guardar_factura($folio, $remision, $total, $status, $fecha, $tipoDocumento, $uidfactura, $uuidfactura, $cliente, $conexion_usuarios){
-		$query = "INSERT INTO facturas (folio, tipoDocumento, remision, total, status, fecha, UID, UUID, cliente) VALUES ('$folio', '$tipoDocumento', '$remision', '$total', '$status', '$fecha', '$uidfactura', '$uuidfactura', '$cliente')";
+	function guardar_factura($folio, $remision, $total, $status, $fecha, $tipoDocumento, $moneda, $uidfactura, $uuidfactura, $cliente, $conexion_usuarios){
+		$query = "INSERT INTO facturas (folio, tipoDocumento, remision, total, status, moneda, fecha, UID, UUID, cliente) VALUES ('$folio', '$tipoDocumento', '$remision', '$total', '$status', '$moneda', '$fecha', '$uidfactura', '$uuidfactura', '$cliente')";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 		$fecha = date("Y-m-d");
 

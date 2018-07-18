@@ -102,7 +102,7 @@
         "buttons":[
           {
             extend: 'collection',
-            text: 'Exportar Control de Salida',
+            text: '<i class="fas fa-file-alt fa-sm" aria-hidden="true"></i> Exportar Control de Salida',
             "className": "btn btn-lg btn-space btn-secondary",
             buttons: [
               {

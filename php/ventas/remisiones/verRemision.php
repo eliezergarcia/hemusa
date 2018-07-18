@@ -277,7 +277,11 @@
 			        		</button>
 			      		</div>
 				      	<div class="modal-body">
-						  <div class="form-group row">
+									<div class="form-group row">
+				      			<label for="descripcion" class="control-label col-4">Descripción</label>
+				      			<input type="text" class="form-control form-control-sm col-7" name="descripcion" id="descripcion">
+				      		</div>
+						  		<div class="form-group row">
 				      			<label for="claveSat" class="control-label col-4">Clave SAT</label>
 				      			<input type="text" class="form-control form-control-sm col-7" name="claveSat" id="claveSat">
 				      		</div>
@@ -485,7 +489,11 @@
 									<th>Modelo</th>
 									<th>Cantidad</th>
 									<th>Descripción</th>
-									<th><input type="checkbox" class="btn btn-outline-primary" name="sel" onclick="seleccionartodo()"></th>
+									<th>
+										<label class="custom-control custom-control-sm custom-checkbox">
+											<input class="custom-control-input" name="sel" type="checkbox" onclick="seleccionartodo()"><span class="custom-control-label"></span>
+										</label>
+									</th>
 								</tr>
 							</thead>
 						</table>
@@ -1044,18 +1052,21 @@
 					{"data": "modelo"},
 					{"data": "cantidad"},
 					{"data": "descripcion"},
-					{"data": "check"},
+					{"data": null,
+						"render": function (data, row) {
+							return "<label class='custom-control custom-control-sm custom-checkbox'><input name='hpacking' value='"+data.id+"' class='custom-control-input' type='checkbox'><span class='custom-control-label'></span></label>";
+						},
+					},
 				],
 				"order": false,
-		        "lengthChange": false,
-		        "info": false,
-		        "paging": false,
-		        "ordering": false,
-		        "language": idioma_espanol,
-		        "dom":
-      				"<'row be-datatable-header'<'col-sm-6'><'col-sm-6 text-right'f>>" +
-      				"<'row be-datatable-body'<'col-sm-12'tr>>" +
-      				"<'row be-datatable-footer'<'col-sm-5'i><'col-sm-7'p>>"
+        "lengthChange": false,
+        "info": false,
+        "paging": false,
+        "ordering": false,
+        "language": idioma_espanol,
+        "dom":
+  				"<'row be-datatable-header'<'col-sm-6'><'col-sm-6 text-right'f>>" +
+  				"<'row be-datatable-body'<'col-sm-12'tr>>"
 			});
 		})
 
@@ -1605,6 +1616,7 @@
 				var data = table.row( $(this).parents("tr") ).data();
 				console.log(data);
 				$("#frmEditar #id").val(data.id);
+				$("#frmEditar #descripcion").val(data.descripcion);
 				$("#frmEditar #claveSat").val(data.claveSat);
 				$("#frmEditar #noserie").val(data.noserie);
 				$("#frmEditar #cantidad").val(data.cantidad);
@@ -2075,9 +2087,10 @@
 						var UIDFactura = data.uid;
 						var UUIDFactura = data.UUID;
 						var tipoDocumento = $("#frmInformacionFactura #tipoDocumento").val();
+						var moneda = $("#frmInformacionFactura #moneda").val();
 						apiConfig.opcion = $("#frmInformacionFactura #entorno").val();
 						if (apiConfig.opcion == "produccion"){
-							guardarFactura(remision, herramienta, tipoDocumento, UIDFactura, UUIDFactura);
+							guardarFactura(remision, herramienta, tipoDocumento, moneda, UIDFactura, UUIDFactura);
 						}else{
 							var request = new XMLHttpRequest();
 
@@ -2145,7 +2158,7 @@
 			});
 		}
 
-		function guardarFactura(remision, herramienta, tipoDocumento, UIDFactura, UUIDFactura) {
+		function guardarFactura(remision, herramienta, tipoDocumento, moneda, UIDFactura, UUIDFactura) {
 			var request = new XMLHttpRequest();
 
 			request.open('GET', apiConfig.enlace+'api/v3/cfdi33/list');
@@ -2173,7 +2186,7 @@
 								method: "POST",
 								url: "guardar.php",
 								dataType: "json",
-								data: {"opcion": opcion, "folio": folio, "remision": remision, "total": total, "status": status, "fecha": fecha, "tipoDocumento": tipoDocumento, "UIDFactura": UIDFactura, "UUIDFactura": UUIDFactura, "cliente": cliente}
+								data: {"opcion": opcion, "folio": folio, "remision": remision, "total": total, "status": status, "fecha": fecha, "tipoDocumento": tipoDocumento, "moneda": moneda, "UIDFactura": UIDFactura, "UUIDFactura": UUIDFactura, "cliente": cliente}
 							}).done( function( data ){
 								console.log(data);
 								mostrar_mensaje(data);
