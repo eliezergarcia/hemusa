@@ -140,10 +140,10 @@
 			);
 		}
 
-		$query = "SELECT * FROM cotizacion WHERE remision ='$remision'";
+		$query = "SELECT * FROM remisiones WHERE remision ='$remision'";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 		if (mysqli_num_rows($resultado) < 1) {
-			$query = "SELECT * FROM remisiones WHERE remision ='$remision'";
+			$query = "SELECT * FROM cotizacion WHERE remision ='$remision'";
 			$resultado = mysqli_query($conexion_usuarios, $query);
 			while($data = mysqli_fetch_assoc($resultado)){
 				$arreglo['cotizacion'] = array_map("utf8_encode", $data);

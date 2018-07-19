@@ -1203,7 +1203,9 @@
 				doc.setDrawColor(0,0,0);
         doc.line(20, 28, 575, 28)
         doc.addImage(imgLogo, 'JPEG', 20, 30, 150, 58);
-				// doc.addImage(pagadoLogo, 'JPEG', 395, 200, 150, 58);
+				if (data.cotizacion.IdFormaPago == 1) {
+					doc.addImage(pagadoLogo, 'JPEG', 395, 200, 150, 58);
+				}
         doc.setFontStyle('bold');
         doc.setFontSize(14);
         doc.text("HERRAMIENTAS MECÁNICAS UNIVERSALES S.A. DE C.V.", 175, 50);
@@ -1237,10 +1239,10 @@
 				doc.setFontSize(10);
 				doc.setFontStyle('normal');
 				doc.text(data.cliente.nombreEmpresa, 20, 165);
-				if (data.cotizacion.CondPago == 0) {
+				if (data.cliente.CondPago == 0) {
 					doc.text("Contado", 475, 180);
 				}else{
-					doc.text(data.cotizacion.CondPago + " días", 475, 180);
+					doc.text(data.cliente.CondPago + " días", 475, 180);
 				}
 				doc.text(data.cliente.RFC, 20, 180);
 				doc.setFontStyle('bold');

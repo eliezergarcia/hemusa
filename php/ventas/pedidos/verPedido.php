@@ -307,6 +307,10 @@
 				        		</button>
 				      		</div>
 					      	<div class="modal-body">
+										<div class="form-group row">
+						      			<label for="descripcion" class="control-label col-4">Descripción</label>
+						      			<input type="text" class="form-control form-control-sm col-7" name="descripcion" id="descripcion">
+						      		</div>
 							  	<div class="form-group row">
 					      			<label for="claveSat" class="control-label col-4">Clave SAT</label>
 					      			<input type="text" class="form-control form-control-sm col-7" name="claveSat" id="claveSat">
@@ -1026,6 +1030,7 @@
 				var data = table.row( $(this).parents("tr") ).data();
 				console.log(data);
 				$("#frmEditar #id").val(data.id);
+				$("#frmEditar #descripcion").val(data.descripcion);
 				$("#frmEditar #claveSat").val(data.claveSat);
 				$("#frmEditar #noserie").val(data.noserie);
 				$("#frmEditar #cantidad").val(data.cantidad);
