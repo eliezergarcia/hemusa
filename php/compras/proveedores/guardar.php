@@ -214,6 +214,8 @@
 			$ordenCompra = $data['ordenCompra'];
 		}
 
+		$informacion['orden'] = $ordenCompra;
+
 		$split = $cantidad - $cantidadsplit;
 
 		$query = "INSERT INTO cotizacionherramientas (FechaCreacion, cliente, cotizacionNo, cotizacionRef, marca, modelo, descripcion, precioLista, cantidad, Unidad, ClaveProductoSAT, Pedido, pedidoFecha, noDePedido, Proveedor, proveedorFecha, IVA, moneda, referencia_interna, lugar_cotizacion, Tiempo_Entrega, flete, proveedorFlete, numeroPedido, fechaPedido, ordenCompra) VALUES ('$fechaCreacion', '$cliente', '$cotizacionNo', '$cotizacionRef', '$marca', '$modelo', '$descripcion', '$precioLista', '$cantidadsplit', '$unidad', '$claveSat', '$pedido', '$pedidoFecha', '$noDePedido', '$proveedor', '$proveedorFecha', '$iva', '$moneda', '$referenciaInterna', '$lugarCotizacion', '$tiempoEntrega', '$flete', '$proveedorFlete', '$numeroPedido', '$fechaPedido', '$ordenCompra')";
@@ -227,8 +229,16 @@
 				$informacion["respuesta"] = "ERROR";
 				$informacion["informacion"] = "Ocurrió un problema al intentar aplicar el split 2 a la partida!";
 			}else{
+
 				$query = "UPDATE cotizacionherramientas SET cantidad = '$split' WHERE id='$idherramienta'";
 				$resultado = mysqli_query($conexion_usuarios, $query);
+
+				$query = "SELECT * FROM cotizacionherramientas WHERE noDePedido ='$noDePedido' ORDER BY id DESC LIMIT 1";
+				$resultado = mysqli_query($conexion_usuarios, $query);
+
+				while($data = mysqli_fetch_assoc($resultado)){
+					$idherramientacotizacion = $data['id'];
+				}
 
 				if (!$resultado) {
 					$informacion["respuesta"] = "ERROR";
@@ -262,7 +272,7 @@
 
 					$split = $cantidad - $cantidadsplit;
 
-					$query = "INSERT INTO utilidad_pedido (id_cotizacion_herramientas, orden_compra, fecha_orden_compra, proveedor, entrada, moneda_pedido, cliente, marca, modelo, cantidad, descripcion, tipo_cambio, costo_mn, costo_usd, venta_mn, venta_usd, utilidad, nombre_cliente, nombre_proveedor) VALUES ('$idCotizacionHerramientas', '$ordenCompra', '$fechaOrdenCompra', '$proveedor', '$entrada', '$monedaPedido', '$cliente', '$marca', '$modelo', '$cantidadsplit', '$descripcion', '$tipoCambio', '$costoMXN', '$costoUSD', '$ventaMXN', '$ventaUSD', '$utilidad', '$nombreCliente', '$nombreProveedor')";
+					$query = "INSERT INTO utilidad_pedido (id_cotizacion_herramientas, orden_compra, fecha_orden_compra, proveedor, entrada, moneda_pedido, cliente, marca, modelo, cantidad, descripcion, tipo_cambio, costo_mn, costo_usd, venta_mn, venta_usd, utilidad, nombre_cliente, nombre_proveedor) VALUES ('$idherramientacotizacion', '$ordenCompra', '$fechaOrdenCompra', '$proveedor', '$entrada', '$monedaPedido', '$cliente', '$marca', '$modelo', '$cantidadsplit', '$descripcion', '$tipoCambio', '$costoMXN', '$costoUSD', '$ventaMXN', '$ventaUSD', '$utilidad', '$nombreCliente', '$nombreProveedor')";
 					$resultado = mysqli_query($conexion_usuarios, $query);
 
 					if (!$resultado) {

@@ -239,15 +239,15 @@
 				<div class="modal-dialog modal-lg" role="document">
 					<div class="modal-content">
 							<div class="modal-header">
-								<h4 class="modal-title" id="exampleModalLabel"><b>Información de factura</b></h4>
+								<h4 class="modal-title" id="exampleModalLabel"><b>Abono de cliente</b></h4>
 								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 										<span aria-hidden="true">&times;</span>
 								</button>
 							</div>
 							<div class="modal-body">
 								<form id="frmAbonoCliente" action="" method="POST">
-									<input type="hidden" id="opcion" name="opcion" required>
-									<input type="hidden" id="idfactura" name="idfactura" required>
+									<input type="hidden" id="opcion" name="opcion" value="abonocliente">
+									<input type="hidden" id="idfactura" name="idfactura">
 									<div class="row form-group">
 										<div class="col">
 											<label for="factura">Factura</label>
@@ -644,6 +644,17 @@
 			$('#frmAbonoCliente .disabled').attr('disabled', false);
 			var frm = $("#frmAbonoCliente").serialize();
 			console.log(frm);
+			$("#modalAbonoCliente").modal("hide");
+			$.ajax({
+				method: "POST",
+				url: "guardar.php",
+				dataType: "json",
+				data: frm,
+				success : function(data) {
+					mostrar_mensaje(data);
+					$('#dt_pagos_cliente').DataTable().ajax.reload();
+				}
+			});
 		});
 
 		$("#seleccionartodo").on("click", function(){

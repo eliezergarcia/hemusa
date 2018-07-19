@@ -50,7 +50,12 @@
                           <table id="dt_partidas_oc_descripcion" class="table table-hover table-striped compact" cellspacing="0" width="100%">
                             <thead>
                               <tr>
-                                <th><input type="checkbox" class="btn btn-outline-primary" name="checksel" onclick="seleccionartodo()"></th>
+                                <!-- <th><input type="checkbox" class="btn btn-outline-primary" name="checksel" onclick="seleccionartodo()"></th> -->
+                                <th>
+            											<label class="custom-control custom-control-sm custom-checkbox">
+            												<input class="custom-control-input" name="checksel" type="checkbox" onclick="seleccionartodo()"><span class="custom-control-label"></span>
+            											</label>
+            										</th>
                                 <th>#</th>
                                 <th>Enviado</th>
                                 <th>Recibido</th>
@@ -228,7 +233,12 @@
           "data": {"opcion": opcion, "folio": folio}
         },
         "columns":[
-          {"data":'check'},
+          // {"data":'check'},
+          {"data": null,
+						"render": function (data, row) {
+							return "<label class='custom-control custom-control-sm custom-checkbox'><input name='hcheck' value='"+data.idcotizacionherramientas+"' class='custom-control-input' type='checkbox' onclick='cambiar_total()'><span class='custom-control-label'></span></label>";
+						},
+					},
           {"data":'indice'},
           {"data":'enviado'},
           {"data":'recibido'},
@@ -315,24 +325,32 @@
                   text:      '<i class="fas fa-file-excel fa-lg"></i> Excel Nacional',
                   // "className": "btn btn-lg btn-space btn-secondary",
                   exportOptions: {
-                    columns: [ 1, 2, 3, 4, 5, 6, 7, 8, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 28  ]
+                    columns: [ 1, 2, 3, 4, 5, 6, 7, 8, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 28  ]
                   },
-                  title: 'excel_nacional'
+                  title: 'excel_nacional',
+                  customize: function ( xlsx ){
+                    var sheet = xlsx.xl.worksheets['sheet1.xml'];
+                    $('row c', sheet).attr( 's', '25' );
+                  }
                 },
                 {
                   extend: 'excelHtml5',
                   text: '<i class="fas fa-file-alt fa-lg"></i> Excel Importacion',
                   // "className": "btn btn-lg btn-space btn-secondary",
                   exportOptions: {
-                    columns: [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 28, 29]
+                    columns: [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 28, 29]
                   },
-                  title: 'excel_importacion'
+                  title: 'excel_importacion',
+                  customize: function ( xlsx ){
+                    var sheet = xlsx.xl.worksheets['sheet1.xml'];
+                    $('row c', sheet).attr( 's', '25' );
+                  }
                 },
             ]
           },
           {
             text: 'Actualizar datos',
-            "className": "btn btn-success btn-lg",
+            "className": "btn btn-lg btn-space btn-success",
             action: function (e, dt, node, config){
               $("#modalActualizarDatos").modal("show");
             }

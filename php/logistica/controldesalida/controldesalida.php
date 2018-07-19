@@ -31,7 +31,7 @@
                     <div class="row table-filters-container">
                       <div class="col-12">
                         <div class="row">
-                          <div class="col-3 table-filters"><span class="table-filter-title">Fecha</span>
+                          <!-- <div class="col-3 table-filters"><span class="table-filter-title">Fecha</span>
                             <div class="filter-container">
                               <form>
                                 <div class="row">
@@ -65,7 +65,7 @@
                                 </div>
                               </form>
                             </div>
-                          </div>
+                          </div> -->
                           <div class="col-2 table-filters"><span class="table-filter-title">Tipo</span>
                             <div class="filter-container">
                               <form>
@@ -100,15 +100,15 @@
 
 										<br>
 										<!-- Grupo de botones -->
-											<div class="row justify-content-center btn-toolbar">
+											<!-- <div class="row justify-content-center btn-toolbar">
 												<div role="group" class="btn-group btn-group-justified mb-2 col-6">
 													<a href="#" id="btnnacional" class="btn btn-primary btn-space" onclick="listar_nacional()">NACIONAL</a href="#">
 													<a href="#" id="btnimportacion" class="btn btn-primary btn-space" onclick="listar_importacion()">IMPORTACION</a href="#">
 												</div>
-											</div>
+											</div> -->
 
 											<!-- Tabla Ordenes de Compras -->
-												<br>
+												<!-- <br>
 												<div id="nacional">
 													<table id="dt_nacional" class="table table-striped table-hover compact" cellspacing="0" width="100%">
 														<thead>
@@ -119,10 +119,10 @@
 															</tr>
 														</thead>
 													</table>
-												</div>
+												</div> -->
 
 												<!-- Tabla Ordenes de Compras -->
-													<br>
+													<!-- <br>
 													<div id="importacion">
 														<table id="dt_importacion" class="table table-striped table-hover compact" cellspacing="0" width="100%">
 															<thead>
@@ -132,7 +132,7 @@
 																</tr>
 															</thead>
 														</table>
-													</div>
+													</div> -->
 									</div>
 								</div>
 						</div>
@@ -150,8 +150,8 @@
   		App.uiNotifications();
 			nav_active();
 			prettyPrint();
-      $("#filtromes").val("<?php echo $mes; ?>").change();
-      // listar_folios();
+      // $("#filtromes").val("<?php echo $mes; ?>").change();
+      listar_folios();
 		});
 
     function nav_active () {
@@ -162,24 +162,14 @@
 			$("#controldesalida-menu").addClass("active");
     }
 
-    $("#filtromes").on("change", function (){
-      // $('#dt_folios').DataTable().ajax.reload();
-			listar_folios();
-		});
-
-		$("#filtroano").on("change", function (){
-      // $('#dt_folios').DataTable().ajax.reload();
-			listar_folios();
-		});
-
 		$('input[name=filtrotipo]').change(function() {
       // $('#dt_folios').DataTable().ajax.reload();
 			listar_folios();
 		});
 
     var listar_folios = function(){
-			var filtromes = $("#filtromes").val();
-			var filtroano = $("#filtroano").val();
+			// var filtromes = $("#filtromes").val();
+			// var filtroano = $("#filtroano").val();
 			var filtrotipo = $("input[name=filtrotipo]:checked").val();
       var table = $("#dt_folios").DataTable({
 				"destroy":"true",
@@ -187,7 +177,7 @@
 				"ajax":{
 					"method":"POST",
 					"url":"listar.php",
-					"data": {"opcion": filtrotipo, "filtromes": filtromes, "filtroano": filtroano},
+					"data": {"opcion": filtrotipo},
 				},
         "sAjaxDataProp": "data",
 				"columns":[

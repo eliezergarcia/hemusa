@@ -94,6 +94,7 @@
           {"data":'proveedor'},
           {"data":'facturaproveedor'}
 				],
+        "order": ["1", "asc"],
 				"language": idioma_espanol,
 				"dom":
 					"<'row be-datatable-header'<'col-sm-6'B><'col-sm-6 text-right'f>>" +
@@ -139,7 +140,7 @@
         method: "POST",
         url: "listar.php",
         dataType: "json",
-        data: {"opcion": opcion, "pedimento": pedimento},
+        data: {"opcion": opcion, "opcion2": opcion2, "pedimento": pedimento},
       }).done( function( data ){
         console.log(data);
         if (opcion2 == "compras"){
@@ -243,7 +244,7 @@
         if (opcionPDF == "imprimir") {
           doc.autoPrint();
         }
-        doc.save('controldesalida.pdf');
+        doc.save('importacion.pdf');
       });
     }
 	</script>

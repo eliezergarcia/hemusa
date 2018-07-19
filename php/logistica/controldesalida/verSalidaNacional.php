@@ -151,7 +151,7 @@
         method: "POST",
         url: "listar.php",
         dataType: "json",
-        data: {"opcion": opcion, "folio": folio},
+        data: {"opcion": opcion, "opcion2": opcion2, "folio": folio},
       }).done( function( data ){
         console.log(data);
         if (opcion2 == "compras"){
