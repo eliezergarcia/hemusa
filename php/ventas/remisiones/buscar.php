@@ -102,11 +102,16 @@
 			$subtotal = 0;
 			while($data = mysqli_fetch_assoc($resultado)){
 				$refCotizacion = $data['cotizacionRef'];
+				$moneda = $data['moneda'];
 
-				$query = "SELECT * FROM cotizacion WHERE ref = '$refCotizacion'";
-				$resultado2 = mysqli_query($conexion_usuarios, $query);
-				while($data2 = mysqli_fetch_assoc($resultado2)){
-					$pedidoCliente = $data2['NoPedClient'];
+				if ($data['numeroPedido'] == "") {
+					$query = "SELECT * FROM cotizacion WHERE ref = '$refCotizacion'";
+					$resultado2 = mysqli_query($conexion_usuarios, $query);
+					while($data2 = mysqli_fetch_assoc($resultado2)){
+						$pedidoCliente = $data2['NoPedClient'];
+					}
+				}else{
+					$pedidoCliente = $data['numeroPedido'];
 				}
 
 				// $descripcion = str_replace($data['descripcion'], "", "(", 5);
@@ -130,15 +135,25 @@
 			$arreglo["totales"][]=array(
 				'subtotal' => "$ ".round($subtotal,2),
 				'iva' => "$ ".round($subtotal * .16,2),
-				'total' => "$ ".round($subtotal * 1.16,2)
+				'total' => "$ ".round($subtotal * 1.16,2),
+				'moneda' => strtoupper($moneda)
 			);
 		}
 
 		$query = "SELECT * FROM cotizacion WHERE remision ='$remision'";
 		$resultado = mysqli_query($conexion_usuarios, $query);
-		while($data = mysqli_fetch_assoc($resultado)){
-			$arreglo['cotizacion'] = array_map("utf8_encode", $data);
-			$idcliente = $data['cliente'];
+		if (mysqli_num_rows($resultado) < 1) {
+			$query = "SELECT * FROM remisiones WHERE remision ='$remision'";
+			$resultado = mysqli_query($conexion_usuarios, $query);
+			while($data = mysqli_fetch_assoc($resultado)){
+				$arreglo['cotizacion'] = array_map("utf8_encode", $data);
+				$idcliente = $data['cliente'];
+			}
+		}else{
+			while($data = mysqli_fetch_assoc($resultado)){
+				$arreglo['cotizacion'] = array_map("utf8_encode", $data);
+				$idcliente = $data['cliente'];
+			}
 		}
 
 		$query = "SELECT * FROM contactos WHERE id ='$idcliente'";
@@ -148,7 +163,6 @@
 		}
 
 		echo json_encode($arreglo, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_PARTIAL_OUTPUT_ON_ERROR);
-		mysqli_free_result($resultado);
 		mysqli_close($conexion_usuarios);
 	}
 

@@ -244,7 +244,7 @@
 								break;
 							}
 						}
-						$query = "UPDATE pedidos SET total = '$total', moneda = 'usd' WHERE cotizacionRef = '$refCotizacion' AND numeroPedido = '$numeroPedido'";
+						$query = "UPDATE pedidos SET total = '$total', moneda = 'mxn' WHERE cotizacionRef = '$refCotizacion' AND numeroPedido = '$numeroPedido'";
 						$resultado = mysqli_query($conexion_usuarios, $query);
 						if (!$resultado) {
 							$informacion["respuesta"] = "ERROR";

@@ -73,7 +73,7 @@
 					'fecha' => $data['remisionFecha'],
 					'cantidad' => $data['partidaCantidad'],
 					'suma' => "$ ".$data['precioTotal'],
-					'facturas' => $factura
+					'facturas' => ""
 				);
 				$i++;
 			}
