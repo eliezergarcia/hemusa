@@ -475,7 +475,11 @@
 			$idcfdi = $data['IdUsoCFDI'];
 			$idformapago = $data['IdFormaPago'];
 			$idmetodopago = $data['IdMetodoPago'];
-			$arreglo['condpago'] = "Pago en ".$data['CondPago']." dias";
+			if ($data['CondPago'] == 0 || $data['CondPago'] == "") {
+				$arreglo['condpago'] = "Contado";
+			}else{
+				$arreglo['condpago'] = "Pago en ".$data['CondPago']." dias";
+			}
 		}
 
 		$query = "SELECT * FROM usocfdi WHERE IdUsoCFDI = '$idcfdi'";

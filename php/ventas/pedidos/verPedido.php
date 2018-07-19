@@ -1894,7 +1894,7 @@
 					'TipoCambio': $("#frmInformacionFactura #tipoCambio").val(),
 					'NumOrder': $("#frmInformacionFactura #numeroOrden").val(),
 					'FechaFromAPI': fecha,
-					'Comentarios': "Condiciones de pago: "+conceptos.condpago,
+					'Comentarios': conceptos.condpago,
 					'EnviarCorreo': $("#frmInformacionFactura #enviarCorreo").val()
 				};
 				console.log(JSON.stringify(body));
