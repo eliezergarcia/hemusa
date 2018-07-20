@@ -237,7 +237,7 @@
 						'ClaveUnidad' => $data['Clave'],
 						'Unidad' => $data['Unidad'],
 						'ValorUnitario' => round($data['precioLista'],2),
-						'Descripcion' => utf8_encode("SKU: ".$data['modelo']." ".$data['descripcion'])." Aduana: Nuevo Laredo, "."Fecha: ".date("d-m-Y"),
+						'Descripcion' => utf8_encode("SKU: ".$data['modelo']."/ ".$data['descripcion'])." Aduana: Nuevo Laredo, "."Fecha: ".date("d-m-Y"),
 						'Descuento' => 0,
 						'Impuestos' => $traslados,
 						'Aduana' => $data['Pedimento']
@@ -250,7 +250,7 @@
 						'ClaveUnidad' => $data['Clave'],
 						'Unidad' => $data['Unidad'],
 						'ValorUnitario' => round($data['precioLista'],2),
-						'Descripcion' => utf8_encode("SKU: ".$data['modelo']." ".$data['descripcion']),
+						'Descripcion' => utf8_encode("SKU: ".$data['modelo']."/ ".$data['descripcion']),
 						'Descuento' => 0,
 						'Impuestos' => $traslados
 						);
