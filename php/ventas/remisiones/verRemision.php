@@ -218,6 +218,7 @@
 													<th>Proveedor</th>
 													<th>Almacen</th>
 													<th>Factura</th>
+													<th>Folio</th>
 													<!-- <th>Entregado <input type="checkbox" class="btn btn-outline-primary" name="sel" onclick="seleccionartodo()"></th> -->
 													<th>Editar</th>
 												</tr>
@@ -903,6 +904,7 @@
 						{"data": "proveedor"},
 						{"data": "almacen"},
 						{"data": "factura"},
+						{"data": "folio"},
 						{"defaultContent": "<div class='invoice-footer'><button type='button' class='editar btn btn-lg btn-primary' data-toggle='modal' data-target='#modalEditar'><i class='fas fa-edit fa-sm' aria-hidden='true'></i></button></div>"}
 					],
 					"columnDefs": [
@@ -920,7 +922,8 @@
 						{ "width": "2%", "targets": 12 },
 						// { "width": "2%", "targets": 13 },
 						{ "width": "5%", "targets": 13 },
-						{ "width": "5%", "targets": 14 },
+						{ "visible": false,  "targets": 14 },
+						{ "width": "5%", "targets": 15 },
 					],
 					"order": false,
 	        "lengthChange": false,

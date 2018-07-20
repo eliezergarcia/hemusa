@@ -395,6 +395,7 @@
 		if (mysqli_num_rows($resultado) > 0) {
 			$i=1;
 			while($data = mysqli_fetch_assoc($resultado)){
+				$idherramienta = $data['id'];
 				$modelo = $data['modelo'];
 				$marca = $data['marca'];
 
@@ -454,6 +455,12 @@
 					}
 				}
 
+				$query5 = "SELECT * FROM utilidad_pedido WHERE id_cotizacion_herramientas = '$idherramienta'";
+				$resultado5 = mysqli_query($conexion_usuarios, $query5);
+				while($data5 = mysqli_fetch_assoc($resultado5)){
+					$folio = $data5['folio'];
+				}
+
 				$arreglo["data"][]=array(
 				'id' => $data['id'],
 				'indice' => $i,
@@ -474,7 +481,8 @@
 				'fechacompromiso' => $fechacompromiso,
 				'almacen' => $almacen,
 				'remision' => $data['remision'],
-				'factura' => $data['factura']
+				'factura' => $data['factura'],
+				'folio' => $folio
 				);
 				$i++;
 			}
@@ -487,6 +495,7 @@
 			}else{
 				$i=1;
 				while($data = mysqli_fetch_assoc($resultado)){
+					$idherramienta = $data['id'];
 					$marca = $data['marca'];
 					$modelo = $data['modelo'];
 
@@ -548,6 +557,11 @@
 						}
 					}
 
+					$query5 = "SELECT * FROM utilidad_pedido WHERE id_cotizacion_herramientas = '$idherramienta'";
+					$resultado5 = mysqli_query($conexion_usuarios, $query5);
+					while($data5 = mysqli_fetch_assoc($resultado5)){
+						$folio = $data5['folio'];
+					}
 
 					$arreglo["data"][]=array(
 						'id' => $data['id'],
@@ -569,7 +583,8 @@
 						'fechacompromiso' => $fechacompromiso,
 						'almacen' => $almacen,
 						'remision' => $data['remision'],
-						'factura' => $factura
+						'factura' => $factura,
+						'factura' => $folio
 				  );
 					$i++;
 				}
