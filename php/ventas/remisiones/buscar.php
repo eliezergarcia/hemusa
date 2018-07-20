@@ -284,6 +284,7 @@
 			if(mysqli_num_rows($resultado) > 0){
 				while($data = mysqli_fetch_assoc($resultado)){
 					$idcliente = $data['cliente'];
+					$fecha = $data['fecha'];
 
 					$query2 = "SELECT * FROM contactos WHERE id = '$idcliente'";
 					$res2 = mysqli_query($conexion_usuarios, $query2);
@@ -314,6 +315,12 @@
 						$pedidocliente = $data4['NoPedClient'];
 					}
 
+					$query5 = "SELECT tipocambio FROM tipocambio WHERE fecha = '$fecha'";
+					$resultado5 = mysqli_query($conexion_usuarios, $query5);
+					while($data5 = mysqli_fetch_assoc($resultado5)){
+						$tipoCambio = $data5['tipocambio'];
+					}
+
 					$informacion['factura'] = $factura;
 					$informacion['pedidocliente'] = $pedidocliente;
 					$informacion['remision'] = $data['remision'];
@@ -323,6 +330,7 @@
 					$informacion['moneda'] = $data['moneda'];
 					$informacion['paqueteria'] = $data['IdPaqueteria'];
 					$informacion['numeroGuia'] = $data['guia'];
+					$informacion['tipoCambio'] = $tipoCambio;
 					$informacion['tipo'] = "cotizacion";
 				}
 			}
