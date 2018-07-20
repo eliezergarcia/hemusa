@@ -619,7 +619,7 @@
 				// ],
 				"language": idioma_espanol,
 				"dom":
-    			"<'row'<'col-sm-6'><'col-sm-6 text-right'>>" +
+    			"<'row'<'col-sm-6'><'col-sm-4 text-right'f>>" +
     			"<'row be-datatable-body justify-content-center'<'col-sm-8'tr>>"
     			// "<'row be-datatable-footer'<'col-sm-5'i><'col-sm-7'p>>"
 			});

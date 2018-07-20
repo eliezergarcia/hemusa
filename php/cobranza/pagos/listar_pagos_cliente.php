@@ -15,7 +15,7 @@
 
 
 	if (mysqli_num_rows($resultado) < 1) {
-		$arreglo['data'] = 0;
+		// $arreglo['data'] = 0;
 	}else{
 		while($data = mysqli_fetch_assoc($resultado)){
 
@@ -28,8 +28,8 @@
 				'ordencompra' => $data['ordenpedido'],
 				'moneda' => $data['moneda'],
 				'abonado' => "$ ".round($data['pagado'],2),
-				'pendiente' => "$ ".round($data['total'] - $data['pagado'], 4),
-				'total' => "$ ".$data['total']
+				'pendiente' => "$ ".round($data['total'] - $data['pagado'], 2),
+				'total' => "$ ".round($data['total'],2)
 			);
 		}
 	}
@@ -56,8 +56,8 @@
 				'ordencompra' => $data['NoPedClient'],
 				'moneda' => $data['moneda'],
 				'abonado' => "$ ".round($data['Pagado'],2),
-				'pendiente' => "$ ".$pendiente,
-				'total' => "$ ".$data['precioTotal'] * 1.16
+				'pendiente' => "$ ".round($pendiente,2),
+				'total' => "$ ".round($data['precioTotal'] * 1.16,2)
 			);
 		}
 	}
