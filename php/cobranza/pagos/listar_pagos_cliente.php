@@ -34,7 +34,7 @@
 		}
 	}
 
-	$query = "SELECT * FROM cotizacion WHERE cliente = '$idcliente' AND factura!=0 AND NoPedClient != '0' AND (Pagado < 1.14 * precioTotal) ORDER BY facturaFecha ASC";
+	$query = "SELECT * FROM cotizacion WHERE cliente = '$idcliente' AND factura!=0 AND NoPedClient != '0' AND (Pagado < 1.14 * precioTotal) AND facturaFecha > '2017-01-01' ORDER BY facturaFecha ASC";
 	$resultado = mysqli_query($conexion_usuarios, $query);
 
 

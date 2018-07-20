@@ -232,7 +232,7 @@
 	}
 
 	function buscardatos($remision, $conexion_usuarios){
-		$query = "SELECT * FROM remisiones WHERE remision='$remision'";
+		$query = "SELECT * FROM remisiones WHERE remision='$remision' AND cliente != 0";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 
 		if(mysqli_num_rows($resultado) > 0){
@@ -275,6 +275,7 @@
 				$informacion['paqueteria'] = $data['paqueteria'];
 				$informacion['numeroGuia'] = $data['numeroGuia'];
 				$informacion['tipoCambio'] = $tipoCambio;
+				$informacion['tipo'] = "remisiones";
 			}
 		}else{
 			$query = "SELECT * FROM cotizacion WHERE remision='$remision'";
@@ -322,6 +323,7 @@
 					$informacion['moneda'] = $data['moneda'];
 					$informacion['paqueteria'] = $data['IdPaqueteria'];
 					$informacion['numeroGuia'] = $data['guia'];
+					$informacion['tipo'] = "cotizacion";
 				}
 			}
 		}

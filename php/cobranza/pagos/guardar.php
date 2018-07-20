@@ -70,29 +70,31 @@
 			break;
 
 		case 'abonocliente':
-			$idfactura = $_POST['idfactura'];
 			$cantidadabono = $_POST['cantidadabono'];
-			abono_cliente($idfactura, $cantidadabono, $conexion_usuarios);
+			$facturas = json_decode($_POST['pagos']);
+			abono_cliente($facturas, $cantidadabono, $conexion_usuarios);
 			break;
 	}
 
-	function abono_cliente($idfactura, $cantidadabono, $conexion_usuarios){
-		$query = "UPDATE facturas SET pagado = pagado + '$cantidadabono' WHERE id ='$idfactura'";
-		$resultado = mysqli_query($conexion_usuarios, $query);
-
-		if (!$resultado) {
-			$query = "UPDATE cotizacion SET Pagado = Pagado + '$cantidadabono' WHERE id ='$idfactura'";
+	function abono_cliente($facturas, $cantidadabono, $conexion_usuarios){
+		foreach ($facturas as &$idfactura) {
+			$query = "UPDATE facturas SET pagado = pagado + '$cantidadabono' WHERE id ='$idfactura'";
 			$resultado = mysqli_query($conexion_usuarios, $query);
-			if (!$resultado) {
-				$informacion["respuesta"] = "ERROR";
-				$informacion["informacion"] = "Ocurrió un error al aplicar el abono.";
+
+			if (mysqli_num_rows($resultado) < 1 || !$resultado) {
+				$query = "UPDATE cotizacion SET Pagado = Pagado + '$cantidadabono' WHERE id ='$idfactura'";
+				$resultado = mysqli_query($conexion_usuarios, $query);
+				if (!$resultado) {
+					$informacion["respuesta"] = "ERROR";
+					$informacion["informacion"] = "Ocurrió un error al aplicar el abono.";
+				}else{
+					$informacion["respuesta"] = "BIEN";
+					$informacion["informacion"] = "El abono se registró correctamente.";
+				}
 			}else{
 				$informacion["respuesta"] = "BIEN";
-				$informacion["informacion"] = "El abono se aplicó correctamente.";
+				$informacion["informacion"] = "El abono se registró correctamente.";
 			}
-		}else{
-			$informacion["respuesta"] = "BIEN";
-			$informacion["informacion"] = "El abono se aplicó correctamente.";
 		}
 
 		echo json_encode($informacion);

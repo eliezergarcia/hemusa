@@ -36,15 +36,6 @@
 														<div class="row">
 															<div class="col-12">
 																<input placeholder="Busca un cliente" class="form-control form-control-sm" list="clientes" id="clientes" name="clientes" type="text" required >
-																<!-- <datalist id="mylist">
-																	<?php
-																	include("../../conexion.php");
-																	$result = mysqli_query($conexion_usuarios, "SELECT id,nombreEmpresa FROM contactos WHERE tipo = 'Cliente'");
-																	while ($row = mysqli_fetch_array($result)) {
-																		echo '<option value="'.$row['id'].'">'.utf8_encode($row['nombreEmpresa']).'</option>';
-																	}
-																	?>
-																</datalist> -->
 															</div>
 														</div>
 													</form>
@@ -134,7 +125,7 @@
 								<!-- Tabla de pagos cliente -->
 								<br>
 								<div id="pagos_cliente">
-									<div class="row justify-content-around">
+									<div class="row justify-content-center">
 										<div class="col-2">
 											<label>Fecha</label>
 											<input type="date" name="fechacliente" id="fechacliente" class="form-control form-control-sm" value="<?php echo date("Y-m-d");?>">
@@ -166,21 +157,32 @@
 												<th>Abonado</th>
 												<th>Pendiente</th>
 												<th>Total</th>
-												<th></th>
+												<!-- <th></th> -->
 											</tr>
 										</thead>
 									</table>
 									<br>
-									<div class="row justify-content-end">
-										<div class="col-1">
-											<label for="total" class="label-control">Total a registrar: $ </label>
-											<input type="text" id="total" name="total" class="form-control col-12">
+									<div class="col-9">
+										<div class="row justify-content-end">
+											<div class="col-2">
+												<label for="total" class="label-control">Cantidad a abonar: $ </label>
+												<input type="text" id="cantidadabono" name="cantidadabono" class="form-control form-control-sm col-12">
+											</div>
+											<div class="col-2">
+												<label for="total" class="label-control">Total a registrar: $ </label>
+												<input type="text" id="total" name="total" class="form-control form-control-sm col-12">
+											</div>
 										</div>
 									</div>
 									<br>
-									<div class="row justify-content-end">
-										<div class="col-1">
-											<input id="registrar-pagos-cliente" type="button" class="form-control btn btn-success col-12" value="Registrar">
+									<div class="col-9">
+										<div class="row justify-content-end">
+											<div class="col-2">
+												<input id="abono-cliente" type="button" class="form-control btn btn-primary col-12" value="Abonar">
+											</div>
+											<div class="col-2">
+												<input id="registrar-pagos-cliente" type="button" class="form-control btn btn-success col-12" value="Registrar">
+											</div>
 										</div>
 									</div>
 								</div>
@@ -232,56 +234,6 @@
 					</div>
 				</div>
 			</div>
-		</div>
-
-		<!-- Modal Abono Cliente -->
-		<div class="modal fade colored-header colored-header-success" id="modalAbonoCliente" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-				<div class="modal-dialog modal-lg" role="document">
-					<div class="modal-content">
-							<div class="modal-header">
-								<h4 class="modal-title" id="exampleModalLabel"><b>Abono de cliente</b></h4>
-								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-										<span aria-hidden="true">&times;</span>
-								</button>
-							</div>
-							<div class="modal-body">
-								<form id="frmAbonoCliente" action="" method="POST">
-									<input type="hidden" id="opcion" name="opcion" value="abonocliente">
-									<input type="hidden" id="idfactura" name="idfactura">
-									<div class="row form-group">
-										<div class="col">
-											<label for="factura">Factura</label>
-											<input type="text" id="factura" name="factura" class="form-control form-control-sm disabled" disabled required>
-										</div>
-										<div class="col">
-											<label for="abonado">Abonado</label>
-											<input type="text" id="abonado" name="abonado" class="form-control form-control-sm disabled" disabled required>
-										</div>
-									</div>
-									<div class="row form-group">
-										<div class="col">
-											<label for="pendiente">Pendiente </label>
-											<input type="text" id="pendiente" name="pendiente" class="form-control form-control-sm disabled" disabled required>
-										</div>
-										<div class="col">
-											<label for="total">Total</label>
-											<input type="text" id="total" name="total" class="form-control form-control-sm disabled" disabled required>
-										</div>
-									</div>
-									<div class="row form-group">
-										<div class="col-6">
-											<label for="cantidadabono">Cantidad a abonar: </label>
-											<input type="text" id="cantidadabono" name="cantidadabono" class="form-control form-control-sm" required>
-										</div>
-									</div>
-								</form>
-							</div>
-							<div class="modal-footer invoice-footer">
-								<button type="button" class="btn btn-lg btn-secondary" data-dismiss="modal">Cancelar</button>
-								<button type="button" class="btn btn-lg btn-success" id="abonarcliente">Registrar</button>
-							</div>
-					</div>
-				</div>
 		</div>
 
 		<!-- Modal Editar Pago -->
@@ -604,7 +556,7 @@
 					{"data":"abonado"},
 					{"data":"pendiente"},
 					{"data":"total"},
-					{"defaultContent": "<div class='invoice-footer'><button class='abonocliente btn btn-space btn-lg btn-primary'><i class='fas fa-money-bill fa-sm'></i> Abono</button></div>"}
+					// {"defaultContent": "<div class='invoice-footer'><button class='abonocliente btn btn-primary'><i class='fas fa-money-bill fa-sm'></i> Abono</button></div>"}
 				],
 				// "columnDefs": [
 				// 	{ "width": "2%", "targets": 0 },
@@ -619,8 +571,8 @@
 				// ],
 				"language": idioma_espanol,
 				"dom":
-    			"<'row'<'col-sm-6'><'col-sm-4 text-right'f>>" +
-    			"<'row be-datatable-body justify-content-center'<'col-sm-8'tr>>"
+    			"<'row be-datatable-body'<'col-sm-6'><'col-sm-3 text-right'f>>" +
+    			"<'row be-datatable-body justify-content-center'<'col-sm-6'tr>>"
     			// "<'row be-datatable-footer'<'col-sm-5'i><'col-sm-7'p>>"
 			});
 
@@ -640,20 +592,38 @@
 			});
 		}
 
-		$("#abonarcliente").on("click", function () {
-			$('#frmAbonoCliente .disabled').attr('disabled', false);
-			var frm = $("#frmAbonoCliente").serialize();
-			console.log(frm);
-			$("#modalAbonoCliente").modal("hide");
+		$("#abono-cliente").on("click", function () {
+			var verificar = 0;
+			$("input[name=pedido]").each(function (index) {
+				if($(this).is(':checked')){
+					verificar++;
+				}
+			});
+
+			if(verificar == 0){
+				alert("Debes de seleccionar al menos una factura.");
+			}else{
+				console.log(verificar);
+				var pagos = new Array();
+				$("input[name=pedido]").each(function (index) {
+					if($(this).is(':checked')){
+						pagos.push($(this).val());
+					}
+				});
+			}
+			var cantidadabono = $("#cantidadabono").val();
+			var opcion = "abonocliente";
 			$.ajax({
 				method: "POST",
 				url: "guardar.php",
 				dataType: "json",
-				data: frm,
-				success : function(data) {
-					mostrar_mensaje(data);
-					$('#dt_pagos_cliente').DataTable().ajax.reload();
-				}
+				data: {"opcion": opcion, "cantidadabono": cantidadabono, "pagos": JSON.stringify(pagos)},
+			}).done( function( data ){
+				console.log(data);
+				$('#dt_pagos_cliente').DataTable().ajax.reload();
+				$("#cantidadabono").val("");
+				$("#total").val("");
+				mostrar_mensaje(data);
 			});
 		});
 
@@ -714,7 +684,7 @@
 		});
 
 		$("#buscarPagadosCliente").on("click", function(){
-			var idcliente = $("#idclientebuscar").val();
+			var idcliente = $("#clientes").val();
 			if (idcliente == "") {
 				alert("Debes de ingresar un cliente!");
 			}else{

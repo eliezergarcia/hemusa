@@ -3,7 +3,7 @@
 	require_once('../../sesion.php');
 	error_reporting(0);
 
-	$resultado = mysqli_query($conexion_usuarios, "SELECT cliente FROM remisiones WHERE remision='".$_REQUEST['remision']."'");
+	$resultado = mysqli_query($conexion_usuarios, "SELECT cliente FROM remisiones WHERE remision='".$_REQUEST['remision']."' AND cliente!=0");
 	while($data = mysqli_fetch_array($resultado)){
 		$idcliente = $data['cliente'];
 	}

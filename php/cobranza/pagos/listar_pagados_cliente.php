@@ -2,7 +2,13 @@
 
 	include("../../conexion.php");
 
-	$idcliente = $_POST['idcliente'];
+	$cliente = $_POST['idcliente'];
+
+	$query = "SELECT id FROM contactos WHERE tipo='Cliente' AND nombreEmpresa LIKE '%$cliente%' LIMIT 1";
+	$resultado = mysqli_query($conexion_usuarios, $query);
+	while($data = mysqli_fetch_assoc($resultado)){
+		$idcliente = $data['id'];
+	}
 
 	$query = "SELECT * FROM payments WHERE client = '$idcliente' ORDER BY date DESC LIMIT 50";
 	$resultado = mysqli_query($conexion_usuarios, $query);
