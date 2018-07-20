@@ -5,14 +5,14 @@
 
 	switch ($opcion) {
 		case 'cancelarfactura':
-			$uidFactura = $_POST['uidFactura'];
+			$UIDfactura = $_POST['uidFactura'];
 			$motivoCancelacion = $_POST['motivoCancelacion'];
 			cancelar_factura($UIDfactura, $motivoCancelacion, $conexion_usuarios);
 			break;
 	}
 
-	function cancelar_factura($uidFactura, $motivoCancelacion, $conexion_usuarios){
-		$query = "UPDATE facturas SET status='cancelada', motivoCancelacion='$motivoCancelacion' WHERE UID='$uidFactura'";
+	function cancelar_factura($UIDfactura, $motivoCancelacion, $conexion_usuarios){
+		$query = "UPDATE facturas SET status='cancelada', motivoCancelacion='$motivoCancelacion' WHERE UID='$UIDfactura'";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 
 		if (!$resultado) {
@@ -23,5 +23,6 @@
 			$informacion["informacion"] = "La factura se canceló correctamente.";
 		}
 		echo json_encode($informacion);
+		mysqli_close($conexion_usuarios);
 	}
 ?>

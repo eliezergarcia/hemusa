@@ -124,7 +124,7 @@
                   <div class="row justify-content-center">
 										<div class="col-10">
 											<select class="form-control form-control-sm select2" name="motivoCancelacion" id="motivoCancelacion">
-												<option>Error en datos fiscales (RFC, domicilio, nombre o razón social)</option>
+												<option selected>Error en datos fiscales (RFC, domicilio, nombre o razón social)</option>
 												<option>Error en forma o método de pago (contado, parcialidad, efectivo, transferencia)</option>
 												<option>Error en los montos (facturar de más o de menos)</option>
 												<option>No pago de la factura electrónica</option>
