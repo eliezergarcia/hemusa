@@ -459,7 +459,7 @@
 			}
 		}
 
-		$query = "SELECT * FROM remisiones WHERE remision = '$remision'";
+		$query = "SELECT * FROM remisiones WHERE remision = '$remision' AND cliente !=0";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 
 		if (mysqli_num_rows($resultado) > 0) {
