@@ -1063,6 +1063,7 @@
 			if($("#frmAgregarPartida #marca").val() == "Agregar a marca"){
 				document.frmAgregarPartida.modelo.style.backgroundColor='#99CCFF';
 				document.frmAgregarPartida.marca.style.backgroundColor='#99CCFF';
+				document.frmAgregarPartida.marca2.style.backgroundColor='#99CCFF';
 				document.frmAgregarPartida.descripcion.style.backgroundColor='#99CCFF';
 				document.frmAgregarPartida.claveSat.style.backgroundColor='#99CCFF';
 				document.frmAgregarPartida.precioUnitario.style.backgroundColor='#99CCFF';
@@ -1350,9 +1351,10 @@
 
 				});
 			}
-			// $("#frmAgregarPartida #marca").blur();
-			$("#frmAgregarPartida #cantidad").focus();
-			$("#frmAgregarPartida #cantidad").select();
+
+			setTimeout(function(){
+				$("#frmAgregarPartida #cantidad").focus();
+			}, 1500);
 		}
 
 		var listar_partidas = function(){
@@ -1846,7 +1848,7 @@
 						mostrar_mensaje(json_info);
 						limpiar_datos();
 						if (json_info.cotizacion == "partida") {
-							$("#modalAgregarPartida").modal("show");
+							setTimeout(function(){ $("#modalAgregarPartida").modal("show"); }, 1000);
 						}
 					});
 				}
@@ -1990,10 +1992,15 @@
 			$("#frmAgregarPartida #refInterna").val("");
 			$("#frmAgregarPartida #cotizadoEn").val("");
 			$("#frmAgregarPartida #modificarPrecioLista").attr('checked', false);
+			$("#frmAgregarPartida #agregarAMarca").attr('checked', false);
+			$("#frmAgregarPartida #valorNacional").attr("checked",false);
+			$("#frmAgregarPartida #valorAmericano").attr("checked",false);
+			$("#frmAgregarPartida #valorOtro").attr("checked",false);
+			$("#frmAgregarPartida #valorNinguno").attr("checked",false);
 			document.getElementById("valorNacional").disabled = true;
       document.getElementById("valorAmericano").disabled = true;
-      document.getElementById("valorOtro").disabled = false;
       document.getElementById("valorNinguno").disabled = true;
+			document.getElementById("valorOtro").disabled = true;
 			document.frmAgregarPartida.modelo.style.backgroundColor='white';
 			document.frmAgregarPartida.marca.style.backgroundColor='white';
 			document.frmAgregarPartida.descripcion.style.backgroundColor='white';

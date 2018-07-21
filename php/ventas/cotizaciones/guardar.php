@@ -302,18 +302,25 @@
 								switch ($valorClaseE) {
 									case 'nacional':
 										$factorClaseE = 1.20;
+										$precioUnitario = round($precioUnitario * 0.83333,2);
 										break;
 									case 'americano':
 										$factorClaseE = 1.40;
+										$precioUnitario = round($precioUnitario * 0.714285,2);
 										break;
 									case 'otro':
 										$factorClaseE = 1.60;
+										$precioUnitario = round($precioUnitario * 0.625,2);
 										break;
 								}
 								if ($noExisteProducto == "noExisteProducto") {
+									$query = "SELECT * FROM marcadeherramientas WHERE marca='$marca'";
+									$resultado = mysqli_query($conexion_usuarios, $query);
+									while($data = mysqli_fetch_assoc($resultado)){
+										$moneda = $data['moneda'];
+									}
 									$enReserva = 0;
 									$clase = "E";
-									$moneda = "usd";
 									$cantidadMinima = 1;
 									$query = "INSERT INTO productos (marca, ref, descripcion, ClaveProductoSAT, precioBase, enReserva, clase, fecha, factor, moneda, CantidadMinima, Unidad) VALUES ('$marca', '$modelo', '$descripcion', '$claveSat', '$precioUnitario', '$enReserva', '$clase', '$fecha', '$factorClaseE', '$moneda', '$cantidadMinima', '$unidad')";
 									$resultado = mysqli_query($conexion_usuarios, $query);

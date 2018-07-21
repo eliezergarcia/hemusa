@@ -443,7 +443,7 @@
 			$query = "INSERT INTO cotizacion (ref, cliente, contacto, vendedor, fecha, moneda, Otra, remision, remisionFecha) VALUES ('$numeroCotizacion', '$idCliente', '$contactoCliente', '$vendedor', '$fechaCotizacion', '$moneda', '$comentarios', '$remision', '$fechaCotizacion')";
 			$resultado = mysqli_query($conexion_usuarios, $query);
 
-			$query = "INSERT INTO remisiones (remision, cotizacionRef, contacto, vendedor, fecha, cliente, moneda, IdFormaPago, IdMetodoPago, IdUsoCFDI) VALUES ('$remision', '$numeroCotizacion', '$contactoCliente', '$vendedor', '$fechaCotizacion', '$idCliente', '$moneda', '$idFormaPago', '$idMetodoPago', '$idUsoCFDI')";
+			$query = "INSERT INTO remisiones (remision, cotizacionRef, contacto, vendedor, fecha, cliente, moneda, IdFormaPago, IdMetodoPago, IdUsoCFDI, comentarios) VALUES ('$remision', '$numeroCotizacion', '$contactoCliente', '$vendedor', '$fechaCotizacion', '$idCliente', '$moneda', '$idFormaPago', '$idMetodoPago', '$idUsoCFDI', '$comentarios')";
 			$resultado = mysqli_query($conexion_usuarios, $query);
 			if (!$resultado) {
 				verificar_resultado($resultado);

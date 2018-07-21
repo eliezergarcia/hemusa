@@ -347,6 +347,7 @@
 				}).done( function( info ){
 					mostrar_mensaje(info);
           App.pageCalendar();
+          location.reload();
 				});
 			});
 		}
