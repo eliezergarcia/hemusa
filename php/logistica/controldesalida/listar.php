@@ -44,7 +44,7 @@
   }
 
   function nacional($conexion_usuarios){
-    $query = "SELECT DISTINCT folio, proveedor FROM utilidad_pedido WHERE folio != '' AND folio != 0 AND folio != '0' ORDER BY id DESC LIMIT 50";
+    $query = "SELECT DISTINCT folio, proveedor FROM utilidad_pedido WHERE folio != '' AND folio != 0 AND folio != '0' ORDER BY id DESC LIMIT 100";
     $resultado = mysqli_query($conexion_usuarios, $query);
 
     if(mysqli_num_rows($resultado) < 1){
@@ -161,7 +161,7 @@
 	}
 
   function importacion($conexion_usuarios){
-    $query = "SELECT DISTINCT Pedimento, proveedor FROM utilidad_pedido WHERE Pedimento != '' AND Pedimento != 0 AND fecha_orden_compra >='$fechainicio' AND fecha_orden_compra <= '$fechafin' ORDER BY id DESC";
+    $query = "SELECT DISTINCT Pedimento, proveedor FROM utilidad_pedido WHERE Pedimento != '' AND Pedimento != 0 ORDER BY id DESC LIMIT 100";
     $resultado = mysqli_query($conexion_usuarios, $query);
 
     if(mysqli_num_rows($resultado) < 1){

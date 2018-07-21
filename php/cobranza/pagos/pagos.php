@@ -197,8 +197,8 @@
 												<th>Cliente</th>
 												<th>Banco</th>
 												<th>Total</th>
-												<th>Ver y Editar</th>
-												<th>Desglosar Facturas</th>
+												<th>Editar</th>
+												<th>Facturas</th>
 											</tr>
 										</thead>
 									</table>
@@ -718,13 +718,13 @@
 					{"data":"cliente"},
 					{"data":"banco"},
 					{"data":"total"},
-					{"defaultContent": "<button class='editar-pago-cliente btn btn-primary'><i class='fa fa-pencil-square-o' aria-hidden='true'></i></button>"},
-					{"defaultContent": "<button class='desglosar-pago-cliente btn btn-primary'><i class='fa fa-list-alt' aria-hidden='true'></i></button>"}
+					{"defaultContent": "<button class='editar-pago-cliente btn btn-primary'><i class='fas fa-pencil-alt' aria-hidden='true'></i></button>"},
+					{"defaultContent": "<button class='desglosar-pago-cliente btn btn-primary'><i class='fas fa-list-alt' aria-hidden='true'></i></button>"}
 				],
 				"language": idioma_espanol,
 				"dom":
-    			"<'row be-datatable-header'<'col-sm-6'><'col-sm-6 text-right'f>>" +
-    			"<'row be-datatable-body'<'col-sm-12'tr>>"
+    			"<'row be-datatable-body'<'col-sm-6'><'col-sm-4 text-right'f>>" +
+    			"<'row be-datatable-body justify-content-center'<'col-sm-8'tr>>"
     			// "<'row be-datatable-footer'<'col-sm-5'i><'col-sm-7'p>>"
 			});
 
