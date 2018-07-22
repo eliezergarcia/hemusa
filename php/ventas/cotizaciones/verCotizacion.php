@@ -460,7 +460,32 @@
 			        			<div class="row">
 			        				<div class="form-group col">
 			        					<label for="">Unidad <font color="#FF4136">*</font></label>
-			        					<input type="text" class="form-control form-control-sm" name="unidad" id="unidad" required>
+			        					<!-- <input type="text" class="form-control form-control-sm" name="unidad" id="unidad" required> -->
+												<select class="form-control form-control-sm" name="unidad" id="unidad" required>
+													<option>PIEZA</option>
+													<option>PAR</option>
+													<option>KIT</option>
+													<option>CAJA</option>
+													<option>CONJUNTO</option>
+													<option>TARIFA</option>
+													<option>UNIDAD DE SERVICIO</option>
+													<option>BLOQUE</option>
+													<option>LITRO</option>
+													<option>GALÓN</option>
+													<option>PAQUETE</option>
+													<option>ELEMENTO</option>
+													<option>GRAMO</option>
+													<option>KILOGRAMO</option>
+													<option>CENTRIMETRO CUADRADO</option>
+													<option>PULGADA</option>
+													<option>METRO</option>
+													<option>METRO CUADRADO</option>
+													<option>METRO CUBICO</option>
+													<option>PIE</option>
+													<option>YARDA</option>
+													<option>MILLA</option>
+													<option>VARIEDAD</option>
+												</select>
 			        				</div>
 			        				<div class="form-group col">
 			        					<label for="">Tiempo de Entrega (Días) <font color="#FF4136">*</font></label>
@@ -488,10 +513,10 @@
                       <label class="custom-control custom-radio">
                         <input type="radio" class="custom-control-input" name="valorClaseE" id="valorOtro" value="otro" disabled required onchange="calcularPrecioClaseE()"><span class="custom-control-label">Otro</span>
                       </label>
-									</div>
+										</div>
 			        			</div>
 			        			<div class="row">
-								</div>
+										</div>
 				      		</div>
 				      		<div class="modal-footer invoice-footer">
 				        		<button type="button" class="btn btn-lg btn-secondary" data-dismiss="modal">Cancelar</button>
@@ -600,7 +625,36 @@
 			        					<label for="">T.E. Días <font color="#FF4136">*</font></label>
 			        						<input type="text" class="form-control form-control-sm" name="tedias" id="tedias" required>
 			        				</div>
-			        				<div class="form-group col-8">
+											<div class="form-group col-4">
+			        					<label for="">Unidad <font color="#FF4136">*</font></label>
+			        					<!-- <input type="text" class="form-control form-control-sm" name="unidad" id="unidad" required> -->
+												<select class="form-control form-control-sm" name="unidad" id="unidad" required>
+													<option>PIEZA</option>
+													<option>PAR</option>
+													<option>KIT</option>
+													<option>CAJA</option>
+													<option>CONJUNTO</option>
+													<option>TARIFA</option>
+													<option>UNIDAD DE SERVICIO</option>
+													<option>BLOQUE</option>
+													<option>LITRO</option>
+													<option>GALÓN</option>
+													<option>PAQUETE</option>
+													<option>ELEMENTO</option>
+													<option>GRAMO</option>
+													<option>KILOGRAMO</option>
+													<option>CENTRIMETRO CUADRADO</option>
+													<option>PULGADA</option>
+													<option>METRO</option>
+													<option>METRO CUADRADO</option>
+													<option>METRO CUBICO</option>
+													<option>PIE</option>
+													<option>YARDA</option>
+													<option>MILLA</option>
+													<option>VARIEDAD</option>
+												</select>
+			        				</div>
+			        				<div class="form-group col-4">
 			        					<label for="">Referencia Interna</label>
 			        						<input type="text" class="form-control form-control-sm" name="refInterna" id="refInterna" placeholder="(Opcional)">
 			        				</div>
@@ -852,7 +906,7 @@
 								}, 350);
 								setTimeout(function () {
 									window.location="../pedidos/verPedido.php?refCotizacion="+refCotizacion+"&numeroPedido="+numeroPedido;
-								}, 2000);
+								}, 1000);
 							}else{
 								$("#mod-success").modal("hide");
 								mostrar_mensaje(data);
@@ -1193,7 +1247,8 @@
 								}
 							}
 
-							$("#frmAgregarPartida #unidad").val(data.data.Unidad);
+							var unidad = (data.data.Unidad).toUpperCase();
+							$("#frmAgregarPartida #unidad").val(unidad).change();
 							$("#frmAgregarPartida #tedias").val(data.tiempoEntrega);
 						}else{
 							console.log(data);
@@ -1329,7 +1384,8 @@
 									}
 								}
 							}
-							$("#frmAgregarPartida #unidad").val(data.data.Unidad);
+							var unidad = (data.data.Unidad).toUpperCase();
+							$("#frmAgregarPartida #unidad").val(unidad).change();
 							$("#frmAgregarPartida #tedias").val(data.tiempoEntrega);
 						}
 
@@ -1785,6 +1841,7 @@
 					claveSat = $("#frmEditarPartida #claveSat").val(data.claveSat),
 					precioUnitario = $("#frmEditarPartida #precioUnitario").val((data.precioUnitario - data.flete).toFixed(2)),
 					tedias = $("#frmEditarPartida #tedias").val(data.tedias),
+					unidad = $("#frmEditarPartida #unidad").val(data.unidad),
 					refInterna = $("#frmEditarPartida #refInterna").val(data.refInterna),
 					cotizadoEn = $("#frmEditarPartida #cotizadoEn").val(data.cotizadoEn),
 					opcion = $("#frmEditarPartida #opcion").val("editar");

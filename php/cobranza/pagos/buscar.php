@@ -48,11 +48,11 @@
 				$resultado2 = mysqli_query($conexion_usuarios, $query2);
 
 				while($data2 = mysqli_fetch_assoc($resultado2)){
-					$total = $total + ($data2['precioTotal'] * 1.16);
+					$total = $total + (($data2['precioTotal'] * 1.16) - $data2['Pagado']);
 				}
 			}else{
 				while($data = mysqli_fetch_assoc($resultado)){
-					$total = $total + $data['total'];
+					$total = $total + ($data['total'] - $data['pagado']);
 				}
 			}
 		}

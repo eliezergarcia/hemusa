@@ -306,12 +306,23 @@
 	<script>
 		$(document).ready(function(){
 			App.init();
-    	App.pageCalendar();
-    	App.formElements();
-    	App.uiNotifications();
+			App.megaMenu();
+  		App.pageCalendar();
+  		App.formElements();
+  		App.uiNotifications();
+			nav_active();
+			prettyPrint();
 			listar(); // Función para listar la tabla de usuarios
 			guardar(); // Función para registrar, modificar y eliminar
 		});
+
+		function nav_active () {
+      $(".nav-item").removeClass("open section-active");
+      $("#administracion-menu").addClass("open section-active");
+
+      $(".nav-link").removeClass("active");
+			$("#usuarios-menu").addClass("active");
+    }
 
 		var listar = function(){ // DataTable de Usuarios
 			var table = $("#dt_usuarios").DataTable({

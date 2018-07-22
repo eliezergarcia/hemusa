@@ -78,9 +78,10 @@
 			$claveSat = $_POST["claveSat"];
 			$tedias = $_POST["tedias"];
 			$refInterna = $_POST["refInterna"];
+			$unidad = $_POST["unidad"];
 			$cotizadoEn = $_POST["cotizadoEn"];
 			$proveedorFlete = $_POST['proveedorFlete'];
-			editar($refCotizacion, $descripcion, $precioUnitario, $cantidad, $claveSat, $tedias, $refInterna, $cotizadoEn, $proveedorFlete, $idherramienta, $conexion_usuarios);
+			editar($refCotizacion, $descripcion, $precioUnitario, $cantidad, $claveSat, $tedias, $unidad, $refInterna, $cotizadoEn, $proveedorFlete, $idherramienta, $conexion_usuarios);
 			actualizarTotalFlete($refCotizacion, $conexion_usuarios);
 			actualizarTotalCotizacion($refCotizacion, $conexion_usuarios);
 			break;
@@ -401,8 +402,8 @@
 		cerrar($conexion_usuarios);
 	}
 
-	function editar($refCotizacion, $descripcion, $precioUnitario, $cantidad, $claveSat, $tedias, $refInterna, $cotizadoEn, $proveedorFlete, $idherramienta, $conexion_usuarios){
-		$query ="UPDATE cotizacionherramientas SET descripcion='$descripcion', precioLista='$precioUnitario', cantidad='$cantidad', ClaveProductoSAT='$claveSat', Tiempo_Entrega='$tedias', referencia_interna='$refInterna', lugar_cotizacion='$cotizadoEn', proveedorFlete ='$proveedorFlete' WHERE id=$idherramienta";
+	function editar($refCotizacion, $descripcion, $precioUnitario, $cantidad, $claveSat, $tedias, $unidad, $refInterna, $cotizadoEn, $proveedorFlete, $idherramienta, $conexion_usuarios){
+		$query ="UPDATE cotizacionherramientas SET descripcion='$descripcion', precioLista='$precioUnitario', cantidad='$cantidad', Unidad='$unidad', ClaveProductoSAT='$claveSat', Tiempo_Entrega='$tedias', referencia_interna='$refInterna', lugar_cotizacion='$cotizadoEn', proveedorFlete ='$proveedorFlete' WHERE id=$idherramienta";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 		if (!$resultado) {
 			$informacion["respuesta"] = "ERROR";

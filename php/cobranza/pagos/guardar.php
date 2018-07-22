@@ -42,10 +42,10 @@
 			editar_pago_cliente($idpago, $fechapago, $tcpago, $bancopago, $conexion_usuarios);
 			break;
 
-		case 'eliminarfacturapago':
+		case 'eliminarpago':
 			$idpago = $_POST['idpago'];
-			$facturas = json_decode($_POST['facturas']);
-			eliminar_factura_pago($idpago, $facturas, $conexion_usuarios);
+			$factura = $_POST['facturas'];
+			eliminar_factura_pago($idpago, $factura, $conexion_usuarios);
 			break;
 
 		case 'registrarproveedor':
@@ -291,74 +291,35 @@
 		$query = "UPDATE payments SET date = '$fechapago', exchangeRate = '$tcpago', account = '$bancopago' WHERE id = '$idpago'";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 		if (!$resultado) {
-			verificar_resultado($resultado);
+			$informacion["respuesta"] = "ERROR";
+			$informacion["informacion"] = "Ocurrió un problema al modificar la información de el pago.";
 		}else{
-			if ($tcpago > 1) {
-				$monto = 0;
-				$query = "SELECT * FROM cotizacion WHERE idpago = '$idpago'";
-				$resultado = mysqli_query($conexion_usuarios, $query);
-
-				while($data = mysqli_fetch_assoc($resultado)){
-					$monto = $monto + (($data['precioTotal'] * 1.16) * $tcpago);
-				}
-				$query = "UPDATE payments SET amount = '$monto' WHERE id = '$idpago'";
-				$resultado = mysqli_query($conexion_usuarios, $query);
-				verificar_resultado($resultado);
-			}else{
-				$monto = 0;
-				$query = "SELECT * FROM cotizacion WHERE idpago = '$idpago'";
-				$resultado = mysqli_query($conexion_usuarios, $query);
-
-				while($data = mysqli_fetch_assoc($resultado)){
-					$monto = $monto + ($data['precioTotal'] * 1.16);
-				}
-
-				$query = "UPDATE payments SET amount = '$monto' WHERE id = '$idpago'";
-				$resultado = mysqli_query($conexion_usuarios, $query);
-				verificar_resultado($resultado);
-			}
+			$informacion["respuesta"] = "BIEN";
+			$informacion["informacion"] = "La información del pago se modificó correctamente";
 		}
+		echo json_encode($informacion);
+		mysqli_close($conexion_usuarios);
 	}
 
-	function eliminar_factura_pago($idpago, $facturas, $conexion_usuarios){
-		foreach ($facturas as &$valor) {
-			$idfactura = $valor;
-			$query = "SELECT * FROM cotizacion WHERE id = '$idfactura'";
-			$resultado = mysqli_query($conexion_usuarios, $query);
-			if (!$resultado) {
-				verificar_resultado($resultado);
-			}else{
-				while($data = mysqli_fetch_assoc($resultado)){
-					$monto = $data['Pagado'];
-				}
-				$pagado = 0;
-				$eliminaridpago = 0;
-				$query = "UPDATE cotizacion SET Pagado = '$pagado', idpago = '$eliminaridpago' WHERE id = '$idfactura'";
-				$resultado = mysqli_query($conexion_usuarios, $query);
+	function eliminar_factura_pago($idpago, $factura, $conexion_usuarios){
+		$query = "UPDATE facturas SET pagado=0, status='enviada' WHERE folio='$factura'";
+		$resultado = mysqli_query($conexion_usuarios, $query);
 
-				if (!$resultado) {
-					verificar_resultado($resultado);
-				}else{
-					$query = "SELECT * FROM payments WHERE id = '$idpago'";
-					$resultado = mysqli_query($conexion_usuarios, $query);
+		$query = "UPDATE cotizacion SET Pagado=0 WHERE factura='$factura'";
+		$resultado=mysqli_query($conexion_usuarios, $query);
 
-					while($data = mysqli_fetch_assoc($resultado)){
-						$total = $data['amount'];
-						$tipocambio = $data['exchangeRate'];
-					}
-
-					if ($tipocambio > 1) {
-						$total = $total - ($monto * $tipocambio);
-					}else{
-						$total = $total - $monto;
-					}
-
-					$query = "UPDATE payments SET amount = '$total' WHERE id = '$idpago'";
-					$resultado = mysqli_query($conexion_usuarios, $query);
-					verificar_resultado($resultado);
-				}
-			}
+		$query = "DELETE FROM payments WHERE id ='$idpago'";
+		$resultado = mysqli_query($conexion_usuarios, $query);
+		if (!$resultado) {
+			$informacion["respuesta"] = "ERROR";
+			$informacion["informacion"] = "Ocurrió un problema al eliminar el pago.";
+		}else{
+			$informacion["respuesta"] = "BIEN";
+			$informacion["informacion"] = "El pago de la factura se eliminó correctamente.";
 		}
+
+		echo json_encode($informacion);
+		mysqli_close($conexion_usuarios);
 	}
 
 	function registrarproveedor($cliente, $tipo, $facoc, $fecha, $monto, $cuenta, $tipocambio, $conexion_usuarios){

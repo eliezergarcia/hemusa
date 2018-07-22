@@ -201,12 +201,23 @@
 	<script>
 		$(document).ready(function(){
 			App.init();
-      		App.pageCalendar();
-      		App.formElements();
-      		App.uiNotifications();
+			App.megaMenu();
+  		App.pageCalendar();
+  		App.formElements();
+  		App.uiNotifications();
+			nav_active();
+			prettyPrint();
 			listar();
 			guardar();
 		});
+
+		function nav_active () {
+      $(".nav-item").removeClass("open section-active");
+      $("#administracion-menu").addClass("open section-active");
+
+      $(".nav-link").removeClass("active");
+			$("#marcas-menu").addClass("active");
+    }
 
 		var  listar = function(){
 			var table = $("#dt_marcas").DataTable({

@@ -874,7 +874,7 @@
 		$resultado = mysqli_query($conexion_usuarios, $query);
 		$fecha = date("Y-m-d");
 
-		$query = "UPDATE cotizacion SET factura = '$folio', facturaFecha = '$fecha' WHERE NoPedClient = '$ordenpedido'";
+		$query = "UPDATE cotizacion SET factura = '$folio', facturaFecha = '$fecha' WHERE remision = '$remision'";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 
 		if (!$resultado) {

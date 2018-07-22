@@ -157,11 +157,23 @@
 	<script>
 		$(document).ready(function(){
 			App.init();
+			App.megaMenu();
   		App.pageCalendar();
   		App.formElements();
   		App.uiNotifications();
+			nav_active();
+			prettyPrint();
 			$("#csv-file").change(handleFileSelect);
 		});
+
+		function nav_active () {
+      $(".nav-item").removeClass("open section-active");
+      $("#administracion-menu").addClass("open section-active");
+
+      $(".nav-link").removeClass("active");
+			$("#subirlista-menu").addClass("active");
+    }
+
 		var data;
 
 		function handleFileSelect(evt) {

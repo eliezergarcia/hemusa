@@ -198,7 +198,7 @@
 												<th>Banco</th>
 												<th>Total</th>
 												<th>Editar</th>
-												<th>Facturas</th>
+												<th>Eliminar</th>
 											</tr>
 										</thead>
 									</table>
@@ -237,7 +237,7 @@
 		</div>
 
 		<!-- Modal Editar Pago -->
-			<div class="modal fade" id="modalEditarPago" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal fade colored-header colored-header-primary" id="modalEditarPago" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 			  <div class="modal-dialog" role="document">
 			    <div class="modal-content">
 			      <div class="modal-header">
@@ -252,17 +252,17 @@
 			        		<input type="hidden" name="idpago" id="idpago">
 			        		<div class="col form-group">
 			        			<label for="fechapago">Fecha</label>
-			        			<input type="date" class="form-control" name="fechapago" id="fechapago">
+			        			<input type="date" class="form-control form-control-sm" name="fechapago" id="fechapago">
 			        		</div>
 			        		<div class="col form-group">
 			        			<label for="tcpago">Tipo de Cambio</label>
-			        			<input type="text" class="form-control" name="tcpago" id="tcpago">
+			        			<input type="text" class="form-control form-control-sm" name="tcpago" id="tcpago">
 			        		</div>
 			        	</div>
 			        	<div class="row">
 			        		<div class="col form-group">
 			        			<label for="fechapago">Banco</label>
-			        			<select name="bancopago" id="bancopago" class="form-control">
+			        			<select name="bancopago" id="bancopago" class="form-control form-control-sm">
 			        				<option value="1">BANCO NACIONAL DE MEXICO, S.A</option>
 			        				<option value="2">BANCO MERCANTIL DEL NORTE, S.A</option>
 			        				<option value="4">BANAMEX Dlls</option>
@@ -272,8 +272,8 @@
 			        </div>
 			      </div>
 			      <div class="modal-footer">
-			        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-			        <button id="editar-pago-cliente" type="button" class="btn btn-primary">Guardar</button>
+			        <button type="button" class="btn btn-lg btn-secondary" data-dismiss="modal">Cerrar</button>
+			        <button id="editar-pago-cliente" type="button" class="btn btn-lg btn-primary">Guardar</button>
 			      </div>
 			    </div>
 			  </div>
@@ -571,7 +571,7 @@
 				// ],
 				"language": idioma_espanol,
 				"dom":
-    			"<'row be-datatable-body'<'col-sm-6'><'col-sm-3 text-right'f>>" +
+    			"<'row be-datatable-space'<'col-sm-6'><'col-sm-3 text-right'f>>" +
     			"<'row be-datatable-body justify-content-center'<'col-sm-6'tr>>"
     			// "<'row be-datatable-footer'<'col-sm-5'i><'col-sm-7'p>>"
 			});
@@ -688,11 +688,11 @@
 			if (idcliente == "") {
 				alert("Debes de ingresar un cliente!");
 			}else{
+				listar_pagados_cliente(idcliente);
 				$("#pagos").slideUp("slow");
 				$("#pagos_cliente").slideUp("slow");
 				$("#desglosar_facturas").slideUp("slow");
 				$("#pagados_cliente").slideDown("slow");
-				listar_pagados_cliente(idcliente);
 			}
 		});
 
@@ -701,11 +701,7 @@
 			var table = $('#dt_pagados_cliente').DataTable({
 				"order": false,
 				"ordering": false,
-        "lengthChange": false,
         "info": false,
-        // "paging": false,
-        // "searching": false,
-        "destroy":"true",
         "scrollX": true,
 				"ajax":{
 					"method":"POST",
@@ -719,7 +715,7 @@
 					{"data":"banco"},
 					{"data":"total"},
 					{"defaultContent": "<button class='editar-pago-cliente btn btn-primary'><i class='fas fa-pencil-alt' aria-hidden='true'></i></button>"},
-					{"defaultContent": "<button class='desglosar-pago-cliente btn btn-primary'><i class='fas fa-list-alt' aria-hidden='true'></i></button>"}
+					{"defaultContent": "<button class='eliminar-pago-cliente btn btn-danger'><i class='fas fa-trash' aria-hidden='true'></i></button>"}
 				],
 				"language": idioma_espanol,
 				"dom":
@@ -729,7 +725,7 @@
 			});
 
 			obtener_data_editar_pago("#dt_pagados_cliente tbody", table);
-			obtener_data_desglosar_pago("#dt_pagados_cliente tbody", table);
+			obtener_data_eliminar_pago("#dt_pagados_cliente tbody", table);
 		}
 
 		var obtener_data_editar_pago = function(tbody, table){
@@ -760,21 +756,32 @@
 				data: {"fechapago": fechapago, "tcpago": tcpago, "bancopago": bancopago, "idpago": idpago, "opcion": opcion},
 			}).done( function( info ){
 				mostrar_mensaje(info);
-				var idcliente = $("#idclientebuscar").val();
-				listar_pagados_cliente(idcliente);
+				$('#dt_pagados_cliente').DataTable().ajax.reload();
 			});
 		});
 
-		var obtener_data_desglosar_pago = function(tbody, table){
-			$(tbody).on("click", "button.desglosar-pago-cliente", function(){
+		var obtener_data_eliminar_pago = function(tbody, table){
+			$(tbody).on("click", "button.eliminar-pago-cliente", function(){
 				var data = table.row( $(this).parents("tr") ).data();
-				console.log(data);
+				var factura = data.facturas;
 				var idpago = data.idpedido;
 				console.log(idpago);
-				$("#idpagofacturas").val(data.idpedido);
-				$("#pagados_cliente").slideUp("slow");
-				$("#desglosar_facturas").slideDown("slow");
-				listar_facturas_pago(idpago);
+				var confirmar = confirm("¿Estás segura de eliminar el pago de la factura "+factura+"?");
+				if (confirmar == true) {
+					var opcion = "eliminarpago";
+					$.ajax({
+						method: "POST",
+						url: "guardar.php",
+						dataType: "json",
+						data: {"idpago": idpago, "opcion": opcion, "facturas": factura},
+					}).done( function( data ){
+						console.log(data);
+						mostrar_mensaje(data);
+						$('#dt_pagados_cliente').DataTable().ajax.reload();
+					});
+				} else {
+
+				}
 			});
 		}
 
@@ -782,11 +789,11 @@
 			var table = $('#dt_desglosar_facturas').DataTable({
 				"order": false,
 				"ordering": false,
-		        "lengthChange": false,
-		        "info": false,
-		        // "paging": false,
-		        // "searching": false,
-		        "destroy":"true",
+        "lengthChange": false,
+        "info": false,
+        // "paging": false,
+        // "searching": false,
+        "destroy":"true",
 				"ajax":{
 					"method":"POST",
 					"url":"listar_facturas_pago.php",

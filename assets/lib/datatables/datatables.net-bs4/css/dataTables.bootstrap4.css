@@ -40,6 +40,7 @@ div.dataTables_wrapper div.dataTables_filter input {
   margin-left: 0.5em;
   display: inline-block;
   width: auto;
+  margin-bottom: 10px;
 }
 div.dataTables_wrapper div.dataTables_info {
   padding-top: 0.85em;
@@ -180,7 +181,7 @@ table.table-bordered.dataTable td {
 table.table-bordered.dataTable th:last-child, table.table-bordered.dataTable th:last-child,
 table.table-bordered.dataTable td:last-child,
 table.table-bordered.dataTable td:last-child {
-  border-right-width: 0;  
+  border-right-width: 0;
 }
 table.table-bordered.dataTable tbody th,
 table.table-bordered.dataTable tbody td {
@@ -198,7 +199,7 @@ div.table-responsive > div.dataTables_wrapper > div.row > div[class^="col-"]:fir
   padding-left: 0;
 }
 div.table-responsive > div.dataTables_wrapper > div.row > div[class^="col-"]:last-child {
-  padding-right: 0;  
+  padding-right: 0;
 }
 
 table thead tr:first-child{

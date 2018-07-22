@@ -340,8 +340,8 @@
 					{"defaultContent": "<div class='invoice-footer'><button class='editar btn btn-space btn-lg btn-primary' data-toggle='modal' data-target='#modalInformacion'><i class='fas fa-edit fa-sm' aria-hidden='true'></i></button></div>"}
 				],
 				"columnDefs": [
-					{ "width": "8%", "targets": 0 },
-					{ "width": "8%", "targets": 1 },
+					{ "width": "6%", "targets": 0 },
+					{ "width": "6%", "targets": 1 },
 					{ "width": "8%", "targets": 3 },
 					{ "width": "8%", "targets": 4 },
 					{ "width": "5%", "targets": 5 },
@@ -375,6 +375,14 @@
 							$('td', row).eq(6).addClass('table-text-claseE');
 							$('td', row).eq(7).addClass('table-text-claseE');
 							$('td', row).eq(8).addClass('table-text-claseE');
+							$('td', row).eq(9).addClass('table-text-claseE');
+							$('td', row).eq(10).addClass('table-text-claseE');
+							$('td', row).eq(11).addClass('table-text-claseE');
+							$('td', row).eq(12).addClass('table-text-claseE');
+							$('td', row).eq(13).addClass('table-text-claseE');
+							$('td', row).eq(14).addClass('table-text-claseE');
+							$('td', row).eq(15).addClass('table-text-claseE');
+							$('td', row).eq(16).addClass('table-text-claseE');
 					}
 					if ( data.clase == "D" ) {
 							$('td', row).eq(0).addClass('table-text-claseD');
@@ -386,6 +394,14 @@
 							$('td', row).eq(6).addClass('table-text-claseD');
 							$('td', row).eq(7).addClass('table-text-claseD');
 							$('td', row).eq(8).addClass('table-text-claseD');
+							$('td', row).eq(9).addClass('table-text-claseD');
+							$('td', row).eq(10).addClass('table-text-claseD');
+							$('td', row).eq(11).addClass('table-text-claseD');
+							$('td', row).eq(12).addClass('table-text-claseD');
+							$('td', row).eq(13).addClass('table-text-claseD');
+							$('td', row).eq(14).addClass('table-text-claseD');
+							$('td', row).eq(15).addClass('table-text-claseD');
+							$('td', row).eq(16).addClass('table-text-claseD');
 					}
 				},
 				"buttons":[
@@ -444,6 +460,7 @@
 		}
 
 		var obtener_data_herramienta = function(tbody, table){
+			$('#dt_precios tbody').off('click');
 			$(tbody).on("click", "button.editar", function(){
 				var data = table.row( $(this).parents("tr") ).data();
 					console.log(data);

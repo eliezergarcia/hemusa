@@ -497,11 +497,11 @@ if ($tipomenu != 4){
                       </li>
 											<li id="administracion-menu" class="nav-item parent"><a class="nav-link" href="#" role="button" aria-expanded="false"><span class="icon fas fa-unlock-alt"></span><span>Administración</span></a>
                         <ul class="be-nav-tabs-sub be-sub-nav nav">
-													<li class="nav-item"><a class="nav-link" href="<?php echo $ruta; ?>php/administracion/usuarios/usuarios.php"><i class="fas fa-users-cog"></i> Usuarios</a>
+													<li class="nav-item"><a id="usuarios-menu" class="nav-link" href="<?php echo $ruta; ?>php/administracion/usuarios/usuarios.php"><i class="fas fa-users-cog"></i> Usuarios</a>
 													</li>
-													<li class="nav-item"><a class="nav-link" href="<?php echo $ruta; ?>php/administracion/marcas/marcas.php"><i class="fas fa-wrench"></i> Marcas</a>
+													<li class="nav-item"><a id="marcas-menu" class="nav-link" href="<?php echo $ruta; ?>php/administracion/marcas/marcas.php"><i class="fas fa-wrench"></i> Marcas</a>
 													</li>
-													<li class="nav-item"><a class="nav-link" href="<?php echo $ruta; ?>php/administracion/marcas/subirlista.php"><i class="fas fa-th-list"></i> Subir lista de precios</a>
+													<li class="nav-item"><a id="subirlista-menu" class="nav-link" href="<?php echo $ruta; ?>php/administracion/marcas/subirlista.php"><i class="fas fa-th-list"></i> Subir lista de precios</a>
 													</li>
                         </ul>
                       </li>
