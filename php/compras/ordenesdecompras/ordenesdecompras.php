@@ -70,34 +70,13 @@
                               <div class="filter-container">
                                 <form>
                                   <div class="row">
-                                    <div class="col-6">
-                                      <label class="custom-control custom-radio">
-                                        <input class="custom-control-input" type="radio" name="filtrotipo" checked="" value="pedido"><span class="custom-control-label">Pedido</span>
-                                      </label>
-                                      <label class="custom-control custom-radio">
-                                        <input class="custom-control-input" type="radio" name="filtrotipo" value="herramienta"><span class="custom-control-label">Herramienta</span>
-                                      </label>
-                                    </div>
-                                  </div>
-                                </form>
-                              </div>
-                            </div>
-                            <div class="col-3 table-filters"><span class="table-filter-title">Estado</span>
-                              <div class="filter-container">
-                                <form>
-                                  <div class="row">
-                                    <div class="col-6">
+                                    <div class="col-12">
                                      <label class="custom-control custom-radio">
-                                       <input class="custom-control-input" type="radio" name="filtroestado" value="ordenesdecompras" checked=""><span class="custom-control-label">Orden de compra</span>
+                                       <input class="custom-control-input" type="radio" name="filtroestado" value="ordenesdecompras" checked=""><span class="custom-control-label">Ordenes de compra</span>
                                      </label>
                                      <label class="custom-control custom-radio">
-                                       <input class="custom-control-input" type="radio" name="filtroestado" value="sinenviar"><span class="custom-control-label">Sin enviar</span>
+                                       <input class="custom-control-input" type="radio" name="filtroestado" value="herramientasoc"><span class="custom-control-label">Herramientas en OC</span>
                                      </label>
-                                    </div>
-                                    <div class="col-6">
-                                      <label class="custom-control custom-radio">
-                                        <input class="custom-control-input" type="radio" name="filtroestado" value="backorder"><span class="custom-control-label">Backorder</span>
-                                      </label>
                                     </div>
                                   </div>
                                 </form>
@@ -285,10 +264,6 @@
 			$('#dt_pedidos').DataTable().ajax.reload();
 		});
 
-		$('input[name=filtrotipo]').change(function() {
-			listar_ordenes();
-			$('#dt_pedidos').DataTable().ajax.reload();
-		});
 
 		$('input[name=filtroestado]').change(function() {
 			listar_ordenes();
@@ -303,12 +278,10 @@
     var listar_ordenes = function(){
       var filtromes = $("#filtromes").val();
 			var filtroano = $("#filtroano").val();
-			var filtrotipo = $("input[name=filtrotipo]:checked").val();
 			var filtroestado = $("input[name=filtroestado]:checked").val();
 			var filtroreferencia = $("#filtroreferencia").val();
 			console.log(filtroano);
 			console.log(filtromes);
-			console.log(filtrotipo);
 			console.log(filtroestado);
 			console.log(filtroreferencia);
       var table = $("#dt_ordenes").DataTable({
@@ -318,18 +291,42 @@
         "ajax":{
           "method":"POST",
           "url":"listar.php",
-          "data": {"opcion": filtroestado, "filtromes": filtromes, "filtroano": filtroano, "filtrotipo": filtrotipo, "buscar": filtroreferencia}
+          "data": {"opcion": filtroestado, "filtromes": filtromes, "filtroano": filtroano, "buscar": filtroreferencia}
         },
         "columns":[
           {"defaultContent":''},
           {"data":'ordencompra'},
           {"data":"proveedor"},
-          {"data":"contacto"},
-          {"data":"fecha"},
-          {"data":"moneda"},
+          {"data": "contacto",
+						"render": function (data) {
+							if (filtroestado == "ordenesdecompras") {
+                return data;
+							}else{
+                return "";
+							}
+						},
+					},
+          {"data": "fecha",
+						"render": function (data) {
+							if (filtroestado == "ordenesdecompras") {
+                return data;
+							}else{
+                return "";
+							}
+						},
+					},
+          {"data": "moneda",
+						"render": function (data) {
+							if (filtroestado == "ordenesdecompras") {
+                return data;
+							}else{
+                return "";
+							}
+						},
+					},
           {"data": "cliente",
 						"render": function (data) {
-							if (filtrotipo == "pedido") {
+							if (filtroestado == "ordenesdecompras") {
 								return "";
 							}else{
 								return data;
@@ -338,7 +335,7 @@
 					},
           {"data": "proveedor",
 						"render": function (data) {
-							if (filtrotipo == "pedido") {
+							if (filtroestado == "ordenesdecompras") {
 								return "";
 							}else{
 								return data;
@@ -347,7 +344,7 @@
 					},
           {"data": "marca",
 						"render": function (data) {
-							if (filtrotipo == "pedido") {
+							if (filtroestado == "ordenesdecompras") {
 								return "";
 							}else{
 								return data;
@@ -356,7 +353,7 @@
 					},
           {"data": "modelo",
 						"render": function (data) {
-							if (filtrotipo == "pedido") {
+							if (filtroestado == "ordenesdecompras") {
 								return "";
 							}else{
 								return data;
@@ -365,7 +362,7 @@
 					},
           {"data": "descripcion",
 						"render": function (data) {
-							if (filtrotipo == "pedido") {
+							if (filtroestado == "ordenesdecompras") {
 								return "";
 							}else{
 								return data;
@@ -374,7 +371,7 @@
 					},
           {"data": "cantidad",
 						"render": function (data) {
-							if (filtrotipo == "pedido") {
+							if (filtroestado == "ordenesdecompras") {
 								return "";
 							}else{
 								return data;
@@ -383,7 +380,7 @@
 					},
           {"data": "ordencompra",
 						"render": function (data) {
-							if (filtrotipo == "pedido") {
+							if (filtroestado == "ordenesdecompras") {
 								return "";
 							}else{
 								return data;
@@ -392,7 +389,7 @@
 					},
           {"data": "fechapedido",
 						"render": function (data) {
-							if (filtrotipo == "pedido") {
+							if (filtroestado == "ordenesdecompras") {
 								return "";
 							}else{
 								return data;
@@ -401,7 +398,7 @@
 					},
           {"data": "fechaenviado",
 						"render": function (data) {
-							if (filtrotipo == "pedido") {
+							if (filtroestado == "ordenesdecompras") {
 								return "";
 							}else{
 								return data;
@@ -494,7 +491,7 @@
         ]
       });
 
-      if (filtrotipo == "pedido") {
+      if (filtroestado == "ordenesdecompras") {
         table.columns( [4] ).order( 'desc' );
         table.columns( [6] ).visible( false );
 				table.columns( [7] ).visible( false );

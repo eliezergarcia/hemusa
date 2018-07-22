@@ -45,7 +45,7 @@
 															</div>
 															<div class="col dropdown row justify-content-end align-items-center">
 																<button class="btn btn-lg btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-																		Menú <i class="fa fa-bars" aria-hidden="true"></i></button>
+																		<b>Menú</b> <i class="fa fa-bars" aria-hidden="true"></i></button>
 																<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 																	<button class="dropdown-item" type="button" data-toggle="modal" data-target="#modalEditarInformacion">Información de proveedor</button>
 																	<!-- <button class="dropdown-item" type="button" data-toggle="modal" data-target="#modalCrearOC" onclick="crearoc()">Crear orden de compra</button> -->
