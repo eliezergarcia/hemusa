@@ -134,7 +134,7 @@
 
 	function sinenviar($conexion_usuarios){
 		$query ="SELECT cotizacionherramientas.*, contactos.nombreEmpresa FROM cotizacionherramientas INNER JOIN contactos
-		 ON contactos.id = cotizacionherramientas.cliente WHERE  pedido='si' AND noDePedido != '' AND enviadoFecha = '0000-00-00'
+		 ON contactos.id = cotizacionherramientas.cliente WHERE pedido='si' AND noDePedido != '' AND enviadoFecha = '0000-00-00'
 		AND pedidoFecha > '2015-01-01' AND recibidoFecha ='0000-00-00' AND Entregado ='0000-00-00' ORDER BY Proveedor";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 

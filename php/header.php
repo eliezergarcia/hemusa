@@ -465,6 +465,8 @@ if ($tipomenu != 4){
 													</li>
 													<li class="nav-item"><a id="ordenesdecompras-menu" class="nav-link" href="<?php echo $ruta; ?>php/compras/ordenesdecompras/ordenesdecompras.php"><i class="fas fa-cart-arrow-down"></i> Ordenes de compras</a>
 													</li>
+													<!-- <li class="nav-item"><a id="backorder-menu" class="nav-link" href="<?php echo $ruta; ?>php/compras/ordenesdecompras/backorder.php"><i class="fas fa-clipboard-list"></i> Backorder</a>
+													</li> -->
                         </ul>
                       </li>
                       <li id="logistica-menu" class="nav-item parent"><a class="nav-link" href="#" role="button" aria-expanded="false"><span class="icon fas fa-cubes"></span><span>Logística</span></a>

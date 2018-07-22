@@ -27,7 +27,7 @@
 	              <ol class="breadcrumb">
 	                <li class="breadcrumb-item">Compras</li>
 	                <li class="breadcrumb-item"><a href="proveedores.php" class="text-primary">Proveedores</a></li>
-	                <li class="breadcrumb-item active">Info Proveedor: <?php echo $nombreContacto; ?></li>
+	                <li class="breadcrumb-item active">Proveedor: <?php echo $nombreContacto; ?></li>
 	              </ol>
 	          	</nav>
 					</div>
@@ -45,38 +45,65 @@
 															</div>
 															<div class="col dropdown row justify-content-end align-items-center">
 																<button class="btn btn-lg btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-																		<i class="fa fa-bars" aria-hidden="true"></i>
-																	</button>
-																	<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-																		<button class="dropdown-item" type="button" data-toggle="modal" data-target="#modalEditarInformacion">Información de proveedor</button>
-																		<!-- <button class="dropdown-item" type="button" data-toggle="modal" data-target="#modalCrearOC" onclick="crearoc()">Crear orden de compra</button> -->
-																		<button class="dropdown-item" type="button" data-toggle="modal" data-target="#modalFactoresCosto">Factores de costo</button>
-																	</div>
+																		Menú <i class="fa fa-bars" aria-hidden="true"></i></button>
+																<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+																	<button class="dropdown-item" type="button" data-toggle="modal" data-target="#modalEditarInformacion">Información de proveedor</button>
+																	<!-- <button class="dropdown-item" type="button" data-toggle="modal" data-target="#modalCrearOC" onclick="crearoc()">Crear orden de compra</button> -->
+																	<button class="dropdown-item" type="button" data-toggle="modal" data-target="#modalFactoresCosto">Factores de costo</button>
+																</div>
 															</div>
 														</div>
 														<hr>
-
-													<!-- Boton de Buscar -->
-														<form class="form-horizontal row justify-content-center" action="pedidos.php" method="post">
-															<div class="form-group col-12 row justify-content-center">
-																<input type="text" class="form-control form-control-sm col-2" name="buscar" id="buscar" placeholder="Buscar">
-															</div>
-														</form>
-
-														<!-- Grupo de botones -->
-														<div class="row justify-content-center btn-toolbar">
-															<div role="group" class="btn-group btn-group-justified mb-2 col-6">
-																<a href="#" id="btnsinpedido" class="btn btn-primary" onclick="listar_sinpedido()">SIN PEDIDO</a>
-																<a href="#" id="btnsinrecibido" class="btn btn-primary" onclick="listar_sinrecibido()">SIN RECIBIDO</a>
-																<a href="#" id="btnsinentregar" class="btn btn-primary" onclick="listar_sinentregar()">SIN ENTREGAR</a>
-																<a href="#" id="btnordenes" class="btn btn-primary" onclick="listar_ordenesdecompra()">ORDENES DE COMPRA</a>
-															</div>
+														<div class="row table-filters-container">
+						                  <div class="col-12">
+						                    <div class="row">
+																	<div class="col-4 table-filters"><span class="table-filter-title">Herramienta/Estado</span>
+						                        <div class="filter-container">
+																			<form>
+						                            <div class="row">
+																					<div class="col-4">
+ 																					 <label class="custom-control custom-radio">
+ 																						 <input class="custom-control-input" type="radio" name="filtroestado" value="sinpedido" checked=""  onclick="listar_sinpedido()"><span class="custom-control-label">Sin pedido</span>
+ 																					 </label>
+																					 <label class="custom-control custom-radio">
+																						 <input class="custom-control-input" type="radio" name="filtroestado" value="backorder"  onclick="listar_backorder()"><span class="custom-control-label">Backorder</span>
+																					 </label>
+ 																				 	</div>
+																					<div class="col-4">
+																						<label class="custom-control custom-radio">
+																							<input class="custom-control-input" type="radio" name="filtroestado" value="sinrecibido"  onclick="listar_sinrecibido()"><span class="custom-control-label">Sin recibido</span>
+																						</label>
+																						<label class="custom-control custom-radio">
+																							<input class="custom-control-input" type="radio" name="filtroestado" value="ordenesdecompras"  onclick="listar_ordenesdecompra()"><span class="custom-control-label">Ordenes de compras</span>
+																						</label>
+						                              </div>
+																					<div class="col-4">
+																						<label class="custom-control custom-radio">
+																							<input class="custom-control-input" type="radio" name="filtroestado" value="sinentregar"  onclick="listar_sinentregar()"><span class="custom-control-label">Sin entregar</span>
+																						</label>
+						                              </div>
+						                            </div>
+						                          </form>
+						                        </div>
+						                      </div>
+																	<div class="col-3 table-filters"><span class="table-filter-title">Referencia</span>
+						                        <div class="filter-container">
+																			<form>
+						                            <div class="row">
+						                              <div class="col-8">
+																						<label class="control-label">Palabra:</label>
+																						<input type="text" class="form-control form-control-sm" name="buscar" id="buscar" value="">
+						                              </div>
+						                            </div>
+						                          </form>
+						                        </div>
+						                      </div>
+						                    </div>
+						                  </div>
 														</div>
 
 															<!-- Listar sin pedido -->
 																<div id="listar_sinpedido">
-																	<br>
-																	<center><h4><b>Sin pedido</b></h4></center>
 																	<table id="dt_listar_sinpedido" class="table table-striped table-hover display compact" cellspacing="0" width="100%">
 																		<thead>
 																			<tr>
@@ -106,8 +133,6 @@
 
 															<!-- Listar sin recibido -->
 																<div id="listar_sinrecibido">
-																	<br>
-																	<center><h4><b>Sin recibido</b></h4></center>
 																	<table id="dt_listar_sinrecibido" class="table table-striped table-hover display compact" cellspacing="0" width="100%">
 																		<thead>
 																			<tr>
@@ -135,8 +160,6 @@
 
 															<!-- Listar sin entregar -->
 																<div id="listar_sinentregar">
-																	<br>
-																	<center><h4><b>Sin entregar</b></h4></center>
 																	<table id="dt_listar_sinentregar" class="table table-striped table-hover display compact" cellspacing="0" width="100%">
 																		<thead>
 																			<tr>
@@ -161,10 +184,28 @@
 																	</table>
 																</div>
 
+															<!-- Listar backorder -->
+																<div id="listar_backorder">
+																	<table id="dt_listar_backorder" class="table table-striped table-hover display compact" cellspacing="0" width="100%">
+																		<thead>
+																			<tr>
+																				<th>#</th>
+																				<th>Cliente</th>
+																				<th>Marca</th>
+																				<th>Modelo</th>
+																				<th>Cantidad</th>
+																				<th>Descripcion</th>
+																				<th>Fecha pedido</th>
+																				<th>Orden compra</th>
+																				<th>Proveedor</th>
+																				<th>Fecha enviado</th>
+																			</tr>
+																		</thead>
+																	</table>
+																</div>
+
 															<!-- Listar ordenes de compra -->
 																<div id="listar_ordenesdecompra">
-																	<br>
-																	<center><h4><b>Ordenes de compra</b></h4></center>
 																	<table id="dt_listar_ordenesdecompra" class="table table-striped table-hover display compact" cellspacing="0" width="100%">
 																		<thead>
 																			<tr>
@@ -571,15 +612,8 @@
 		$("#listar_sinpedido").slideDown("slow");
 		$("#listar_sinrecibido").slideUp("slow");
 		$("#listar_sinentregar").slideUp("slow");
+		$("#listar_backorder").slideUp("slow");
 		$("#listar_ordenesdecompra").slideUp("slow");
-		$("#btnsinpedido").removeClass("btn-secondary");
-		$("#btnsinpedido").addClass("btn-primary");
-		$("#btnsinrecibido").removeClass("btn-primary");
-		$("#btnsinrecibido").addClass("btn-secondary");
-		$("#btnsinentregar").removeClass("btn-primary");
-		$("#btnsinentregar").addClass("btn-secondary");
-		$("#btnordenes").removeClass("btn-primary");
-		$("#btnordenes").addClass("btn-secondary");
 		var opcion = "sinpedido";
 		var buscar = $("#buscar").val();
 		console.log(buscar);
@@ -748,15 +782,8 @@
 		$("#listar_sinpedido").slideUp("slow");
 		$("#listar_sinrecibido").slideDown("slow");
 		$("#listar_sinentregar").slideUp("slow");
+		$("#listar_backorder").slideUp("slow");
 		$("#listar_ordenesdecompra").slideUp("slow");
-		$("#btnsinrecibido").removeClass("btn-secondary");
-		$("#btnsinrecibido").addClass("btn-primary");
-		$("#btnsinpedido").removeClass("btn-primary");
-		$("#btnsinpedido").addClass("btn-secondary");
-		$("#btnsinentregar").removeClass("btn-primary");
-		$("#btnsinentregar").addClass("btn-secondary");
-		$("#btnordenes").removeClass("btn-primary");
-		$("#btnordenes").addClass("btn-secondary");
 		var opcion = "sinrecibido";
 		var buscar = $("#buscar").val();
 		console.log(idproveedor);
@@ -985,15 +1012,8 @@
 		$("#listar_sinpedido").slideUp("slow");
 		$("#listar_sinrecibido").slideUp("slow");
 		$("#listar_sinentregar").slideDown("slow");
+		$("#listar_backorder").slideUp("slow");
 		$("#listar_ordenesdecompra").slideUp("slow");
-		$("#btnsinentregar").removeClass("btn-secondary");
-		$("#btnsinentregar").addClass("btn-primary");
-		$("#btnsinpedido").removeClass("btn-primary");
-		$("#btnsinpedido").addClass("btn-secondary");
-		$("#btnsinrecibido").removeClass("btn-primary");
-		$("#btnsinrecibido").addClass("btn-secondary");
-		$("#btnordenes").removeClass("btn-primary");
-		$("#btnordenes").addClass("btn-secondary");
 		var opcion = "sinentregar";
 		var buscar = $("#buscar").val();
 		console.log(idproveedor);
@@ -1127,20 +1147,61 @@
 	    // obtener_id_quitar("#dt_listar_sinpedido tbody", table, idproveedor);
 	}
 
+	var listar_backorder = function(){
+		var idproveedor = "<?php echo $_REQUEST['id']; ?>";
+		$("#listar_sinpedido").slideUp("slow");
+		$("#listar_sinrecibido").slideUp("slow");
+		$("#listar_sinentregar").slideUp("slow");
+		$("#listar_backorder").slideDown("slow");
+		$("#listar_ordenesdecompra").slideUp("slow");
+		var opcion = "backorder";
+		var buscar = $("#buscar").val();
+		console.log(idproveedor);
+		var table = $("#dt_listar_backorder").DataTable({
+      "destroy": true,
+			"autoWidth": false,
+      "ajax":{
+        "method":"POST",
+        "url":"listar.php" ,
+        "data": {"idproveedor": idproveedor, "opcion": opcion, "buscar": buscar},
+      },
+      "columns":[
+			  {"data": "indice"},
+			  {"data": "cliente"},
+			  {"data": "marca"},
+	      {"data": "modelo"},
+			  {"data": "cantidad"},
+        {"data": "descripcion"},
+        {"data": "fechapedido"},
+        {"data": "ordencompra"},
+        {"data": "proveedor"},
+        {"data": "fechaenviado"}
+	    ],
+			"columnDefs": [
+				{ "width": "3%", "orderable": false, "targets": 0 },
+				{ "width": "8%", "targets": 2 },
+				{ "width": "8%", "targets": 3 },
+				{ "width": "6%", "targets": 4 },
+				{ "width": "8%", "targets": 6 },
+				{ "width": "9%", "targets": 7 },
+				{ "width": "9%", "targets": 9 },
+			],
+			"paging": false,
+      "language": idioma_espanol,
+			"dom":
+				"<'row be-datatable-header'<'col-sm-6'><'col-sm-6 text-right'f>>" +
+				"<'row be-datatable-body'<'col-sm-12'tr>>" +
+				"<'row be-datatable-footer'<'col-sm-5'i><'col-sm-7'p>>"
+	    });
+	}
+
 	var listar_ordenesdecompra = function(){
 		var idproveedor = "<?php echo $_REQUEST['id']; ?>";
 		$("#listar_sinpedido").slideUp("slow");
 		$("#listar_sinrecibido").slideUp("slow");
 		$("#listar_sinentregar").slideUp("slow");
+		$("#listar_backorder").slideUp("slow");
 		$("#listar_ordenesdecompra").slideDown("slow");
-		$("#btnordenes").removeClass("btn-secondary");
-		$("#btnordenes").addClass("btn-primary");
-		$("#btnsinrecibido").removeClass("btn-primary");
-		$("#btnsinrecibido").addClass("btn-secondary");
-		$("#btnsinentregar").removeClass("btn-primary");
-		$("#btnsinentregar").addClass("btn-secondary");
-		$("#btnsinpedido").removeClass("btn-primary");
-		$("#btnsinpedido").addClass("btn-secondary");
 		var opcion = "ordenesdecompra";
 		var buscar = $("#buscar").val();
 		console.log(idproveedor);

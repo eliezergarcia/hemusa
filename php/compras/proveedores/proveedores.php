@@ -41,10 +41,16 @@
                                             <input class="custom-control-input" type="radio" name="filtrotipo" value="herramientasinpedido"><span class="custom-control-label">Herramienta sin pedido</span>
                                           </label>
                                           <label class="custom-control custom-radio custom-control-inline">
+                                            <input class="custom-control-input" type="radio" name="filtrotipo" value="herramientasinenviar"><span class="custom-control-label">Herramienta sin enviar</span>
+                                          </label>
+                                          <label class="custom-control custom-radio custom-control-inline">
                                             <input class="custom-control-input" type="radio" name="filtrotipo" value="herramientasinrecibido"><span class="custom-control-label">Herramienta sin recibido</span>
                                           </label>
                                           <label class="custom-control custom-radio custom-control-inline">
                                             <input class="custom-control-input" type="radio" name="filtrotipo" value="herramientasinentregar"><span class="custom-control-label">Herramienta sin entregar</span>
+                                          </label>
+                                          <label class="custom-control custom-radio custom-control-inline">
+                                            <input class="custom-control-input" type="radio" name="filtrotipo" value="backorder"><span class="custom-control-label">Backorder</span>
                                           </label>
                                         </div>
                                       </div>

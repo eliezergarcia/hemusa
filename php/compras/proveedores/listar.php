@@ -28,6 +28,12 @@
 			sinentregar($idproveedor, $buscar, $conexion_usuarios);
 			break;
 
+		case 'backorder':
+			$buscar = $_POST['buscar'];
+			$idproveedor = $_POST['idproveedor'];
+			backorder($idproveedor, $buscar, $conexion_usuarios);
+			break;
+
 		case 'ordenesdecompra':
 			$buscar = $_POST['buscar'];
 			$idproveedor = $_POST['idproveedor'];
@@ -42,15 +48,23 @@
 				break;
 
 			case 'herramientasinpedido':
-				$query = "SELECT DISTINCT (Proveedor), contactos.* FROM cotizacionherramientas INNER JOIN contactos ON contactos.nombreEmpresa = cotizacionherramientas.Proveedor WHERE Pedido = 'si' AND noDePedido = '' AND Proveedor != 'ALMACEN' ORDER BY Proveedor";
+				$query = "SELECT DISTINCT (Proveedor), contactos.* FROM cotizacionherramientas INNER JOIN contactos ON contactos.nombreEmpresa = cotizacionherramientas.Proveedor WHERE Pedido = 'si' AND noDePedido = '' AND Proveedor != 'ALMACEN' AND pedidoFecha >= '2017-01-01' ORDER BY Proveedor";
+				break;
+
+			case 'herramientasinenviar':
+				$query = "SELECT DISTINCT (Proveedor), contactos.* FROM cotizacionherramientas INNER JOIN contactos ON contactos.nombreEmpresa = cotizacionherramientas.Proveedor WHERE Pedido = 'si' AND noDePedido != '' AND enviadoFecha='0000-00-00' AND Proveedor != 'ALMACEN' AND pedidoFecha >= '2017-01-01' ORDER BY Proveedor";
 				break;
 
 			case 'herramientasinrecibido':
-				$query = "SELECT DISTINCT (Proveedor), contactos.* FROM cotizacionherramientas INNER JOIN contactos ON contactos.nombreEmpresa = cotizacionherramientas.Proveedor WHERE noDePedido != '' AND pedidoFecha >= '2017-01-01' AND proveedorFecha!='0000-00-00' AND recibidoFecha='0000-00-00' AND Proveedor != 'ALMACEN' ORDER BY Proveedor";
+				$query = "SELECT DISTINCT (Proveedor), contactos.* FROM cotizacionherramientas INNER JOIN contactos ON contactos.nombreEmpresa = cotizacionherramientas.Proveedor WHERE Pedido = 'si' AND noDePedido != '' AND enviadoFecha!='0000-00-00' AND recibidoFecha='0000-00-00' AND Proveedor != 'ALMACEN' AND pedidoFecha >= '2017-01-01' ORDER BY Proveedor";
 				break;
 
 			case 'herramientasinentregar':
-				$query = "SELECT DISTINCT (Proveedor), contactos.* FROM cotizacionherramientas INNER JOIN contactos ON contactos.nombreEmpresa = cotizacionherramientas.Proveedor WHERE  pedidoFecha >= '2017-01-01' AND proveedorFecha!='0000-00-00' AND enviadoFecha!='0000-00-00' AND recibidoFecha!='0000-00-00' AND Entregado='0000-00-00' AND Proveedor != 'ALMACEN' ORDER BY Proveedor";
+				$query = "SELECT DISTINCT (Proveedor), contactos.* FROM cotizacionherramientas INNER JOIN contactos ON contactos.nombreEmpresa = cotizacionherramientas.Proveedor WHERE Pedido = 'si' AND noDePedido != '' AND enviadoFecha!='0000-00-00' AND recibidoFecha!='0000-00-00' AND Entregado='0000-00-00' AND Proveedor != 'ALMACEN' AND pedidoFecha >= '2017-01-01' ORDER BY Proveedor";
+				break;
+
+			case 'backorder':
+				$query ="SELECT DISTINCT (Proveedor), contactos.* FROM cotizacionherramientas INNER JOIN contactos ON contactos.nombreEmpresa = cotizacionherramientas.Proveedor WHERE  pedido='si' AND noDePedido != '' AND enviadoFecha != '0000-00-00' AND pedidoFecha > '2017-01-01' AND recibidoFecha ='0000-00-00' AND Entregado ='0000-00-00' ORDER BY Proveedor DESC";
 				break;
 		}
 		$resultado = mysqli_query($conexion_usuarios, $query);
@@ -327,6 +341,50 @@
 			}
 		}
 
+		echo json_encode($arreglo, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_PARTIAL_OUTPUT_ON_ERROR);
+		mysqli_close($conexion_usuarios);
+	}
+
+	function backorder($idproveedor, $buscar, $conexion_usuarios){
+		$query = "SELECT * FROM contactos WHERE id = '$idproveedor'";
+		$resultado = mysqli_query($conexion_usuarios, $query);
+
+		if(!$resultado){
+			die("Error al buscar proveedor");
+		}else{
+			while($data = mysqli_fetch_assoc($resultado)){
+				$proveedor = $data['nombreEmpresa'];
+				$proveedor = trim($proveedor);
+			}
+
+			$query ="SELECT cotizacionherramientas.*, contactos.nombreEmpresa FROM cotizacionherramientas INNER JOIN contactos ON contactos.id = cotizacionherramientas.cliente WHERE (nombreEmpresa LIKE '%$buscar%' OR marca LIKE '%$buscar%' OR modelo LIKE '%$buscar%' OR cantidad LIKE '%$buscar%' OR descripcion LIKE '%$buscar%' OR pedidoFecha LIKE '%$buscar%' OR noDePedido LIKE '%$buscar%' OR proveedor LIKE '%$buscar%' OR enviadoFecha LIKE '%$buscar%')
+			AND pedido='si' AND noDePedido != '' AND enviadoFecha != '0000-00-00' AND pedidoFecha > '2017-01-01' AND recibidoFecha ='0000-00-00' AND Entregado ='0000-00-00' AND Proveedor='$proveedor' ORDER BY pedidoFecha DESC";
+			$resultado = mysqli_query($conexion_usuarios, $query);
+
+			if(mysqli_num_rows($resultado) < 1){
+				$arreglo['data'] = 0;
+			}else{
+				$i = 1;
+				while($data = mysqli_fetch_assoc($resultado)){
+
+					$arreglo['data'][] = array(
+						'id' => $data['id'],
+						'indice' => $i,
+						'cliente' => $data['nombreEmpresa'],
+						'marca' => $data['marca'],
+						'modelo' => $data['modelo'],
+						'descripcion' => $data['descripcion'],
+						'cantidad' => $data['cantidad'],
+						'fechapedido' => $data['pedidoFecha'],
+						'ordencompra' => $data['noDePedido'],
+						'proveedor' => $data['Proveedor'],
+						'fechaenviado' => $data['enviadoFecha']
+					);
+
+					$i++;
+				}
+			}
+		}
 		echo json_encode($arreglo, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_PARTIAL_OUTPUT_ON_ERROR);
 		mysqli_close($conexion_usuarios);
 	}
