@@ -17,7 +17,7 @@
           <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
               <li class="breadcrumb-item">Logística</li>
-              <li class="breadcrumb-item"><a id="toolTipVerCotizaciones" href="ordenesdecompras.php" class="text-primary">Ordenes de compras</a></li>
+              <li class="breadcrumb-item"><a id="toolTipVerCotizaciones" href="../../compras/ordenesdecompras/ordenesdecompras.php" class="text-primary">Ordenes de compras</a></li>
             </ol>
           </nav>
       </div>
@@ -26,24 +26,52 @@
             <div class="col-lg-12">
                 <div class="card card-fullcalendar">
                     <div class="card-body">
-                      <!-- Form buscar ordenes de compras -->
-                       <div class="col-12">
-                         <div class="row justify-content-center">
-                           <div>
-                             <div class="row justify-content-center form-group">
-                               <label for="folio">Ingresa el número de folio:</label>
-                               <input type="text" class="form-control form-control-sm row justify-content-center" name="folio" id="folio">
-                             </div>
-                             <!-- <div class="row justify-content-center form-group">
-                               <label for="fechaInicio">Fecha Fin:</label>
-                               <input type="date" class="form-control form-control-sm" name="fechaFin" id="fechaFin">
-                             </div> -->
-                             <div class="row justify-content-center form-group">
-                               <button class="btn btn-lg btn-primary" onclick="listar_partidas()"><i class="fas fa-search fa-sm"></i> Buscar</button>
-                             </div>
-                           </div>
-                         </div>
-                       </div>
+                      <div class="row table-filters-container">
+                        <div class="col-12">
+                          <div class="row align-items-end">
+                            <div class="col-1 table-filters"><span class="table-filter-title">Fecha <i class="fas fa-calendar-alt"></i></span>
+                              <div class="filter-container">
+                                <form>
+                                  <div class="row">
+                                    <div class="col-12">
+                                      <label for="filtroano">Año: </label>
+                                      <select name="filtroano" id="filtroano" class="form-control form-control-sm">
+                                        <option value="2017">2017</option>
+                                        <option value="2018" selected>2018</option>
+                                        <option value="2019">2019</option>
+                                        <option value="2020">2020</option>
+                                      </select>
+                                    </div>
+                                  </div>
+                                </form>
+                              </div>
+                            </div>
+                            <div class="col-2 table-filters"><span class="table-filter-title">Filtro <i class="fas fa-filter"></i></span>
+                              <div class="filter-container">
+                                <form>
+                                  <div class="row">
+                                    <div class="col-6">
+                                      <label for="folio">Folio: </label>
+                                      <input type="text" class="form-control form-control-sm" name="folio" id="folio">
+                                    </div>
+                                    <div class="col-6">
+                                      <label for="ordencompra">Orden de compra: </label>
+                                      <input type="text" class="form-control form-control-sm" name="ordencompra" id="ordencompra">
+                                    </div>
+                                  </div>
+                                </form>
+                              </div>
+                            </div>
+                            <div class="col-2 table-filters"><span class="table-filter-title"></span>
+                              <div class="filter-container">
+                                <div class="row">
+                                  <button class="btn btn-lg btn-primary" onclick="listar_partidas()"><i class="fas fa-search fa-sm"></i> Buscar</button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
 
                          <!-- Tabla de Partidas -->
                           <br>
@@ -218,10 +246,12 @@
 			});
     }
 
-    var listar_partidas = function(ordencompra){
-      // var fechaInicio = $("#fechaInicio").val(),
-      //     fechaFin = $("#fechaFin").val();
+    var listar_partidas = function(){
+      var ano = $("#filtroano").val();
       var folio = $("#folio").val();
+      var ordencompra = $("#ordencompra").val();
+      $("#folio").val("");
+      $("#ordencompra").val("");
       var opcion = "partidasocdescripcion";
       var table = $("#dt_partidas_oc_descripcion").DataTable({
         "destroy":"true",
@@ -230,10 +260,9 @@
         "ajax":{
           "method":"POST",
           "url":"listar.php",
-          "data": {"opcion": opcion, "folio": folio}
+          "data": {"opcion": opcion, "ano": ano, "folio": folio, "ordencompra": ordencompra}
         },
         "columns":[
-          // {"data":'check'},
           {"data": null,
 						"render": function (data, row) {
 							return "<label class='custom-control custom-control-sm custom-checkbox'><input name='hcheck' value='"+data.idcotizacionherramientas+"' class='custom-control-input' type='checkbox' onclick='cambiar_total()'><span class='custom-control-label'></span></label>";
@@ -304,7 +333,6 @@
           }
         },
         "order":[[3, "desc"]],
-        // "searching": false,
         "info": false,
         "paging": false,
         "ordering": false,

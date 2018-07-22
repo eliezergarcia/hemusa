@@ -388,7 +388,7 @@
 		          },
 		          {
 		            text: '<i class="fas fa-user-plus fa-sm"></i> Agregar usuario',
-		            "className": "btn btn-lg btn-space btn-secondary",
+		            "className": "btn btn-lg btn-space btn-success",
 		            action: function (e, dt, node, config){
 		              $("#modalRegistrarUsuario").modal("show");
 		            }

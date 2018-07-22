@@ -312,7 +312,7 @@
 			          },
 					      {
 		                text: '<i class="fas fa-box fa-sm" aria-hidden="true"></i> Nuevo embarque',
-		                "className": "btn btn-lg btn-space btn-secondary",
+		                "className": "btn btn-lg btn-space btn-success",
 		                action: function ( e, dt, node, config ) {
 		                	$('#modalNuevoEmbarque').modal('show');
 		                }

@@ -14,7 +14,8 @@
 			// 	$fechainicio = $filtroano.'-01-01';
 			// 	$fechafin = $filtroano.'-12-31';
 			// }
-			nacional($conexion_usuarios);
+			$filtrocantidad = $_POST['filtrocantidad'];
+			nacional($filtrocantidad, $conexion_usuarios);
 			break;
 
     case 'partidasnacional':
@@ -33,7 +34,8 @@
 			// 	$fechainicio = $filtroano.'-01-01';
 			// 	$fechafin = $filtroano.'-12-31';
 			// }
-			importacion($conexion_usuarios);
+			$filtrocantidad = $_POST['filtrocantidad'];
+			importacion($filtrocantidad, $conexion_usuarios);
 			break;
 
     case 'partidasimportacion':
@@ -43,8 +45,8 @@
 			break;
   }
 
-  function nacional($conexion_usuarios){
-    $query = "SELECT DISTINCT folio, proveedor FROM utilidad_pedido WHERE folio != '' AND folio != 0 AND folio != '0' ORDER BY id DESC LIMIT 100";
+  function nacional($filtrocantidad, $conexion_usuarios){
+    $query = "SELECT DISTINCT folio, proveedor FROM utilidad_pedido WHERE folio != '' AND folio != 0 AND folio != '0' ORDER BY id DESC LIMIT ".$filtrocantidad;
     $resultado = mysqli_query($conexion_usuarios, $query);
 
     if(mysqli_num_rows($resultado) < 1){
@@ -160,8 +162,8 @@
 		mysqli_close($conexion_usuarios);
 	}
 
-  function importacion($conexion_usuarios){
-    $query = "SELECT DISTINCT Pedimento, proveedor FROM utilidad_pedido WHERE Pedimento != '' AND Pedimento != 0 ORDER BY id DESC LIMIT 100";
+  function importacion($filtrocantidad, $conexion_usuarios){
+    $query = "SELECT DISTINCT Pedimento, proveedor FROM utilidad_pedido WHERE Pedimento != '' AND Pedimento != 0 ORDER BY id DESC LIMIT ".$filtrocantidad;
     $resultado = mysqli_query($conexion_usuarios, $query);
 
     if(mysqli_num_rows($resultado) < 1){

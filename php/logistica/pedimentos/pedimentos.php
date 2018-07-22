@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <title>Ordenes de Compras</title>
+  <title>Pedimentos</title>
   <?php include('../../enlacescss.php'); ?>
 </head>
 <body>
@@ -34,12 +34,26 @@
 					                            <div class="row">
 					                              <div class="col-6">
                                           <label class="control-label">Fecha inicio:</label>
-                                          <input type="date" class="form-control form-control-sm" name="fechaInicio" id="fechaInicio">
+                                          <!-- <input type="date" class="form-control form-control-sm" name="fechaInicio" id="fechaInicio"> -->
+                                          <!-- <div class="col-12"> -->
+                                            <div class="input-group date datetimepicker" data-min-view="2" data-date-format="yyyy-mm-dd">
+                                              <input class="form-control form-control-sm" name="fechaInicio" id="fechaInicio" size="16" type="text" value="">
+                                              <div class="input-group-append">
+                                                <button class="btn btn-primary"><i class="icon-th mdi mdi-calendar"></i></button>
+                                              </div>
+                                            </div>
+                                          <!-- </div> -->
 																				</select>
 					                              </div>
 					                              <div class="col-6">
 																					<label class="control-label">Fecha fin</label>
-                                          <input type="date" class="form-control form-control-sm" name="fechaFin" id="fechaFin">
+                                          <!-- <input type="date" class="form-control form-control-sm" name="fechaFin" id="fechaFin"> -->
+                                          <div class="input-group date datetimepicker" data-min-view="2" data-date-format="yyyy-mm-dd">
+                                            <input class="form-control form-control-sm" name="fechaFin" id="fechaFin" size="16" type="text" value="">
+                                            <div class="input-group-append">
+                                              <button class="btn btn-primary"><i class="icon-th mdi mdi-calendar"></i></button>
+                                            </div>
+                                          </div>
 					                              </div>
 					                            </div>
 					                          </form>

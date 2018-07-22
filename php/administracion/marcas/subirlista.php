@@ -33,8 +33,10 @@
 															<h4>Instrucciones: <button class="btn btn-warning" data-toggle="modal" data-target="#modalInstrucciones"><i class="fas fa-info-circle"></i></button></h4>
 														</div>
 														<br>
-                            <div class="row col-4 justify-content-center">
+                            <div class="row col-4">
                               <input id="csv-file" name="files" accept=".csv" type="file" class="form-control">
+				                      <!-- <input id="csv-file" name="files" accept=".csv" type="file" class="form-control">
+				                      <label class="btn-secondary" for="files"> <i class="mdi mdi-upload"></i><span>Selecciona un archivo...					</span></label> -->
                             </div>
                             <br>
 
@@ -152,6 +154,7 @@
 					</div>
 				</div>
 			</div>
+
 	<header>
 	<?php include('../../enlacesjs.php'); ?>
 	<script>

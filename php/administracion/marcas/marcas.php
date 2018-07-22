@@ -295,7 +295,7 @@
 			          },
 		            {
 		                text: '<i class="fas fa-wrench fa-sm"></i> Agregar marca',
-		                "className": "btn btn-lg btn-space btn-secondary",
+		                "className": "btn btn-lg btn-space btn-success",
 		                titleAttr: 'Agregar Marca',
 		                action: function ( e, dt, node, config ) {
 		                    $('#modalAgregarMarca').modal('show');

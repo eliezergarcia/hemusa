@@ -33,8 +33,10 @@
 			break;
 
 		case 'partidasocdescripcion':
+			$ano = $_POST['ano'];
 			$folio = $_POST['folio'];
-			partidasocdescripcion($folio, $conexion_usuarios);
+			$ordencompra = $_POST['ordencompra'];
+			partidasocdescripcion($ano, $folio, $ordencompra, $conexion_usuarios);
 			break;
 	}
 
@@ -375,13 +377,19 @@
 		echo json_encode($arreglo, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_PARTIAL_OUTPUT_ON_ERROR);
 	}
 
-	function partidasocdescripcion($folio, $conexion_usuarios){
-		$fechaFin = date("Y-m-d");
-		$fechaInicio = date("Y-01-01");
-		$query = "SELECT * FROM utilidad_pedido WHERE folio = '$folio' AND fecha_orden_compra >='$fechaInicio' AND fecha_orden_compra <= '$fechaFin' ORDER BY fecha_orden_compra DESC";
+	function partidasocdescripcion($ano, $folio, $ordencompra, $conexion_usuarios){
+		$fechaFin = $ano."-".date("m")."-".date("d");
+		$fechaInicio = $ano."-01-01";
+		if ($folio != '' && $ordencompra == '') {
+			$query = "SELECT * FROM utilidad_pedido WHERE folio = '$folio' AND fecha_orden_compra >='$fechaInicio' AND fecha_orden_compra <= '$fechaFin' ORDER BY fecha_orden_compra DESC";
+		}else{
+			$query = "SELECT * FROM utilidad_pedido WHERE orden_compra = '$ordencompra' AND fecha_orden_compra >='$fechaInicio' AND fecha_orden_compra <= '$fechaFin' ORDER BY fecha_orden_compra DESC";
+		}
 		$resultado = mysqli_query($conexion_usuarios, $query);
 
-		if (mysqli_num_rows($resultado) > 0) {
+		if (mysqli_num_rows($resultado) < 1) {
+			$arreglo['data'] = 0;
+		}else{
 			$i = 1;
 			while($data = mysqli_fetch_assoc($resultado)){
 				$idcliente = $data['cliente'];

@@ -312,7 +312,7 @@
                 shiftKey: true,
                 key: 'c'
             },
-            "className": "btn btn-lg btn-space btn-secondary",
+            "className": "btn btn-lg btn-space btn-success",
             action: function (e, dt, node, config){
               $("#modalAgregarCliente").modal("show");
             }

@@ -362,7 +362,7 @@
           },
           {
             text: '<i class="fas fa-address-card fa-sm" aria-hidden="true"></i> Agregar proveedor',
-            "className": "btn btn-lg btn-space btn-secondary",
+            "className": "btn btn-lg btn-space btn-success",
             titleAttr: 'Agregar Proveedor',
             action: function (e, dt, node, config){
               $("#modalAgregarProveedor").modal("show");

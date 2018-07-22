@@ -31,50 +31,38 @@
                     <div class="row table-filters-container">
                       <div class="col-12">
                         <div class="row">
-                          <!-- <div class="col-3 table-filters"><span class="table-filter-title">Fecha</span>
+                          <div class="col-2 table-filters"><span class="table-filter-title">Cantidad</span>
                             <div class="filter-container">
                               <form>
                                 <div class="row">
-                                  <div class="col-6">
-                                    <label class="control-label">Mes:</label>
-                                    <select class="form-control form-control-sm select2" name="filtromes" id="filtromes">
-                                      <option value="01">Enero</option>
-                                      <option value="02">Febrero</option>
-                                      <option value="03">Marzo</option>
-                                      <option value="04">Abril</option>
-                                      <option value="05">Mayo</option>
-                                      <option value="06">Junio</option>
-                                      <option value="07">Julio</option>
-                                      <option value="08">Agosto</option>
-                                      <option value="09">Septiembre</option>
-                                      <option value="10">Octubre</option>
-                                      <option value="11">Noviembre</option>
-                                      <option value="12">Diciembre</option>
-                                      <option value="todo">Todo</option>
-                                    </select>
-                                  </div>
-                                  <div class="col-6">
-                                    <label class="control-label">Año:</label>
-                                    <select class="form-control form-control-sm select2" name="filtroano" id="filtroano">
-                                      <option value="2017">2017</option>
-                                      <option value="2018" selected>2018</option>
-                                      <option value="2019">2019</option>
-                                      <option value="2020">2020</option>
+                                  <div class="col-8">
+                                    <label class="control-label">Mostrar:</label>
+                                    <select class="form-control form-control-sm select2" name="filtrocantidad" id="filtrocantidad">
+                                      <option value="100" selected>100</option>
+                                      <option value="200">200</option>
+                                      <option value="300">300</option>
+                                      <option value="400">400</option>
+                                      <option value="500">500</option>
+                                      <option value="600">600</option>
+                                      <option value="700">700</option>
+                                      <option value="800">800</option>
+                                      <option value="900">900</option>
+                                      <option value="1000">1000</option>
                                     </select>
                                   </div>
                                 </div>
                               </form>
                             </div>
-                          </div> -->
+                          </div>
                           <div class="col-2 table-filters"><span class="table-filter-title">Tipo</span>
                             <div class="filter-container">
                               <form>
                                 <div class="row">
                                   <div class="col-12">
-                                    <label class="custom-control custom-radio custom-control-inline">
+                                    <label class="custom-control custom-radio">
                                       <input class="custom-control-input" type="radio" name="filtrotipo" checked="" value="nacional"><span class="custom-control-label">Nacional</span>
                                     </label>
-                                    <label class="custom-control custom-radio custom-control-inline">
+                                    <label class="custom-control custom-radio">
                                       <input class="custom-control-input" type="radio" name="filtrotipo" value="importacion"><span class="custom-control-label">Importación</span>
                                     </label>
                                   </div>
@@ -98,42 +86,6 @@
                     </thead>
                   </table>
 
-										<br>
-										<!-- Grupo de botones -->
-											<!-- <div class="row justify-content-center btn-toolbar">
-												<div role="group" class="btn-group btn-group-justified mb-2 col-6">
-													<a href="#" id="btnnacional" class="btn btn-primary btn-space" onclick="listar_nacional()">NACIONAL</a href="#">
-													<a href="#" id="btnimportacion" class="btn btn-primary btn-space" onclick="listar_importacion()">IMPORTACION</a href="#">
-												</div>
-											</div> -->
-
-											<!-- Tabla Ordenes de Compras -->
-												<!-- <br>
-												<div id="nacional">
-													<table id="dt_nacional" class="table table-striped table-hover compact" cellspacing="0" width="100%">
-														<thead>
-															<tr>
-																<th>Folio</th>
-                                <th>Proveedor</th>
-																<th>Ver</th>
-															</tr>
-														</thead>
-													</table>
-												</div> -->
-
-												<!-- Tabla Ordenes de Compras -->
-													<!-- <br>
-													<div id="importacion">
-														<table id="dt_importacion" class="table table-striped table-hover compact" cellspacing="0" width="100%">
-															<thead>
-																<tr>
-																	<th>Pedimento</th>
-																	<th>Ver</th>
-																</tr>
-															</thead>
-														</table>
-													</div> -->
-									</div>
 								</div>
 						</div>
 				</div>
@@ -150,7 +102,6 @@
   		App.uiNotifications();
 			nav_active();
 			prettyPrint();
-      // $("#filtromes").val("<?php echo $mes; ?>").change();
       listar_folios();
 		});
 
@@ -162,14 +113,16 @@
 			$("#controldesalida-menu").addClass("active");
     }
 
+    $('#filtrocantidad').change(function() {
+			listar_folios();
+		});
+
 		$('input[name=filtrotipo]').change(function() {
-      // $('#dt_folios').DataTable().ajax.reload();
 			listar_folios();
 		});
 
     var listar_folios = function(){
-			// var filtromes = $("#filtromes").val();
-			// var filtroano = $("#filtroano").val();
+			var filtrocantidad = $("#filtrocantidad").val();
 			var filtrotipo = $("input[name=filtrotipo]:checked").val();
       var table = $("#dt_folios").DataTable({
 				"destroy":"true",
@@ -177,7 +130,7 @@
 				"ajax":{
 					"method":"POST",
 					"url":"listar.php",
-					"data": {"opcion": filtrotipo},
+					"data": {"opcion": filtrotipo, "filtrocantidad": filtrocantidad},
 				},
         "sAjaxDataProp": "data",
 				"columns":[

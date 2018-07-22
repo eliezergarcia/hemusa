@@ -422,7 +422,7 @@
           },
 					{
 						text: '<i class="fas fa-file-alt fa-sm" aria-hidden="true"></i> Agregar cotización',
-						"className": "btn btn-lg btn-space btn-secondary",
+						"className": "btn btn-lg btn-space btn-success",
 						key: {
                 shiftKey: true,
                 key: 'c'
