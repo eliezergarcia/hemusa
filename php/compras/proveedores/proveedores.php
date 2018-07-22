@@ -26,6 +26,46 @@
                 <div class="col-lg-12">
                     <div class="card card-fullcalendar">
                         <div class="card-body">
+                          <div class="row table-filters-container">
+                            <div class="col-12">
+                              <div class="row">
+                                <div class="col-12 table-filters"><span class="table-filter-title">Filtro <i class="fas fa-filter"></i></span>
+                                  <div class="">
+                                    <form>
+                                      <div class="row">
+                                        <div class="col-12">
+                                          <label class="custom-control custom-radio custom-control-inline">
+                                            <input class="custom-control-input" type="radio" name="filtrotipo" value="todos" checked=""><span class="custom-control-label">Todos</span>
+                                          </label>
+                                          <label class="custom-control custom-radio custom-control-inline">
+                                            <input class="custom-control-input" type="radio" name="filtrotipo" value="herramientasinpedido"><span class="custom-control-label">Herramienta sin pedido</span>
+                                          </label>
+                                          <label class="custom-control custom-radio custom-control-inline">
+                                            <input class="custom-control-input" type="radio" name="filtrotipo" value="herramientasinrecibido"><span class="custom-control-label">Herramienta sin recibido</span>
+                                          </label>
+                                          <label class="custom-control custom-radio custom-control-inline">
+                                            <input class="custom-control-input" type="radio" name="filtrotipo" value="herramientasinentregar"><span class="custom-control-label">Herramienta sin entregar</span>
+                                          </label>
+                                        </div>
+                                      </div>
+                                    </form>
+                                  </div>
+                                </div>
+                                <!-- <div class="col-3 table-filters"><span class="table-filter-title">Referencia</span>
+                                  <div class="filter-container">
+                                    <form>
+                                      <div class="row">
+                                        <div class="col-8">
+                                          <label class="control-label">Palabra:</label>
+                                          <input type="text" class="form-control form-control-sm" name="filtroreferencia" id="filtroreferencia" value="">
+                                        </div>
+                                      </div>
+                                    </form>
+                                  </div>
+                                </div> -->
+                              </div>
+                            </div>
+                          </div>
                            <!-- Tabla de proveedores -->
                             <br>
                             <table id="dt_proveedores" class="table table-striped table-hover compact" cellspacing="0" width="100%">
@@ -230,8 +270,13 @@
 			$("#proveedores-menu").addClass("active");
     }
 
+    $('input[name=filtrotipo]').change(function() {
+			listar_proveedores();
+		});
+
     var  listar_proveedores = function(){
       var opcion = "proveedores";
+      var filtrotipo = $("input[name=filtrotipo]:checked").val();
       var table = $("#dt_proveedores").DataTable({
         "destroy":true,
         "deferRender": true,
@@ -240,7 +285,7 @@
         "ajax":{
           "method":"POST",
           "url":"listar.php",
-          "data": {"opcion": opcion}
+          "data": {"opcion": opcion, "filtrotipo": filtrotipo}
         },
         "columns":[
           {"data": "nombreEmpresa"},
@@ -248,8 +293,8 @@
           {"data": "tlf1"},
           {"data": "correoElectronico"},
           {"data": "paginaWeb"},
-          {"defaultContent": "<div class='invoice-footer'><button class='verproveedor btn btn-lg btn-primary'><i class='fas fa-edit fa-sm' aria-hidden='true'></i></button></div>"},
-          {"defaultContent": "<div class='invoice-footer'><button class='eliminar btn btn-lg btn-danger' data-toggle='modal' data-target='#modalEliminarProveedor'><i class='fas fa-trash fa-sm' aria-hidden='true'></i></button></div>"}
+          {"defaultContent": "<div class='invoice-footer'><button class='verproveedor btn btn-lg btn-primary'><i class='fas fa-edit fa-sm' aria-hidden='true'></i></button></div>", "sortable": false},
+          {"defaultContent": "<div class='invoice-footer'><button class='eliminar btn btn-lg btn-danger' data-toggle='modal' data-target='#modalEliminarProveedor'><i class='fas fa-trash fa-sm' aria-hidden='true'></i></button></div>", "sortable": false}
         ],
         "columnDefs": [
           { "width": "30%", "targets": 0 },
@@ -331,6 +376,7 @@
     }
 
     var obtener_id_ver = function(tbody, table){
+      // $('#dt_proveedores tbody').off('click');
       $(tbody).on("click", "button.verproveedor", function(){
         var data = table.row( $(this).parents("tr") ).data();
         var id = data.id;
@@ -339,6 +385,7 @@
     }
 
     var obtener_id_eliminar = function(tbody, table){
+      // $('#dt_proveedores tbody').off('click');
       $(tbody).on("click", "button.eliminar", function(){
         var data = table.row( $(this).parents("tr") ).data();
           console.log(data);

@@ -49,7 +49,7 @@
 																	</button>
 																	<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 																		<button class="dropdown-item" type="button" data-toggle="modal" data-target="#modalEditarInformacion">Información de proveedor</button>
-																		<button class="dropdown-item" type="button" data-toggle="modal" data-target="#modalCrearOC" onclick="crearoc()">Crear orden de compra</button>
+																		<!-- <button class="dropdown-item" type="button" data-toggle="modal" data-target="#modalCrearOC" onclick="crearoc()">Crear orden de compra</button> -->
 																		<button class="dropdown-item" type="button" data-toggle="modal" data-target="#modalFactoresCosto">Factores de costo</button>
 																	</div>
 															</div>
@@ -80,7 +80,11 @@
 																	<table id="dt_listar_sinpedido" class="table table-striped table-hover display compact" cellspacing="0" width="100%">
 																		<thead>
 																			<tr>
-																				<th><input type="checkbox" class="btn btn-outline-primary" name="selg" onclick="seleccionartodo()"></th>
+																				<th>
+																					<label class="custom-control custom-control-sm custom-checkbox">
+							                              <input class="custom-control-input" name="selg" type="checkbox" onclick="seleccionartodo()"><span class="custom-control-label"></span>
+							                            </label>
+																				</th>
 																				<th>#</th>
 																				<th>Marca</th>
 																				<th>Modelo</th>
@@ -107,7 +111,11 @@
 																	<table id="dt_listar_sinrecibido" class="table table-striped table-hover display compact" cellspacing="0" width="100%">
 																		<thead>
 																			<tr>
-																				<th><input type="checkbox" class="btn btn-outline-primary" name="selg" onclick="seleccionartodo()"></th>
+																				<th>
+																					<label class="custom-control custom-control-sm custom-checkbox">
+							                              <input class="custom-control-input" name="selg" type="checkbox" onclick="seleccionartodo()"><span class="custom-control-label"></span>
+							                            </label>
+																				</th>
 																				<th>#</th>
 																				<th>Enviado</th>
 																				<th>Recibido</th>
@@ -132,7 +140,11 @@
 																	<table id="dt_listar_sinentregar" class="table table-striped table-hover display compact" cellspacing="0" width="100%">
 																		<thead>
 																			<tr>
-																				<th><input type="checkbox" class="btn btn-outline-primary" name="selg" onclick="seleccionartodo()"></th>
+																				<th>
+																					<label class="custom-control custom-control-sm custom-checkbox">
+							                              <input class="custom-control-input" name="selg" type="checkbox" onclick="seleccionartodo()"><span class="custom-control-label"></span>
+							                            </label>
+																				</th>
 																				<th>#</th>
 																				<th>Enviado</th>
 																				<th>Recibido</th>
@@ -430,7 +442,7 @@
 							</table>
 						</div>
 						<div class="modal-footer">
-							<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+							<button type="button" class="btn btn-lg btn-secondary" data-dismiss="modal">Cerrar</button>
 						</div>
 					</div>
 				</div>
@@ -582,7 +594,11 @@
         "data": {"idproveedor": idproveedor, "opcion": opcion, "buscar": buscar},
       },
       "columns":[
-				{"data": "check"},
+				{"data": null,
+					"render": function (data) {
+						return "<label class='custom-control custom-control-sm custom-checkbox'><input name='hsinpedido' value='"+data.id+"' class='custom-control-input' type='checkbox'><span class='custom-control-label'></span></label>";
+					},
+				},
         {"data": "indice"},
         {"data": "marca"},
         {"data": "modelo"},
@@ -601,11 +617,11 @@
 				"<'row be-datatable-body'<'col-sm-12'tr>>" +
 				"<'row be-datatable-footer'<'col-sm-5'i><'col-sm-7'p>>",
 			"columnDefs": [
-        { "width": "5%", "orderable": false, "targets": 0 },
-        { "width": "3%", "orderable": false, "targets": 1 },
-        { "width": "10%", "targets": 2 },
-        { "width": "10%", "targets": 3 },
-				{ "width": "5%", "targets": 5 },
+        { "width": "3%", "orderable": false, "targets": 0 },
+        { "width": "2%", "orderable": false, "targets": 1 },
+        { "width": "8%", "targets": 2 },
+        { "width": "8%", "targets": 3 },
+				{ "width": "7%", "targets": 5 },
 				{ "width": "7%", "targets": 7 },
 				{ "width": "10%", "targets": 8 },
 				{ "width": "6%", "targets": 9 },
@@ -694,7 +710,7 @@
 					},
           {
           	text: '<i class="fa fa-cart-plus fa-sm" aria-hidden="true"></i> Orden de compra',
-          	"className": "btn btn-primary btn-lg btn-space",
+          	"className": "btn btn-success btn-lg btn-space",
           	action: function (e, dt, node, config){
   					$("#modalCrearOC").modal("show");
   					crear_orden_compra();
@@ -754,7 +770,12 @@
         "data": {"idproveedor": idproveedor, "opcion": opcion, "buscar": buscar},
       },
       "columns":[
-				{"data": "check", "sortable": false},
+				// {"data": "check", "sortable": false},
+				{"data": null,
+					"render": function (data) {
+						return "<label class='custom-control custom-control-sm custom-checkbox'><input name='sel' value='"+data.id+"' class='custom-control-input' type='checkbox'><span class='custom-control-label'></span></label>";
+					},
+				},
 			  {"data": "indice"},
 			  {"data": "enviado"},
 			  {"data": "recibir"},
@@ -777,6 +798,8 @@
 				}
       ],
 			"columnDefs": [
+				{ "orderable": false, "targets": 0 },
+				{ "orderable": false, "targets": 1 },
 				{ "width": "8%", "targets": 2 },
 				{ "width": "8%", "targets": 3 },
 				{ "width": "7%", "targets": 4 },
@@ -841,7 +864,7 @@
                  shiftKey: true,
                  key: 'e'
              },
-		         "className": "btn btn-lg btn-secondary btn-space",
+		         "className": "btn btn-lg btn-primary btn-space",
 		          action: function ( e, dt, node, config ) {
 		          	var verificar = 0;
 								$("input[name=sel]").each(function (index) {
@@ -881,7 +904,7 @@
 			                  shiftKey: true,
 			                  key: 'r'
 			              },
-		                "className": "btn btn-lg btn-secondary btn-space",
+		                "className": "btn btn-lg btn-primary btn-space",
 		                action: function ( e, dt, node, config ) {
 		                	var verificar = 0;
 							$("input[name=sel]").each(function (index) {
@@ -917,7 +940,7 @@
 		            },
 								{
 					         text: '<i class="fas fa-times fa-sm" aria-hidden="true"></i> Enviado',
-					         "className": "btn btn-lg btn-secondary btn-space",
+					         "className": "btn btn-lg btn-danger btn-space",
 					          action: function ( e, dt, node, config ) {
 					          	var verificar = 0;
 											$("input[name=sel]").each(function (index) {
@@ -983,7 +1006,12 @@
         "data": {"idproveedor": idproveedor, "opcion": opcion, "buscar": buscar},
       },
       "columns":[
-				{"data": "check", "sortable": false},
+				// {"data": "check", "sortable": false},
+				{"data": null,
+					"render": function (data) {
+						return "<label class='custom-control custom-control-sm custom-checkbox'><input name='sel' value='"+data.id+"' class='custom-control-input' type='checkbox'><span class='custom-control-label'></span></label>";
+					},
+				},
 			  {"data": "indice"},
 			  {"data": "enviado"},
 			  {"data": "recibir"},
@@ -997,6 +1025,8 @@
         {"data": "costo"}
 	    ],
 			"columnDefs": [
+				{ "orderable": false, "targets": 0 },
+				{ "orderable": false, "targets": 1 },
 				{ "width": "8%", "targets": 2 },
 				{ "width": "8%", "targets": 3 },
 				{ "width": "7%", "targets": 4 },
@@ -1057,7 +1087,7 @@
 				},
 				{
 								text: '<i class="fas fa-times fa-sm" aria-hidden="true"></i> Recibido',
-								"className": "btn btn-lg btn-secondary btn-space",
+								"className": "btn btn-lg btn-danger btn-space",
 								action: function ( e, dt, node, config ) {
 									var verificar = 0;
 					$("input[name=sel]").each(function (index) {

@@ -6,7 +6,8 @@
 
 	switch ($opcion) {
 		case 'proveedores':
-			proveedores($conexion_usuarios);
+			$filtrotipo = $_POST['filtrotipo'];
+			proveedores($filtrotipo, $conexion_usuarios);
 			break;
 
 		case 'sinpedido':
@@ -34,15 +35,38 @@
 			break;
 	}
 
-	function proveedores($conexion_usuarios){
-		$query = "SELECT * FROM contactos WHERE tipo = 'Proveedor' AND nombreEmpresa != '' ORDER BY nombreEmpresa";
+	function proveedores($filtrotipo, $conexion_usuarios){
+		switch ($filtrotipo) {
+			case 'todos':
+				$query = "SELECT * FROM contactos WHERE tipo = 'Proveedor' AND nombreEmpresa != '' ORDER BY nombreEmpresa";
+				break;
+
+			case 'herramientasinpedido':
+				$query = "SELECT DISTINCT (Proveedor), contactos.* FROM cotizacionherramientas INNER JOIN contactos ON contactos.nombreEmpresa = cotizacionherramientas.Proveedor WHERE Pedido = 'si' AND noDePedido = '' AND Proveedor != 'ALMACEN' ORDER BY Proveedor";
+				break;
+
+			case 'herramientasinrecibido':
+				$query = "SELECT DISTINCT (Proveedor), contactos.* FROM cotizacionherramientas INNER JOIN contactos ON contactos.nombreEmpresa = cotizacionherramientas.Proveedor WHERE noDePedido != '' AND pedidoFecha >= '2017-01-01' AND proveedorFecha!='0000-00-00' AND recibidoFecha='0000-00-00' AND Proveedor != 'ALMACEN' ORDER BY Proveedor";
+				break;
+
+			case 'herramientasinentregar':
+				$query = "SELECT DISTINCT (Proveedor), contactos.* FROM cotizacionherramientas INNER JOIN contactos ON contactos.nombreEmpresa = cotizacionherramientas.Proveedor WHERE  pedidoFecha >= '2017-01-01' AND proveedorFecha!='0000-00-00' AND enviadoFecha!='0000-00-00' AND recibidoFecha!='0000-00-00' AND Entregado='0000-00-00' AND Proveedor != 'ALMACEN' ORDER BY Proveedor";
+				break;
+		}
 		$resultado = mysqli_query($conexion_usuarios, $query);
 
 		if (!$resultado) {
 			$arreglo["data"] = 0;
 		}else{
 			while($data = mysqli_fetch_assoc($resultado)){
-				$arreglo["data"][] = array_map("utf8_encode", $data);
+				$arreglo["data"][] = array(
+					"id" => $data['id'],
+					"nombreEmpresa" => utf8_encode($data['nombreEmpresa']),
+					"personaContacto" => utf8_encode($data['personaContacto']),
+					"tlf1" => $data['tlf1'],
+					"correoElectronico" => $data['correoElectronico'],
+					"paginaWeb" => $data['paginaWeb']
+				);
 			}
 		}
 
