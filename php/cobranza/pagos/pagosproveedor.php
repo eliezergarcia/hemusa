@@ -30,12 +30,12 @@
 								<div class="row table-filters-container">
 									<div class="col-12">
 										<div class="row align-items-end">
-											<div class="col-2 table-filters"><span class="table-filter-title">Cliente</span>
+											<div class="col-2 table-filters"><span class="table-filter-title">Proveedor</span>
 												<div class="filter-container">
 													<form>
 														<div class="row">
 															<div class="col-12">
-																<input placeholder="Busca un cliente" class="form-control form-control-sm" list="proveedores" id="proveedores" name="proveedores" type="text" required >
+																<input placeholder="Busca un proveedor" class="form-control form-control-sm" list="proveedores" id="proveedores" name="proveedores" type="text" required >
 															</div>
 														</div>
 													</form>
@@ -46,7 +46,7 @@
 													<form>
 														<div class="row">
 															<div class="col-4">
-																<button type="button" name="buscar" id="buscarPagosCliente" class="btn btn-primary btn-lg btn-space">Buscar pendientes</button>
+																<button type="button" name="buscar" id="buscarPagosProveedor" class="btn btn-primary btn-lg btn-space">Buscar pendientes</button>
 															</div>
 															<div class="col">
 																<button type="button" name="buscar" id="buscarPagadosCliente" class="btn btn-primary btn-lg btn-space">Consultar pagados</button>
@@ -142,7 +142,7 @@
 										</div>
 									</div>
 									<br><br>
-									<table id="dt_pagos_cliente" class="table table-bordered table-striped display" cellspacing="0" width="100%">
+									<table id="dt_pagos_proveedor" class="table table-bordered table-striped display" cellspacing="0" width="100%">
 										<thead></tr>
 											<tr>
 												<th>
@@ -301,7 +301,7 @@
       $("#cobranza-menu").addClass("open section-active");
 
       $(".nav-link").removeClass("active");
-			$("#pagoscliente-menu").addClass("active");
+			$("#pagosproveedor-menu").addClass("active");
     }
 
 		function buscar_proveedores () {
@@ -313,7 +313,7 @@
 				data: {"opcion": opcion},
 				success : function(data) {
 					var proveedores = data;
-					console.log(clientes);
+					console.log(proveedores);
 					var input = document.getElementById("proveedores");
 					var awesomplete = new Awesomplete(input);
 					awesomplete.list = proveedores;
@@ -339,27 +339,6 @@
 
 			obtener_datos_pago("#dt_pagos tbody", table);
 			eliminar_datos_pago("#dt_pagos tbody", table);
-		}
-
-		var cambiar_total = function(){
-			var pedidos = new Array();
-			$("input[name=pedido]").each(function (index) {
-				if($(this).is(':checked')){
-					pedidos.push($(this).val());
-				}
-			});
-			console.log(pedidos);
-			var idcliente = $("#idclientebuscar").val();
-			var opcion = "buscartotalpedidoscliente";
-			$.ajax({
-				method: "POST",
-				url: "buscar.php",
-				dataType: "json",
-				data: {"pedidos": JSON.stringify(pedidos), "idcliente": idcliente, "opcion": opcion},
-			}).done( function( data ){
-				console.log(data);
-				$("#total").val(data.total);
-			});
 		}
 
 		$('#dt_pagos tr td').change(function(){
@@ -514,22 +493,22 @@
 			});
 		}
 
-		$("#buscarPagosCliente").on("click", function(){
-			var idcliente = $("#clientes").val();
-			if (idcliente == "") {
+		$("#buscarPagosProveedor").on("click", function(){
+			var idproveedor = $("#proveedores").val();
+			if (idproveedor == "") {
 				alert("Debes de ingresar un cliente!");
 			}else{
 				$("#pagos").slideUp("slow");
 				$("#pagados_cliente").slideUp("slow");
 				$("#desglosar_facturas").slideUp("slow");
 				$("#pagos_cliente").slideDown("slow");
-				listar_pagos_cliente(idcliente);
+				listar_pagos_proveedor(idproveedor);
 			}
 		});
 
-		var listar_pagos_cliente = function(idcliente){
-			console.log(idcliente);
-			var table = $('#dt_pagos_cliente').DataTable({
+		var listar_pagos_proveedor = function(idproveedor){
+			console.log(idproveedor);
+			var table = $('#dt_pagos_proveedor').DataTable({
 				"order": false,
 				"ordering": false,
         "lengthChange": false,
@@ -539,14 +518,14 @@
         "destroy":"true",
 				"ajax":{
 					"method":"POST",
-					"url":"listar_pagos_cliente.php",
-					"data":{"idcliente": idcliente},
+					"url":"listar_pagos_proveedor.php",
+					"data":{"idproveedor": idproveedor},
 				},
 				"columns":[
 					// {"data":"check"},
 					{"data": null,
 						"render": function (data, row) {
-							return "<label class='custom-control custom-control-sm custom-checkbox'><input name='pedido' value='"+data.id+"' class='custom-control-input' type='checkbox' onclick='cambiar_total()'><span class='custom-control-label'></span></label>";
+							return "<label class='custom-control custom-control-sm custom-checkbox'><input name='pedido' value='"+data.factura+"' class='custom-control-input' type='checkbox' onclick='cambiar_total()'><span class='custom-control-label'></span></label>";
 						},
 					},
 					// {"data":"cliente"},
@@ -577,6 +556,27 @@
 			});
 
 			obtener_data_factura("#dt_pagos_cliente tbody", table)
+		}
+
+		var cambiar_total = function(){
+			var pedidos = new Array();
+			$("input[name=pedido]").each(function (index) {
+				if($(this).is(':checked')){
+					pedidos.push($(this).val());
+				}
+			});
+			console.log(pedidos);
+			var idproveedor = $("#proveedores").val();
+			var opcion = "buscartotalpedidosproveedores";
+			$.ajax({
+				method: "POST",
+				url: "buscar.php",
+				dataType: "json",
+				data: {"pedidos": JSON.stringify(pedidos), "idproveedor": idproveedor, "opcion": opcion},
+			}).done( function( data ){
+				console.log(data);
+				$("#total").val(data.total);
+			});
 		}
 
 		var obtener_data_factura = function(tbody, table){

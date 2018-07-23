@@ -8,8 +8,8 @@
 			clientes($conexion_usuarios);
 			break;
 
-		case 'buscarclientes':
-			clientes($conexion_usuarios);
+		case 'buscarproveedores':
+			proveedores($conexion_usuarios);
 			break;
 
 		case 'buscarcuentas':
@@ -26,6 +26,12 @@
 			$idcliente = $_POST['idcliente'];
 			$pedidos = json_decode($_POST['pedidos']);
 			buscar_total_pedidos_cliente($idcliente, $pedidos, $conexion_usuarios);
+			break;
+
+		case 'buscartotalpedidosproveedores':
+			$proveedor = $_POST['idproveedor'];
+			$pedidos = json_decode($_POST['pedidos']);
+			buscar_total_pedidos_proveedor($proveedor, $pedidos, $conexion_usuarios);
 			break;
 
 		case 'buscartotalpedidos':
@@ -69,6 +75,35 @@
 		mysqli_close($conexion_usuarios);
 	}
 
+	function buscar_total_pedidos_proveedor($proveedor, $pedidos, $conexion_usuarios){
+		$query = "SELECT * FROM contactos WHERE tipo='Proveedor' AND nombreEmpresa LIKE '%$proveedor%' LIMIT 1";
+		$resultado = mysqli_query($conexion_usuarios, $query);
+		while($data = mysqli_fetch_assoc($resultado)){
+			$monedaproveedor = $data['moneda'];
+			$idcliente = $data['id'];
+		}
+
+		$total = 0;
+		foreach ($pedidos as &$factura) {
+			$query="SELECT moneda_pedido, costo_usd, costo_mn, cantidad FROM utilidad_pedido WHERE factura_proveedor = '$factura'";
+			$resultado = mysqli_query($conexion_usuarios, $query);
+			while($data = mysqli_fetch_assoc($resultado)){
+				$monedapedido = $data['moneda_pedido'];
+
+				if ($monedaproveedor == "usd") {
+					$total = $total + ($data['costo_usd'] * $data['cantidad']);
+				}else{
+					$total = $total + ($data['costo_mn'] * $data['cantidad']);
+				}
+			}
+		}
+
+
+		$arreglo['total'] = round($total, 2);
+		echo json_encode($arreglo);
+		mysqli_close($conexion_usuarios);
+	}
+
 	function buscar_total_pedidos($idproveedor, $pedidos, $conexion_usuarios){
 		$query = "SELECT moneda FROM contactos WHERE id = '$idproveedor'";
 		$resultado = mysqli_query($conexion_usuarios, $query);
@@ -97,6 +132,18 @@
 
 	function clientes($conexion_usuarios){
 		$query = "SELECT nombreEmpresa FROM contactos WHERE tipo = 'Cliente' AND nombreEmpresa != ''";
+		$resultado = mysqli_query($conexion_usuarios, $query);
+
+		while($data = mysqli_fetch_array($resultado)){
+			$informacion[] = utf8_encode($data['nombreEmpresa']);
+		}
+
+		echo json_encode($informacion);
+		mysqli_close($conexion_usuarios);
+	}
+
+	function proveedores($conexion_usuarios){
+		$query = "SELECT nombreEmpresa FROM contactos WHERE tipo = 'Proveedor' AND nombreEmpresa != ''";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 
 		while($data = mysqli_fetch_array($resultado)){

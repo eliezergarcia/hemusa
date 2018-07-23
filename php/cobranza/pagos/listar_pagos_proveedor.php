@@ -1,21 +1,20 @@
-<?php 
-	
+<?php
 	include("../../conexion.php");
-	ini_set('max_execution_time', 300);
 
-	$idproveedor = $_POST['idcliente'];
-	$query = "SELECT moneda FROM contactos WHERE id = '$idproveedor'";
+	$proveedor = $_POST['idproveedor'];
+
+	$query = "SELECT * FROM contactos WHERE nombreEmpresa LIKE '%$proveedor%' LIMIT 1";
 	$resultado = mysqli_query($conexion_usuarios, $query);
 	while($data = mysqli_fetch_assoc($resultado)){
 		$monedaproveedor = $data['moneda'];
+		$idproveedor = $data['id'];
 	}
 
-	$query="SELECT DISTINCT factura_proveedor FROM  `utilidad_pedido` WHERE  `fecha_orden_compra` >  '2016-01-01' AND  `proveedor` ='$idproveedor' AND pagada != 'si' and factura_proveedor != '0' ORDER BY factura_proveedor  ";
+	$query="SELECT DISTINCT factura_proveedor, orden_compra, pago_factura FROM utilidad_pedido WHERE fecha_orden_compra > '2017-01-01' AND proveedor ='$idproveedor' AND pagada != 'si' AND factura_proveedor != '0' ORDER BY fecha_orden_compra";
 	$resultado = mysqli_query($conexion_usuarios, $query);
 
-	
-	if (!$resultado) {
-		die("Error!");
+	if (mysqli_num_rows($resultado) < 1) {
+		$arreglo['data'] = 0;
 	}else{
 		while($data = mysqli_fetch_assoc($resultado)){
 			$facturaproveedor = $data['factura_proveedor'];
@@ -24,6 +23,8 @@
 			$res2 = mysqli_query($conexion_usuarios, $query2);
 			$total = 0;
 			while($data2 = mysqli_fetch_assoc($res2)){
+				$monedapedido = $data['moneda_pedido'];
+
 				if ($monedaproveedor == "usd") {
 					$total = $total + ($data2['costo_usd'] * $data2['cantidad']);
 				}else{
@@ -35,9 +36,12 @@
 			$check = "<input type='checkbox' name='pedido' value='".$facturaproveedor."' onclick='cambiar_total()'>";
 
 			$arreglo["data"][] = array(
-				'check' => $check,				
-				'factura' => $facturaproveedor,
-				'total' => "$ ".round($total, 2)
+				'factura' => $data['factura_proveedor'],
+				'ordencompra' => $data['orden_compra'],
+				'moneda' => $monedapedido,
+				'abonado' => $data['pago_factura'],
+				'pendiente' => round($total - $data['pago_factura'],2),
+				'total' => round($total,2)
 			);
 		}
 	}
