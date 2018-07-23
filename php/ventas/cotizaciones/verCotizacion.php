@@ -1539,7 +1539,7 @@
 					},
 					{
 						text: '<i class="fas fa-wrench fa-sm" aria-hidden="true"></i> Agregar partida',
-						"className": "btn btn-secondary btn-lg btn-space",
+						"className": "btn btn-success btn-lg btn-space",
 						key: {
                 shiftKey: true,
                 key: 'h'
@@ -1550,7 +1550,7 @@
 					},
 					{
 						text: '<i class="fas fa-truck fa-sm" aria-hidden="true"></i> Agregar flete',
-						"className": "btn btn-secondary btn-lg btn-space",
+						"className": "btn btn-success btn-lg btn-space",
 						key: {
                 shiftKey: true,
                 key: 'f'
