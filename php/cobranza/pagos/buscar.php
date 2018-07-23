@@ -8,6 +8,10 @@
 			clientes($conexion_usuarios);
 			break;
 
+		case 'buscarclientes':
+			clientes($conexion_usuarios);
+			break;
+
 		case 'buscarcuentas':
 			cuentas($conexion_usuarios);
 			break;

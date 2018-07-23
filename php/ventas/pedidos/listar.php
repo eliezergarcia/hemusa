@@ -387,8 +387,8 @@
 
 					$arreglo['data'][] = array(
 						'cotizacionRef' => $data['ref'],
-						'numeroPedido' => $pedido,
 						'nombreEmpresa' => $data['nombreEmpresa'],
+						'numeroPedido' => $pedido,
 						'contacto' => $data['contacto'],
 						'vendedor' => $data['vendedor'],
 						'fecha' => $data['fecha'],
@@ -632,7 +632,7 @@
 						'almacen' => $almacen,
 						'remision' => $data['remision'],
 						'factura' => $factura,
-						'factura' => $folio
+						'folio' => $folio
 				  );
 					$i++;
 				}
