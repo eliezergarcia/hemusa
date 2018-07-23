@@ -26,6 +26,47 @@
                 <div class="col-lg-12">
                     <div class="card card-fullcalendar">
                       <div class="card-body">
+                        <div class="row table-filters-container">
+                          <div class="col-12">
+                            <div class="row">
+                              <div class="col-12 table-filters"><span class="table-filter-title">Filtro <i class="fas fa-filter"></i></span>
+                                <div class="">
+                                  <form>
+                                    <div class="row">
+                                      <div class="col-12">
+                                        <label class="custom-control custom-radio custom-control-inline">
+                                          <input class="custom-control-input" type="radio" name="filtrotipo" value="todos" checked=""><span class="custom-control-label">Todos</span>
+                                        </label>
+                                        <label class="custom-control custom-radio custom-control-inline">
+                                          <input class="custom-control-input" type="radio" name="filtrotipo" value="herramientaspedido"><span class="custom-control-label">Herramienta en pedido</span>
+                                        </label>
+                                        <label class="custom-control custom-radio custom-control-inline">
+                                          <input class="custom-control-input" type="radio" name="filtrotipo" value="herramientasinproveedor"><span class="custom-control-label">Herramienta sin proveedor</span>
+                                        </label>
+                                        <label class="custom-control custom-radio custom-control-inline">
+                                          <input class="custom-control-input" type="radio" name="filtrotipo" value="herramientasinentregar"><span class="custom-control-label">Herramienta sin entregar</span>
+                                        </label>
+                                      </div>
+                                    </div>
+                                  </form>
+                                </div>
+                              </div>
+                              <!-- <div class="col-3 table-filters"><span class="table-filter-title">Referencia</span>
+                                <div class="filter-container">
+                                  <form>
+                                    <div class="row">
+                                      <div class="col-8">
+                                        <label class="control-label">Palabra:</label>
+                                        <input type="text" class="form-control form-control-sm" name="filtroreferencia" id="filtroreferencia" value="">
+                                      </div>
+                                    </div>
+                                  </form>
+                                </div>
+                              </div> -->
+                            </div>
+                          </div>
+                        </div>
+
                           <!-- Tabla de Clientes -->
                             <table id="dt_clientes" class="table table-striped table-hover compact" cellspacing="0" width="100%">
                               <thead>
@@ -229,8 +270,14 @@
 			$("#clientes-menu").addClass("active");
     }
 
+    $('input[name=filtrotipo]').change(function() {
+			listar_clientes();
+		});
+
+
     var listar_clientes = function(){
       var opcion = "clientes";
+      var filtrotipo = $("input[name=filtrotipo]:checked").val();
       var table = $("#dt_clientes").DataTable({
         "destroy":"true",
         "scrollX": true,
@@ -238,7 +285,7 @@
         "ajax":{
           "method":"POST",
           "url":"listar.php",
-          "data": {"opcion": opcion},
+          "data": {"opcion": opcion, "filtrotipo": filtrotipo},
         },
         "columns":[
           {"data": "nombreEmpresa"},

@@ -41,7 +41,7 @@
 													</form>
 												</div>
 											</div>
-											<div class="col-3 table-filters">
+											<div class="col-4 table-filters">
 												<div class="filter-container">
 													<form>
 														<div class="row">

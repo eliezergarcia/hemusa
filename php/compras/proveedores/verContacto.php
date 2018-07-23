@@ -1,6 +1,6 @@
 <?php
-	require_once('../../conexion.php'); // Llamada a connect.php para establecer conexi�n con la BD
-	require_once('../../sesion.php'); // Llamada a sesion.php para validar si hay sesi�n inciada
+	require_once('../../conexion.php');
+	require_once('../../sesion.php');
 	error_reporting(0);
 	$idContacto = $_REQUEST['id'];
 	$fecha = date("d").'-'.date("m").'-'.date("Y");
@@ -66,7 +66,7 @@
  																						 <input class="custom-control-input" type="radio" name="filtroestado" value="sinpedido" checked=""  onclick="listar_sinpedido()"><span class="custom-control-label">Sin pedido</span>
  																					 </label>
 																					 <label class="custom-control custom-radio">
-																						 <input class="custom-control-input" type="radio" name="filtroestado" value="backorder"  onclick="listar_backorder()"><span class="custom-control-label">Backorder</span>
+																						 <input class="custom-control-input" type="radio" name="filtroestado" value="sinentregar"  onclick="listar_sinentregar()"><span class="custom-control-label">Sin entregar</span>
 																					 </label>
  																				 	</div>
 																					<div class="col-4">
@@ -74,12 +74,12 @@
 																							<input class="custom-control-input" type="radio" name="filtroestado" value="sinrecibido"  onclick="listar_sinrecibido()"><span class="custom-control-label">Sin recibido</span>
 																						</label>
 																						<label class="custom-control custom-radio">
-																							<input class="custom-control-input" type="radio" name="filtroestado" value="ordenesdecompras"  onclick="listar_ordenesdecompra()"><span class="custom-control-label">Ordenes de compras</span>
+																							<input class="custom-control-input" type="radio" name="filtroestado" value="backorder"  onclick="listar_backorder()"><span class="custom-control-label">Backorder</span>
 																						</label>
 						                              </div>
 																					<div class="col-4">
 																						<label class="custom-control custom-radio">
-																							<input class="custom-control-input" type="radio" name="filtroestado" value="sinentregar"  onclick="listar_sinentregar()"><span class="custom-control-label">Sin entregar</span>
+																							<input class="custom-control-input" type="radio" name="filtroestado" value="ordenesdecompras"  onclick="listar_ordenesdecompra()"><span class="custom-control-label">Ordenes de compras</span>
 																						</label>
 						                              </div>
 						                            </div>
