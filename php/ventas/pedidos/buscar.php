@@ -86,6 +86,12 @@
 					$informacion['cliente'] = $data2;
 				}
 
+				$query5 = "SELECT Cuenta FROM cuentasclientes WHERE Cuenta != '' AND Cuenta != 'N/A' AND IdContacto = '$idcliente'";
+				$res5 = mysqli_query($conexion_usuarios, $query5);
+				while($data5 = mysqli_fetch_assoc($res5)){
+					$cuenta = $data5['Cuenta'];
+				}
+
 				$query3 = "SELECT folio FROM facturas WHERE ordenpedido = '$numeroPedido'";
 				$resultado3 = mysqli_query($conexion_usuarios, $query3);
 				if (mysqli_num_rows($resultado3) < 1) {
@@ -114,6 +120,7 @@
 				$informacion['paqueteria'] = $data['paqueteria'];
 				$informacion['numeroGuia'] = $data['numeroGuia'];
 				$informacion['tipoCambio'] = $tipoCambio;
+				$informacion['cuenta'] = $cuenta;
 			}
 		}else{
 			$query = "SELECT * FROM cotizacion WHERE ref='$refCotizacion'";
@@ -150,6 +157,12 @@
 					$tipoCambio = $data4['tipocambio'];
 				}
 
+				$query5 = "SELECT Cuenta FROM cuentasclientes WHERE Cuenta != '' AND Cuenta != 'N/A' AND IdContacto = '$idcliente'";
+				$res5 = mysqli_query($conexion_usuarios, $query5);
+				while($data5 = mysqli_fetch_assoc($res5)){
+					$cuenta = $data5['Cuenta'];
+				}
+
 				$informacion['refCotizacion'] = $data['ref'];
 				$informacion['fecha'] = $data['fecha'];
 				$informacion['vendedor'] = $data['vendedor'];
@@ -162,6 +175,7 @@
 				$informacion['remision'] = $data['remision'];
 				$informacion['total'] = $data['precioTotal'];
 				$informacion['tipoCambio'] = $tipoCambio;
+				$informacion['cuenta'] = $cuenta;
 			}
 		}
 

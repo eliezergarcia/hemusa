@@ -264,6 +264,12 @@
 					$tipoCambio = $data4['tipocambio'];
 				}
 
+				$query5 = "SELECT Cuenta FROM cuentasclientes WHERE Cuenta != '' AND Cuenta != 'N/A' AND IdContacto = '$idcliente'";
+				$res5 = mysqli_query($conexion_usuarios, $query5);
+				while($data5 = mysqli_fetch_assoc($res5)){
+					$cuenta = $data5['Cuenta'];
+				}
+
 				$informacion['refCotizacion'] = $data['cotizacionRef'];
 				$informacion['fecha'] = $data['fecha'];
 				$informacion['vendedor'] = $data['vendedor'];
@@ -276,6 +282,7 @@
 				$informacion['numeroGuia'] = $data['numeroGuia'];
 				$informacion['tipoCambio'] = $tipoCambio;
 				$informacion['tipo'] = "remisiones";
+				$informacion['cuenta'] = $cuenta;
 			}
 		}else{
 			$query = "SELECT * FROM cotizacion WHERE remision='$remision'";
@@ -321,6 +328,12 @@
 						$tipoCambio = $data5['tipocambio'];
 					}
 
+					$query6 = "SELECT Cuenta FROM cuentasclientes WHERE Cuenta != '' AND Cuenta != 'N/A' AND IdContacto = '$idcliente'";
+					$res6 = mysqli_query($conexion_usuarios, $query6);
+					while($data6 = mysqli_fetch_assoc($res6)){
+						$cuenta = $data6['Cuenta'];
+					}
+
 					$informacion['factura'] = $factura;
 					$informacion['pedidocliente'] = $pedidocliente;
 					$informacion['remision'] = $data['remision'];
@@ -332,6 +345,7 @@
 					$informacion['numeroGuia'] = $data['guia'];
 					$informacion['tipoCambio'] = $tipoCambio;
 					$informacion['tipo'] = "cotizacion";
+					$informacion['cuenta'] = $cuenta;
 				}
 			}
 		}

@@ -536,6 +536,11 @@
 			        			</div>
 			        			<div class="row form-group">
 											<div class="col">
+												<label for="cuenta">Cuenta <font color="#FF4136">*</font></label>
+												<!-- <input type="text" id="usoCFDI" name="usoCFDI" class="form-control form-control-sm" disabled required> -->
+												<input id="cuenta" name="cuenta" class="form-control form-control-sm">
+											</div>
+											<div class="col-5">
 												<label for="usoCFDI">Uso de CFDI <font color="#FF4136">*</font></label>
 												<!-- <input type="text" id="usoCFDI" name="usoCFDI" class="form-control form-control-sm" disabled required> -->
 												<select id="usoCFDI" name="usoCFDI" class="form-control form-control-sm" disabled>
@@ -563,7 +568,7 @@
 													<option value="22">Por definir</option>
 												</select>
 											</div>
-											<div class="col">
+											<div class="col-5">
 												<label for="formaPago">Forma de pago <font color="#FF4136">*</font></label>
 												<!-- <input type="text" id="formaPago" name="formaPago" class="form-control form-control-sm" disabled required> -->
 												<select type="text" id="formaPago" name="formaPago" class="form-control form-control-sm" disabled>
@@ -1572,6 +1577,7 @@
 				$("#frmInformacionFactura #formaPago").val(info.cliente.IdFormaPago);
 				$("#frmInformacionFactura #metodoPago").val(info.cliente.IdMetodoPago);
 				$("#frmInformacionFactura #condicionesPago").val(info.cliente.CondPago);
+				$("#frmInformacionFactura #cuenta").val(info.cuenta);
 			});
 		}
 
@@ -1893,6 +1899,7 @@
 					'FormaPago': conceptos.formapago,
 					'MetodoPago': conceptos.metodopago,
 					'CondicionesDePago': conceptos.condpago,
+					'Cuenta': $("#frmInformacionFactura #cuenta").val(),
 					'Moneda': ($("#frmInformacionFactura #moneda").val()).toUpperCase(),
 					'TipoCambio': $("#frmInformacionFactura #tipoCambio").val(),
 					'NumOrder': $("#frmInformacionFactura #numeroOrden").val(),
