@@ -95,10 +95,16 @@
 					$querycotizacion = "SELECT cotizacion.*, contactos.nombreEmpresa FROM cotizacion INNER JOIN contactos ON contactos.id = cotizacion.cliente WHERE (cotizacion.ref LIKE '%$buscar%' OR NoPedClient LIKE '%$buscar%' OR nombreEmpresa LIKE '%$buscar%' OR contacto LIKE '%$buscar%' OR vendedor LIKE '%$buscar%' OR Pedido LIKE '%$buscar%' OR precioTotal LIKE '%$buscar%') AND cotizacion.ref = '$cotizacionRef' ORDER BY fecha";
 					$rescotizacion = mysqli_query($conexion_usuarios, $querycotizacion);
 
+
 					while($data = mysqli_fetch_assoc($rescotizacion)){
+						if($data['numeroPedido'] == ""){
+							$pedido = $data['NoPedClient'];
+						}else{
+							$pedido = $data['numeroPedido'];
+						}
 						$arreglo['data'][] = array(
 							'cotizacionRef' => $data['ref'],
-							'numeroPedido' => $data['NoPedClient'],
+							'numeroPedido' => $pedido,
 							'nombreEmpresa' => utf8_encode($data['nombreEmpresa']),
 							'contacto' => $data['contacto'],
 							'vendedor' => $data['vendedor'],
@@ -121,9 +127,14 @@
 				$arreglo['data'] = 0;
 			}else{
 				while($data = mysqli_fetch_assoc($resultado)){
+					if($data['numeroPedido'] == ""){
+						$pedido = $data['NoPedClient'];
+					}else{
+						$pedido = $data['numeroPedido'];
+					}
 					$arreglo['data'][] = array(
 						'cotizacionRef' => $data['ref'],
-						'numeroPedido' => $data['NoPedClient'],
+						'numeroPedido' => $pedido,
 						'nombreEmpresa' => utf8_encode($data['nombreEmpresa']),
 						'contacto' => $data['contacto'],
 						'vendedor' => $data['vendedor'],
@@ -162,9 +173,14 @@
 					$rescotizacion = mysqli_query($conexion_usuarios, $querycotizacion);
 
 					while($data = mysqli_fetch_assoc($rescotizacion)){
+						if($data['numeroPedido'] == ""){
+							$pedido = $data['NoPedClient'];
+						}else{
+							$pedido = $data['numeroPedido'];
+						}
 						$arreglo['data'][] = array(
 							'cotizacionRef' => $data['ref'],
-							'numeroPedido' => $data['NoPedClient'],
+							'numeroPedido' => $pedido,
 							'nombreEmpresa' => utf8_encode($data['nombreEmpresa']),
 							'contacto' => $data['contacto'],
 							'vendedor' => $data['vendedor'],
@@ -187,9 +203,14 @@
 				$arreglo['data'] = 0;
 			}else{
 				while($data = mysqli_fetch_assoc($resultado)){
+					if($data['numeroPedido'] == ""){
+						$pedido = $data['NoPedClient'];
+					}else{
+						$pedido = $data['numeroPedido'];
+					}
 					$arreglo['data'][] = array(
 						'cotizacionRef' => $data['ref'],
-						'numeroPedido' => $data['NoPedClient'],
+						'numeroPedido' => $pedido,
 						'nombreEmpresa' => utf8_encode($data['nombreEmpresa']),
 						'contacto' => $data['contacto'],
 						'vendedor' => $data['vendedor'],
@@ -223,9 +244,15 @@
 					$descripcion = "";
 					$precioUnitario = "";
 
+					if($data['numeroPedido'] == ""){
+						$pedido = $data['NoPedClient'];
+					}else{
+						$pedido = $data['numeroPedido'];
+					}
+
 					$arreglo['data'][] = array(
 						'cotizacionRef' => $data['ref'],
-						'numeroPedido' => $data['NoPedClient'],
+						'numeroPedido' => $pedido,
 						'nombreEmpresa' => $data['nombreEmpresa'],
 						'contacto' => $data['contacto'],
 						'vendedor' => $data['vendedor'],
@@ -276,10 +303,15 @@
 				$arreglo['data'] = 0;
 			}else{
 				while($data = mysqli_fetch_assoc($resultado)){
+					if($data['numeroPedido'] == ""){
+						$pedido = $data['NoPedClient'];
+					}else{
+						$pedido = $data['numeroPedido'];
+					}
 
 					$arreglo['data'][] = array(
 						'cotizacionRef' => $data['ref'],
-						'numeroPedido' => $data['NoPedClient'],
+						'numeroPedido' => $pedido,
 						'nombreEmpresa' => $data['nombreEmpresa'],
 						'contacto' => $data['contacto'],
 						'vendedor' => $data['vendedor'],
@@ -305,9 +337,15 @@
 			$resultado = mysqli_query($conexion_usuarios, $query);
 
 			while($data = mysqli_fetch_assoc($resultado)){
+				if($data['numeroPedido'] == ""){
+					$pedido = $data['NoPedClient'];
+				}else{
+					$pedido = $data['numeroPedido'];
+				}
+
 				$arreglo['data'][] = array(
 					'cotizacionRef' => $data['ref'],
-					'numeroPedido' => $data['NoPedClient'],
+					'numeroPedido' => $pedido,
 					'nombreEmpresa' => $data['nombreEmpresa'],
 					'contacto' => $data['contacto'],
 					'vendedor' => $data['vendedor'],
@@ -341,9 +379,15 @@
 			}else{
 				while($data = mysqli_fetch_assoc($resultado)){
 
+					if($data['numeroPedido'] == ""){
+						$pedido = $data['NoPedClient'];
+					}else{
+						$pedido = $data['numeroPedido'];
+					}
+
 					$arreglo['data'][] = array(
 						'cotizacionRef' => $data['ref'],
-						'numeroPedido' => $data['NoPedClient'],
+						'numeroPedido' => $pedido,
 						'nombreEmpresa' => $data['nombreEmpresa'],
 						'contacto' => $data['contacto'],
 						'vendedor' => $data['vendedor'],
