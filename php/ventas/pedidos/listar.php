@@ -457,8 +457,12 @@
 
 				$query5 = "SELECT * FROM utilidad_pedido WHERE id_cotizacion_herramientas = '$idherramienta'";
 				$resultado5 = mysqli_query($conexion_usuarios, $query5);
-				while($data5 = mysqli_fetch_assoc($resultado5)){
-					$folio = $data5['folio'];
+				if (mysqli_num_rows($resultado5) < 1) {
+					$folio = "";
+				}else{
+					while($data5 = mysqli_fetch_assoc($resultado5)){
+						$folio = $data5['folio'];
+					}
 				}
 
 				$arreglo["data"][]=array(
