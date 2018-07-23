@@ -150,14 +150,12 @@
 														<input class="custom-control-input" name="seleccionartodo" id="seleccionartodo" type="checkbox"><span class="custom-control-label"></span>
 													</label>
 												</th>
-												<!-- <th>Cliente</th> -->
 												<th>Factura</th>
 												<th>Orden Compra</th>
 												<th>Moneda</th>
 												<th>Abonado</th>
 												<th>Pendiente</th>
 												<th>Total</th>
-												<!-- <th></th> -->
 											</tr>
 										</thead>
 									</table>

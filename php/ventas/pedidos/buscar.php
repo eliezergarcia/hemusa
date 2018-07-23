@@ -416,7 +416,7 @@
 			if ($data['CondPago'] == 0 || $data['CondPago'] == "") {
 				$arreglo['condpago'] = "Contado";
 			}else{
-				$arreglo['condpago'] = "Pago en ".$data['CondPago']." dias";
+				$arreglo['condpago'] = $data['CondPago']." dias";
 			}
 		}
 		//

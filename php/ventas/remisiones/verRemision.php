@@ -2182,6 +2182,10 @@
 				if (tipoDocumento == "factura" || tipoDocumento == "factura/pagoanticipado") {
 					tipoDocumento = "factura";
 				}
+				var cuenta = $("#frmInformacionFactura #cuenta").val();
+				if (cuenta == "") {
+					cuenta = "No Identificado";
+				}
 				var fecha = "<?php echo date("Y-m-d")."T".date("H:i:s"); ?>";
 				var body = {
 					'Receptor': {
@@ -2195,6 +2199,7 @@
 					'FormaPago': conceptos.formapago,
 					'MetodoPago': conceptos.metodopago,
 					'CondicionesDePago': conceptos.condpago,
+					'Cuenta': cuenta,
 					'Moneda': ($("#frmInformacionFactura #moneda").val()).toUpperCase(),
 					'TipoCambio': $("#frmInformacionFactura #tipoCambio").val(),
 					'NumOrder': $("#frmInformacionFactura #numeroOrden").val(),

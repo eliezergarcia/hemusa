@@ -602,10 +602,10 @@
 
 		if ($proveedor == "ALMACEN") {
 			$fecha = date("Y-m-d");
-			$query = "UPDATE cotizacionherramientas SET descripcion='$descripcion', 'ClaveProductoSAT='$claveSat', NoSerie='$noserie', fechacompromiso='$fechacompromiso', Proveedor='$proveedor', proveedorFecha='$fecha', enviadoFecha='$fecha', recibidoFecha='$fecha', Pedimento = '$pedimento', Entregado='$entregado' WHERE id =$id";
+			$query = "UPDATE cotizacionherramientas SET descripcion='$descripcion', 'ClaveProductoSAT='$claveSat', NoSerie='$noserie', fechaCompromiso='$fechacompromiso', Proveedor='$proveedor', proveedorFecha='$fecha', enviadoFecha='$fecha', recibidoFecha='$fecha', Pedimento = '$pedimento', Entregado='$entregado' WHERE id =$id";
 		}else{
 			$fecha = "0000-00-00";
-			$query = "UPDATE cotizacionherramientas SET descripcion='$descripcion', ClaveProductoSAT='$claveSat', NoSerie='$noserie', fechacompromiso='$fechacompromiso', Proveedor='$proveedor', proveedorFecha='$fecha', enviadoFecha='$fecha', recibidoFecha='$fecha', Pedimento = '$pedimento', Entregado='$entregado' WHERE id =$id";
+			$query = "UPDATE cotizacionherramientas SET descripcion='$descripcion', ClaveProductoSAT='$claveSat', NoSerie='$noserie', fechaCompromiso='$fechacompromiso', Proveedor='$proveedor', proveedorFecha='$fecha', enviadoFecha='$fecha', recibidoFecha='$fecha', Pedimento = '$pedimento', Entregado='$entregado' WHERE id =$id";
 		}
 
 		$resultado = mysqli_query($conexion_usuarios, $query);
