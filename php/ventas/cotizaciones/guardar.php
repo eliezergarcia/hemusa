@@ -52,6 +52,11 @@
 			}else{
 				$marca = $_POST["marca2"];
 			}
+			if(isset($_POST["claveSat"])){
+				$claveSat = $_POST["claveSat"];
+			}else{
+				$claveSat = $_POST["claveSat2"];
+			}
 			if(isset($_POST["modificarPrecioLista"])){
 				$modificar = "si";
 			}else{
@@ -61,7 +66,7 @@
 			$descripcion = $_POST["descripcion"];
 			$precioUnitario = str_replace("$ ", "", $_POST["precioUnitario"]);
 			$cantidad = $_POST["cantidad"];
-			$claveSat = $_POST["claveSat"];
+			// $claveSat = $_POST["claveSat"];
 			$unidad = $_POST["unidad"];
 			$tedias = $_POST["tedias"];
 			$refInterna = $_POST["refInterna"];

@@ -437,10 +437,14 @@
 			        					<label for="">Descripción <font color="#FF4136">*</font></label>
 			        					<input type="text" class="form-control form-control-sm" name="descripcion" id="descripcion" onchange="buscarClavesSat()" required>
 			        				</div>
-											<div class="form-group col">
+											<div id="claveSat1" class="form-group col">
 												<label for="">Clave SAT</label>
 												<select class="form-control form-control-sm" name="claveSat" id="claveSat">
 												</select>
+											</div>
+											<div id="claveSat2" class="form-group col" style="display: none;">
+												<label for="">Clave SAT</label>
+												<input class="form-control form-control-sm" type="text" name="claveSat2" id="claveSat3">
 											</div>
 			        			</div>
 			        			<div class="row">
@@ -790,10 +794,16 @@
 					var claves = data;
 					console.log(claves);
 					$('#claveSat').empty();
-					$("#claveSat").append("<option>Selecciona CS</option>");
-					for(var i=0;i<claves.length;i = i+2){
-						$("#claveSat").append("<option value="+claves[i]+">"+ claves[i] + " - " + claves[i+1] + "</option>");
-					};
+					if (claves != null) {
+						console.log(claves.length);
+						$("#claveSat").append("<option>Selecciona Clave Sat</option>");
+						for(var i=0;i<claves.length;i = i+2){
+							$("#claveSat").append("<option value="+claves[i] +">"+ claves[i] + " - " + claves[i+1] + "</option>");
+						};
+					}else{
+						document.getElementById("claveSat1").style.display = "none";
+						document.getElementById("claveSat2").style.display = "";
+					}
 				}
 			});
 		}
@@ -985,6 +995,8 @@
 						alert("El producto no está en lista, llene los campos para agregarlo.");
 						document.getElementById("selMarca").style.display = "none";
 						document.getElementById("inMarca").style.display = "";
+						document.getElementById("claveSat1").style.display = "";
+						document.getElementById("claveSat2").style.display = "none";
 						document.getElementById("marca").disabled = true;
 						document.getElementById("marca2").disabled = false;
 						document.getElementById("valorNacional").disabled = false;
@@ -1005,6 +1017,8 @@
 						$("#frmAgregarPartida #noExisteProducto").val("");
 						document.getElementById("selMarca").style.display = "";
 						document.getElementById("inMarca").style.display = "none";
+						document.getElementById("claveSat1").style.display = "";
+						document.getElementById("claveSat2").style.display = "none";
 						document.getElementById("marca").disabled = false;
 						document.getElementById("marca2").disabled = true;
 						document.getElementById("valorNacional").disabled = true;
@@ -1193,10 +1207,15 @@
 										var claves = data;
 										console.log(claves);
 										$('#claveSat').empty();
-										$("#claveSat").append("<option>Selecciona CS</option>");
-										for(var i=0;i<claves.length;i = i+2){
-											$("#claveSat").append("<option value="+claves[i] +">"+ claves[i] + " - " + claves[i+1] + "</option>");
-										};
+										if (claves.length > 1) {
+											$("#claveSat").append("<option>Selecciona Clave Sat</option>");
+											for(var i=0;i<claves.length;i = i+2){
+												$("#claveSat").append("<option value="+claves[i] +">"+ claves[i] + " - " + claves[i+1] + "</option>");
+											};
+										}else{
+											document.getElementById("claveSat1").style.display = "none";
+											document.getElementById("claveSat2").style.display = "";
+										}
 									}
 								});
 							}
@@ -1282,10 +1301,15 @@
 										var claves = datos
 										console.log(claves);
 										$('#claveSat').empty();
-										$("#claveSat").append("<option>Selecciona CS</option>");
-										for(var i=0;i<claves.length;i = i+2){
-											$("#claveSat").append("<option value="+claves[i] +">"+ claves[i] + " - " + claves[i+1] + "</option>");
-										};
+										if (claves.length > 1) {
+											$("#claveSat").append("<option>Selecciona Clave Sat</option>");
+											for(var i=0;i<claves.length;i = i+2){
+												$("#claveSat").append("<option value="+claves[i] +">"+ claves[i] + " - " + claves[i+1] + "</option>");
+											};
+										}else{
+											document.getElementById("claveSat1").style.display = "none";
+											document.getElementById("claveSat2").style.display = "";
+										}
 									}
 								});
 							}
@@ -2041,6 +2065,7 @@
 			$("#frmAgregarPartida #descripcion").val("");
 			$("#frmAgregarPartida #claveSat").empty();
 			$("#frmAgregarPartida #claveSat").val("");
+			$("#frmAgregarPartida #claveSat3").val("");
 			$("#frmAgregarPartida #precioUnitario").val("");
 			$("#frmAgregarPartida #cantidad").val("");
 			$("#frmAgregarPartida #precioTotal").val("");

@@ -242,7 +242,6 @@
 					{ "width": "5%", "orderable": false, "targets": 9 },
 					{ "width": "5%", "orderable": false, "targets": 10 },
 				],
-        "order": [[1, "desc"]],
         "language": idioma_espanol,
         "dom":
 	    		"<'row be-datatable-header'<'col-sm-6'B><'col-sm-6 text-right'f>>" +

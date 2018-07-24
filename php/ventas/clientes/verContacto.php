@@ -1479,11 +1479,7 @@
 				var remision = data.remision;
 				var pedido = data.pedido;
 
-				if(remision == 0 || remision == ""){
-					window.location.href = "../pedidos/verPedido.php?refCotizacion="+cotizacion+"&numeroPedido="+pedido;
-				}else{
-					window.location.href = "../remisiones/verRemision.php?remision="+remision;
-				}
+				window.location.href = "../cotizaciones/verCotizacion.php?numero="+cotizacion;													
 			});
 		}
 
