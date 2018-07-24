@@ -154,6 +154,7 @@
 				$modelo = $data['modelo'];
 				$cantidadquitar = $data['cantidad'];
 				$entregado = $data['Entregado'];
+				$folio = str_replace("H ","",$folio);
 
 				if ($tipoDocumento == "factura/pagoanticipado") {
 						$query2 = "UPDATE cotizacionherramientas SET factura='$folio' WHERE id = '$id'";
@@ -873,6 +874,7 @@
 		$query = "INSERT INTO facturas (folio, tipoDocumento, remision, total, status, moneda, fecha, UID, UUID, cliente) VALUES ('$folio', '$tipoDocumento', '$remision', '$total', '$status', '$moneda', '$fecha', '$uidfactura', '$uuidfactura', '$cliente')";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 		$fecha = date("Y-m-d");
+		$folio = str_replace("H ","",$folio);
 
 		$query = "UPDATE cotizacion SET factura = '$folio', facturaFecha = '$fecha' WHERE remision = '$remision'";
 		$resultado = mysqli_query($conexion_usuarios, $query);

@@ -123,6 +123,7 @@
 				$modelo = $data['modelo'];
 				$cantidadquitar = $data['cantidad'];
 				$entregado = $data['Entregado'];
+				$folio = str_replace("H ","",$folio);
 
 				if ($tipoDocumento == "factura/pagoanticipado") {
 					if ($entregado == "0000-00-00") {
@@ -677,6 +678,7 @@
 		$ordenpedido = str_replace(".","",$ordenpedido);
 		$ordenpedido = str_replace(",","",$ordenpedido);
 		$ordenpedido = str_replace("OC","",$ordenpedido);
+		$folio = str_replace("H ","",$folio);
 
 		$query = "INSERT INTO facturas (folio, tipoDocumento, ordenpedido, total, moneda, status, fecha, UID, UUID, cliente) VALUES ('$folio', '$tipoDocumento', '$ordenpedido', '$total','$moneda', '$status', '$fecha', '$uidfactura', '$uuidfactura', '$cliente')";
 		$resultado = mysqli_query($conexion_usuarios, $query);
