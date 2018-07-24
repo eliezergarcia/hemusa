@@ -342,7 +342,7 @@
 				'modelo' => $data['modelo'],
 				'descripcion' => $data['descripcion'],
 				'cantidad' => $data['cantidad'],
-				'precioUnitario' => round($data['precioLista'], 2),
+				'precioUnitario' => round(($data['precioLista'] + $data['flete']), 2),
 				'precioTotal' => round(($data['precioLista'] + $data['flete']) * $data['cantidad'],2),
 				'unidad' => strtoupper($data['Unidad']),
 				'tiempoEntrega' => $data['Tiempo_Entrega']." días",

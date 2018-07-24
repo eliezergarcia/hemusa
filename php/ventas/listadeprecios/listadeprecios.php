@@ -358,6 +358,7 @@
 					{ "width": "5%", "targets": 16 },
 				],
         "lengthChange": false,
+				 "pageLength": 30,
 				"language": idioma_espanol,
 				"dom":
     			"<'row be-datatable-header'<'col-sm-6'B><'col-sm-6 text-right'f>>" +

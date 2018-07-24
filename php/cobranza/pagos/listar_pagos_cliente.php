@@ -10,7 +10,7 @@
 		$idcliente = $data['id'];
 	}
 
-	$query = "SELECT * FROM facturas WHERE cliente = '$cliente' AND pagado != total";
+	$query = "SELECT * FROM facturas WHERE cliente = '$cliente' AND pagado != total ORDER BY fecha";
 	$resultado1 = mysqli_query($conexion_usuarios, $query);
 
 	while($data = mysqli_fetch_assoc($resultado1)){
@@ -29,7 +29,7 @@
 		);
 	}
 
-	$query = "SELECT * FROM cotizacion WHERE cliente = '$idcliente' AND factura!=0 AND NoPedClient != '0' AND (Pagado < 1.14 * precioTotal) AND facturaFecha > '2017-01-01' ORDER BY facturaFecha ASC";
+	$query = "SELECT * FROM cotizacion WHERE cliente = '$idcliente' AND factura!=0 AND NoPedClient != '0' AND (Pagado < 1.14 * precioTotal) AND facturaFecha > '2017-01-01' ORDER BY facturaFecha";
 	$resultado2 = mysqli_query($conexion_usuarios, $query);
 
 	while($data = mysqli_fetch_assoc($resultado2)){
