@@ -531,7 +531,7 @@
 			console.log(idcliente);
 			var table = $('#dt_pagos_cliente').DataTable({
 				"order": false,
-				"ordering": false,
+				// "ordering": false,
         "lengthChange": false,
         "info": false,
         "paging": false,
@@ -569,6 +569,7 @@
 				// 	{ "width": "8%", "targets": 7 },
 				// 	{ "width": "5%", "targets": 8 },
 				// ],
+				"order": ["1", "asc"],
 				"language": idioma_espanol,
 				"dom":
     			"<'row be-datatable-space'<'col-sm-6'><'col-sm-3 text-right'f>>" +
