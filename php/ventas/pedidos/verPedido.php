@@ -536,7 +536,7 @@
 			        			</div>
 			        			<div class="row form-group">
 											<div class="col">
-												<label for="cuenta">Cuenta <font color="#FF4136">*</font></label>
+												<label for="cuenta">Cuenta </label>
 												<!-- <input type="text" id="usoCFDI" name="usoCFDI" class="form-control form-control-sm" disabled required> -->
 												<input id="cuenta" name="cuenta" class="form-control form-control-sm">
 											</div>
@@ -1583,107 +1583,111 @@
 
 		function buscar_cliente_portal(RFC, numeroPedido, refCotizacion){
 			$("#generarFactura").on("click", function(){
-				apiConfig.opcion = $("#frmInformacionFactura #entorno").val();
-				if (apiConfig.opcion == "pruebas") {
-					apiConfig.enlace = "http://devfactura.in/",
-				  apiConfig.apiKey = "JDJ5JDEwJDNtc1I3Z2JySG5pcUs0VWtQTlVxbmVsaFdyWUl6Ym5kQ1FKcmE2UGNIMG1WeGs5aEtXU3dp",
-				  apiConfig.secretKey = "JDJ5JDEwJERYUXBSWGo5R0VINzE4UlRiY25oc09SUWhnMU9vRWdYSTQwOWJuTDZXUlhYR1E0Vmp5ZUFX",
-				  apiConfig.serie = "1194"
-				}
-
-				$("#modalInformacionFactura").modal("hide");
-				$("#mod-success").modal("show");
-				var request = new XMLHttpRequest();
-
-				request.open('GET', apiConfig.enlace+'api/v1/clients/'+RFC);
-
-				request.setRequestHeader('Content-Type', 'application/json');
-				request.setRequestHeader('F-API-KEY', apiConfig.apiKey);
-				request.setRequestHeader('F-SECRET-KEY', apiConfig.secretKey);
-
-				request.onload = function() {
-					var responseText = request.responseText;
-					console.log(responseText);
-				};
-
-				request.onerror = function(xhr) {
-					$.gritter.add({
-						title: 'Error!',
-						text: 'Ocurrió un problema en la conexión de "Factura.com".',
-						class_name: 'color danger'
-					});
-					$(".texto1").fadeOut(300, function(){
-						$(this).html("");
-						$(this).fadeIn(300);
-					});
-					setTimeout(function () {
-						$(".texto1").append("<div class='text-danger'><span class='modal-main-icon mdi mdi-close-circle-o'></span></div>");
-						$(".texto1").append("<h3>Error!</h3>");
-						$(".texto1").append("<h4>Ocurrió un problema al conectar a  portal 'Factura.com'.</h4>");
-					}, 350);
-					setTimeout( function () {
-						$("#mod-success").modal("hide");
-						$(".texto1").html("");
-						$(".texto1").append("<br><br>");
-						$(".texto1").append("<h3>Espere un momento...</h3>");
-						$(".texto1").append("<h4>Se está generando la factura</h4>");
-						$(".texto1").append("<br>");
-						$(".texto1").append("<div class='text-center'><div class='be-spinner'><svg width='40px' height='40px' viewBox='0 0 66 66' xmlns='http://www.w3.org/2000/svg'><circle fill='none' stroke-width='4' stroke-linecap='round' cx='33' cy='33' r='30' class='circle'></circle></svg></div></div></div>");
-						$(".texto1").append("<br>");
-						$(".texto1").append("<br>");
-					}, 3000);
-				};
-
-				request.onreadystatechange = function () {
-					if (this.readyState === 4) {
-				    console.log('Status:', this.status);
-			    	console.log('Headers:', this.getAllResponseHeaders());
-			    	console.log('Body:', this.responseText);
-						var data = JSON.parse(this.responseText);
-
-
-						if (data.status == 0){
-							$(".texto1").fadeOut(300, function(){
-								$(this).html("");
-								$(this).fadeIn(300);
-							});
-							setTimeout(function () {
-								$(".texto1").append("<div class='text-danger'><span class='modal-main-icon mdi mdi-close-circle-o'></span></div>");
-								$(".texto1").append("<h3>Error!</h3>");
-								$(".texto1").append("<h4>Ocurrió un problema al conectar a  portal 'Factura.com'.</h4>");
-							}, 350);
-							setTimeout( function () {
-								$("#mod-success").modal("hide");
-								$(".texto1").html("");
-								$(".texto1").append("<br><br>");
-								$(".texto1").append("<h3>Espere un momento...</h3>");
-								$(".texto1").append("<h4>Se está generando la factura</h4>");
-								$(".texto1").append("<br>");
-								$(".texto1").append("<div class='text-center'><div class='be-spinner'><svg width='40px' height='40px' viewBox='0 0 66 66' xmlns='http://www.w3.org/2000/svg'><circle fill='none' stroke-width='4' stroke-linecap='round' cx='33' cy='33' r='30' class='circle'></circle></svg></div></div></div>");
-								$(".texto1").append("<br>");
-								$(".texto1").append("<br>");
-							}, 3000);
-						}else if (data.status == "error") {
-							$(".texto1").fadeOut(300, function(){
-								$(this).html("");
-								$(this).fadeIn(300);
-							});
-							setTimeout(function () {
-								$(".texto1").append("<div class='text-warning'><span class='modal-main-icon mdi mdi-alert-triangle'></span></div>");
-								$(".texto1").append("<h3>Aviso!</h3>");
-								$(".texto1").append("<h4>El cliente no esta registrado en portal 'Factura.com'</h4>");
-								$(".texto1").append("<div class='text-center'>");
-								$(".texto1").append("<p>Registrarlo a continuación para poder facturar.</p>");
-								$(".texto1").append("</div>");
-							}, 425);
-							buscarDatosCliente(RFC);
-						}else{
-							var UID = data.Data.UID;
-							generar_factura(RFC, numeroPedido, refCotizacion, UID);
-						}
+				if ($("#frmInformacionFactura #numeroOrden").val() == "") {
+					alert("Debes de ingresar el pedido del cliente.");
+				}else{
+					apiConfig.opcion = $("#frmInformacionFactura #entorno").val();
+					if (apiConfig.opcion == "pruebas") {
+						apiConfig.enlace = "http://devfactura.in/",
+						apiConfig.apiKey = "JDJ5JDEwJDNtc1I3Z2JySG5pcUs0VWtQTlVxbmVsaFdyWUl6Ym5kQ1FKcmE2UGNIMG1WeGs5aEtXU3dp",
+						apiConfig.secretKey = "JDJ5JDEwJERYUXBSWGo5R0VINzE4UlRiY25oc09SUWhnMU9vRWdYSTQwOWJuTDZXUlhYR1E0Vmp5ZUFX",
+						apiConfig.serie = "1194"
 					}
+
+					$("#modalInformacionFactura").modal("hide");
+					$("#mod-success").modal("show");
+					var request = new XMLHttpRequest();
+
+					request.open('GET', apiConfig.enlace+'api/v1/clients/'+RFC);
+
+					request.setRequestHeader('Content-Type', 'application/json');
+					request.setRequestHeader('F-API-KEY', apiConfig.apiKey);
+					request.setRequestHeader('F-SECRET-KEY', apiConfig.secretKey);
+
+					request.onload = function() {
+						var responseText = request.responseText;
+						console.log(responseText);
+					};
+
+					request.onerror = function(xhr) {
+						$.gritter.add({
+							title: 'Error!',
+							text: 'Ocurrió un problema en la conexión de "Factura.com".',
+							class_name: 'color danger'
+						});
+						$(".texto1").fadeOut(300, function(){
+							$(this).html("");
+							$(this).fadeIn(300);
+						});
+						setTimeout(function () {
+							$(".texto1").append("<div class='text-danger'><span class='modal-main-icon mdi mdi-close-circle-o'></span></div>");
+							$(".texto1").append("<h3>Error!</h3>");
+							$(".texto1").append("<h4>Ocurrió un problema al conectar a  portal 'Factura.com'.</h4>");
+						}, 350);
+						setTimeout( function () {
+							$("#mod-success").modal("hide");
+							$(".texto1").html("");
+							$(".texto1").append("<br><br>");
+							$(".texto1").append("<h3>Espere un momento...</h3>");
+							$(".texto1").append("<h4>Se está generando la factura</h4>");
+							$(".texto1").append("<br>");
+							$(".texto1").append("<div class='text-center'><div class='be-spinner'><svg width='40px' height='40px' viewBox='0 0 66 66' xmlns='http://www.w3.org/2000/svg'><circle fill='none' stroke-width='4' stroke-linecap='round' cx='33' cy='33' r='30' class='circle'></circle></svg></div></div></div>");
+							$(".texto1").append("<br>");
+							$(".texto1").append("<br>");
+						}, 3000);
+					};
+
+					request.onreadystatechange = function () {
+						if (this.readyState === 4) {
+							console.log('Status:', this.status);
+							console.log('Headers:', this.getAllResponseHeaders());
+							console.log('Body:', this.responseText);
+							var data = JSON.parse(this.responseText);
+
+
+							if (data.status == 0){
+								$(".texto1").fadeOut(300, function(){
+									$(this).html("");
+									$(this).fadeIn(300);
+								});
+								setTimeout(function () {
+									$(".texto1").append("<div class='text-danger'><span class='modal-main-icon mdi mdi-close-circle-o'></span></div>");
+									$(".texto1").append("<h3>Error!</h3>");
+									$(".texto1").append("<h4>Ocurrió un problema al conectar a  portal 'Factura.com'.</h4>");
+								}, 350);
+								setTimeout( function () {
+									$("#mod-success").modal("hide");
+									$(".texto1").html("");
+									$(".texto1").append("<br><br>");
+									$(".texto1").append("<h3>Espere un momento...</h3>");
+									$(".texto1").append("<h4>Se está generando la factura</h4>");
+									$(".texto1").append("<br>");
+									$(".texto1").append("<div class='text-center'><div class='be-spinner'><svg width='40px' height='40px' viewBox='0 0 66 66' xmlns='http://www.w3.org/2000/svg'><circle fill='none' stroke-width='4' stroke-linecap='round' cx='33' cy='33' r='30' class='circle'></circle></svg></div></div></div>");
+									$(".texto1").append("<br>");
+									$(".texto1").append("<br>");
+								}, 3000);
+							}else if (data.status == "error") {
+								$(".texto1").fadeOut(300, function(){
+									$(this).html("");
+									$(this).fadeIn(300);
+								});
+								setTimeout(function () {
+									$(".texto1").append("<div class='text-warning'><span class='modal-main-icon mdi mdi-alert-triangle'></span></div>");
+									$(".texto1").append("<h3>Aviso!</h3>");
+									$(".texto1").append("<h4>El cliente no esta registrado en portal 'Factura.com'</h4>");
+									$(".texto1").append("<div class='text-center'>");
+										$(".texto1").append("<p>Registrarlo a continuación para poder facturar.</p>");
+										$(".texto1").append("</div>");
+									}, 425);
+									buscarDatosCliente(RFC);
+								}else{
+									var UID = data.Data.UID;
+									generar_factura(RFC, numeroPedido, refCotizacion, UID);
+								}
+							}
+						}
+					request.send();
 				}
-				request.send();
 			});
 		}
 
