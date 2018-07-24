@@ -289,9 +289,12 @@
           doc.line(450, 157, 692, 157);
           doc.line(450, 70, 450, 157);
           doc.line(691, 70, 691, 157);
+          doc.setLineWidth(0.1)
+    			doc.line(20, 170, 820, 170)
+          doc.text("OBSERVACIONES: "+data.embarque.observaciones, 30, doc.autoTable.previous.finalY  + 30);
 	        doc.autoTable(columns, rows, {
           	theme: 'grid',
-        	  margin: {top: 180, right: 20, bottom: 20, left: 20},
+        	  margin: {top: 210, right: 20, bottom: 20, left: 20},
           	tableWidth: 'auto',
           	styles: {overflow: 'linebreak', cellPadding: 6, fontSize: 8, rowHeight: 15, pageBreak: 'always', columnWidth: 'auto'},
             columnStyles: {
@@ -308,7 +311,8 @@
 	        });
 
 			    doc.setFontSize(8);
-	        doc.text("REVISÓ _________________________________ CONFIRMÓ _________________________________ PESO "+data.embarque.peso+" KG, DIMENSIONES "+data.embarque.dimensiones+" CM" , 160, doc.autoTable.previous.finalY  + 50);
+          // doc.text("OBSERVACIONES: "+data.embarque.observaciones, 30, doc.autoTable.previous.finalY  + 20);
+	        doc.text("REVISÓ _________________________________ CONFIRMÓ _________________________________ PESO "+data.embarque.peso+" KG, DIMENSIONES "+data.embarque.dimensiones+" CM" , 160, doc.autoTable.previous.finalY  + 80);
 
           if (opcionPDF == "imprimir") {
             doc.autoPrint();
