@@ -1956,7 +1956,7 @@
 
 							quitarStock(numeroPedido, refCotizacion, herramienta, folio, tipoDocumento);
 							buscardatos(refCotizacion, numeroPedido);
-							descargarPDF(UID);
+							descargarPDF(UID, folio);
 						}
 					}
 				}
@@ -1976,7 +1976,7 @@
 			});
 		}
 
-		function descargarPDF (UID) {
+		function descargarPDF (UID, folio) {
 			var request = new XMLHttpRequest();
 
 			request.open('GET', apiConfig.enlace+'api/v3/cfdi33/'+UID+'/pdf');
@@ -1996,7 +1996,7 @@
 					var blob = new Blob([this.response], {type: 'application/pdf'});
 					var link = document.createElement('a');
 					link.href = window.URL.createObjectURL(blob);
-					link.download = "factura.pdf";
+					link.download = folio+".pdf";
 					link.click();
 				}
 			};

@@ -317,6 +317,7 @@
         var data = table.row( $(this).parents("tr") ).data();
 				console.log(data);
         var UIDfactura = data.uid;
+				var folio = data.folio;
         console.log(UIDfactura);
 
 				var request = new XMLHttpRequest();
@@ -338,7 +339,7 @@
 							var blob = new Blob([this.response], {type: 'application/pdf'});
 							var link = document.createElement('a');
 							link.href = window.URL.createObjectURL(blob);
-							link.download = "factura.pdf";
+							link.download = "H "+folio+".pdf";
 							link.click();
 						}
 				};
@@ -352,8 +353,8 @@
 	    $(tbody).on("click", "button.xml", function(){
 				$("#mod-spinner").modal("show");
         var data = table.row( $(this).parents("tr") ).data();
-        var UIDfactura = data.uid;
-
+				var folio = data.folio;
+				var UIDfactura = data.uid;
 				var request = new XMLHttpRequest();
 
 				request.open('GET', apiConfig.enlace+'api/v3/cfdi33/'+UIDfactura+'/xml');
@@ -372,7 +373,7 @@
 						var blob = new Blob([this.responseText], {type: 'application/xml'});
 						var link = document.createElement('a');
 						link.href = window.URL.createObjectURL(blob);
-						link.download = "factura.xml";
+						link.download = "H "+folio+".xml";
 						link.click();
 					}
 				};
