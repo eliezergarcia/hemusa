@@ -387,7 +387,7 @@
             });
             console.log(herramienta);
 
-            if ($("#frmActualizarDatos #pedimento").val().length != 0 && $("#frmActualizarDatos #pedimento").val().length != 21 ) {
+            if ($("#frmActualizarDatos #pedimento").val().length != 0 && $("#frmActualizarDatos #pedimento").val().length != 21 || $("#frmActualizarDatos #pedimento").val() == "2018*") {
               alert("El número de pedimento es inválido!\nVerifica que tiene la siguiente estructura\nEjemplo: XX--XX--XXXX--XXXXXXX");
             }else{
               var pedimento = $("#frmActualizarDatos #pedimento").val();
