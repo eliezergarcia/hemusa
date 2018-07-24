@@ -48,7 +48,8 @@
 									    Menú <i class="fa fa-bars" aria-hidden="true"></i>
 									  	</button>
 									  	<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-									    	<button class="dropdown-item" type="button" data-toggle="modal" data-target="#modalEditarInformacion">Editar Información</button>
+									    	<button class="dropdown-item" type="button" data-toggle="modal" data-target="#modalEditarInformacion">Información de cliente</button>
+												<button class="dropdown-item" type="button" data-toggle="modal" data-target="#modalCuentasBanco">Cuentas de banco</button>
 									    	<button class="dropdown-item" type="button" data-toggle="modal" data-target="#modalNuevaRemision">Nueva Remision</button>
 									    	<button class="dropdown-item" type="button" data-toggle="modal" data-target="#modalNuevaCotizacion">Nueva Cotizacion</button>
 									  	</div>
@@ -272,6 +273,101 @@
 				</div>
     	</div>
   	</div>
+
+	<!-- Modal Cuentas Banco -->
+		<div class="modal fade" id="modalCuentasBanco" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog  colored-header colored-header-primary" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title" id="exampleModalLabel"><b>Cuentas de banco</b></h4>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<table id="dt_cuentas_banco" class="table table-hover table-striped display compact" cellspacing="0" width="100%">
+							<thead>
+								<tr>
+									<th>#</th>
+									<th>Cuenta</th>
+									<th>Moneda</th>
+									<th></th>
+									<th></th>
+								</tr>
+							</thead>
+						</table>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-lg btn-secondary" data-dismiss="modal">Cerrar</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	<!-- Modal Agregar Cuenta Banco -->
+		<div class="modal fade" id="modalAgregarCuentaBanco" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog  colored-header colored-header-success" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title" id="exampleModalLabel"><b>Agregar cuenta</b></h4>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<input type="hidden" name="idclienteagregarcuenta" id="idclienteagregarcuenta" value="">
+						<div class="row form-group justify-content-center align-items-center">
+							<label for="cuenta">Cuenta </label>
+							<input type="text" id="cuenta" name="cuenta" class="form-control form-control-sm col-3" placeholder="4 dígitos">
+						</div>
+						<div class="row form-group justify-content-center">
+							<label for="monedacuenta">Moneda </label>
+							<select type="text" id="monedacuenta" name="monedacuenta" class="form-control form-control-sm col-3">
+								<option value="mxn" selected>MXN</option>
+								<option value="usd">USD</option>
+							</select>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-lg btn-secondary" data-dismiss="modal">Cerrar</button>
+						<button type="button" class="btn btn-lg btn-success" data-dismiss="modal" onclick="agregar_cuenta()">Agregar</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	<!-- Modal Editar Cuenta Banco -->
+		<div class="modal fade" id="modalEditarCuentaBanco" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog  colored-header colored-header-primary" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title" id="exampleModalLabel"><b>Editar cuenta</b></h4>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<input type="hidden" name="idcuentaeditar" id="idcuentaeditar" value="">
+						<div class="row form-group justify-content-center align-items-center">
+							<label for="cuentaeditar">Cuenta </label>
+							<input type="text" id="cuentaeditar" name="cuentaeditar" class="form-control form-control-sm col-3" placeholder="4 dígitos">
+						</div>
+						<div class="row form-group justify-content-center">
+							<label for="monedacuentaeditar">Moneda </label>
+							<select type="text" id="monedacuentaeditar" name="monedacuentaeditar" class="form-control form-control-sm col-3">
+								<option value="mxn" selected>MXN</option>
+								<option value="usd">USD</option>
+							</select>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-lg btn-secondary" data-dismiss="modal">Cerrar</button>
+						<button type="button" class="btn btn-lg btn-primary" data-dismiss="modal" onclick="editar_cuenta()">Editar</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
 
 	<!-- Modal Agregar Clasificacion -->
 		<form action="#" method="POST">
@@ -1479,7 +1575,7 @@
 				var remision = data.remision;
 				var pedido = data.pedido;
 
-				window.location.href = "../cotizaciones/verCotizacion.php?numero="+cotizacion;													
+				window.location.href = "../cotizaciones/verCotizacion.php?numero="+cotizacion;
 			});
 		}
 
@@ -1764,6 +1860,123 @@
 						mostrar_mensaje(info);
 					}
 				});
+			});
+		}
+
+		$('#modalCuentasBanco').on('show.bs.modal', function (e) {
+			var opcion = "cuentasbanco";
+			var idcliente = "<?php echo $_REQUEST['id']; ?>";
+			var table = $("#dt_cuentas_banco").DataTable({
+				"destroy":"true",
+				"deferRender": true,
+				"scrollX": true,
+				"ajax":{
+					"url": "buscar.php",
+					"type": "POST",
+					"data": {"idcliente": idcliente,"opcion": opcion}
+				},
+				"columns":[
+					{"data": "indice"},
+					{"data": "cuenta"},
+					{"data": "moneda"},
+					{"defaultContent": "<div class='invoice-footer'><button type='button' class='editarcuenta btn btn-primary'><i class='fas fa-edit fa-sm' aria-hidden='true'></i></button></div>"},
+					{"defaultContent": "<div class='invoice-footer'><button type='button' class='eliminarcuenta btn btn-danger'><i class='fas fa-times fa-sm' aria-hidden='true'></i></button></div>"}
+				],
+				"columnDefs": [
+					{ "width": "20%", "targets": 0 },
+					{ "width": "40%", "targets": 1 },
+					{ "width": "20%", "targets": 2 },
+					{ "width": "20%", "targets": 3 },
+				],
+				"order": false,
+				"lengthChange": false,
+				"info": false,
+				"paging": false,
+				"ordering": false,
+				"language": idioma_espanol,
+				"dom":
+					"<'row be-datatable-header'<'col-sm-6'B><'col-sm-6 text-right'>>" +
+					"<'row be-datatable-body'<'col-sm-12'tr>>",
+				"buttons": [
+					{
+						text: '<i class="fas fa-plus fa-sm" aria-hidden="true"></i> Agregar',
+						"className": "btn btn-lg btn-space btn-success",
+						action: function ( e, dt, node, config ) {
+							$("#modalAgregarCuentaBanco").modal("show");
+							$("#idclienteagregarcuenta").val(idcliente);
+						}
+					}
+				]
+			});
+			obtener_data_editar_cuenta("#dt_cuentas_banco tbody", table, idcliente);
+			obtener_data_eliminar_cuenta("#dt_cuentas_banco tbody", table, idcliente);
+		})
+
+		function agregar_cuenta () {
+			var idcliente = $("#idclienteagregarcuenta").val();
+			var cuenta = $("#cuenta").val();
+			var moneda = $("#monedacuenta").val();
+			var opcion = "agregarcuenta";
+			$.ajax({
+				method: "POST",
+				url: "guardar.php",
+				data: {"opcion": opcion, "idcliente": idcliente, "cuenta": cuenta, "moneda": moneda},
+				success: function (data) {
+					var json_info = JSON.parse( data );
+					mostrar_mensaje(json_info);
+					$("#dt_cuentas_banco").DataTable().ajax.reload();
+				}
+			});
+		}
+
+		function editar_cuenta () {
+			var idcuenta = $("#idcuentaeditar").val();
+			var cuenta = $("#cuentaeditar").val();
+			var moneda = $("#monedacuentaeditar").val();
+			var opcion = "editarcuenta";
+			$.ajax({
+				method: "POST",
+				url: "guardar.php",
+				data: {"opcion": opcion, "idcuenta": idcuenta, "cuenta": cuenta, "moneda": moneda},
+				success: function (data) {
+					var json_info = JSON.parse( data );
+					mostrar_mensaje(json_info);
+					$("#dt_cuentas_banco").DataTable().ajax.reload();
+				}
+			});
+		}
+
+		var obtener_data_editar_cuenta = function(tbody, table, idcliente){
+			$(tbody).on("click", "button.editarcuenta", function(){
+				var data = table.row( $(this).parents("tr") ).data();
+				console.log(data);
+				$("#idcuentaeditar").val(data.id);
+				$("#cuentaeditar").val(data.cuenta);
+				$("#monedacuentaeditar").val(data.moneda);
+				$("#modalEditarCuentaBanco").modal("show");
+			});
+		}
+
+		var obtener_data_eliminar_cuenta = function(tbody, table, idcliente){
+			$(tbody).on("click", "button.eliminarcuenta", function(){
+				var data = table.row( $(this).parents("tr") ).data();
+				console.log(data);
+				if (confirm("Esta seguro(a) de eliminar esta cuenta?")){
+					var idcuenta = data.id;
+					var opcion = "eliminarcuenta";
+					$.ajax({
+						method: "POST",
+						url: "guardar.php",
+						data: {"opcion": opcion, "idcuenta": idcuenta},
+						success: function (data) {
+							var json_info = JSON.parse( data );
+							mostrar_mensaje(json_info);
+							$("#dt_cuentas_banco").DataTable().ajax.reload();
+						}
+					});
+				}else{
+
+				}
 			});
 		}
 

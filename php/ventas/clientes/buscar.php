@@ -5,7 +5,7 @@
 
 	switch ($opcion) {
 		case 'datosusuario':
-			$idusuario = $_POST['idusuario'];			
+			$idusuario = $_POST['idusuario'];
 			datosusuario($idusuario, $conexion_usuarios);
 			break;
 
@@ -14,7 +14,7 @@
 			buscar_datos_cliente($idcliente, $conexion_usuarios);
 			break;
 
-		case 'nuevacotizacion':			
+		case 'nuevacotizacion':
 			nueva_cotizacion($conexion_usuarios);
 			break;
 
@@ -22,7 +22,7 @@
 			$idcliente = $_POST['idcliente'];
 			buscar_contactos($idcliente, $conexion_usuarios);
 			break;
-			
+
 		case 'informacioncontacto':
 			$idcliente = $_POST['idcliente'];
 			informacion_contacto($idcliente, $conexion_usuarios);
@@ -35,6 +35,11 @@
 
 		case 'buscarClientes':
 			buscar_clientes($conexion_usuarios);
+			break;
+
+		case 'cuentasbanco':
+			$idcliente = $_POST['idcliente'];
+			cuentas_banco($idcliente, $conexion_usuarios);
 			break;
 	}
 
@@ -53,7 +58,7 @@
      	$numero = substr(date("y"), 1).date("m").date("d").$n;
 	   	$query = "SELECT ref FROM cotizacion ORDER BY id DESC LIMIT 100";
      	$resultado = mysqli_query($conexion_usuarios, $query);
-     	
+
      	while($data = mysqli_fetch_array($resultado)){
      		$ultimaCotizacion = str_replace("HMU", "", $data['ref']);
 	     	while ($numero <= $ultimaCotizacion) {
@@ -61,7 +66,7 @@
 	     		$numero = substr(date("y"), 1).date("m").date("d").$n;
 			}
      	}
-		 
+
 		$numeroCotizacion = "HMU".substr(date("y"), 1).date("m").date("d").$n;
 
 		$query = "SELECT max(remision) AS ultimaremision FROM cotizacion";
@@ -115,7 +120,7 @@
      	$numero = substr(date("y"), 1).date("m").date("d").$n;
 	   	$query = "SELECT ref FROM cotizacion ORDER BY id DESC LIMIT 100";
      	$resultado = mysqli_query($conexion_usuarios, $query);
-     	
+
      	while($data = mysqli_fetch_array($resultado)){
      		$ultimaCotizacion = str_replace("HMU", "", $data['ref']);
 	     	while ($numero <= $ultimaCotizacion) {
@@ -123,7 +128,7 @@
 	     		$numero = substr(date("y"), 1).date("m").date("d").$n;
 			}
      	}
-		 
+
 		$numeroCotizacion = "HMU".substr(date("y"), 1).date("m").date("d").$n;
 
      	$arreglo['resultado'] = "ok";
@@ -158,6 +163,30 @@
 		}
 
 		echo json_encode($arreglo);
+	}
+
+	function cuentas_banco($idcliente, $conexion_usuarios){
+		$query = "SELECT * FROM cuentasclientes WHERE IdContacto = '$idcliente'";
+		$resultado = mysqli_query($conexion_usuarios, $query);
+
+		if (mysqli_num_rows($resultado) < 1) {
+			$arreglo['data'] = 0;
+		}else{
+			$i = 1;
+			while($data = mysqli_fetch_assoc($resultado)){
+				$arreglo['data'][] = array(
+					'id' => $data['IdCuenta'],
+					'indice' => $i,
+					'cuenta' => $data['Cuenta'],
+					'moneda' => $data['moneda']
+				);
+
+				$i++;
+			}
+		}
+
+		echo json_encode($arreglo);
+		mysqli_close($conexion_usuarios);
 	}
 
 	function verificar_resultado($resultado){

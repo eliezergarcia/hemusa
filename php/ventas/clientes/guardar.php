@@ -122,10 +122,74 @@
 			nuevaremision($numeroCotizacion, $remision, $fechaCotizacion, $vendedor, $cliente, $contactoCliente, $moneda, $comentarios, $conexion_usuarios);
 			break;
 
+		case 'agregarcuenta':
+			$idcliente= $_POST['idcliente'];
+			$cuenta= $_POST['cuenta'];
+			$moneda= $_POST['moneda'];
+			agregar_cuenta($idcliente, $cuenta, $moneda, $conexion_usuarios);
+			break;
+
+		case 'editarcuenta':
+			$idcuenta= $_POST['idcuenta'];
+			$cuenta= $_POST['cuenta'];
+			$moneda= $_POST['moneda'];
+			editar_cuenta($idcuenta, $cuenta, $moneda, $conexion_usuarios);
+			break;
+
+		case 'eliminarcuenta':
+			$idcuenta= $_POST['idcuenta'];
+			eliminar_cuenta($idcuenta, $conexion_usuarios);
+			break;
+
 		default:
 			$informacion["respuesta"] = "OPCION_VACIA";
 			echo json_encode($informacion);
 			break;
+	}
+
+	function agregar_cuenta($idcliente, $cuenta, $moneda, $conexion_usuarios){
+		$query = "INSERT INTO cuentasclientes (IdContacto, Cuenta, moneda) VALUES ('$idcliente', '$cuenta', '$moneda')";
+		$resultado = mysqli_query($conexion_usuarios, $query);
+		if (!$resultado) {
+			$informacion["respuesta"] = "ERROR";
+			$informacion["informacion"] = "Ocurrió un problema al agregar la cuenta de banco.";
+		}else{
+			$informacion["respuesta"] = "BIEN";
+			$informacion["informacion"] = "La cuenta de banco se agregó correctamente.";
+		}
+
+		echo json_encode($informacion);
+		mysqli_close($conexion_usuarios);
+	}
+
+	function editar_cuenta($idcuenta, $cuenta, $moneda, $conexion_usuarios){
+		$query = "UPDATE cuentasclientes SET Cuenta='$cuenta', moneda='$moneda' WHERE IdCuenta='$idcuenta'";
+		$resultado = mysqli_query($conexion_usuarios, $query);
+		if (!$resultado) {
+			$informacion["respuesta"] = "ERROR";
+			$informacion["informacion"] = "Ocurrió un problema al editar la cuenta de banco.";
+		}else{
+			$informacion["respuesta"] = "BIEN";
+			$informacion["informacion"] = "La cuenta de banco se modificó correctamente.";
+		}
+
+		echo json_encode($informacion);
+		mysqli_close($conexion_usuarios);
+	}
+
+	function eliminar_cuenta($idcuenta, $conexion_usuarios){
+		$query = "DELETE FROM cuentasclientes WHERE IdCuenta = $idcuenta";
+		$resultado = mysqli_query($conexion_usuarios, $query);
+		if (!$resultado) {
+			$informacion["respuesta"] = "ERROR";
+			$informacion["informacion"] = "Ocurrió un problema al eliminar la cuenta de banco.";
+		}else{
+			$informacion["respuesta"] = "BIEN";
+			$informacion["informacion"] = "La cuenta de banco se eliminó correctamente.";
+		}
+
+		echo json_encode($informacion);
+		mysqli_close($conexion_usuarios);
 	}
 
 	function existe_cliente($rfc, $conexion_usuarios){
