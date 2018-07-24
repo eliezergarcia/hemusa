@@ -124,7 +124,11 @@
                 action: function (e, dt, node, config){
                   var opcion = "imprimir";
                   var opcion2 = "compras";
-                  genPDF(opcion, opcion2);
+                  var fecha = prompt("Ingresa la fecha del folio: ");
+                  console.log(fecha);
+                  if (fecha != '') {
+                    genPDF(opcion, opcion2, fecha);
+                  }
                 },
               },
               {
@@ -133,8 +137,10 @@
                 action: function (e, dt, node, config){
                   var opcion = "imprimir";
                   var opcion2 = "facturacion";
-
-                  genPDF(opcion, opcion2);
+                  var fecha = prompt("Ingresa la fecha del folio: ");
+                  if (fecha != '') {
+                    genPDF(opcion, opcion2, fecha);
+                  }
                 },
               }
             ]
@@ -143,7 +149,7 @@
 			});
 		}
 
-    function genPDF(opcionPDF, opcion2, surtidopor) {
+    function genPDF(opcionPDF, opcion2, fecha) {
       var folio = "<?php echo $_REQUEST['folio']; ?>";
       var opcion = "partidasnacional";
       console.log(folio);
@@ -205,7 +211,7 @@
         doc.text("CONTROL DE SALIDA DE HERRAMIENTA", 475, 115)
         doc.setFontSize(13);
         doc.setFontStyle('bold');
-        doc.text("FECHA:  " + data.fecha, 30, 135)
+        doc.text("FECHA:  " + fecha, 30, 135)
         doc.text("COMPRA NACIONAL", 533, 135)
         doc.text("FOLIO #" + folio, 700, 155)
 
