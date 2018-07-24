@@ -291,8 +291,8 @@
 									<th>#</th>
 									<th>Cuenta</th>
 									<th>Moneda</th>
-									<th></th>
-									<th></th>
+									<th>Ver</th>
+									<th>Eliminar</th>
 								</tr>
 							</thead>
 						</table>

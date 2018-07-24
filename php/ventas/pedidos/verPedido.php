@@ -763,7 +763,7 @@
 					{"data": "descripcion"},
 					{"data": null,
 						"render": function (data, row) {
-							return "<label class='custom-control custom-control-sm custom-checkbox'><input name='pedido' value='"+data.id+"' class='custom-control-input' type='checkbox' onclick='cambiar_total()'><span class='custom-control-label'></span></label>";
+							return "<label class='custom-control custom-control-sm custom-checkbox'><input name='hpacking' value='"+data.id+"' class='custom-control-input' type='checkbox' onclick='cambiar_total()'><span class='custom-control-label'></span></label>";
 						},
 					},
 				],
