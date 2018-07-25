@@ -85,6 +85,7 @@
           'descripcion' => utf8_encode($data['descripcion']),
           'cantidad' => $data['cantidad'],
           'factura' => $factura,
+          'remision' => $data['remision'],
           'ordencompra' => $data['NoPedClient'],
           'paqueteria' => utf8_encode($paqueteria),
           'guia' => $data['guia']
@@ -141,6 +142,7 @@
           'descripcion' => utf8_encode($data['descripcion']),
           'cantidad' => $data['cantidad'],
           'factura' => $factura,
+          'remision' => $data['remision'],
           'ordencompra' => $data['NoPedClient'],
           'paqueteria' => utf8_encode($paqueteria),
           'guia' => $data['guia']

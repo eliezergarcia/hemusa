@@ -36,6 +36,7 @@
 												<th>Descripción</th>
 												<th>Cantidad</th>
 												<th>Factura</th>
+                        <th>Remisión</th>
 												<th>Orden de Compra</th>
 												<th>Paqueteria</th>
 												<th># Guía</th>
@@ -91,6 +92,7 @@
 					{"data":"descripcion"},
 					{"data":"cantidad"},
 					{"data":"factura"},
+          {"data":"remision"},
 					{"data":"ordencompra"},
 					{"data":"paqueteria"},
 					{"data":"guia"}
@@ -187,6 +189,7 @@
             {title: "Descripción", dataKey: "descripcion"},
             {title: "Cantidad", dataKey: "cantidad"},
             {title: "Factura", dataKey: "factura"},
+            {title: "Remisión", dataKey: "remision"},
             {title: "Orden de compra", dataKey: "ordencompra"},
   				  {title: "Paqueteria", dataKey: "paquteria"},
   				  {title: "# Guía", dataKey: "guia"},
@@ -301,10 +304,11 @@
               indice: {columnWidth: 20, halign: 'center'},
               marca: {columnWidth: 60},
               modelo:{columnWidth: 60},
-              descripcion: {columnWidth: 335},
+              descripcion: {columnWidth: 250},
               cantidad:{columnWidth:50, halign: 'center'},
+              remision:{columnWidth:50, halign: 'center'},
               factura: {columnWidth: 50},
-              ordencompra:{columnWidth: 50},
+              ordencompra:{columnWidth: 80},
               paquteria:{columnWidth: 75},
               guia:{columnWidth: 100},
             },
