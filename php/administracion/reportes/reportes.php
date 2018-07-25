@@ -1,7 +1,6 @@
-<?php 
+<?php
 	require_once('../../conexion.php'); // Llamada a connect.php para establecer conexión con la BD
 	require_once('../../sesion.php'); // Llamada a sesion.php para validar si hay sesión inciada
-	$ruta = "http://localhost/Hemusa/";
 	error_reporting(0);
 
 ?>
@@ -12,27 +11,27 @@
 	<?php include('../../enlaces.php'); ?>
 </head>
 <body>
-	
+
 	<?php include('../../header.php'); ?>
-	
+
   		<main class="mdl-layout__content">
     		<div class="page-content">
     			<!-- Breadcrumb -->
 	    			<nav aria-label="breadcrumb">
-					  	<ol class="breadcrumb">				    	
+					  	<ol class="breadcrumb">
 					    	<li class="breadcrumb-item">Administración</li>
 					    	<li class="breadcrumb-item active" aria-current="page">Reportes</li>
 					  	</ol>
 					</nav>
-				
+
 				<!-- Titulo -->
 	    			<div class="row fondo align-itmes-center">
 						<div class="col-sm-12">
 							<h1 class="text-center titulo"><b>Reportes</b> <i class="material-icons icono">insert_chart</i></h1>
 						</div>
-					</div>	
+					</div>
 					<br>
-				
+
 				<!-- Dropdown de Reportes -->
 					<div class="dropdown row justify-content-center">
 					  	<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -44,11 +43,11 @@
 					    	<a class="dropdown-item" data-toggle="collapse" href="#collapseReporteAcumulados" role="button" aria-expanded="false" aria-controls="collapseReporteAcumulados">Reporte de Acumulados</a>
 					    	<a class="dropdown-item" data-toggle="collapse" href="#collapseReporteComisiones" role="button" aria-expanded="false" aria-controls="collapseReporteComisiones">Reporte de Comisiones</a>
 							<a class="dropdown-item" data-toggle="collapse" href="#collapseReportePedidosSinOC" role="button" aria-expanded="false" aria-controls="collapseReportePedidosSinOC">Reporte de Pedidos sin OC</a>
-							<a class="dropdown-item" data-toggle="collapse" href="#collapseReporteCobranza" role="button" aria-expanded="false" aria-controls="collapseReporteCobranza">Reporte de Cobranza</a>			   	
+							<a class="dropdown-item" data-toggle="collapse" href="#collapseReporteCobranza" role="button" aria-expanded="false" aria-controls="collapseReporteCobranza">Reporte de Cobranza</a>
 							<a class="dropdown-item" data-toggle="collapse" href="#collapseHerramientaSinEntregar" role="button" aria-expanded="false" aria-controls="collapseHerramienta" id="btn_listar_herramienta_sin_entregar">Reporte de de Herramienta sin Entregar</a>
 							<a class="dropdown-item" data-toggle="collapse" href="#collapseHerramientaSinFactura" role="button" aria-expanded="false" aria-controls="collapseHerramienta" id="btn_listar_herramienta_sin_factura">Reporte de de Herramienta sin Factura</a>
 					  	</div>
-					</div>				
+					</div>
 
 				<!-- Collapse Reporte de Impuestos-->
 					<br>
@@ -87,7 +86,7 @@
 	  								</thead>
 	  							</table>
 							</div>
-						</div>	
+						</div>
 
 				<!-- Collapse Reporte de Acumulados -->
 					<br>
@@ -127,7 +126,7 @@
 	  							</table>
 							</div>
 						</div>
-				
+
 				<!-- Collapse Reporte Pedidos Sin OC -->
 						<div class="collapse col-12 " id="collapseReportePedidosSinOC">
 	  						<div class="card card-body">
@@ -138,7 +137,7 @@
 	    						<br>
 	    						<br>
 	    						<?php
-									//Se busca el nombre del proveedor 
+									//Se busca el nombre del proveedor
 									$sql_pedidos_pendientes ="SELECT * FROM  `cotizacionherramientas` WHERE  `Proveedor` !=  'none' AND `Proveedor` !=  'ALMACEN' AND  `proveedorFecha` =  '0000-00-00' AND  `Pedido` =  'si'  AND pedidoFecha > '2015-01-01' order by Proveedor";
 
 									$resultado_pedidos=mysqli_query($conexion_usuarios, $sql_pedidos_pendientes);
@@ -146,7 +145,7 @@
 									$resultado_proveedor=mysqli_query($conexion_usuarios, $sql_pedidos_pendientes);
 
 									while($row_proveedor =mysqli_fetch_array($resultado_proveedor)){
-										$filtro_proveedor[$count]=$row_proveedor['Proveedor'];	
+										$filtro_proveedor[$count]=$row_proveedor['Proveedor'];
 										$count ++;
 									}
 
@@ -171,10 +170,10 @@
 									$i=0;
 
 									if(!empty($_POST["proveedor_oc"])){
-									
+
 										$nombre_proveedor=$_POST["proveedor_oc"];
 										echo $nombre_proveedor;
-									
+
 										if($nombre_proveedor!='Proveedor'){
 											$sql_pedidos_pendientes ="SELECT * FROM  `cotizacionherramientas` WHERE  `Proveedor` ='$nombre_proveedor' AND proveedorFecha` =  '0000-00-00' AND  `Pedido` =  'si'  AND pedidoFecha > '2015-01-01' order by Proveedor";
 												$resultado_pedidos=mysqli_query($conexion_usuarios, $sql_pedidos_pendientes);
@@ -193,27 +192,27 @@
 												$nombre_cliente="";
 											}else{
 												while($row_nombre =mysqli_fetch_array($resultado_nombre)){
-													$nombre_cliente=$row_nombre['nombreEmpresa'];				
+													$nombre_cliente=$row_nombre['nombreEmpresa'];
 												}
 											}
 
-										$marca=$row_pedidos['marca'];	
-										$modelo=$row_pedidos['modelo'];	
-										$cantidad=$row_pedidos['cantidad'];	
-										$descripcion=$row_pedidos['descripcion'];	
-										$pedido_fecha=$row_pedidos['pedidoFecha'];	
-										$proveedor=$row_pedidos['Proveedor'];	
+										$marca=$row_pedidos['marca'];
+										$modelo=$row_pedidos['modelo'];
+										$cantidad=$row_pedidos['cantidad'];
+										$descripcion=$row_pedidos['descripcion'];
+										$pedido_fecha=$row_pedidos['pedidoFecha'];
+										$proveedor=$row_pedidos['Proveedor'];
 
 										// numero_proveedor
-											$sql_id_contacto ="SELECT id FROM  `contactos` WHERE  `nombreEmpresa` = '$proveedor'"; 
+											$sql_id_contacto ="SELECT id FROM  `contactos` WHERE  `nombreEmpresa` = '$proveedor'";
 											$resultado_id=mysqli_query($conexion_usuarios, $sql_id_contacto);
 
 											while($row_id =mysqli_fetch_array($resultado_id)){
-												$numero_proveedor=$row_id['id'];	
-											}										
+												$numero_proveedor=$row_id['id'];
+											}
 
-										// tabla	
-											$tabla="";	
+										// tabla
+											$tabla="";
 											$sql_buscar_tabla ="SELECT tabla FROM  `factores_proveedores` WHERE  `proveedor` = '$numero_proveedor'";
 											$resultado_tabla=mysqli_query($conexion_usuarios, $sql_buscar_tabla);
 
@@ -221,10 +220,10 @@
 												$tabla="todas";
 											}else{
 												while($row_tabla =mysqli_fetch_array($resultado_tabla)){
-													$tabla=$row_tabla['tabla'];				
+													$tabla=$row_tabla['tabla'];
 												}
 											}
-											
+
 											if(empty($tabla)){
 												$tabla="todas";
 											}
@@ -240,17 +239,17 @@
 
 											if(!$resultado_precio=mysqli_query($conexion_usuarios, $sql_buscar_costo)){
 												$precio_modelo=0;
-												
+
 											}else{
 												while($row_precio =mysqli_fetch_array($resultado_precio)){
-													$precio_modelo=$row_precio['precioBase'];				
+													$precio_modelo=$row_precio['precioBase'];
 												}
 											}
-											
+
 											if(empty($precio)){
 												$precio_modelo=0;
 											}
-										
+
 										// factor
 											$sql_factor="SELECT factor_proveedor from factores_proveedores WHERE proveedor='$numero_proveedor' ";
 											$result_factor = mysqli_query($conexion_usuarios, $sql_factor);
@@ -266,12 +265,12 @@
 												}
 											}
 
-											$factor= $row_factor_proveedor; 
+											$factor= $row_factor_proveedor;
 
 											if(empty($factor_proveedor)){
 												$factor=1;
 											}
-	
+
 										$precio_modelo=$precio_modelo*$factor;
 										$precio_modelo=number_format($precio_modelo,2,".",""); //obtener 2 decimales
 
@@ -283,16 +282,16 @@
 												$almacen=0;
 											}else{
 												while($row_stock =mysqli_fetch_array($resultado_stock)){
-													$almacen=$row_stock['enReserva'];				
+													$almacen=$row_stock['enReserva'];
 												}
 											}
-											
+
 											if(empty($almacen)){
 												$almacen=0;
 											}
 
 											$i++;
-										
+
 										echo '<tr>';
 										echo '<td valign="top">'.$i.'</td>';
 										echo '<td valign="top">'.$proveedor.'</td>';
@@ -304,7 +303,7 @@
 										echo '<td valign="top">'.$pedido_fecha.'</td>';
 										echo '<td valign="top">'.$almacen.'</td>';
 										echo '<td valign="top">'.$precio_modelo.'</td>';
-										
+
 										echo '</tr>';
 									}
 									// echo '<tfoot><tr>';
@@ -325,7 +324,7 @@
 									echo '</table>';
 								?>
 	  						</div>
-						</div>					
+						</div>
 
 				<!-- Collapse Reporte de Cobranza -->
 					<div class="collapse col-12 " id="collapseReporteCobranza">
@@ -373,7 +372,7 @@
 	  						</table>
 						</div>
 					</div>
-				
+
 				<!-- Collapse Reporte de Comisiones -->
 					<div class="collapse col-12 " id="collapseReporteComisiones">
 						<div class="card card-body">
@@ -390,7 +389,7 @@
 									$resultado_usuarios = mysqli_query($conexion_usuarios, $query_usuarios);
 									while($row_usuarios = mysqli_fetch_array($resultado_usuarios)){
 									 	echo "<option value='".$row_usuarios['id']."' >".$row_usuarios['nombre']."</option>";
-									}	
+									}
 								?>
 									</select>
 	  							</div>
@@ -423,7 +422,7 @@
 							</table>
 						</div>
 					</div>
-			
+
 				<!-- Collapse Reporte Herramienta sin Entregar -->
 					<div class="collapse col-12 " id="collapseHerramientaSinEntregar">
 	  					<div class="card card-body">
@@ -447,7 +446,7 @@
 	  						</table>
 	  					</div>
 	  				</div>
-			
+
 				<!-- Collapse Reporte Herramienta sin Factura -->
 					<div class="collapse col-12 " id="collapseHerramientaSinFactura">
 	  					<div class="card card-body">
@@ -467,8 +466,8 @@
 	  						</table>
 	  					</div>
 	  				</div>
-			
-			</div>	
+
+			</div>
       	</main>
 </body>
 </html>
@@ -512,9 +511,9 @@
 		 //        $(this).html( '<input class="form-control" type="text" placeholder="Buscar '+title+'" />' );
 		 //    });
 
-			var table = $("#dt_pedidos_sin_oc").DataTable({				
+			var table = $("#dt_pedidos_sin_oc").DataTable({
 				"language": idioma_espanol,
-				"dom": 
+				"dom":
 					"<'container-fluid row'<'row justify-content-center col-sm-4 buttons'B><'row justify-content-end col-sm-8 buttons'f>>" +
           			"<'container-fluid row'<'row justify-content-center col-sm-12 buttons'tr>>" +
           			"<'container-fluid row'<'row justify-content-center col-6 buttons'i><'row justify-content-end col-6 buttons'p>>",
@@ -565,14 +564,14 @@
                         },
 			          },
 				]
-			});		
+			});
 
 			// $("#dt_pedidos_sin_oc tfoot input").on( 'keyup change', function () {
 	  //           table
 	  //               .column( $(this).parent().index()+':visible' )
 	  //               .search( this.value )
-	  //               .draw();    
-   //    		});	
+	  //               .draw();
+   //    		});
 		}
 
 		var listar_impuestos = function(){
@@ -584,7 +583,7 @@
 		          		"method":"POST",
 		          		"url":"listar_impuestos.php",
 		          		"data": {"anoImpuestos": anoImpuestos}
-		        },	
+		        },
 		        "columns":[
 		        	{"data": "impuesto"},
 		        	{"data": "enero"},
@@ -604,9 +603,9 @@
 				"paging": false,
 				"info": false,
 				"searching": false,
-				"order": false,			
+				"order": false,
 				"language": idioma_espanol,
-				"dom": 
+				"dom":
 					"<'container-fluid row'<'row justify-content-center col-sm-4 buttons'B><'row justify-content-end col-sm-8 buttons'f>>" +
           			"<'container-fluid row'<'row justify-content-center col-sm-12 buttons'tr>>" +
           			"<'container-fluid row'<'row justify-content-center col-6 buttons'i><'row justify-content-end col-6 buttons'p>>",
@@ -777,7 +776,7 @@
                         },
 			        },
 				]
-			});		
+			});
 			var anoImpuestos=document.getElementById("anoImpuestos").value;
 			$("#tituloAnoImpuestos").val(anoImpuestos);
 		}
@@ -791,7 +790,7 @@
 		          		"method":"POST",
 		          		"url":"listar_acumulados.php",
 		          		"data": {"anoAcumulados": anoAcumulados}
-		        },	
+		        },
 		        "columns":[
 		        	{"data": "reporte"},
 		        	{"data": "enero"},
@@ -811,9 +810,9 @@
 				"paging": false,
 				"info": false,
 				"searching": false,
-				"order": false,			
+				"order": false,
 				"language": idioma_espanol,
-				"dom": 
+				"dom":
 					"<'container-fluid row'<'row justify-content-center col-sm-4 buttons'B><'row justify-content-end col-sm-8 buttons'f>>" +
           			"<'container-fluid row'<'row justify-content-center col-sm-12 buttons'tr>>" +
           			"<'container-fluid row'<'row justify-content-center col-6 buttons'i><'row justify-content-end col-6 buttons'p>>",
@@ -984,14 +983,14 @@
                         },
 			        },
 				]
-			});		
+			});
 		}
 
 		var listar_cobranza = function(){
 			$("#dt_reporte_cobranza").append('<tfoot><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th></tfoot>');
 			var fechaInicio = $("#frmMostrarCobranza #fechaInicio").val(),
           		fechaFin = $("#frmMostrarCobranza #fechaFin").val();
-			var table = $("#dt_reporte_cobranza").DataTable({	
+			var table = $("#dt_reporte_cobranza").DataTable({
 				"destroy":"true",
 		        "ajax":{
 		          "method":"POST",
@@ -1013,7 +1012,7 @@
 		        	{"data": "totalMXN"}
 		        ],
 				"language": idioma_espanol,
-				"dom": 
+				"dom":
 					"<'container-fluid row'<'row justify-content-center col-sm-4 buttons'B><'row justify-content-end col-sm-8 buttons'f>>" +
           			"<'container-fluid row'<'row justify-content-center col-sm-12 buttons'tr>>" +
           			"<'container-fluid row'<'row justify-content-center col-6 buttons'i><'row justify-content-end col-6 buttons'p>>",
@@ -1104,15 +1103,15 @@
                         },
 			        },
 				]
-			});	
-			// obtener_data_reporte_cobranza("#dt_reporte_cobranza tbody", table);	
+			});
+			// obtener_data_reporte_cobranza("#dt_reporte_cobranza tbody", table);
 		}
 
 		var obtener_data_reporte_cobranza = function(){
 	      	var fechaInicio =document.getElementById("fechaInicio").value;
 	        var fechaFin =document.getElementById("fechaFin").value;
-	        document.getElementById("valFechaInicio").innerHTML = fechaInicio;	
-	        document.getElementById("valFechaFin").innerHTML = fechaFin;	         
+	        document.getElementById("valFechaInicio").innerHTML = fechaInicio;
+	        document.getElementById("valFechaFin").innerHTML = fechaFin;
 	    }
 
 		var  listar_comisiones = function(){
@@ -1120,7 +1119,7 @@
 			var fechaInicio = $("#frmMostrarComisiones #fechaInicio").val(),
           		fechaFin = $("#frmMostrarComisiones #fechaFin").val(),
           		idvendedor = $("#frmMostrarComisiones #idvendedor").val();
-			var table = $("#dt_reporte_comisiones").DataTable({	
+			var table = $("#dt_reporte_comisiones").DataTable({
 				"destroy":"true",
 		        "ajax":{
 		          "method":"POST",
@@ -1141,7 +1140,7 @@
 					{"data":"iva"},
 					{"data":"total"}
 				],
-				"dom": 
+				"dom":
 					"<'container-fluid row'<'row justify-content-center col-sm-4 buttons'B><'row justify-content-end col-sm-8 buttons'f>>" +
           			"<'container-fluid row'<'row justify-content-center col-sm-12 buttons'tr>>" +
           			"<'container-fluid row'<'row justify-content-center col-6 buttons'i><'row justify-content-end col-6 buttons'p>>",
@@ -1239,7 +1238,7 @@
 		}
 
 		var  listar_herramienta_sin_entregar = function(){
-			var table = $("#dt_herramienta_sin_entregar").DataTable({	
+			var table = $("#dt_herramienta_sin_entregar").DataTable({
 				"destroy":"true",
 		        "ajax":{
 		          "method":"POST",
@@ -1258,10 +1257,10 @@
 					{"data":"pedidoCliente"},
 					{"data":"fechaPedido"}
 				],
-				"dom": 
+				"dom":
 					"<'container-fluid row'<'row justify-content-center col-sm-4 buttons'B><'row justify-content-end col-sm-8 buttons'f>>" +
           			"<'container-fluid row'<'row justify-content-center col-sm-12 buttons'tr>>" +
-          			"<'container-fluid row'<'row justify-content-center col-6 buttons'i><'row justify-content-end col-6 buttons'p>>",          	
+          			"<'container-fluid row'<'row justify-content-center col-6 buttons'i><'row justify-content-end col-6 buttons'p>>",
 				"buttons":[
 		            {
 			            extend:    'pdfHtml5',
@@ -1319,7 +1318,7 @@
 
 		$('#btn_listar_herramienta_sin_factura').on("click", function(){
 			var  listar_herramienta_sin_factura = function(){
-				var table = $("#dt_herramienta_sin_factura").DataTable({	
+				var table = $("#dt_herramienta_sin_factura").DataTable({
 					"destroy":"true",
 			        "ajax":{
 			          "method":"POST",
@@ -1334,10 +1333,10 @@
 						{"data":"cantidad"},
 						{"data":"remision"}
 					],
-					"dom": 
+					"dom":
 						"<'container-fluid row'<'row justify-content-center col-sm-4 buttons'B><'row justify-content-end col-sm-8 buttons'f>>" +
 	          			"<'container-fluid row'<'row justify-content-center col-sm-12 buttons'tr>>" +
-	          			"<'container-fluid row'<'row justify-content-center col-6 buttons'i><'row justify-content-end col-6 buttons'p>>",          	
+	          			"<'container-fluid row'<'row justify-content-center col-6 buttons'i><'row justify-content-end col-6 buttons'p>>",
 					"buttons":[
 			            {
 				            extend:    'pdfHtml5',

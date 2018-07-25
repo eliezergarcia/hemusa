@@ -638,6 +638,7 @@
 						$NoSerie = $data['NoSerie'];
 						$fechaCompromiso = $data['fechaCompromiso'];
 						$Pedido = $data['Pedido'];
+						$pedidoFecha = $data['pedidoFecha'];
 						$fechaPedido = $data['fechaPedido'];
 						$Proveedor = $data['Proveedor'];
 						$ordenCompra = $data['ordenCompra'];
@@ -647,7 +648,7 @@
 						$lugar_cotizacion = $data['lugar_cotizacion'];
 						$Tiempo_Entrega = $data['Tiempo_Entrega'];
 					}
-					$query = "INSERT INTO cotizacionherramientas (cliente, cotizacionNo, cotizacionRef, marca, modelo, descripcion, precioLista, flete, cantidad, Unidad, ClaveProductoSAT, proveedorFlete, NoSerie, fechaCompromiso, Pedido, fechaPedido, ordenCompra, numeroPedido, Proveedor, moneda, referencia_interna, lugar_cotizacion, Tiempo_Entrega) VALUES ('$cliente', '$cotizacionNo', '$cotizacionRef', '$marca', '$modelo', '$descripcion', '$precioLista', '$flete', '$split', '$Unidad', '$ClaveProductoSAT', '$proveedorFlete', '$NoSerie', '$fechaCompromiso', '$Pedido', '$fechaPedido', '$ordenCompra', '$numeroPedido', '$Proveedor', '$moneda', '$referencia_interna', '$lugar_cotizacion', '$Tiempo_Entrega')";
+					$query = "INSERT INTO cotizacionherramientas (cliente, cotizacionNo, cotizacionRef, marca, modelo, descripcion, precioLista, flete, cantidad, Unidad, ClaveProductoSAT, proveedorFlete, NoSerie, fechaCompromiso, Pedido, pedidoFecha, fechaPedido, ordenCompra, numeroPedido, Proveedor, moneda, referencia_interna, lugar_cotizacion, Tiempo_Entrega) VALUES ('$cliente', '$cotizacionNo', '$cotizacionRef', '$marca', '$modelo', '$descripcion', '$precioLista', '$flete', '$split', '$Unidad', '$ClaveProductoSAT', '$proveedorFlete', '$NoSerie', '$fechaCompromiso', '$Pedido', '$pedidoFecha', '$fechaPedido', '$ordenCompra', '$numeroPedido', '$Proveedor', '$moneda', '$referencia_interna', '$lugar_cotizacion', '$Tiempo_Entrega')";
 					$resultado = mysqli_query($conexion_usuarios, $query);
 					if (!$resultado) {
 						$informacion["respuesta"] = "ERROR";
