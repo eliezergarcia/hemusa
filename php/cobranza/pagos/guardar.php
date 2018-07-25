@@ -60,9 +60,12 @@
 			break;
 
 		case 'registrarpagosproveedor':
+			$fecha = $_POST['fecha'];
+			$cuenta = $_POST['cuenta'];
+			$tipocambio = $_POST['tipocambio'];
 			$proveedor = $_POST['proveedor'];
 			$facturas = json_decode($_POST['pagos']);
-			registrar_pagos_proveedor($proveedor, $facturas, $conexion_usuarios);
+			registrar_pagos_proveedor($fecha, $cuenta, $tipocambio, $proveedor, $facturas, $conexion_usuarios);
 			break;
 
 		case 'abonocliente':
@@ -188,12 +191,16 @@
 				$monedacuenta = "mxn";
 				break;
 
-			case 3:
+			case 4:
 				$monedacuenta = "usd";
 				break;
 
-			case 4:
+			case 5:
 				$monedacuenta = "usd";
+				break;
+
+			case 6:
+				$monedacuenta = "mxn";
 				break;
 		}
 
@@ -346,8 +353,8 @@
 		verificar_resultado($resultado);
 	}
 
-	function registrar_pagos_proveedor($proveedor, $facturas, $conexion_usuarios){
-		$query = "SELECT id FROM contactos WHERE tipo='Proveedor' AND nombreEmpresa LIKE '%$cliente%' LIMIT 1";
+	function registrar_pagos_proveedor($fecha, $cuenta, $tipocambio, $proveedor, $facturas, $conexion_usuarios){
+		$query = "SELECT * FROM contactos WHERE tipo='Proveedor' AND nombreEmpresa LIKE '%$proveedor%' LIMIT 1";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 
 		if (mysqli_num_rows($resultado) < 1 || !$resultado) {
@@ -358,6 +365,28 @@
 				$monedaproveedor = $data['moneda'];
 				$idproveedor = $data['id'];
 			}
+		}
+
+		switch ($cuenta) {
+			case 1:
+				$monedacuenta = "mxn";
+				break;
+
+			case 2:
+				$monedacuenta = "mxn";
+				break;
+
+			case 4:
+				$monedacuenta = "usd";
+				break;
+
+			case 5:
+				$monedacuenta = "usd";
+				break;
+
+			case 6:
+				$monedacuenta = "mxn";
+				break;
 		}
 
 		foreach ($facturas as &$factura) {
@@ -373,8 +402,20 @@
 					$total = $total + ($data2['costo_mn'] * $data2['cantidad']);
 				}
 			}
+			$query = "INSERT INTO pagos_oc (proveedor, factura, monto, fecha, cuenta, tipo_cambio) VALUES ('$idproveedor', '$factura', '$total', '$fecha', '$cuenta', '$tipocambio')";
+			$resultado = mysqli_query($conexion_usuarios, $query);
 		}
-		// echo json_
+
+		if (!$resultado) {
+			$informacion["respuesta"] = "ERROR";
+			$informacion["informacion"] = "Ocurrió un problema al actualizar la información de la factura.";
+		}else{
+			$informacion["respuesta"] = "BIEN";
+			$informacion["informacion"] = "La información de la(s) factura(s) se actualizó correctamente.";
+		}
+
+		echo json_encode($informacion);
+		mysqli_close($conexion_usuarios);
 	}
 
 	function verificar_resultado($resultado){

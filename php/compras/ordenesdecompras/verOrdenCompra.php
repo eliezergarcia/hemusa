@@ -299,11 +299,11 @@
             $('td', row).eq(2).addClass('table-text-recibido');
           }
         },
-        "order":[[3, "desc"]],
+        "order":[[2, "desc"]],
         "searching": false,
         "info": false,
         "paging": false,
-        "ordering": false,
+        // "ordering": false,
         "language": idioma_espanol,
         "dom":
           "<'row be-datatable-header'<'col-sm-6'B><'col-sm-6 text-right'f>>" +
@@ -542,7 +542,7 @@
         if (opcionPDF == "imprimir") {
           doc.autoPrint();
         }
-        doc.save('ordencompra.pdf');
+        doc.save(data.ordencompra.noDePedido+'.pdf');
       });
     }
 

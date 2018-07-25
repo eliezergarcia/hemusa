@@ -46,7 +46,7 @@
   }
 
   function nacional($filtrocantidad, $conexion_usuarios){
-    $query = "SELECT DISTINCT folio, proveedor FROM utilidad_pedido WHERE folio != '' AND folio != 0 AND folio != '0' ORDER BY id DESC LIMIT ".$filtrocantidad;
+		$query = "SELECT DISTINCT folio, proveedor FROM utilidad_pedido WHERE folio != '' AND folio != 0 AND folio != '0' ORDER BY id DESC LIMIT ".$filtrocantidad;
     $resultado = mysqli_query($conexion_usuarios, $query);
 
     if(mysqli_num_rows($resultado) < 1){
@@ -54,10 +54,10 @@
 		}else{
 			while($data = mysqli_fetch_assoc($resultado)){
 				$idproveedor = $data['proveedor'];
-				$query2 = "SELECT * FROM contactos WHERE id = '$idproveedor'";
+				$query2 = "SELECT nombreEmpresa FROM contactos WHERE id = '$idproveedor'";
 				$resultado2 = mysqli_query($conexion_usuarios, $query2);
 				while($data2 = mysqli_fetch_assoc($resultado2)){
-					$proveedor = $data2['nombreEmpresa'];
+					$proveedor = utf8_encode($data2['nombreEmpresa']);
 				}
 
 

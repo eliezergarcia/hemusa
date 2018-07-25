@@ -238,7 +238,7 @@
 			$monedaproveedor = $data['moneda'];
 		}
 
-		$query = "SELECT * FROM utilidad_pedido WHERE orden_compra = '$ordencompra'";
+		$query = "SELECT * FROM utilidad_pedido WHERE orden_compra = '$ordencompra' ORDER BY modelo DESC";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 
 		if (mysqli_num_rows($resultado) > 0) {
@@ -290,7 +290,7 @@
 				}
 			}
 		}else{
-			$query = "SELECT * FROM cotizacionherramientas WHERE noDePedido = '$ordencompra'";
+			$query = "SELECT * FROM cotizacionherramientas WHERE noDePedido = '$ordencompra' ORDER BY modelo";
 			$resultado = mysqli_query($conexion_usuarios, $query);
 
 			if (!$resultado) {

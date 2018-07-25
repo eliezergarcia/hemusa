@@ -128,17 +128,17 @@
 									<div class="row justify-content-center">
 										<div class="col-2">
 											<label>Fecha</label>
-											<input type="date" name="fechacliente" id="fechacliente" class="form-control form-control-sm" value="<?php echo date("Y-m-d");?>">
+											<input type="date" name="fechaproveedor" id="fechaproveedor" class="form-control form-control-sm" value="<?php echo date("Y-m-d");?>">
 										</div>
 										<div class="col-2">
 											<label>Cuenta</label>
 											<!-- <input type="text" name="cuentacliente" id="cuentacliente" class="form-control form-control-sm"> -->
-											<select name="cuenta" id="cuentacliente" class="form-control form-control-sm limpiar" required>
+											<select name="cuentaproveedor" id="cuentaproveedor" class="form-control form-control-sm limpiar" required>
 											</select>
 										</div>
 										<div class="col-2">
 											<label>Tipo de cambio</label>
-											<input type="text" name="tipocambiocliente" id="tipocambiocliente" class="form-control form-control-sm" value="1.00">
+											<input type="text" name="tipocambioproveedor" id="tipocambioproveedor" class="form-control form-control-sm" value="1.00">
 										</div>
 									</div>
 									<br><br>
@@ -400,8 +400,8 @@
 				data: {"opcion": opcion},
 				success : function(data) {
 					var cuentas = data;
-					for(var i=0;i<=2;i++){
-		         $("select[name=cuenta]").append("<option value='"+ cuentas.data[i].id + "'>" + cuentas.data[i].nombre + "</option>");
+					for(var i=0;i<=4;i++){
+		         $("select[name=cuentaproveedor]").append("<option value='"+ cuentas.data[i].id + "'>" + cuentas.data[i].nombre + "</option>");
 		     	};
 	   		}
 			});
@@ -659,21 +659,24 @@
 						numeroPartidas++;
 					}
 				});
+				var fecha = $("#fechaproveedor").val();
+				var cuenta = $("#cuentaproveedor").val();
+				var tipocambio = $("#tipocambioproveedor").val();
 				var proveedor = $("#proveedores").val();
 				var opcion = "registrarpagosproveedor";
 				console.log(pagos);
 				console.log(proveedor);
-				// $.ajax({
-				// 	method: "POST",
-				// 	url: "guardar.php",
-				// 	dataType: "json",
-				// 	data: {"opcion": opcion, "proveedor": proveedor, "pagos": JSON.stringify(pagos)},
-				// }).done( function( data ){
-				// 	console.log(data);
-				// 	$('#dt_pagos_proveedor').DataTable().ajax.reload();
-				// 	$("#total").val("");
-				// 	mostrar_mensaje(data);
-				// });
+				$.ajax({
+					method: "POST",
+					url: "guardar.php",
+					dataType: "json",
+					data: {"opcion": opcion, "fecha": fecha, "cuenta": cuenta, "tipocambio": tipocambio, "proveedor": proveedor, "pagos": JSON.stringify(pagos)},
+				}).done( function( data ){
+					console.log(data);
+					$('#dt_pagos_proveedor').DataTable().ajax.reload();
+					$("#total").val("");
+					mostrar_mensaje(data);
+				});
 			}
 		});
 
