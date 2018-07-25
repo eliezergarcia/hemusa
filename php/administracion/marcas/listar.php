@@ -1,5 +1,5 @@
-<?php 
-	
+<?php
+
 	include("../../conexion.php");
 	$query = "SELECT * FROM marcadeherramientas ORDER BY marca";
 	$resultado = mysqli_query($conexion_usuarios, $query);
@@ -8,7 +8,7 @@
 		die('Error');
 	}else{
 		while($data = mysqli_fetch_assoc($resultado)){
-			$arreglo["data"][] = array_map("utf8_encode", $data); 
+			$arreglo["data"][] = array_map("utf8_encode", $data);
 		}
 		echo json_encode($arreglo);
 	}

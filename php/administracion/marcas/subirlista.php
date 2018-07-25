@@ -39,6 +39,7 @@
 				                      <label class="btn-secondary" for="files"> <i class="mdi mdi-upload"></i><span>Selecciona un archivo...					</span></label> -->
                             </div>
                             <br>
+														<button type="button" name="button" id="ejecutar-query" class="btn btn-lg btn-primary">Ejecutar Query</button>
 
                             <!-- Tabla Lista de precios -->
                               <table id="example" class="ui celler table" width="100%">
@@ -338,6 +339,16 @@
 				$(".texto1").append("<h5>Errores: <h4 class='text-danger' id='filaserror'></h4></h5>");
 			}, 500);
 		});
+
+	$("#ejecutar-query").on("click", function (){
+		$.ajax({
+			method: "POST",
+			url: "query.php",
+			dataType: "json",
+		}).done(function (info){
+			console.log(info);
+		});
+	});
 
 	</script>
   <script type="text/javascript" src="<?php echo $ruta; ?>php/js/idioma_espanol.js"></script>

@@ -487,7 +487,7 @@ if ($tipomenu != 4){
 													</li>
                         </ul>
                       </li>
-											<li id="facturacion-menu" class="nav-item parent"><a class="nav-link" href="#" role="button" aria-expanded="false"><span class="icon far fa-file-alt"></span><span>Facturación</span></a>
+											<li id="facturacion-menu" class="nav-item parent"><a class="nav-link" href="#" role="button" aria-expanded="false"><span class="icon fas fa-file-alt"></span><span>Facturación</span></a>
                         <ul class="be-nav-tabs-sub be-sub-nav nav">
 													<li class="nav-item"><a id="remisiones-menu" class="nav-link" href="<?php echo $ruta; ?>php/ventas/remisiones/remisiones.php"><i class="fas fa-file"></i> Remisiones</a>
 													</li>

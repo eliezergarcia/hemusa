@@ -153,6 +153,7 @@
 																				<th>Fecha</th>
 																				<th>Costo</th>
 																				<th></th>
+																				<th></th>
 																			</tr>
 																		</thead>
 																	</table>
@@ -489,6 +490,49 @@
 				</div>
 			</div>
 
+		<!-- Modal Editar Partida -->
+      <form action="" method="POST" id="frmEditarPartida">
+        <div class="modal fade colored-header colored-header-primary" id="modalEditarHerrmientaSinRecibido" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Información de partida</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <div class="row justify-content-center">
+                  <input type="hidden" name="idpartida" id="idpartida" value="">
+                  <div class="col-12 justify-content-center align-items-end">
+                    <div class="col row form-group justify-content-center">
+                      <label for="pedimento" class="col">Pedimento:</label>
+                      <input type="text" class="form-control form-control-sm col" name="pedimento" id="pedimento">
+                    </div>
+                    <div class="col row form-group justify-content-center">
+                      <label for="folio" class="col">Folio:</label>
+                      <input type="text" class="form-control form-control-sm col" name="folio" id="folio">
+                    </div>
+                    <div class="col row form-group justify-content-center">
+                      <label for="facturaproveedor" class="col">Factura proveedor:</label>
+                      <input type="text" class="form-control form-control-sm col" name="facturaproveedor" id="facturaproveedor">
+                    </div>
+                    <div class="col row form-group justify-content-center">
+                      <label for="entrada" class="col">Entrada:</label>
+                      <input type="text" class="form-control form-control-sm col" name="entrada" id="entrada">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer invoice-footer">
+                <button type="button" class="btn btn-lg btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-lg btn-primary">Guardar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+
 			<div id="mod-success" tabindex="-1" role="dialog" style="" class="modal fade" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog">
             <div class="modal-header">
@@ -821,6 +865,11 @@
 						}else{
 							return "";
 						}
+					}
+				},
+				{"data": null, "sortable": false,
+					"render": function(cantidad){
+						return "<div class='invoice-footer'><button class='editarHerramienta btn btn-lg btn-primary'  data-toggle='modal' data-target='#modalEditarHerrmientaSinRecibido'><i class='fas fa-edit'></i></button></div>";
 					}
 				}
       ],
