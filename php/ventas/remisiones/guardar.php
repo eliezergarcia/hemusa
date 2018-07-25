@@ -871,10 +871,10 @@
 	}
 
 	function guardar_factura($folio, $remision, $total, $status, $fecha, $tipoDocumento, $moneda, $uidfactura, $uuidfactura, $cliente, $conexion_usuarios){
-		$query = "INSERT INTO facturas (folio, tipoDocumento, remision, total, status, moneda, fecha, UID, UUID, cliente) VALUES ('$folio', '$tipoDocumento', '$remision', '$total', '$status', '$moneda', '$fecha', '$uidfactura', '$uuidfactura', '$cliente')";
-		$resultado = mysqli_query($conexion_usuarios, $query);
 		$fecha = date("Y-m-d");
 		$folio = str_replace("H ","",$folio);
+		$query = "INSERT INTO facturas (folio, tipoDocumento, remision, total, status, moneda, fecha, UID, UUID, cliente) VALUES ('$folio', '$tipoDocumento', '$remision', '$total', '$status', '$moneda', '$fecha', '$uidfactura', '$uuidfactura', '$cliente')";
+		$resultado = mysqli_query($conexion_usuarios, $query);
 
 		$query = "UPDATE cotizacion SET factura = '$folio', facturaFecha = '$fecha' WHERE remision = '$remision'";
 		$resultado = mysqli_query($conexion_usuarios, $query);

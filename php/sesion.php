@@ -2,8 +2,8 @@
 
 	// Iniciamos la sesión
 	if (!isset($_SESSION)) {
-		ini_set("session.cookie_lifetime","5");
-		ini_set("session.gc_maxlifetime","5");
+		ini_set("session.cookie_lifetime","18000");
+		ini_set("session.gc_maxlifetime","18000");
 		session_start();
 	}
 

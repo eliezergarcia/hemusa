@@ -10,7 +10,7 @@
 		$idproveedor = $data['id'];
 	}
 
-	$query="SELECT DISTINCT factura_proveedor, orden_compra, pago_factura FROM utilidad_pedido WHERE fecha_orden_compra > '2017-01-01' AND proveedor ='$idproveedor' AND pagada != 'si' AND factura_proveedor != '0' ORDER BY fecha_orden_compra";
+	$query="SELECT DISTINCT factura_proveedor, orden_compra, pago_factura, fecha_orden_compra FROM utilidad_pedido WHERE fecha_orden_compra > '2017-01-01' AND proveedor ='$idproveedor' AND pagada != 'si' AND factura_proveedor != '0' ORDER BY fecha_orden_compra DESC LIMIT 10";
 	$resultado = mysqli_query($conexion_usuarios, $query);
 
 	if (mysqli_num_rows($resultado) < 1) {
@@ -32,12 +32,19 @@
 				}
 			}
 
+			$fecha = $data['fecha_orden_compra'];
+			$nuevafecha = strtotime ( '+30 day' , strtotime ( $fecha ) ) ;
+			$fechavencimiento = date ( 'd-m-Y' , $nuevafecha );
+			$fecha = date ( 'd-m-Y' , strtotime($data['fecha_orden_compra']));
+
 
 			$check = "<input type='checkbox' name='pedido' value='".$facturaproveedor."' onclick='cambiar_total()'>";
 
 			$arreglo["data"][] = array(
 				'factura' => $data['factura_proveedor'],
 				'ordencompra' => $data['orden_compra'],
+				'fecha' => $fecha,
+				'fechavencimiento' => $fechavencimiento,
 				'moneda' => $monedapedido,
 				'abonado' => $data['pago_factura'],
 				'pendiente' => round($total - $data['pago_factura'],2),

@@ -60,13 +60,9 @@
 			break;
 
 		case 'registrarpagosproveedor':
-			$proveedor = $_POST['cliente'];
-			$fecha = $_POST['fecha'];
-			$cuenta = $_POST['cuenta'];
-			$tipocambio = $_POST['tipocambio'];
-			$total = $_POST['total'];
+			$proveedor = $_POST['proveedor'];
 			$facturas = json_decode($_POST['pagos']);
-			registrar_pagos_proveedor($proveedor, $fecha, $cuenta, $total, $tipocambio, $facturas, $conexion_usuarios);
+			registrar_pagos_proveedor($proveedor, $facturas, $conexion_usuarios);
 			break;
 
 		case 'abonocliente':
@@ -350,37 +346,35 @@
 		verificar_resultado($resultado);
 	}
 
-	function registrar_pagos_proveedor($proveedor, $fecha, $cuenta, $total, $tipocambio, $facturas, $conexion_usuarios){
-		$total = $total * 1.16;
-		$query = "INSERT INTO pagos_oc (proveedor, monto, fecha, cuenta, tipo_cambio) VALUES ('$proveedor', '$total', '$fecha', '$cuenta', '$tipocambio')";
+	function registrar_pagos_proveedor($proveedor, $facturas, $conexion_usuarios){
+		$query = "SELECT id FROM contactos WHERE tipo='Proveedor' AND nombreEmpresa LIKE '%$cliente%' LIMIT 1";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 
-		$query = "SELECT moneda FROM contactos WHERE id = '$proveedor'";
-		$resultado = mysqli_query($conexion_usuarios, $query);
-		while($data = mysqli_fetch_assoc($resultado)){
-			$monedaproveedor = $data['moneda'];
+		if (mysqli_num_rows($resultado) < 1 || !$resultado) {
+			$informacion["respuesta"] = "ERROR";
+			$informacion["informacion"] = "Ocurrió un problema al buscar información del cliente.";
+		}else{
+			while($data = mysqli_fetch_assoc($resultado)){
+				$monedaproveedor = $data['moneda'];
+				$idproveedor = $data['id'];
+			}
 		}
 
-		foreach ($facturas as &$valor) {
-			$factura = $valor;
-
-			$query="SELECT moneda_pedido, costo_usd, costo_mn, cantidad FROM utilidad_pedido WHERE factura_proveedor = '$factura'";
-			$resultado = mysqli_query($conexion_usuarios, $query);
-
+		foreach ($facturas as &$factura) {
+			$query2="SELECT moneda_pedido, costo_usd, costo_mn, cantidad FROM utilidad_pedido WHERE factura_proveedor = '$factura'";
+			$res2 = mysqli_query($conexion_usuarios, $query2);
 			$total = 0;
-			while($data = mysqli_fetch_assoc($resultado)){
+			while($data2 = mysqli_fetch_assoc($res2)){
+				$monedapedido = $data['moneda_pedido'];
+
 				if ($monedaproveedor == "usd") {
-					$total = $total + ($data['costo_usd'] * $data['cantidad']);
+					$total = $total + ($data2['costo_usd'] * $data2['cantidad']);
 				}else{
-					$total = $total + ($data['costo_mn'] * $data['cantidad']);
+					$total = $total + ($data2['costo_mn'] * $data2['cantidad']);
 				}
 			}
-			$total = $total * 1.16;
-			$fecha = date("Y-m-d");
-			$query2="UPDATE utilidad_pedido SET pagada = 'si', pago_factura = '$total', fecha_pago = '$fecha', cuenta = '$cuenta', total_factura = '$total' WHERE factura_proveedor = '$factura'";
-			$resultado2 = mysqli_query($conexion_usuarios, $query2);
 		}
-		verificar_resultado($resultado);
+		// echo json_
 	}
 
 	function verificar_resultado($resultado){

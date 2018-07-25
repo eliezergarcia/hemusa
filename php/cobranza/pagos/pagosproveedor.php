@@ -152,6 +152,8 @@
 												</th>
 												<th>Factura</th>
 												<th>Orden Compra</th>
+												<th>Fecha</th>
+												<th>Fecha Vencimiento</th>
 												<th>Moneda</th>
 												<th>Abonado</th>
 												<th>Pendiente</th>
@@ -176,10 +178,10 @@
 									<div class="col-9">
 										<div class="row justify-content-end">
 											<div class="col-2">
-												<input id="abono-cliente" type="button" class="form-control btn btn-primary col-12" value="Abonar">
+												<input id="abono-proveedor" type="button" class="form-control btn btn-primary col-12" value="Abonar">
 											</div>
 											<div class="col-2">
-												<input id="registrar-pagos-cliente" type="button" class="form-control btn btn-success col-12" value="Registrar">
+												<input id="registrar-pagos-proveedor" type="button" class="form-control btn btn-success col-12" value="Registrar">
 											</div>
 										</div>
 									</div>
@@ -529,6 +531,8 @@
 					// {"data":"cliente"},
 					{"data":"factura"},
 					{"data":"ordencompra"},
+					{"data":"fecha"},
+					{"data":"fechavencimiento"},
 					{"data":"moneda"},
 					{"data":"abonado"},
 					{"data":"pendiente"},
@@ -635,7 +639,7 @@
 			});
 		});
 
-		$("#registrar-pagos-cliente").on("click", function(){
+		$("#registrar-pagos-proveedor").on("click", function(){
 			var verificar = 0;
 			$("input[name=pedido]").each(function (index) {
 				if($(this).is(':checked')){
@@ -655,29 +659,21 @@
 						numeroPartidas++;
 					}
 				});
-				var cliente = $("#clientes").val();
-				var fecha = $("#fechacliente").val();
-				var cuenta = $("#cuentacliente").val();
-				var tipocambio = $("#tipocambiocliente").val();
-				var opcion = 'registrarpagoscliente';
-				console.log(cliente);
-				console.log(numeroPartidas);
+				var proveedor = $("#proveedores").val();
+				var opcion = "registrarpagosproveedor";
 				console.log(pagos);
-				console.log(fecha);
-				console.log(cuenta);
-				console.log(tipocambio);
-				console.log(opcion);
-				$.ajax({
-					method: "POST",
-					url: "guardar.php",
-					dataType: "json",
-					data: {"cliente": cliente, "fecha": fecha, "cuenta": cuenta, "tipocambio": tipocambio, "opcion": opcion, "numeroPartidas": numeroPartidas, "pagos": JSON.stringify(pagos)},
-				}).done( function( data ){
-					console.log(data);
-					$('#dt_pagos_cliente').DataTable().ajax.reload();
-					$("#total").val("");
-					mostrar_mensaje(data);
-				});
+				console.log(proveedor);
+				// $.ajax({
+				// 	method: "POST",
+				// 	url: "guardar.php",
+				// 	dataType: "json",
+				// 	data: {"opcion": opcion, "proveedor": proveedor, "pagos": JSON.stringify(pagos)},
+				// }).done( function( data ){
+				// 	console.log(data);
+				// 	$('#dt_pagos_proveedor').DataTable().ajax.reload();
+				// 	$("#total").val("");
+				// 	mostrar_mensaje(data);
+				// });
 			}
 		});
 
