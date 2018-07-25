@@ -41,6 +41,36 @@
 			$idcliente = $_POST['idcliente'];
 			cuentas_banco($idcliente, $conexion_usuarios);
 			break;
+
+		case 'herramientasremisiones':
+			$remisiones = json_decode($_POST['remisiones']);
+			herramientas_remisiones($remisiones, $conexion_usuarios);
+			break;
+	}
+
+	function herramientas_remisiones($remisiones, $conexion_usuarios){
+		foreach ($remisiones as &$remision) {
+			$query = "SELECT * FROM cotizacionherramientas WHERE remision='$remision'";
+			$resultado = mysqli_query($conexion_usuarios, $query);
+
+			while($data = mysqli_fetch_assoc($resultado)){
+				$arreglo["data"][]=array(
+				'id' => $data['id'],
+				'indice' => $i,
+				'enviado' => $data['enviadoFecha'],
+				'recibido' => $data['recibidoFecha'],
+				'marca' => $data['marca'],
+				'modelo' => $data['modelo'],
+				'cantidad' => $data['cantidad'],
+				'precioUnitario' => "$ ".($data['precioLista'] + $data['flete']),
+				'descripcion' => utf8_encode($data['descripcion']),
+				'precioTotal' => "$ ".($data['precioLista'] + $data['flete']) * $data['cantidad']
+				);
+			}
+			$i++;
+		}
+		echo json_encode($arreglo, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_PARTIAL_OUTPUT_ON_ERROR);
+		mysqli_close($conexion_usuarios);
 	}
 
 	function buscar_clientes($conexion_usuarios){

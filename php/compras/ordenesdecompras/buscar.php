@@ -165,7 +165,7 @@
 						$almacen = 0;
 					}
 
-					if($moneda == "usd"){
+					if($monedaproveedor == "usd"){
 						$precioUnitario = $data['costo_usd'];
 						$precioTotal = $data['costo_usd'] * $data['cantidad'];
 						$utilidad = (($data['venta_usd'] - $data['costo_usd'])/$data['venta_usd']) * 100;

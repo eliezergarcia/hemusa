@@ -10,6 +10,7 @@
 	while($row = mysqli_fetch_array($resultado)){
 		$nombreContacto = $row['nombreEmpresa'];
 		$tipo = $row['tipo'];
+		$RFC = $row['RFC'];
 	}
 ?>
 <!DOCTYPE html>
@@ -234,6 +235,7 @@
 									<table id="dt_listar_remisiones" class="table table-striped table-hover display compact" cellspacing="0" width="100%">
 										<thead>
 											<tr>
+												<th></th>
 												<th>#</th>
 												<th>Remision</th>
 												<th>Ref. Cotización</th>
@@ -1322,6 +1324,7 @@
 
 		var listar_remisiones = function(){
 			var idcliente = "<?php echo $_REQUEST['id']; ?>";
+			var RFC = "<?php echo $RFC; ?>";
 			$("#listar_enpedido").slideUp("slow");
 			$("#listar_sinproveedor").slideUp("slow");
 			$("#listar_facturadonoentregado").slideUp("slow");
@@ -1339,6 +1342,11 @@
         "data": {"idcliente": idcliente, "opcion": opcion, "buscar": buscar},
       },
         "columns":[
+					{"data": null,
+						"render": function (data) {
+							return "<label class='custom-control custom-control-sm custom-checkbox'><input name='hremision' value='"+data.remision+"' class='custom-control-input' type='checkbox'><span class='custom-control-label'></span></label>";
+						},
+					},
           {"data": "indice"},
           {"data": "remision"},
 					{"data": "cotizacion"},
@@ -1398,6 +1406,39 @@
 			                }
 			            ]
 			        },
+							{
+								text: '<i class="fas fa-file-alt fa-sm" aria-hidden="true"></i> Generar factura',
+								"className": "btn btn-lg btn-space btn-primary",
+								action: function ( e, dt, node, config ) {
+									var verificar = 0;
+									$("input[name=hremision]").each(function (index) {
+										if($(this).is(':checked')){
+											verificar++;
+										}
+									});
+									if(verificar == 0){
+										alert("Debes de seleccionar al menos una partida!");
+									}else{
+										var remisiones = new Array();
+										$("input[name=hremision]").each(function (index) {
+											if($(this).is(':checked')){
+												remisiones.push($(this).val());
+											}
+										});
+										var opcion = "herramientasremisiones";
+										console.log(remisiones);
+										console.log(opcion);
+										$.ajax({
+											method: "POST",
+											url: "buscar.php",
+											dataType: "json",
+											data: {"remisiones": JSON.stringify(remisiones), "RFC": RFC, "opcion": opcion},
+										}).done( function( data ){
+											console.log(data);
+										});
+									}
+								}
+							}
 				]
 		    });
 				obtener_data_ver_remision("#dt_listar_remisiones tbody", table);
