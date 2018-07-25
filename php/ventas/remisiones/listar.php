@@ -181,8 +181,8 @@
 					'preciototal' => "$ ".($data['precioLista'] + $data['flete']) * $data['cantidad'],
 					'fechacompromiso' => $fechacompromiso,
 					'almacen' => $almacen,
-					'folio' => $folio
-					'factura' => $factura,
+					'folio' => $folio,
+					'factura' => $factura
 				);
 				$i++;
 			}
