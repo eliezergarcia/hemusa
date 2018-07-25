@@ -149,15 +149,18 @@
 
 				if ($data['factura'] != 0) {
 					$factura = $data['factura'];
-					$query5 = "SELECT factura FROM cotizacion WHERE id = '$factura'";
+					$query5 = "SELECT factura FROM cotizacion WHERE id ='$factura'";
 					$resultado5 = mysqli_query($conexion_usuarios, $query5);
-					if (mysqli_num_rows($resultado)<1) {
+
+					if (!$resultado5) {
 						$factura = $data['factura'];
 					}else{
 						while($data5 = mysqli_fetch_assoc($resultado5)){
 							$factura = $data5['factura'];
 						}
 					}
+				}else{
+					$factura = "";
 				}
 
 				$arreglo["data"][]=array(
@@ -178,8 +181,8 @@
 					'preciototal' => "$ ".($data['precioLista'] + $data['flete']) * $data['cantidad'],
 					'fechacompromiso' => $fechacompromiso,
 					'almacen' => $almacen,
-					'factura' => $factura,
 					'folio' => $folio
+					'factura' => $factura,
 				);
 				$i++;
 			}

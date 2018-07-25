@@ -484,15 +484,18 @@
 
 				if ($data['factura'] != 0) {
 					$factura = $data['factura'];
-					$query4 = "SELECT factura FROM cotizacion WHERE id = '$factura'";
+					$query4 = "SELECT factura FROM cotizacion WHERE id ='$factura'";
 					$resultado4 = mysqli_query($conexion_usuarios, $query4);
-					if (mysqli_num_rows($resultado)<1) {
+
+					if (!$resultado4) {
 						$factura = $data['factura'];
 					}else{
 						while($data4 = mysqli_fetch_assoc($resultado4)){
 							$factura = $data4['factura'];
 						}
 					}
+				}else{
+					$factura = "";
 				}
 
 				$query5 = "SELECT * FROM utilidad_pedido WHERE id_cotizacion_herramientas = '$idherramienta'";
@@ -586,19 +589,18 @@
 
 					if ($data['factura'] != 0) {
 						$factura = $data['factura'];
-						// $query4 = "SELECT factura FROM cotizacion WHERE id = '$factura'";
-						// $resultado4 = mysqli_query($conexion_usuarios, $query4);
-						// while($data4 = mysqli_fetch_assoc($resultado4)){
-						// 	$factura = $data4['factura'];
-						// }
+						$query4 = "SELECT factura FROM cotizacion WHERE id ='$factura'";
+						$resultado4 = mysqli_query($conexion_usuarios, $query4);
+
+						if (!$resultado4) {
+							$factura = $data['factura'];
+						}else{
+							while($data4 = mysqli_fetch_assoc($resultado4)){
+								$factura = $data4['factura'];
+							}
+						}
 					}else{
 						$factura = "";
-						// $cotizacionRef = $data['cotizacionRef'];
-						// $query4 = "SELECT factura FROM cotizacion WHERE ref = '$cotizacionRef'";
-						// $resultado4 = mysqli_query($conexion_usuarios, $query4);
-						// while($data4 = mysqli_fetch_assoc($resultado4)){
-						// 	$factura = $data4['factura'];
-						// }
 					}
 
 					$query5 = "SELECT * FROM utilidad_pedido WHERE id_cotizacion_herramientas = '$idherramienta'";
