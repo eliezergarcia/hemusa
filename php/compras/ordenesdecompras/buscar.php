@@ -290,6 +290,7 @@
 			$utilidad = (($total - $subtotal)/$total) * 100;
 
 			$informacion['totales'][] = array(
+				'moneda' => strtoupper($monedaproveedor),
 				'subtotal' => "$ ".round($subtotal, 2),
 				'flete' => "$ ".round($flete, 2),
 				'iva' => "$ ".round($iva, 2),
@@ -345,6 +346,7 @@
 				$utilidad = (($total - $subtotal)/$total) * 100;
 
 				$informacion['totales'][] = array(
+					'moneda' => strtoupper($monedaproveedor),
 					'subtotal' => "$ ".round($subtotal, 2),
 					'flete' => "$ ".round($flete, 2),
 					'iva' => "$ ".round($iva, 2),

@@ -428,6 +428,7 @@
         var rows = data.partidas;
 
         var columnstotales = [
+            {title: "MONEDA", dataKey: "moneda"},
             {title: "SUBTOTAL", dataKey: "subtotal"},
             {title: "FLETE", dataKey: "flete"},
             {title: "IVA (16%)", dataKey: "iva"},
@@ -490,7 +491,7 @@
 
         doc.autoTable(columnstotales, rowstotales, {
           theme: 'grid',
-          margin: {top: doc.autoTable.previous.finalY  + 15, right: 20, bottom: 20, left: 350},
+          margin: {top: doc.autoTable.previous.finalY  + 15, right: 20, bottom: 20, left: 300},
           tableWidth: 'auto',
           styles: {overflow: 'linebreak', cellPadding: 6, fontSize: 8, rowHeight: 15, pageBreak: 'always', columnWidth: 'auto'},
         });
