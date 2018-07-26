@@ -57,17 +57,19 @@
 			$id = $_POST['id'];
 			$descripcion = $_POST['descripcion'];
 			$claveSat = $_POST['claveSat'];
+			$unidad = $_POST['unidad'];
 			$noserie = $_POST['noserie'];
 			$cantidad = $_POST['cantidad'];
 			$fechacompromiso = $_POST['fechacompromiso'];
 			$proveedor = $_POST['proveedor'];
 			$entregado = $_POST['entregado'];
+			$pedimento = $_POST['pedimento'];
 			if (isset($_POST['split'])) {
 				$split = $_POST['split'];
 			}else{
 				$split = 0;
 			}
-			editarpartida($id, $descripcion, $claveSat, $noserie, $cantidad, $fechacompromiso, $proveedor, $split, $entregado, $conexion_usuarios);
+			editarpartida($id, $descripcion, $claveSat, $unidad, $noserie, $cantidad, $fechacompromiso, $proveedor, $split, $entregado, $pedimento, $conexion_usuarios);
 			break;
 
 		case 'agregarcontacto':
@@ -795,16 +797,16 @@
 		mysqli_close($conexion_usuarios);
 	}
 
-	function editarpartida($id, $descripcion, $claveSat, $noserie, $cantidad, $fechacompromiso, $proveedor, $split, $entregado, $conexion_usuarios){
+	function editarpartida($id, $descripcion, $claveSat, $unidad, $noserie, $cantidad, $fechacompromiso, $proveedor, $split, $entregado, $pedimento, $conexion_usuarios){
 		if($proveedor == "None"){
 			$fecha = "0000-00-00";
 		}else{
 			$fecha = date("Y-m-d");
 		}
-		$query = "UPDATE utilidad_pedido SET fecha_entregado = '$entregado' WHERE id_cotizacion_herramientas =$id";
+		$query = "UPDATE utilidad_pedido SET fecha_entregado = '$entregado', Pedimento='$pedimento' WHERE id_cotizacion_herramientas =$id";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 
-		$query = "UPDATE cotizacionherramientas SET descripcion='$descripcion', ClaveProductoSAT='$claveSat', NoSerie='$noserie', cantidad='$cantidad', fechacompromiso='$fechacompromiso', Proveedor='$proveedor', proveedorFecha='$fecha', Entregado = '$entregado' WHERE id =$id";
+		$query = "UPDATE cotizacionherramientas SET descripcion='$descripcion', ClaveProductoSAT='$claveSat', Unidad='$unidad', NoSerie='$noserie', cantidad='$cantidad', fechacompromiso='$fechacompromiso', Proveedor='$proveedor', proveedorFecha='$fecha', Entregado = '$entregado', Pedimento='$pedimento' WHERE id =$id";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 		if (!$resultado) {
 			$informacion["respuesta"] = "ERROR";
@@ -833,6 +835,7 @@
 						$NoSerie = $data['NoSerie'];
 						$fechaCompromiso = $data['fechaCompromiso'];
 						$Pedido = $data['Pedido'];
+						$pedidoFecha = $data['pedidoFecha'];
 						$fechaPedido = $data['fechaPedido'];
 						$Proveedor = $data['Proveedor'];
 						$ordenCompra = $data['ordenCompra'];
@@ -843,7 +846,7 @@
 						$Tiempo_Entrega = $data['Tiempo_Entrega'];
 						$remision = $data['remision'];
 					}
-					$query = "INSERT INTO cotizacionherramientas (cliente, cotizacionNo, cotizacionRef, marca, modelo, descripcion, precioLista, flete, cantidad, Unidad, ClaveProductoSAT, proveedorFlete, NoSerie, fechaCompromiso, Pedido, fechaPedido, ordenCompra, numeroPedido, Proveedor, moneda, referencia_interna, lugar_cotizacion, Tiempo_Entrega, remision) VALUES ('$cliente', '$cotizacionNo', '$cotizacionRef', '$marca', '$modelo', '$descripcion', '$precioLista', '$flete', '$split', '$Unidad', '$ClaveProductoSAT', '$proveedorFlete', '$NoSerie', '$fechaCompromiso', '$Pedido', '$fechaPedido', '$ordenCompra', '$numeroPedido', '$Proveedor', '$moneda', '$referencia_interna', '$lugar_cotizacion', '$Tiempo_Entrega', '$remision')";
+					$query = "INSERT INTO cotizacionherramientas (cliente, cotizacionNo, cotizacionRef, marca, modelo, descripcion, precioLista, flete, cantidad, Unidad, ClaveProductoSAT, proveedorFlete, NoSerie, fechaCompromiso, Pedido, pedidoFecha, fechaPedido, ordenCompra, numeroPedido, Proveedor, moneda, referencia_interna, lugar_cotizacion, Tiempo_Entrega, remision) VALUES ('$cliente', '$cotizacionNo', '$cotizacionRef', '$marca', '$modelo', '$descripcion', '$precioLista', '$flete', '$split', '$Unidad', '$ClaveProductoSAT', '$proveedorFlete', '$NoSerie', '$fechaCompromiso', '$Pedido', '$pedidoFecha', '$fechaPedido', '$ordenCompra', '$numeroPedido', '$Proveedor', '$moneda', '$referencia_interna', '$lugar_cotizacion', '$Tiempo_Entrega', '$remision')";
 					$resultado = mysqli_query($conexion_usuarios, $query);
 					if (!$resultado) {
 						$informacion["respuesta"] = "ERROR";

@@ -64,6 +64,7 @@
 			$id = $_POST['id'];
 			$descripcion = $_POST['descripcion'];
 			$claveSat = $_POST['claveSat'];
+			$unidad = $_POST['unidad'];
 			$noserie = $_POST['noserie'];
 			// $cantidad = $_POST['cantidad'];
 			$fechacompromiso = $_POST['fechacompromiso'];
@@ -75,7 +76,7 @@
 			}
 			$entregado = $_POST['entregado'];
 			$pedimento = $_POST['pedimento'];
-			editarpartida($id, $descripcion, $claveSat, $noserie, $fechacompromiso, $proveedor, $split, $pedimento, $entregado, $conexion_usuarios);
+			editarpartida($id, $descripcion, $claveSat, $unidad, $noserie, $fechacompromiso, $proveedor, $split, $pedimento, $entregado, $conexion_usuarios);
 			break;
 
 		case 'guardarfactura':
@@ -597,16 +598,16 @@
 		mysqli_close($conexion_usuarios);
 	}
 
-	function editarpartida($id, $descripcion, $claveSat, $noserie, $fechacompromiso, $proveedor, $split, $pedimento, $entregado, $conexion_usuarios){
+	function editarpartida($id, $descripcion, $claveSat, $unidad, $noserie, $fechacompromiso, $proveedor, $split, $pedimento, $entregado, $conexion_usuarios){
 		$query = "UPDATE utilidad_pedido SET Pedimento = '$pedimento', fecha_entregado = '$entregado' WHERE id_cotizacion_herramientas =$id";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 
 		if ($proveedor == "ALMACEN") {
 			$fecha = date("Y-m-d");
-			$query = "UPDATE cotizacionherramientas SET descripcion='$descripcion', 'ClaveProductoSAT='$claveSat', NoSerie='$noserie', fechaCompromiso='$fechacompromiso', Proveedor='$proveedor', proveedorFecha='$fecha', enviadoFecha='$fecha', recibidoFecha='$fecha', Pedimento = '$pedimento', Entregado='$entregado' WHERE id =$id";
+			$query = "UPDATE cotizacionherramientas SET descripcion='$descripcion', 'ClaveProductoSAT='$claveSat', Unidad='$unidad', NoSerie='$noserie', fechaCompromiso='$fechacompromiso', Proveedor='$proveedor', proveedorFecha='$fecha', enviadoFecha='$fecha', recibidoFecha='$fecha', Pedimento = '$pedimento', Entregado='$entregado' WHERE id =$id";
 		}else{
 			$fecha = date("Y-m-d");
-			$query = "UPDATE cotizacionherramientas SET descripcion='$descripcion', ClaveProductoSAT='$claveSat', NoSerie='$noserie', fechaCompromiso='$fechacompromiso', Proveedor='$proveedor', proveedorFecha='$fecha', Pedimento = '$pedimento', Entregado='$entregado' WHERE id =$id";
+			$query = "UPDATE cotizacionherramientas SET descripcion='$descripcion', ClaveProductoSAT='$claveSat', Unidad='$unidad', NoSerie='$noserie', fechaCompromiso='$fechacompromiso', Proveedor='$proveedor', proveedorFecha='$fecha', Pedimento = '$pedimento', Entregado='$entregado' WHERE id =$id";
 		}
 
 		$resultado = mysqli_query($conexion_usuarios, $query);

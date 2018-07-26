@@ -168,6 +168,8 @@
 					'indice' => $i,
 					'check' => $check,
 					'claveSat' => $data['ClaveProductoSAT'],
+					'unidad' => $data['Unidad'],
+					'pedimento' => $data['Pedimento'],
 					'enviado' => $data['enviadoFecha'],
 					'recibido' => $data['recibidoFecha'],
 					'entregado' => $entregado,

@@ -424,7 +424,7 @@
 				$cliente = $data['nombreEmpresa'];
 			}
 
-			$query = "SELECT * FROM cotizacion WHERE (remision LIKE '%$buscar%' OR ref LIKE '%$buscar%' OR contacto LIKE '%$buscar%' OR remisionFecha LIKE '%$buscar%') AND Comentario='' AND remision!=0 AND remisionFactura=0 AND cliente='$idcliente' ORDER BY remision DESC ";
+			$query = "SELECT * FROM cotizacion WHERE (remision LIKE '%$buscar%' OR ref LIKE '%$buscar%' OR contacto LIKE '%$buscar%' OR remisionFecha LIKE '%$buscar%') AND Comentario='' AND remision!=0 AND remisionFactura=0 AND cliente='$idcliente' AND fecha > '2017-01-01' ORDER BY remision DESC ";
 			$resultado = mysqli_query($conexion_usuarios, $query);
 			$arreglo = array();
 

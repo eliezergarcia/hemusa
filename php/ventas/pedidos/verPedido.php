@@ -213,6 +213,8 @@
 													<th>Remisión</th>
 													<th>Factura</th>
 													<th>Folio</th>
+													<th>Unidad</th>
+													<th>Pedimento</th>
 													<!-- <th>Entregado <input type="checkbox" class="btn btn-outline-primary" name="sel" onclick="seleccionartodo()"></th> -->
 													<th>Editar</th>
 												</tr>
@@ -312,9 +314,37 @@
 						      			<label for="descripcion" class="control-label col-4">Descripción</label>
 						      			<input type="text" class="form-control form-control-sm col-7" name="descripcion" id="descripcion">
 						      		</div>
-							  	<div class="form-group row">
+							  		<div class="form-group row">
 					      			<label for="claveSat" class="control-label col-4">Clave SAT</label>
 					      			<input type="text" class="form-control form-control-sm col-7" name="claveSat" id="claveSat">
+					      		</div>
+										<div class="form-group row">
+					      			<label for="claveSat" class="control-label col-4">Unidad</label>
+											<select class="form-control form-control-sm col-7" name="unidad" id="unidad">
+												<option>PIEZA</option>
+												<option>PAR</option>
+												<option>KIT</option>
+												<option>CAJA</option>
+												<option>CONJUNTO</option>
+												<option>TARIFA</option>
+												<option>UNIDAD DE SERVICIO</option>
+												<option>BLOQUE</option>
+												<option>LITRO</option>
+												<option>GALÓN</option>
+												<option>PAQUETE</option>
+												<option>ELEMENTO</option>
+												<option>GRAMO</option>
+												<option>KILOGRAMO</option>
+												<option>CENTRIMETRO CUADRADO</option>
+												<option>PULGADA</option>
+												<option>METRO</option>
+												<option>METRO CUADRADO</option>
+												<option>METRO CUBICO</option>
+												<option>PIE</option>
+												<option>YARDA</option>
+												<option>MILLA</option>
+												<option>VARIEDAD</option>
+											</select>
 					      		</div>
 					      		<div class="form-group row">
 					      			<label for="noserie" class="control-label col-4">No. Serie</label>
@@ -893,6 +923,8 @@
 						{"data": "remision"},
 						{"data": "factura"},
 						{"data": "folio"},
+						{"data": "unidad"},
+						{"data": "pedimento"},
 						{"defaultContent": "<div class='invoice-footer'><button type='button' class='editar btn btn-lg btn-primary' data-toggle='modal' data-target='#modalEditar'><i class='fas fa-edit fa-sm' aria-hidden='true'></i></button></div>"}
 					],
 					"columnDefs": [
@@ -911,7 +943,9 @@
 						{ "width": "2%", "targets": 13 },
 						{ "width": "5%", "targets": 14 },
 						{ "visible": false, "targets": 15 },
-						{ "width": "5%", "targets": 16 },
+						{ "visible": false, "targets": 16 },
+						{ "visible": false, "targets": 17 },
+						{ "width": "5%", "targets": 18 },
 					],
 					"order": false,
 	        "lengthChange": false,
@@ -1039,6 +1073,7 @@
 				console.log(data);
 				$("#frmEditar #id").val(data.id);
 				$("#frmEditar #descripcion").val(data.descripcion);
+				$("#frmEditar #unidad").val(data.unidad).change();
 				$("#frmEditar #claveSat").val(data.claveSat);
 				$("#frmEditar #noserie").val(data.noserie);
 				$("#frmEditar #cantidad").val(data.cantidad);

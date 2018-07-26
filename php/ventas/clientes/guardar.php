@@ -141,10 +141,68 @@
 			eliminar_cuenta($idcuenta, $conexion_usuarios);
 			break;
 
+		case 'guardarfactura':
+			$folio = $_POST['folio'];
+			$remisiones = json_decode($_POST['remisiones']);
+			$total = $_POST['total'];
+			$status = $_POST['status'];
+			$fecha = $_POST['fecha'];
+			$cliente = $_POST['cliente'];
+			$tipoDocumento = $_POST['tipoDocumento'];
+			$moneda = $_POST['moneda'];
+			$uidfactura = $_POST['UIDFactura'];
+			$uuidfactura = $_POST['UUIDFactura'];
+			guardar_factura($folio, $remisiones, $total, $status, $fecha, $tipoDocumento, $moneda, $uidfactura, $uuidfactura, $cliente, $conexion_usuarios);
+			break;
+
 		default:
 			$informacion["respuesta"] = "OPCION_VACIA";
 			echo json_encode($informacion);
 			break;
+	}
+
+	function guardar_factura($folio, $remisiones, $total, $status, $fecha, $tipoDocumento, $moneda, $uidfactura, $uuidfactura, $cliente, $conexion_usuarios){
+		$folio = str_replace("H ","",$folio);
+
+		$ordenpedido = "";
+		foreach ($remisiones as &$remision) {
+			$ordenpedido = $remision.", ".$ordenpedido;
+		}
+
+		$query = "INSERT INTO facturas (folio, tipoDocumento, remision, total, moneda, status, fecha, UID, UUID, cliente) VALUES ('$folio', '$tipoDocumento', '$ordenpedido', '$total','$moneda', '$status', '$fecha', '$uidfactura', '$uuidfactura', '$cliente')";
+		$resultado = mysqli_query($conexion_usuarios, $query);
+		$fecha = date("Y-m-d");
+		foreach ($remisiones as &$remision) {
+			$query = "UPDATE cotizacion SET factura = '$folio', facturaFecha = '$fecha' WHERE remision = '$remision'";
+			$resultado = mysqli_query($conexion_usuarios, $query);
+
+			if (!$resultado) {
+				$informacion["respuesta"] = "ERROR";
+				$informacion["informacion"] = "Ocurrió un problema al guardar la factura '".$folio."'!";
+			}else{
+				$query = "SELECT * FROM cotizacionherramientas WHERE remision = '$remision'";
+				$resultado = mysqli_query($conexion_usuarios, $query);
+				$fecha = date("Y-m-d");
+				while($data = mysqli_fetch_assoc($resultado)){
+					$id = $data['id'];
+					$query2 = "UPDATE cotizacionherramientas SET factura='$folio' WHERE remision = '$remision'";
+					$resultado2 = mysqli_query($conexion_usuarios, $query2);
+
+					$query2 = "UPDATE utilidad_pedido SET factura_hemusa='$folio' WHERE id_cotizacion_herramientas = '$id'";
+					$resultado2 = mysqli_query($conexion_usuarios, $query2);
+				}
+			}
+		}
+
+		if (!$resultado) {
+			$informacion["respuesta"] = "ERROR";
+			$informacion["informacion"] = "Ocurrió un problema al modificar la información de las partidas.";
+		}else{
+			$informacion["respuesta"] = "BIEN";
+			$informacion["informacion"] = "La factura '".$folio."' se guardó en el sistema correctamente.";
+		}
+		echo json_encode($informacion);
+		mysqli_close($conexion_usuarios);
 	}
 
 	function agregar_cuenta($idcliente, $cuenta, $moneda, $conexion_usuarios){
