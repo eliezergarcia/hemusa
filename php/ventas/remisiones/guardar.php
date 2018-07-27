@@ -90,6 +90,7 @@
 
 		case 'guardarfactura':
 			$folio = $_POST['folio'];
+			$ordenpedido = $_POST['ordenpedido'];
 			$remision = $_POST['remision'];
 			$total = $_POST['total'];
 			$status = $_POST['status'];
@@ -99,7 +100,7 @@
 			$moneda = $_POST['moneda'];
 			$uidfactura = $_POST['UIDFactura'];
 			$uuidfactura = $_POST['UUIDFactura'];
-			guardar_factura($folio, $remision, $total, $status, $fecha, $tipoDocumento, $moneda, $uidfactura, $uuidfactura, $cliente, $conexion_usuarios);
+			guardar_factura($folio, $ordenpedido, $remision, $total, $status, $fecha, $tipoDocumento, $moneda, $uidfactura, $uuidfactura, $cliente, $conexion_usuarios);
 			break;
 
 		case 'quitarstock':
@@ -873,14 +874,22 @@
 		mysqli_close($conexion_usuarios);
 	}
 
-	function guardar_factura($folio, $remision, $total, $status, $fecha, $tipoDocumento, $moneda, $uidfactura, $uuidfactura, $cliente, $conexion_usuarios){
+	function guardar_factura($folio, $ordenpedido, $remision, $total, $status, $fecha, $tipoDocumento, $moneda, $uidfactura, $uuidfactura, $cliente, $conexion_usuarios){
 		$fecha = date("Y-m-d");
 		$folio = str_replace("H ","",$folio);
-		$query = "INSERT INTO facturas (folio, tipoDocumento, remision, total, status, moneda, fecha, UID, UUID, cliente) VALUES ('$folio', '$tipoDocumento', '$remision', '$total', '$status', '$moneda', '$fecha', '$uidfactura', '$uuidfactura', '$cliente')";
-		$resultado = mysqli_query($conexion_usuarios, $query);
+		if ($ordenpedido == "") {
+			$query = "INSERT INTO facturas (folio, tipoDocumento, remision, total, status, moneda, fecha, UID, UUID, cliente) VALUES ('$folio', '$tipoDocumento', '$remision', '$total', '$status', '$moneda', '$fecha', '$uidfactura', '$uuidfactura', '$cliente')";
+			$resultado = mysqli_query($conexion_usuarios, $query);
 
-		$query = "UPDATE cotizacion SET factura = '$folio', facturaFecha = '$fecha' WHERE remision = '$remision'";
-		$resultado = mysqli_query($conexion_usuarios, $query);
+			$query = "UPDATE cotizacion SET factura = '$folio', facturaFecha = '$fecha' WHERE remision = '$remision'";
+			$resultado = mysqli_query($conexion_usuarios, $query);
+		}else{
+			$query = "INSERT INTO facturas (folio, tipoDocumento, ordenpedido, remision, total, status, moneda, fecha, UID, UUID, cliente) VALUES ('$folio', '$tipoDocumento', '$ordenpedido', '$remision', '$total', '$status', '$moneda', '$fecha', '$uidfactura', '$uuidfactura', '$cliente')";
+			$resultado = mysqli_query($conexion_usuarios, $query);
+
+			$query = "UPDATE cotizacion SET factura = '$folio', facturaFecha = '$fecha' WHERE remision = '$remision'";
+			$resultado = mysqli_query($conexion_usuarios, $query);
+		}
 
 		if (!$resultado) {
 			$informacion["respuesta"] = "ERROR";
