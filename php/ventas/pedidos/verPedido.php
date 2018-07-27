@@ -977,6 +977,10 @@
       			"<'row be-datatable-header'<'col-sm-6'B><'col-sm-6 text-right'f>>" +
       			"<'row be-datatable-body'<'col-sm-12'tr>>",
 					"createdRow": function ( row, data, index ) {
+						if ( data.enviado == '0000-00-00' && data.recibido == '0000-00-00' ) {
+							$('td', row).eq(2).addClass('text-danger');
+							$('td', row).eq(3).addClass('text-danger');
+						}
 						if ( data.enviado != '0000-00-00' && data.recibido == '0000-00-00' ) {
 							$('td', row).eq(2).addClass('table-text-enviado');
 							$('td', row).eq(3).addClass('table-text-enviado');
@@ -986,9 +990,9 @@
 							$('td', row).eq(2).addClass('table-text-recibido');
 							$('td', row).eq(3).addClass('table-text-recibido');
 						}
-						if ( data.enviado == '0000-00-00' && data.recibido == '0000-00-00' ) {
-							$('td', row).eq(2).addClass('text-danger');
-							$('td', row).eq(3).addClass('text-danger');
+						if ( data.enviado != '0000-00-00' && data.recibido != '0000-00-00' && data.entregado != '0000-00-00') {
+							$('td', row).eq(2).addClass('text-primary');
+							$('td', row).eq(3).addClass('text-primary');
 						}
 					},
 					"buttons":[

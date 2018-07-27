@@ -1935,6 +1935,9 @@
 		}
 
 		var obtener_data_ver_herramienta = function(tbody, table){
+			$('#dt_listar_enpedido tbody').off('click');
+			$('#dt_listar_sinproveedor tbody').off('click');
+			$('#dt_listar_sinentregar tbody').off('click');
 			$(tbody).on("click", "button.verherramienta", function(){
 				var data = table.row( $(this).parents("tr") ).data();
 				console.log(data);

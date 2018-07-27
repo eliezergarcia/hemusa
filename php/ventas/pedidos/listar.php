@@ -477,7 +477,8 @@
 				$check = '<input type="checkbox" class="btn btn-outline-primary" name="hproveedor" value="'.$data['id'].'">';
 
 				if($data['Entregado'] == "0000-00-00"){
-					$entregado = '<input type="checkbox" class="btn btn-outline-primary" name="hentregado" value="'.$data['id'].'">';
+					// $entregado = '<input type="checkbox" class="btn btn-outline-primary" name="hentregado" value="'.$data['id'].'">';
+					$entregado = $data['Entregado'];
 				}else{
 					$entregado = $data['Entregado'];
 				}

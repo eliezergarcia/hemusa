@@ -147,7 +147,7 @@
 											<tr>
 												<th>
 													<label class="custom-control custom-control-sm custom-checkbox">
-														<input class="custom-control-input" name="seleccionartodo" id="seleccionartodo" type="checkbox"><span class="custom-control-label"></span>
+														<input class="custom-control-input" name="seleccionartodo" id="seleccionartodo" type="checkbox" onclick="cambiar_total()"><span class="custom-control-label"></span>
 													</label>
 												</th>
 												<th>Factura</th>
