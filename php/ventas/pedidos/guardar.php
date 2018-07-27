@@ -604,7 +604,7 @@
 
 		if ($proveedor == "ALMACEN") {
 			$fecha = date("Y-m-d");
-			$query = "UPDATE cotizacionherramientas SET descripcion='$descripcion', 'ClaveProductoSAT='$claveSat', Unidad='$unidad', NoSerie='$noserie', fechaCompromiso='$fechacompromiso', Proveedor='$proveedor', proveedorFecha='$fecha', enviadoFecha='$fecha', recibidoFecha='$fecha', Pedimento = '$pedimento', Entregado='$entregado' WHERE id =$id";
+			$query = "UPDATE cotizacionherramientas SET descripcion='$descripcion', ClaveProductoSAT='$claveSat', Unidad='$unidad', NoSerie='$noserie', fechaCompromiso='$fechacompromiso', Proveedor='$proveedor', proveedorFecha='$fecha', enviadoFecha='$fecha', recibidoFecha='$fecha', Pedimento = '$pedimento', Entregado='$entregado' WHERE id =$id";
 		}else{
 			$fecha = date("Y-m-d");
 			$query = "UPDATE cotizacionherramientas SET descripcion='$descripcion', ClaveProductoSAT='$claveSat', Unidad='$unidad', NoSerie='$noserie', fechaCompromiso='$fechacompromiso', Proveedor='$proveedor', proveedorFecha='$fecha', Pedimento = '$pedimento', Entregado='$entregado' WHERE id =$id";
