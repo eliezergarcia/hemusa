@@ -165,7 +165,7 @@
 						$almacen = 0;
 					}
 
-					if($monedaproveedor == "usd"){
+					if($monedaoc == "usd"){
 						$precioUnitario = $data['costo_usd'];
 						$precioTotal = $data['costo_usd'] * $data['cantidad'];
 						$utilidad = (($data['venta_usd'] - $data['costo_usd'])/$data['venta_usd']) * 100;
@@ -187,7 +187,9 @@
 						'precioTotal' => "$ ".round($precioTotal,2),
 						'almacen' => $almacen,
 						'fechaCompromiso' => "",
-						'utilidad' => "% ".round($utilidad,2)
+						'utilidad' => "% ".round($utilidad,2),
+						"tipo" => 1,
+						'monedaoc' => $monedaoc
 					);
 					$i++;
 				}
@@ -250,7 +252,8 @@
 						'precioTotal' => "$ ".round($precioTotal,2),
 						'almacen' => $almacen,
 						'fechaCompromiso' => "",
-						'utilidad' => "% ".round($utilidad,2)
+						'utilidad' => "% ".round($utilidad,2),
+						"tipo" => 2
 					);
 					$i++;
 				}
@@ -290,7 +293,7 @@
 			$utilidad = (($total - $subtotal)/$total) * 100;
 
 			$informacion['totales'][] = array(
-				'moneda' => strtoupper($monedaproveedor),
+				'moneda' => strtoupper($monedaoc),
 				'subtotal' => "$ ".round($subtotal, 2),
 				'flete' => "$ ".round($flete, 2),
 				'iva' => "$ ".round($iva, 2),
@@ -346,7 +349,7 @@
 				$utilidad = (($total - $subtotal)/$total) * 100;
 
 				$informacion['totales'][] = array(
-					'moneda' => strtoupper($monedaproveedor),
+					'moneda' => strtoupper($monedaoc),
 					'subtotal' => "$ ".round($subtotal, 2),
 					'flete' => "$ ".round($flete, 2),
 					'iva' => "$ ".round($iva, 2),
