@@ -23,10 +23,10 @@
 			$ordencompra = $_POST['ordencompra'];
 			$pedimento = $_POST['pedimento'];
 			$folio = $_POST['folio'];
-			$facturaproveedor = $_POST['facturaproveedor'];
-			$entrada = $_POST['entrada'];
+			// $facturaproveedor = $_POST['facturaproveedor'];
+			// $entrada = $_POST['entrada'];
 			$datapartidas = json_decode($_POST['herramienta']);
-			actualizar($ordencompra, $pedimento, $folio, $facturaproveedor, $entrada, $datapartidas, $conexion_usuarios);
+			actualizar($ordencompra, $pedimento, $folio, $datapartidas, $conexion_usuarios);
 			break;
 
 		case 'editarpartidadescripcion':
@@ -145,7 +145,7 @@
 					}
 
 					$stock = $stock + $cantduplicar;
-					
+
 					$query = "UPDATE productos SET enReserva='$stock' WHERE marca ='$marca' AND ref ='$modelo'";
 					$resultado = mysqli_query($conexion_usuarios, $query);
 
@@ -347,14 +347,14 @@
 		mysqli_close($conexion_usuarios);
 	}
 
-	function actualizar($ordencompra, $pedimento, $folio, $facturaproveedor, $entrada, $datapartidas, $conexion_usuarios){
+	function actualizar($ordencompra, $pedimento, $folio, $datapartidas, $conexion_usuarios){
 		$fecha = date("Y-m-d");
 		foreach ($datapartidas as &$valor) {
 			$id = $valor;
-			$query = "UPDATE cotizacionherramientas SET FechaPedimento = '$fecha', Pedimento = '$pedimento', foliopedimento = '$folio', facturaproveedor = '$facturaproveedor', entrada = '$entrada' WHERE id = '$id'";
+			$query = "UPDATE cotizacionherramientas SET FechaPedimento = '$fecha', Pedimento = '$pedimento', foliopedimento = '$folio' WHERE id = '$id'";
 			$resultado = mysqli_query($conexion_usuarios, $query);
 
-			$query = "UPDATE utilidad_pedido SET Pedimento = '$pedimento', folio = '$folio', factura_proveedor = '$facturaproveedor', entrada = '$entrada' WHERE id_cotizacion_herramientas = '$id'";
+			$query = "UPDATE utilidad_pedido SET Pedimento = '$pedimento', folio = '$folio' WHERE id_cotizacion_herramientas = '$id'";
 			$resultado = mysqli_query($conexion_usuarios, $query);
 		}
 

@@ -198,14 +198,14 @@
                       <label for="folio" class="col">Folio:</label>
                       <input type="text" class="form-control form-control-sm col" name="folio" id="folio">
                     </div>
-                    <div class="col row form-group justify-content-center">
+                    <!-- <div class="col row form-group justify-content-center">
                       <label for="facturaproveedor" class="col">Factura proveedor:</label>
                       <input type="text" class="form-control form-control-sm col" name="facturaproveedor" id="facturaproveedor">
                     </div>
                     <div class="col row form-group justify-content-center">
                       <label for="entrada" class="col">Entrada:</label>
                       <input type="text" class="form-control form-control-sm col" name="entrada" id="entrada">
-                    </div>
+                    </div> -->
                   </div>
                 </div>
               </div>
@@ -424,14 +424,14 @@
           }else{
             var pedimento = $("#frmActualizarDatos #pedimento").val();
             var folio = $("#frmActualizarDatos #folio").val();
-            var facturaproveedor = $("#frmActualizarDatos #facturaproveedor").val();
-            var entrada = $("#frmActualizarDatos #entrada").val();
+            // var facturaproveedor = $("#frmActualizarDatos #facturaproveedor").val();
+            // var entrada = $("#frmActualizarDatos #entrada").val();
             var opcion = "actualizar";
             $(".modal").modal("hide");
             $.ajax({
               method: "POST",
               url: "guardar.php",
-              data: {"herramienta": JSON.stringify(herramienta), "pedimento": pedimento, "folio": folio, "facturaproveedor": facturaproveedor, "entrada": entrada, "opcion": opcion}
+              data: {"herramienta": JSON.stringify(herramienta), "pedimento": pedimento, "folio": folio, "opcion": opcion}
             }).done( function( info ){
               var json_info = JSON.parse( info );
               mostrar_mensaje(json_info);
