@@ -50,6 +50,7 @@
 									  	</button>
 									  	<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 									    	<button class="dropdown-item" type="button" data-toggle="modal" data-target="#modalEditarInformacion">Información de cliente</button>
+												<button class="dropdown-item" type="button" data-toggle="modal" data-target="#modalAgregarContacto">Agregar contacto</button>
 												<button class="dropdown-item" type="button" data-toggle="modal" data-target="#modalCuentasBanco">Cuentas de banco</button>
 									    	<button class="dropdown-item" type="button" data-toggle="modal" data-target="#modalNuevaRemision">Nueva Remision</button>
 									    	<button class="dropdown-item" type="button" data-toggle="modal" data-target="#modalNuevaCotizacion">Nueva Cotizacion</button>
