@@ -3,14 +3,15 @@
 
 	$proveedor = $_POST['idproveedor'];
 
-	$query = "SELECT * FROM contactos WHERE nombreEmpresa LIKE '%$proveedor%' LIMIT 1";
+	$query = "SELECT * FROM contactos WHERE nombreEmpresa LIKE '%$proveedor%' AND tipo ='Proveedor' LIMIT 1";
 	$resultado = mysqli_query($conexion_usuarios, $query);
 	while($data = mysqli_fetch_assoc($resultado)){
 		$monedaproveedor = $data['moneda'];
 		$idproveedor = $data['id'];
 	}
+	// $arreglo["cliente"] = $idproveedor;
 
-	$query="SELECT DISTINCT factura_proveedor, orden_compra, pago_factura, fecha_orden_compra FROM utilidad_pedido WHERE fecha_orden_compra > '2017-01-01' AND proveedor ='$idproveedor' AND pagada != 'si' AND factura_proveedor != '0' ORDER BY fecha_orden_compra DESC LIMIT 10";
+	$query="SELECT DISTINCT factura_proveedor, orden_compra, pago_factura, fecha_orden_compra FROM utilidad_pedido WHERE fecha_orden_compra > '2017-01-01' AND proveedor ='$idproveedor' AND pagada != 'si' AND factura_proveedor != '0' ORDER BY fecha_orden_compra DESC";
 	$resultado = mysqli_query($conexion_usuarios, $query);
 
 	if (mysqli_num_rows($resultado) < 1) {
