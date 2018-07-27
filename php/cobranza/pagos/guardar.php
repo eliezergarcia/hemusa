@@ -402,17 +402,25 @@
 					$total = $total + ($data2['costo_mn'] * $data2['cantidad']);
 				}
 			}
-			$query = "INSERT INTO pagos_oc (proveedor, factura, monto, fecha, cuenta, tipo_cambio) VALUES ('$idproveedor', '$factura', '$total', '$fecha', '$cuenta', '$tipocambio')";
-			$resultado = mysqli_query($conexion_usuarios, $query);
-		}
 
+			$query = "UPDATE utilidad_pedido SET pagada ='si', Tipo_pago='Factura', pago_factura='$total', fecha_pago='$fecha', cuenta='$cuenta', total_factura='$total' WHERE factura_proveedor='$factura'";
+			$resultado = mysqli_query($conexion_usuarios, $query);
+			if (!$resultado) {
+				$informacion["respuesta"] = "ERROR";
+				$informacion["informacion"] = "Ocurrió un problema al actualizar la información de la factura.";
+			}else{
+				$query = "INSERT INTO pagos_oc (proveedor, factura, monto, fecha, cuenta, tipo_cambio) VALUES ('$idproveedor', '$factura', '$total', '$fecha', '$cuenta', '$tipocambio')";
+				$resultado = mysqli_query($conexion_usuarios, $query);
+			}
+		}
 		if (!$resultado) {
 			$informacion["respuesta"] = "ERROR";
-			$informacion["informacion"] = "Ocurrió un problema al actualizar la información de la factura.";
+			$informacion["informacion"] = "Ocurrió un problema al registrar el pago de la factura.";
 		}else{
 			$informacion["respuesta"] = "BIEN";
-			$informacion["informacion"] = "La información de la(s) factura(s) se actualizó correctamente.";
+			$informacion["informacion"] = "El pago se guardó correctamente.";
 		}
+
 
 		echo json_encode($informacion);
 		mysqli_close($conexion_usuarios);

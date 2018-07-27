@@ -46,17 +46,21 @@
                                 </form>
                               </div>
                             </div>
-                            <div class="col-2 table-filters"><span class="table-filter-title">Filtro <i class="fas fa-filter"></i></span>
+                            <div class="col-3 table-filters"><span class="table-filter-title">Filtro <i class="fas fa-filter"></i></span>
                               <div class="filter-container">
                                 <form>
                                   <div class="row">
-                                    <div class="col-6">
+                                    <div class="col-4">
+                                      <label for="ordencompra">Orden de compra: </label>
+                                      <input type="text" class="form-control form-control-sm" name="ordencompra" id="ordencompra">
+                                    </div>
+                                    <div class="col-4">
                                       <label for="folio">Folio: </label>
                                       <input type="text" class="form-control form-control-sm" name="folio" id="folio">
                                     </div>
-                                    <div class="col-6">
-                                      <label for="ordencompra">Orden de compra: </label>
-                                      <input type="text" class="form-control form-control-sm" name="ordencompra" id="ordencompra">
+                                    <div class="col-4">
+                                      <label for="pedimento">Pedimento: </label>
+                                      <input type="text" class="form-control form-control-sm" name="pedimento" id="pedimento">
                                     </div>
                                   </div>
                                 </form>
@@ -249,9 +253,11 @@
     var listar_partidas = function(){
       var ano = $("#filtroano").val();
       var folio = $("#folio").val();
+      var pedimento = $("#pedimento").val();
       var ordencompra = $("#ordencompra").val();
       $("#folio").val("");
       $("#ordencompra").val("");
+      $("#pedimento").val("");
       var opcion = "partidasocdescripcion";
       var table = $("#dt_partidas_oc_descripcion").DataTable({
         "destroy":"true",
@@ -260,7 +266,7 @@
         "ajax":{
           "method":"POST",
           "url":"listar.php",
-          "data": {"opcion": opcion, "ano": ano, "folio": folio, "ordencompra": ordencompra}
+          "data": {"opcion": opcion, "ano": ano, "folio": folio, "ordencompra": ordencompra, "pedimento": pedimento}
         },
         "columns":[
           {"data": null,

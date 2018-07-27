@@ -80,8 +80,8 @@ var App = (function () {
               }
               $("#frmEditarEventoCalendario #horaInicio").val(data.data.horaInicio);
               $("#frmEditarEventoCalendario #horaFin").val(data.data.horaFin);
-              $("#frmEditarEventoCalendario #repetir").val(data.data.repetir);
-              $("#frmEditarEventoCalendario #recordatorio").val(data.data.recordatorio);
+              // $("#frmEditarEventoCalendario #repetir").val(data.data.repetir).change();
+              // $("#frmEditarEventoCalendario #recordatorio").val(data.data.recordatorio).change();
               $("#frmEditarEventoCalendario #notas").val(data.data.notas);
             }else{
               mostrar_mensaje(data);

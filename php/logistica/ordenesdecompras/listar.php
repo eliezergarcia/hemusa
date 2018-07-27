@@ -36,7 +36,8 @@
 			$ano = $_POST['ano'];
 			$folio = $_POST['folio'];
 			$ordencompra = $_POST['ordencompra'];
-			partidasocdescripcion($ano, $folio, $ordencompra, $conexion_usuarios);
+			$pedimento = $_POST['pedimento'];
+			partidasocdescripcion($ano, $folio, $ordencompra, $pedimento, $conexion_usuarios);
 			break;
 	}
 
@@ -377,11 +378,13 @@
 		echo json_encode($arreglo, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_PARTIAL_OUTPUT_ON_ERROR);
 	}
 
-	function partidasocdescripcion($ano, $folio, $ordencompra, $conexion_usuarios){
+	function partidasocdescripcion($ano, $folio, $ordencompra, $pedimento, $conexion_usuarios){
 		$fechaFin = $ano."-".date("m")."-".date("d");
 		$fechaInicio = $ano."-01-01";
-		if ($folio != '' && $ordencompra == '') {
+		if ($folio != '' && $ordencompra == '' && $pedimento == '') {
 			$query = "SELECT * FROM utilidad_pedido WHERE folio = '$folio' AND fecha_orden_compra >='$fechaInicio' AND fecha_orden_compra <= '$fechaFin' ORDER BY fecha_orden_compra DESC";
+		}else if ($pedimento != '' && $ordencompra == '' && $folio == '') {
+			$query = "SELECT * FROM utilidad_pedido WHERE Pedimento = '$pedimento' AND fecha_orden_compra >='$fechaInicio' AND fecha_orden_compra <= '$fechaFin' ORDER BY fecha_orden_compra DESC";
 		}else{
 			$query = "SELECT * FROM utilidad_pedido WHERE orden_compra = '$ordencompra' AND fecha_orden_compra >='$fechaInicio' AND fecha_orden_compra <= '$fechaFin' ORDER BY fecha_orden_compra DESC";
 		}

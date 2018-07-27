@@ -89,6 +89,7 @@
 												<th>#</th>
 												<th>Folio</th>
 												<th>Orden/Pedido</th>
+												<th>Remisión</th>
 												<th>Total</th>
 												<th>Pagado</th>
 												<th>Status</th>
@@ -221,6 +222,7 @@
 					{"defaultContent": ""},
           {"data": "folio"},
           {"data": "ordenpedido"},
+					{"data": "remision"},
           {"data": "total"},
           {"data": "pagado"},
           {"data": "status"},
@@ -236,11 +238,12 @@
 					{ "width": "10%", "targets": 2 },
 					{ "width": "8%", "targets": 3 },
 					{ "width": "8%", "targets": 4 },
-					{ "width": "6%", "targets": 5 },
-					{ "width": "10%", "targets": 6 },
-					{ "width": "5%", "orderable": false, "targets": 8 },
+					{ "width": "8%", "targets": 5 },
+					{ "width": "6%", "targets": 6 },
+					{ "width": "10%", "targets": 7 },
 					{ "width": "5%", "orderable": false, "targets": 9 },
 					{ "width": "5%", "orderable": false, "targets": 10 },
+					{ "width": "5%", "orderable": false, "targets": 11 },
 				],
         "language": idioma_espanol,
         "dom":

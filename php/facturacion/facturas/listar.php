@@ -31,6 +31,7 @@
 			$arreglo["data"][] = array(
 				'folio' => $data['folio'],
 				'ordenpedido' => $data['ordenpedido'],
+				'remision' => $data['remision'],
 				'total' => "$ ".$data['total'],
 				'pagado' => "$ ".$data['pagado'],
 				'status' => $data['status'],

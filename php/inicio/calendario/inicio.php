@@ -102,7 +102,7 @@
                   </label>
             	  </div>
           	  </div>
-              <label><h4><b>Repetir</b></h4></label>
+              <!-- <label><h4><b>Repetir</b></h4></label>
               <div class="form-group row">
                   <div class="col-12 col-sm-12 col-lg-12">
                       <select class="form-control form-control-sm select2" id="repetir" name="repetir">
@@ -114,8 +114,8 @@
                           <option value="RA">Anualmente</option>
                       </select>
                   </div>
-              </div>
-              <label><h4><b>Recordatorio</b></h4></label>
+              </div> -->
+              <!-- <label><h4><b>Recordatorio</b></h4></label>
               <div class="form-group row">
                   <div class="col-12 col-sm-8 col-lg-12">
                       <select class="form-control form-control-sm select2" id="recordatorio" name="recordatorio">
@@ -131,7 +131,7 @@
                           <option value="1S">1 semana</option>
                       </select>
                   </div>
-              </div>
+              </div> -->
 	            <label for="inputTextarea3"><h4><b>Notas</b></h4></label>
               <div class="form-group row">
                 		<div class="col-12 col-sm-8 col-lg-12">
@@ -208,7 +208,7 @@
                   </label>
             	  </div>
           	  </div>
-              <label><h4><b>Repetir</b></h4></label>
+              <!-- <label><h4><b>Repetir</b></h4></label>
               <div class="form-group row">
                   <div class="col-12 col-sm-12 col-lg-12">
                       <select class="form-control form-control-sm select2" id="repetir" name="repetir">
@@ -220,8 +220,8 @@
                           <option value="RA">Anualmente</option>
                       </select>
                   </div>
-              </div>
-              <label><h4><b>Recordatorio</b></h4></label>
+              </div> -->
+              <!-- <label><h4><b>Recordatorio</b></h4></label>
               <div class="form-group row">
                   <div class="col-12 col-sm-8 col-lg-12">
                       <select class="form-control form-control-sm select2" id="recordatorio" name="recordatorio">
@@ -237,7 +237,7 @@
                           <option value="1S">1 semana</option>
                       </select>
                   </div>
-              </div>
+              </div> -->
 	            <label for="inputTextarea3"><h4><b>Notas</b></h4></label>
               <div class="form-group row">
                 		<div class="col-12 col-sm-8 col-lg-12">
@@ -445,6 +445,7 @@
 							$("#frmMostrarEvento #fechafin").val(fechafin);
 							$("#frmMostrarEvento #asignado").val(data.data.asignado);
 							$("#frmMostrarEvento #descripcion").val(data.data.descripcion);
+              $("#frmMostrarEvento #descripcion").val(data.data.descripcion);
 						});
 			      	},
 				    dayClick: function(date, jsEvent, view) {
