@@ -530,6 +530,7 @@
     }
 
     var obtener_data_id = function(tbody, table){
+      $('#dt_ordenes tbody').off('click');
       $(tbody).on("click", "button.veroc", function(){
         var data = table.row( $(this).parents("tr") ).data();
         var ordencompra = data.ordencompra;
