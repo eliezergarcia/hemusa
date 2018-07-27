@@ -27,9 +27,9 @@
 				$monedapedido = $data['moneda_pedido'];
 
 				if ($monedaproveedor == "usd") {
-					$total = $total + ($data2['costo_usd'] * $data2['cantidad']);
+					$total = $total + (($data2['costo_usd'] * $data2['cantidad'])*1.16);
 				}else{
-					$total = $total + ($data2['costo_mn'] * $data2['cantidad']);
+					$total = $total + (($data2['costo_mn'] * $data2['cantidad'])*1.16);
 				}
 			}
 

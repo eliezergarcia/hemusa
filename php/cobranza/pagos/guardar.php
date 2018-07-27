@@ -367,6 +367,18 @@
 			}
 		}
 
+		$query = "SELECT max(idpago) AS ultimoidpago FROM pagos_oc";
+		$resultado = mysqli_query($conexion_usuarios, $query);
+
+		if (mysqli_num_rows($resultado) < 1 || !$resultado) {
+			$informacion["respuesta"] = "ERROR";
+			$informacion["informacion"] = "Ocurrió un problema al buscar información de facturas.";
+		}else{
+			while($data = mysqli_fetch_assoc($resultado)){
+				$idpago = $data['ultimoidpago'] + 1;
+			}
+		}
+
 		switch ($cuenta) {
 			case 1:
 				$monedacuenta = "mxn";
@@ -397,9 +409,9 @@
 				$monedapedido = $data['moneda_pedido'];
 
 				if ($monedaproveedor == "usd") {
-					$total = $total + ($data2['costo_usd'] * $data2['cantidad']);
+					$total = $total + (($data2['costo_usd'] * $data2['cantidad'])*1.16);
 				}else{
-					$total = $total + ($data2['costo_mn'] * $data2['cantidad']);
+					$total = $total + (($data2['costo_mn'] * $data2['cantidad'])*1.16);
 				}
 			}
 
@@ -409,7 +421,7 @@
 				$informacion["respuesta"] = "ERROR";
 				$informacion["informacion"] = "Ocurrió un problema al actualizar la información de la factura.";
 			}else{
-				$query = "INSERT INTO pagos_oc (proveedor, factura, monto, fecha, cuenta, tipo_cambio) VALUES ('$idproveedor', '$factura', '$total', '$fecha', '$cuenta', '$tipocambio')";
+				$query = "INSERT INTO pagos_oc (proveedor, factura, monto, fecha, cuenta, tipo_cambio, idpago) VALUES ('$idproveedor', '$factura', '$total', '$fecha', '$cuenta', '$tipocambio', '$idpago')";
 				$resultado = mysqli_query($conexion_usuarios, $query);
 			}
 		}
