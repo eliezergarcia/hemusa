@@ -507,6 +507,10 @@ if ($tipomenu != 4){
 													</li>
 													<li class="nav-item"><a id="subirlista-menu" class="nav-link" href="<?php echo $ruta; ?>php/administracion/marcas/subirlista.php"><i class="fas fa-th-list"></i> Subir lista de precios</a>
 													</li>
+													<!-- <li class="nav-item"><a id="query-menu" class="nav-link" href="<?php echo $ruta; ?>php/administracion/query/query.php">Query</a>
+													</li> -->
+													<li class="nav-item"><a id="query-menu" class="nav-link" href="<?php echo $ruta; ?>php/administracion/reportes/reportes.php"><i class="fas fa-clipboard-list"></i> Reportes</a>
+													</li>
                         </ul>
                       </li>
 											<li id="email-menu" class="nav-item parent"><a class="nav-link" href="<?php echo $ruta; ?>php/email/email.php"><i class="icon fas fa-envelope"></i><span>Email</span><span class="badge badge-primary float-right">BETA</span></a></li>

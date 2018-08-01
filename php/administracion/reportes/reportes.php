@@ -1,515 +1,208 @@
 <?php
-	require_once('../../conexion.php'); // Llamada a connect.php para establecer conexión con la BD
-	require_once('../../sesion.php'); // Llamada a sesion.php para validar si hay sesión inciada
+	require_once('../../conexion.php');
+	require_once('../../sesion.php');
 	error_reporting(0);
-
+	$fecha = date("d").'-'.date("m").'-'.date("Y");
+	$mes = date("m");
+	$ano = date("Y");
 ?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
-	<title>Reportes administración</title>
-	<?php include('../../enlaces.php'); ?>
+	<title>Reportes</title>
+	<?php include('../../enlacescss.php'); ?>
 </head>
 <body>
-
 	<?php include('../../header.php'); ?>
+		<div class="be-content">
+          	<div class="page-head">
+              	<h2 class="page-head-title">Reportes</h2>
+              	<nav aria-label="breadcrumb" role="navigation">
+	                <ol class="breadcrumb page-head-nav">
+	                    <li class="breadcrumb-item"><a href="#">Administración</a></li>
+	                    <li class="breadcrumb-item"><a href="#">Reportes</a></li>
+	                </ol>
+              	</nav>
+          	</div>
+          	<div class="main-content container-fluid">
+              	<div class="row full-calendar">
+                	<div class="col-lg-12">
+                    	<div class="card card-fullcalendar">
+                      		<div class="card-body">
+														<div class="row table-filters-container">
+						                  <div class="col-12 col-lg-12 col-xl-6">
+						                    <div class="row">
+						                      <div class="col-12 col-lg-6 table-filters pb-0 pb-xl-4"><span class="table-filter-title">Fecha</span>
+						                        <div class="filter-container">
+																			<form>
+						                            <div class="row">
+						                              <div class="col-6">
+																						<label class="control-label">Mes:</label>
+																						<select class="form-control form-control-sm select2" name="filtromes" id="filtromes">
+																						<option value="01">Enero</option>
+																						<option value="02">Febrero</option>
+																						<option value="03">Marzo</option>
+																						<option value="04">Abril</option>
+																						<option value="05">Mayo</option>
+																						<option value="06">Junio</option>
+																						<option value="07">Julio</option>
+																						<option value="08">Agosto</option>
+																						<option value="09">Septiembre</option>
+																						<option value="10">Octubre</option>
+																						<option value="11">Noviembre</option>
+																						<option value="12">Diciembre</option>
+																						<option value="todo">Todo</option>
+																					</select>
+						                              </div>
+						                              <div class="col-6">
+																						<label class="control-label">Año:</label>
+																						<select class="form-control form-control-sm select2" name="filtroano" id="filtroano">
+																							<option value="2017">2017</option>
+																							<option value="2018" selected>2018</option>
+																							<option value="2019">2019</option>
+																							<option value="2020">2020</option>
+																						</select>
+						                              </div>
+						                            </div>
+						                          </form>
+						                        </div>
+						                      </div>
+						                    </div>
+						                  </div>
+														</div>
 
-  		<main class="mdl-layout__content">
-    		<div class="page-content">
-    			<!-- Breadcrumb -->
-	    			<nav aria-label="breadcrumb">
-					  	<ol class="breadcrumb">
-					    	<li class="breadcrumb-item">Administración</li>
-					    	<li class="breadcrumb-item active" aria-current="page">Reportes</li>
-					  	</ol>
-					</nav>
+                          	<!-- Tabla de Reportes de Ventas -->
+															<table id="dt_reportes" class="table table-striped table-hover display compact" cellspacing="0" width="100%">
+																<thead>
+																	<tr>
+																		<th>Factura</th>
+																		<th>Fecha</th>
+																		<th>Cliente</th>
+																		<th>Moneda</th>
+																		<th>Iva</th>
+																		<th>Subtotal</th>
+																		<th>Total</th>
+																		<th>Pagado</th>
+																		<th>Banco</th>
+																		<th>Fecha pago</th>
+																		<th>Nota de crédito</th>
+																	</tr>
+																</thead>
+															</table>
+                      		</div>
+                    	</div>
+                	</div>
+            	</div>
+      		</div>
+    	</div>
 
-				<!-- Titulo -->
-	    			<div class="row fondo align-itmes-center">
-						<div class="col-sm-12">
-							<h1 class="text-center titulo"><b>Reportes</b> <i class="material-icons icono">insert_chart</i></h1>
-						</div>
-					</div>
-					<br>
-
-				<!-- Dropdown de Reportes -->
-					<div class="dropdown row justify-content-center">
-					  	<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-					    	Mostrar Reporte
-					  	</button>
-					  	<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-					    	<a class="dropdown-item" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">Reporte de Bancos</a>
-					    	<a class="dropdown-item" data-toggle="collapse" href="#collapseReporteImpuestos" role="button" aria-expanded="false" aria-controls="collapseReporteImpuestos">Reporte de Impuestos</a>
-					    	<a class="dropdown-item" data-toggle="collapse" href="#collapseReporteAcumulados" role="button" aria-expanded="false" aria-controls="collapseReporteAcumulados">Reporte de Acumulados</a>
-					    	<a class="dropdown-item" data-toggle="collapse" href="#collapseReporteComisiones" role="button" aria-expanded="false" aria-controls="collapseReporteComisiones">Reporte de Comisiones</a>
-							<a class="dropdown-item" data-toggle="collapse" href="#collapseReportePedidosSinOC" role="button" aria-expanded="false" aria-controls="collapseReportePedidosSinOC">Reporte de Pedidos sin OC</a>
-							<a class="dropdown-item" data-toggle="collapse" href="#collapseReporteCobranza" role="button" aria-expanded="false" aria-controls="collapseReporteCobranza">Reporte de Cobranza</a>
-							<a class="dropdown-item" data-toggle="collapse" href="#collapseHerramientaSinEntregar" role="button" aria-expanded="false" aria-controls="collapseHerramienta" id="btn_listar_herramienta_sin_entregar">Reporte de de Herramienta sin Entregar</a>
-							<a class="dropdown-item" data-toggle="collapse" href="#collapseHerramientaSinFactura" role="button" aria-expanded="false" aria-controls="collapseHerramienta" id="btn_listar_herramienta_sin_factura">Reporte de de Herramienta sin Factura</a>
-					  	</div>
-					</div>
-
-				<!-- Collapse Reporte de Impuestos-->
-					<br>
-						<div class="collapse col-12 " id="collapseReporteImpuestos">
-							<div class="card card-body">
-								<div class="container row justify-content-center">
-									<div>
-										<form id="frmMostrarImpuestos" action="" method="POST" class="row justify-content-center">
-											<input name="ano_impuestos" id="anoImpuestos" type="text" class="form-control col-5 row justify-content-center" placeholder="Ingresa un año">&nbsp;&nbsp;&nbsp;&nbsp;
-											<button id="btn_listar_impuestos" type="button" class="btn btn-primary">Mostar</button>
-										</form>
-									</div>
-									<br><br>
-								</div>
-								<div id="titulo_impuestos">
-	  								<br><center><h3>Reporte de Impuestos <label for="" id="tituloAnoImpuestos"></label></h3></center><br>
-	  							</div>
-	  							<table id="dt_impuestos" class="table table-bordered display" cellspacing="0" width="100%">
-	  								<thead>
-	  									<tr>
-		  									<th>Impuesto</th>
-		  									<th>Enero</th>
-		  									<th>Febrero</th>
-		  									<th>Marzo</th>
-		  									<th>Abril</th>
-		  									<th>Mayo</th>
-		  									<th>Junio</th>
-		  									<th>Julio</th>
-		  									<th>Agosto</th>
-		  									<th>Septiembre</th>
-		  									<th>Octubre</th>
-		  									<th>Noviembre</th>
-		  									<th>Diciembre</th>
-		  									<th>Total</th>
-		  								</tr>
-	  								</thead>
-	  							</table>
-							</div>
-						</div>
-
-				<!-- Collapse Reporte de Acumulados -->
-					<br>
-						<div class="collapse col-12 " id="collapseReporteAcumulados">
-							<div class="card card-body">
-								<div class="container row justify-content-center">
-									<div>
-										<form id="frmMostrarAcumulados" action="" method="POST" class="row justify-content-center">
-											<input name="ano_impuestos" id="anoAcumulados" type="text" class="form-control col-5 row justify-content-center" placeholder="Ingresa un año">&nbsp;&nbsp;&nbsp;&nbsp;
-											<button id="btn_listar_acumulados" type="button" class="btn btn-primary">Mostar</button>
-										</form>
-									</div>
-									<br><br>
-								</div>
-								<div id="titulo_acumulados">
-	  								<br><center><h3>Reporte de Acumulados <label id="anoImpuestos"></label></h3></center><br>
-	  							</div>
-	  							<table id="dt_acumulados" class="table table-bordered display" cellspacing="0" width="100%">
-	  								<thead>
-	  									<tr>
-		  									<th>Reporte</th>
-		  									<th>Enero</th>
-		  									<th>Febrero</th>
-		  									<th>Marzo</th>
-		  									<th>Abril</th>
-		  									<th>Mayo</th>
-		  									<th>Junio</th>
-		  									<th>Julio</th>
-		  									<th>Agosto</th>
-		  									<th>Septiembre</th>
-		  									<th>Octubre</th>
-		  									<th>Noviembre</th>
-		  									<th>Diciembre</th>
-		  									<th>Total</th>
-		  								</tr>
-	  								</thead>
-	  							</table>
-							</div>
-						</div>
-
-				<!-- Collapse Reporte Pedidos Sin OC -->
-						<div class="collapse col-12 " id="collapseReportePedidosSinOC">
-	  						<div class="card card-body">
-	  							<div id="titulo_pedidosSinOC">
-	  								<center><h3>Reporte de Pedidos sin Orden de Compra</h3></center><br>
-	  								<center><h6>Pedidos sin proveedor asignado y que están pendientes de crear OC</h6></center>
-	  							</div>
-	    						<br>
-	    						<br>
-	    						<?php
-									//Se busca el nombre del proveedor
-									$sql_pedidos_pendientes ="SELECT * FROM  `cotizacionherramientas` WHERE  `Proveedor` !=  'none' AND `Proveedor` !=  'ALMACEN' AND  `proveedorFecha` =  '0000-00-00' AND  `Pedido` =  'si'  AND pedidoFecha > '2015-01-01' order by Proveedor";
-
-									$resultado_pedidos=mysqli_query($conexion_usuarios, $sql_pedidos_pendientes);
-									$count=0;
-									$resultado_proveedor=mysqli_query($conexion_usuarios, $sql_pedidos_pendientes);
-
-									while($row_proveedor =mysqli_fetch_array($resultado_proveedor)){
-										$filtro_proveedor[$count]=$row_proveedor['Proveedor'];
-										$count ++;
-									}
-
-									$filtro_proveedor= array_values(array_unique($filtro_proveedor));
-
-									echo '<table id="dt_pedidos_sin_oc" class="table table-bordered table-striped table-hover compact" cellspacing="0" width="100%">';
-									echo '<thead><tr>';
-									echo '<th> # </th>';
-									echo '<th>Proveedor';
-									echo '</th>';
-
-									echo '<th> Cliente  </th>';
-									echo '<th> Marca </th>';
-									echo '<th> Modelo </th>';
-									echo '<th> Descripcion </th>';
-									echo '<th> Cantidad </th>';
-									echo '<th> Fecha de Pedido </th>';
-									echo '<th> Almacen </th>';
-									echo '<th> Costo </th>';
-									echo '</tr></thead>';
-
-									$i=0;
-
-									if(!empty($_POST["proveedor_oc"])){
-
-										$nombre_proveedor=$_POST["proveedor_oc"];
-										echo $nombre_proveedor;
-
-										if($nombre_proveedor!='Proveedor'){
-											$sql_pedidos_pendientes ="SELECT * FROM  `cotizacionherramientas` WHERE  `Proveedor` ='$nombre_proveedor' AND proveedorFecha` =  '0000-00-00' AND  `Pedido` =  'si'  AND pedidoFecha > '2015-01-01' order by Proveedor";
-												$resultado_pedidos=mysqli_query($conexion_usuarios, $sql_pedidos_pendientes);
-											}
-									}
-
-									while($row_pedidos =mysqli_fetch_array($resultado_pedidos)){
-
-										$cliente=$row_pedidos['cliente'];
-
-										// nombre_cliente
-											$sql_nombre_cliente ="SELECT nombreEmpresa FROM contactos WHERE id= '".$cliente."'";
-											$resultado_nombre=mysqli_query($conexion_usuarios, $sql_nombre_cliente);
-
-											if(!$resultado_nombre=mysqli_query($conexion_usuarios, $sql_nombre_cliente)){
-												$nombre_cliente="";
-											}else{
-												while($row_nombre =mysqli_fetch_array($resultado_nombre)){
-													$nombre_cliente=$row_nombre['nombreEmpresa'];
-												}
-											}
-
-										$marca=$row_pedidos['marca'];
-										$modelo=$row_pedidos['modelo'];
-										$cantidad=$row_pedidos['cantidad'];
-										$descripcion=$row_pedidos['descripcion'];
-										$pedido_fecha=$row_pedidos['pedidoFecha'];
-										$proveedor=$row_pedidos['Proveedor'];
-
-										// numero_proveedor
-											$sql_id_contacto ="SELECT id FROM  `contactos` WHERE  `nombreEmpresa` = '$proveedor'";
-											$resultado_id=mysqli_query($conexion_usuarios, $sql_id_contacto);
-
-											while($row_id =mysqli_fetch_array($resultado_id)){
-												$numero_proveedor=$row_id['id'];
-											}
-
-										// tabla
-											$tabla="";
-											$sql_buscar_tabla ="SELECT tabla FROM  `factores_proveedores` WHERE  `proveedor` = '$numero_proveedor'";
-											$resultado_tabla=mysqli_query($conexion_usuarios, $sql_buscar_tabla);
-
-											if(!$resultado_tabla=mysqli_query($conexion_usuarios, $sql_buscar_tabla)){
-												$tabla="todas";
-											}else{
-												while($row_tabla =mysqli_fetch_array($resultado_tabla)){
-													$tabla=$row_tabla['tabla'];
-												}
-											}
-
-											if(empty($tabla)){
-												$tabla="todas";
-											}
-
-										// precio_modelo
-											if($tabla == 'todas' ){
-												$sql_buscar_costo ="SELECT precioBase FROM  `precio".$marca."` WHERE  `ref` = '$modelo'";
-											}else{
-												$sql_buscar_costo ="SELECT precioBase FROM  `".$tabla."` WHERE  `ref` = '$modelo'";
-											}
-
-											$resultado_precio=mysqli_query($conexion_usuarios, $sql_buscar_costo);
-
-											if(!$resultado_precio=mysqli_query($conexion_usuarios, $sql_buscar_costo)){
-												$precio_modelo=0;
-
-											}else{
-												while($row_precio =mysqli_fetch_array($resultado_precio)){
-													$precio_modelo=$row_precio['precioBase'];
-												}
-											}
-
-											if(empty($precio)){
-												$precio_modelo=0;
-											}
-
-										// factor
-											$sql_factor="SELECT factor_proveedor from factores_proveedores WHERE proveedor='$numero_proveedor' ";
-											$result_factor = mysqli_query($conexion_usuarios, $sql_factor);
-											$row_factor_proveedor=0.0;
-
-											while($row_factores= mysqli_fetch_array($result_factor)){
-											   $factor= $row_factores["factor_proveedor"];
-
-												if($row_factor_proveedor==0){
-													$row_factor_proveedor+=$factor;
-												}else{
-											   		$row_factor_proveedor= $row_factor_proveedor*$factor;
-												}
-											}
-
-											$factor= $row_factor_proveedor;
-
-											if(empty($factor_proveedor)){
-												$factor=1;
-											}
-
-										$precio_modelo=$precio_modelo*$factor;
-										$precio_modelo=number_format($precio_modelo,2,".",""); //obtener 2 decimales
-
-										// almacen
-											$sql_buscar_stock ="SELECT enReserva FROM  `precio".$marca."` WHERE `ref` = '$modelo'";
-											$resultado_stock=mysqli_query($conexion_usuarios, $sql_buscar_stock);
-
-											if(!$resultado_stock=mysqli_query($conexion_usuarios, $sql_buscar_stock)){
-												$almacen=0;
-											}else{
-												while($row_stock =mysqli_fetch_array($resultado_stock)){
-													$almacen=$row_stock['enReserva'];
-												}
-											}
-
-											if(empty($almacen)){
-												$almacen=0;
-											}
-
-											$i++;
-
-										echo '<tr>';
-										echo '<td valign="top">'.$i.'</td>';
-										echo '<td valign="top">'.$proveedor.'</td>';
-										echo '<td valign="top">'.$nombre_cliente.'</td>';
-										echo '<td valign="top">'.$marca.'</td>';
-										echo '<td valign="top">'.$modelo.'</td>';
-										echo '<td valign="top">'.utf8_encode($descripcion).'</td>';
-										echo '<td valign="top">'.$cantidad.'</td>';
-										echo '<td valign="top">'.$pedido_fecha.'</td>';
-										echo '<td valign="top">'.$almacen.'</td>';
-										echo '<td valign="top">'.$precio_modelo.'</td>';
-
-										echo '</tr>';
-									}
-									// echo '<tfoot><tr>';
-									// echo '<th> # </th>';
-									// echo '<th>Proveedor';
-									// echo '</th>';
-
-									// echo '<th> Cliente  </th>';
-									// echo '<th> Marca </th>';
-									// echo '<th> Modelo </th>';
-									// echo '<th> Descripcion </th>';
-									// echo '<th> Cantidad </th>';
-									// echo '<th> Fecha de Pedido </th>';
-									// echo '<th> Almacen </th>';
-									// echo '<th> Costo </th>';
-									// echo '</tr></tfoot>';
-
-									echo '</table>';
-								?>
-	  						</div>
-						</div>
-
-				<!-- Collapse Reporte de Cobranza -->
-					<div class="collapse col-12 " id="collapseReporteCobranza">
-						<div class="card card-body">
-							<div class="container">
-								<form id="frmMostrarCobranza" method="post">
-									<div class="form-group row justify-content-center align-itmes-center">
-										<label for="fechaInicio" class="label-control col-2">Fecha inicio:</label>
-										<input type="date" id="fechaInicio" name="fechaInicio" class="form-control col-2">
-									</div>
-									<div class="form-group row justify-content-center align-itmes-center">
-										<label for="fechaFin" class="label-control col-2">Fecha fin:</label>
-										<input type="date" id="fechaFin" name="fechaFin" class="form-control col-2">
-									</div>
-									<div class="form-group row justify-content-center">
-										<button id="btn_listar_cobranza" type="button" class="btn btn-primary">Mostrar</button>
-									</div>
-								</form>
-							</div>
-							<div id="titulo_reporteCobranza">
-	  							<br><center><h2>Reporte de Cobranza</h2></center><br>
-		  						<div class="col-12">
-		  							<h3><b>PERIODO:</b></h3>
-		  							<h4><label id="valFechaInicio"></label> - <label id="valFechaFin"></label></h4>
-		  						</div>
-		  						<br>
-	  						</div>
-	  						<table id="dt_reporte_cobranza" class="ui celler table display" width="100%">
-	  							<thead>
-	  								<tr>
-	  									<th>Banco</th>
-	  									<th>Fecha</th>
-	  									<th>Factura</th>
-	  									<th>Cliente</th>
-	  									<th>Moneda</th>
-	  									<th>TC</th>
-	  									<th>Importe</th>
-	  									<th>Iva</th>
-	  									<th>Total</th>
-	  									<th>Importe MXN</th>
-	  									<th>Iva MXN</th>
-	  									<th>Total MXN</th>
-	  								</tr>
-	  							</thead>
-	  						</table>
-						</div>
-					</div>
-
-				<!-- Collapse Reporte de Comisiones -->
-					<div class="collapse col-12 " id="collapseReporteComisiones">
-						<div class="card card-body">
-							<div id="titulo_comisiones">
-	  							<center><h3>Reporte de Comisiones</h3></center><br>
-	  						</div>
-	  						<br>
-	  						<form id="frmMostrarComisiones" method="POST">
-	  							<div class="form-group row justify-content-center">
-	  								<label for="contacto hemusa" class="col-1">Vendedor</label>
-									<select id="idvendedor" name="vendedor" class="form-control col-2">
-								<?php
-									$query_usuarios = "SELECT id,nombre FROM usuarios where dp = 'Ventas'";
-									$resultado_usuarios = mysqli_query($conexion_usuarios, $query_usuarios);
-									while($row_usuarios = mysqli_fetch_array($resultado_usuarios)){
-									 	echo "<option value='".$row_usuarios['id']."' >".$row_usuarios['nombre']."</option>";
-									}
-								?>
-									</select>
-	  							</div>
-	  							<div class="form-group row justify-content-center">
-	  								<label for="fecha_inicio" class="col-1">Fecha inicio: </label>
-									<input type="date" id="fechaInicio" name="fechaInicio" class="form-control col-2" value="" />
-	  							</div>
-	  							<div class="form-group row justify-content-center">
-	  								<label for="fecha_fin" class="col-1">Fecha fin: </label>
-									<input type="date" id="fechaFin" name="fechaFin" class="form-control col-2" value="" />
-								</div>
-								<div class="form-group row justify-content-center">
-									<button id="btn_listar_comisiones" type="button" class="btn btn-primary">Mostrar</button>
-								</div>
-							</form>
-							<table id="dt_reporte_comisiones" class="table table-bordered table-striped table-hover" cellspacing="0" width="100%">
-								<thead>
-									<tr>
-										<th>Banco</th>
-										<th>Fecha</th>
-										<th>Factura</th>
-										<th>Cliente</th>
-										<th>Moneda</th>
-										<th>TC</th>
-										<th>Importe</th>
-										<th>Iva</th>
-										<th>Total</th>
-									</tr>
-								</thead>
-							</table>
-						</div>
-					</div>
-
-				<!-- Collapse Reporte Herramienta sin Entregar -->
-					<div class="collapse col-12 " id="collapseHerramientaSinEntregar">
-	  					<div class="card card-body">
-	  						<div id="titulo_herramientaSinEntregar">
-	  							<center><h3>Reporte de Herramienta sin Entregar</h3></center><br>
-	  						</div>
-	  						<table id="dt_herramienta_sin_entregar" class="table table-bordered table-striped table-hover compact" cellspacing="0" width="100%">
-	  							<thead>
-	  								<tr>
-	  									<th>Marca</th>
-	  									<th>Modelo</th>
-	  									<th>Cliente</th>
-	  									<th>Descripcion</th>
-	  									<th>Cantidad</th>
-	  									<th>Precio</th>
-	  									<th>Moneda</th>
-	  									<th>Pedido Cliente</th>
-	  									<th>Fecha Pedido</th>
-	  								</tr>
-	  							</thead>
-	  						</table>
-	  					</div>
-	  				</div>
-
-				<!-- Collapse Reporte Herramienta sin Factura -->
-					<div class="collapse col-12 " id="collapseHerramientaSinFactura">
-	  					<div class="card card-body">
-	  						<div id="titulo_herramientaSinFactura">
-	  							<center><h3>Reporte de Herramienta sin Factura</h3></center><br>
-	  						</div>
-	  						<table id="dt_herramienta_sin_factura" class="ui celler table">
-	  							<thead>
-	  								<tr>
-	  									<th>Marca</th>
-	  									<th>Modelo</th>
-	  									<th>Cliente</th>
-	  									<th>Cantidad</th>
-	  									<th>Remision</th>
-	  								</tr>
-	  							</thead>
-	  						</table>
-	  					</div>
-	  				</div>
-
-			</div>
-      	</main>
-</body>
-</html>
+    <header>
+    <?php include('../../enlacesjs.php'); ?>
 	<script>
-		// $('#selectCliente').zelect();
-		$(document).on("ready", function(){
-			// listar_pedidos_sin_oc();
-			// listar_impuestos();
-			// listar_cobranza();
-			$("#success-alert").fadeTo(2000, 500).slideUp(500, function(){
-    			$("#success-alert").slideUp(500);
-			});
+		$(document).ready(function(){
+			App.init();
+			App.megaMenu();
+			App.pageCalendar();
+			App.formElements();
+			App.uiNotifications();
+			// nav_active();
+			prettyPrint();
+			listar();
+			$("#filtromes").val("<?php echo $mes; ?>").change();
+			$("#filtroano").val("<?php echo $ano; ?>").change();
 		});
 
-		$('#btn_listar_impuestos').on("click", function(){
-	      	listar_impuestos();
-	      	// obtener_data_reporte_cobranza();
-	    });
+		$("#filtromes").on("change", function (){
+			listar();
+		});
 
-	    $('#btn_listar_acumulados').on("click", function(){
-	      	listar_acumulados();
-	      	// obtener_data_reporte_cobranza();
-	    });
+		$("#filtroano").on("change", function (){
+			listar();
+		});
 
-		$('#btn_listar_cobranza').on("click", function(){
-	      	listar_cobranza();
-	      	obtener_data_reporte_cobranza();
-	    });
-
-		$('#btn_listar_comisiones').on("click", function(){
-	      	listar_comisiones();
-	    });
-
-		$('#btn_listar_herramienta_sin_entregar').on("click", function(){
-	      	listar_herramienta_sin_entregar();
-	    });
+		var listar = function(){
+			var opcion = "reporteventas";
+			var filtromes = $("#filtromes").val();
+			var filtroano = $("#filtroano").val();
+			console.log(filtroano);
+			console.log(filtromes);
+			var table = $("#dt_reportes").DataTable({
+				"destroy": true,
+				"deferRender": true,
+				"scrollX": true,
+				"autoWidth": false,
+				"ajax":{
+					"url": "listar.php",
+					"type": "POST",
+					"data": {"opcion": opcion, "filtromes": filtromes, "filtroano": filtroano},
+				},
+				"columns":[
+					{"data": "factura"},
+					{"data": "fecha"},
+					{"data": "cliente"},
+					{"data": "moneda"},
+					{"data": "iva"},
+					{"data": "subtotal"},
+					{"data": "total"},
+					{"data": "pagado"},
+					{"data": "banco"},
+					{"data": "fechapago"},
+					{"data": "notacredito"}
+				],
+				"language": idioma_espanol,
+				"dom":
+    			"<'row be-datatable-header'<'col-sm-6'B><'col-sm-6 text-right'f>>" +
+    			"<'row be-datatable-body'<'col-sm-12'tr>>" +
+    			"<'row be-datatable-footer'<'col-sm-5'i><'col-sm-7'p>>",
+				"buttons":[
+					{
+            extend: 'collection',
+            text: '<i class="fas fa-table fa-sm"></i> Exportar tabla',
+            "className": "btn btn-lg btn-space btn-secondary",
+            buttons: [
+                {
+                  extend:    'excelHtml5',
+                  text:      '<i class="fas fa-file-excel fa-lg"></i> Excel',
+                  // "className": "btn btn-lg btn-space btn-secondary",
+                  exportOptions: {
+                    columns: [ 0, 1, 2, 3, 4, 5, 6 ]
+                  }
+                },
+                {
+                  extend: 'csv',
+                  text: '<i class="fas fa-file-alt fa-lg"></i> CSV',
+                  // "className": "btn btn-lg btn-space btn-secondary",
+                  exportOptions: {
+                          columns: [ 0, 1, 2, 3, 4, 5, 6 ]
+                  }
+                },
+                {
+                  extend:    'pdfHtml5',
+                  text:      '<i class="fas fa-file-pdf fa-lg"></i> PDF',
+                  download: 'open',
+                  // "className": "btn btn-lg btn-space btn-secondary",
+                  exportOptions: {
+                    columns: [ 0, 1, 2, 3, 4, 5, 6 ]
+                  }
+                },
+                {
+                  extend: 'print',
+                  text: '<i class="fas fa-print fa-lg"></i> Imprimir',
+                  header: 'false',
+                  exportOptions: {
+                          columns: [ 0, 1, 2, 3, 4, 5, 6 ]
+                  },
+                  orientation: 'landscape',
+                  pageSize: 'LEGAL'
+                }
+            ]
+          }
+				]
+			});
+		}
 
 		var  listar_pedidos_sin_oc = function(){
-			// $('#dt_pedidos_sin_oc tfoot th').each( function () {
-		 //        var title = $(this).text();
-		 //        $(this).html( '<input class="form-control" type="text" placeholder="Buscar '+title+'" />' );
-		 //    });
+
 
 			var table = $("#dt_pedidos_sin_oc").DataTable({
 				"language": idioma_espanol,
@@ -567,11 +260,7 @@
 			});
 
 			// $("#dt_pedidos_sin_oc tfoot input").on( 'keyup change', function () {
-	  //           table
-	  //               .column( $(this).parent().index()+':visible' )
-	  //               .search( this.value )
-	  //               .draw();
-   //    		});
+
 		}
 
 		var listar_impuestos = function(){
