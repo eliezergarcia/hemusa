@@ -34,7 +34,7 @@
 				                      <label class="btn-secondary" for="files"> <i class="mdi mdi-upload"></i><span>Selecciona un archivo...					</span></label> -->
                             </div>
                             <br>
-														<!-- <button type="button" name="button" id="ejecutar-query" class="btn btn-lg btn-primary">Ejecutar Query</button> -->
+														<button type="button" name="button" id="ejecutar-query" onclick="query_payments()" class="btn btn-lg btn-primary">Ejecutar Query</button>
 
                             <!-- Tabla Lista de precios -->
                               <table id="example" class="ui celler table" width="100%">

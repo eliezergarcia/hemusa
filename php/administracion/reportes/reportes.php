@@ -150,6 +150,22 @@
 					{"data": "notacredito"}
 				],
 				"language": idioma_espanol,
+				"pageLength": 25,
+				"createdRow": function ( row, data, index ) {
+					if ( data.pagado == "$ 0.00" ) {
+						$('td', row).eq(0).addClass('text-danger');
+						$('td', row).eq(1).addClass('text-danger');
+						$('td', row).eq(2).addClass('text-danger');
+						$('td', row).eq(3).addClass('text-danger');
+						$('td', row).eq(4).addClass('text-danger');
+						$('td', row).eq(5).addClass('text-danger');
+						$('td', row).eq(6).addClass('text-danger');
+						$('td', row).eq(7).addClass('text-danger');
+						$('td', row).eq(8).addClass('text-danger');
+						$('td', row).eq(9).addClass('text-danger');
+						$('td', row).eq(10).addClass('text-danger');
+					}
+				},
 				"dom":
     			"<'row be-datatable-header'<'col-sm-6'B><'col-sm-6 text-right'f>>" +
     			"<'row be-datatable-body'<'col-sm-12'tr>>" +

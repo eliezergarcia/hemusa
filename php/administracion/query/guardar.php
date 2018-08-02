@@ -24,8 +24,9 @@
 
   function query_payments($conexion_usuarios){
     // $conexion_usuarios = mysqli_connect("18.236.250.216", "hemusadb", "Hemusa@2017", "hemusapruebas");
-    mysqli_select_db($conexion_usuarios, "hemusapruebas2");
-    $query = "SELECT * FROM cotizacion WHERE fecha>='2018-05-01' AND fecha<='2018-05-31' ORDER BY fecha ASC";
+    mysqli_select_db($conexion_usuarios, "nuevo");
+    $query = "SELECT * FROM cotizacion WHERE fecha>='2015-01-01' AND fecha<='2015-01-31' ORDER BY factura ASC";
+    // $query = "SELECT * FROM cotizacion WHERE ref = 'HMU3925303'";
     $resultado = mysqli_query($conexion_usuarios, $query);
     while($data = mysqli_fetch_assoc($resultado)){
       $idcotizacion = $data['id'];
@@ -38,7 +39,7 @@
         'facturaFecha' => $facturaFecha
       );
     }
-    mysqli_select_db($conexion_usuarios, "hemusa");
+    mysqli_select_db($conexion_usuarios, "hemusa20julio");
     $length = count($arreglo['data']);
     for ($i=0; $i <=$length ; $i++) {
       $arreglo2['data'][] = array(
