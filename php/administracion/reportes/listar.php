@@ -97,6 +97,8 @@
 			$query4 = "SELECT * FROM abonos WHERE deFactura = '$factura'";
 			$resultado4 = mysqli_query($conexion_usuarios, $query4);
 
+			$notadecredito = "";
+			
 			if (!$resultado4 || mysqli_num_rows($resultado4) < 1 || mysqli_num_rows($resultado4) == null) {
 				$notadecredito = "";
 			}else{
