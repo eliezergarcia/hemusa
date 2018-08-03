@@ -99,7 +99,7 @@
 
 			$notadecredito = "";
 
-			if (!$resultado4 || mysqli_num_rows($resultado4) < 1 || mysqli_num_rows($resultado4) == null) {
+			if (mysqli_num_rows($resultado4) < 1 || mysqli_num_rows($resultado4) == null) {
 				$notadecredito = "";
 			}else{
 				while($data4 = mysqli_fetch_assoc($resultado4)){
