@@ -16,82 +16,90 @@
 
     case 'querypayments':
       // $json = $_POST['lista'];
-      // $data = json_decode($json);
       // $indice = $_POST['indice'];
-      query_payments($conexion_usuarios);
+      $facturas = json_decode($_POST['facturas']);
+      query_payments($facturas, $conexion_usuarios);
       break;
 	}
 
-  function query_payments($conexion_usuarios){
-    // $conexion_usuarios = mysqli_connect("18.236.250.216", "hemusadb", "Hemusa@2017", "hemusapruebas");
-    mysqli_select_db($conexion_usuarios, "nuevo");
-    $query = "SELECT * FROM cotizacion WHERE fecha>='2015-01-01' AND fecha<='2015-01-31' ORDER BY factura ASC";
-    // $query = "SELECT * FROM cotizacion WHERE ref = 'HMU3925303'";
-    $resultado = mysqli_query($conexion_usuarios, $query);
-    while($data = mysqli_fetch_assoc($resultado)){
-      $idcotizacion = $data['id'];
-      $factura = $data['factura'];
-      $facturaFecha = $data['facturaFecha'];
+  function query_payments($facturas, $conexion_usuarios){
+    $length = count($facturas);
 
-      $arreglo['data'][] = array(
-        'id' => $idcotizacion,
-        'factura' => $factura,
-        'facturaFecha' => $facturaFecha
-      );
-    }
-    mysqli_select_db($conexion_usuarios, "hemusa20julio");
-    $length = count($arreglo['data']);
     for ($i=0; $i <=$length ; $i++) {
-      $arreglo2['data'][] = array(
-        'id2' => $arreglo['data'][$i]['id'],
-        'factura2' => $arreglo['data'][$i]['factura'],
-        'facturaFecha2' =>$arreglo['data'][$i]['facturaFecha']
-      );
+      $fecha = $facturas[$i]->{'FechaTimbrado'};
+      $folio = $facturas[$i]->{'Folio'};
+      $ordenpedido = $facturas[$i]->{'NumOrder'};
+      $cliente = $facturas[$i]->{'RazonSocialReceptor'};
+      $status = $facturas[$i]->{'Status'};
+      $subtotal = $facturas[$i]->{'Subtotal'};
+      $total = $facturas[$i]->{'Total'};
+      $uid = $facturas[$i]->{'UID'};
+      $uuid = $facturas[$i]->{'UUID'};
+      $factura = str_replace("H ","",$folio);
 
-      $idcotizacion = $arreglo['data'][$i]['id'];
-      $factura = $arreglo['data'][$i]['factura'];
-      $facturaFecha = $arreglo['data'][$i]['facturaFecha'];
-
-      $query = "UPDATE cotizacion SET factura='$factura', facturaFecha='$facturaFecha' WHERE id='$idcotizacion'";
+      $query = "SELECT amount FROM payments WHERE factura='$factura'";
       $resultado = mysqli_query($conexion_usuarios, $query);
+      if (!$resultado || mysqli_num_rows($resultado)<1 || mysqli_num_rows($resultado)==null) {
+        $pagado = "0.00";
+      }else{
+        $data = mysqli_fetch_assoc($resultado);
+        $pagado = $data['amount'];
+      }
+
+      $query = "INSERT INTO facturas (folio, tipoDocumento, ordenpedido, subtotal, total, pagado, status, fecha, UID, UUID, cliente) VALUES ('$factura', 'factura', '$ordenpedido', '$subtotal', '$total', '$pagado', '$status', '$fecha', '$uid', '$uuid', '$cliente')";
+      $resultado = mysqli_query($conexion_usuarios, $query);
+
+      if (!$resultado || mysqli_num_rows($resultado)<1 || mysqli_num_rows($resultado)==null) {
+      }else{
+        echo json_encode($i);
+      }
     }
 
-
+    // mysqli_select_db($conexion_usuarios, "nuevo");
+    // $query = "SELECT * FROM cotizacion WHERE fecha>='2012-01-01' AND fecha<='2012-01-31' ORDER BY factura ASC";
+    // $resultado = mysqli_query($conexion_usuarios, $query);
     // while($data = mysqli_fetch_assoc($resultado)){
     //   $idcotizacion = $data['id'];
     //   $factura = $data['factura'];
     //   $facturaFecha = $data['facturaFecha'];
     //
-    //   $arreglo2['data'][] = array(
+    //   $arreglo['data'][] = array(
     //     'id' => $idcotizacion,
     //     'factura' => $factura,
     //     'facturaFecha' => $facturaFecha
     //   );
     // }
-
-
-    echo json_encode($arreglo2);
-
-    // $query = "SELECT * FROM payments WHERE factura >= 22508 AND factura <= 22876";
-    // $resultado = mysqli_query($conexion_usuarios, $query);
-    // $i = 1;
-    // while($data = mysqli_fetch_assoc($resultado)){
-    //   $idcliente = $data['client'];
-    //   $factura = $data['factura'];
-    //   $total = $data['amount'];
-    //
-    //   $query2 = "UPDATE cotizacion SET factura='0', facturaFecha='0000-00-00' WHERE cliente='$idcliente' AND Pagado='$total'  AND fechaEntregado>='2017-03-01' AND fechaEntregado<='2017-03-31'";
-    //   $resultado2=mysqli_query($conexion_usuarios, $query2);
-    //
-    //   $query2 = "UPDATE cotizacion SET factura='$factura', Pedido=fechaEntregado WHERE cliente='$idcliente' AND Pagado='$total' AND factura='0' AND facturaFecha='0000-00-00'";
-    //   $resultado2=mysqli_query($conexion_usuarios, $query2);
-    //
-    //   $arreglo['data'][] = array(
-    //     'indice' => $i
+    // mysqli_select_db($conexion_usuarios, "hemusa20julio");
+    // $length = count($arreglo['data']);
+    // for ($i=0; $i <=$length ; $i++) {
+    //   $arreglo2['data'][] = array(
+    //     'id2' => $arreglo['data'][$i]['id'],
+    //     'factura2' => $arreglo['data'][$i]['factura'],
+    //     'facturaFecha2' =>$arreglo['data'][$i]['facturaFecha']
     //   );
-    //   $i++;
+    //
+    //   $idcotizacion = $arreglo['data'][$i]['id'];
+    //   $factura = $arreglo['data'][$i]['factura'];
+    //   $facturaFecha = $arreglo['data'][$i]['facturaFecha'];
+    //
+    //   $query = "UPDATE cotizacion SET factura='$factura', facturaFecha='$facturaFecha' WHERE id='$idcotizacion'";
+    //   $resultado = mysqli_query($conexion_usuarios, $query);
     // }
     //
+    // echo json_encode($arreglo2);
+
+    // mysqli_select_db($conexion_usuarios, "hemusa2");
+    // $query = "SELECT cotizacion.ref, cotizacion.fecha, cotizacionherramientas.cotizacionRef, cotizacionherramientas.marca, cotizacionherramientas.modelo FROM cotizacion INNER JOIN cotizacionherramientas ON cotizacionherramientas.cotizacionRef = cotizacion.ref WHERE cotizacion.fecha>='2018-07-21' AND cotizacion.fecha<='2018-07-31'";
+    // $resultado = mysqli_query($conexion_usuarios, $query);
+    // while($data = mysqli_fetch_assoc($resultado)){
+    //   $arreglo['data'][] = array(
+    //     'ref' => $data['cotizacionRef'],
+    //     'marca' => $data['marca'],
+    //     'modelo' => $data['modelo']
+    //   );
+    // }
+    //
+    // echo json_encode($arreglo);
   }
 
   function query($data, $indice, $conexion_usuarios){

@@ -509,7 +509,10 @@ if ($tipomenu != 4){
 													</li>
 													<li class="nav-item"><a id="query-menu" class="nav-link" href="<?php echo $ruta; ?>php/administracion/query/query.php">Query</a>
 													</li>
-													<li class="nav-item"><a id="query-menu" class="nav-link" href="<?php echo $ruta; ?>php/administracion/reportes/reportes.php"><i class="fas fa-clipboard-list"></i> Reportes</a>
+													<li class="nav-item dropdown parent"><a id="reportes-menu" class="nav-link" href="" data-toggle="dropdown"><i class="fas fa-clipboard-list"></i> Reportes</a>
+														<div class="dropdown-menu be-sub-nav" role="menu">
+			                        <a class="dropdown-item" href="<?php echo $ruta; ?>php/administracion/reportes/reporteventas.php">Reporte de ventas</a>
+			                      </div>
 													</li>
                         </ul>
                       </li>

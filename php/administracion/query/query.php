@@ -137,16 +137,35 @@
 		}
 
     function query_payments(lista){
-      var opcion = "querypayments";
-      var lista = JSON.stringify(lista);
-      $.ajax({
-        method: "POST",
-        url: "guardar.php",
-        dataType: "json",
-        data: {"opcion": opcion},
-      }).done( function( info ){
-        console.log(info);
-      });
+
+			var request = new XMLHttpRequest();
+
+			request.open('GET', apiConfig.enlace+'api/v3/cfdi33/list?per_page=3780');
+
+			request.setRequestHeader('Content-Type', 'application/json');
+			request.setRequestHeader('F-API-KEY', apiConfig.apiKey);
+			request.setRequestHeader('F-SECRET-KEY', apiConfig.secretKey);
+
+			request.onreadystatechange = function () {
+			  if (this.readyState === 4) {
+			    console.log('Status:', this.status);
+			    console.log('Headers:', this.getAllResponseHeaders());
+					var data = JSON.parse(this.responseText);
+					console.log(data);
+					var facturas = JSON.stringify(data.data);
+					var opcion = "querypayments";
+					$.ajax({
+						method: "POST",
+						url: "guardar.php",
+						dataType: "json",
+						data: {"opcion": opcion, "facturas": facturas},
+					}).done( function( info ){
+						console.log(info);
+					});
+			  }
+			};
+
+			request.send();
     }
 
 		function query(lista, j){
