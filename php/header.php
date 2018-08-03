@@ -483,9 +483,9 @@ if ($tipomenu != 4){
                         <ul class="be-nav-tabs-sub be-sub-nav nav">
 													<li class="nav-item dropdown parent"><a id="pagoscliente-menu" class="nav-link" href="#" data-toggle="dropdown"><i class="fab fa-cc-amazon-pay"></i> Pagos de cliente</a>
 														<div class="dropdown-menu be-sub-nav" role="menu">
-			                        <a class="dropdown-item" href="<?php echo $ruta; ?>php/cobranza/pagos/pagos.php">Consultar pendientes</a>
-															<a class="dropdown-item" href="<?php echo $ruta; ?>php/cobranza/pagos/informacionfactura.php">Información de factura</a>
-															<a class="dropdown-item" href="<?php echo $ruta; ?>php/cobranza/pagos/notacredito.php">Nota de crédito</a>
+			                        <a class="dropdown-item" href="<?php echo $ruta; ?>php/cobranza/pagoscliente/pagospendientes.php">Consultar pendientes</a>
+															<a class="dropdown-item" href="<?php echo $ruta; ?>php/cobranza/pagoscliente/informacionfactura.php">Información de factura</a>
+															<a class="dropdown-item" href="<?php echo $ruta; ?>php/cobranza/pagoscliente/notacredito.php">Nota de crédito</a>
 			                      </div>
 													</li>
 													<li class="nav-item"><a id="pagosproveedor-menu" class="nav-link" href="<?php echo $ruta; ?>php/cobranza/pagos/pagosproveedor.php"><i class="fab fa-cc-amazon-pay"></i> Pagos a proveedor</a>
@@ -513,6 +513,8 @@ if ($tipomenu != 4){
 													<li class="nav-item"><a id="usuarios-menu" class="nav-link" href="<?php echo $ruta; ?>php/administracion/usuarios/usuarios.php"><i class="fas fa-users-cog"></i> Usuarios</a>
 													</li>
 													<li class="nav-item"><a id="marcas-menu" class="nav-link" href="<?php echo $ruta; ?>php/administracion/marcas/marcas.php"><i class="fas fa-wrench"></i> Marcas</a>
+													</li>
+													<li class="nav-item"><a id="kardex-menu" class="nav-link" href="<?php echo $ruta; ?>php/administracion/kardex/kardex.php"><i class="fas fa-list-alt"></i> Kárdex</a>
 													</li>
 													<li class="nav-item"><a id="subirlista-menu" class="nav-link" href="<?php echo $ruta; ?>php/administracion/marcas/subirlista.php"><i class="fas fa-th-list"></i> Subir lista de precios</a>
 													</li>

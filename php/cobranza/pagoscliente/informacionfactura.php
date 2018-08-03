@@ -18,7 +18,7 @@
 					<nav aria-label="breadcrumb" role="navigation">
 						<ol class="breadcrumb page-head-nav">
 								<li class="breadcrumb-item"><a href="#">Créditos y cobranza</a></li>
-								<li class="breadcrumb-item"><a href="#">Información de factura</a></li>
+								<li class="breadcrumb-item"><a href="#">Pagos de cliente</a></li>
 						</ol>
 					</nav>
 			</div>

@@ -91,6 +91,7 @@
 																		<th>Pagado</th>
 																		<th>Crédito</th>
                                     <th>Vencimiento</th>
+																		<th>Comentarios</th>
 																	</tr>
 																</thead>
 															</table>
@@ -162,7 +163,8 @@
 					{"data": "total"},
 					{"data": "pagado"},
 					{"data": "credito"},
-					{"data": "vencimiento"}
+					{"data": "vencimiento"},
+					{"defaultContent": ""}
 				],
 				"order": [1, "asc"],
 				"language": idioma_espanol,
@@ -227,9 +229,9 @@
                   text:      '<i class="fas fa-file-excel fa-lg"></i> Excel',
                   // "className": "btn btn-lg btn-space btn-secondary",
 									exportOptions: {
-                    columns: [ 0, 1, 2, 4, 3, 6, 7, 8, 5, 13, 14, 15 ]
+                    columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ]
                   },
-                  title: 'reporteventas',
+                  title: 'reportecobranza',
                   customize: function ( xlsx ){
                     var sheet = xlsx.xl.worksheets['sheet1.xml'];
                     $('row c', sheet).attr( 's', '25' );
@@ -239,12 +241,12 @@
           }
 				]
 			});
-      table.columns( [13] ).visible( false );
-			table.columns( [14] ).visible( false );
-			table.columns( [15] ).visible( false );
-			$("#folioinicio").val("");
-			$("#foliofin").val("");
-			obtener_data_descargar_factura("#dt_reportes tbody", table);
+      table.columns( [9] ).visible( false );
+			// table.columns( [14] ).visible( false );
+			// table.columns( [15] ).visible( false );
+			// $("#folioinicio").val("");
+			// $("#foliofin").val("");
+			// obtener_data_descargar_factura("#dt_reportes tbody", table);
 		}
 
 		var obtener_data_descargar_factura = function(tbody, table){

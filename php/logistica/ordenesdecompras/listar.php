@@ -379,6 +379,7 @@
 	}
 
 	function partidasocdescripcion($ano, $folio, $ordencompra, $pedimento, $conexion_usuarios){
+		mysqli_select_db($conexion_usuarios, "hemusa2");
 		$fechaFin = $ano."-".date("m")."-".date("d");
 		$fechaInicio = $ano."-01-01";
 		if ($folio != '' && $ordencompra == '' && $pedimento == '') {
