@@ -33,7 +33,16 @@
 					$queryfacturas = "SELECT * FROM facturas WHERE fecha>='$fechainicio' AND fecha<='$fechafin'";
 				}
 				break;
+
 			case 'enviada':
+				if ($folioinicio |= "" && $foliofin != "") {
+					$queryfacturas = "SELECT * FROM facturas WHERE folio>='$folioinicio' AND folio<='$foliofin' AND status='abonada'";
+				}else{
+					$queryfacturas = "SELECT * FROM facturas WHERE fecha>='$fechainicio' AND fecha<='$fechafin' AND status='abonada'";
+				}
+				break;
+
+			case 'abonado':
 				if ($folioinicio |= "" && $foliofin != "") {
 					$queryfacturas = "SELECT * FROM facturas WHERE folio>='$folioinicio' AND folio<='$foliofin' AND status='enviada'";
 				}else{
@@ -70,6 +79,7 @@
 
     while ($data = mysqli_fetch_assoc($resultadofacturas)){
 			$factura = $data['folio'];
+			$fechafactura = $data['fecha'];
 
 			$query2 = "SELECT payments.date, payments.account, accounts.nombre FROM payments INNER JOIN accounts ON accounts.id = payments.account WHERE payments.factura='$factura'";
 			$resultado2 = mysqli_query($conexion_usuarios, $query2);
@@ -112,12 +122,33 @@
 				}
 			}
 
+			if ($moneda == "mxn") {
+				$tipocambio = "1.00";
+			}else{
+				$query5 = "SELECT tipocambio FROM tipocambio WHERE fecha = '$fechafactura'";
+				$resultado5 = mysqli_query($conexion_usuarios, $query5);
+
+				if (mysqli_num_rows($resultado5) < 1 || mysqli_num_rows($resultado5) == null) {
+					$tipocambio = "";
+				}else{
+					while($data5 = mysqli_fetch_assoc($resultado5)){
+						$tipocambio = $data5['tipocambio'];
+					}
+				}
+			}
+
+			$mniva = ($data['subtotal'] * .16) * $tipocambio;
+			$mnsubtotal = $data['subtotal'] * $tipocambio;
+			$mntotal = $data['total'] * $tipocambio;
+
 			if ($data['status'] == "cancelada") {
 				$arreglo['data'][] = array(
 					'factura' => $data['folio'],
 					'fecha' => $data['fecha'],
-					'cliente' => strtoupper($data['status']),
+					'cliente' => strtoupper($data['cliente']),
+					'status' => strtoupper($data['status']),
 					'moneda' => "",
+					'tipocambio' => "",
 					'iva' => "",
 					'subtotal' => "",
 					'total' => "",
@@ -126,15 +157,20 @@
 					'fechapago' => "",
 					'notacredito' => "",
 					'uid' => $data['UID'],
-					'uuid' => $data['UUID']
+					'uuid' => $data['UUID'],
+					'mniva' => "",
+					'mnsubtotal' => "",
+					'mntotal' => ""
 				);
 			}else{
 				$arreglo['data'][] = array(
 					'factura' => $data['folio'],
 					'fecha' => $data['fecha'],
 					'cliente' => utf8_encode($data['cliente']),
+					'status' => $data['status'],
 					'moneda' => strtoupper($moneda),
-					'iva' => "$ ".$data['total'] * .16,
+					'tipocambio' => $tipocambio,
+					'iva' => "$ ".round($data['subtotal'] * .16, 2),
 					'subtotal' => "$ ".$data['subtotal'],
 					'total' => "$ ".$data['total'],
 					'pagado' => "$ ".$pagado,
@@ -142,7 +178,10 @@
 					'fechapago' => $fechapago,
 					'notacredito' => $notacredito,
 					'uid' => $data['UID'],
-					'uuid' => $data['UUID']
+					'uuid' => $data['UUID'],
+					'mniva' => round($mniva, 2),
+					'mnsubtotal' => round($mnsubtotal, 2),
+					'mntotal' => round($mntotal, 2)
 				);
 			}
 		}

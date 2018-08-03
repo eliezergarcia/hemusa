@@ -92,6 +92,7 @@
 																						<select class="form-control form-control-sm select2" name="status" id="status">
 																							<option value="todo">Todo</option>
 																							<option value="enviada">Enviada</option>
+																							<option value="abonado">Abonado</option>
 																							<option value="pagada">Pagada</option>
 																							<option value="cancelada">Cancelada</option>
 																						</select>
@@ -122,7 +123,9 @@
 																		<th>Factura</th>
 																		<th>Fecha</th>
 																		<th>Cliente</th>
+																		<th>Status</th>
 																		<th>Moneda</th>
+																		<th>Tipo cambio</th>
 																		<th>Iva</th>
 																		<th>Subtotal</th>
 																		<th>Total</th>
@@ -130,6 +133,9 @@
 																		<th>Banco</th>
 																		<th>Fecha pago</th>
 																		<th>Nota de crédito</th>
+																		<th>MN IVA</th>
+																		<th>MN SUBTOTAL</th>
+																		<th>MN TOTAL</th>
 																		<th></th>
 																	</tr>
 																</thead>
@@ -203,7 +209,9 @@
 					{"data": "factura"},
 					{"data": "fecha"},
 					{"data": "cliente"},
+					{"data": "status"},
 					{"data": "moneda"},
+					{"data": "tipocambio"},
 					{"data": "iva"},
 					{"data": "subtotal"},
 					{"data": "total"},
@@ -211,26 +219,46 @@
 					{"data": "banco"},
 					{"data": "fechapago"},
 					{"data": "notacredito"},
-					{"defaultContent": "<div class='invoice-footer'><button type='button' class='descargarfactura btn btn-lg btn-primary' data-toggle='modal' data-target='#modalEditar'><i class='fas fa-cloud-download-alt'></i></button></div>"}
+					{"data": "mniva"},
+					{"data": "mnsubtotal"},
+					{"data": "mntotal"},
+					{"defaultContent": "<div class='invoice-footer'><button type='button' class='descargarfactura btn btn-lg btn-primary' data-toggle='modal' data-target='#modalEditar'><i class='fas fa-cloud-download-alt'></i></button></div>", "sortable": false}
 				],
 				"order": [0, "asc"],
 				"language": idioma_espanol,
 				"pageLength": 25,
 				"createdRow": function ( row, data, index ) {
-					if ( data.pagado != "$ 0.00" ) {
-						$('td', row).eq(0).addClass('text-primary');
-						$('td', row).eq(1).addClass('text-primary');
-						$('td', row).eq(2).addClass('text-primary');
-						$('td', row).eq(3).addClass('text-primary');
-						$('td', row).eq(4).addClass('text-primary');
-						$('td', row).eq(5).addClass('text-primary');
-						$('td', row).eq(6).addClass('text-primary');
-						$('td', row).eq(7).addClass('text-primary');
-						$('td', row).eq(8).addClass('text-primary');
-						$('td', row).eq(9).addClass('text-primary');
-						$('td', row).eq(10).addClass('text-primary');
+					if ( data.pagado == data.total ) {
+						$('td', row).eq(0).addClass('text-success');
+						$('td', row).eq(1).addClass('text-success');
+						$('td', row).eq(2).addClass('text-success');
+						$('td', row).eq(3).addClass('text-success');
+						$('td', row).eq(4).addClass('text-success');
+						$('td', row).eq(5).addClass('text-success');
+						$('td', row).eq(6).addClass('text-success');
+						$('td', row).eq(7).addClass('text-success');
+						$('td', row).eq(8).addClass('text-success');
+						$('td', row).eq(9).addClass('text-success');
+						$('td', row).eq(10).addClass('text-success');
+						$('td', row).eq(11).addClass('text-success');
+						$('td', row).eq(12).addClass('text-success');
 					}
-					if ( data.cliente == "CANCELADA" ) {
+					if ( data.pagado != '$ 0.00' && (data.pagado != data.total) ) {
+						$('td', row).eq(0).addClass('text-warning');
+						$('td', row).eq(1).addClass('text-warning');
+						$('td', row).eq(2).addClass('text-warning');
+						$('td', row).eq(3).addClass('text-warning');
+						$('td', row).eq(4).addClass('text-warning');
+						$('td', row).eq(5).addClass('text-warning');
+						$('td', row).eq(6).addClass('text-warning');
+						$('td', row).eq(7).addClass('text-warning');
+						$('td', row).eq(8).addClass('text-warning');
+						$('td', row).eq(9).addClass('text-warning');
+						$('td', row).eq(10).addClass('text-warning');
+						$('td', row).eq(11).addClass('text-success');
+						$('td', row).eq(12).addClass('text-success');
+					}
+					if ( data.status == "CANCELADA" ) {
 						$('td', row).eq(0).addClass('text-danger');
 						$('td', row).eq(1).addClass('text-danger');
 						$('td', row).eq(2).addClass('text-danger');
@@ -258,41 +286,22 @@
                   extend:    'excelHtml5',
                   text:      '<i class="fas fa-file-excel fa-lg"></i> Excel',
                   // "className": "btn btn-lg btn-space btn-secondary",
-                  exportOptions: {
-                    columns: [ 0, 1, 2, 3, 4, 5, 6 ]
-                  }
-                },
-                {
-                  extend: 'csv',
-                  text: '<i class="fas fa-file-alt fa-lg"></i> CSV',
-                  // "className": "btn btn-lg btn-space btn-secondary",
-                  exportOptions: {
-                          columns: [ 0, 1, 2, 3, 4, 5, 6 ]
-                  }
-                },
-                {
-                  extend:    'pdfHtml5',
-                  text:      '<i class="fas fa-file-pdf fa-lg"></i> PDF',
-                  download: 'open',
-                  // "className": "btn btn-lg btn-space btn-secondary",
-                  exportOptions: {
-                    columns: [ 0, 1, 2, 3, 4, 5, 6 ]
-                  }
-                },
-                {
-                  extend: 'print',
-                  text: '<i class="fas fa-print fa-lg"></i> Imprimir',
-                  header: 'false',
-                  exportOptions: {
-                          columns: [ 0, 1, 2, 3, 4, 5, 6 ]
+									exportOptions: {
+                    columns: [ 0, 1, 2, 4, 3, 6, 7, 8, 5, 13, 14, 15 ]
                   },
-                  orientation: 'landscape',
-                  pageSize: 'LEGAL'
+                  title: 'reporteventas',
+                  customize: function ( xlsx ){
+                    var sheet = xlsx.xl.worksheets['sheet1.xml'];
+                    $('row c', sheet).attr( 's', '25' );
+                  }
                 }
             ]
           }
 				]
 			});
+      table.columns( [13] ).visible( false );
+			table.columns( [14] ).visible( false );
+			table.columns( [15] ).visible( false );
 			$("#folioinicio").val("");
 			$("#foliofin").val("");
 			obtener_data_descargar_factura("#dt_reportes tbody", table);
