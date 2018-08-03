@@ -124,7 +124,7 @@
 					'pagado' => "$ ".$data['pagado'],
 					'banco' => $banco,
 					'fechapago' => $fechapago,
-					'notacredito' => $notacredito
+					'notacredito' => $notacredito,
 					'uid' => $data['UID'],
 					'uuid' => $data['UUID']
 				);
