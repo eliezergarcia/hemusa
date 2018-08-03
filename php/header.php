@@ -479,13 +479,22 @@ if ($tipomenu != 4){
 													</li>
                         </ul>
                       </li>
-                      <li id="cobranza-menu" class="nav-item parent"><a class="nav-link" href="#" role="button" aria-expanded="false"><span class="icon fas fa-credit-card"></span><span>Créditos y cobranza</span></a>
+                      <li id="cobranza-menu" class="nav-item parent"><a class="nav-link" href="" role="button" aria-expanded="false"><span class="icon fas fa-credit-card"></span><span>Créditos y cobranza</span></a>
                         <ul class="be-nav-tabs-sub be-sub-nav nav">
-													<li class="nav-item"><a id="pagoscliente-menu" class="nav-link" href="<?php echo $ruta; ?>php/cobranza/pagos/pagos.php"><i class="fab fa-cc-amazon-pay"></i> Pagos de cliente</a>
+													<li class="nav-item dropdown parent"><a id="pagoscliente-menu" class="nav-link" href="#" data-toggle="dropdown"><i class="fab fa-cc-amazon-pay"></i> Pagos de cliente</a>
+														<div class="dropdown-menu be-sub-nav" role="menu">
+			                        <a class="dropdown-item" href="<?php echo $ruta; ?>php/cobranza/pagos/pagos.php">Consultar pendientes</a>
+															<a class="dropdown-item" href="<?php echo $ruta; ?>php/cobranza/pagos/informacionfactura.php">Información de factura</a>
+															<a class="dropdown-item" href="<?php echo $ruta; ?>php/cobranza/pagos/notacredito.php">Nota de crédito</a>
+			                      </div>
 													</li>
 													<li class="nav-item"><a id="pagosproveedor-menu" class="nav-link" href="<?php echo $ruta; ?>php/cobranza/pagos/pagosproveedor.php"><i class="fab fa-cc-amazon-pay"></i> Pagos a proveedor</a>
 													</li>
-													<li class="nav-item"><a id="facturas-menu" class="nav-link" href="<?php echo $ruta; ?>php/cobranza/facturas/facturas.php"><i class="fas fa-file-alt"></i> Facturas</a>
+													<li class="nav-item dropdown parent"><a id="reportes-menu" class="nav-link" href="" data-toggle="dropdown"><i class="fas fa-clipboard-list"></i> Reportes</a>
+														<div class="dropdown-menu be-sub-nav" role="menu">
+			                        <a class="dropdown-item" href="<?php echo $ruta; ?>php/administracion/reportes/reporteventas.php">Reporte de ventas</a>
+															<a class="dropdown-item" href="<?php echo $ruta; ?>php/administracion/reportes/reportecobranza.php">Reporte de cobranza</a>
+			                      </div>
 													</li>
                         </ul>
                       </li>
@@ -512,6 +521,7 @@ if ($tipomenu != 4){
 													<li class="nav-item dropdown parent"><a id="reportes-menu" class="nav-link" href="" data-toggle="dropdown"><i class="fas fa-clipboard-list"></i> Reportes</a>
 														<div class="dropdown-menu be-sub-nav" role="menu">
 			                        <a class="dropdown-item" href="<?php echo $ruta; ?>php/administracion/reportes/reporteventas.php">Reporte de ventas</a>
+															<a class="dropdown-item" href="<?php echo $ruta; ?>php/administracion/reportes/reportecobranza.php">Reporte de cobranza</a>
 			                      </div>
 													</li>
                         </ul>

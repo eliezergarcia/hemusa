@@ -22,6 +22,13 @@
 
 			reporteventas($fechainicio, $fechafin, $folioinicio, $foliofin, $status, $conexion_usuarios);
 			break;
+
+		case 'reportecobranza':
+			$fechainicio = $_POST['fechainicio'];
+			$fechafin = $_POST['fechafin'];
+			$status = $_POST['status'];
+			reportecobranza($fechainicio, $fechafin, $status, $conexion_usuarios);
+			break;
 	}
 
   function reporteventas ($fechainicio, $fechafin, $folioinicio, $foliofin, $status, $conexion_usuarios) {
@@ -230,4 +237,68 @@
     echo json_encode($arreglo, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_PARTIAL_OUTPUT_ON_ERROR);
 		mysqli_close($conexion_usuarios);
   }
+
+	function reportecobranza ($fechainicio, $fechafin, $status, $conexion_usuarios) {
+		$fechahoy = date("Y-m-d");
+		$query = "SELECT facturas.*, contactos.CondPago FROM facturas INNER JOIN contactos ON contactos.nombreEmpresa = facturas.cliente WHERE fecha>='$fechainicio' AND fecha<='$fechafin' AND pagado!=total AND status!='cancelada' ORDER BY folio ASC";
+		$resultado = mysqli_query($conexion_usuarios, $query);
+
+		$i = 1;
+		while($data = mysqli_fetch_assoc($resultado)){
+			$factura = $data['folio'];
+
+			$query2 = "SELECT * FROM cotizacion WHERE factura='$factura'";
+			$resultado2 = mysqli_query($conexion_usuarios, $query2);
+
+			if (mysqli_num_rows($resultado2) < 1) {
+				$moneda = "";
+			}else{
+				while($data2 = mysqli_fetch_assoc($resultado2)){
+					$moneda = $data2['moneda'];
+				}
+			}
+
+			if ($data['CondPago'] == 0) {
+				$fecha = $data['fecha'];
+				$nuevafecha = strtotime ( '+1 day' , strtotime ( $fecha ) ) ;
+				$vencimiento = date ( 'Y-m-d' , $nuevafecha );
+			}else{
+				$fecha = $data['fecha'];
+				$nuevafecha = strtotime ( '+'.$data['CondPago'].' day' , strtotime ( $fecha ) ) ;
+				$vencimiento = date ( 'Y-m-d' , $nuevafecha );
+			}
+
+			if ($status == "vencida" && $vencimiento < $fechahoy) {
+				$arreglo['data'][] = array(
+					"indice" => $i,
+					"factura" => $data['folio'],
+					"fecha" => $fecha,
+					"cliente" => $data['cliente'],
+					"moneda" => strtoupper($moneda),
+					"total" => "$ ".$data['total'],
+					"pagado" => "$ ".$data['pagado'],
+					"credito" => $data['CondPago']." días",
+					"vencimiento" => $vencimiento
+				);
+				$i++;
+			}
+			if ($status == "porvencer" && $vencimiento > $fechahoy) {
+				$arreglo['data'][] = array(
+					"indice" => $i,
+					"factura" => $data['folio'],
+					"fecha" => $fecha,
+					"cliente" => $data['cliente'],
+					"moneda" => strtoupper($moneda),
+					"total" => "$ ".$data['total'],
+					"pagado" => "$ ".$data['pagado'],
+					"credito" => $data['CondPago']." días",
+					"vencimiento" => $vencimiento
+				);
+				$i++;
+			}
+
+		}
+		echo json_encode($arreglo, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_PARTIAL_OUTPUT_ON_ERROR);
+		mysqli_close($conexion_usuarios);
+	}
 ?>
