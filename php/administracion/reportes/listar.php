@@ -108,7 +108,9 @@
 					'pagado' => "",
 					'banco' => "",
 					'fechapago' => "",
-					'notacredito' => ""
+					'notacredito' => "",
+					'uid' => $data['UID'],
+					'uuid' => $data['UUID']
 				);
 			}else{
 				$arreglo['data'][] = array(
@@ -123,6 +125,8 @@
 					'banco' => $banco,
 					'fechapago' => $fechapago,
 					'notacredito' => $notacredito
+					'uid' => $data['UID'],
+					'uuid' => $data['UUID']
 				);
 			}
 		}
