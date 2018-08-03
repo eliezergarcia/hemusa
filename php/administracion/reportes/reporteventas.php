@@ -30,9 +30,9 @@
                     	<div class="card card-fullcalendar">
                       		<div class="card-body">
 														<div class="row table-filters-container">
-						                  <div class="col-12 col-lg-12 col-xl-6">
-						                    <div class="row">
-						                      <div class="col-12 col-lg-6 table-filters pb-0 pb-xl-4"><span class="table-filter-title">Fecha</span>
+						                  <div class="col-12">
+						                    <div class="row align-items-end">
+						                      <div class="col-3"><span class="table-filter-title">Fecha</span>
 						                        <div class="filter-container">
 																			<form>
 						                            <div class="row">
@@ -58,7 +58,7 @@
 																						<label class="control-label">Año:</label>
 																						<select class="form-control form-control-sm select2" name="filtroano" id="filtroano">
 																							<option value="2017">2017</option>
-																							<option value="2018" selected>2018</option>
+																							<option value="2018">2018</option>
 																							<option value="2019">2019</option>
 																							<option value="2020">2020</option>
 																						</select>
@@ -67,7 +67,51 @@
 						                          </form>
 						                        </div>
 						                      </div>
-						                    </div>
+																	<div class="col-2"><span class="table-filter-title">Folio</span>
+						                        <div class="filter-container">
+																			<form>
+						                            <div class="row">
+						                              <div class="col-6">
+																						<label class="control-label">Inicio:</label>
+																						<input type="text" name="folioinicio" id="folioinicio" class="form-control form-control-sm" value="">
+						                              </div>
+						                              <div class="col-6">
+																						<label class="control-label">Fin:</label>
+																						<input type="text" name="foliofin" id="foliofin" class="form-control form-control-sm" value="">
+						                              </div>
+						                            </div>
+						                          </form>
+						                        </div>
+						                      </div>
+																	<div class="col-1"><span class="table-filter-title">Status</span>
+						                        <div class="filter-container">
+																			<form>
+						                            <div class="row">
+						                              <div class="col-12">
+																						<label class="control-label"></label>
+																						<select class="form-control form-control-sm select2" name="status" id="status">
+																							<option value="todo">Todo</option>
+																							<option value="enviada">Enviada</option>
+																							<option value="pagada">Pagada</option>
+																							<option value="cancelada">Cancelada</option>
+																						</select>
+																					</div>
+						                            </div>
+						                          </form>
+						                        </div>
+						                      </div>
+																	<div class="col-1">
+						                        <div class="filter-container">
+																			<form>
+						                            <div class="row">
+						                              <div class="col-12">
+																						<button id="listar-reportes" type="button" name="button" class="btn btn-lg btn-primary">Buscar</button>
+						                              </div>
+						                            </div>
+						                          </form>
+						                        </div>
+						                      </div>
+																</div>
 						                  </div>
 														</div>
 
@@ -86,6 +130,7 @@
 																		<th>Banco</th>
 																		<th>Fecha pago</th>
 																		<th>Nota de crédito</th>
+																		<th></th>
 																	</tr>
 																</thead>
 															</table>
@@ -95,6 +140,18 @@
             	</div>
       		</div>
     	</div>
+
+			<div id="mod-spinner" tabindex="-1" role="dialog" style="" class="modal fade" data-backdrop="static" data-keyboard="false">
+	      <div class="modal-dialog" style="top: 400px;">
+					<div class="text-center">
+						<div class="be-spinner">
+							<svg width="50px" height="50px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+								<circle fill="none" stroke-width="4" stroke-linecap="round" cx="33" cy="33" r="30" class="circle"></circle>
+							</svg>
+						</div>
+					</div>
+	    	</div>
+			</div>
 
     <header>
     <?php include('../../enlacesjs.php'); ?>
@@ -107,7 +164,6 @@
 			App.uiNotifications();
 			nav_active();
 			prettyPrint();
-			listar();
 			$("#filtromes").val("<?php echo $mes; ?>").change();
 			$("#filtroano").val("<?php echo $ano; ?>").change();
 		});
@@ -120,11 +176,7 @@
 			$("#reportes-menu").addClass("active");
     }
 
-		$("#filtromes").on("change", function (){
-			listar();
-		});
-
-		$("#filtroano").on("change", function (){
+		$("#listar-reportes").on("click", function () {
 			listar();
 		});
 
@@ -132,6 +184,9 @@
 			var opcion = "reporteventas";
 			var filtromes = $("#filtromes").val();
 			var filtroano = $("#filtroano").val();
+			var folioinicio = $("#folioinicio").val();
+			var foliofin = $("#foliofin").val();
+			var status = $("#status").val();
 			console.log(filtroano);
 			console.log(filtromes);
 			var table = $("#dt_reportes").DataTable({
@@ -142,7 +197,7 @@
 				"ajax":{
 					"url": "listar.php",
 					"type": "POST",
-					"data": {"opcion": opcion, "filtromes": filtromes, "filtroano": filtroano},
+					"data": {"opcion": opcion, "filtromes": filtromes, "filtroano": filtroano, "folioinicio": folioinicio, "foliofin": foliofin, "status": status},
 				},
 				"columns":[
 					{"data": "factura"},
@@ -155,12 +210,27 @@
 					{"data": "pagado"},
 					{"data": "banco"},
 					{"data": "fechapago"},
-					{"data": "notacredito"}
+					{"data": "notacredito"},
+					{"defaultContent": "<div class='invoice-footer'><button type='button' class='descargarfactura btn btn-lg btn-primary' data-toggle='modal' data-target='#modalEditar'><i class='fas fa-cloud-download-alt'></i></button></div>"}
 				],
+				"order": [0, "asc"],
 				"language": idioma_espanol,
 				"pageLength": 25,
 				"createdRow": function ( row, data, index ) {
-					if ( data.pagado == "$ 0.00" ) {
+					if ( data.pagado != "$ 0.00" ) {
+						$('td', row).eq(0).addClass('text-primary');
+						$('td', row).eq(1).addClass('text-primary');
+						$('td', row).eq(2).addClass('text-primary');
+						$('td', row).eq(3).addClass('text-primary');
+						$('td', row).eq(4).addClass('text-primary');
+						$('td', row).eq(5).addClass('text-primary');
+						$('td', row).eq(6).addClass('text-primary');
+						$('td', row).eq(7).addClass('text-primary');
+						$('td', row).eq(8).addClass('text-primary');
+						$('td', row).eq(9).addClass('text-primary');
+						$('td', row).eq(10).addClass('text-primary');
+					}
+					if ( data.cliente == "CANCELADA" ) {
 						$('td', row).eq(0).addClass('text-danger');
 						$('td', row).eq(1).addClass('text-danger');
 						$('td', row).eq(2).addClass('text-danger');
@@ -222,6 +292,46 @@
             ]
           }
 				]
+			});
+			$("#folioinicio").val("");
+			$("#foliofin").val("");
+			obtener_data_descargar_factura("#dt_reportes tbody", table);
+		}
+
+		var obtener_data_descargar_factura = function(tbody, table){
+			$(tbody).on("click", "button.descargarfactura", function(){
+				$("#mod-spinner").modal("show");
+				var data = table.row( $(this).parents("tr") ).data();
+				console.log(data);
+				var UIDfactura = data.uid;
+				var folio = data.factura;
+				console.log(UIDfactura);
+
+				var request = new XMLHttpRequest();
+
+				request.open('GET', apiConfig.enlace+'api/v3/cfdi33/'+UIDfactura+'/pdf');
+
+				request.setRequestHeader('F-API-KEY', apiConfig.apiKey);
+				request.setRequestHeader('F-SECRET-KEY', apiConfig.secretKey);
+				request.setRequestHeader('Content-Type', 'application/pdf');
+				request.setRequestHeader('Content-Transfer-Encoding', 'Binary');
+				request.responseType = 'blob';
+
+				request.onreadystatechange = function () {
+						if (this.readyState === 4) {
+							console.log('Status:', this.status);
+							console.log('Headers:', this.getAllResponseHeaders());
+							console.log('Body:', this.response);
+							$("#mod-spinner").modal("hide");
+							var blob = new Blob([this.response], {type: 'application/pdf'});
+							var link = document.createElement('a');
+							link.href = window.URL.createObjectURL(blob);
+							link.download = "H "+folio+".pdf";
+							link.click();
+						}
+				};
+
+				request.send();
 			});
 		}
 
