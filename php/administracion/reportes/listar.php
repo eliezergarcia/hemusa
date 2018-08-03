@@ -77,12 +77,10 @@
 			if (!$resultado2 || mysqli_num_rows($resultado2) < 1 || mysqli_num_rows($resultado2) == null) {
 				$banco = "";
 				$fechapago = "";
-				$notacredito = "";
 			}else{
 				while($data2 = mysqli_fetch_assoc($resultado2)){
 					$banco = $data2['nombre'];
 					$fechapago = $data2['date'];
-					$notacredito = "";
 				}
 			}
 
@@ -94,6 +92,18 @@
 			}else{
 				$data3 = mysqli_fetch_assoc($resultado3);
 				$moneda = $data3['moneda'];
+			}
+
+			$query4 = "SELECT * FROM abonos WHERE deFactura = '$factura'";
+			$resultado4 = mysqli_query($conexion_usuarios, $query4);
+
+			if (!$resultado4 || mysqli_num_rows($resultado4) < 1 || mysqli_num_rows($resultado4) == null) {
+				$notadecredito = "";
+			}else{
+				$data4 = mysqli_fetch_assoc($resultado4);
+				$folio = $data4['numero'];
+				$valor = $data4['valor'];
+				$notacredito = "FOLIO: ".$data['folio']." "."FACTURA: ".$factura." "."MONTO: ".$valor;
 			}
 
 			if ($data['status'] == "cancelada") {
