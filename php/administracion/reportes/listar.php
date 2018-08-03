@@ -101,11 +101,13 @@
 
 			if (mysqli_num_rows($resultado4) < 1 || mysqli_num_rows($resultado4) == null) {
 				$notadecredito = "";
+				$pagado = $data['total'];
 			}else{
 				while($data4 = mysqli_fetch_assoc($resultado4)){
 					$folio = $data4['numero'];
 					$valor = $data4['valor'];
 					$notacredito = "FOLIO: ".$folio." "."FACTURA: ".$factura." "."MONTO: ".$valor;
+					$pagado = $data['total'];
 				}
 			}
 
@@ -134,7 +136,7 @@
 					'iva' => "$ ".$data['total'] * .16,
 					'subtotal' => "$ ".$data['subtotal'],
 					'total' => "$ ".$data['total'],
-					'pagado' => "$ ".$data['pagado'],
+					'pagado' => "$ ".$pagado,
 					'banco' => $banco,
 					'fechapago' => $fechapago,
 					'notacredito' => $notacredito,
