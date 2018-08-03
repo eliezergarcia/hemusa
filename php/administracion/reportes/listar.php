@@ -106,7 +106,8 @@
 				while($data4 = mysqli_fetch_assoc($resultado4)){
 					$folio = $data4['numero'];
 					$valor = $data4['valor'];
-					$notacredito = "FOLIO: ".$folio." "."FACTURA: ".$factura." "."MONTO: ".$valor;
+					$deFactura = $data4['deFactura'];
+					$notacredito = "FOLIO: ".$folio." "."FACTURA: ".$deFactura." "."MONTO: ".$valor;
 					$pagado = $data['total'];
 				}
 			}
