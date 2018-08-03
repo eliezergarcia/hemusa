@@ -100,7 +100,7 @@
 			$notadecredito = "";
 
 			if (mysqli_num_rows($resultado4) < 1 || mysqli_num_rows($resultado4) == null) {
-				$notadecredito = "";
+				$notacredito = "";
 				$pagado = $data['total'];
 			}else{
 				while($data4 = mysqli_fetch_assoc($resultado4)){
