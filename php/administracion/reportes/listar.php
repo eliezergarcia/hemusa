@@ -98,14 +98,15 @@
 			$resultado4 = mysqli_query($conexion_usuarios, $query4);
 
 			$notadecredito = "";
-			
+
 			if (!$resultado4 || mysqli_num_rows($resultado4) < 1 || mysqli_num_rows($resultado4) == null) {
 				$notadecredito = "";
 			}else{
-				$data4 = mysqli_fetch_assoc($resultado4);
-				$folio = $data4['numero'];
-				$valor = $data4['valor'];
-				$notacredito = "FOLIO: ".$data['folio']." "."FACTURA: ".$factura." "."MONTO: ".$valor;
+				while($data4 = mysqli_fetch_assoc($resultado4)){
+					$folio = $data4['numero'];
+					$valor = $data4['valor'];
+					$notacredito = "FOLIO: ".$folio." "."FACTURA: ".$factura." "."MONTO: ".$valor;
+				}
 			}
 
 			if ($data['status'] == "cancelada") {
