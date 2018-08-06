@@ -124,42 +124,22 @@
 												<div class="row">
 													<div class="form-group col-6">
 														<label for="">Tipo de CFDI <font color="#FF4136">*</font></label>
-														<select name="" id="" class="form-control form-control-sm col-12">
-															<option value="" selected>Nota de crédito</option>
-														</select>
-													</div>
-													<div class="form-group col-6">
-														<label for="">Cliente <font color="#FF4136">*</font></label>
-														<select name="" id="" class="form-control form-control-sm col-12">
-															<option value="" selected>VENTAS AL PUBLICO EN GENERAL</option>
-														</select>
-													</div>
-													<div class="form-group col-6">
-														<label for="">Lugar de expedición <font color="#FF4136">*</font></label>
-														<select name="" id="" class="form-control form-control-sm col-12">
-															<option value="" selected>Principal</option>
-														</select>
-													</div>
-													<div class="form-group col-6">
-														<label for="">Fecha de CFDI <font color="#FF4136">*</font></label>
-														<select name="" id="" class="form-control form-control-sm col-12">
-															<option value="" selected>Timbrar con fecha actual</option>
+														<select name="tipoDocumento" id="tipoDocumento" class="form-control form-control-sm col-12">
+															<option value="nota_credito" selected>Nota de crédito</option>
 														</select>
 													</div>
 													<div class="form-group col-6">
 														<label for="">Uso CFDI <font color="#FF4136">*</font></label>
-														<select name="" id="" class="form-control form-control-sm col-12">
-															<option value="" selected>Seleccionar</option>
-															<option value="">Adquisición de mercancias</option>
-															<option value="">Devolución</option>
-															<option value="">Descuento o bonificación</option>
-															<option value="">Gastos en general</option>
-															<option value="">Por definir</option>
+														<select name="usoCFDI" id="usoCFDI" class="form-control form-control-sm col-12">
+															<option value="G02" selected>Devoluciones, descuentos o bonificaciones</option>
+														</select>
+													</div>
+													<div class="form-group col-8">
+														<label for="">Cliente <font color="#FF4136">*</font></label>
+														<select name="cliente" id="cliente" class="form-control form-control-sm col-12">
 														</select>
 													</div>
 												</div>
-												<br>
-												<h3>Datos de remisión</h3>
 												<hr>
 												<div class="row">
 													<div class="form-group col-6">
@@ -204,8 +184,6 @@
 														</select>
 													</div>
 												</div>
-												<br>
-												<h3>Conceptos</h3>
 												<hr>
 												<div class="row">
 													<div class="form-group col-6">
@@ -371,6 +349,10 @@
 			var fechafin = $("#fechafin").val("");
 			var folio = $("#folio").val("");
 		});
+
+		$('#myModal').on('shown.bs.modal', function (e) {
+		  // do something...
+		})
 
 	</script>
 	<script type="text/javascript" src="<?php echo $ruta; ?>php/js/idioma_espanol.js"></script>
