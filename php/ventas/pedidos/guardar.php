@@ -701,9 +701,10 @@
 					$informacion["respuesta"] = "BIEN";
 					$informacion["informacion"] = "La factura '".$folio."' se guardó en el sistema correctamente!";
 				}
+			}else{
+				$informacion["respuesta"] = "ERROR";
+				$informacion["informacion"] = "Ocurrió un problema al modificar la informacion del pedido, la referencia de cotización esta vacía!";
 			}
-			$informacion["respuesta"] = "ERROR";
-			$informacion["informacion"] = "Ocurrió un problema al modificar la informacion del pedido, la referencia de cotización esta vacía!";
 		}
 
 		echo json_encode($informacion);

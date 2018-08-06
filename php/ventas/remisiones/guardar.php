@@ -878,14 +878,15 @@
 	function guardar_factura($folio, $ordenpedido, $remision, $subtotal, $total, $status, $fecha, $tipoDocumento, $moneda, $uidfactura, $uuidfactura, $cliente, $conexion_usuarios){
 		$fecha = date("Y-m-d");
 		$folio = str_replace("H ","",$folio);
-		if ($remision != "") {
-			$query = "INSERT INTO facturas (folio, tipoDocumento, remision, subtotal, total, status, moneda, fecha, UID, UUID, cliente) VALUES ('$folio', '$tipoDocumento', '$remision', '$subtotal', '$total', '$status', '$moneda', '$fecha', '$uidfactura', '$uuidfactura', '$cliente')";
-			$resultado = mysqli_query($conexion_usuarios, $query);
 
-			if (!$resultado) {
-				$informacion["respuesta"] = "ERROR";
-				$informacion["informacion"] = "Ocurrió un problema al guardar la factura '".$folio."'!";
-			}else{
+		$query = "INSERT INTO facturas (folio, tipoDocumento, remision, subtotal, total, status, moneda, fecha, UID, UUID, cliente) VALUES ('$folio', '$tipoDocumento', '$remision', '$subtotal', '$total', '$status', '$moneda', '$fecha', '$uidfactura', '$uuidfactura', '$cliente')";
+		$resultado = mysqli_query($conexion_usuarios, $query);
+
+		if (!$resultado) {
+			$informacion["respuesta"] = "ERROR";
+			$informacion["informacion"] = "Ocurrió un problema al guardar la factura '".$folio."'!";
+		}else{
+			if ($remision != "") {
 				$query = "UPDATE cotizacion SET factura = '$folio', facturaFecha = '$fecha' WHERE remision = '$remision'";
 				$resultado = mysqli_query($conexion_usuarios, $query);
 
@@ -896,12 +897,12 @@
 					$informacion["respuesta"] = "BIEN";
 					$informacion["informacion"] = "La factura '".$folio."' se guardó en el sistema correctamente!";
 				}
+			}else{
+				$informacion["respuesta"] = "ERROR";
+				$informacion["informacion"] = "Ocurrió un problema al modificar la información del pedido, la remisión se encuentra vacía!";
 			}
-		}else{
-			$informacion["respuesta"] = "ERROR";
-			$informacion["informacion"] = "Ocurrió un problema al modificar la información del pedido, la remisión se encuentra vacía!";
 		}
-
+		
 		echo json_encode($informacion);
 		mysqli_close($conexion_usuarios);
 	}
