@@ -37,7 +37,7 @@
 			$fechafin = $filtroano.'-12-31';
 		}
 
-		$query = "SELECT cotizacion.*, contactos.nombreEmpresa FROM cotizacion INNER JOIN contactos ON contactos.id = cotizacion.cliente WHERE fecha >= '$fechainicio' AND fecha <= '$fechafin' AND partidaPedido != partidaCantidad ORDER BY id DESC";
+		$query = "SELECT cotizacion.*, contactos.nombreEmpresa FROM cotizacion INNER JOIN contactos ON contactos.id = cotizacion.cliente WHERE fecha >= '$fechainicio' AND fecha <= '$fechafin' AND (partidaPedido != partidaCantidad OR (partidaCantidad=0)) ORDER BY id DESC";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 
 		if(mysqli_num_rows($resultado) < 1){
@@ -153,6 +153,7 @@
 
 				$arreglo["data"][]=array(
 					'indice' => $i,
+					'id' => $data['id'],
 					'marca' => $data['marca'],
 					'modelo' => $data['modelo'],
 					'descripcion' => $data['descripcion'],

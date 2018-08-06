@@ -14828,7 +14828,8 @@ canvas {
   font-family: "Material Icons";
   font-size: 1.615rem;
   vertical-align: middle;
-  margin-top: 1px;
+  margin-top: 0px;
+  margin-left: 5px;
 }
 
 @media (max-width: 767.98px) {

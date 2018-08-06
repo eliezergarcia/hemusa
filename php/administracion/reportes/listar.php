@@ -29,9 +29,23 @@
 			$status = $_POST['status'];
 			reportecobranza($fechainicio, $fechafin, $status, $conexion_usuarios);
 			break;
+
+		case 'reportebancos':
+			$fechainicio = $_POST['fechainicio'];
+			$fechafin = $_POST['fechafin'];
+			$banco = $_POST['banco'];
+			reportebancos($fechainicio, $fechafin, $banco, $conexion_usuarios);
+			break;
+
+		case 'reportecomisiones':
+			$fechainicio = $_POST['fechainicio'];
+			$fechafin = $_POST['fechafin'];
+			$vendedor = $_POST['vendedor'];
+			reportecomisiones($fechainicio, $fechafin, $vendedor, $conexion_usuarios);
+			break;
 	}
 
-  function reporteventas ($fechainicio, $fechafin, $folioinicio, $foliofin, $status, $conexion_usuarios) {
+  function reporteventas ($fechainicio, $fechafin, $folioinicio, $foliofin, $status, $conexion_usuarios){
 		switch ($status) {
 			case 'todo':
 				if ($folioinicio |= "" && $foliofin != "") {
@@ -236,7 +250,7 @@
 
     echo json_encode($arreglo, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_PARTIAL_OUTPUT_ON_ERROR);
 		mysqli_close($conexion_usuarios);
-  }
+	}
 
 	function reportecobranza ($fechainicio, $fechafin, $status, $conexion_usuarios) {
 		$fechahoy = date("Y-m-d");
@@ -298,6 +312,97 @@
 			}
 
 		}
+		echo json_encode($arreglo, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_PARTIAL_OUTPUT_ON_ERROR);
+		mysqli_close($conexion_usuarios);
+	}
+
+	function reportebancos($fechainicio, $fechafin, $banco, $conexion_usuarios) {
+		$query = "SELECT DISTINCT client, date FROM payments WHERE account = '$banco' AND date >= '$fechainicio' AND date <= '$fechafin' ORDER BY date ASC";
+		$resultado = mysqli_query($conexion_usuarios, $query);
+
+		if (mysqli_num_rows($resultado) < 1) {
+			$arreglo['data'] = 0;
+		}else{
+			while($data = mysqli_fetch_assoc($resultado)){
+				$idcliente = $data['client'];
+				$fecha = $data['date'];
+
+				$query2 = "SELECT payments.*, contactos.nombreEmpresa FROM payments INNER JOIN contactos ON contactos.id = payments.client WHERE client = '$idcliente' AND date = '$fecha'";
+				$resultado2 = mysqli_query($conexion_usuarios, $query2);
+
+				$facturas = "";
+				$cantidadtotal = "";
+				while($data2 = mysqli_fetch_assoc($resultado2)){
+					$fecha = $data2['date'];
+					$facturas = $facturas." ".$data2['factura'];
+					$cliente = $data2['nombreEmpresa'];
+					$cantidadtotal = $cantidadtotal + $data2['amount'];
+				}
+
+				$arreglo['data'][] = array(
+					'fecha' => $fecha,
+					'factura' => $facturas,
+					'cliente' => $cliente,
+					'cantidadtotal' => "$ ".$cantidadtotal
+				);
+			}
+		}
+
+		echo json_encode($arreglo, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_PARTIAL_OUTPUT_ON_ERROR);
+		mysqli_close($conexion_usuarios);
+	}
+
+	function reportecomisiones($fechainicio, $fechafin, $vendedor, $conexion_usuarios){
+		$query = "SELECT clientes_de_vendedor.id_cliente, contactos.nombreEmpresa FROM clientes_de_vendedor INNER JOIN contactos ON contactos.id = clientes_de_vendedor.id_cliente WHERE id_vendedor = '$vendedor'";
+		$resultado = mysqli_query($conexion_usuarios, $query);
+
+		if (mysqli_num_rows($resultado) < 1) {
+			$arreglo['data'] = 0;
+		}else{
+			$i = 1;
+			while($data = mysqli_fetch_assoc($resultado)){
+				$idcliente = $data['id_cliente'];
+				$cliente = $data['nombreEmpresa'];
+
+				$query2 = "SELECT payments.*, facturas.subtotal, facturas.total, facturas.fecha, accounts.nombre FROM payments INNER JOIN facturas ON facturas.folio = payments.factura INNER JOIN accounts ON accounts.id = payments.account WHERE payments.client = '$idcliente' AND payments.date >= '$fechainicio' AND payments.date <= '$fechafin' ORDER BY date";
+				$resultado2 = mysqli_query($conexion_usuarios, $query2);
+
+				while($data2 = mysqli_fetch_assoc($resultado2)){
+					$fecha = $data2['date'];
+
+					$query3 = "SELECT tipocambio FROM tipocambio WHERE fecha='$fecha'";
+					$resultado3 = mysqli_query($conexion_usuarios, $query3);
+					$data3 = mysqli_fetch_assoc($resultado3);
+					$tipocambio = $data3['tipocambio'];
+
+					if ($data2['currency'] == "usd") {
+						$subtotal = ($data2['subtotal'] * $tipocambio);
+						$iva = ($data2['subtotal'] * $tipocambio) * .16;
+						$total = ($data2['total'] * $tipocambio);
+					}else{
+						$subtotal = $data2['subtotal'];
+						$iva = $data2['subtotal']* .16;
+						$total = $data2['total'];
+						$tipocambio = 1.00;
+					}
+
+					$arreglo['data'][] = array(
+						'indice' => $i,
+						'banco' => $data2['nombre'],
+						'fecha' => $data2['date'],
+						'factura' => $data2['factura'],
+						'cliente' => $cliente,
+						'moneda' => $data2['currency'],
+						'tipocambio' => $tipocambio,
+						'importe' => round($subtotal, 2),
+						'iva' => round($iva, 2),
+						'total' => round($total, 2)
+					);
+					$i++;
+				}
+			}
+		}
+
 		echo json_encode($arreglo, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_PARTIAL_OUTPUT_ON_ERROR);
 		mysqli_close($conexion_usuarios);
 	}

@@ -473,6 +473,7 @@
 					var input = document.getElementById("cliente");
 					var awesomplete = new Awesomplete(input);
 					awesomplete.list = clientes;
+					$("#cliente").focus();
 				}
 			});
 		});

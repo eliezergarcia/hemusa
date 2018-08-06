@@ -105,6 +105,7 @@
                                   <th>Fecha pedido</th>
                                   <th>Proveedor</th>
                                   <th>Cliente</th>
+																	<th>Pedido cliente</th>
                                 </tr>
                               </thead>
                             </table>
@@ -237,7 +238,8 @@
 					{"data": "cantidad"},
 					{"data": "fechapedido"},
 					{"data": "proveedor"},
-          {"data": "cliente"}
+          {"data": "cliente"},
+					{"data": "pedidocliente"}
 				],
         "language": idioma_espanol,
         "dom":

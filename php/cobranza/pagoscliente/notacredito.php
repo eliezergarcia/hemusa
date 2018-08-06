@@ -14,11 +14,11 @@
 	<?php include('../../header.php'); ?>
 		<div class="be-content">
 			<div class="page-head">
-					<h2 class="page-head-title">Información de factura</h2>
+					<h2 class="page-head-title">Nota de crédito</h2>
 					<nav aria-label="breadcrumb" role="navigation">
 						<ol class="breadcrumb page-head-nav">
 								<li class="breadcrumb-item"><a href="#">Créditos y cobranza</a></li>
-								<li class="breadcrumb-item"><a href="#">Información de factura</a></li>
+								<li class="breadcrumb-item"><a href="#">Pagos de cliente</a></li>
 						</ol>
 					</nav>
 			</div>
@@ -27,152 +27,241 @@
 					<div class="col-lg-12">
 						<div class="card card-fullcalendar">
 							<div class="card-body">
-                <h3>Nueva nota de crédito</h3>
-      					<hr>
-      					<h5><i class="fa fa-info-circle" aria-hidden="true"></i> Por favor ingresa la siguiente información para la creación de: Nota de crédito.</h5>
-      					<h5>&nbsp;&nbsp;&nbsp;&nbsp;Los campos marcados con * son obligatorios.</h5><br>
-      					<div class="row">
-      						<div class="form-group col-6">
-      							<label for="">Tipo de CFDI *</label>
-      							<select name="" id="" class="form-control col-8">
-      								<option value="" selected>Nota de crédito</option>
-      							</select>
-      						</div>
-      						<div class="form-group col-6">
-      							<label for="">Cliente *</label>
-      							<select name="" id="" class="form-control col-8">
-      								<option value="" selected>VENTAS AL PUBLICO EN GENERAL</option>
-      							</select>
-      						</div>
-      						<div class="form-group col-6">
-      							<label for="">Lugar de expedición *</label>
-      							<select name="" id="" class="form-control col-8">
-      								<option value="" selected>Principal</option>
-      							</select>
-      						</div>
-      						<div class="form-group col-6">
-      							<label for="">Fecha de CFDI *</label>
-      							<select name="" id="" class="form-control col-8">
-      								<option value="" selected>Timbrar con fecha actual</option>
-      							</select>
-      						</div>
-      						<div class="form-group col-6">
-      							<label for="">Uso CFDI *</label>
-      							<select name="" id="" class="form-control col-8">
-      								<option value="" selected>Seleccionar</option>
-      								<option value="">Adquisición de mercancias</option>
-      								<option value="">Devolución</option>
-      								<option value="">Descuento o bonificación</option>
-      								<option value="">Gastos en general</option>
-      								<option value="">Por definir</option>
-      							</select>
-      						</div>
-      					</div>
-      					<br>
-      					<h3>Datos de remisión</h3>
-      					<hr>
-      					<div class="row">
-      						<div class="form-group col-6">
-      							<label for="">Serie *</label>
-      							<select name="" id="" class="form-control col-8">
-      								<option value="" selected>NC</option>
-      							</select>
-      						</div>
-      						<div class="form-group col-6">
-      							<label for="">No. de orden/pedido</label>
-      							<input type="text" class="form-control col-8" placeholder="No. de pedido">
-      						</div>
-      						<div class="form-group col-6">
-      							<label for="">Método de pago</label>
-      							<select name="" id="" class="form-control col-8">
-      								<option value="" selected>Pago en una sola exhibición</option>
-      							</select>
-      						</div>
-      						<div class="form-group col-6">
-      							<label for="">Forma de pago *</label>
-      							<select name="" id="" class="form-control col-8">
-      								<option value="" selected>Seleccionar</option>
-      							</select>
-      						</div>
-      						<div class="form-group col-6">
-      							<label for="">Condiciones de pago</label>
-      							<input type="text" class="form-control col-8">
-      						</div>
-      						<div class="form-group col-6">
-      							<label for="">Moneda *</label>
-      							<select name="" id="" class="form-control col-8">
-      								<option value="" selected>MXN</option>
-      								<option value="">USD</option>
-      							</select>
-      						</div>
-      						<div class="form-group col-6">
-      							<label for="">Número de decimales *</label>
-      							<select name="" id="" class="form-control col-8">
-      								<option value="" selected>2</option>
-      								<option value="">3</option>
-      								<option value="">4</option>
-      							</select>
-      						</div>
-      					</div>
-      					<br>
-      					<h3>Conceptos</h3>
-      					<hr>
-      					<div class="row">
-      						<div class="form-group col-6">
-      							<label for="">Concepto * <i class="fa fa-info-circle" aria-hidden="true"></i></label>
-      							<input type="text" class="form-control col-9" placeholder="Selecciona un producto o servicio de lista de productos">
-      						</div>
-      						<div class="form-group col-6">
-      							<label for="">Cantidad *</label>
-      							<input type="text" class="form-control col-8" value="1">
-      						</div>
-      						<div class="form-group col-6">
-      							<label for="">Unidad *</label>
-      							<select name="" id="" class="form-control col-8">
-      								<option value="" selected>Seleccionar</option>
-      							</select>
-      						</div>
-      						<div class="form-group col-6">
-      							<label for="">Precio unitario *</label>
-      							<input type="text" class="form-control col-8" value="0.00">
-      						</div>
-      						<div class="form-group col-6">
-      							<label for="">Subtotal</label>
-      							<input type="text" class="form-control col-8" value="$0.00">
-      						</div>
-      						<div class="form-group col-3">
-      							<label for="">IVA</label>
-      							<select name="" id="" class="form-control col-8">
-      								<option value="" selected>16%</option>
-      							</select>
-      						</div>
-      						<div class="form-group col-3">
-      							<label for="">Total</label>
-      							<input type="text" class="form-control col-8" value="$0.00">
-      						</div>
-      						<div class="form-group col-6">
-      							<label for="">Clave SAT *</label>
-      							<input type="text" class="form-control col-8" placeholder="Clave SAT">
-      						</div>
-      					</div>
-      					<hr>
-      					<div class="row justify-content-end">
-      						<button class="btn btn-outline-success"><i class="fa fa-plus-circle" aria-hidden="true"></i> Agregar Parte</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      						<button class="btn btn-success"><i class="fa fa-plus-circle" aria-hidden="true"></i> Agregar Concepto</button>
-      					</div>
-      					<br>
-      				</div>
-      				  	</div>
-      				</div>
+								<div class="row table-filters-container">
+									<div class="col-12">
+										<div class="row align-items-end">
+											<div class="col-2 table-filters"><span class="table-filter-title">Cliente</span>
+												<div class="filter-container">
+													<div class="row">
+														<div class="col-12">
+															<label class="control-label"></label>
+															<input type="text" name="cliente" id="cliente" value="" class="form-control form-control-sm" required>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="col-3 table-filters"><span class="table-filter-title">Fecha</span>
+												<div class="filter-container">
+													<div class="row">
+														<div class="col-6">
+															<label class="control-label">Inicio:</label>
+															<input type="date" name="fechainicio" id="fechainicio" value="" class="form-control form-control-sm" required>
+														</div>
+														<div class="col-6">
+															<label class="control-label">Fin:</label>
+															<input type="date" name="fechafin" id="fechafin" value="" class="form-control form-control-sm" required>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="col-1 table-filters"><span class="table-filter-title">Folio</span>
+												<div class="filter-container">
+													<div class="row">
+														<div class="col-12">
+															<label class="control-label"></label>
+															<input type="text" name="folio" id="folio" value="" class="form-control form-control-sm">
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="col-1 table-filters"><span class="table-filter-title"></span>
+												<div class="filter-container">
+													<div class="row">
+														<div class="col-12">
+															<label class="control-label"></label>
+															<button type="submit" id="buscar-notas" class="btn btn-lg btn-primary">Buscar</button>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="col-5 table-filters"><span class="table-filter-title"></span>
+												<div class="filter-container">
+													<div class="row">
+														<div class="col-12">
+															<label class="control-label"></label>
+															<!-- <button type="button" class="btn btn-lg btn-success" data-toggle='modal' data-target='#modalNotaCredito'>Nueva nota de crédito</button> -->
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
 
+								<br>
+								<button type="button" class="btn btn-lg btn-success btn-space" data-toggle='modal' data-target='#modalNotaCredito'>Nueva nota de crédito</button>
+
+							<!-- Tabla de notas de crédito -->
+								<br>
+								<table id="dt_notas_credito" class="table table-bordered table-striped display" cellspacing="0" width="100%">
+									<thead>
+										<tr>
+											<th>Folio</th>
+											<th>Fecha</th>
+											<th>Cliente</th>
+											<th>Factura</th>
+											<th>Descripción</th>
+											<th>Valor</th>
+											<th>Subtipo</th>
+										</tr>
+									</thead>
+								</table>
+
+
+						<!-- Modal Nueva Nota de Crédito -->
+							<div class="modal fade colored-header colored-header-success" id="modalNotaCredito" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+								<div class="modal-dialog modal-lg" role="document">
+									<div class="modal-content">
+											<div class="modal-header">
+												<h4 class="modal-title" id="exampleModalLabel"><b>Nota de crédito</b></h4>
+												<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+														<span aria-hidden="true">&times;</span>
+												</button>
+											</div>
+											<div class="modal-body">
+												<h5><i class="fa fa-info-circle" aria-hidden="true"></i> Por favor ingresa la siguiente información para la creación de: Nota de crédito.</h5>
+												<h5>&nbsp;&nbsp;&nbsp;&nbsp;Los campos marcados con <font color="#FF4136">*</font> son obligatorios.</h5><br>
+												<div class="row">
+													<div class="form-group col-6">
+														<label for="">Tipo de CFDI <font color="#FF4136">*</font></label>
+														<select name="" id="" class="form-control form-control-sm col-12">
+															<option value="" selected>Nota de crédito</option>
+														</select>
+													</div>
+													<div class="form-group col-6">
+														<label for="">Cliente <font color="#FF4136">*</font></label>
+														<select name="" id="" class="form-control form-control-sm col-12">
+															<option value="" selected>VENTAS AL PUBLICO EN GENERAL</option>
+														</select>
+													</div>
+													<div class="form-group col-6">
+														<label for="">Lugar de expedición <font color="#FF4136">*</font></label>
+														<select name="" id="" class="form-control form-control-sm col-12">
+															<option value="" selected>Principal</option>
+														</select>
+													</div>
+													<div class="form-group col-6">
+														<label for="">Fecha de CFDI <font color="#FF4136">*</font></label>
+														<select name="" id="" class="form-control form-control-sm col-12">
+															<option value="" selected>Timbrar con fecha actual</option>
+														</select>
+													</div>
+													<div class="form-group col-6">
+														<label for="">Uso CFDI <font color="#FF4136">*</font></label>
+														<select name="" id="" class="form-control form-control-sm col-12">
+															<option value="" selected>Seleccionar</option>
+															<option value="">Adquisición de mercancias</option>
+															<option value="">Devolución</option>
+															<option value="">Descuento o bonificación</option>
+															<option value="">Gastos en general</option>
+															<option value="">Por definir</option>
+														</select>
+													</div>
+												</div>
+												<br>
+												<h3>Datos de remisión</h3>
+												<hr>
+												<div class="row">
+													<div class="form-group col-6">
+														<label for="">Serie <font color="#FF4136">*</font></label>
+														<select name="" id="" class="form-control form-control-sm col-12">
+															<option value="" selected>NC</option>
+														</select>
+													</div>
+													<div class="form-group col-6">
+														<label for="">No. de orden/pedido</label>
+														<input type="text" class="form-control form-control-sm col-12" placeholder="No. de pedido">
+													</div>
+													<div class="form-group col-6">
+														<label for="">Método de pago</label>
+														<select name="" id="" class="form-control form-control-sm col-12">
+															<option value="" selected>Pago en una sola exhibición</option>
+														</select>
+													</div>
+													<div class="form-group col-6">
+														<label for="">Forma de pago <font color="#FF4136">*</font></label>
+														<select name="" id="" class="form-control form-control-sm col-12">
+															<option value="" selected>Seleccionar</option>
+														</select>
+													</div>
+													<div class="form-group col-6">
+														<label for="">Condiciones de pago</label>
+														<input type="text" class="form-control form-control-sm col-12">
+													</div>
+													<div class="form-group col-6">
+														<label for="">Moneda <font color="#FF4136">*</font></label>
+														<select name="" id="" class="form-control form-control-sm col-12">
+															<option value="" selected>MXN</option>
+															<option value="">USD</option>
+														</select>
+													</div>
+													<div class="form-group col-6">
+														<label for="">Número de decimales <font color="#FF4136">*</font></label>
+														<select name="" id="" class="form-control form-control-sm col-12">
+															<option value="" selected>2</option>
+															<option value="">3</option>
+															<option value="">4</option>
+														</select>
+													</div>
+												</div>
+												<br>
+												<h3>Conceptos</h3>
+												<hr>
+												<div class="row">
+													<div class="form-group col-6">
+														<label for="">Concepto <font color="#FF4136">*</font> <i class="fa fa-info-circle" aria-hidden="true"></i></label>
+														<input type="text" class="form-control form-control-sm col-12" placeholder="Selecciona un producto o servicio de lista de productos">
+													</div>
+													<div class="form-group col-6">
+														<label for="">Cantidad <font color="#FF4136">*</font></label>
+														<input type="text" class="form-control form-control-sm col-12" value="1">
+													</div>
+													<div class="form-group col-6">
+														<label for="">Unidad <font color="#FF4136">*</font></label>
+														<select name="" id="" class="form-control form-control-sm col-12">
+															<option value="" selected>Seleccionar</option>
+														</select>
+													</div>
+													<div class="form-group col-6">
+														<label for="">Precio unitario <font color="#FF4136">*</font></label>
+														<input type="text" class="form-control form-control-sm col-12" value="0.00">
+													</div>
+													<div class="form-group col-6">
+														<label for="">Subtotal</label>
+														<input type="text" class="form-control form-control-sm col-12" value="$0.00">
+													</div>
+													<div class="form-group col-3">
+														<label for="">IVA</label>
+														<select name="" id="" class="form-control form-control-sm col-12">
+															<option value="" selected>16%</option>
+														</select>
+													</div>
+													<div class="form-group col-3">
+														<label for="">Total</label>
+														<input type="text" class="form-control form-control-sm col-12" value="$0.00">
+													</div>
+													<div class="form-group col-6">
+														<label for="">Clave SAT <font color="#FF4136">*</font></label>
+														<input type="text" class="form-control form-control-sm col-12" placeholder="Clave SAT">
+													</div>
+												</div>
+												<hr>
+
+											</div>
+											<div class="modal-footer invoice-footer">
+												<button type="button" class="btn btn-lg btn-secondary" data-dismiss="modal">Cancelar</button>
+												<button type="button" id="" class="btn btn-lg btn-success">Agregar</button>
+											</div>
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-
-    </header>
+	</div>
+</header>
 	<?php include('../../enlacesjs.php'); ?>
 	<script>
 		$(document).ready(function(){
@@ -183,6 +272,7 @@
   		App.uiNotifications();
 			nav_active();
 			prettyPrint();
+			buscar_clientes();
 		});
 
 		function nav_active () {
@@ -193,60 +283,31 @@
 			$("#pagoscliente-menu").addClass("active");
     }
 
-    $("#buscar-informacion").on("click", function () {
-      var factura = $("#factura").val();
-      informacion_factura(factura);
-      herramienta_factura(factura);
-    });
-
-		var informacion_factura = function(factura){
-      var opcion = "informacionfactura";
-			var table = $('#dt_factura').DataTable({
-				"order": false,
-        "lengthChange": false,
-        "info": false,
-        "paging": false,
-        "destroy":"true",
-				"ajax":{
-					"method":"POST",
-					"url":"listar.php",
-					"data":{"factura": factura, "opcion": opcion},
-				},
-				"columns":[
-					{"data":"factura"},
-					{"data":"fechafactura"},
-					{"data":"cliente"},
-					{"data":"subtotal"},
-					{"data":"iva"},
-					{"data":"total"},
-          {"data":"moneda"},
-          {"data":"pagado"},
-          {"data":"monedapago"},
-          {"data":"banco"},
-          {"data":"fechapago"}
-				],
-				// "columnDefs": [
-				// 	{ "width": "2%", "targets": 0 },
-				// 	// { "width": "13%", "targets": 1 },
-				// 	{ "width": "5%", "targets": 2 },
-				// 	{ "width": "8%", "targets": 3 },
-				// 	{ "width": "5%", "targets": 4 },
-				// 	{ "width": "8%", "targets": 5 },
-				// 	{ "width": "8%", "targets": 6 },
-				// 	{ "width": "8%", "targets": 7 },
-				// 	{ "width": "5%", "targets": 8 },
-				// ],
-				"language": idioma_espanol,
-				"dom":
-    			"<'row be-datatable-header'<'col-sm-6'><'col-sm-6 text-right'>>" +
-    			"<'row be-datatable-body justify-content-center'<'col-sm-12'tr>>"
-    			// "<'row be-datatable-footer'<'col-sm-5'i><'col-sm-7'p>>"
+		function buscar_clientes() {
+			opcion = "buscarclientes";
+			$.ajax({
+				method: "POST",
+				url: "buscar.php",
+				dataType: "json",
+				data: {"opcion": opcion},
+				success : function(data) {
+					var clientes = data;
+					console.log(clientes);
+					var input = document.getElementById("cliente");
+					var awesomplete = new Awesomplete(input);
+					awesomplete.list = clientes;
+					$("#cliente").focus();
+				}
 			});
 		}
 
-    var herramienta_factura = function(factura){
-      var opcion = "herramientafactura";
-			var table = $('#dt_herramienta').DataTable({
+		$("#buscar-notas").on("click", function () {
+			var opcion = "notascredito";
+			var cliente = $("#cliente").val();
+			var fechainicio = $("#fechainicio").val();
+			var fechafin = $("#fechafin").val();
+			var folio = $("#folio").val();
+ 			var table = $('#dt_notas_credito').DataTable({
 				"order": false,
         "lengthChange": false,
         "info": false,
@@ -255,35 +316,61 @@
 				"ajax":{
 					"method":"POST",
 					"url":"listar.php",
-					"data":{"factura": factura, "opcion": opcion},
+					"data":{"opcion": opcion, "cliente": cliente, "fechainicio": fechainicio, "fechafin": fechafin, "folio": folio},
 				},
 				"columns":[
-          {"data":"indice"},
-					{"data":"remision"},
-					{"data":"marca"},
-					{"data":"modelo"},
-					{"data":"cantidad"},
 					{"data":"folio"},
-					{"data":"fecharecibido"}
+					{"data":"fecha"},
+					{"data":"cliente"},
+					{"data":"factura"},
+					{"data":"descripcion"},
+					{"data":"valor"},
+					{"data":"subtipo"}
 				],
-				// "columnDefs": [
-				// 	{ "width": "2%", "targets": 0 },
-				// 	// { "width": "13%", "targets": 1 },
-				// 	{ "width": "5%", "targets": 2 },
-				// 	{ "width": "8%", "targets": 3 },
-				// 	{ "width": "5%", "targets": 4 },
-				// 	{ "width": "8%", "targets": 5 },
-				// 	{ "width": "8%", "targets": 6 },
-				// 	{ "width": "8%", "targets": 7 },
-				// 	{ "width": "5%", "targets": 8 },
-				// ],
 				"language": idioma_espanol,
 				"dom":
-    			"<'row be-datatable-header'<'col-sm-6'><'col-sm-6 text-right'>>" +
-    			"<'row be-datatable-body justify-content-start'<'col-sm-6'tr>>"
-    			// "<'row be-datatable-footer'<'col-sm-5'i><'col-sm-7'p>>"
+    			"<'row be-datatable-header'<'col-sm-6 col-xs-12'B><'col-sm-6 col-xs-12 text-right'f>>" +
+    			"<'row be-datatable-body'<'col-sm-12'tr>>" +
+    			"<'row be-datatable-footer'<'col-sm-5 col-xs-12'i><'col-sm-7 col-xs-12'p>>",
+				"buttons": [
+					{
+						extend: 'collection',
+						text: '<i class="fas fa-table fa-sm"></i> Exportar tabla',
+						"className": "btn btn-lg btn-space btn-secondary",
+						buttons: [
+								{
+									extend: 'excelHtml5',
+									text: '<i class="fas fa-file-alt fa-lg"></i> Excel',
+									customize: function ( xlsx ){
+										var sheet = xlsx.xl.worksheets['sheet1.xml'];
+										$('row c', sheet).attr( 's', '25' );
+									}
+								},
+								{
+									extend: 'csv',
+									text: '<i class="fas fa-file-alt fa-lg"></i> CSV',
+								},
+								{
+									extend:    'pdfHtml5',
+									text:      '<i class="fas fa-file-pdf fa-lg"></i> PDF',
+									download: 'open',
+								},
+								{
+									extend: 'print',
+									text: '<i class="fas fa-print fa-lg"></i> Imprimir',
+									header: 'false',
+									orientation: 'landscape',
+									pageSize: 'LEGAL'
+								}
+							]
+						}
+					]
 			});
-		}
+			var cliente = $("#cliente").val("");
+			var fechainicio = $("#fechainicio").val("");
+			var fechafin = $("#fechafin").val("");
+			var folio = $("#folio").val("");
+		});
 
 	</script>
 	<script type="text/javascript" src="<?php echo $ruta; ?>php/js/idioma_espanol.js"></script>

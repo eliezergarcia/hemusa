@@ -137,10 +137,9 @@
 		}
 
     function query_payments(lista){
-
 			var request = new XMLHttpRequest();
 
-			request.open('GET', apiConfig.enlace+'api/v3/cfdi33/list?per_page=3780');
+			request.open('GET', apiConfig.enlace+'api/v3/cfdi33/list?per_page=38');
 
 			request.setRequestHeader('Content-Type', 'application/json');
 			request.setRequestHeader('F-API-KEY', apiConfig.apiKey);
@@ -166,6 +165,15 @@
 			};
 
 			request.send();
+			// var opcion = "querypayments";
+			// $.ajax({
+			// 	method: "POST",
+			// 	url: "guardar.php",
+			// 	dataType: "json",
+			// 	data: {"opcion": opcion},
+			// }).done( function( info ){
+			// 	console.log(info);
+			// });
     }
 
 		function query(lista, j){

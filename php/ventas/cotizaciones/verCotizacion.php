@@ -224,7 +224,11 @@
 				      						<th>Descripción</th>
 													<th>Cantidad</th>
 				      						<th>Precio Total</th>
-				      						<th><input type="checkbox" class="btn btn-outline-primary" name="sel" onclick="seleccionartodo()"></th>
+													<th>
+														<label class="custom-control custom-control-sm custom-checkbox">
+															<input class="custom-control-input" name="sel" type="checkbox" onclick="seleccionartodo()"><span class="custom-control-label"></span>
+														</label>
+													</th>
 				      					</tr>
 				      				</thead>
 				      			</table>
@@ -844,8 +848,12 @@
 					{"data": "modelo"},
 					{"data": "descripcion"},
 					{"data": "cantidad"},
-					{"data": "precioTotal"},
-					{"data": "input"}
+					{"data": "precioTotal"},					
+					{"data": null,
+						"render": function (data) {
+							return "<label class='custom-control custom-control-sm custom-checkbox'><input name='hcambiarpedido' value='"+data.id+"' class='custom-control-input' type='checkbox'><span class='custom-control-label'></span></label>";
+						},
+					}
 				],
 				"order": false,
         "lengthChange": false,

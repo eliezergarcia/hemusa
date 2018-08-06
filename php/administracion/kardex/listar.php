@@ -31,7 +31,7 @@
 	}
 
   function listarpedidos($marca, $modelo, $fechainicio, $fechafin, $conexion_usuarios){
-    $query = "SELECT cotizacionherramientas.*, contactos.nombreEmpresa FROM cotizacionherramientas INNER JOIN contactos ON contactos.id = cotizacionherramientas.cliente WHERE marca='$marca' AND modelo='$modelo' AND pedidoFecha != '0000-00-00' AND pedidoFecha>='$fechainicio' AND pedidoFecha<='$fechafin'";
+    $query = "SELECT cotizacionherramientas.*, cotizacion.NoPedClient, contactos.nombreEmpresa FROM cotizacionherramientas INNER JOIN cotizacion ON cotizacion.ref = cotizacionherramientas.cotizacionRef INNER JOIN contactos ON contactos.id = cotizacionherramientas.cliente WHERE marca='$marca' AND modelo='$modelo' AND pedidoFecha != '0000-00-00' AND pedidoFecha>='$fechainicio' AND pedidoFecha<='$fechafin'";
     $resultado = mysqli_query($conexion_usuarios, $query);
 
     if (mysqli_num_rows($resultado) < 1) {
@@ -45,7 +45,8 @@
           'cantidad' => $data['cantidad'],
           'fechapedido' => $data['pedidoFecha'],
           'proveedor' => $data['Proveedor'],
-          'cliente' => $data['nombreEmpresa']
+          'cliente' => $data['nombreEmpresa'],
+					'pedidocliente' => $data['NoPedClient']
         );
       }
     }
@@ -102,16 +103,21 @@
           $remision = $data['remision'];
         }
 
-        $query2 = "SELECT factura FROM cotizacion WHERE id = '$idcotizacion'";
-        $resultado2 = mysqli_query($conexion_usuarios, $query2);
+				if ($data['factura'] == "0" || $data['factura'] == "") {
+					$factura = "";
+				}else{
+					$query2 = "SELECT factura FROM cotizacion WHERE id = '$idcotizacion'";
+					$resultado2 = mysqli_query($conexion_usuarios, $query2);
 
-        if (mysqli_num_rows($resultado2) < 1) {
-          $factura = $data['factura'];
-        }else{
-          while($data2 = mysqli_fetch_assoc($resultado2)){
-            $factura = $data2['factura'];
-          }
-        }
+					if (mysqli_num_rows($resultado2) < 1) {
+						$factura = $data['factura'];
+					}else{
+						while($data2 = mysqli_fetch_assoc($resultado2)){
+							$factura = $data2['factura'];
+						}
+					}
+				}
+
 
         $arreglo['data'][] = array(
           'marca' => $data['marca'],

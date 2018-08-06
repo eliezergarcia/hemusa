@@ -852,8 +852,7 @@
 				if (!$resultado) {
 					$respuesta['respuesta'] = "ERROR 3";
 				}else{
-					$entregado = "0000-00-00";
-					$query = "INSERT INTO pedidos (cotizacionRef, numeroPedido, cliente, contacto, vendedor, fecha, partidas, total, entregado, moneda, IdFormaPago, IdMetodoPago, IdUsoCFDI) VALUES ('$refCotizacion', '$numeroPedido', '$idcliente', '$contacto', '$vendedor', '$fecha', '$numeroPartidas', '$total', '$entregado', '$moneda', '$idFormaPago', '$idMetodoPago', '$idUsoCFDI')";
+					$query = "INSERT INTO pedidos (cotizacionRef, numeroPedido, cliente, contacto, vendedor, fecha, partidas, total, moneda, IdFormaPago, IdMetodoPago, IdUsoCFDI) VALUES ('$refCotizacion', '$numeroPedido', '$idcliente', '$contacto', '$vendedor', '$fecha', '$numeroPartidas', '$total', '$moneda', '$idFormaPago', '$idMetodoPago', '$idUsoCFDI')";
 					$resultado = mysqli_query($conexion_usuarios, $query);
 					if (!$resultado) {
 						$respuesta['respuesta'] = "ERROR 4";

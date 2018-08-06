@@ -1977,17 +1977,19 @@
 						if (UIDFactura == data.data[i].UID){
 							var folio = data.data[i].Folio;
 							var ordenpedido = data.data[i].NumOrder;
+							var subtotal = data.data[i].Subtotal;
 							var total = data.data[i].Total;
 							var status = data.data[i].Status;
 							var fecha = data.data[i].FechaTimbrado;
 							var cliente = data.data[i].RazonSocialReceptor;
 							var UID = data.data[i].UID;
+							var UUID = data.data[i].UUID;
 							var opcion = "guardarfactura";
 							$.ajax({
 								method: "POST",
 								url: "guardar.php",
 								dataType: "json",
-								data: {"opcion": opcion, "folio": folio, "ordenpedido": ordenpedido, "total": total, "status": status, "fecha": fecha, "tipoDocumento": tipoDocumento, "moneda": moneda, "UIDFactura": UIDFactura, "UUIDFactura": UUIDFactura, "cliente": cliente}
+								data: {"opcion": opcion, "folio": folio, "refCotizacion": refCotizacion, "ordenpedido": ordenpedido, "subtotal": subtotal, "total": total, "status": status, "fecha": fecha, "tipoDocumento": tipoDocumento, "moneda": moneda, "UIDFactura": UIDFactura, "UUIDFactura": UUIDFactura, "cliente": cliente}
 							}).done( function( data ){
 								console.log(data);
 								mostrar_mensaje(data);

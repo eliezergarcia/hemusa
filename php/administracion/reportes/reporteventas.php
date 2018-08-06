@@ -32,7 +32,7 @@
 														<div class="row table-filters-container">
 						                  <div class="col-12">
 						                    <div class="row align-items-end">
-						                      <div class="col-3"><span class="table-filter-title">Fecha</span>
+						                      <div class="col-3 table-filters"><span class="table-filter-title">Fecha</span>
 						                        <div class="filter-container">
 																			<form>
 						                            <div class="row">
@@ -67,7 +67,7 @@
 						                          </form>
 						                        </div>
 						                      </div>
-																	<div class="col-2"><span class="table-filter-title">Folio</span>
+																	<div class="col-2 table-filters"><span class="table-filter-title">Folio</span>
 						                        <div class="filter-container">
 																			<form>
 						                            <div class="row">
@@ -83,7 +83,7 @@
 						                          </form>
 						                        </div>
 						                      </div>
-																	<div class="col-1"><span class="table-filter-title">Status</span>
+																	<div class="col-1 table-filters"><span class="table-filter-title">Status</span>
 						                        <div class="filter-container">
 																			<form>
 						                            <div class="row">
@@ -101,7 +101,7 @@
 						                          </form>
 						                        </div>
 						                      </div>
-																	<div class="col-1">
+																	<div class="col-1 table-filters"><span class="table-filter-title"></span>
 						                        <div class="filter-container">
 																			<form>
 						                            <div class="row">

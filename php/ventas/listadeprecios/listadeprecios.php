@@ -31,7 +31,7 @@
 														<div class="row table-filters-container">
 						                  <div class="col-12">
 						                    <div class="row">
-						                      <div class="col-4 table-filters pb-0 pb-xl-4"><span class="table-filter-title">Herramienta</span>
+						                      <div class="col-4 table-filters pb-0 pb-xl-4"><span class="table-filter-title">Filtro</span>
 						                        <div class="filter-container">
 																			<form>
 						                            <div class="row align-items-end">

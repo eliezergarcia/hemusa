@@ -19,6 +19,7 @@
       // $indice = $_POST['indice'];
       $facturas = json_decode($_POST['facturas']);
       query_payments($facturas, $conexion_usuarios);
+      // query_payments($conexion_usuarios);
       break;
 	}
 
@@ -56,7 +57,7 @@
     }
 
     // mysqli_select_db($conexion_usuarios, "nuevo");
-    // $query = "SELECT * FROM cotizacion WHERE fecha>='2012-01-01' AND fecha<='2012-01-31' ORDER BY factura ASC";
+    // $query = "SELECT * FROM cotizacion WHERE fecha='0000-00-00' ORDER BY factura ASC";
     // $resultado = mysqli_query($conexion_usuarios, $query);
     // while($data = mysqli_fetch_assoc($resultado)){
     //   $idcotizacion = $data['id'];
@@ -85,7 +86,7 @@
     //   $query = "UPDATE cotizacion SET factura='$factura', facturaFecha='$facturaFecha' WHERE id='$idcotizacion'";
     //   $resultado = mysqli_query($conexion_usuarios, $query);
     // }
-    //
+
     // echo json_encode($arreglo2);
 
     // mysqli_select_db($conexion_usuarios, "hemusa2");

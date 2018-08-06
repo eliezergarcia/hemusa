@@ -9,7 +9,6 @@
 		$monedaproveedor = $data['moneda'];
 		$idproveedor = $data['id'];
 	}
-	// $arreglo["cliente"] = $idproveedor;
 
 	$query="SELECT DISTINCT factura_proveedor, orden_compra, pago_factura, fecha_orden_compra FROM utilidad_pedido WHERE fecha_orden_compra > '2017-01-01' AND proveedor ='$idproveedor' AND pagada != 'si' AND factura_proveedor != '0' ORDER BY fecha_orden_compra DESC";
 	$resultado = mysqli_query($conexion_usuarios, $query);

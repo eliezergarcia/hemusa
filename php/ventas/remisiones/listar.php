@@ -31,9 +31,8 @@
 	}
 
 	function remisiones($buscar, $fechainicio, $fechafin, $conexion_usuarios){
-		$query = "SELECT cotizacion.*, contactos.nombreEmpresa, remisiones.remision as r , case when remisiones.efectivo is null then 0 else remisiones.Efectivo end as 'Efectivo' FROM cotizacion LEFT JOIN contactos on
-		contactos.id=cotizacion.cliente LEFT JOIN remisiones on remisiones.remision=cotizacion.remision WHERE cotizacion.Comentario='' AND cotizacion.remision!=0 AND
-		cotizacion.remisionFactura=0 AND cotizacion.remisionFecha >= '$fechainicio' AND cotizacion.remisionFecha <='$fechafin' ORDER BY cotizacion.remision DESC LIMIT 100";
+		$query = "SELECT cotizacion.*, contactos.nombreEmpresa FROM cotizacion INNER JOIN contactos ON contactos.id = cotizacion.cliente WHERE cotizacion.Comentario='' AND cotizacion.remision!=0 AND
+		cotizacion.remisionFactura=0 AND cotizacion.remisionFecha >= '$fechainicio' AND cotizacion.remisionFecha <='$fechafin' ORDER BY cotizacion.remision";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 
 		if(mysqli_num_rows($resultado) < 1){
@@ -41,28 +40,46 @@
 		}else{
 			$i = 1;
 			while($data = mysqli_fetch_assoc($resultado)){
-				if($data['Efectivo'] == 1){
-					$factura = "Pagada";
-				}else{
-					$remision = $data['remision'];
+				$remision = $data['remision'];
 
-					$query2 = "SELECT factura FROM cotizacionherramientas WHERE remision = '$remision'";
-					$resultado2 = mysqli_query($conexion_usuarios, $query2);
-					while($data2 = mysqli_fetch_assoc($resultado2)){
-						$factura = $data2['factura'];
-						if ($data2['factura'] == 0) {
-							$factura = "Pendiente";
+				$query2 = "SELECT * FROM remisiones WHERE remision = '$remision'";
+				$resultado2 = mysqli_query($conexion_usuarios, $query2);
+
+				if (mysqli_num_rows($resultado2) < 1) {
+					$facturas = "";
+					$query3 = "SELECT DISTINCT factura FROM cotizacionherramientas WHERE remision = '$remision'";
+					$resultado3 = mysqli_query($conexion_usuarios, $query3);
+					while($data3 = mysqli_fetch_assoc($resultado3)){
+						$factura2 = $data3['factura'];
+						if ($data3['factura'] == "" || $data3['factura'] == "0") {
+							$facturas = "Pendiente, ".$facturas;
 						}else{
-							mysqli_free_result($resultado2);
-							$query3 = "SELECT factura FROM cotizacion WHERE id = '$factura'";
+							$query4 = "SELECT factura FROM cotizacion WHERE id = '$factura2'";
+							$resultado4 = mysqli_query($conexion_usuarios, $query4);
+
+							while($data4 = mysqli_fetch_assoc($resultado4)){
+								$facturas = $data4['factura'].", ".$facturas;
+							}
+						}
+					}
+					$factura = rtrim($facturas, ',');
+				}else{
+					while($data2 = mysqli_fetch_assoc($resultado2)){
+						if ($data2['Efectivo'] == 1 && $data2['IdFormaPago'] == 0) {
+							$factura = "Pagada";
+						}elseif ($data2['Efectivo'] == 1 && $data2['IdFormaPago'] == 1) {
+							$factura = "Pagada";
+						}else{
+							$factura = "";
+							$query3 = "SELECT factura FROM cotizacionherramientas WHERE remision = '$remision'";
 							$resultado3 = mysqli_query($conexion_usuarios, $query3);
 							while($data3 = mysqli_fetch_assoc($resultado3)){
-								$factura = $data3['factura'];
+								$factura = $data3['factura'].", ".$factura;
 							}
-							mysqli_free_result($resultado3);
 						}
 					}
 				}
+
 
 				$arreglo['data'][] = array(
 					'indice' => $i,
@@ -73,7 +90,7 @@
 					'fecha' => $data['remisionFecha'],
 					'cantidad' => $data['partidaCantidad'],
 					'suma' => "$ ".$data['precioTotal'],
-					'facturas' => ""
+					'facturas' => $factura
 				);
 				$i++;
 			}

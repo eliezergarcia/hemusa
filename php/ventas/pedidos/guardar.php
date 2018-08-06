@@ -81,7 +81,9 @@
 
 		case 'guardarfactura':
 			$folio = $_POST['folio'];
+			$refCotizacion = $_POST['refCotizacion'];
 			$ordenpedido = $_POST['ordenpedido'];
+			$subtotal = $_POST['subtotal'];
 			$total = $_POST['total'];
 			$status = $_POST['status'];
 			$fecha = $_POST['fecha'];
@@ -90,7 +92,7 @@
 			$moneda = $_POST['moneda'];
 			$uidfactura = $_POST['UIDFactura'];
 			$uuidfactura = $_POST['UUIDFactura'];
-			guardar_factura($folio, $ordenpedido, $total, $status, $fecha, $tipoDocumento, $moneda, $uidfactura, $uuidfactura, $cliente, $conexion_usuarios);
+			guardar_factura($folio, $refCotizacion, $ordenpedido, $subtotal, $total, $status, $fecha, $tipoDocumento, $moneda, $uidfactura, $uuidfactura, $cliente, $conexion_usuarios);
 			break;
 
 		case 'quitarstock':
@@ -676,28 +678,34 @@
 		mysqli_close($conexion_usuarios);
 	}
 
-	function guardar_factura($folio, $ordenpedido, $total, $status, $fecha, $tipoDocumento, $moneda, $uidfactura, $uuidfactura, $cliente, $conexion_usuarios){
+	function guardar_factura($folio, $refCotizacion, $ordenpedido, $subtotal, $total, $status, $fecha, $tipoDocumento, $moneda, $uidfactura, $uuidfactura, $cliente, $conexion_usuarios){
 		$ordenpedido = str_replace(".","",$ordenpedido);
 		$ordenpedido = str_replace(",","",$ordenpedido);
 		$ordenpedido = str_replace("OC","",$ordenpedido);
 		$folio = str_replace("H ","",$folio);
 
-		$query = "INSERT INTO facturas (folio, tipoDocumento, ordenpedido, total, moneda, status, fecha, UID, UUID, cliente) VALUES ('$folio', '$tipoDocumento', '$ordenpedido', '$total','$moneda', '$status', '$fecha', '$uidfactura', '$uuidfactura', '$cliente')";
-		$resultado = mysqli_query($conexion_usuarios, $query);
-		$fecha = date("Y-m-d");
-		$query = "UPDATE pedidos SET factura = '$folio', facturaFecha = '$fecha' WHERE numeroPedido = '$ordenpedido'";
-		$resultado = mysqli_query($conexion_usuarios, $query);
-
-		$query = "UPDATE cotizacion SET factura = '$folio', facturaFecha = '$fecha' WHERE NoPedClient = '$ordenpedido'";
+		$query = "INSERT INTO facturas (folio, tipoDocumento, ordenpedido, subtotal, total, moneda, status, fecha, UID, UUID, cliente) VALUES ('$folio', '$tipoDocumento', '$ordenpedido', '$subtotal', '$total','$moneda', '$status', '$fecha', '$uidfactura', '$uuidfactura', '$cliente')";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 
 		if (!$resultado) {
 			$informacion["respuesta"] = "ERROR";
 			$informacion["informacion"] = "Ocurrió un problema al guardar la factura '".$folio."'!";
 		}else{
-			$informacion["respuesta"] = "BIEN";
-			$informacion["informacion"] = "La factura '".$folio."' se guardó en el sistema correctamente!";
+			if ($refCotizacion != '') {
+				$query = "UPDATE cotizacion SET factura = '$folio', facturaFecha = '$fecha' WHERE ref = '$refCotizacion'";
+				$resultado = mysqli_query($conexion_usuarios, $query);
+				if (!$resultado) {
+					$informacion["respuesta"] = "ERROR";
+					$informacion["informacion"] = "Ocurrió un problema al modificar la informacion del pedido!";
+				}else{
+					$informacion["respuesta"] = "BIEN";
+					$informacion["informacion"] = "La factura '".$folio."' se guardó en el sistema correctamente!";
+				}
+			}
+			$informacion["respuesta"] = "ERROR";
+			$informacion["informacion"] = "Ocurrió un problema al modificar la informacion del pedido, la referencia de cotización esta vacía!";
 		}
+
 		echo json_encode($informacion);
 		mysqli_close($conexion_usuarios);
 	}

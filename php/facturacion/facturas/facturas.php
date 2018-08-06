@@ -232,6 +232,7 @@
           {"defaultContent": "<div class='invoice-footer'><button class='xml btn btn-lg btn-primary'><i class='fas fa-file-alt fa-sm' aria-hidden='true'></i> XML</button></div>"},
           {"defaultContent": "<div class='invoice-footer'><button class='cancelar btn btn-lg btn-danger'><i class='fas fa-times-circle fa-sm' aria-hidden='true'></i> Cancelar</button></div>"}
         ],
+				"order": [1, "desc"],
 				"columnDefs": [
 					{ "width": "4%", "targets": 0 },
 					{ "width": "7%", "targets": 1 },

@@ -2269,6 +2269,7 @@
 						if (UIDFactura == data.data[i].UID){
 							var folio = data.data[i].Folio;
 							var ordenpedido = data.data[i].NumOrder;
+							var subtotal = data.data[i].Subtotal;
 							var total = data.data[i].Total;
 							var status = data.data[i].Status;
 							var fecha = data.data[i].FechaTimbrado;
@@ -2279,7 +2280,7 @@
 								method: "POST",
 								url: "guardar.php",
 								dataType: "json",
-								data: {"opcion": opcion, "folio": folio, "ordenpedido": ordenpedido, "remision": remision, "total": total, "status": status, "fecha": fecha, "tipoDocumento": tipoDocumento, "moneda": moneda, "UIDFactura": UIDFactura, "UUIDFactura": UUIDFactura, "cliente": cliente}
+								data: {"opcion": opcion, "folio": folio, "ordenpedido": ordenpedido, "remision": remision, "subtotal": subtotal, "total": total, "status": status, "fecha": fecha, "tipoDocumento": tipoDocumento, "moneda": moneda, "UIDFactura": UIDFactura, "UUIDFactura": UUIDFactura, "cliente": cliente}
 							}).done( function( data ){
 								console.log(data);
 								mostrar_mensaje(data);
