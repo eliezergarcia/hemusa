@@ -8,6 +8,10 @@
 			clientes($conexion_usuarios);
 			break;
 
+		case 'buscarclientesnc':
+			clientesnc($conexion_usuarios);
+			break;
+
 		case 'buscarproveedores':
 			proveedores($conexion_usuarios);
 			break;
@@ -127,6 +131,18 @@
 
 		while($data = mysqli_fetch_array($resultado)){
 			$informacion[] = utf8_encode($data['nombreEmpresa']);
+		}
+
+		echo json_encode($informacion);
+		mysqli_close($conexion_usuarios);
+	}
+
+	function clientesnc($conexion_usuarios){
+		$query = "SELECT * FROM contactos WHERE tipo = 'Cliente' AND nombreEmpresa != ''";
+		$resultado = mysqli_query($conexion_usuarios, $query);
+
+		while($data = mysqli_fetch_assoc($resultado)){
+			$informacion['data'][] = array_map("utf8_encode", $data);
 		}
 
 		echo json_encode($informacion);

@@ -110,129 +110,127 @@
 
 						<!-- Modal Nueva Nota de Crédito -->
 							<div class="modal fade colored-header colored-header-success" id="modalNotaCredito" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-								<div class="modal-dialog modal-lg" role="document">
-									<div class="modal-content">
-											<div class="modal-header">
-												<h4 class="modal-title" id="exampleModalLabel"><b>Nota de crédito</b></h4>
-												<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-														<span aria-hidden="true">&times;</span>
-												</button>
-											</div>
-											<div class="modal-body">
-												<h5><i class="fa fa-info-circle" aria-hidden="true"></i> Por favor ingresa la siguiente información para la creación de: Nota de crédito.</h5>
-												<h5>&nbsp;&nbsp;&nbsp;&nbsp;Los campos marcados con <font color="#FF4136">*</font> son obligatorios.</h5><br>
-												<div class="row">
-													<div class="form-group col-6">
-														<label for="">Tipo de CFDI <font color="#FF4136">*</font></label>
-														<select name="tipoDocumento" id="tipoDocumento" class="form-control form-control-sm col-12">
-															<option value="nota_credito" selected>Nota de crédito</option>
-														</select>
-													</div>
-													<div class="form-group col-6">
-														<label for="">Uso CFDI <font color="#FF4136">*</font></label>
-														<select name="usoCFDI" id="usoCFDI" class="form-control form-control-sm col-12">
-															<option value="G02" selected>Devoluciones, descuentos o bonificaciones</option>
-														</select>
-													</div>
-													<div class="form-group col-8">
-														<label for="">Cliente <font color="#FF4136">*</font></label>
-														<select name="cliente" id="cliente" class="form-control form-control-sm col-12">
-														</select>
-													</div>
+									<div class="modal-dialog modal-lg" role="document">
+										<div class="modal-content">
+												<div class="modal-header">
+													<h4 class="modal-title" id="exampleModalLabel"><b>Nota de crédito</b></h4>
+													<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+															<span aria-hidden="true">&times;</span>
+													</button>
 												</div>
-												<hr>
-												<div class="row">
-													<div class="form-group col-6">
-														<label for="">Serie <font color="#FF4136">*</font></label>
-														<select name="" id="" class="form-control form-control-sm col-12">
-															<option value="" selected>NC</option>
-														</select>
+												<div class="modal-body">
+													<h5><i class="fa fa-info-circle" aria-hidden="true"></i> Por favor ingresa la siguiente información para la creación de: Nota de crédito.</h5>
+													<h5>&nbsp;&nbsp;&nbsp;&nbsp;Los campos marcados con <font color="#FF4136">*</font> son obligatorios.</h5><br>
+													<div class="row">
+														<div class="form-group col-6">
+															<label for="">Tipo de CFDI <font color="#FF4136">*</font></label>
+															<select name="tipoDocumento" id="tipoDocumento" class="form-control form-control-sm col-12">
+																<option value="nota_credito" selected>Nota de crédito</option>
+															</select>
+														</div>
+														<div class="form-group col-6">
+															<label for="">Uso CFDI <font color="#FF4136">*</font></label>
+															<select name="usoCFDI" id="usoCFDI" class="form-control form-control-sm col-12">
+																<option value="G02" selected>Devoluciones, descuentos o bonificaciones</option>
+															</select>
+														</div>
+														<div class="form-group col-8">
+															<label for="">Cliente <font color="#FF4136">*</font></label>
+															<select name="clientenc" id="clientenc" class="form-control form-control-sm col-12">
+															</select>
+														</div>
 													</div>
-													<div class="form-group col-6">
-														<label for="">No. de orden/pedido</label>
-														<input type="text" class="form-control form-control-sm col-12" placeholder="No. de pedido">
+													<hr>
+													<div class="row">
+														<div class="form-group col-6">
+															<label for="">No. de orden/pedido</label>
+															<input type="text" name="ordenpedido" id="ordenpedido" class="form-control form-control-sm col-12" placeholder="No. de pedido">
+														</div>
+														<div class="form-group col-6">
+															<label for="">Forma de pago <font color="#FF4136">*</font></label>
+															<select type="text" id="formaPago" name="formaPago" class="form-control form-control-sm">
+																<option value="1">Efectivo</option>
+																<option value="2">Cheque nominativo</option>
+																<option value="3">Transferencia electrónica de fondos</option>
+																<option value="4">Tarjeta de crédito</option>
+																<option value="5">Monedero electrónico</option>
+																<option value="6">Dinero electrónico</option>
+																<option value="7">Vales de despensa</option>
+																<option value="8">Tarjeta de débito</option>
+																<option value="9">Tarjeta de servicio</option>
+																<option value="10">Otros</option>
+																<option value="11">NA</option>
+															</select>
+														</div>
+														<div class="form-group col-6">
+															<label for="">Método de pago <font color="#FF4136">*</font></label>
+															<select type="text" id="metodoPago" name="metodoPago" class="form-control form-control-sm">
+																<option value="1">Pago en una sola exhibición</option>
+																<option value="2">Pago en parcialidades o diferido</option>
+															</select>
+														</div>
+														<div class="form-group col-6">
+															<label for="">Condiciones de pago <font color="#FF4136">*</font></label>
+															<input type="text" name="condicionesPago" id="condicionesPago" class="form-control form-control-sm col-12">
+														</div>
+														<div class="form-group col-6">
+															<label for="">Moneda <font color="#FF4136">*</font></label>
+															<select name="moneda" id="moneda" class="form-control form-control-sm col-12">
+																<option value="mxn" selected>MXN</option>
+																<option value="usd">USD</option>
+															</select>
+														</div>
 													</div>
-													<div class="form-group col-6">
-														<label for="">Método de pago</label>
-														<select name="" id="" class="form-control form-control-sm col-12">
-															<option value="" selected>Pago en una sola exhibición</option>
-														</select>
+													<hr>
+													<div class="row">
+														<div class="form-group col-6">
+															<label for="">Concepto <font color="#FF4136">*</font></label>
+															<input type="text" name="concepto" id="concepto" class="form-control form-control-sm col-12" placeholder="Descripción">
+														</div>
+														<div class="form-group col-6">
+															<label for="">Cantidad <font color="#FF4136">*</font></label>
+															<input type="number" name="cantidad" id="cantidad" class="form-control form-control-sm col-12" value="1" onchange="cambiar_total()">
+														</div>
+														<div class="form-group col-6">
+															<label for="">Unidad <font color="#FF4136">*</font></label>
+															<select name="unidad" id="unidad" class="form-control form-control-sm col-12">
+																<option value="H87" selected>Pieza</option>
+																<option value="E48" selected>Unidad de servicio</option>
+															</select>
+														</div>
+														<div class="form-group col-6">
+															<label for="">Precio unitario <font color="#FF4136">*</font></label>
+															<input type="number" name="precioUnitario" id="precioUnitario" class="form-control form-control-sm col-12" value="0.00" onchange="cambiar_total()">
+														</div>
+														<div class="form-group col-6">
+															<label for="">Subtotal</label>
+															<input type="number" name="subtotal" id="subtotal" class="form-control form-control-sm col-12" value="0.00" onchange="cambiar_total()">
+														</div>
+														<div class="form-group col-3">
+															<label for="">IVA</label>
+															<select name="iva" id="iva" class="form-control form-control-sm col-12">
+																<option value="1.16" selected>16%</option>
+															</select>
+														</div>
+														<div class="form-group col-3">
+															<label for="">Total</label>
+															<input type="number" name="total" id="total" class="form-control form-control-sm col-12" value="0.00" onchange="cambiar_total()">
+														</div>
+														<div class="form-group col-6">
+															<label for="">Clave SAT <font color="#FF4136">*</font></label>
+															<input type="text" name="claveSat" id="claveSat" class="form-control form-control-sm col-12">
+														</div>
 													</div>
-													<div class="form-group col-6">
-														<label for="">Forma de pago <font color="#FF4136">*</font></label>
-														<select name="" id="" class="form-control form-control-sm col-12">
-															<option value="" selected>Seleccionar</option>
-														</select>
-													</div>
-													<div class="form-group col-6">
-														<label for="">Condiciones de pago</label>
-														<input type="text" class="form-control form-control-sm col-12">
-													</div>
-													<div class="form-group col-6">
-														<label for="">Moneda <font color="#FF4136">*</font></label>
-														<select name="" id="" class="form-control form-control-sm col-12">
-															<option value="" selected>MXN</option>
-															<option value="">USD</option>
-														</select>
-													</div>
-													<div class="form-group col-6">
-														<label for="">Número de decimales <font color="#FF4136">*</font></label>
-														<select name="" id="" class="form-control form-control-sm col-12">
-															<option value="" selected>2</option>
-															<option value="">3</option>
-															<option value="">4</option>
-														</select>
-													</div>
-												</div>
-												<hr>
-												<div class="row">
-													<div class="form-group col-6">
-														<label for="">Concepto <font color="#FF4136">*</font> <i class="fa fa-info-circle" aria-hidden="true"></i></label>
-														<input type="text" class="form-control form-control-sm col-12" placeholder="Selecciona un producto o servicio de lista de productos">
-													</div>
-													<div class="form-group col-6">
-														<label for="">Cantidad <font color="#FF4136">*</font></label>
-														<input type="text" class="form-control form-control-sm col-12" value="1">
-													</div>
-													<div class="form-group col-6">
-														<label for="">Unidad <font color="#FF4136">*</font></label>
-														<select name="" id="" class="form-control form-control-sm col-12">
-															<option value="" selected>Seleccionar</option>
-														</select>
-													</div>
-													<div class="form-group col-6">
-														<label for="">Precio unitario <font color="#FF4136">*</font></label>
-														<input type="text" class="form-control form-control-sm col-12" value="0.00">
-													</div>
-													<div class="form-group col-6">
-														<label for="">Subtotal</label>
-														<input type="text" class="form-control form-control-sm col-12" value="$0.00">
-													</div>
-													<div class="form-group col-3">
-														<label for="">IVA</label>
-														<select name="" id="" class="form-control form-control-sm col-12">
-															<option value="" selected>16%</option>
-														</select>
-													</div>
-													<div class="form-group col-3">
-														<label for="">Total</label>
-														<input type="text" class="form-control form-control-sm col-12" value="$0.00">
-													</div>
-													<div class="form-group col-6">
-														<label for="">Clave SAT <font color="#FF4136">*</font></label>
-														<input type="text" class="form-control form-control-sm col-12" placeholder="Clave SAT">
-													</div>
-												</div>
-												<hr>
+													<hr>
 
-											</div>
-											<div class="modal-footer invoice-footer">
-												<button type="button" class="btn btn-lg btn-secondary" data-dismiss="modal">Cancelar</button>
-												<button type="button" id="" class="btn btn-lg btn-success">Agregar</button>
-											</div>
+												</div>
+												<div class="modal-footer invoice-footer">
+													<button type="button" class="btn btn-lg btn-secondary" data-dismiss="modal">Cancelar</button>
+													<button type="button" id="generar-notacredito" class="btn btn-lg btn-success">Agregar</button>
+												</div>
+										</div>
 									</div>
 								</div>
-							</div>
 						</div>
 					</div>
 				</div>
@@ -350,9 +348,36 @@
 			var folio = $("#folio").val("");
 		});
 
-		$('#myModal').on('shown.bs.modal', function (e) {
-		  // do something...
+		$('#modalNotaCredito').on('shown.bs.modal', function (e) {
+			var opcion = "buscarclientesnc";
+		  $.ajax({
+				method: "POST",
+				url: "buscar.php",
+				dataType: "json",
+				data:{"opcion": opcion},
+			}).done( function ( data ) {
+				var clientes = data;
+				var total = (clientes.data).length;
+				console.log(total);
+				for(var i=0;i<=total;i++){
+					 $("select[name=clientenc]").append("<option value='"+ clientes.data[i].RFC + "'>" + clientes.data[i].nombreEmpresa + "</option>");
+				};
+			});
 		})
+
+		function cambiar_total() {
+			var cantidad = $("#cantidad").val();
+			var precioUnitario = $("#precioUnitario").val();
+			var subtotal = $("#subtotal").val();
+			var iva = $("#iva").val();
+			var total = $("#total").val();
+
+			$("#subtotal").val((precioUnitario * cantidad).toFixed(2));
+			$("#total").val(((precioUnitario * cantidad) * iva).toFixed(2));
+		}
+
+		$("#generar-notacredito").on("click", function () {
+		});
 
 	</script>
 	<script type="text/javascript" src="<?php echo $ruta; ?>php/js/idioma_espanol.js"></script>
