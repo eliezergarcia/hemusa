@@ -270,7 +270,7 @@
         											$dia = date("d");
         											$mes = date("m");
         											$año = date("Y");
-        											$diario = "http://dof.gob.mx/indicadores_detalle.php?cod_tipo_indicador=158&dfecha=".$dia."%2F".$mes."%2F".$año."&hfecha=".$dia."%2F".$mes."%2F".$año;
+        											$diario = "http://www.dof.gob.mx/indicadores_detalle.php?cod_tipo_indicador=158&dfecha=".$dia."%2F".$mes."%2F".$año."&hfecha=".$dia."%2F".$mes."%2F".$año;
         										?>
 				              			<a href="<?php echo $diario; ?>" target="_blank" style="color: var(--color-warning); text-decoration: underline;">'Diario Oficial'</a>
 				              		</h4>

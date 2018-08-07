@@ -17,7 +17,7 @@
 			$tiempoEntrega = $_POST['tiempoEntrega'];
 			$condicionesPago = $_POST['condicionesPago'];
 			$comentarios = $_POST['comentarios'];
-			agregar_cotizacion($usuariologin, $dplogin, $numeroCotizacion, $fechaCotizacion, $vendedor, $cliente, $contactoCliente, $moneda, $tiempoEntrega, $condicionesPago, $comentarios, $conexion_usuarios);
+			agregar_cotizacion($numeroCotizacion, $fechaCotizacion, $vendedor, $cliente, $contactoCliente, $moneda, $tiempoEntrega, $condicionesPago, $comentarios, $conexion_usuarios, $idusuario);
 			break;
 
 		case 'agregarcontacto':
@@ -33,13 +33,13 @@
 			$tlf = $_POST['tlf'];
 			$movil = $_POST['movil'];
 			$correoElectronico = $_POST['correoElectronico'];
-			agregar_contacto($usuariologin, $dplogin, $idcliente, $contacto, $puesto, $calle, $colonia, $ciudad, $estado, $cp, $pais, $tlf, $movil, $correoElectronico, $conexion_usuarios);
+			agregar_contacto($idcliente, $contacto, $puesto, $calle, $colonia, $ciudad, $estado, $cp, $pais, $tlf, $movil, $correoElectronico, $conexion_usuarios, $idusuario);
 			break;
 
 		case 'agregarClas':
 			$idCliente = $_POST['id'];
 			$clas = $_POST['clasificacion'];
-			agregarClas($idCliente, $clas, $conexion_usuarios);
+			agregarClas($idCliente, $clas, $conexion_usuarios, $idusuario);
 			break;
 
 		case 'agregar':
@@ -71,7 +71,7 @@
 			$tedias = $_POST["tedias"];
 			$refInterna = $_POST["refInterna"];
 			$cotizadoEn = $_POST["cotizadoEn"];
-			agregar($idproducto, $modificar, $noExisteProducto, $valorClaseE, $modelo, $marca, $descripcion, $claveSat, $precioUnitario, $cantidad, $unidad, $tedias, $refInterna, $cotizadoEn, $refCotizacion, $conexion_usuarios);
+			agregar($idproducto, $modificar, $noExisteProducto, $valorClaseE, $modelo, $marca, $descripcion, $claveSat, $precioUnitario, $cantidad, $unidad, $tedias, $refInterna, $cotizadoEn, $refCotizacion, $conexion_usuarios, $idusuario);
 			break;
 
 		case 'editar':
@@ -86,7 +86,7 @@
 			$unidad = $_POST["unidad"];
 			$cotizadoEn = $_POST["cotizadoEn"];
 			$proveedorFlete = $_POST['proveedorFlete'];
-			editar($refCotizacion, $descripcion, $precioUnitario, $cantidad, $claveSat, $tedias, $unidad, $refInterna, $cotizadoEn, $proveedorFlete, $idherramienta, $conexion_usuarios);
+			editar($refCotizacion, $descripcion, $precioUnitario, $cantidad, $claveSat, $tedias, $unidad, $refInterna, $cotizadoEn, $proveedorFlete, $idherramienta, $conexion_usuarios, $idusuario);
 			actualizarTotalFlete($refCotizacion, $conexion_usuarios);
 			actualizarTotalCotizacion($refCotizacion, $conexion_usuarios);
 			break;
@@ -94,14 +94,14 @@
 		case 'eliminar':
 			$idherramienta = $_POST["idherramienta"];
 			$refCotizacion = $_POST['refCotizacion'];
-			eliminar($refCotizacion, $idherramienta, $conexion_usuarios);
+			eliminar($refCotizacion, $idherramienta, $conexion_usuarios, $idusuario);
 			break;
 
 		case 'agregarFlete':
 			$refCotizacion = $_POST['refCotizacion'];
 			$proveedor = $_POST['proveedor'];
 			$totalFlete = $_POST['totalFlete'];
-			agregarFlete($refCotizacion, $proveedor, $totalFlete, $conexion_usuarios);
+			agregarFlete($refCotizacion, $proveedor, $totalFlete, $conexion_usuarios, $idusuario);
 			break;
 
 		case 'editarFlete':
@@ -109,37 +109,37 @@
 			$proveedor = $_POST['proveedor'];
 			$costoFlete = $_POST['totalFlete'];
 			$refCotizacion = $_POST['refCotizacion'];
-			editarFlete($idflete, $proveedor, $costoFlete, $refCotizacion, $conexion_usuarios);
+			editarFlete($idflete, $proveedor, $costoFlete, $refCotizacion, $conexion_usuarios, $idusuario);
 			actualizarTotalFlete($refCotizacion, $conexion_usuarios);
 			actualizarTotalCotizacion($refCotizacion, $conexion_usuarios);
 			break;
 
 		case 'eliminarFlete':
 			$idflete = $_POST['idflete'];
-			eliminarFlete($idflete, $conexion_usuarios);
+			eliminarFlete($idflete, $conexion_usuarios, $idusuario);
 			break;
 
 		case 'cambiarCondPago':
 			$refCotizacion = $_POST['refCotizacion'];
 			$condPago = $_POST['condPago'];
-			cambiar_condiciones_pago($refCotizacion, $condPago, $conexion_usuarios);
+			cambiar_condiciones_pago($refCotizacion, $condPago, $conexion_usuarios, $idusuario);
 			break;
 
 		case 'cambiarTiempoEntrega':
 			$refCotizacion = $_POST['refCotizacion'];
 			$tiempoEntrega = $_POST['tiempoEntrega'];
-			cambiar_tiempo_entrega($refCotizacion, $tiempoEntrega, $conexion_usuarios);
+			cambiar_tiempo_entrega($refCotizacion, $tiempoEntrega, $conexion_usuarios, $idusuario);
 			break;
 
 		case 'cambiarMoneda':
 		 	$refCotizacion = $_POST['refCotizacion'];
-			cambiar_moneda($refCotizacion, $conexion_usuarios);
+			cambiar_moneda($refCotizacion, $conexion_usuarios, $idusuario);
 			break;
 
 		case 'cambiarClasificacion':
 		 	$clasificacion = $_POST['clasificacion'];
 			$idcliente = $_POST['idcliente'];
-			cambiar_clasificacion($clasificacion, $idcliente, $conexion_usuarios);
+			cambiar_clasificacion($clasificacion, $idcliente, $conexion_usuarios, $idusuario);
 			break;
 
 		case 'cambiarPedido':
@@ -147,7 +147,7 @@
 			$refCotizacion = $_POST['refCotizacion'];
 			$numeroPedido = $_POST['numeroPedido'];
 			$numeroPartidas = $_POST['numeroPartidas'];
-			cambiarPedido($data, $refCotizacion, $numeroPedido, $numeroPartidas, $conexion_usuarios);
+			cambiarPedido($data, $refCotizacion, $numeroPedido, $numeroPartidas, $conexion_usuarios, $idusuario);
 			break;
 
 		default:
@@ -156,7 +156,7 @@
 			break;
 	}
 
-	function agregar_cotizacion($usuariologin, $dplogin, $numeroCotizacion, $fechaCotizacion, $vendedor, $cliente, $contactoCliente, $moneda, $tiempoEntrega, $condicionesPago, $comentarios, $conexion_usuarios){
+	function agregar_cotizacion($numeroCotizacion, $fechaCotizacion, $vendedor, $cliente, $contactoCliente, $moneda, $tiempoEntrega, $condicionesPago, $comentarios, $conexion_usuarios, $idusuario){
 		$query = "SELECT id FROM contactos WHERE nombreEmpresa LIKE '%$cliente%' LIMIT 1";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 		if (!$resultado) {
@@ -176,10 +176,10 @@
 				$informacion["respuesta"] = "BIEN";
 				$informacion["cotizacion"] = $numeroCotizacion;
 
-				$descripcion = "Se creo la cotizacion ".$numeroCotizacion;
-				$fechahora = date("Y-m-d G:i:s");
-				$query = "INSERT INTO movimientosusuarios (cotizacion, departamento, usuario, tipomovimiento, descripcion, fechahora) VALUES ('$numeroCotizacion','$dplogin', '$usuariologin', 'Registro', '$descripcion', '$fechahora')";
-				$resultado = mysqli_query($conexion_usuarios, $query);
+				$descripcionmovimiento = "Se creo la cotizacion con referencia ".$numeroCotizacion." al cliente ".$cliente;
+				$fechamovimiento = date("Y-m-d H:i:s");
+				$querymovimiento = "INSERT INTO movimientosusuarios (idusuario, tipomovimiento, documento, descripcion, fechahora) VALUES ('$idusuario', 'R', 'cotizaciones', '$descripcionmovimiento', '$fechamovimiento')";
+				$resultadomovimiento = mysqli_query($conexion_usuarios, $querymovimiento);
 			}
 		}
 		$informacion["respuesta"] = "BIEN";
@@ -188,7 +188,7 @@
 		cerrar($conexion_usuarios);
 	}
 
-	function agregar_contacto($usuariologin, $dplogin, $idcliente, $contacto, $puesto, $calle, $colonia, $ciudad, $estado, $cp, $pais, $tlf, $movil, $correoElectronico, $conexion_usuarios){
+	function agregar_contacto($idcliente, $contacto, $puesto, $calle, $colonia, $ciudad, $estado, $cp, $pais, $tlf, $movil, $correoElectronico, $conexion_usuarios, $idusuario){
 		$query = "INSERT INTO contactospersonas (empresa,personaContacto,puesto,calle,colonia,ciudad,estado,cp,pais,tlf1,movil,correoElectronico) VALUES ('$idcliente', '$contacto', '$puesto', '$calle', '$colonia', '$ciudad', '$estado', '$cp', '$pais', '$tlf', '$movil', '$correoElectronico')";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 		if (!$resultado) {
@@ -206,17 +206,17 @@
 				$cliente = $data['nombreEmpresa'];
 			}
 
-			$descripcion = "Se agrego el contacto ".$contacto." al cliente ".$cliente;
-			$fechahora = date("Y-m-d G:i:s");
-			$query = "INSERT INTO movimientosusuarios (departamento, usuario, tipomovimiento, descripcion, fechahora) VALUES ('$dplogin', '$usuariologin', 'Registro', '$descripcion', '$fechahora')";
-			$resultado = mysqli_query($conexion_usuarios, $query);
+			$descripcionmovimiento = "Se agrego el contacto ".$contacto." al cliente ".$cliente;
+			$fechamovimiento = date("Y-m-d H:i:s");
+			$querymovimiento = "INSERT INTO movimientosusuarios (idusuario, tipomovimiento, documento, descripcion, fechahora) VALUES ('$idusuario', 'R', 'cotizaciones', '$descripcionmovimiento', '$fechamovimiento')";
+			$resultadomovimiento = mysqli_query($conexion_usuarios, $querymovimiento);
 		}
 
 		echo json_encode($informacion);
 		mysqli_close($conexion_usuarios);
 	}
 
-	function agregarClas($idCliente, $clas, $conexion_usuarios){
+	function agregarClas($idCliente, $clas, $conexion_usuarios, $idusuario){
 		switch ($clas) {
 			case 'clas1':
 				$clas = 1.20;
@@ -243,13 +243,23 @@
 		}else{
 			$informacion["respuesta"] = "BIEN";
 			$informacion["informacion"] = "La clasificación se asignó al cliente correctamente!";
+
+			$query = "SELECT nombreEmpresa FROM contactos WHERE id = '$idCliente'";
+			$resultado = mysqli_query($conexion_usuarios, $query);
+			$data = mysqli_fetch_assoc($resultado);
+			$cliente = $data['nombreEmpresa'];
+
+			$descripcionmovimiento = "Se asigno la clasificacion ".$clas." al cliente ".$cliente;
+			$fechamovimiento = date("Y-m-d H:i:s");
+			$querymovimiento = "INSERT INTO movimientosusuarios (idusuario, tipomovimiento, documento, descripcion, fechahora) VALUES ('$idusuario', 'R', 'cotizaciones', '$descripcionmovimiento', '$fechamovimiento')";
+			$resultadomovimiento = mysqli_query($conexion_usuarios, $querymovimiento);
 		}
 
 		echo json_encode($informacion);
 		cerrar($conexion_usuarios);
 	}
 
-	function agregar($idproducto, $modificar, $noExisteProducto, $valorClaseE, $modelo, $marca, $descripcion, $claveSat, $precioUnitario, $cantidad, $unidad, $tedias, $refInterna, $cotizadoEn, $refCotizacion, $conexion_usuarios){
+	function agregar($idproducto, $modificar, $noExisteProducto, $valorClaseE, $modelo, $marca, $descripcion, $claveSat, $precioUnitario, $cantidad, $unidad, $tedias, $refInterna, $cotizadoEn, $refCotizacion, $conexion_usuarios, $idusuario){
 		$proveedorFlete = "Ninguno";
 		$query = "SELECT * FROM cotizacion WHERE ref = '$refCotizacion'";
 		$resultado = mysqli_query($conexion_usuarios, $query);
@@ -266,6 +276,11 @@
 			$informacion["informacion"] = "Ocurrió un problema al guardar los datos de la partida!";
 			echo json_encode($informacion);
 		}else{
+			$descripcionmovimiento = "Se agrego la herramienta ".$modelo." de la marca ".$marca." con precio ".$precioUnitario." y cantidad ".$cantidad." a la cotizacion con referencia ".$refCotizacion;
+			$fechamovimiento = date("Y-m-d H:i:s");
+			$querymovimiento = "INSERT INTO movimientosusuarios (idusuario, tipomovimiento, documento, descripcion, fechahora) VALUES ('$idusuario', 'R', 'cotizaciones', '$descripcionmovimiento', '$fechamovimiento')";
+			$resultadomovimiento = mysqli_query($conexion_usuarios, $querymovimiento);
+
 			$query = "SELECT DISTINCT partidaCantidad FROM cotizacion WHERE ref='".$refCotizacion."'";
 			$resultado = mysqli_query($conexion_usuarios, $query);
 			if(!$resultado){
@@ -407,7 +422,7 @@
 		cerrar($conexion_usuarios);
 	}
 
-	function editar($refCotizacion, $descripcion, $precioUnitario, $cantidad, $claveSat, $tedias, $unidad, $refInterna, $cotizadoEn, $proveedorFlete, $idherramienta, $conexion_usuarios){
+	function editar($refCotizacion, $descripcion, $precioUnitario, $cantidad, $claveSat, $tedias, $unidad, $refInterna, $cotizadoEn, $proveedorFlete, $idherramienta, $conexion_usuarios, $idusuario){
 		$query ="UPDATE cotizacionherramientas SET descripcion='$descripcion', precioLista='$precioUnitario', cantidad='$cantidad', Unidad='$unidad', ClaveProductoSAT='$claveSat', Tiempo_Entrega='$tedias', referencia_interna='$refInterna', lugar_cotizacion='$cotizadoEn', proveedorFlete ='$proveedorFlete' WHERE id=$idherramienta";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 		if (!$resultado) {
@@ -415,6 +430,17 @@
 			$informacion["informacion"] = "Ocurrió un problema al actualizar la información de la partida!";
 			echo json_encode($informacion);
 		}else{
+			$query ="SELECT * FROM cotizacionherramientas WHERE id=$idherramienta";
+			$resultado = mysqli_query($conexion_usuarios, $query);
+			$data = mysqli_fetch_assoc($resultado);
+			$marca = $data['marca'];
+			$modelo = $data['modelo'];
+
+			$descripcionmovimiento = "Se modifico la informacion de la herramienta ".$modelo." de la marca ".$marca." de la cotizacion con referencia ".$refCotizacion;
+			$fechamovimiento = date("Y-m-d H:i:s");
+			$querymovimiento = "INSERT INTO movimientosusuarios (idusuario, tipomovimiento, documento, descripcion, fechahora) VALUES ('$idusuario', 'M', 'cotizaciones', '$descripcionmovimiento', '$fechamovimiento')";
+			$resultadomovimiento = mysqli_query($conexion_usuarios, $querymovimiento);
+
 			if($proveedorFlete == "Ninguno" || $proveedorFlete == "ninguno"){
 				$query = "UPDATE cotizacionherramientas SET flete = 0.0000 WHERE id='".$idherramienta."'";
 				$resultado = mysqli_query($conexion_usuarios, $query);
@@ -538,7 +564,13 @@
 		actualizarTiempoEntrega($refCotizacion, $conexion_usuarios);
 	}
 
-	function eliminar($refCotizacion, $idherramienta, $conexion_usuarios){
+	function eliminar($refCotizacion, $idherramienta, $conexion_usuarios, $idusuario){
+		$query = "SELECT * FROM cotizacionherramientas WHERE id = '$idherramienta'";
+		$resultado = mysqli_query($conexion_usuarios, $query);
+		$data = mysqli_fetch_assoc($resultado);
+		$marca = $data['marca'];
+		$modelo = $data['modelo'];
+
 		$query = "DELETE FROM cotizacionherramientas WHERE id =$idherramienta";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 		if (!$resultado) {
@@ -546,6 +578,11 @@
 			$informacion["informacion"] = "Ocurrió un problema al intentar eliminar la partida!";
 			echo json_encode($informacion);
 		}else{
+			$descripcionmovimiento = "Se elimino la herramienta ".$modelo." de la marca ".$marca." de la cotizacion con referencia ".$refCotizacion;
+			$fechamovimiento = date("Y-m-d H:i:s");
+			$querymovimiento = "INSERT INTO movimientosusuarios (idusuario, tipomovimiento, documento, descripcion, fechahora) VALUES ('$idusuario', 'E', 'cotizaciones', '$descripcionmovimiento', '$fechamovimiento')";
+			$resultadomovimiento = mysqli_query($conexion_usuarios, $querymovimiento);
+
 			$query = "SELECT DISTINCT partidaCantidad FROM cotizacion WHERE ref='".$refCotizacion."'";
 			$resultado = mysqli_query($conexion_usuarios, $query);
 			if(!$resultado){
@@ -595,22 +632,26 @@
 		cerrar($conexion_usuarios);
 	}
 
-	function agregarFlete($refCotizacion, $proveedor, $totalFlete, $conexion_usuarios){
+	function agregarFlete($refCotizacion, $proveedor, $totalFlete, $conexion_usuarios, $idusuario){
 		$query = "INSERT INTO fletescotizacion (refCotizacion, proveedor, costoFlete) VALUES ('$refCotizacion', '$proveedor', '$totalFlete')";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 		if (!$resultado) {
 			$informacion["respuesta"] = "ERROR";
 			$informacion["informacion"] = "Ocurrió un problema al agregar el flete!";
-			echo json_encode($informacion);
 		}else{
 			$informacion["respuesta"] = "BIEN";
 			$informacion["informacion"] = "Se agregó el flete correctamente!";
-			echo json_encode($informacion);
+
+			$descripcionmovimiento = "Se agrego un flete de ".$totalFlete." del proveedor ".$proveedor." de la cotizacion con referencia ".$refCotizacion;
+			$fechamovimiento = date("Y-m-d H:i:s");
+			$querymovimiento = "INSERT INTO movimientosusuarios (idusuario, tipomovimiento, documento, descripcion, fechahora) VALUES ('$idusuario', 'R', 'cotizaciones', '$descripcionmovimiento', '$fechamovimiento')";
+			$resultadomovimiento = mysqli_query($conexion_usuarios, $querymovimiento);
 		}
-		cerrar($conexion_usuarios);
+		echo json_encode($informacion);
+		mysqli_close($conexion_usuarios);
 	}
 
-	function eliminarFlete($idflete, $conexion_usuarios){
+	function eliminarFlete($idflete, $conexion_usuarios, $idusuario){
 		$query = "SELECT * FROM fletescotizacion WHERE id = '$idflete'";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 
@@ -629,6 +670,11 @@
 				$informacion["respuesta"] = "ERROR";
 				$informacion["informacion"] = "Ocurrió un problema al eliminar el flete!";
 			}else{
+				$descripcionmovimiento = "Se elimino el flete del proveedor ".$proveedor." con costo de ".$costoFlete." de la cotizacion con referencia ".$refCotizacion;
+				$fechamovimiento = date("Y-m-d H:i:s");
+				$querymovimiento = "INSERT INTO movimientosusuarios (idusuario, tipomovimiento, documento, descripcion, fechahora) VALUES ('$idusuario', 'E', 'cotizaciones', '$descripcionmovimiento', '$fechamovimiento')";
+				$resultadomovimiento = mysqli_query($conexion_usuarios, $querymovimiento);
+
 				$query = "UPDATE cotizacionherramientas SET flete = 0.0000, proveedorFlete = 'Ninguno' WHERE cotizacionRef = '$refCotizacion' AND proveedorFlete='$proveedor'";
 				$resultado = mysqli_query($conexion_usuarios, $query);
 				if (!$resultado) {
@@ -641,16 +687,21 @@
 		}
 	}
 
-	function editarFlete($idflete, $proveedor, $costoFlete, $refCotizacion, $conexion_usuarios){
+	function editarFlete($idflete, $proveedor, $costoFlete, $refCotizacion, $conexion_usuarios, $idusuario){
 		$query ="UPDATE fletescotizacion SET proveedor='$proveedor', costoFlete='$costoFlete' WHERE id=$idflete";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 		if (!$resultado) {
 			$informacion["respuesta"] = "ERROR";
 			$informacion["informacion"] = "Ocurrió un problema al modificar la información del flete!";
 		}
+
+		$descripcionmovimiento = "Se modifico el flete del proveedor ".$proveedor." a ".$costoFlete." de la cotizacion con referencia ".$refCotizacion;
+		$fechamovimiento = date("Y-m-d H:i:s");
+		$querymovimiento = "INSERT INTO movimientosusuarios (idusuario, tipomovimiento, documento, descripcion, fechahora) VALUES ('$idusuario', 'M', 'cotizaciones', '$descripcionmovimiento', '$fechamovimiento')";
+		$resultadomovimiento = mysqli_query($conexion_usuarios, $querymovimiento);
 	}
 
-	function cambiar_condiciones_pago($refCotizacion, $condPago, $conexion_usuarios){
+	function cambiar_condiciones_pago($refCotizacion, $condPago, $conexion_usuarios, $idusuario){
 		$query = "UPDATE cotizacion SET CondPago = '$condPago' WHERE ref = '$refCotizacion'";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 
@@ -660,13 +711,22 @@
 		}else{
 			$informacion["respuesta"] = "BIEN";
 			$informacion["informacion"] = "Las condiciones de pago se modificaron correctamente!";
+
+			if ($condPago == 0) {
+				$descripcionmovimiento = "Se modifico las condiciones de pago de la cotizacion con referencia ".$refCotizacion." a Contado";
+			}else{
+				$descripcionmovimiento = "Se modifico las condiciones de pago de la cotizacion con referencia ".$refCotizacion." a ".$condPago." dias";
+			}
+			$fechamovimiento = date("Y-m-d H:i:s");
+			$querymovimiento = "INSERT INTO movimientosusuarios (idusuario, tipomovimiento, documento, descripcion, fechahora) VALUES ('$idusuario', 'M', 'cotizaciones', '$descripcionmovimiento', '$fechamovimiento')";
+			$resultadomovimiento = mysqli_query($conexion_usuarios, $querymovimiento);
 		}
 
 		echo json_encode($informacion);
 		mysqli_close($conexion_usuarios);
 	}
 
-	function cambiar_tiempo_entrega($refCotizacion, $tiempoEntrega, $conexion_usuarios){
+	function cambiar_tiempo_entrega($refCotizacion, $tiempoEntrega, $conexion_usuarios, $idusuario){
 		$query = "UPDATE cotizacion SET TiempoEntrega = '$tiempoEntrega' WHERE ref = '$refCotizacion'";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 
@@ -676,13 +736,18 @@
 		}else{
 			$informacion["respuesta"] = "BIEN";
 			$informacion["informacion"] = "El tiempo de entrega se modificó correctamente!";
+
+			$descripcionmovimiento = "Se modifico el tiempo de entrega de la cotizacion con referencia ".$refCotizacion." a ".$tiempoEntrega." dias";
+			$fechamovimiento = date("Y-m-d H:i:s");
+			$querymovimiento = "INSERT INTO movimientosusuarios (idusuario, tipomovimiento, documento, descripcion, fechahora) VALUES ('$idusuario', 'M', 'cotizaciones', '$descripcionmovimiento', '$fechamovimiento')";
+			$resultadomovimiento = mysqli_query($conexion_usuarios, $querymovimiento);
 		}
 
 		echo json_encode($informacion);
 		mysqli_close($conexion_usuarios);
 	}
 
-	function cambiar_moneda($refCotizacion, $conexion_usuarios){
+	function cambiar_moneda($refCotizacion, $conexion_usuarios, $idusuario){
 		$fecha = date("Y-m-d");
 		$query = "SELECT tipocambio FROM tipocambio WHERE fecha='$fecha'";
 		$resultado = mysqli_query($conexion_usuarios, $query);
@@ -736,6 +801,11 @@
 							$informacion["respuesta"] = "BIEN";
 							$informacion["informacion"] = "La moneda se cambio y la información se modificó correctamente!";
 
+							$descripcionmovimiento = "Se cambio la moneda de la cotizacion con referencia ".$refCotizacion." de MXN a USD";
+							$fechamovimiento = date("Y-m-d H:i:s");
+							$querymovimiento = "INSERT INTO movimientosusuarios (idusuario, tipomovimiento, documento, descripcion, fechahora) VALUES ('$idusuario', 'M', 'cotizaciones', '$descripcionmovimiento', '$fechamovimiento')";
+							$resultadomovimiento = mysqli_query($conexion_usuarios, $querymovimiento);
+
 							$query = "SELECT * FROM fletescotizacion WHERE refCotizacion = '$refCotizacion'";
 							$resultado = mysqli_query($conexion_usuarios, $query);
 
@@ -773,6 +843,11 @@
 							$informacion["respuesta"] = "BIEN";
 							$informacion["informacion"] = "La moneda se cambio y la información se modificó correctamente!";
 
+							$descripcionmovimiento = "Se cambio la moneda de la cotizacion con referencia ".$refCotizacion." de USD a MXN";
+							$fechamovimiento = date("Y-m-d H:i:s");
+							$querymovimiento = "INSERT INTO movimientosusuarios (idusuario, tipomovimiento, documento, descripcion, fechahora) VALUES ('$idusuario', 'M', 'cotizaciones', '$descripcionmovimiento', '$fechamovimiento')";
+							$resultadomovimiento = mysqli_query($conexion_usuarios, $querymovimiento);
+
 							$query = "SELECT * FROM fletescotizacion WHERE refCotizacion = '$refCotizacion'";
 							$resultado = mysqli_query($conexion_usuarios, $query);
 
@@ -793,7 +868,12 @@
 		mysqli_close($conexion_usuarios);
 	}
 
-	function cambiar_clasificacion($clasificacion, $idcliente, $conexion_usuarios){
+	function cambiar_clasificacion($clasificacion, $idcliente, $conexion_usuarios, $idusuario){
+		$query = "SELECT nombreEmpresa FROM contactos WHERE id = '$idcliente'";
+		$resultado = mysqli_query($conexion_usuarios, $query);
+		$data = mysqli_fetch_assoc($resultado);
+		$cliente = $data['nombreEmpresa'];
+
 		$query = "UPDATE contactos SET clasificacion = '$clasificacion' WHERE id = '$idcliente'";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 
@@ -803,13 +883,18 @@
 		}else{
 			$informacion["respuesta"] = "BIEN";
 			$informacion["informacion"] = "La clasificación del cliente se cambió correctamente!";
+
+			$descripcionmovimiento = "Se cambio la clasificacion del cliente ".$cliente." a ".$clasificacion;
+			$fechamovimiento = date("Y-m-d H:i:s");
+			$querymovimiento = "INSERT INTO movimientosusuarios (idusuario, tipomovimiento, documento, descripcion, fechahora) VALUES ('$idusuario', 'M', 'cotizaciones', '$descripcionmovimiento', '$fechamovimiento')";
+			$resultadomovimiento = mysqli_query($conexion_usuarios, $querymovimiento);
 		}
 
 		echo json_encode($informacion);
 		mysqli_close($conexion_usuarios);
 	}
 
-	function cambiarPedido($partidas, $refCotizacion, $numeroPedido, $numeroPartidas, $conexion_usuarios){
+	function cambiarPedido($partidas, $refCotizacion, $numeroPedido, $numeroPartidas, $conexion_usuarios, $idusuario){
 		$fecha = date("Y").'-'.date("m").'-'.date("d");
 		$query = "SELECT * FROM cotizacion WHERE ref='$refCotizacion'";
 		$resultado = mysqli_query($conexion_usuarios, $query);
@@ -847,7 +932,7 @@
 			if (!$resultado) {
 				$respuesta['respuesta'] = "ERROR 2";
 			}else{
-				$query = "UPDATE cotizacion SET partidaPedido='$numeroPartidas', Pedido = '$fecha', NoPedClient = '$numeroPedido' WHERE ref='$refCotizacion'";
+				$query = "UPDATE cotizacion SET partidaPedido='$numeroPartidas' WHERE ref='$refCotizacion'";
 				$resultado = mysqli_query($conexion_usuarios, $query);
 				if (!$resultado) {
 					$respuesta['respuesta'] = "ERROR 3";
@@ -858,6 +943,11 @@
 						$respuesta['respuesta'] = "ERROR 4";
 					}else{
 						$respuesta['respuesta'] = "OK";
+
+						$descripcionmovimiento = "Se creo el pedido ".$numeroPedido." de la cotizacion ".$refCotizacion." con un total de ".($total*1.16).", ".$numeroPartidas." partidas y moneda ".$moneda;
+						$fechamovimiento = date("Y-m-d H:i:s");
+						$querymovimiento = "INSERT INTO movimientosusuarios (idusuario, tipomovimiento, documento, descripcion, fechahora) VALUES ('$idusuario', 'R', 'cotizaciones/pedidos', '$descripcionmovimiento', '$fechamovimiento')";
+						$resultadomovimiento = mysqli_query($conexion_usuarios, $querymovimiento);
 					}
 				}
 			}

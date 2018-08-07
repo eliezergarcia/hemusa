@@ -112,15 +112,15 @@
 								<div class="row">
 									<div class="col form-group">
 										<label for="numeroCotizacion">Número cotización <font color="#FF4136">*</font></label>
-										<input type="text" id="numeroCotizacion" name="numeroCotizacion" class="disabled form-control form-control-sm" disabled>
+										<input type="text" id="numeroCotizacion" name="numeroCotizacion" class="disabled form-control form-control-sm" required>
 									</div>
 									<div class="col form-group">
 										<label for="fechaCotizacion">Fecha <font color="#FF4136">*</font></label>
-										<input type="text" id="fechaCotizacion" name="fechaCotizacion" class="disabled form-control form-control-sm" value="<?php echo $fecha; ?>" disabled>
+										<input type="text" id="fechaCotizacion" name="fechaCotizacion" class="disabled form-control form-control-sm" value="<?php echo $fecha; ?>" required>
 									</div>
 									<div class="col form-group">
 										<label for="vendedor">Vendedor <font color="#FF4136">*</font></label>
-										<input type="text" id="vendedor" name="vendedor" class="disabled form-control form-control-sm" value="<?php echo $vendedor; ?>" disabled>
+										<input type="text" id="vendedor" name="vendedor" class="disabled form-control form-control-sm" value="<?php echo $vendedor; ?>" required>
 									</div>
 								</div>
 								<div class="row">
@@ -163,7 +163,7 @@
 							</div>
 							<div class="modal-footer invoice-footer">
 								<button type="button" class="btn btn-lg btn-secondary" data-dismiss="modal">Cancelar</button>
-								<button type="submit" class="btn btn-lg btn-success" name="crearCotizacion">Hecho</button>
+								<button type="submit" class="btn btn-lg btn-success" name="crearCotizacion">Guardar</button>
 							</div>
 						</div>
 					</div>

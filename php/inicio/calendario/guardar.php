@@ -6,7 +6,7 @@
 	switch ($opcion) {
 		case 'tipocambio':
 			$tipocambio = $_POST['tipocambio'];
-			tipo_cambio($tipocambio, $conexion_usuarios);
+			tipo_cambio($tipocambio, $conexion_usuarios, $idusuario);
 			break;
 
 		case 'crearevento':
@@ -51,7 +51,7 @@
 			break;
 	}
 
-	function tipo_cambio($tipocambio, $conexion_usuarios){
+	function tipo_cambio($tipocambio, $conexion_usuarios, $idusuario){
 		$fecha = date("Y-m-d");
 
 		$query = "INSERT INTO tipocambio (tipocambio, fecha) VALUES ('$tipocambio' , '$fecha')";
@@ -63,6 +63,11 @@
 		}else{
 			$informacion["respuesta"] = "BIEN";
 			$informacion["informacion"] = "El tipo de cambio del día se guardó correctamente.";
+
+			$descripcionmovimiento = "Se agrego el tipo de cambio del dia a: ".$tipocambio;
+			$fechamovimiento = date("Y-m-d H:i:s");
+			$querymovimiento = "INSERT INTO movimientosusuarios (idusuario, tipomovimiento, documento, descripcion, fechahora) VALUES ('$idusuario', 'R', 'tipocambio', '$descripcionmovimiento', '$fechamovimiento')";
+			$resultadomovimiento = mysqli_query($conexion_usuarios, $querymovimiento);
 		}
 
 		echo json_encode($informacion);

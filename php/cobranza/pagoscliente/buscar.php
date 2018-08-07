@@ -138,11 +138,23 @@
 	}
 
 	function clientesnc($conexion_usuarios){
-		$query = "SELECT * FROM contactos WHERE tipo = 'Cliente' AND nombreEmpresa != ''";
+		$fecha = date("Y-m-d");
+		$query = "SELECT tipocambio FROM tipocambio WHERE fecha = '$fecha'";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 
 		while($data = mysqli_fetch_assoc($resultado)){
-			$informacion['data'][] = array_map("utf8_encode", $data);
+			$tipocambio = $data['tipocambio'];
+		}
+
+		$query = "SELECT * FROM contactos WHERE tipo = 'Cliente' AND nombreEmpresa != '' AND RFC != ''";
+		$resultado = mysqli_query($conexion_usuarios, $query);
+
+		while($data = mysqli_fetch_assoc($resultado)){
+			$informacion['data'][] = array(
+				'RFC' => $data['RFC'],
+				'nombreEmpresa' => utf8_encode($data['nombreEmpresa']),
+				'tipocambio' => $tipocambio
+			);
 		}
 
 		echo json_encode($informacion);

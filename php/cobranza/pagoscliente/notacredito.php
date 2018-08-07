@@ -123,6 +123,13 @@
 													<h5>&nbsp;&nbsp;&nbsp;&nbsp;Los campos marcados con <font color="#FF4136">*</font> son obligatorios.</h5><br>
 													<div class="row">
 														<div class="form-group col-6">
+						        					<label for="entorno">Seleccione el entorno: <font color="#FF4136">*</font></label>
+															<select type="text" id="entorno" name="entorno" class="form-control form-control-sm">
+																<option value="produccion">Produccion</option>
+																<option value="pruebas">Pruebas</option>
+															</select>
+						        				</div>
+														<div class="form-group col-6">
 															<label for="">Tipo de CFDI <font color="#FF4136">*</font></label>
 															<select name="tipoDocumento" id="tipoDocumento" class="form-control form-control-sm col-12">
 																<option value="nota_credito" selected>Nota de crédito</option>
@@ -134,9 +141,9 @@
 																<option value="G02" selected>Devoluciones, descuentos o bonificaciones</option>
 															</select>
 														</div>
-														<div class="form-group col-8">
+														<div class="form-group col-6">
 															<label for="">Cliente <font color="#FF4136">*</font></label>
-															<select name="clientenc" id="clientenc" class="form-control form-control-sm col-12">
+															<select name="clientenc" id="clientenc" class="form-control form-control-sm col-12" onchange="datos_cliente()">
 															</select>
 														</div>
 													</div>
@@ -173,12 +180,20 @@
 															<label for="">Condiciones de pago <font color="#FF4136">*</font></label>
 															<input type="text" name="condicionesPago" id="condicionesPago" class="form-control form-control-sm col-12">
 														</div>
-														<div class="form-group col-6">
+														<div class="form-group col-4">
 															<label for="">Moneda <font color="#FF4136">*</font></label>
 															<select name="moneda" id="moneda" class="form-control form-control-sm col-12">
 																<option value="mxn" selected>MXN</option>
 																<option value="usd">USD</option>
 															</select>
+														</div>
+														<div class="form-group col-4">
+						        					<label for="fecha">Fecha <font color="#FF4136">*</font></label>
+						        					<input type="text" id="fecha" name="fecha" class="form-control form-control-sm" value="<?php echo date("Y-m-d"); ?>" required>
+						        				</div>
+														<div class="form-group col-4">
+															<label for="tipoCambio">Tipo de cambio </label>
+															<input type="text" id="tipoCambio" name="tipoCambio" class="form-control form-control-sm" required>
 														</div>
 													</div>
 													<hr>
@@ -218,7 +233,9 @@
 														</div>
 														<div class="form-group col-6">
 															<label for="">Clave SAT <font color="#FF4136">*</font></label>
-															<input type="text" name="claveSat" id="claveSat" class="form-control form-control-sm col-12">
+															<select name="claveSat" id="claveSat" class="form-control form-control-sm col-12">
+																<option value="27113201" selected>27113201</option>
+															</select>
 														</div>
 													</div>
 													<hr>
@@ -237,6 +254,36 @@
 			</div>
 		</div>
 	</div>
+
+	<div id="mod-success" tabindex="-1" role="dialog" style="" class="modal fade" data-backdrop="static">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+				</div>
+				<div class="modal-body">
+					<div class="text-center">
+						<div class="texto1">
+							<br><br>
+							<h3>Espere un momento...</h3>
+							<h4>Se está generando la factura</h4>
+							<br>
+							<div class="text-center">
+								<div class="be-spinner">
+									<svg width="40px" height="40px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+										<circle fill="none" stroke-width="4" stroke-linecap="round" cx="33" cy="33" r="30" class="circle"></circle>
+									</svg>
+								</div>
+							</div>
+						</div>
+						<div class="mt-8">
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer"></div>
+			</div>
+		</div>
+	</div>
+
 </header>
 	<?php include('../../enlacesjs.php'); ?>
 	<script>
@@ -273,6 +320,20 @@
 					var awesomplete = new Awesomplete(input);
 					awesomplete.list = clientes;
 					$("#cliente").focus();
+				}
+			});
+		}
+
+		function datos_cliente() {
+			opcion = "datoscliente";
+			var RFC = $("#clientenc").val();
+			$.ajax({
+				method: "POST",
+				url: "buscar.php",
+				dataType: "json",
+				data: {"opcion": opcion, "RFC": RFC},
+				success : function(data) {
+
 				}
 			});
 		}
@@ -359,8 +420,10 @@
 				var clientes = data;
 				var total = (clientes.data).length;
 				console.log(total);
+				$("select[name=clientenc]").append("<option value=''>Selecciona un cliente...</option>");
 				for(var i=0;i<=total;i++){
 					 $("select[name=clientenc]").append("<option value='"+ clientes.data[i].RFC + "'>" + clientes.data[i].nombreEmpresa + "</option>");
+					 $("#tipoCambio").val(clientes.data[i].tipocambio);
 				};
 			});
 		})
@@ -377,8 +440,214 @@
 		}
 
 		$("#generar-notacredito").on("click", function () {
+			var RFC = $("#clientenc").val();
+
+			var request = new XMLHttpRequest();
+
+			request.open('GET', apiConfig.enlace+'api/v1/clients/'+RFC);
+
+			request.setRequestHeader('Content-Type', 'application/json');
+			request.setRequestHeader('F-API-KEY', apiConfig.apiKey);
+			request.setRequestHeader('F-SECRET-KEY', apiConfig.secretKey);
+
+			request.onreadystatechange = function () {
+				if (this.readyState === 4) {
+					console.log('Status:', this.status);
+					console.log('Headers:', this.getAllResponseHeaders());
+					console.log('Body:', this.responseText);
+					var data = JSON.parse(this.responseText);
+
+					if (data.status == 0){
+						$(".texto1").fadeOut(300, function(){
+							$(this).html("");
+							$(this).fadeIn(300);
+						});
+						setTimeout(function () {
+							$(".texto1").append("<div class='text-danger'><span class='modal-main-icon mdi mdi-close-circle-o'></span></div>");
+							$(".texto1").append("<h3>Error!</h3>");
+							$(".texto1").append("<h4>Ocurrió un problema al conectar a  portal 'Factura.com'.</h4>");
+						}, 350);
+						setTimeout( function () {
+							$("#mod-success").modal("hide");
+							$(".texto1").html("");
+							$(".texto1").append("<br><br>");
+							$(".texto1").append("<h3>Espere un momento...</h3>");
+							$(".texto1").append("<h4>Se está generando la nota de crédito</h4>");
+							$(".texto1").append("<br>");
+							$(".texto1").append("<div class='text-center'><div class='be-spinner'><svg width='40px' height='40px' viewBox='0 0 66 66' xmlns='http://www.w3.org/2000/svg'><circle fill='none' stroke-width='4' stroke-linecap='round' cx='33' cy='33' r='30' class='circle'></circle></svg></div></div></div>");
+							$(".texto1").append("<br>");
+							$(".texto1").append("<br>");
+						}, 3000);
+					}else if (data.status == "error") {
+						$(".texto1").fadeOut(300, function(){
+							$(this).html("");
+							$(this).fadeIn(300);
+						});
+						setTimeout(function () {
+							$(".texto1").append("<div class='text-warning'><span class='modal-main-icon mdi mdi-alert-triangle'></span></div>");
+							$(".texto1").append("<h3>Aviso!</h3>");
+							$(".texto1").append("<h4>El cliente no esta registrado en portal 'Factura.com'</h4>");
+							$(".texto1").append("<div class='text-center'>");
+								$(".texto1").append("<p>Registrarlo a continuación para poder facturar.</p>");
+								$(".texto1").append("</div>");
+							}, 425);
+							buscarDatosCliente(RFC);
+						}else{
+							var UID = data.Data.UID;
+							generar_factura(RFC, UID);
+						}
+					}
+				}
+
+			request.send();
+
 		});
 
+		function generar_factura(RFC, UID) {
+			var tipoDocumento = $("#tipoDocumento").val();
+			var usoCFDI = $("#usoCFDI").val();
+			var RFC = $("#clientenc").val();
+			var ordenpedido = $("#ordenpedido").val();
+			var formaPago = $("#formaPago").val();
+			var metodoPago = $("#metodoPago").val();
+			var condicionesPago = $("#condicionesPago").val();
+			var moneda = $("#moneda").val();
+			var concepto = $("#concepto").val();
+			var cantidad = $("#cantidad").val();
+			var unidad = $("#unidad").val();
+			var precioUnitario = $("#precioUnitario").val();
+			var subtotal = $("#subtotal").val();
+			var iva = $("#iva").val();
+			var total = $("#total").val();
+			var claveSat = $("#claveSat").val();
+
+			console.log(tipoDocumento);
+			console.log(usoCFDI);
+			console.log(RFC);
+			console.log(ordenpedido);
+			console.log(formaPago);
+			console.log(metodoPago);
+			console.log(condicionesPago);
+			console.log(moneda);
+			console.log(concepto);
+			console.log(cantidad);
+			console.log(unidad);
+			console.log(precioUnitario);
+			console.log(subtotal);
+			console.log(iva);
+			console.log(total);
+			console.log(claveSat);
+
+
+			var request = new XMLHttpRequest();
+
+			request.open('POST', apiConfig.enlace+'api/v3/cfdi33/create');
+			request.setRequestHeader('Content-Type', 'application/json');
+			request.setRequestHeader('F-API-KEY', apiConfig.apiKey);
+			request.setRequestHeader('F-SECRET-KEY', apiConfig.secretKey);
+
+			request.onreadystatechange = function () {
+				if (this.readyState === 4) {
+					console.log('Status:', this.status);
+					console.log('Headers:', this.getAllResponseHeaders());
+					console.log('Body:', this.responseText);
+					var data = JSON.parse(this.responseText);
+					if (data.response == "error" && typeof data.message.message != "undefined") {
+						$("#mod-success").modal("hide");
+						$.gritter.add({
+							title: 'Error!',
+							text: data.message.message+'<br>'+data.message.messageDetail,
+							class_name: 'color danger'
+						});
+					}else if (data.response == "error" && typeof data.message != "undefined") {
+						$("#mod-success").modal("hide");
+						$.gritter.add({
+							title: 'Aviso!',
+							text: data.message,
+							class_name: 'color warning'
+						});
+					}else{
+						$(".texto1").fadeOut(300, function(){
+							$(this).html("");
+							$(this).fadeIn(300);
+						});
+						setTimeout(function () {
+							$(".texto1").append("<div class='text-success'><span class='modal-main-icon mdi mdi-check-circle'></span></div>");
+							$(".texto1").append("<h3>Correcto!</h3>");
+							$(".texto1").append("<h4>La nota de crédito se generó correctamente en el portal 'Factura.com'.</h4>");
+							$(".texto1").append("<div class='text-center'>");
+							$(".texto1").append("<p>En un momento se descargará el archivo PDF.</p>");
+							$(".texto1").append("</div>");
+						}, 350);
+						var UIDFactura = data.uid;
+						var UUIDFactura = data.UUID;
+						var tipoDocumento = $("#frmInformacionFactura #tipoDocumento").val();
+						var moneda = $("#frmInformacionFactura #moneda").val();
+						apiConfig.opcion = $("#frmInformacionFactura #entorno").val();
+						if (apiConfig.opcion == "produccion"){
+							// guardarFactura(numeroPedido, refCotizacion, herramienta, tipoDocumento, moneda, UIDFactura, UUIDFactura);
+						}else{
+							var request = new XMLHttpRequest();
+
+							request.open('GET', apiConfig.enlace+'api/v3/cfdi33/'+UIDFactura+'/pdf');
+
+							request.setRequestHeader('F-API-KEY', apiConfig.apiKey);
+							request.setRequestHeader('F-SECRET-KEY', apiConfig.secretKey);
+							request.setRequestHeader('Content-Type', 'application/pdf');
+							request.setRequestHeader('Content-Transfer-Encoding', 'Binary');
+							request.responseType = 'blob';
+
+							request.onreadystatechange = function () {
+								if (this.readyState === 4) {
+									console.log('Status:', this.status);
+									console.log('Headers:', this.getAllResponseHeaders());
+									console.log('Body:', this.response);
+									var blob = new Blob([this.response], {type: 'application/pdf'});
+									var link = document.createElement('a');
+									link.href = window.URL.createObjectURL(blob);
+									link.download = "facturaprueba.pdf";
+									link.click();
+								}
+							};
+							request.send();
+						}
+					}
+				}
+			};
+
+			var body = {
+				'Receptor': {
+					'UID': UID,
+					'ResidenciaFiscal': '',
+				},
+				'TipoDocumento': tipoDocumento,
+				'Conceptos': [{
+		        'ClaveProdServ': claveSat,
+		        'Cantidad': cantidad,
+		        'ClaveUnidad': unidad,
+		        'Unidad': 'Unidad de servicio',
+		        'ValorUnitario': precioUnitario,
+		        'Descripcion': concepto,
+		        'Impuestos':{
+		            'Traslados':[{'Base' : subtotal, 'Impuesto': '002', 'TipoFactor': 'Tasa', 'TasaOCuota': 0.16, 'Importe': subtotal * iva}],
+		        }
+		    }],
+				'UsoCFDI': usoCFDI,
+				'Serie': apiConfig.serienc,
+				'FormaPago': formaPago,
+				'MetodoPago': metodoPago,
+				'CondicionesDePago': condicionesPago,
+				'Cuenta': "",
+				'Moneda': (moneda).toUpperCase(),
+				'TipoCambio': "",
+				'NumOrder': ordenpedido,
+				'FechaFromAPI': "",
+				'Comentarios': condicionesPago
+			};
+			console.log(JSON.stringify(body));
+			// request.send(JSON.stringify(body));
+
+		}
 	</script>
 	<script type="text/javascript" src="<?php echo $ruta; ?>php/js/idioma_espanol.js"></script>
 	<script type="text/javascript" src="<?php echo $ruta; ?>php/js/mensajes_cambios.js"></script>

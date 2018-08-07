@@ -167,7 +167,7 @@
 	}
 
 	function nueva_remision($conexion_usuarios){
-		$n = 101;
+			$n = 101;
      	$numero = substr(date("y"), 1).date("m").date("d").$n;
 	   	$query = "SELECT ref FROM cotizacion ORDER BY id DESC LIMIT 100";
      	$resultado = mysqli_query($conexion_usuarios, $query);
@@ -177,7 +177,7 @@
 	     	while ($numero <= $ultimaCotizacion) {
 	     		$n++;
 	     		$numero = substr(date("y"), 1).date("m").date("d").$n;
-			}
+				}
      	}
 
 		$numeroCotizacion = "HMU".substr(date("y"), 1).date("m").date("d").$n;
@@ -188,7 +188,7 @@
 			$remision = $data['ultimaremision'] + 1;
 		}
 
-     	$arreglo['resultado'] = "ok";
+    $arreglo['resultado'] = "ok";
 		$arreglo['numeroCotizacion'] = $numeroCotizacion;
 		$arreglo['remision'] = $remision;
 		echo json_encode($arreglo);

@@ -76,6 +76,7 @@
 					'iva' => $data['iva'],
 					'mespromocion' => $data['mesPromocion'],
 					'descuento' => "% ".$data['descuento'],
+					'codigobarras' => $data['codigoBarras']
 				);
 
 			}
