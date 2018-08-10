@@ -1,6 +1,6 @@
 <?php
 	include("../../conexion.php");
-	// error_reporting(0);
+	include("../../sesion.php");
 
 	$opcion = $_POST['opcion'];
 	$informacion[] = "";
@@ -8,19 +8,19 @@
 	switch ($opcion) {
 		case 'cambiarMoneda':
 			$remision = $_POST['remision'];
-			cambiar_moneda($remision, $conexion_usuarios);
+			cambiar_moneda($remision, $conexion_usuarios, $idusuario);
 			break;
 
 		case 'numeroguia':
 			$numeroguia = $_POST['numeroguia'];
 			$remision = $_POST['remision'];
-			numeroguia($numeroguia, $remision, $conexion_usuarios);
+			numeroguia($numeroguia, $remision, $conexion_usuarios, $idusuario);
 			break;
 
 		case 'paqueteria':
 			$paqueteria = $_POST['paqueteria'];
 			$remision = $_POST['remision'];
-			paqueteria($paqueteria, $remision, $conexion_usuarios);
+			paqueteria($paqueteria, $remision, $conexion_usuarios, $idusuario);
 			break;
 
 		case 'proveedor':
@@ -38,19 +38,19 @@
 		case 'formapago':
 			$formapago = $_POST['formapago'];
 			$remision = $_POST['remision'];
-			formapago($formapago, $remision, $conexion_usuarios);
+			formapago($formapago, $remision, $conexion_usuarios, $idusuario);
 			break;
 
 		case 'metodopago':
 			$metodopago = $_POST['metodopago'];
 			$remision = $_POST['remision'];
-			metodopago($metodopago, $remision, $conexion_usuarios);
+			metodopago($metodopago, $remision, $conexion_usuarios, $idusuario);
 			break;
 
 		case 'usocfdi':
 			$cfdi = $_POST['cfdi'];
 			$remision = $_POST['remision'];
-			usocfdi($cfdi, $remision, $conexion_usuarios);
+			usocfdi($cfdi, $remision, $conexion_usuarios, $idusuario);
 			break;
 
 		case 'editarpartida':
@@ -115,13 +115,13 @@
 		case 'agregarherramientaremision':
 			$data = json_decode($_POST['herramienta']);
 			$remision = $_POST['remision'];
-			agregar_herramienta($data, $remision, $conexion_usuarios);
+			agregar_herramienta($data, $remision, $conexion_usuarios, $idusuario);
 			break;
 
 		case 'quitarherramienta':
 			$remision = $_POST['remision'];
 			$herramienta = json_decode($_POST['herramienta']);
-			quitar_herramienta($remision, $herramienta, $conexion_usuarios);
+			quitar_herramienta($remision, $herramienta, $conexion_usuarios, $idusuario);
 			break;
 
 		case 'packinglist':
@@ -143,7 +143,7 @@
 			$contactoCliente = $_POST['contactoCliente'];
 			$moneda = $_POST['moneda'];
 			$comentarios = $_POST['comentarios'];
-			nuevaremision($numeroCotizacion, $remision, $fechaCotizacion, $vendedor, $cliente, $contactoCliente, $moneda, $comentarios, $conexion_usuarios);
+			nuevaremision($numeroCotizacion, $remision, $fechaCotizacion, $vendedor, $cliente, $contactoCliente, $moneda, $comentarios, $conexion_usuarios, $idusuario, $idusuario);
 			break;
 	}
 
@@ -187,7 +187,7 @@
 		mysqli_close($conexion_usuarios);
 	}
 
-	function cambiar_moneda($remision, $conexion_usuarios){
+	function cambiar_moneda($remision, $conexion_usuarios, $idusuario){
 		$fecha = date("Y-m-d");
 		$query = "SELECT tipocambio FROM tipocambio WHERE fecha='$fecha'";
 		$resultado = mysqli_query($conexion_usuarios, $query);
@@ -244,6 +244,11 @@
 							$informacion["respuesta"] = "ERROR";
 							$informacion["informacion"] = "Ocurrió un problema al intentar modificar la información de la cotización!";
 						}else{
+							$descripcionmovimiento = "Se cambio la moneda de la remision ".$remision." de MXN a USD";
+							$fechamovimiento = date("Y-m-d H:i:s");
+							$querymovimiento = "INSERT INTO movimientosusuarios (idusuario, tipomovimiento, documento, descripcion, fechahora) VALUES ('$idusuario', 'M', 'remisiones', '$descripcionmovimiento', '$fechamovimiento')";
+							$resultadomovimiento = mysqli_query($conexion_usuarios, $querymovimiento);
+
 							$informacion["respuesta"] = "BIEN";
 							$informacion["informacion"] = "La moneda se cambio y la información se modificó correctamente!";
 						}
@@ -279,6 +284,11 @@
 							$informacion["respuesta"] = "ERROR";
 							$informacion["informacion"] = "Ocurrió un problema al intentar modificar la información de la cotización!";
 						}else{
+							$descripcionmovimiento = "Se cambio la moneda de la remision ".$remision." de USD a MXN";
+							$fechamovimiento = date("Y-m-d H:i:s");
+							$querymovimiento = "INSERT INTO movimientosusuarios (idusuario, tipomovimiento, documento, descripcion, fechahora) VALUES ('$idusuario', 'M', 'remisiones', '$descripcionmovimiento', '$fechamovimiento')";
+							$resultadomovimiento = mysqli_query($conexion_usuarios, $querymovimiento);
+
 							$informacion["respuesta"] = "BIEN";
 							$informacion["informacion"] = "La moneda se cambio y la información se modificó correctamente!";
 						}
@@ -432,7 +442,7 @@
 		verificar_resultado($resultado);
 	}
 
-	function nuevaremision($numeroCotizacion, $remision, $fechaCotizacion, $vendedor, $cliente, $contactoCliente, $moneda, $comentarios, $conexion_usuarios){
+	function nuevaremision($numeroCotizacion, $remision, $fechaCotizacion, $vendedor, $cliente, $contactoCliente, $moneda, $comentarios, $conexion_usuarios, $idusuario){
 		$query = "SELECT * FROM contactos WHERE nombreEmpresa LIKE '%$cliente%' LIMIT 1";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 		if (mysqli_num_rows($resultado) < 1) {
@@ -445,14 +455,19 @@
 				$idMetodoPago = $data['IdMetodoPago'];
 				$idUsoCFDI = $data['IdUsoCFDI'];
 			}
-			$query = "INSERT INTO cotizacion (ref, cliente, contacto, vendedor, fecha, moneda, Otra, remision, remisionFecha) VALUES ('$numeroCotizacion', '$idCliente', '$contactoCliente', '$vendedor', '$fechaCotizacion', '$moneda', '$comentarios', '$remision', '$fechaCotizacion')";
-			$resultado = mysqli_query($conexion_usuarios, $query);
+			// $query = "INSERT INTO cotizacion (ref, cliente, contacto, vendedor, fecha, moneda, Otra, remision, remisionFecha) VALUES ('$numeroCotizacion', '$idCliente', '$contactoCliente', '$vendedor', '$fechaCotizacion', '$moneda', '$comentarios', '$remision', '$fechaCotizacion')";
+			// $resultado = mysqli_query($conexion_usuarios, $query);
 
 			$query = "INSERT INTO remisiones (remision, cotizacionRef, contacto, vendedor, fecha, cliente, moneda, IdFormaPago, IdMetodoPago, IdUsoCFDI, comentarios) VALUES ('$remision', '$numeroCotizacion', '$contactoCliente', '$vendedor', '$fechaCotizacion', '$idCliente', '$moneda', '$idFormaPago', '$idMetodoPago', '$idUsoCFDI', '$comentarios')";
 			$resultado = mysqli_query($conexion_usuarios, $query);
 			if (!$resultado) {
 				verificar_resultado($resultado);
 			}else{
+				$descripcionmovimiento = "Se creo la remision ".$remision." al cliente ".$cliente;
+				$fechamovimiento = date("Y-m-d H:i:s");
+				$querymovimiento = "INSERT INTO movimientosusuarios (idusuario, tipomovimiento, documento, descripcion, fechahora) VALUES ('$idusuario', 'R', 'remisiones', '$descripcionmovimiento', '$fechamovimiento')";
+				$resultadomovimiento = mysqli_query($conexion_usuarios, $querymovimiento);
+
 				$informacion["respuesta"] = "BIEN";
 				$informacion["remision"] = $remision;
 			}
@@ -460,14 +475,21 @@
 		echo json_encode($informacion);
 	}
 
-	function agregar_herramienta($herramienta, $remision, $conexion_usuarios){
+	function agregar_herramienta($herramienta, $remision, $conexion_usuarios, $idusuario){
 		$fecha = date("Y-m-d");
+		$modelos = "";
 		foreach ($herramienta as &$id) {
 			$query = "UPDATE utilidad_pedido SET remision = '$remision', fecha_entregado='$fecha' WHERE id_cotizacion_herramientas = '$id'";
 			$resultado = mysqli_query($conexion_usuarios, $query);
 
 			$query = "UPDATE cotizacionherramientas SET remision = '$remision', Entregado='$fecha' WHERE id = '$id'";
 			$resultado = mysqli_query($conexion_usuarios, $query);
+
+			$query = "SELECT * FROM cotizacionherramientas WHERE id='$id'";
+			$resultado = mysqli_query($conexion_usuarios, $query);
+			$data = mysqli_fetch_assoc($resultado);
+			$modelo = $data['modelo'];
+			$modelos = $modelo.", ".$modelos;
 		}
 
 		$query = "SELECT moneda, partidaCantidad, precioTotal FROM cotizacion WHERE remision = '$remision'";
@@ -534,14 +556,19 @@
 		$query = "UPDATE remisiones SET total = '$totalcotizacion', partidas = '$partidas' WHERE remision = '$remision'";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 
-		$query = "UPDATE cotizacion SET precioTotal = '$totalcotizacion', partidaCantidad = '$partidas' WHERE remision = '$remision'";
-		$resultado = mysqli_query($conexion_usuarios, $query);
+		// $query = "UPDATE cotizacion SET precioTotal = '$totalcotizacion', partidaCantidad = '$partidas' WHERE remision = '$remision'";
+		// $resultado = mysqli_query($conexion_usuarios, $query);
 
 
 		if (!$resultado) {
 			$informacion["respuesta"] = "ERROR";
 			$informacion["informacion"] = "Ocurrió un problema al intentar agregar la herramienta a la remisión!";
 		}else{
+			$descripcionmovimiento = "Se agrego la herramienta ".$modelos."a la remision ".$remision;
+			$fechamovimiento = date("Y-m-d H:i:s");
+			$querymovimiento = "INSERT INTO movimientosusuarios (idusuario, tipomovimiento, documento, descripcion, fechahora) VALUES ('$idusuario', 'R', 'remisiones', '$descripcionmovimiento', '$fechamovimiento')";
+			$resultadomovimiento = mysqli_query($conexion_usuarios, $querymovimiento);
+
 			$informacion["respuesta"] = "BIEN";
 			$informacion["informacion"] = "La herramienta se agregó a la remisión correctamente!";
 		}
@@ -549,7 +576,7 @@
 		echo json_encode($informacion);
 	}
 
-	function quitar_herramienta($remision, $herramienta, $conexion_usuarios){
+	function quitar_herramienta($remision, $herramienta, $conexion_usuarios, $idusuario){
 		$fecha = date("Y-m-d");
 		foreach ($herramienta as &$id) {
 			$query = "UPDATE utilidad_pedido SET remision = '', fecha_entregado='0000-00-00' WHERE id_cotizacion_herramientas = '$id'";
@@ -576,6 +603,7 @@
 		$total = 0;
 		$i = 0;
 
+		$modelos = "";
 		foreach ($herramienta as &$id) {
 			$query = "SELECT marca, modelo, precioLista, cantidad, moneda FROM cotizacionherramientas WHERE id = '$id'";
 			$resultado = mysqli_query($conexion_usuarios, $query);
@@ -586,6 +614,7 @@
 				$marca = $data2['marca'];
 				$modelo = $data2['modelo'];
 				$cantidadquitar = $data2['cantidad'];
+				$modelos = $modelo.", ".$modelos;
 			}
 
 			$query = "SELECT enReserva FROM productos WHERE marca = '$marca' AND ref = '$modelo'";
@@ -625,14 +654,19 @@
 		$query = "UPDATE remisiones SET total = '$totalcotizacion', partidas = '$partidas' WHERE remision = '$remision'";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 
-		$query = "UPDATE cotizacion SET precioTotal = '$totalcotizacion', partidaCantidad = '$partidas' WHERE remision = '$remision'";
-		$resultado = mysqli_query($conexion_usuarios, $query);
+		// $query = "UPDATE cotizacion SET precioTotal = '$totalcotizacion', partidaCantidad = '$partidas' WHERE remision = '$remision'";
+		// $resultado = mysqli_query($conexion_usuarios, $query);
 
 
 		if (!$resultado) {
 			$informacion["respuesta"] = "ERROR";
 			$informacion["informacion"] = "Ocurrió un problema al intentar agregar la herramienta a la remisión!";
 		}else{
+			$descripcionmovimiento = "Se quito la herramienta ".$modelos."de la remision ".$remision;
+			$fechamovimiento = date("Y-m-d H:i:s");
+			$querymovimiento = "INSERT INTO movimientosusuarios (idusuario, tipomovimiento, documento, descripcion, fechahora) VALUES ('$idusuario', 'R', 'remisiones', '$descripcionmovimiento', '$fechamovimiento')";
+			$resultadomovimiento = mysqli_query($conexion_usuarios, $querymovimiento);
+
 			$informacion["respuesta"] = "BIEN";
 			$informacion["informacion"] = "La herramienta se agregó a la remisión correctamente!";
 		}
@@ -640,7 +674,7 @@
 		echo json_encode($informacion);
 	}
 
-	function numeroguia($numeroguia, $remision, $conexion_usuarios){
+	function numeroguia($numeroguia, $remision, $conexion_usuarios, $idusuario){
 		$query = "UPDATE remisiones SET numeroGuia='$numeroguia' WHERE remision ='$remision'";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 
@@ -650,6 +684,11 @@
 			$informacion["respuesta"] = "ERROR";
 			$informacion["informacion"] = "Ocurrió un problema al guardar el número de guía '".$numeroguia."'!";
 		}else{
+			$descripcionmovimiento = "Se cambio el numero de guia de la remision ".$remision." a ".$numeroguia;
+			$fechamovimiento = date("Y-m-d H:i:s");
+			$querymovimiento = "INSERT INTO movimientosusuarios (idusuario, tipomovimiento, documento, descripcion, fechahora) VALUES ('$idusuario', 'M', 'remisiones', '$descripcionmovimiento', '$fechamovimiento')";
+			$resultadomovimiento = mysqli_query($conexion_usuarios, $querymovimiento);
+
 			$informacion["respuesta"] = "BIEN";
 			$informacion["informacion"] = "El número de guía '".$numeroguia."' se guardó correctamente!";
 		}
@@ -657,10 +696,16 @@
 		mysqli_close($conexion_usuarios);
 	}
 
-	function paqueteria($paqueteria, $remision, $conexion_usuarios){
+	function paqueteria($paqueteria, $remision, $conexion_usuarios, $idusuario){
 		if($paqueteria == "NINGUNA"){
 			$paqueteria = 0;
 		}
+
+		$query = "SELECT nombre FROM paqueterias WHERE IdPaqueteria = '$paqueteria'";
+		$resultado = mysqli_query($conexion_usuarios, $query);
+		$data = mysqli_fetch_assoc($resultado);
+		$nombrepaqueteria = $data['nombre'];
+
 		$query = "UPDATE remisiones SET paqueteria='$paqueteria' WHERE remision = '$remision'";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 
@@ -671,6 +716,11 @@
 			$informacion["respuesta"] = "ERROR";
 			$informacion["informacion"] = "Ocurrió un problema al guardar la paqueteria!";
 		}else{
+			$descripcionmovimiento = "Se cambio la paqueteria da la remision ".$remision." a ".$nombrepaqueteria;
+			$fechamovimiento = date("Y-m-d H:i:s");
+			$querymovimiento = "INSERT INTO movimientosusuarios (idusuario, tipomovimiento, documento, descripcion, fechahora) VALUES ('$idusuario', 'M', 'remisiones', '$descripcionmovimiento', '$fechamovimiento')";
+			$resultadomovimiento = mysqli_query($conexion_usuarios, $querymovimiento);
+
 			$informacion["respuesta"] = "BIEN";
 			$informacion["informacion"] = "La paqueteria se guardó correctamente!";
 		}
@@ -729,7 +779,12 @@
 		mysqli_close($conexion_usuarios);
 	}
 
-	function formapago($formapago, $remision, $conexion_usuarios){
+	function formapago($formapago, $remision, $conexion_usuarios, $idusuario){
+		$query = "SELECT Descripcion FROM formasdepago WHERE IdFormaPago = '$formapago'";
+		$resultado = mysqli_query($conexion_usuarios, $query);
+		$data = mysqli_fetch_assoc($resultado);
+		$nombreformapago = $data['Descripcion'];
+
 		$query = "UPDATE remisiones SET IdFormaPago='$formapago' WHERE remision='$remision'";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 
@@ -746,6 +801,11 @@
 			$informacion["respuesta"] = "ERROR";
 			$informacion["informacion"] = "Ocurrió un problema al actualizar la forma de pago!";
 		}else{
+			$descripcionmovimiento = "Se cambio la forma de pago de la remision ".$remision." a ".$nombreformapago;
+			$fechamovimiento = date("Y-m-d H:i:s");
+			$querymovimiento = "INSERT INTO movimientosusuarios (idusuario, tipomovimiento, documento, descripcion, fechahora) VALUES ('$idusuario', 'M', 'remisiones', '$descripcionmovimiento', '$fechamovimiento')";
+			$resultadomovimiento = mysqli_query($conexion_usuarios, $querymovimiento);
+
 			$informacion["respuesta"] = "BIEN";
 			$informacion["informacion"] = "La forma de pago se actualizó correctamente!";
 		}
@@ -753,7 +813,12 @@
 		mysqli_close($conexion_usuarios);
 	}
 
-	function metodopago($metodopago, $remision, $conexion_usuarios){
+	function metodopago($metodopago, $remision, $conexion_usuarios, $idusuario){
+		$query = "SELECT Descripcion FROM metodosdepago WHERE IdMetodoPago = '$metodopago'";
+		$resultado = mysqli_query($conexion_usuarios, $query);
+		$data = mysqli_fetch_assoc($resultado);
+		$nombremetodopago = $data['Descripcion'];
+
 		$query = "UPDATE remisiones SET IdMetodoPago='$metodopago' WHERE remision='$remision'";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 
@@ -769,6 +834,11 @@
 			$informacion["respuesta"] = "ERROR";
 			$informacion["informacion"] = "Ocurrió un problema al actualizar el método de pago!";
 		}else{
+			$descripcionmovimiento = "Se cambio el metodo de pago de la remision ".$remision." a ".$nombremetodopago;
+			$fechamovimiento = date("Y-m-d H:i:s");
+			$querymovimiento = "INSERT INTO movimientosusuarios (idusuario, tipomovimiento, documento, descripcion, fechahora) VALUES ('$idusuario', 'M', 'remisiones', '$descripcionmovimiento', '$fechamovimiento')";
+			$resultadomovimiento = mysqli_query($conexion_usuarios, $querymovimiento);
+
 			$informacion["respuesta"] = "BIEN";
 			$informacion["informacion"] = "El método de pago se actualizó correctamente!";
 		}
@@ -776,7 +846,12 @@
 		mysqli_close($conexion_usuarios);
 	}
 
-	function usocfdi($cfdi, $remision, $conexion_usuarios){
+	function usocfdi($cfdi, $remision, $conexion_usuarios, $idusuario){
+		$query = "SELECT Descripcion FROM usocfdi WHERE IdUsoCFDI = '$cfdi'";
+		$resultado = mysqli_query($conexion_usuarios, $query);
+		$data = mysqli_fetch_assoc($resultado);
+		$nombreusocfdi = $data['Descripcion'];
+
 		$query = "UPDATE remisiones SET IdUsoCFDI='$cfdi' WHERE remision='$remision'";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 
@@ -792,6 +867,11 @@
 			$informacion["respuesta"] = "ERROR";
 			$informacion["informacion"] = "Ocurrió un problema al actualizar el uso de CFDI!";
 		}else{
+			$descripcionmovimiento = "Se cambio el uso de CFDI de la remision ".$remision." a ".$nombreusocfdi;
+			$fechamovimiento = date("Y-m-d H:i:s");
+			$querymovimiento = "INSERT INTO movimientosusuarios (idusuario, tipomovimiento, documento, descripcion, fechahora) VALUES ('$idusuario', 'M', 'remisiones', '$descripcionmovimiento', '$fechamovimiento')";
+			$resultadomovimiento = mysqli_query($conexion_usuarios, $querymovimiento);
+
 			$informacion["respuesta"] = "BIEN";
 			$informacion["informacion"] = "El CFDI se actualizó correctamente!";
 		}
@@ -902,7 +982,7 @@
 				$informacion["informacion"] = "Ocurrió un problema al modificar la información del pedido, la remisión se encuentra vacía!";
 			}
 		}
-		
+
 		echo json_encode($informacion);
 		mysqli_close($conexion_usuarios);
 	}

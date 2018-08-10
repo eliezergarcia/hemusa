@@ -1,6 +1,6 @@
 <?php
 	include('../../conexion.php');
-	// error_reporting(0
+	include('../../sesion.php');
 
 
 	$opcion = $_POST['opcion'];
@@ -26,7 +26,7 @@
 			// $facturaproveedor = $_POST['facturaproveedor'];
 			// $entrada = $_POST['entrada'];
 			$datapartidas = json_decode($_POST['herramienta']);
-			actualizar($ordencompra, $pedimento, $folio, $datapartidas, $conexion_usuarios);
+			actualizar($ordencompra, $pedimento, $folio, $datapartidas, $conexion_usuarios, $idusuario);
 			break;
 
 		case 'editarpartidadescripcion':
@@ -347,8 +347,9 @@
 		mysqli_close($conexion_usuarios);
 	}
 
-	function actualizar($ordencompra, $pedimento, $folio, $datapartidas, $conexion_usuarios){
+	function actualizar($ordencompra, $pedimento, $folio, $datapartidas, $conexion_usuarios, $idusuario){
 		$fecha = date("Y-m-d");
+		$modelos = "";
 		foreach ($datapartidas as &$valor) {
 			$id = $valor;
 			$query = "UPDATE cotizacionherramientas SET FechaPedimento = '$fecha', Pedimento = '$pedimento', foliopedimento = '$folio' WHERE id = '$id'";
@@ -356,12 +357,24 @@
 
 			$query = "UPDATE utilidad_pedido SET Pedimento = '$pedimento', folio = '$folio' WHERE id_cotizacion_herramientas = '$id'";
 			$resultado = mysqli_query($conexion_usuarios, $query);
+
+			$query = "SELECT * FROM utilidad_pedido WHERE id_cotizacion_herramientas = '$id'";
+			$resultado = mysqli_query($conexion_usuarios, $query);
+			$data2 = mysqli_fetch_assoc($resultado);
+			$modelo = $data2['modelo'];
+			$ordencompra = $data2['orden_compra'];
+			$modelos = $modelo.", ".$modelos;
 		}
 
 		if (!$resultado) {
 			$informacion["respuesta"] = "ERROR";
 			$informacion["informacion"] = "Ocurrió un problema al intentar guardar la información del pedido!";
 		}else{
+			$descripcionmovimiento = "Se modifico la informacion de las herramientas ".$modelos."de la orden de compra ".$ordencompra;
+			$fechamovimiento = date("Y-m-d H:i:s");
+			$querymovimiento = "INSERT INTO movimientosusuarios (idusuario, tipomovimiento, documento, descripcion, fechahora) VALUES ('$idusuario', 'M', 'logistica', '$descripcionmovimiento', '$fechamovimiento')";
+			$resultadomovimiento = mysqli_query($conexion_usuarios, $querymovimiento);
+
 			$informacion["respuesta"] = "BIEN";
 			$informacion["informacion"] = "La información se guardó correctamente!";
 		}

@@ -1,5 +1,6 @@
 <?php
 	include('../../conexion.php');
+	include('../../sesion.php');
 
 	$opcion = $_POST["opcion"];
 	$informacion = [];
@@ -12,7 +13,7 @@
 			$tipocambio = $_POST['tipocambio'];
 			$numeropartidas = $_POST['numeroPartidas'];
 			$facturas = json_decode($_POST['facturas']);
-			registrar_pagos_cliente($cliente, $fecha, $cuenta, $tipocambio, $numeropartidas, $facturas, $conexion_usuarios);
+			registrar_pagos_cliente($cliente, $fecha, $cuenta, $tipocambio, $numeropartidas, $facturas, $conexion_usuarios, $idusuario);
 			break;
 
 		case 'editarpagocliente':
@@ -25,7 +26,7 @@
 
 		case 'eliminarpagocliente':
 			$factura = $_POST['factura'];
-			eliminar_pago_cliente($factura, $conexion_usuarios);
+			eliminar_pago_cliente($factura, $conexion_usuarios, $idusuario);
 			break;
 
 		case 'registrarproveedor':
@@ -51,11 +52,11 @@
 		case 'abonocliente':
 			$cantidadabono = $_POST['cantidadabono'];
 			$facturas = json_decode($_POST['pagos']);
-			abono_cliente($facturas, $cantidadabono, $conexion_usuarios);
+			abono_cliente($facturas, $cantidadabono, $conexion_usuarios, $idusuario);
 			break;
 	}
 
-	function abono_cliente($facturas, $cantidadabono, $conexion_usuarios){
+	function abono_cliente($facturas, $cantidadabono, $conexion_usuarios, $idusuario){
 		foreach ($facturas as &$idfactura) {
 			$query = "UPDATE facturas SET pagado = pagado + '$cantidadabono' WHERE id ='$idfactura'";
 			$resultado = mysqli_query($conexion_usuarios, $query);
@@ -92,7 +93,7 @@
 		return $existe_pago;
 	}
 
-	function registrar_pagos_cliente($cliente, $fecha, $cuenta, $tipocambio, $numeropartidas, $facturas, $conexion_usuarios){
+	function registrar_pagos_cliente($cliente, $fecha, $cuenta, $tipocambio, $numeropartidas, $facturas, $conexion_usuarios, $idusuario){
 		$query = "SELECT id FROM contactos WHERE tipo='Cliente' AND nombreEmpresa LIKE '%$cliente%' LIMIT 1";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 
@@ -169,6 +170,11 @@
 								$informacion["respuesta"] = "ERROR";
 								$informacion["informacion"] = "Ocurrió un problema al actualizar la información de el pedido.";
 							}else{
+								$descripcionmovimiento = "Se registro un pago de $ ".$monto." de la factura ".$factura." del cliente ".$cliente;
+								$fechamovimiento = date("Y-m-d H:i:s");
+								$querymovimiento = "INSERT INTO movimientosusuarios (idusuario, tipomovimiento, documento, descripcion, fechahora) VALUES ('$idusuario', 'R', 'cobranza', '$descripcionmovimiento', '$fechamovimiento')";
+								$resultadomovimiento = mysqli_query($conexion_usuarios, $querymovimiento);
+
 								$informacion["respuesta"] = "BIEN";
 								$informacion["informacion"] = "La información de la(s) factura(s) se actualizó correctamente.";
 							}
@@ -195,7 +201,12 @@
 		mysqli_close($conexion_usuarios);
 	}
 
-	function eliminar_pago_cliente($factura, $conexion_usuarios){
+	function eliminar_pago_cliente($factura, $conexion_usuarios, $idusuario){
+		$query = "SELECT cliente FROM facturas WHERE folio = '$factura'";
+		$resultado = mysqli_query($conexion_usuarios, $query);
+		$data = mysqli_fetch_assoc($resultado);
+		$cliente = $data['cliente'];
+
 		$query = "UPDATE facturas SET pagado=0.00, status='enviada' WHERE folio='$factura'";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 
@@ -220,6 +231,10 @@
 					$informacion["respuesta"] = "ERROR";
 					$informacion["informacion"] = "Ocurrió un problema al eliminar el pago de el pedido";
 				}else{
+					$descripcionmovimiento = "Se elimino el pago de la factura ".$factura." del cliente ".$cliente;
+					$fechamovimiento = date("Y-m-d H:i:s");
+					$querymovimiento = "INSERT INTO movimientosusuarios (idusuario, tipomovimiento, documento, descripcion, fechahora) VALUES ('$idusuario', 'E', 'cobranza', '$descripcionmovimiento', '$fechamovimiento')";
+					$resultadomovimiento = mysqli_query($conexion_usuarios, $querymovimiento);
 
 					$informacion["respuesta"] = "BIEN";
 					$informacion["informacion"] = "El pago de la factura se eliminó correctamente.";
