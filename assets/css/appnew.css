@@ -16429,6 +16429,7 @@ li.L9 {
 .timeline-icon > .icon {
   line-height: 40px;
   vertical-align: middle;
+  margin-left: 3px;
 }
 
 @media (max-width: 767.98px) {

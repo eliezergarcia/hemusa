@@ -30,7 +30,7 @@
 				$informacion["informacion"] = "No se pudo registrar la información porque el RFC '".$rfc."' ya existe!";
 				echo json_encode($informacion);
 			}else{
-				agregar_cliente($usuariologin, $dplogin, $nombreEmpresa, $alias, $rfc, $moneda, $calle, $numExterior, $numInterior, $colonia, $cp, $ciudad, $estado, $pais, $tlf1, $tlf2, $paginaWeb, $correoElectronico, $conexion_usuarios);
+				agregar_cliente($nombreEmpresa, $alias, $rfc, $moneda, $calle, $numExterior, $numInterior, $colonia, $cp, $ciudad, $estado, $pais, $tlf1, $tlf2, $paginaWeb, $correoElectronico, $conexion_usuarios, $idusuario);
 			}
 
 			break;
@@ -38,7 +38,7 @@
 		case 'eliminarcliente':
 			$idcliente = $_POST['idcliente'];
 			$nombreEmpresa = $_POST['nombreEmpresa'];
-			eliminar_cliente($usuariologin, $dplogin, $idcliente, $nombreEmpresa, $conexion_usuarios);
+			eliminar_cliente($idcliente, $nombreEmpresa, $conexion_usuarios, $idusuario);
 			break;
 
 		case 'agregarclas':
@@ -61,7 +61,7 @@
 			$tlf = $_POST['tlf'];
 			$movil = $_POST['movil'];
 			$correoElectronico = $_POST['correoElectronico'];
-			agregar_contacto($usuariologin, $dplogin, $idcliente, $contacto, $puesto, $calle, $colonia, $ciudad, $estado, $cp, $pais, $tlf, $movil, $correoElectronico, $conexion_usuarios);
+			agregar_contacto($idcliente, $contacto, $puesto, $calle, $colonia, $ciudad, $estado, $cp, $pais, $tlf, $movil, $correoElectronico, $conexion_usuarios, $idusuario, $idusuario);
 			break;
 
 		case 'agregarcotizacion':
@@ -76,7 +76,7 @@
 			$tiempoentrega = $_POST['tiempoEntrega'];
 			$condicionespago = $_POST['condicionesPago'];
 			$comentarios = $_POST['comentarios'];
-			agregar_cotizacion($usuariologin, $dplogin, $numerocotizacion, $fechacotizacion, $vendedor, $idcliente, $contactocliente, $moneda, $tiempoentrega, $condicionespago, $comentarios, $conexion_usuarios);
+			agregar_cotizacion($numerocotizacion, $fechacotizacion, $vendedor, $idcliente, $contactocliente, $moneda, $tiempoentrega, $condicionespago, $comentarios, $conexion_usuarios, $idusuario);
 			break;
 
 		case 'editarinformacion':
@@ -107,7 +107,7 @@
 			$formapago = $_POST['formapago'];
 			$metodopago = $_POST['metodopago'];
 			$cfdi = $_POST['cfdi'];
-			editar_informacion($idcontacto, $empresa, $alias, $rfc, $contacto, $calle, $noexterior, $nointerior, $colonia, $ciudad, $estado, $cp, $pais, $tlf1, $tlf2, $movil, $correofac1, $correofac2, $correo, $paginaweb, $credito, $contactohemusa, $moneda, $clasificacion, $formapago, $metodopago, $cfdi, $conexion_usuarios);
+			editar_informacion($idcontacto, $empresa, $alias, $rfc, $contacto, $calle, $noexterior, $nointerior, $colonia, $ciudad, $estado, $cp, $pais, $tlf1, $tlf2, $movil, $correofac1, $correofac2, $correo, $paginaweb, $credito, $contactohemusa, $moneda, $clasificacion, $formapago, $metodopago, $cfdi, $conexion_usuarios, $idusuario);
 			break;
 
 		case 'nuevaremision':
@@ -119,26 +119,26 @@
 			$contactoCliente = $_POST['contactoCliente'];
 			$moneda = $_POST['moneda'];
 			$comentarios = $_POST['comentarios'];
-			nuevaremision($numeroCotizacion, $remision, $fechaCotizacion, $vendedor, $cliente, $contactoCliente, $moneda, $comentarios, $conexion_usuarios);
+			nuevaremision($numeroCotizacion, $remision, $fechaCotizacion, $vendedor, $cliente, $contactoCliente, $moneda, $comentarios, $conexion_usuarios, $idusuario, $idusuario);
 			break;
 
 		case 'agregarcuenta':
 			$idcliente= $_POST['idcliente'];
 			$cuenta= $_POST['cuenta'];
 			$moneda= $_POST['moneda'];
-			agregar_cuenta($idcliente, $cuenta, $moneda, $conexion_usuarios);
+			agregar_cuenta($idcliente, $cuenta, $moneda, $conexion_usuarios, $idusuario);
 			break;
 
 		case 'editarcuenta':
 			$idcuenta= $_POST['idcuenta'];
 			$cuenta= $_POST['cuenta'];
 			$moneda= $_POST['moneda'];
-			editar_cuenta($idcuenta, $cuenta, $moneda, $conexion_usuarios);
+			editar_cuenta($idcuenta, $cuenta, $moneda, $conexion_usuarios, $idusuario);
 			break;
 
 		case 'eliminarcuenta':
 			$idcuenta= $_POST['idcuenta'];
-			eliminar_cuenta($idcuenta, $conexion_usuarios);
+			eliminar_cuenta($idcuenta, $conexion_usuarios, $idusuario);
 			break;
 
 		case 'guardarfactura':
@@ -152,7 +152,7 @@
 			$moneda = $_POST['moneda'];
 			$uidfactura = $_POST['UIDFactura'];
 			$uuidfactura = $_POST['UUIDFactura'];
-			guardar_factura($folio, $remisiones, $total, $status, $fecha, $tipoDocumento, $moneda, $uidfactura, $uuidfactura, $cliente, $conexion_usuarios);
+			guardar_factura($folio, $remisiones, $total, $status, $fecha, $tipoDocumento, $moneda, $uidfactura, $uuidfactura, $cliente, $conexion_usuarios, $idusuario);
 			break;
 
 		default:
@@ -161,7 +161,7 @@
 			break;
 	}
 
-	function guardar_factura($folio, $remisiones, $total, $status, $fecha, $tipoDocumento, $moneda, $uidfactura, $uuidfactura, $cliente, $conexion_usuarios){
+	function guardar_factura($folio, $remisiones, $total, $status, $fecha, $tipoDocumento, $moneda, $uidfactura, $uuidfactura, $cliente, $conexion_usuarios, $idusuario){
 		$folio = str_replace("H ","",$folio);
 
 		$ordenpedido = "";
@@ -172,14 +172,14 @@
 		$query = "INSERT INTO facturas (folio, tipoDocumento, remision, total, moneda, status, fecha, UID, UUID, cliente) VALUES ('$folio', '$tipoDocumento', '$ordenpedido', '$total','$moneda', '$status', '$fecha', '$uidfactura', '$uuidfactura', '$cliente')";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 		$fecha = date("Y-m-d");
-		foreach ($remisiones as &$remision) {
-			$query = "UPDATE cotizacion SET factura = '$folio', facturaFecha = '$fecha' WHERE remision = '$remision'";
-			$resultado = mysqli_query($conexion_usuarios, $query);
 
-			if (!$resultado) {
-				$informacion["respuesta"] = "ERROR";
-				$informacion["informacion"] = "Ocurrió un problema al guardar la factura '".$folio."'!";
-			}else{
+		$modelos = "";
+		foreach ($remisiones as &$remision) {
+			// $query = "UPDATE cotizacion SET factura = '$folio', facturaFecha = '$fecha' WHERE remision = '$remision'";
+			// $resultado = mysqli_query($conexion_usuarios, $query);
+			if ($remision != '' || $remision != 0) {
+				$modelos = $remision.", ".$modelos;
+
 				$query = "SELECT * FROM cotizacionherramientas WHERE remision = '$remision'";
 				$resultado = mysqli_query($conexion_usuarios, $query);
 				$fecha = date("Y-m-d");
@@ -192,12 +192,18 @@
 					$resultado2 = mysqli_query($conexion_usuarios, $query2);
 				}
 			}
+
 		}
 
 		if (!$resultado) {
 			$informacion["respuesta"] = "ERROR";
 			$informacion["informacion"] = "Ocurrió un problema al modificar la información de las partidas.";
 		}else{
+			$descripcionmovimiento = "Se genero la factura ".$folio." de las remisiones ".$modelos;
+			$fechamovimiento = date("Y-m-d H:i:s");
+			$querymovimiento = "INSERT INTO movimientosusuarios (idusuario, tipomovimiento, documento, descripcion, fechahora) VALUES ('$idusuario', 'R', 'contactos', '$descripcionmovimiento', '$fechamovimiento')";
+			$resultadomovimiento = mysqli_query($conexion_usuarios, $querymovimiento);
+
 			$informacion["respuesta"] = "BIEN";
 			$informacion["informacion"] = "La factura '".$folio."' se guardó en el sistema correctamente.";
 		}
@@ -205,13 +211,23 @@
 		mysqli_close($conexion_usuarios);
 	}
 
-	function agregar_cuenta($idcliente, $cuenta, $moneda, $conexion_usuarios){
+	function agregar_cuenta($idcliente, $cuenta, $moneda, $conexion_usuarios, $idusuario){
+		$query = "SELECT nombreEmpresa FROM contactos WHERE id = '$idcliente'";
+		$resultado = mysqli_query($conexion_usuarios, $query);
+		$data = mysqli_fetch_assoc($resultado);
+		$cliente = $data['nombreEmpresa'];
+
 		$query = "INSERT INTO cuentasclientes (IdContacto, Cuenta, moneda) VALUES ('$idcliente', '$cuenta', '$moneda')";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 		if (!$resultado) {
 			$informacion["respuesta"] = "ERROR";
 			$informacion["informacion"] = "Ocurrió un problema al agregar la cuenta de banco.";
 		}else{
+			$descripcionmovimiento = "Se agrego la cuenta de banco ".$cuenta." con moneda ".$moneda." al cliente ".$cliente;
+			$fechamovimiento = date("Y-m-d H:i:s");
+			$querymovimiento = "INSERT INTO movimientosusuarios (idusuario, tipomovimiento, documento, descripcion, fechahora) VALUES ('$idusuario', 'R', 'contactos', '$descripcionmovimiento', '$fechamovimiento')";
+			$resultadomovimiento = mysqli_query($conexion_usuarios, $querymovimiento);
+
 			$informacion["respuesta"] = "BIEN";
 			$informacion["informacion"] = "La cuenta de banco se agregó correctamente.";
 		}
@@ -220,13 +236,23 @@
 		mysqli_close($conexion_usuarios);
 	}
 
-	function editar_cuenta($idcuenta, $cuenta, $moneda, $conexion_usuarios){
+	function editar_cuenta($idcuenta, $cuenta, $moneda, $conexion_usuarios, $idusuario){
+		$query = "SELECT cuentasclientes.IdContacto, contactos.nombreEmpresa FROM cuentasclientes INNER JOIN contactos ON contactos.id = cuentasclientes.IdContacto";
+		$resultado = mysqli_query($conexion_usuarios, $query);
+		$data = mysqli_fetch_assoc($resultado);
+		$cliente = $data['nombreEmpresa'];
+
 		$query = "UPDATE cuentasclientes SET Cuenta='$cuenta', moneda='$moneda' WHERE IdCuenta='$idcuenta'";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 		if (!$resultado) {
 			$informacion["respuesta"] = "ERROR";
 			$informacion["informacion"] = "Ocurrió un problema al editar la cuenta de banco.";
 		}else{
+			$descripcionmovimiento = "Se modifico la informacion de la cuenta ".$cuenta." con moneda ".$moneda." al cliente ".$cliente;
+			$fechamovimiento = date("Y-m-d H:i:s");
+			$querymovimiento = "INSERT INTO movimientosusuarios (idusuario, tipomovimiento, documento, descripcion, fechahora) VALUES ('$idusuario', 'M', 'contactos', '$descripcionmovimiento', '$fechamovimiento')";
+			$resultadomovimiento = mysqli_query($conexion_usuarios, $querymovimiento);
+
 			$informacion["respuesta"] = "BIEN";
 			$informacion["informacion"] = "La cuenta de banco se modificó correctamente.";
 		}
@@ -235,7 +261,13 @@
 		mysqli_close($conexion_usuarios);
 	}
 
-	function eliminar_cuenta($idcuenta, $conexion_usuarios){
+	function eliminar_cuenta($idcuenta, $conexion_usuarios, $idusuario){
+		$query = "SELECT cuentasclientes.IdContacto, cuentasclientes.Cuenta, contactos.nombreEmpresa FROM cuentasclientes INNER JOIN contactos ON contactos.id = cuentasclientes.IdContacto";
+		$resultado = mysqli_query($conexion_usuarios, $query);
+		$data = mysqli_fetch_assoc($resultado);
+		$cliente = $data['nombreEmpresa'];
+		$cuenta = $data['Cuenta'];
+
 		$query = "DELETE FROM cuentasclientes WHERE IdCuenta = $idcuenta";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 		if (!$resultado) {
@@ -244,6 +276,11 @@
 		}else{
 			$informacion["respuesta"] = "BIEN";
 			$informacion["informacion"] = "La cuenta de banco se eliminó correctamente.";
+
+			$descripcionmovimiento = "Se elimino la cuenta ".$cuenta." del cliente ".$cliente;
+			$fechamovimiento = date("Y-m-d H:i:s");
+			$querymovimiento = "INSERT INTO movimientosusuarios (idusuario, tipomovimiento, documento, descripcion, fechahora) VALUES ('$idusuario', 'E', 'contactos', '$descripcionmovimiento', '$fechamovimiento')";
+			$resultadomovimiento = mysqli_query($conexion_usuarios, $querymovimiento);
 		}
 
 		echo json_encode($informacion);
@@ -257,44 +294,46 @@
 		return $existecliente;
 	}
 
-	function agregar_cliente($usuariologin, $dplogin, $nombreEmpresa, $alias, $rfc, $moneda, $calle, $numExterior, $numInterior, $colonia, $cp, $ciudad, $estado, $pais, $tlf1, $tlf2, $paginaWeb, $correoElectronico, $conexion_usuarios){
+	function agregar_cliente($nombreEmpresa, $alias, $rfc, $moneda, $calle, $numExterior, $numInterior, $colonia, $cp, $ciudad, $estado, $pais, $tlf1, $tlf2, $paginaWeb, $correoElectronico, $conexion_usuarios, $idusuario){
 		$query = "INSERT INTO contactos (nombreEmpresa, alias, calle, NumInt, NumExt, ciudad, estado, cp, pais, tlf1, tlf2, correoElectronico, paginaWeb, RFC, colonia, tipo, moneda) VALUES ('$nombreEmpresa', '$alias', '$calle', '$numInterior', '$numExterior', '$ciudad', '$estado', '$cp', '$pais', '$tlf1', '$tlf2', '$correoElectronico', '$paginaWeb', '$rfc', '$colonia', 'Cliente', '$moneda')";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 		if (!$resultado) {
 			$informacion["respuesta"] = "ERROR";
 			$informacion["informacion"] = "Ocurrió un problema al registrar la información del cliente '".$nombreEmpresa."'!";
 		}else{
-			$descripcion = "Se registro el cliente ".$nombreEmpresa;
-			$fechahora = date("Y-m-d G:i:s");
-			$query = "INSERT INTO movimientosusuarios (departamento, usuario, tipomovimiento, descripcion, fechahora) VALUES ('$dplogin', '$usuariologin', 'Registro', '$descripcion', '$fechahora')";
-			$resultado = mysqli_query($conexion_usuarios, $query);
 			$informacion["respuesta"] = "BIEN";
 			$informacion["informacion"] = "La información del cliente '".$nombreEmpresa."' se guardó correctamente!";
+
+			$descripcionmovimiento = "Se registro el cliente ".$nombreEmpresa;
+			$fechamovimiento = date("Y-m-d H:i:s");
+			$querymovimiento = "INSERT INTO movimientosusuarios (idusuario, tipomovimiento, documento, descripcion, fechahora) VALUES ('$idusuario', 'R', 'contactos', '$descripcionmovimiento', '$fechamovimiento')";
+			$resultadomovimiento = mysqli_query($conexion_usuarios, $querymovimiento);
 		}
 
 		echo json_encode($informacion);
 		cerrar($conexion_usuarios);
 	}
 
-	function eliminar_cliente($usuariologin, $dplogin, $idcliente, $nombreEmpresa, $conexion_usuarios){
+	function eliminar_cliente($idcliente, $nombreEmpresa, $conexion_usuarios, $idusuario){
 		$query = "DELETE FROM contactos WHERE id = $idcliente";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 		if (!$resultado) {
 			$informacion["respuesta"] = "ERROR";
 			$informacion["informacion"] = "Ocurrió un problema al eliminar el cliente '".$nombreEmpresa."'!";
 		}else{
-			$descripcion = "Se elimino el cliente ".$nombreEmpresa;
-			$fechahora = date("Y-m-d G:i:s");
-			$query = "INSERT INTO movimientosusuarios (departamento, usuario, tipomovimiento, descripcion, fechahora) VALUES ('$dplogin', '$usuariologin', 'Eliminacion', '$descripcion', '$fechahora')";
-			$resultado = mysqli_query($conexion_usuarios, $query);
 			$informacion["respuesta"] = "BIEN";
 			$informacion["informacion"] = "Se eliminó el cliente '".$nombreEmpresa."' correctamente!";
+
+			$descripcionmovimiento = "Se elimino el cliente ".$nombreEmpresa;
+			$fechamovimiento = date("Y-m-d H:i:s");
+			$querymovimiento = "INSERT INTO movimientosusuarios (idusuario, tipomovimiento, documento, descripcion, fechahora) VALUES ('$idusuario', 'E', 'contactos', '$descripcionmovimiento', '$fechamovimiento')";
+			$resultadomovimiento = mysqli_query($conexion_usuarios, $querymovimiento);
 		}
 		echo json_encode($informacion);
 		cerrar($conexion_usuarios);
 	}
 
-	function nuevaremision($numeroCotizacion, $remision, $fechaCotizacion, $vendedor, $cliente, $contactoCliente, $moneda, $comentarios, $conexion_usuarios){
+	function nuevaremision($numeroCotizacion, $remision, $fechaCotizacion, $vendedor, $cliente, $contactoCliente, $moneda, $comentarios, $conexion_usuarios, $idusuario){
 		$query = "SELECT * FROM contactos WHERE nombreEmpresa LIKE '%$cliente%' LIMIT 1";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 		if (!$resultado) {
@@ -306,8 +345,8 @@
 				$idMetodoPago = $data['IdMetodoPago'];
 				$idUsoCFDI = $data['IdUsoCFDI'];
 			}
-			$query = "INSERT INTO cotizacion (ref, cliente, contacto, vendedor, fecha, moneda, Otra, remision, remisionFecha) VALUES ('$numeroCotizacion', '$idCliente', '$contactoCliente', '$vendedor', '$fechaCotizacion', '$moneda', '$comentarios', '$remision', '$fechaCotizacion')";
-			$resultado = mysqli_query($conexion_usuarios, $query);
+			// $query = "INSERT INTO cotizacion (ref, cliente, contacto, vendedor, fecha, moneda, Otra, remision, remisionFecha) VALUES ('$numeroCotizacion', '$idCliente', '$contactoCliente', '$vendedor', '$fechaCotizacion', '$moneda', '$comentarios', '$remision', '$fechaCotizacion')";
+			// $resultado = mysqli_query($conexion_usuarios, $query);
 
 			$query = "INSERT INTO remisiones (remision, cotizacionRef, contacto, vendedor, fecha, cliente, moneda, IdFormaPago, IdMetodoPago, IdUsoCFDI) VALUES ('$remision', '$numeroCotizacion', '$contactoCliente', '$vendedor', '$fechaCotizacion', '$idCliente', '$moneda', '$idFormaPago', '$idMetodoPago', '$idUsoCFDI')";
 			$resultado = mysqli_query($conexion_usuarios, $query);
@@ -315,6 +354,11 @@
 				$informacion["respuesta"] = "ERROR";
 				$informacion["informacion"] = "Ocurrió un problema al generar la remisión!";
 			}else{
+				$descripcionmovimiento = "Se creo la remision ".$remision." al cliente ".$cliente;
+				$fechamovimiento = date("Y-m-d H:i:s");
+				$querymovimiento = "INSERT INTO movimientosusuarios (idusuario, tipomovimiento, documento, descripcion, fechahora) VALUES ('$idusuario', 'R', 'contactos', '$descripcionmovimiento', '$fechamovimiento')";
+				$resultadomovimiento = mysqli_query($conexion_usuarios, $querymovimiento);
+
 				$informacion["respuesta"] = "nuevaremision";
 				$informacion["remision"] = $remision;
 				echo json_encode($informacion);
@@ -356,7 +400,12 @@
 		cerrar($conexion_usuarios);
 	}
 
-	function agregar_contacto($usuariologin, $dplogin, $idcliente, $contacto, $puesto, $calle, $colonia, $ciudad, $estado, $cp, $pais, $tlf, $movil, $correoElectronico, $conexion_usuarios){
+	function agregar_contacto($idcliente, $contacto, $puesto, $calle, $colonia, $ciudad, $estado, $cp, $pais, $tlf, $movil, $correoElectronico, $conexion_usuarios, $idusuario){
+		$query = "SELECT nombreEmpresa FROM contactos WHERE id = '$idcliente'";
+		$resultado = mysqli_query($conexion_usuarios, $query);
+		$data = mysqli_fetch_assoc($resultado);
+		$cliente = $data['nombreEmpresa'];
+
 		$query = "INSERT INTO contactospersonas (empresa,personaContacto,puesto,calle,colonia,ciudad,estado,cp,pais,tlf1,movil,correoElectronico) VALUES ('$idcliente', '$contacto', '$puesto', '$calle', '$colonia', '$ciudad', '$estado', '$cp', '$pais', '$tlf', '$movil', '$correoElectronico')";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 		if (!$resultado) {
@@ -366,11 +415,21 @@
 			$informacion["idcliente"] = $idcliente;
 			$informacion["respuesta"] = "agregarcontacto";
 			$informacion["informacion"] = "El contacto del cliente se guardó correctamente!";
+
+			$descripcionmovimiento = "Se agrego el contacto ".$contacto." al cliente ".$cliente;
+			$fechamovimiento = date("Y-m-d H:i:s");
+			$querymovimiento = "INSERT INTO movimientosusuarios (idusuario, tipomovimiento, documento, descripcion, fechahora) VALUES ('$idusuario', 'R', 'contactos', '$descripcionmovimiento', '$fechamovimiento')";
+			$resultadomovimiento = mysqli_query($conexion_usuarios, $querymovimiento);
 		}
 		echo json_encode($informacion);
 		mysqli_close($conexion_usuarios);	}
 
-	function agregar_cotizacion($usuariologin, $dplogin, $numerocotizacion, $fechacotizacion, $vendedor, $idcliente, $contactocliente, $moneda, $tiempoentrega, $condicionespago, $comentarios, $conexion_usuarios){
+	function agregar_cotizacion($numerocotizacion, $fechacotizacion, $vendedor, $idcliente, $contactocliente, $moneda, $tiempoentrega, $condicionespago, $comentarios, $conexion_usuarios, $idusuario){
+		$query = "SELECT nombreEmpresa FROM contactos WHERE id = '$idcliente'";
+		$resultado = mysqli_query($conexion_usuarios, $query);
+		$data = mysqli_fetch_assoc($resultado);
+		$cliente = $data['nombreEmpresa'];
+
 		$query = "INSERT INTO cotizacion (ref, cliente, contacto, vendedor, fecha, moneda, TiempoEntrega, CondPago, Otra) VALUES ('$numerocotizacion', '$idcliente', '$contactocliente', '$vendedor', '$fechacotizacion', '$moneda', '$tiempoentrega', '$condicionespago', '$comentarios')";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 		if (!$resultado) {
@@ -384,6 +443,11 @@
 			// 	$informacion["respuesta"] = "ERROR";
 			// 	$informacion["informacion"] = "Ocurrió un problema al generar la cotización!";
 			// }else{
+				$descripcionmovimiento = "Se creo la cotizacion con referencia ".$numeroCotizacion." al cliente ".$cliente;
+				$fechamovimiento = date("Y-m-d H:i:s");
+				$querymovimiento = "INSERT INTO movimientosusuarios (idusuario, tipomovimiento, documento, descripcion, fechahora) VALUES ('$idusuario', 'R', 'contactos', '$descripcionmovimiento', '$fechamovimiento')";
+				$resultadomovimiento = mysqli_query($conexion_usuarios, $querymovimiento);
+
 				$informacion['respuesta'] = "agregarcotizacion";
 				$informacion['numero'] = $numerocotizacion;
 				echo json_encode($informacion);
@@ -401,7 +465,7 @@
 		echo json_encode($informacion);
 	}
 
-	function editar_informacion($idcontacto, $empresa, $alias, $rfc, $contacto, $calle, $noexterior, $nointerior, $colonia, $ciudad, $estado, $cp, $pais, $tlf1, $tlf2, $movil, $correofac1, $correofac2, $correo, $paginaweb, $credito, $contactohemusa, $moneda, $clasificacion, $formapago, $metodopago, $cfdi, $conexion_usuarios){
+	function editar_informacion($idcontacto, $empresa, $alias, $rfc, $contacto, $calle, $noexterior, $nointerior, $colonia, $ciudad, $estado, $cp, $pais, $tlf1, $tlf2, $movil, $correofac1, $correofac2, $correo, $paginaweb, $credito, $contactohemusa, $moneda, $clasificacion, $formapago, $metodopago, $cfdi, $conexion_usuarios, $idusuario){
 		$query = "UPDATE contactos SET nombreEmpresa = '$empresa', alias = '$alias', RFC = '$rfc', personaContacto = '$contacto', calle = '$calle', NumExt ='$noexterior', NumInt = '$nointerior', colonia = '$colonia', ciudad = '$ciudad', estado = '$estado', cp ='$cp', pais = '$pais', tlf1 ='$tlf1', tlf2 = '$tlf2', movil = '$movil', correoFacturacion1 = '$correofac1', correoFacturacion2 = '$correofac2', correoElectronico ='$correo',  paginaWeb = '$paginaweb', CondPago = '$credito', responsable = '$contactohemusa', moneda = '$moneda', clasificacion = '$clasificacion', IdFormaPago = '$formapago', IdMetodoPago = '$metodopago', IdUsoCFDI = '$cfdi' WHERE id = '$idcontacto'";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 		if (!$resultado) {
@@ -410,6 +474,11 @@
 		}else{
 			$informacion["respuesta"] = "BIEN";
 			$informacion["informacion"] = "La información del cliente se guardó correctamente!";
+
+			$descripcionmovimiento = "Se modifico la informacion del cliente ".$empresa;
+			$fechamovimiento = date("Y-m-d H:i:s");
+			$querymovimiento = "INSERT INTO movimientosusuarios (idusuario, tipomovimiento, documento, descripcion, fechahora) VALUES ('$idusuario', 'M', 'contactos', '$descripcionmovimiento', '$fechamovimiento')";
+			$resultadomovimiento = mysqli_query($conexion_usuarios, $querymovimiento);
 		}
 		echo json_encode($informacion);
 		mysqli_close($conexion_usuarios);

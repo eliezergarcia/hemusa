@@ -30,20 +30,20 @@
 				$informacion["informacion"] = "No se pudo registrar la información porque el RFC '".$rfc."' ya existe!";
 				echo json_encode($informacion);
 			}else{
-				agregar_proveedor($nombreEmpresa, $alias, $rfc, $moneda, $calle, $numExterior, $numInterior, $colonia, $cp, $ciudad, $estado, $pais, $tlf1, $tlf2, $paginaWeb, $correoElectronico, $conexion_usuarios);
+				agregar_proveedor($nombreEmpresa, $alias, $rfc, $moneda, $calle, $numExterior, $numInterior, $colonia, $cp, $ciudad, $estado, $pais, $tlf1, $tlf2, $paginaWeb, $correoElectronico, $conexion_usuarios, $idusuario, $idusuario);
 			}
 
 			break;
 
 		case 'eliminarproveedor':
 			$idproveedor = $_POST['idproveedor'];
-			eliminarproveedor($idproveedor, $conexion_usuarios);
+			eliminarproveedor($idproveedor, $conexion_usuarios, $idusuario);
 			break;
 
 		case 'quitarproveedor':
 			$id = $_POST['id'];
 			$data = json_decode($_POST['herramienta']);
-			quitarproveedor($id, $data, $conexion_usuarios);
+			quitarproveedor($id, $data, $conexion_usuarios, $idusuario, $idusuario);
 			break;
 
 		case 'crearordencompra':
@@ -54,7 +54,7 @@
 			}else{
 				$iddireccionenvio = $_POST['direccionenvio'];
 			}
-			crearordencompra($idproveedor, $saludo, $iddireccionenvio, $idusuario, $conexion_usuarios);
+			crearordencompra($idproveedor, $saludo, $iddireccionenvio, $conexion_usuarios, $idusuario);
 			break;
 
 		case 'editarinformacion':
@@ -84,7 +84,7 @@
 			$formapago = $_POST['formapago'];
 			$metodopago = $_POST['metodopago'];
 			$cfdi = $_POST['cfdi'];
-			editar_informacion($idcontacto, $empresa, $alias, $rfc, $contacto, $calle, $noexterior, $nointerior, $colonia, $ciudad, $estado, $cp, $pais, $tlf1, $tlf2, $movil, $correofac1, $correofac2, $correo, $paginaweb, $credito, $contactohemusa, $moneda, $formapago, $metodopago, $cfdi, $conexion_usuarios);
+			editar_informacion($idcontacto, $empresa, $alias, $rfc, $contacto, $calle, $noexterior, $nointerior, $colonia, $ciudad, $estado, $cp, $pais, $tlf1, $tlf2, $movil, $correofac1, $correofac2, $correo, $paginaweb, $credito, $contactohemusa, $moneda, $formapago, $metodopago, $cfdi, $conexion_usuarios, $idusuario);
 			break;
 
 			default:
@@ -94,56 +94,66 @@
 
 		case 'herramientaenviado':
 			$data = json_decode($_POST['herramienta']);
-			herramienta_enviado($data, $conexion_usuarios);
+			herramienta_enviado($data, $conexion_usuarios, $idusuario);
 			break;
 
 		case 'herramientarecibido':
 			$data = json_decode($_POST['herramienta']);
-			herramienta_recibido($data, $conexion_usuarios);
+			herramienta_recibido($data, $conexion_usuarios, $idusuario);
 			break;
 
 		case 'herramientaquitarenviado':
 			$data = json_decode($_POST['herramienta']);
-			herramienta_quitar_enviado($data, $conexion_usuarios);
+			herramienta_quitar_enviado($data, $conexion_usuarios, $idusuario);
 			break;
 
 		case 'herramientaquitarrecibido':
 			$data = json_decode($_POST['herramienta']);
-			herramienta_quitar_recibido($data, $conexion_usuarios);
+			herramienta_quitar_recibido($data, $conexion_usuarios, $idusuario);
 			break;
 
 		case 'splitsinrecibido':
 			$cantidadsplit = $_POST['cantidadsplit'];
 			$idherramienta = $_POST['idherramienta'];
-			split_sin_recibido($idherramienta, $cantidadsplit, $conexion_usuarios);
+			split_sin_recibido($idherramienta, $cantidadsplit, $conexion_usuarios, $idusuario);
 			break;
 
 		case 'agregarcosto':
 			$factor = $_POST['factor'];
 			$idproveedor = $_POST['idproveedor'];
-			agregar_costo($factor, $idproveedor, $conexion_usuarios);
+			agregar_costo($factor, $idproveedor, $conexion_usuarios, $idusuario);
 			break;
 
 		case 'editarcosto':
 			$idfactor = $_POST['idfactor'];
 			$factor = $_POST['factor'];
-			editar_costo($idfactor, $factor, $conexion_usuarios);
+			editar_costo($idfactor, $factor, $conexion_usuarios, $idusuario);
 			break;
 
 		case 'eliminarcosto':
 			$idcosto = $_POST['id'];
-			eliminar_costo($idcosto, $conexion_usuarios);
+			eliminar_costo($idcosto, $conexion_usuarios, $idusuario);
 			break;
 	}
 
-	function agregar_costo($factor, $idproveedor, $conexion_usuarios){
+	function agregar_costo($factor, $idproveedor, $conexion_usuarios, $idusuario){
 		$query = "INSERT INTO factorescosto (proveedor, factor_proveedor) VALUES ('$idproveedor', '$factor')";
 		$resultado = mysqli_query($conexion_usuarios, $query);
+
+		$query = "SELECT nombreEmpresa FROM contactos WHERE id = '$idproveedor'";
+		$resultado = mysqli_query($conexion_usuarios, $query);
+		$data = mysqli_fetch_assoc($resultado);
+		$proveedor = $data['nombreEmpresa'];
 
 		if (!$resultado) {
 			$informacion["respuesta"] = "ERROR";
 			$informacion["informacion"] = "Ocurrió un problema al agregar el factor.";
 		}else{
+			$descripcionmovimiento = "Se agrego el factor de costo de ".$factor." al proveedor ".$proveedor;
+			$fechamovimiento = date("Y-m-d H:i:s");
+			$querymovimiento = "INSERT INTO movimientosusuarios (idusuario, tipomovimiento, documento, descripcion, fechahora) VALUES ('$idusuario', 'R', 'contactos', '$descripcionmovimiento', '$fechamovimiento')";
+			$resultadomovimiento = mysqli_query($conexion_usuarios, $querymovimiento);
+
 			$informacion["respuesta"] = "BIEN";
 			$informacion["informacion"] = "El factor se agregó correctamente.";
 		}
@@ -151,7 +161,12 @@
 		mysqli_close($conexion_usuarios);
 	}
 
-	function editar_costo($idfactor, $factor, $conexion_usuarios){
+	function editar_costo($idfactor, $factor, $conexion_usuarios, $idusuario){
+		$query = "SELECT factorescosto.proveedor, contactos.nombreEmpresa FROM factorescosto INNER JOIN contactos ON contactos.id = factorescosto.proveedor WHERE factorescosto.id = '$idfactor'";
+		$resultado = mysqli_query($conexion_usuarios, $query);
+		$data = mysqli_fetch_assoc($resultado);
+		$proveedor = $data['nombreEmpresa'];
+
 		$query = "UPDATE factorescosto SET factor_proveedor='$factor' WHERE id = '$idfactor'";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 
@@ -159,6 +174,11 @@
 			$informacion["respuesta"] = "ERROR";
 			$informacion["informacion"] = "Ocurrió un problema al editar el factor.";
 		}else{
+			$descripcionmovimiento = "Se modifico el factor de costo a ".$factor." del proveedor ".$proveedor;
+			$fechamovimiento = date("Y-m-d H:i:s");
+			$querymovimiento = "INSERT INTO movimientosusuarios (idusuario, tipomovimiento, documento, descripcion, fechahora) VALUES ('$idusuario', 'M', 'contactos', '$descripcionmovimiento', '$fechamovimiento')";
+			$resultadomovimiento = mysqli_query($conexion_usuarios, $querymovimiento);
+
 			$informacion["respuesta"] = "BIEN";
 			$informacion["informacion"] = "El factor se modificó correctamente.";
 		}
@@ -166,7 +186,13 @@
 		mysqli_close($conexion_usuarios);
 	}
 
-	function eliminar_costo($idcosto, $conexion_usuarios){
+	function eliminar_costo($idcosto, $conexion_usuarios, $idusuario){
+		$query = "SELECT factorescosto.proveedor, factorescosto.factor_proveedor, contactos.nombreEmpresa FROM factorescosto INNER JOIN contactos ON contactos.id = factorescosto.proveedor WHERE factorescosto.id = '$idcosto'";
+		$resultado = mysqli_query($conexion_usuarios, $query);
+		$data = mysqli_fetch_assoc($resultado);
+		$proveedor = $data['nombreEmpresa'];
+		$factor = $data['factor_proveedor'];
+
 		$query = "DELETE FROM factorescosto WHERE id = $idcosto";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 
@@ -174,6 +200,11 @@
 			$informacion["respuesta"] = "ERROR";
 			$informacion["informacion"] = "Ocurrió un problema al eliminar el factor.";
 		}else{
+			$descripcionmovimiento = "Se elimino el factor de costo ".$factor." del proveedor ".$proveedor;
+			$fechamovimiento = date("Y-m-d H:i:s");
+			$querymovimiento = "INSERT INTO movimientosusuarios (idusuario, tipomovimiento, documento, descripcion, fechahora) VALUES ('$idusuario', 'E', 'contactos', '$descripcionmovimiento', '$fechamovimiento')";
+			$resultadomovimiento = mysqli_query($conexion_usuarios, $querymovimiento);
+
 			$informacion["respuesta"] = "BIEN";
 			$informacion["informacion"] = "El factor se eliminó correctamente.";
 		}
@@ -181,7 +212,7 @@
 		mysqli_close($conexion_usuarios);
 	}
 
-	function split_sin_recibido($idherramienta, $cantidadsplit, $conexion_usuarios){
+	function split_sin_recibido($idherramienta, $cantidadsplit, $conexion_usuarios, $idusuario){
 		$query = "SELECT * FROM cotizacionherramientas WHERE id ='$idherramienta'";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 
@@ -201,6 +232,7 @@
 			$pedidoFecha = $data['pedidoFecha'];
 			$noDePedido = $data['noDePedido'];
 			$proveedor = $data['Proveedor'];
+			$nombreProveedor = $data['Proveedor'];
 			$proveedorFecha = $data['proveedorFecha'];
 			$iva = $data['IVA'];
 			$moneda = $data['moneda'];
@@ -286,6 +318,11 @@
 							$informacion["respuesta"] = "ERROR";
 							$informacion["informacion"] = "Ocurrió un problema al intentar aplicar el split 5 a la partida!";
 						}else{
+							$descripcionmovimiento = "Se aplico un split de ".$cantidadsplit." - ".$split." a la herramienta ".$modelo." del proveedor ".$nombreProveedor;
+							$fechamovimiento = date("Y-m-d H:i:s");
+							$querymovimiento = "INSERT INTO movimientosusuarios (idusuario, tipomovimiento, documento, descripcion, fechahora) VALUES ('$idusuario', 'M', 'contactos', '$descripcionmovimiento', '$fechamovimiento')";
+							$resultadomovimiento = mysqli_query($conexion_usuarios, $querymovimiento);
+
 							$informacion["respuesta"] = "BIEN";
 							$informacion["informacion"] = "El split se aplicó correctamente a la partida!";
 						}
@@ -298,8 +335,9 @@
 		mysqli_close($conexion_usuarios);
 	}
 
-	function herramienta_enviado($data, $conexion_usuarios){
+	function herramienta_enviado($data, $conexion_usuarios, $idusuario){
 		$fecha = date("Y-m-d");
+		$modelos = "";
 		foreach ($data as &$valor) {
 			$id = $valor;
 
@@ -308,12 +346,25 @@
 
 			$query = "UPDATE utilidad_pedido SET fecha_enviado = '$fecha' WHERE id_cotizacion_herramientas = '$id'";
 			$resultado = mysqli_query($conexion_usuarios, $query);
+
+			$query = "SELECT * FROM cotizacionherramientas WHERE id = '$id'";
+			$resultado = mysqli_query($conexion_usuarios, $query);
+			$data2 = mysqli_fetch_assoc($resultado);
+			$modelo = $data2['modelo'];
+			$proveedor = $data2['Proveedor'];
+
+			$modelos = $modelo.", ".$modelos;
 		}
 
 		if (!$resultado) {
 			$informacion["respuesta"] = "ERROR";
 			$informacion["informacion"] = "Ocurrió un problema al intentar modificar el estado de la(s) partida(s)!";
 		}else{
+			$descripcionmovimiento = "Se cambio el estado a Enviado a la herramienta ".$modelos." del proveedor ".$proveedor;
+			$fechamovimiento = date("Y-m-d H:i:s");
+			$querymovimiento = "INSERT INTO movimientosusuarios (idusuario, tipomovimiento, documento, descripcion, fechahora) VALUES ('$idusuario', 'M', 'contactos', '$descripcionmovimiento', '$fechamovimiento')";
+			$resultadomovimiento = mysqli_query($conexion_usuarios, $querymovimiento);
+
 			$informacion["respuesta"] = "BIEN";
 			$informacion["informacion"] = "El estado de la(s) partida(s) se cambio a 'Enviado' correctamente!";
 		}
@@ -321,8 +372,9 @@
 		mysqli_close($conexion_usuarios);
 	}
 
-	function herramienta_recibido($data, $conexion_usuarios){
+	function herramienta_recibido($data, $conexion_usuarios, $idusuario){
 		$fecha = date("Y-m-d");
+		$modelos = "";
 		foreach ($data as &$valor) {
 			$id = $valor;
 
@@ -350,12 +402,25 @@
 
 			$query = "UPDATE productos SET enReserva = '$cantidadstock' WHERE marca = '$marca' AND ref = '$modelo'";
 			$resultado = mysqli_query($conexion_usuarios, $query);
+
+			$query = "SELECT * FROM cotizacionherramientas WHERE id = '$id'";
+			$resultado = mysqli_query($conexion_usuarios, $query);
+			$data2 = mysqli_fetch_assoc($resultado);
+			$modelo = $data2['modelo'];
+			$proveedor = $data2['Proveedor'];
+
+			$modelos = $modelo.", ".$modelos;
 		}
 
 		if (!$resultado) {
 			$informacion["respuesta"] = "ERROR";
 			$informacion["informacion"] = "Ocurrió un problema al intentar modificar el estado de la(s) partida(s)!";
 		}else{
+			$descripcionmovimiento = "Se cambio el estado a Recibido a la herramienta ".$modelos." del proveedor ".$proveedor;
+			$fechamovimiento = date("Y-m-d H:i:s");
+			$querymovimiento = "INSERT INTO movimientosusuarios (idusuario, tipomovimiento, documento, descripcion, fechahora) VALUES ('$idusuario', 'M', 'contactos', '$descripcionmovimiento', '$fechamovimiento')";
+			$resultadomovimiento = mysqli_query($conexion_usuarios, $querymovimiento);
+
 			$informacion["respuesta"] = "BIEN";
 			$informacion["informacion"] = "El estado de la(s) partida(s) se cambio a 'Recibido' y se aumento el stock correctamente!";
 		}
@@ -363,8 +428,9 @@
 		mysqli_close($conexion_usuarios);
 	}
 
-	function herramienta_quitar_enviado($data, $conexion_usuarios){
+	function herramienta_quitar_enviado($data, $conexion_usuarios, $idusuario){
 		$fecha = date("Y-m-d");
+		$modelos = "";
 		foreach ($data as &$valor) {
 			$id = $valor;
 			$query = "UPDATE cotizacionherramientas SET enviadoFecha = '0000-00-00' WHERE id = '$id'";
@@ -372,12 +438,25 @@
 
 			$query = "UPDATE utilidad_pedido SET fecha_enviado = '0000-00-00' WHERE id_cotizacion_herramientas = '$id'";
 			$resultado = mysqli_query($conexion_usuarios, $query);
+
+			$query = "SELECT * FROM cotizacionherramientas WHERE id = '$id'";
+			$resultado = mysqli_query($conexion_usuarios, $query);
+			$data2 = mysqli_fetch_assoc($resultado);
+			$modelo = $data2['modelo'];
+			$proveedor = $data2['Proveedor'];
+
+			$modelos = $modelo.", ".$modelos;
 		}
 
 		if (!$resultado) {
 			$informacion["respuesta"] = "ERROR";
 			$informacion["informacion"] = "Ocurrió un problema al intentar modificar el estado de la(s) partida(s)!";
 		}else{
+			$descripcionmovimiento = "Se quito el estado de Enviado a la herramienta ".$modelos." del proveedor ".$proveedor;
+			$fechamovimiento = date("Y-m-d H:i:s");
+			$querymovimiento = "INSERT INTO movimientosusuarios (idusuario, tipomovimiento, documento, descripcion, fechahora) VALUES ('$idusuario', 'E', 'contactos', '$descripcionmovimiento', '$fechamovimiento')";
+			$resultadomovimiento = mysqli_query($conexion_usuarios, $querymovimiento);
+
 			$informacion["respuesta"] = "BIEN";
 			$informacion["informacion"] = "El estado de la(s) partida(s) se cambio a 'Sin Enviar' correctamente!";
 		}
@@ -385,8 +464,9 @@
 		mysqli_close($conexion_usuarios);
 	}
 
-	function herramienta_quitar_recibido($data,$conexion_usuarios){
+	function herramienta_quitar_recibido($data,$conexion_usuarios, $idusuario){
 		$fecha = date("Y-m-d");
+		$modelos = "";
 		foreach ($data as &$valor) {
 			$id = $valor;
 
@@ -414,12 +494,25 @@
 
 			$query = "UPDATE productos SET enReserva = '$cantidadstock' WHERE marca = '$marca' AND ref = '$modelo'";
 			$resultado = mysqli_query($conexion_usuarios, $query);
+
+			$query = "SELECT * FROM cotizacionherramientas WHERE id = '$id'";
+			$resultado = mysqli_query($conexion_usuarios, $query);
+			$data2 = mysqli_fetch_assoc($resultado);
+			$modelo = $data2['modelo'];
+			$proveedor = $data2['Proveedor'];
+
+			$modelos = $modelo.", ".$modelos;
 		}
 
 		if (!$resultado) {
 			$informacion["respuesta"] = "ERROR";
 			$informacion["informacion"] = "Ocurrió un problema al intentar modificar el estado de la(s) partida(s)!";
 		}else{
+			$descripcionmovimiento = "Se quito el estado de Recibido a la herramienta ".$modelos." del proveedor ".$proveedor;
+			$fechamovimiento = date("Y-m-d H:i:s");
+			$querymovimiento = "INSERT INTO movimientosusuarios (idusuario, tipomovimiento, documento, descripcion, fechahora) VALUES ('$idusuario', 'E', 'contactos', '$descripcionmovimiento', '$fechamovimiento')";
+			$resultadomovimiento = mysqli_query($conexion_usuarios, $querymovimiento);
+
 			$informacion["respuesta"] = "BIEN";
 			$informacion["informacion"] = "El estado de la(s) partida(s) se cambio a 'Sin Recibido' y se quitó de el stock correctamente!";
 		}
@@ -434,7 +527,7 @@
 		return $existeproveedor;
 	}
 
-	function agregar_proveedor($nombreEmpresa, $alias, $rfc, $moneda, $calle, $numExterior, $numInterior, $colonia, $cp, $ciudad, $estado, $pais, $tlf1, $tlf2, $paginaWeb, $correoElectronico, $conexion_usuarios){
+	function agregar_proveedor($nombreEmpresa, $alias, $rfc, $moneda, $calle, $numExterior, $numInterior, $colonia, $cp, $ciudad, $estado, $pais, $tlf1, $tlf2, $paginaWeb, $correoElectronico, $conexion_usuarios, $idusuario){
 		$query = "INSERT INTO contactos (nombreEmpresa, alias, calle, NumInt, NumExt, ciudad, estado, cp, pais, tlf1, tlf2, correoElectronico, paginaWeb, RFC, colonia, tipo, moneda) VALUES ('$nombreEmpresa', '$alias', '$calle', '$numInterior', '$numExterior', '$ciudad', '$estado', '$cp', '$pais', '$tlf1', '$tlf2', '$correoElectronico', '$paginaWeb', '$rfc', '$colonia', 'Proveedor', '$moneda')";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 		if (!$resultado) {
@@ -443,12 +536,17 @@
 		}else{
 			$informacion["respuesta"] = "BIEN";
 			$informacion["informacion"] = "La información del proveedor '".$nombreEmpresa."' se guardó correctamente!";
+
+			$descripcionmovimiento = "Se registro el proveedor ".$nombreEmpresa;
+			$fechamovimiento = date("Y-m-d H:i:s");
+			$querymovimiento = "INSERT INTO movimientosusuarios (idusuario, tipomovimiento, documento, descripcion, fechahora) VALUES ('$idusuario', 'R', 'contactos', '$descripcionmovimiento', '$fechamovimiento')";
+			$resultadomovimiento = mysqli_query($conexion_usuarios, $querymovimiento);
 		}
 		echo json_encode($informacion);
 		mysqli_close($conexion_usuarios);
 	}
 
-	function eliminarproveedor($idproveedor, $conexion_usuarios){
+	function eliminarproveedor($idproveedor, $conexion_usuarios, $idusuario){
 		$query = "SELECT * FROM contactos WHERE id = '$idproveedor'";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 		while($data = mysqli_fetch_assoc($resultado)){
@@ -461,6 +559,11 @@
 			$informacion["respuesta"] = "ERROR";
 			$informacion["informacion"] = "Ocurrió un problema al eliminar el proveedor '".$nombreEmpresa."'!";
 		}else{
+			$descripcionmovimiento = "Se elimino el proveedor ".$nombreEmpresa;
+			$fechamovimiento = date("Y-m-d H:i:s");
+			$querymovimiento = "INSERT INTO movimientosusuarios (idusuario, tipomovimiento, documento, descripcion, fechahora) VALUES ('$idusuario', 'E', 'contactos', '$descripcionmovimiento', '$fechamovimiento')";
+			$resultadomovimiento = mysqli_query($conexion_usuarios, $querymovimiento);
+
 			$informacion["respuesta"] = "BIEN";
 			$informacion["informacion"] = "Se eliminó el proveedor '".$nombreEmpresa."' correctamente!";
 		}
@@ -468,16 +571,30 @@
 		mysqli_close($conexion_usuarios);
 	}
 
-	function quitarproveedor($id, $data, $conexion_usuarios){
+	function quitarproveedor($id, $data, $conexion_usuarios, $idusuario){
+		$modelos = "";
 		foreach ($data as &$id) {
+			$query = "SELECT * FROM cotizacionherramientas WHERE id = '$id'";
+			$resultado = mysqli_query($conexion_usuarios, $query);
+			$data2 = mysqli_fetch_assoc($resultado);
+			$modelo = $data2['modelo'];
+			$modelos = $modelo.", ".$modelos;
+			$proveedor = $data2['Proveedor'];
+
 			$query = "UPDATE cotizacionherramientas SET Proveedor = 'None' WHERE id='$id'";
 			$resultado = mysqli_query($conexion_usuarios, $query);
+
 		}
 
 		if (!$resultado) {
 			$informacion["respuesta"] = "ERROR";
 			$informacion["informacion"] = "Ocurrió un problema al intentar quitar la herramienta del proveedor!";
 		}else{
+			$descripcionmovimiento = "Se quito el proveedor ".$proveedor." de la herramienta ".$modelos;
+			$fechamovimiento = date("Y-m-d H:i:s");
+			$querymovimiento = "INSERT INTO movimientosusuarios (idusuario, tipomovimiento, documento, descripcion, fechahora) VALUES ('$idusuario', 'E', 'contactos/ordenesdecompras', '$descripcionmovimiento', '$fechamovimiento')";
+			$resultadomovimiento = mysqli_query($conexion_usuarios, $querymovimiento);
+
 			$informacion["respuesta"] = "BIEN";
 			$informacion["informacion"] = "La herramienta se quitó correctamente!";
 		}
@@ -485,7 +602,7 @@
 		mysqli_close($conexion_usuarios);
 	}
 
-	function crearordencompra($idproveedor, $saludo, $iddireccionenvio, $idusario, $conexion_usuarios){
+	function crearordencompra($idproveedor, $saludo, $iddireccionenvio, $conexion_usuarios, $idusuario){
 		$query = "SELECT nombreEmpresa, moneda FROM contactos WHERE id = '$idproveedor'";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 		while($data = mysqli_fetch_assoc($resultado)){
@@ -524,6 +641,11 @@
 				if(!$resultado){
 					verificar_resultado($resultado);
 				}else{
+					$descripcionmovimiento = "Se genero la orden de compra ".$numeroOC." del proveedor ".$proveedor;
+					$fechamovimiento = date("Y-m-d H:i:s");
+					$querymovimiento = "INSERT INTO movimientosusuarios (idusuario, tipomovimiento, documento, descripcion, fechahora) VALUES ('$idusuario', 'R', 'contactos/ordenesdecompras', '$descripcionmovimiento', '$fechamovimiento')";
+					$resultadomovimiento = mysqli_query($conexion_usuarios, $querymovimiento);
+
 					$query = "SELECT * FROM cotizacionherramientas WHERE noDePedido = '$numeroOC'";
 					$resultado = mysqli_query($conexion_usuarios, $query);
 					while($data = mysqli_fetch_assoc($resultado)){
@@ -630,13 +752,18 @@
    	mysqli_close($conexion_usuarios);
 	}
 
-	function editar_informacion($idcontacto, $empresa, $alias, $rfc, $contacto, $calle, $noexterior, $nointerior, $colonia, $ciudad, $estado, $cp, $pais, $tlf1, $tlf2, $movil, $correofac1, $correofac2, $correo, $paginaweb, $credito, $contactohemusa, $moneda, $formapago, $metodopago, $cfdi, $conexion_usuarios){
+	function editar_informacion($idcontacto, $empresa, $alias, $rfc, $contacto, $calle, $noexterior, $nointerior, $colonia, $ciudad, $estado, $cp, $pais, $tlf1, $tlf2, $movil, $correofac1, $correofac2, $correo, $paginaweb, $credito, $contactohemusa, $moneda, $formapago, $metodopago, $cfdi, $conexion_usuarios, $idusuario){
 		$query = "UPDATE contactos SET nombreEmpresa = '$empresa', alias = '$alias', RFC = '$rfc', personaContacto = '$contacto', calle = '$calle', NumExt ='$noexterior', NumInt = '$nointerior', colonia = '$colonia', ciudad = '$ciudad', estado = '$estado', cp ='$cp', pais = '$pais', tlf1 ='$tlf1', tlf2 = '$tlf2', movil = '$movil', correoFacturacion1 = '$correofac1', correoFacturacion2 = '$correofac2', correoElectronico ='$correo',  paginaWeb = '$paginaweb', CondPago = '$credito', responsable = '$contactohemusa', moneda = '$moneda', IdFormaPago = '$formapago', IdMetodoPago = '$metodopago', IdUsoCFDI = '$cfdi' WHERE id = '$idcontacto'";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 		if (!$resultado) {
 			$informacion["respuesta"] = "ERROR";
 			$informacion["informacion"] = "Ocurrió un problema al intentar modificar la información del proveedor!";
 		}else{
+			$descripcionmovimiento = "Se modifico la informacion del proveedor ".$empresa;
+			$fechamovimiento = date("Y-m-d H:i:s");
+			$querymovimiento = "INSERT INTO movimientosusuarios (idusuario, tipomovimiento, documento, descripcion, fechahora) VALUES ('$idusuario', 'M', 'contactos', '$descripcionmovimiento', '$fechamovimiento')";
+			$resultadomovimiento = mysqli_query($conexion_usuarios, $querymovimiento);
+
 			$informacion["respuesta"] = "BIEN";
 			$informacion["informacion"] = "La información del proveedor se modificó correctamente!";
 		}

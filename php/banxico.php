@@ -21,7 +21,7 @@ if(!empty($resultado))
    if($xmlDatos->length>1)
    {
        $item = $xmlDatos->item(1);
-       // $fecha_tc = ffecha($item->getAttribute('TIME_PERIOD'));
+       $fecha_tc = ffecha($item->getAttribute('TIME_PERIOD'));
        $tc = $item->getAttribute('OBS_VALUE');
    }
 }

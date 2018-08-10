@@ -25,11 +25,11 @@
       	<div class="row full-calendar">
         	<div class="col-lg-12">
             <div class="row justify-content-center">
-              <div class="btn-space" style="font-size: 25px">
+              <div class="btn-space" style="font-size: 25px; margin-top: 7px;">
                 Tipo de Cambio: $
               </div>
               <div class="">
-                <label id="tipoCambio" style="font-size: 25px"></label>
+                <label id="tipoCambio" style="font-size: 25px; margin-top: 7px;"></label>
               </div>
             </div>
         		<div class="card card-fullcalendar">

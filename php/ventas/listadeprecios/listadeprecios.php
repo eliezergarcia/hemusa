@@ -36,7 +36,7 @@
 																			<form>
 						                            <div class="row align-items-end">
 						                              <div class="col-6">
-																						<label class="control-label">Palabra:</label>
+																						<label class="control-label">Modelo/Palabra:</label>
 																						<input id="palabraBusca" name="palabraBusca" type="text" class="form-control form-control-sm"  autofocus required>
 						                              </div>
 						                              <div class="col-4">

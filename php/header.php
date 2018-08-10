@@ -434,7 +434,7 @@ if ($tipomenu != 4){
         </div>
       </nav>
       <nav class="navbar navbar-expand-lg be-sub-header row justify-content-center">
-        <div class="col-8" style="padding: 10px 20px 0;">
+        <div class="col-8" style="padding: 10px 50px 0;">
           <!--+mega-menu('dashboard1','home')-->
                 <!-- Mega Menu structure-->
                 <nav class="navbar navbar-expand-md">
@@ -522,6 +522,8 @@ if ($tipomenu != 4){
 													<li class="nav-item"><a id="kardex-menu" class="nav-link" href="<?php echo $ruta; ?>php/administracion/kardex/kardex.php"><i class="fas fa-list-alt"></i> Kárdex</a>
 													</li>
 													<li class="nav-item"><a id="subirlista-menu" class="nav-link" href="<?php echo $ruta; ?>php/administracion/marcas/subirlista.php"><i class="fas fa-th-list"></i> Subir lista de precios</a>
+													</li>
+													<li class="nav-item"><a id="timeline-menu" class="nav-link" href="<?php echo $ruta; ?>php/administracion/timeline/timeline.php"><i class="icon fas fa-clock"></i>Timeline</a>
 													</li>
 													<li class="nav-item"><a id="query-menu" class="nav-link" href="<?php echo $ruta; ?>php/administracion/query/query.php">Query</a>
 													</li>

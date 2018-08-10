@@ -1,7 +1,6 @@
 <?php
 	include('../../conexion.php');
-	// error_reporting(0
-
+	include('../../sesion.php');
 
 	$opcion = $_POST['opcion'];
 
@@ -10,13 +9,13 @@
 			$cantidad = $_POST['cantidad'];
 			$idherramienta = $_POST['idherramienta'];
 			$cantduplicar = $_POST['cantduplicar'];
-			duplicar($idherramienta, $cantduplicar, $cantidad, $conexion_usuarios);
+			duplicar($idherramienta, $cantduplicar, $cantidad, $conexion_usuarios, $idusuario);
 			break;
 
 		case 'flete':
 			$flete = $_POST['flete'];
 			$ordencompra = $_POST['ordencompra'];
-			flete($flete, $ordencompra, $conexion_usuarios);
+			flete($flete, $ordencompra, $conexion_usuarios, $idusuario);
 			break;
 
 		case 'actualizar':
@@ -26,7 +25,7 @@
 			$facturaproveedor = $_POST['facturaproveedor'];
 			$entrada = $_POST['entrada'];
 			$datapartidas = json_decode($_POST['herramienta']);
-			actualizar($ordencompra, $pedimento, $folio, $facturaproveedor, $entrada, $datapartidas, $conexion_usuarios);
+			actualizar($ordencompra, $pedimento, $folio, $facturaproveedor, $entrada, $datapartidas, $conexion_usuarios, $idusuario);
 			break;
 
 		case 'editarpartidadescripcion':
@@ -36,30 +35,30 @@
 			$folio = $_POST['folio'];
 			$facturaproveedor = $_POST['facturaproveedor'];
 			$entrada = $_POST['entrada'];
-			editar_partida_descripcion($idpartida, $ordencompra, $pedimento, $folio, $facturaproveedor, $entrada, $conexion_usuarios);
+			editar_partida_descripcion($idpartida, $ordencompra, $pedimento, $folio, $facturaproveedor, $entrada, $conexion_usuarios, $idusuario);
 			break;
 
 		case 'editarpartida':
 			$idherramienta  = $_POST['idherramienta'];
 			$precioUnitario = $_POST['precioUnitario'];
 			$fechaCompromiso = $_POST['fechaCompromiso'];
-			editar_partida($idherramienta, $precioUnitario, $fechaCompromiso, $conexion_usuarios);
+			editar_partida($idherramienta, $precioUnitario, $fechaCompromiso, $conexion_usuarios, $idusuario);
 			break;
 
 		case 'cambiarMoneda':
 			$ordenCompra = $_POST['ordenCompra'];
-			cambiar_moneda($ordenCompra, $conexion_usuarios);
+			cambiar_moneda($ordenCompra, $conexion_usuarios, $idusuario, $idusuario);
 			break;
 
 		case 'crearordencompra':
 			$proveedor  = $_POST['proveedor'];
 			$saludo = $_POST['saludo'];
 			$direccionenvio = $_POST['direccionenvio'];
-			crear_orden_compra($proveedor, $saludo, $direccionenvio, $conexion_usuarios);
+			crear_orden_compra($proveedor, $saludo, $direccionenvio, $conexion_usuarios, $idusuario);
 			break;
 	}
 
-	function duplicar($idherramienta, $cantduplicar, $cantidad, $conexion_usuarios){
+	function duplicar($idherramienta, $cantduplicar, $cantidad, $conexion_usuarios, $idusuario){
 			$query = "SELECT * FROM utilidad_pedido WHERE id ='$idherramienta'";
 			$resultado = mysqli_query($conexion_usuarios, $query);
 
@@ -93,6 +92,11 @@
 				$informacion["respuesta"] = "ERROR";
 				$informacion["informacion"] = "Ocurrió un problema al intentar duplicar la herramienta para Almacen!";
 			}else{
+				$descripcionmovimiento = "Se aplico un dulicado de ".$cantidad." - ".$cantduplicar." a la herramienta ".$modelo." de la orden de compra ".$ordenCompra;
+				$fechamovimiento = date("Y-m-d H:i:s");
+				$querymovimiento = "INSERT INTO movimientosusuarios (idusuario, tipomovimiento, documento, descripcion, fechahora) VALUES ('$idusuario', 'M', 'ordenesdecompras', '$descripcionmovimiento', '$fechamovimiento')";
+				$resultadomovimiento = mysqli_query($conexion_usuarios, $querymovimiento);
+
 				$informacion["respuesta"] = "BIEN";
 				$informacion["informacion"] = "La herramienta se duplicó para 'Almacen' correctamente!";
 			}
@@ -101,7 +105,7 @@
 		mysqli_close($conexion_usuarios);
 	}
 
-	function cambiar_moneda($ordenCompra, $conexion_usuarios){
+	function cambiar_moneda($ordenCompra, $conexion_usuarios, $idusuario){
 		$query = "SELECT moneda FROM ordendecompras WHERE noDePedido = '$ordenCompra'";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 
@@ -129,6 +133,11 @@
 				$informacion["respuesta"] = "ERROR";
 				$informacion["informacion"] = "Ocurrió un problema al intentar modificar la información de la cotización!";
 			}else{
+				$descripcionmovimiento = "Se cambio la moneda de la orden de compra ".$ordenCompra." de ".$monedaorden." a ".$moneda;
+				$fechamovimiento = date("Y-m-d H:i:s");
+				$querymovimiento = "INSERT INTO movimientosusuarios (idusuario, tipomovimiento, documento, descripcion, fechahora) VALUES ('$idusuario', 'M', 'ordenesdecompras', '$descripcionmovimiento', '$fechamovimiento')";
+				$resultadomovimiento = mysqli_query($conexion_usuarios, $querymovimiento);
+
 				$informacion["respuesta"] = "BIEN";
 				$informacion["informacion"] = "La moneda se cambio y la información se modificó correctamente!";
 			}
@@ -137,7 +146,7 @@
     mysqli_close($conexion_usuarios);
 	}
 
-	function crear_orden_compra($proveedor, $saludo, $iddireccionenvio, $conexion_usuarios){
+	function crear_orden_compra($proveedor, $saludo, $iddireccionenvio, $conexion_usuarios, $idusuario){
 		$query = "SELECT id, moneda FROM contactos WHERE nombreEmpresa LIKE '%$proveedor%' LIMIT 1";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 		while($data = mysqli_fetch_assoc($resultado)){
@@ -177,6 +186,11 @@
 				if(!$resultado){
 					verificar_resultado($resultado);
 				}else{
+					$descripcionmovimiento = "Se creo la orden de compra ".$numeroOC." del proveedor ".$proveedor;
+					$fechamovimiento = date("Y-m-d H:i:s");
+					$querymovimiento = "INSERT INTO movimientosusuarios (idusuario, tipomovimiento, documento, descripcion, fechahora) VALUES ('$idusuario', 'R', 'ordenesdecompras', '$descripcionmovimiento', '$fechamovimiento')";
+					$resultadomovimiento = mysqli_query($conexion_usuarios, $querymovimiento);
+
 					$query = "SELECT * FROM cotizacionherramientas WHERE noDePedido = '$numeroOC'";
 					$resultado = mysqli_query($conexion_usuarios, $query);
 					while($data = mysqli_fetch_assoc($resultado)){
@@ -269,7 +283,7 @@
     mysqli_close($conexion_usuarios);
 	}
 
-	function flete($flete, $ordencompra, $conexion_usuarios){
+	function flete($flete, $ordencompra, $conexion_usuarios, $idusuario){
 		$query = "UPDATE ordendecompras SET flete = '$flete' WHERE noDePedido = '$ordencompra'";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 
@@ -277,6 +291,11 @@
 			$informacion["respuesta"] = "ERROR";
 			$informacion["informacion"] = "Ocurrió un problema al guardar la información del flete!";
 		}else{
+			$descripcionmovimiento = "Se agrego agrego un flete de ".$flete." a la orden de compra ".$ordencompra;
+			$fechamovimiento = date("Y-m-d H:i:s");
+			$querymovimiento = "INSERT INTO movimientosusuarios (idusuario, tipomovimiento, documento, descripcion, fechahora) VALUES ('$idusuario', 'R', 'ordenesdecompras', '$descripcionmovimiento', '$fechamovimiento')";
+			$resultadomovimiento = mysqli_query($conexion_usuarios, $querymovimiento);
+
 			$informacion["respuesta"] = "BIEN";
 			$informacion["informacion"] = "El flete se guardó correctamente!";
 		}
@@ -284,8 +303,9 @@
 		mysqli_close($conexion_usuarios);
 	}
 
-	function actualizar($ordencompra, $pedimento, $folio, $facturaproveedor, $entrada, $datapartidas, $conexion_usuarios){
+	function actualizar($ordencompra, $pedimento, $folio, $facturaproveedor, $entrada, $datapartidas, $conexion_usuarios, $idusuario){
 		$fecha = date("Y-m-d");
+		$modelos = "";
 		foreach ($datapartidas as &$valor) {
 			$id = $valor;
 			$query = "UPDATE cotizacionherramientas SET FechaPedimento = '$fecha', Pedimento = '$pedimento', foliopedimento = '$folio', facturaproveedor = '$facturaproveedor', entrada = '$entrada' WHERE id = '$id'";
@@ -293,12 +313,24 @@
 
 			$query = "UPDATE utilidad_pedido SET Pedimento = '$pedimento', folio = '$folio', factura_proveedor = '$facturaproveedor', entrada = '$entrada' WHERE id_cotizacion_herramientas = '$id'";
 			$resultado = mysqli_query($conexion_usuarios, $query);
+
+			$query = "SELECT * FROM utilidad_pedido WHERE id_cotizacion_herramientas = '$id'";
+			$resultado = mysqli_query($conexion_usuarios, $query);
+			$data2 = mysqli_fetch_assoc($resultado);
+			$modelo = $data2['modelo'];
+			$ordencompra = $data2['orden_compra'];
+			$modelos = $modelo.", ".$modelos;
 		}
 
 		if (!$resultado) {
 			$informacion["respuesta"] = "ERROR";
 			$informacion["informacion"] = "Ocurrió un problema al intentar guardar la información del pedido!";
 		}else{
+			$descripcionmovimiento = "Se modifico la informacion de las herramientas ".$modelos."de la orden de compra ".$ordencompra;
+			$fechamovimiento = date("Y-m-d H:i:s");
+			$querymovimiento = "INSERT INTO movimientosusuarios (idusuario, tipomovimiento, documento, descripcion, fechahora) VALUES ('$idusuario', 'M', 'ordenesdecompras', '$descripcionmovimiento', '$fechamovimiento')";
+			$resultadomovimiento = mysqli_query($conexion_usuarios, $querymovimiento);
+
 			$informacion["respuesta"] = "BIEN";
 			$informacion["informacion"] = "La información se guardó correctamente!";
 		}
@@ -306,11 +338,12 @@
 		mysqli_close($conexion_usuarios);
 	}
 
-	function editar_partida_descripcion($idpartida, $ordencompra, $pedimento, $folio, $facturaproveedor, $entrada, $conexion_usuarios){
+	function editar_partida_descripcion($idpartida, $ordencompra, $pedimento, $folio, $facturaproveedor, $entrada, $conexion_usuarios, $idusuario){
 		$query = "SELECT * FROM utilidad_pedido WHERE id ='$idpartida'";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 		while($data = mysqli_fetch_assoc($resultado)){
 			$idcotherramientas = $data['id_cotizacion_herramientas'];
+			$modelo = $data['modelo'];
 		}
 
 		$query = "UPDATE cotizacionherramientas SET FechaPedimento = '$fecha', Pedimento = '$pedimento', foliopedimento = '$folio', facturaproveedor = '$facturaproveedor', entrada = '$entrada' WHERE id = '$idcotherramientas'";
@@ -326,6 +359,11 @@
 			$informacion["respuesta"] = "ERROR";
 			$informacion["informacion"] = "Ocurrió un problema al intentar modificar la información de la partida!";
 		}else{
+			$descripcionmovimiento = "Se modifico la informacion de la herramienta ".$modelo." de la orden de compra ".$ordencompra;
+			$fechamovimiento = date("Y-m-d H:i:s");
+			$querymovimiento = "INSERT INTO movimientosusuarios (idusuario, tipomovimiento, documento, descripcion, fechahora) VALUES ('$idusuario', 'M', 'ordenesdecompras', '$descripcionmovimiento', '$fechamovimiento')";
+			$resultadomovimiento = mysqli_query($conexion_usuarios, $querymovimiento);
+
 			$informacion["respuesta"] = "BIEN";
 			$informacion["informacion"] = "la información de la partida se modificó correctamente!";
 		}
@@ -333,13 +371,15 @@
 		mysqli_close($conexion_usuarios);
 	}
 
-	function editar_partida($idherramienta, $precioUnitario, $fechaCompromiso, $conexion_usuarios){
+	function editar_partida($idherramienta, $precioUnitario, $fechaCompromiso, $conexion_usuarios, $idusuario){
 		$query = "SELECT * FROM utilidad_pedido WHERE id = '$idherramienta'";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 		while($data = mysqli_fetch_assoc($resultado)){
 			$moneda = $data['moneda_pedido'];
 			$id = $data['id_cotizacion_herramientas'];
 			$fecha = $data['fecha_orden_compra'];
+			$modelo = $data['modelo'];
+			$ordencompra = $data['orden_compra'];
 		}
 
 		$query = "SELECT * FROM tipocambio WHERE fecha = '$fecha'";
@@ -366,6 +406,11 @@
 			$informacion["respuesta"] = "ERROR";
 			$informacion["informacion"] = "Ocurrió un problema al modificar la información de la partida!";
 		}else{
+			$descripcionmovimiento = "Se modifico la informacion de la herramienta ".$modelo." de la orden de compra ".$ordencompra;
+			$fechamovimiento = date("Y-m-d H:i:s");
+			$querymovimiento = "INSERT INTO movimientosusuarios (idusuario, tipomovimiento, documento, descripcion, fechahora) VALUES ('$idusuario', 'M', 'ordenesdecompras', '$descripcionmovimiento', '$fechamovimiento')";
+			$resultadomovimiento = mysqli_query($conexion_usuarios, $querymovimiento);
+
 			$informacion["respuesta"] = "BIEN";
 			$informacion["informacion"] = "La información de la partida se modificó correctamente!";
 		}
