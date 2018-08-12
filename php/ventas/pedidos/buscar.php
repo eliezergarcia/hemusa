@@ -109,6 +109,17 @@
 					$tipoCambio = $data4['tipocambio'];
 				}
 
+				$query5 = "SELECT DISTINCT factura FROM cotizacionherramientas WHERE factura != 0 AND cotizacionRef = '$refCotizacion' AND numeroPedido = '$numeroPedido'";
+				$resultado5 = mysqli_query($conexion_usuarios, $query5);
+				if (mysqli_num_rows($resultado5) < 1) {
+					$facturas = "";
+				}else{
+					$facturas = "";
+					while($data5 = mysqli_fetch_assoc($resultado5)){
+						$facturas = $data5['factura'].", ".$facturas;
+					}
+				}
+
 				$informacion['refCotizacion'] = $data['cotizacionRef'];
 				$informacion['fecha'] = $data['fecha'];
 				$informacion['vendedor'] = $data['vendedor'];

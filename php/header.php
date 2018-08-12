@@ -34,10 +34,10 @@ if ($tipomenu != 4) {
 				</div>
 			</li>
 		</ul>
-		<!-- <ul class="nav navbar-nav float-right be-icons-nav">
+		<ul class="nav navbar-nav float-right be-icons-nav">
 		<li class="nav-item dropdown">
 		<a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle">
-		<span class="icon mdi mdi-notifications"></span>
+		<span class="icon fas fa-bell"></span>
 		<span class="indicator"></span>
 	</a>
 	<ul class="dropdown-menu be-notifications">
@@ -50,21 +50,21 @@ if ($tipomenu != 4) {
 	<li class="notification notification-unread"><a href="#">
 	<div class="image"><img src="<?php echo $ruta; ?>assets/img/avatar2.png" alt="Avatar"></div>
 	<div class="notification-info">
-	<div class="text"><span class="user-name">Jessica Caruso</span> accepted your invitation to join the team.</div><span class="date">2 min ago</span>
+	<div class="text"><span class="user-name">Jessica Caruso</span> acepto tu invitacion para unirse al equipo.</div><span class="date">Hace 2 minutos</span>
 </div></a></li>
 <li class="notification"><a href="#">
 <div class="image"><img src="<?php echo $ruta; ?>assets/img/avatar3.png" alt="Avatar"></div>
 <div class="notification-info">
-<div class="text"><span class="user-name">Joel King</span> is now following you</div><span class="date">2 days ago</span>
+<div class="text"><span class="user-name">Joel King</span> ahora esta siguiendo</div><span class="date">Hace 2 dias</span>
 </div></a></li>
 <li class="notification"><a href="#">
 <div class="image"><img src="<?php echo $ruta; ?>assets/img/avatar4.png" alt="Avatar"></div>
 <div class="notification-info">
-<div class="text"><span class="user-name">John Doe</span> is watching your main repository</div><span class="date">2 days ago</span>
+<div class="text"><span class="user-name">John Doe</span> esta viendo el repositorio principal</div><span class="date">Hace 2 dias</span>
 </div></a></li>
 <li class="notification"><a href="#">
 	<div class="image"><img src="<?php echo $ruta; ?>assets/img/avatar5.png" alt="Avatar"></div>
-	<div class="notification-info"><span class="text"><span class="user-name">Emily Carter</span> is now following you</span><span class="date">5 days ago</span></div></a></li>
+	<div class="notification-info"><span class="text"><span class="user-name">Emily Carter</span> ahora te esta siguiendo</span><span class="date">Hace 5 dias</span></div></a></li>
 </ul>
 </div>
 </div>
@@ -73,8 +73,8 @@ if ($tipomenu != 4) {
 </li>
 </ul>
 </li>
-<li class="nav-item dropdown"><a href="#" role="button" aria-expanded="false" class="nav-link be-toggle-right-sidebar"><span id='listar-contactos-chat' class="icon mdi mdi-comments"></span></a></li>
-<li class="nav-item dropdown"><a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle"><span class="icon mdi mdi-apps"></span></a>
+<li class="nav-item dropdown"><a href="#" role="button" aria-expanded="false" class="nav-link be-toggle-right-sidebar"><span id='listar-contactos-chat' class="icon fas fa-comments"></span></a></li>
+<!-- <li class="nav-item dropdown"><a href="#" data-toggle="dropdown" role="button" aria-expanded="false" class="nav-link dropdown-toggle"><span class="icon mdi mdi-apps"></span></a> -->
 	<ul class="dropdown-menu be-connections">
 		<li>
 			<div class="list">
@@ -95,7 +95,7 @@ if ($tipomenu != 4) {
 		</li>
 	</ul>
 </li>
-</ul> -->
+</ul>
 </div>
 </div>
 </nav>
@@ -144,9 +144,25 @@ if ($tipomenu != 4){
 						</li>
 						<li class="parent"><a href="#"><i class="icon far fa-credit-card"></i><span>Créditos y cobranza</span></a>
 							<ul class="sub-menu">
-								<li><a href="<?php echo $ruta; ?>php/cobranza/pagos/pagos.php"><i class="fab fa-cc-amazon-pay"></i> Pagos de cliente</a>
+								<li class="nav-item dropdown parent"><a id="pagoscliente-menu" class="nav-link" href="#" data-toggle="dropdown"><i class="fab fa-cc-amazon-pay"></i> Pagos de cliente</a>
+									<div class="dropdown-menu be-sub-nav" role="menu">
+										<a class="dropdown-item" href="<?php echo $ruta; ?>php/cobranza/pagoscliente/pagospendientes.php">Pagos pendientes</a>
+										<a class="dropdown-item" href="<?php echo $ruta; ?>php/cobranza/pagoscliente/consultarpagados.php">Consultar pagados</a>
+										<a class="dropdown-item" href="<?php echo $ruta; ?>php/cobranza/pagoscliente/informacionfactura.php">Información de factura</a>
+										<a class="dropdown-item" href="<?php echo $ruta; ?>php/cobranza/pagoscliente/notacredito.php">Nota de crédito</a>
+									</div>
 								</li>
-								<li><a href="<?php echo $ruta; ?>php/cobranza/pagos/pagosproveedor.php"><i class="fab fa-cc-amazon-pay"></i> Pagos de proveedor</a>
+								<li class="nav-item  dropdown parent"><a id="pagosproveedor-menu" class="nav-link" href="#" data-toggle="dropdown"><i class="fab fa-cc-amazon-pay"></i> Pagos a proveedor</a>
+									<div class="dropdown-menu be-sub-nav" role="menu">
+										<a class="dropdown-item" href="<?php echo $ruta; ?>php/cobranza/pagosproveedor/pagospendientes.php">Pagos pendientes</a>
+										<a class="dropdown-item" href="<?php echo $ruta; ?>php/cobranza/pagosproveedor/consultarpagados.php">Consultar pagados</a>
+									</div>
+								</li>
+								<li class="nav-item dropdown parent"><a id="reportes-menu" class="nav-link" href="" data-toggle="dropdown"><i class="fas fa-clipboard-list"></i> Reportes</a>
+									<div class="dropdown-menu be-sub-nav" role="menu">
+										<a class="dropdown-item" href="<?php echo $ruta; ?>php/administracion/reportes/reporteventas.php">Reporte de ventas</a>
+										<a class="dropdown-item" href="<?php echo $ruta; ?>php/administracion/reportes/reportecobranza.php">Reporte de cobranza</a>
+									</div>
 								</li>
 							</ul>
 						</li>
@@ -167,6 +183,20 @@ if ($tipomenu != 4){
 								<li><a href="<?php echo $ruta; ?>php/administracion/marcas/marcas.php"><i class="fas fa-wrench"></i> Marcas</a>
 								</li>
 								<li><a href="<?php echo $ruta; ?>php/administracion/marcas/subirlista.php"><i class="fas fa-th-list"></i> Subir lista de precios</a>
+								</li>
+								<li class="nav-item"><a id="kardex-menu" class="nav-link" href="<?php echo $ruta; ?>php/administracion/kardex/kardex.php"><i class="fas fa-list-alt"></i> Kárdex</a>
+								</li>
+								<li class="nav-item"><a id="subirlista-menu" class="nav-link" href="<?php echo $ruta; ?>php/administracion/marcas/subirlista.php"><i class="fas fa-th-list"></i> Subir lista de precios</a>
+								</li>
+								<li class="nav-item"><a id="timeline-menu" class="nav-link" href="<?php echo $ruta; ?>php/administracion/timeline/timeline.php"><i class="icon fas fa-clock"></i>Timeline</a>
+								</li>
+								<li class="nav-item dropdown parent"><a id="reportes-menu" class="nav-link" href="" data-toggle="dropdown"><i class="fas fa-clipboard-list"></i> Reportes</a>
+									<div class="dropdown-menu be-sub-nav" role="menu">
+										<a class="dropdown-item" href="<?php echo $ruta; ?>php/administracion/reportes/reporteventas.php">Reporte de ventas</a>
+										<a class="dropdown-item" href="<?php echo $ruta; ?>php/administracion/reportes/reportecobranza.php">Reporte de cobranza</a>
+										<a class="dropdown-item" href="<?php echo $ruta; ?>php/administracion/reportes/reportebancos.php">Reporte de bancos</a>
+										<a class="dropdown-item" href="<?php echo $ruta; ?>php/administracion/reportes/reportecomisiones.php">Reporte de comisiones</a>
+									</div>
 								</li>
 							</ul>
 						</li>
@@ -372,43 +402,45 @@ if ($tipomenu != 4){
 								</div>
 							</li>
 						</ul>
-            <!-- <ul class="nav navbar-nav float-right be-icons-nav">
-              <li class="nav-item dropdown"><a class="nav-link be-toggle-right-sidebar" href="#" role="button" aria-expanded="false"><span class="icon mdi mdi-settings"></span></a></li>
-              <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-expanded="false"><span class="icon mdi mdi-notifications"></span><span class="indicator"></span></a>
-                <ul class="dropdown-menu be-notifications">
-                  <li>
-                    <div class="title">Notifications<span class="badge badge-pill">3</span></div>
-                    <div class="list">
-                      <div class="be-scroller">
-                        <div class="content">
-                          <ul>
-                            <li class="notification notification-unread"><a href="#">
-                                <div class="image"><img src="assets/img/avatar2.png" alt="Avatar"></div>
-                                <div class="notification-info">
-                                  <div class="text"><span class="user-name">Jessica Caruso</span> accepted your invitation to join the team.</div><span class="date">2 min ago</span>
-                                </div></a></li>
-                            <li class="notification"><a href="#">
-                                <div class="image"><img src="assets/img/avatar3.png" alt="Avatar"></div>
-                                <div class="notification-info">
-                                  <div class="text"><span class="user-name">Joel King</span> is now following you</div><span class="date">2 days ago</span>
-                                </div></a></li>
-                            <li class="notification"><a href="#">
-                                <div class="image"><img src="assets/img/avatar4.png" alt="Avatar"></div>
-                                <div class="notification-info">
-                                  <div class="text"><span class="user-name">John Doe</span> is watching your main repository</div><span class="date">2 days ago</span>
-                                </div></a></li>
-                            <li class="notification"><a href="#">
-                                <div class="image"><img src="assets/img/avatar5.png" alt="Avatar"></div>
-                                <div class="notification-info"><span class="text"><span class="user-name">Emily Carter</span> is now following you</span><span class="date">5 days ago</span></div></a></li>
-                          </ul>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="footer"> <a href="#">View all notifications</a></div>
-                  </li>
-                </ul>
-              </li>
-              <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-expanded="false"><span class="icon mdi mdi-apps"></span></a>
+            <ul class="nav navbar-nav float-right be-icons-nav">
+							<li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-expanded="false">
+								<span class="icon fas fa-bell"></span>
+								<span class="indicator"></span></a>
+								<ul class="dropdown-menu be-notifications">
+									<li>
+										<div class="title">Notifications<span class="badge badge-pill">3</span></div>
+										<div class="list">
+											<div class="be-scroller">
+												<div class="content">
+													<ul>
+														<li class="notification notification-unread"><a href="#">
+															<div class="image"><img src="<?php echo $ruta; ?>assets/img/avatar2.png" alt="Avatar"></div>
+															<div class="notification-info">
+																<div class="text"><span class="user-name">Jessica Caruso</span> acepto tu invitacion para unirse al equipo.</div><span class="date">HACE 2 MINUTOS</span>
+															</div></a></li>
+															<li class="notification"><a href="#">
+																<div class="image"><img src="<?php echo $ruta; ?>assets/img/avatar3.png" alt="Avatar"></div>
+																<div class="notification-info">
+																	<div class="text"><span class="user-name">Joel King</span> ahora te esta siguiendo</div><span class="date">HACE 2 DIAS</span>
+																</div></a></li>
+																<li class="notification"><a href="#">
+																	<div class="image"><img src="<?php echo $ruta; ?>assets/img/avatar4.png" alt="Avatar"></div>
+																	<div class="notification-info">
+																		<div class="text"><span class="user-name">John Doe</span> esta viendo el repositorio principal</div><span class="date">HACE 2 DIAS</span>
+																	</div></a></li>
+																	<li class="notification"><a href="#">
+																		<div class="image"><img src="<?php echo $ruta; ?>assets/img/avatar5.png" alt="Avatar"></div>
+																		<div class="notification-info"><span class="text"><span class="user-name">Emily Carter</span> ahora te esta siguiendo</span><span class="date">HACE 5 DIAS</span></div></a></li>
+																	</ul>
+																</div>
+															</div>
+														</div>
+														<div class="footer"> <a href="#">Ver todas las notificaciones</a></div>
+													</li>
+												</ul>
+											</li>
+              <li class="nav-item dropdown"><a class="nav-link be-toggle-right-sidebar" href="#" role="button" aria-expanded="false"><span id='listar-contactos-chat' class="icon fas fa-comments"></span></a></li>
+              <!-- <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-expanded="false"><span class="icon mdi mdi-apps"></span></a> -->
                 <ul class="dropdown-menu be-connections">
                   <li>
                     <div class="list">
@@ -429,7 +461,7 @@ if ($tipomenu != 4){
                   </li>
                 </ul>
               </li>
-            </ul> -->
+            </ul>
           </div>
         </div>
       </nav>
@@ -525,8 +557,8 @@ if ($tipomenu != 4){
 													</li>
 													<li class="nav-item"><a id="timeline-menu" class="nav-link" href="<?php echo $ruta; ?>php/administracion/timeline/timeline.php"><i class="icon fas fa-clock"></i>Timeline</a>
 													</li>
-													<li class="nav-item"><a id="query-menu" class="nav-link" href="<?php echo $ruta; ?>php/administracion/query/query.php">Query</a>
-													</li>
+													<!-- <li class="nav-item"><a id="query-menu" class="nav-link" href="<?php echo $ruta; ?>php/administracion/query/query.php">Query</a>
+													</li> -->
 													<li class="nav-item dropdown parent"><a id="reportes-menu" class="nav-link" href="" data-toggle="dropdown"><i class="fas fa-clipboard-list"></i> Reportes</a>
 														<div class="dropdown-menu be-sub-nav" role="menu">
 			                        <a class="dropdown-item" href="<?php echo $ruta; ?>php/administracion/reportes/reporteventas.php">Reporte de ventas</a>

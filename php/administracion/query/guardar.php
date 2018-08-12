@@ -17,45 +17,45 @@
     case 'querypayments':
       // $json = $_POST['lista'];
       // $indice = $_POST['indice'];
-      // $facturas = json_decode($_POST['facturas']);
-      // query_payments($facturas, $conexion_usuarios);
-      query_payments($conexion_usuarios);
+      $facturas = json_decode($_POST['facturas']);
+      query_payments($facturas, $conexion_usuarios);
+      // query_payments($conexion_usuarios);
       break;
 	}
 
-  function query_payments($conexion_usuarios){
+  function query_payments($facturas, $conexion_usuarios){
 
-    // $length = count($facturas);
-    //
-    // for ($i=0; $i <=$length ; $i++) {
-    //   $fecha = $facturas[$i]->{'FechaTimbrado'};
-    //   $folio = $facturas[$i]->{'Folio'};
-    //   $ordenpedido = $facturas[$i]->{'NumOrder'};
-    //   $cliente = $facturas[$i]->{'RazonSocialReceptor'};
-    //   $status = $facturas[$i]->{'Status'};
-    //   $subtotal = $facturas[$i]->{'Subtotal'};
-    //   $total = $facturas[$i]->{'Total'};
-    //   $uid = $facturas[$i]->{'UID'};
-    //   $uuid = $facturas[$i]->{'UUID'};
-    //   $factura = str_replace("H ","",$folio);
-    //
-    //   $query = "SELECT amount FROM payments WHERE factura='$factura'";
-    //   $resultado = mysqli_query($conexion_usuarios, $query);
-    //   if (!$resultado || mysqli_num_rows($resultado)<1 || mysqli_num_rows($resultado)==null) {
-    //     $pagado = "0.00";
-    //   }else{
-    //     $data = mysqli_fetch_assoc($resultado);
-    //     $pagado = $data['amount'];
-    //   }
-    //
-    //   $query = "INSERT INTO facturas (folio, tipoDocumento, ordenpedido, subtotal, total, pagado, status, fecha, UID, UUID, cliente) VALUES ('$factura', 'factura', '$ordenpedido', '$subtotal', '$total', '$pagado', '$status', '$fecha', '$uid', '$uuid', '$cliente')";
-    //   $resultado = mysqli_query($conexion_usuarios, $query);
-    //
-    //   if (!$resultado || mysqli_num_rows($resultado)<1 || mysqli_num_rows($resultado)==null) {
-    //   }else{
-    //     echo json_encode($i);
-    //   }
-    // }
+    $length = count($facturas);
+
+    for ($i=0; $i <=$length ; $i++) {
+      $fecha = $facturas[$i]->{'FechaTimbrado'};
+      $folio = $facturas[$i]->{'Folio'};
+      $ordenpedido = $facturas[$i]->{'NumOrder'};
+      $cliente = $facturas[$i]->{'RazonSocialReceptor'};
+      $status = $facturas[$i]->{'Status'};
+      $subtotal = $facturas[$i]->{'Subtotal'};
+      $total = $facturas[$i]->{'Total'};
+      $uid = $facturas[$i]->{'UID'};
+      $uuid = $facturas[$i]->{'UUID'};
+      $factura = str_replace("H ","",$folio);
+
+      $query = "SELECT amount FROM payments WHERE factura='$factura'";
+      $resultado = mysqli_query($conexion_usuarios, $query);
+      if (!$resultado || mysqli_num_rows($resultado)<1 || mysqli_num_rows($resultado)==null) {
+        $pagado = "0.00";
+      }else{
+        $data = mysqli_fetch_assoc($resultado);
+        $pagado = $data['amount'];
+      }
+
+      $query = "INSERT INTO facturas (folio, tipoDocumento, ordenpedido, subtotal, total, pagado, status, fecha, UID, UUID, cliente) VALUES ('$factura', 'factura', '$ordenpedido', '$subtotal', '$total', '$pagado', '$status', '$fecha', '$uid', '$uuid', '$cliente')";
+      $resultado = mysqli_query($conexion_usuarios, $query);
+
+      if (!$resultado || mysqli_num_rows($resultado)<1 || mysqli_num_rows($resultado)==null) {
+      }else{
+        echo json_encode($i);
+      }
+    }
 
     // mysqli_select_db($conexion_usuarios, "nuevo");
     // $query = "SELECT * FROM cotizacion WHERE fecha>='2018-07-01' AND fecha<='2018-07-31' AND remision = 0";
@@ -95,35 +95,35 @@
     // echo json_encode($arreglo2);
 
     // $query = "SELECT cotizacion.factura, cotizacion.ref, facturas.subtotal FROM cotizacion INNER JOIN facturas ON facturas.folio = cotizacion.factura WHERE cotizacion.precioTotal='11083.22' AND cotizacion.remision= '0' AND cotizacion.factura!= '0'";
-    $query = "SELECT * FROM cotizacion WHERE precioTotal = '11083.22' AND remision = 0";
-    $resultado = mysqli_query($conexion_usuarios, $query);
-
-    while($data = mysqli_fetch_assoc($resultado)){
-      $ref = $data['ref'];
-
-      $query2 = "SELECT * FROM cotizacionherramientas WHERE cotizacionRef = '$ref'";
-      $resultado2 = mysqli_query($conexion_usuarios, $query2);
-
-      $partidas = 0;
-      $precioCotizacion = 0;
-      while($data2 = mysqli_fetch_assoc($resultado2)){
-        $precioCotizacion = $precioCotizacion + ($data2['precioLista'] * $data2['cantidad']);
-        $partidas++;
-      }
-
-      $arreglo['data'][] = array(
-        'ref' => $data['ref'],
-        'precioCotizacion' => $precioCotizacion,
-        'precioFactura' => $data['subtotal'],
-        'partidas' => $partidas
-      );
-
-      $factura = $data['factura'];
-      $precioTotal = round($precioCotizacion,2);
-
-      $query3 = "UPDATE cotizacion SET precioTotal='$precioTotal', partidaCantidad='$partidas' WHERE ref='$ref'";
-      $resultado3 = mysqli_query($conexion_usuarios, $query3);
-    }
+    // $query = "SELECT * FROM cotizacion WHERE precioTotal = '11083.22' AND remision = 0";
+    // $resultado = mysqli_query($conexion_usuarios, $query);
+    //
+    // while($data = mysqli_fetch_assoc($resultado)){
+    //   $ref = $data['ref'];
+    //
+    //   $query2 = "SELECT * FROM cotizacionherramientas WHERE cotizacionRef = '$ref'";
+    //   $resultado2 = mysqli_query($conexion_usuarios, $query2);
+    //
+    //   $partidas = 0;
+    //   $precioCotizacion = 0;
+    //   while($data2 = mysqli_fetch_assoc($resultado2)){
+    //     $precioCotizacion = $precioCotizacion + ($data2['precioLista'] * $data2['cantidad']);
+    //     $partidas++;
+    //   }
+    //
+    //   $arreglo['data'][] = array(
+    //     'ref' => $data['ref'],
+    //     'precioCotizacion' => $precioCotizacion,
+    //     'precioFactura' => $data['subtotal'],
+    //     'partidas' => $partidas
+    //   );
+    //
+    //   $factura = $data['factura'];
+    //   $precioTotal = round($precioCotizacion,2);
+    //
+    //   $query3 = "UPDATE cotizacion SET precioTotal='$precioTotal', partidaCantidad='$partidas' WHERE ref='$ref'";
+    //   $resultado3 = mysqli_query($conexion_usuarios, $query3);
+    // }
 
     // mysqli_select_db($conexion_usuarios, "hemusa2");
     // $query = "SELECT cotizacion.ref, cotizacion.fecha, cotizacionherramientas.cotizacionRef, cotizacionherramientas.marca, cotizacionherramientas.modelo FROM cotizacion INNER JOIN cotizacionherramientas ON cotizacionherramientas.cotizacionRef = cotizacion.ref WHERE cotizacion.fecha>='2018-07-21' AND cotizacion.fecha<='2018-07-31'";

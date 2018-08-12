@@ -115,7 +115,7 @@
 				}
 			}
 		}else{
-			$query = "SELECT cotizacionherramientas.marca, cotizacionherramientas.modelo, cotizacionherramientas.descripcion, cotizacionherramientas.precioLista, cotizacionherramientas.numeroPedido, cotizacion.ref, cotizacion.NoPedClient, cotizacion.cliente, cotizacion.vendedor, cotizacion.contacto, cotizacion.Pedido, cotizacion.partidaCantidad, contactos.nombreEmpresa FROM cotizacionherramientas INNER JOIN cotizacion ON cotizacion.ref=cotizacionherramientas.cotizacionRef INNER JOIN contactos ON contactos.id=cotizacion.cliente WHERE (cotizacion.ref LIKE '%$buscar%' OR cotizacion.NoPedClient LIKE '%$buscar%' OR contactos.nombreEmpresa LIKE '%$buscar%' OR cotizacion.vendedor LIKE '%$buscar%' OR cotizacion.contacto LIKE '%$buscar%' OR cotizacionherramientas.marca LIKE '%$buscar%' OR cotizacionherramientas.modelo LIKE '%$buscar%' OR cotizacionherramientas.descripcion LIKE '%$buscar%' OR cotizacionherramientas.precioLista LIKE '%$buscar%') AND cotizacionherramientas.Pedido = 'si' AND cotizacionherramientas.pedidoFecha != '0000-00-00' AND cotizacionherramientas.Proveedor = 'None' AND cotizacionherramientas.pedidoFecha >= '$fechainicio' AND cotizacionherramientas.pedidoFecha <= '$fechafin'";
+			$query = "SELECT cotizacionherramientas.cotizacionRef, cotizacionherramientas.marca, cotizacionherramientas.modelo, cotizacionherramientas.descripcion, cotizacionherramientas.precioLista, cotizacionherramientas.numeroPedido, contactos.nombreEmpresa FROM cotizacionherramientas INNER JOIN pedidos ON pedidos.numeroPedido=cotizacionherramientas.numeroPedido INNER JOIN contactos ON contactos.id=pedidos.cliente WHERE (pedidos.cotizacionRef LIKE '%$buscar%' OR pedidos.numeroPedido LIKE '%$buscar%' OR contactos.nombreEmpresa LIKE '%$buscar%' OR pedidos.vendedor LIKE '%$buscar%' OR pedidos.contacto LIKE '%$buscar%' OR cotizacionherramientas.marca LIKE '%$buscar%' OR cotizacionherramientas.modelo LIKE '%$buscar%' OR cotizacionherramientas.descripcion LIKE '%$buscar%' OR cotizacionherramientas.precioLista LIKE '%$buscar%') AND cotizacionherramientas.Pedido = 'si' AND cotizacionherramientas.pedidoFecha != '0000-00-00' AND cotizacionherramientas.Proveedor = 'None' AND cotizacionherramientas.pedidoFecha >= '$fechainicio' AND cotizacionherramientas.pedidoFecha <= '$fechafin' ORDER BY cotizacionherramientas.pedidoFecha";
 			$resultado = mysqli_query($conexion_usuarios, $query);
 
 			if (mysqli_num_rows($resultado) < 1) {
@@ -128,8 +128,8 @@
 						$pedido = $data['numeroPedido'];
 					}
 					$arreglo['data'][] = array(
-						'cotizacionRef' => $data['ref'],
-						'numeroPedido' => $pedido,
+						'cotizacionRef' => $data['cotizacionRef'],
+						'numeroPedido' => $data['numeroPedido'],
 						'nombreEmpresa' => utf8_encode($data['nombreEmpresa']),
 						'contacto' => $data['contacto'],
 						'vendedor' => $data['vendedor'],
@@ -186,21 +186,16 @@
 				}
 			}
 		}else{
-			$query = "SELECT cotizacionherramientas.marca, cotizacionherramientas.modelo, cotizacionherramientas.descripcion, cotizacionherramientas.precioLista, cotizacion.ref, cotizacion.NoPedClient, cotizacion.cliente, cotizacion.vendedor, cotizacion.contacto, cotizacion.Pedido, cotizacion.partidaCantidad, contactos.nombreEmpresa FROM cotizacionherramientas INNER JOIN cotizacion ON cotizacion.ref=cotizacionherramientas.cotizacionRef INNER JOIN contactos ON contactos.id=cotizacion.cliente WHERE (cotizacion.ref LIKE '%$buscar%' OR cotizacion.NoPedClient LIKE '%$buscar%' OR contactos.nombreEmpresa LIKE '%$buscar%' OR cotizacion.vendedor LIKE '%$buscar%' OR cotizacion.contacto LIKE '%$buscar%' OR cotizacionherramientas.marca LIKE '%$buscar%' OR cotizacionherramientas.modelo LIKE '%$buscar%' OR cotizacionherramientas.descripcion LIKE '%$buscar%' OR cotizacionherramientas.precioLista LIKE '%$buscar%') AND cotizacionherramientas.Pedido = 'si' AND cotizacionherramientas.pedidoFecha != '0000-00-00' AND cotizacionherramientas.Proveedor != 'None' AND cotizacionherramientas.Entregado ='0000-00-00' AND cotizacionherramientas.factura = 0 AND cotizacionherramientas.remision = 0 AND cotizacionherramientas.pedidoFecha >= '$fechainicio' AND cotizacionherramientas.pedidoFecha <= '$fechafin'";
+			$query = "SELECT cotizacionherramientas.cotizacionRef, cotizacionherramientas.marca, cotizacionherramientas.modelo, cotizacionherramientas.descripcion, cotizacionherramientas.precioLista, contactos.nombreEmpresa FROM cotizacionherramientas INNER JOIN pedidos ON pedidos.numeroPedido=cotizacionherramientas.numeroPedido INNER JOIN contactos ON contactos.id=pedidos.cliente WHERE (pedidos.cotizacionRef LIKE '%$buscar%' OR pedidos.numeroPedido LIKE '%$buscar%' OR contactos.nombreEmpresa LIKE '%$buscar%' OR pedidos.vendedor LIKE '%$buscar%' OR pedidos.contacto LIKE '%$buscar%' OR cotizacionherramientas.marca LIKE '%$buscar%' OR cotizacionherramientas.modelo LIKE '%$buscar%' OR cotizacionherramientas.descripcion LIKE '%$buscar%' OR cotizacionherramientas.precioLista LIKE '%$buscar%') AND cotizacionherramientas.Pedido = 'si' AND cotizacionherramientas.pedidoFecha != '0000-00-00' AND cotizacionherramientas.Proveedor != 'None' AND cotizacionherramientas.Entregado ='0000-00-00' AND cotizacionherramientas.factura = 0 AND cotizacionherramientas.remision = 0 AND cotizacionherramientas.pedidoFecha >= '$fechainicio' AND cotizacionherramientas.pedidoFecha <= '$fechafin'";
 			$resultado = mysqli_query($conexion_usuarios, $query);
 
 			if (mysqli_num_rows($resultado) < 1) {
 				$arreglo['data'] = 0;
 			}else{
 				while($data = mysqli_fetch_assoc($resultado)){
-					if($data['numeroPedido'] == ""){
-						$pedido = $data['NoPedClient'];
-					}else{
-						$pedido = $data['numeroPedido'];
-					}
 					$arreglo['data'][] = array(
-						'cotizacionRef' => $data['ref'],
-						'numeroPedido' => $pedido,
+						'cotizacionRef' => $data['cotizacionRef'],
+						'numeroPedido' => $data['numeroPedido'],
 						'nombreEmpresa' => utf8_encode($data['nombreEmpresa']),
 						'contacto' => $data['contacto'],
 						'vendedor' => $data['vendedor'],
@@ -222,35 +217,6 @@
 
 	function facturadonopagado($buscar, $fechainicio, $fechafin, $filtrotipo, $conexion_usuarios){
 		if ($filtrotipo == "pedido") {
-			$query = "SELECT pedidos.*, contactos.nombreEmpresa FROM pedidos INNER JOIN contactos ON contactos.id=pedidos.cliente WHERE (pedidos.cotizacionRef LIKE '%$buscar%' OR pedidos.numeroPedido LIKE '%$buscar%') AND (pedidos.pagado < 1.14 * pedidos.total) AND (pedidos.fecha >= '$fechainicio' AND pedidos.fecha <= '$fechafin') ORDER BY fecha";
-			$resultado = mysqli_query($conexion_usuarios, $query);
-
-			if(mysqli_num_rows($resultado) < 1){
-				$arreglo['data'] = 0;
-			}else{
-				while($data = mysqli_fetch_assoc($resultado)){
-					$marca = "";
-					$modelo = "";
-					$descripcion = "";
-					$precioUnitario = "";
-
-					$arreglo['data'][] = array(
-						'cotizacionRef' => $data['cotizacionRef'],
-						'numeroPedido' => $data['numeroPedido'],
-						'nombreEmpresa' => $data['nombreEmpresa'],
-						'contacto' => $data['contacto'],
-						'vendedor' => $data['vendedor'],
-						'fecha' => $data['fecha'],
-						'partidas' => $data['partidas'],
-						'total' => "$ ".$data['total'],
-						'marca' => $marca,
-						'modelo' => $modelo,
-						'descripcion' => utf8_encode($descripcion),
-						'precioUnitario' => " $".$precioUnitario,
-					);
-				}
-			}
-
 			$query = "SELECT facturas.*, pedidos.cotizacionRef, pedidos.contacto, pedidos.vendedor, pedidos.partidas FROM facturas LEFT JOIN pedidos ON pedidos.numeroPedido = facturas.ordenpedido WHERE (pedidos.cotizacionRef LIKE '%$buscar%' OR facturas.ordenpedido LIKE '%$buscar%' OR facturas.cliente LIKE '%$buscar%' OR pedidos.contacto LIKE '%$buscar%' OR pedidos.vendedor LIKE '%$buscar%' OR facturas.fecha LIKE '%$buscar%' OR facturas.total LIKE '%$buscar%') AND (facturas.pagado < 1.14 * facturas.total) AND (facturas.fecha >= '$fechainicio' AND facturas.fecha <= '$fechafin') ORDER BY fecha";
 			$resultado = mysqli_query($conexion_usuarios, $query);
 
@@ -267,8 +233,8 @@
 						'cotizacionRef' => $data['cotizacionRef'],
 						'numeroPedido' => $data['ordenpedido'],
 						'nombreEmpresa' => $data['cliente'],
-						'contacto' => $data['contacto'],
 						'vendedor' => $data['vendedor'],
+						'contacto' => $data['contacto'],
 						'fecha' => $data['fecha'],
 						'partidas' => $data['partidas'],
 						'total' => "$ ".$data['total'],
@@ -280,35 +246,35 @@
 				}
 			}
 		}else{
-			$query = "SELECT cotizacion.*, contactos.nombreEmpresa, cotizacionherramientas.marca, cotizacionherramientas.modelo, cotizacionherramientas.descripcion, cotizacionherramientas.precioLista FROM cotizacion INNER JOIN contactos ON contactos.id=cotizacion.cliente INNER JOIN cotizacionherramientas ON cotizacionherramientas.factura=cotizacion.id WHERE (cotizacion.ref LIKE '%$buscar%' OR cotizacion.NoPedClient LIKE '%$buscar%' OR contactos.nombreEmpresa LIKE '%$buscar%' OR cotizacion.contacto LIKE '%$buscar%' OR cotizacion.vendedor LIKE '%$buscar%' OR cotizacion.fecha LIKE '%$buscar%' OR cotizacionherramientas.marca LIKE '%$buscar%' OR cotizacionherramientas.modelo LIKE '%$buscar%' OR cotizacionherramientas.descripcion LIKE '%$buscar%' OR cotizacionherramientas.precioLista LIKE '%$buscar%') AND (cotizacion.Pagado < 1.14 * cotizacion.precioTotal) AND (cotizacion.fecha >= '$fechainicio' AND cotizacion.fecha <= '$fechafin')";
-			$resultado = mysqli_query($conexion_usuarios, $query);
-
-			if(mysqli_num_rows($resultado) < 1){
-				$arreglo['data'] = 0;
-			}else{
-				while($data = mysqli_fetch_assoc($resultado)){
-					if($data['numeroPedido'] == ""){
-						$pedido = $data['NoPedClient'];
-					}else{
-						$pedido = $data['numeroPedido'];
-					}
-
-					$arreglo['data'][] = array(
-						'cotizacionRef' => $data['ref'],
-						'numeroPedido' => $pedido,
-						'nombreEmpresa' => $data['nombreEmpresa'],
-						'contacto' => $data['contacto'],
-						'vendedor' => $data['vendedor'],
-						'fecha' => $data['fecha'],
-						'partidas' => $data['partidaCantidad'],
-						'total' => "$ ".$data['precioTotal'],
-						'marca' => $data['marca'],
-						'modelo' => $data['modelo'],
-						'descripcion' => utf8_encode($data['descripcion']),
-						'precioUnitario' => " $".$data['precioLista'],
-					);
-				}
-			}
+			// $query = "SELECT cotizacion.*, contactos.nombreEmpresa, cotizacionherramientas.marca, cotizacionherramientas.modelo, cotizacionherramientas.descripcion, cotizacionherramientas.precioLista FROM cotizacion INNER JOIN contactos ON contactos.id=cotizacion.cliente INNER JOIN cotizacionherramientas ON cotizacionherramientas.factura=cotizacion.id WHERE (cotizacion.ref LIKE '%$buscar%' OR cotizacion.NoPedClient LIKE '%$buscar%' OR contactos.nombreEmpresa LIKE '%$buscar%' OR cotizacion.contacto LIKE '%$buscar%' OR cotizacion.vendedor LIKE '%$buscar%' OR cotizacion.fecha LIKE '%$buscar%' OR cotizacionherramientas.marca LIKE '%$buscar%' OR cotizacionherramientas.modelo LIKE '%$buscar%' OR cotizacionherramientas.descripcion LIKE '%$buscar%' OR cotizacionherramientas.precioLista LIKE '%$buscar%') AND (cotizacion.Pagado < 1.14 * cotizacion.precioTotal) AND (cotizacion.fecha >= '$fechainicio' AND cotizacion.fecha <= '$fechafin')";
+			// $resultado = mysqli_query($conexion_usuarios, $query);
+			//
+			// if(mysqli_num_rows($resultado) < 1){
+			// 	$arreglo['data'] = 0;
+			// }else{
+			// 	while($data = mysqli_fetch_assoc($resultado)){
+			// 		if($data['numeroPedido'] == ""){
+			// 			$pedido = $data['NoPedClient'];
+			// 		}else{
+			// 			$pedido = $data['numeroPedido'];
+			// 		}
+			//
+			// 		$arreglo['data'][] = array(
+			// 			'cotizacionRef' => $data['ref'],
+			// 			'numeroPedido' => $pedido,
+			// 			'nombreEmpresa' => $data['nombreEmpresa'],
+			// 			'contacto' => $data['contacto'],
+			// 			'vendedor' => $data['vendedor'],
+			// 			'fecha' => $data['fecha'],
+			// 			'partidas' => $data['partidaCantidad'],
+			// 			'total' => "$ ".$data['precioTotal'],
+			// 			'marca' => $data['marca'],
+			// 			'modelo' => $data['modelo'],
+			// 			'descripcion' => utf8_encode($data['descripcion']),
+			// 			'precioUnitario' => " $".$data['precioLista'],
+			// 		);
+			// 	}
+			// }
 		}
 
 		echo json_encode($arreglo, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_PARTIAL_OUTPUT_ON_ERROR);

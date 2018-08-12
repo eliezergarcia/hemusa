@@ -98,7 +98,7 @@
                   <p style="font-size: 20px;">Colores del entorno</p>
                   <form id="frmColoresEntorno">
                     <button id="btnDefaultColoresEntorno" type="button" name="button" class="btn btn-secondary btn-space btn-lg">Colores default</button>
-                    <button id="btnColoresEntorno" type="button" name="button" class="btn btn-secondary btn-space btn-lg">Editar <i class="fas fa-pencil-alt fa-sm"></i></button>
+                    <button id="btnColoresEntorno" type="button" name="button" class="btn btn-primary btn-space btn-lg">Editar <i class="fas fa-pencil-alt fa-sm"></i></button>
                 </div>
                 <div class="card-body colores">
                   <div class="row justify-content-between align-items-center">
@@ -145,7 +145,7 @@
                   <p style="font-size: 20px;">Colores principales</p>
                   <form id="frmColoresEntorno">
                     <button id="btnDefaultColoresPrincipales" type="button" name="button" class="btn btn-secondary btn-space btn-lg">Colores default</button>
-                    <button id="btnColoresPrincipales" type="button" name="button" class="btn btn-secondary btn-space btn-lg">Editar <i class="fas fa-pencil-alt fa-sm"></i></button>
+                    <button id="btnColoresPrincipales" type="button" name="button" class="btn btn-primary btn-space btn-lg">Editar <i class="fas fa-pencil-alt fa-sm"></i></button>
                 </div>
                 <div class="card-body colores">
                   <div class="row justify-content-between align-items-center">

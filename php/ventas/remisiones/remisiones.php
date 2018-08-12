@@ -118,25 +118,25 @@
 							<div class="row">
 								<div class="col form-group">
 									<label for="numeroCotizacion">Referencia <font color="#FF4136">*</font></label>
-									<input type="text" id="numeroCotizacion" name="numeroCotizacion" class="disabled form-control form-control-sm" disabled>
+									<input type="text" id="numeroCotizacion" name="numeroCotizacion" class="disabled form-control form-control-sm" required>
 								</div>
 								<div class="col form-group">
 									<label for="remision">Remision <font color="#FF4136">*</font></label>
-									<input type="text" id="remision" name="remision" class="disabled form-control form-control-sm" disabled>
+									<input type="text" id="remision" name="remision" class=" form-control form-control-sm" required>
 								</div>
 								<div class="col form-group">
 									<label for="fechaCotizacion">Fecha <font color="#FF4136">*</font></label>
-									<input type="text" id="fechaCotizacion" name="fechaCotizacion" class="disabled form-control form-control-sm" value="<?php echo date("Y-m-d"); ?>" disabled>
+									<input type="text" id="fechaCotizacion" name="fechaCotizacion" class=" form-control form-control-sm" value="<?php echo date("Y-m-d"); ?>" required>
 								</div>
 								<div class="col form-group">
 									<label for="vendedor">Vendedor <font color="#FF4136">*</font></label>
-									<input type="text" id="vendedor" name="vendedor" class="disabled form-control form-control-sm" value="<?php echo $usuario." ".$usuarioApellido; ?>" disabled>
+									<input type="text" id="vendedor" name="vendedor" class="disabled form-control form-control-sm" value="<?php echo $usuario." ".$usuarioApellido; ?>" required>
 								</div>
 							</div>
 							<div class="row">
 								<div class="col-8 form-group">
 									<label for="cliente">Cliente <font color="#FF4136">*</font></label>
-									<input placeholder="Busca un cliente" class="form-control form-control-sm col-12" data-min-length="1" list="clientes" id="cliente" name="cliente" type="text" onchange="buscarDatosCliente()"  required >
+									<input placeholder="Busca un cliente" class="form-control form-control-sm col-12" data-min-length="1" list="clientes" id="cliente" name="cliente" type="text" onchange="buscarDatosCliente()"  required>
 									<!-- <datalist id="clientes">
 									</datalist> -->
 								</div>

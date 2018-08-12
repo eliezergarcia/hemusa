@@ -709,8 +709,8 @@
 			$informacion["respuesta"] = "ERROR";
 			$informacion["informacion"] = "Ocurrió un problema al guardar la factura '".$folio."'!";
 		}else{
-			$informacion["respuesta"] = "ERROR";
-			$informacion["informacion"] = "Ocurrió un problema al modificar la informacion del pedido, la referencia de cotización esta vacía!";
+			$informacion["respuesta"] = "BIEN";
+			$informacion["informacion"] = "Se genero la factura ".$folio." con pedido de cliente".$ordenpedido." del cliente ".$cliente;
 
 			$descripcionmovimiento = "Se genero la factura ".$folio." con pedido ".$ordenpedido." del cliente ".$cliente;
 			$fechamovimiento = date("Y-m-d H:i:s");

@@ -5208,6 +5208,7 @@ input[type="button"].btn-block {
   padding-right: 0.7em;
   padding-left: 0.7em;
   border-radius: 10rem;
+  /* margin-bottom: 10px; */
 }
 
 .badge-primary {
@@ -11642,7 +11643,7 @@ canvas {
 .be-icons-nav > li.dropdown > a .icon {
   font-size: 1.846rem;
   vertical-align: middle;
-  color: #737373;
+  color: #FFFFFF;
 }
 
 .be-icons-nav > li.dropdown > a .icon.mdi-comment-more {

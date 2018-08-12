@@ -302,8 +302,47 @@
       App.megaMenu();
       nav_active();
 			buscar_tipo_cambio();
-			// listar_calendario();
+			listar_calendario();
+      var opcion = "listarcontactos";
+      $.ajax({
+        method: "POST",
+        url: "../../../assets/php/app-chat.php",
+        dataType: "json",
+        data: {"opcion": opcion}
+      }).done( function( data ){
+        console.log(data);
+        var usuarios = data.usuarios;
+        $("#lista-contactos").empty();
+        $("#lista-reciente").empty();
+        for(var i=0;i<usuarios.length;i = i+1){
+          if (usuarios[i].reciente == "no") {
+            $("#lista-contactos").append("<div class='user' id='"+ usuarios[i].id +"' onClick='mostrar_mensajes("+ usuarios[i].id +")'><a href='#'><img src='../../../assets/img/"+ usuarios[i].avatar +"' alt='Avatar'><div class='user-data2'><span class='status'></span><span class='name contacto-chat'>"+ usuarios[i].nombre + " " + usuarios[i].apellidos +"</span></div></a></div>");
+          }else{
+            $("#lista-reciente").append("<div class='user' id='"+ usuarios[i].id +"' onClick='mostrar_mensajes("+ usuarios[i].id +")'><a href='#'><img src='../../../assets/img/"+ usuarios[i].avatar +"' alt='Avatar'><div class='user-data2'><span class='status'></span><span class='name contacto-chat'>"+ usuarios[i].nombre + " " + usuarios[i].apellidos +"</span><span class='message'>"+ usuarios[i].reciente +"</span></div></a></div>");
+          }
+        };
+      });
 		});
+
+    // function mostrar_mensajes (idcontacto) {
+    //   console.log(idcontacto);
+    //
+    //   var config = {
+    //     apiKey: "AIzaSyDe92NNoooohCjs30aiW3INmdBtZChCDls ",
+    //     authDomain: "hemusa-194306.firebaseapp.com",
+    //     databaseURL: "https://hemusa-194306.firebaseio.com",
+    //   };
+    //
+    //   firebase.initializeApp(config);
+    //   const preObject = document.getElementById('object')
+    //   // const dbRefObject = firebase.database().ref().child('object')
+    //   // dbRefObject.on('value', snap => console.log(snap.val()))
+    //   return firebase.database().ref('/chat/mensajes').once('value').then(function(snapshot) {
+    //   var username = (snapshot.val() && snapshot.val().username) || 'Anonymous';
+    //   console.log(username);
+    // });
+    // }
+
 
     function nav_active () {
       $(".nav-item").removeClass("open section-active");
@@ -373,17 +412,6 @@
         $('#frmEditarEventoCalendario input[name=horaFin]').prop('disabled' , false);
       }
     }
-
-    var config = {
-      apiKey: "AIzaSyDe92NNoooohCjs30aiW3INmdBtZChCDls ",
-      authDomain: "hemusa-194306.firebaseapp.com",
-      databaseURL: "https://hemusa-194306.firebaseio.com",
-    };
-
-    firebase.initializeApp(config);
-    const preObject = document.getElementById('object')
-    const dbRefObject = firebase.database().ref().child('object')
-    dbRefObject.on('value', snap => console.log(snap.val()))
 
 
 		// $("#menu").on("change", function(){

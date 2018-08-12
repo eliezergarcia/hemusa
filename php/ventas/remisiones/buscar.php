@@ -182,7 +182,7 @@
 
 		$numeroCotizacion = "HMU".substr(date("y"), 1).date("m").date("d").$n;
 
-		$query = "SELECT max(remision) AS ultimaremision FROM cotizacion";
+		$query = "SELECT max(remision) AS ultimaremision FROM remisiones";
 		$resultado = mysqli_query($conexion_usuarios, $query);
 		while($data = mysqli_fetch_assoc($resultado)){
 			$remision = $data['ultimaremision'] + 1;
