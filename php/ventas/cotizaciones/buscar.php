@@ -257,7 +257,7 @@
 						$arreglo['moneda'] = $data['moneda'];
 					}
 					$fecha = date("Y-m-d");
-					$query = "SELECT * FROM tipocambio WHERE fecha = '$fecha'";
+					$query = "SELECT * FROM cifrasimportantes WHERE id = 1";
 					$resultado = mysqli_query($conexion_usuarios, $query);
 					if(!$resultado){
 						$arreglo['data'] = "Error";

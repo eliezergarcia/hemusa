@@ -14,6 +14,10 @@
 			query($data, $indice, $conexion_usuarios);
 			break;
 
+    case 'query2':
+			query2($conexion_usuarios);
+			break;
+
     case 'querypayments':
       // $json = $_POST['lista'];
       // $indice = $_POST['indice'];
@@ -22,6 +26,23 @@
       // query_payments($conexion_usuarios);
       break;
 	}
+
+  function query2($conexion_usuarios){
+    $query = "SELECT id, factura FROM cotizacion WHERE factura != 0";
+    $resultado = mysqli_query($conexion_usuarios, $query);
+
+    while($data = mysqli_fetch_assoc($resultado)){
+      $arreglo['data'][] = $data;
+
+      $factura = $data['factura'];
+      $idcotizacion = $data['id'];
+      $query2 = "UPDATE cotizacionherramientas SET factura = '$factura' WHERE factura='$idcotizacion'";
+      $resultado2 = mysqli_query($conexion_usuarios, $query2);
+    }
+
+    echo json_encode($arreglo);
+    mysqli_close($conexion_usuarios);
+  }
 
   function query_payments($facturas, $conexion_usuarios){
 

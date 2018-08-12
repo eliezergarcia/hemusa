@@ -31,66 +31,51 @@
                 </div>
               </div>
             </div>
-            <!-- <div class="col-lg-6 col-sm-12">
+            <div class="col-lg-10">
               <div class="card">
                 <div class="card-header card-header-divider row align-items-end justify-content-between">
-                  <p style="font-size: 20px;"></p>
+                  <p style="font-size: 20px;">Configuración principal</p>
                   <form id="frmColoresEntorno">
-                    <button id="" type="button" name="button" class="btn btn-secondary btn-space btn-lg">Colores default</button>
-                    <button id="" type="button" name="button" class="btn btn-secondary btn-space btn-lg">Editar <i class="fas fa-pencil-alt fa-sm"></i></button>
-                </div>
-              </div>
-            </div> -->
-            <!-- <div class="col-lg-6 col-sm-12">
-              <div class="card">
-                <div class="card-header card-header-divider row align-items-start justify-content-between">
-                  <p style="font-size: 20px;">Notificaciones</p>
-                  <form id="frmColoresEntorno">
+                    <!-- <button id="btnDefaultColoresEntorno" type="button" name="button" class="btn btn-secondary btn-space btn-lg">Colores default</button>
+                    <button id="btnColoresEntorno" type="button" name="button" class="btn btn-primary btn-space btn-lg">Editar <i class="fas fa-pencil-alt fa-sm"></i></button> -->
                 </div>
                 <div class="card-body colores">
-                  <div class="row justify-content-between align-items-center">
-                    <div class="form-group col-lg-12 col-sm-12">
-                      <label class="col-6">Habilitar notificaciones </label>
-                      <div class="switch-button switch-button-yesno">
-                        <input type="checkbox" checked="" name="swt8" id="swt8"><span>
-                          <label for="swt8"></label></span>
+                  <div class="row">
+
+                  </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-2">
+              <div class="card">
+                <div class="card-header card-header-divider row align-items-end justify-content-between">
+                  <p style="font-size: 20px;">Tipo de cambio
+                  <form id="frmTipoCambio">
+                    <input type="hidden" name="opcion" id="opcion" value="tipocambio">
+                    <button id="btnTipoCambio" type="button" name="button" class="btn btn-primary btn-space btn-lg">Editar <i class="fas fa-pencil-alt fa-sm"></i></button>
+                </div>
+                <div class="card-body colores">
+                  <div class="row">
+                    <div class="col-12">
+                      <div class="form-group col-12">
+                        <label for="">Cambio USD a MXN</label>
+                        <input type="text" class="form-control form-control-sm" name="cambiodolar" id="cambiodolar" value="">
                       </div>
-                    </div>
-                    <div class="form-group col-lg-12 col-sm-12">
-                      <label class="col-6">Mensajes de chat </label>
-                      <div class="switch-button switch-button-yesno">
-                        <input type="checkbox" checked="" name="swt9" id="swt9"><span>
-                          <label for="swt9"></label></span>
+                      <div class="form-group col-12">
+                        <label for="">Cambio MXN a USD</label>
+                        <input type="text" class="form-control form-control-sm" name="cambiopeso" id="cambiopeso" value="">
                       </div>
-                    </div>
-                    <div class="form-group col-lg-12 col-sm-12">
-                      <label class="col-6">Ordenes de compra pendientes </label>
-                      <div class="switch-button switch-button-yesno">
-                        <input type="checkbox" checked="" name="swt9" id="swt9"><span>
-                          <label for="swt9"></label></span>
-                      </div>
-                    </div>
-                    <div class="card-header card-header-divider row align-items-end justify-content-between">
-                      <p style="font-size: 17px;">Sonidos</p>
-                    </div>
-                    <div class="form-group col-lg-12 col-sm-12">
-                      <label class="col-7">Reproducir sonido al recibir mensajes de chat</label>
-                      <div class="switch-button switch-button-yesno">
-                        <input type="checkbox" checked="" name="swt10" id="swt10"><span>
-                          <label for="swt10"></label></span>
-                      </div>
-                    </div>
-                    <div class="form-group col-lg-12 col-sm-12">
-                      <label class="col-7">Reproducir sonido al recibir notificaciones nuevas</label>
-                      <div class="switch-button switch-button-yesno">
-                        <input type="checkbox" checked="" name="swt11" id="swt11"><span>
-                          <label for="swt11"></label></span>
+                      <div class="form-group col-12">
+                        <label for="">IVA</label>
+                        <input type="text" class="form-control form-control-sm" name="iva" id="iva" value="">
                       </div>
                     </div>
                   </div>
+                  </form>
                 </div>
               </div>
-            </div> -->
+            </div>
 
             <div class="col-lg-5 col-sm-12">
               <div class="card">
@@ -213,6 +198,7 @@
       	App.init()
         App.formElements()
         buscarConfiguracion()
+        buscarTipoCambio()
         // App.chat()
       })
 
@@ -259,6 +245,25 @@
           $.gritter.add({
 	        	title: 'Error!',
 	        	text: 'Ocurrió un error al cargar la configuración de usuario.',
+	        	class_name: 'color danger'
+	      	});
+        })
+      }
+
+      function buscarTipoCambio () {
+        $.ajax({
+          method: "POST",
+          url: "buscar.php",
+          dataType: "json",
+          data: {"opcion": opcion = "buscartipocambio"},
+        }).done( function ( data ) {
+          $("#cambiodolar").val(data.data.exchangerate)
+          $("#cambiopeso").val(data.data.cambio_dos)
+          $("#iva").val(data.data.comision_ml)
+        }).fail( function ( info ) {
+          $.gritter.add({
+	        	title: 'Error!',
+	        	text: 'Ocurrió un error al cargar la configuración de tipo de cambio.',
 	        	class_name: 'color danger'
 	      	});
         })
@@ -369,6 +374,21 @@
           url: "guardar.php",
           dataType: "json",
           data: {"opcion": opcion, "primario": primario, "hoverPrimario": hoverPrimario, "bordePrimario": bordePrimario, "success": success, "hoverSuccess": hoverSuccess, "bordeSuccess": bordeSuccess, "warning": warning, "hoverWarning": hoverWarning, "bordeWarning": bordeWarning, "danger": danger, "hoverDanger": hoverDanger, "bordeDanger": bordeDanger}
+        }).done( function ( info ) {
+          mostrar_mensaje(info)
+        }).fail( function ( info ) {
+          mostrar_mensaje(info)
+        })
+      })
+
+      $("#btnTipoCambio").on("click", function () {
+        var frm = $("#frmTipoCambio").serialize();
+        console.log(frm);
+        $.ajax({
+          method: "POST",
+          url: "guardar.php",
+          dataType: "json",
+          data: frm,
         }).done( function ( info ) {
           mostrar_mensaje(info)
         }).fail( function ( info ) {

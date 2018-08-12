@@ -182,8 +182,6 @@ if ($tipomenu != 4){
 								</li>
 								<li><a href="<?php echo $ruta; ?>php/administracion/marcas/marcas.php"><i class="fas fa-wrench"></i> Marcas</a>
 								</li>
-								<li><a href="<?php echo $ruta; ?>php/administracion/marcas/subirlista.php"><i class="fas fa-th-list"></i> Subir lista de precios</a>
-								</li>
 								<li class="nav-item"><a id="kardex-menu" class="nav-link" href="<?php echo $ruta; ?>php/administracion/kardex/kardex.php"><i class="fas fa-list-alt"></i> Kárdex</a>
 								</li>
 								<li class="nav-item"><a id="subirlista-menu" class="nav-link" href="<?php echo $ruta; ?>php/administracion/marcas/subirlista.php"><i class="fas fa-th-list"></i> Subir lista de precios</a>
@@ -196,8 +194,11 @@ if ($tipomenu != 4){
 										<a class="dropdown-item" href="<?php echo $ruta; ?>php/administracion/reportes/reportecobranza.php">Reporte de cobranza</a>
 										<a class="dropdown-item" href="<?php echo $ruta; ?>php/administracion/reportes/reportebancos.php">Reporte de bancos</a>
 										<a class="dropdown-item" href="<?php echo $ruta; ?>php/administracion/reportes/reportecomisiones.php">Reporte de comisiones</a>
+										<a class="dropdown-item" href="<?php echo $ruta; ?>php/administracion/reportes/reportemarcas.php">Reporte de marcas</a>
 									</div>
 								</li>
+								<!-- <li class="nav-item"><a id="query-menu" class="nav-link" href="<?php echo $ruta; ?>php/administracion/query/query.php">Query</a>
+								</li> -->
 							</ul>
 						</li>
 						<li class="divider">Features</li>
@@ -565,6 +566,7 @@ if ($tipomenu != 4){
 															<a class="dropdown-item" href="<?php echo $ruta; ?>php/administracion/reportes/reportecobranza.php">Reporte de cobranza</a>
 															<a class="dropdown-item" href="<?php echo $ruta; ?>php/administracion/reportes/reportebancos.php">Reporte de bancos</a>
 															<a class="dropdown-item" href="<?php echo $ruta; ?>php/administracion/reportes/reportecomisiones.php">Reporte de comisiones</a>
+															<a class="dropdown-item" href="<?php echo $ruta; ?>php/administracion/reportes/reportemarcas.php">Reporte de marcas</a>
 			                      </div>
 													</li>
                         </ul>

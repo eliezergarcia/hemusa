@@ -11,10 +11,26 @@
 		case 'buscarvendedores':
 			vendedores($conexion_usuarios);
 			break;
+
+		case 'buscarmarcas':
+			marcas($conexion_usuarios);
+			break;
   }
 
   function cuentas($conexion_usuarios){
     $query = "SELECT * FROM accounts ORDER BY id";
+    $resultado = mysqli_query($conexion_usuarios, $query);
+
+    while($data = mysqli_fetch_assoc($resultado)){
+      $arreglo["data"][] = $data;
+    }
+
+    echo json_encode($arreglo);
+    mysqli_close($conexion_usuarios);
+  }
+
+	function marcas($conexion_usuarios){
+    $query = "SELECT * FROM marcadeherramientas ORDER BY id";
     $resultado = mysqli_query($conexion_usuarios, $query);
 
     while($data = mysqli_fetch_assoc($resultado)){

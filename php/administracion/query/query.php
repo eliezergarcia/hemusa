@@ -35,6 +35,7 @@
                             </div>
                             <br>
 														<button type="button" name="button" id="ejecutar-query" onclick="query_payments()" class="btn btn-lg btn-primary">Ejecutar Query</button>
+														<button type="button" name="button" onclick="query2()" class="btn btn-lg btn-primary">Ejecutar Query 2</button>
 
                             <!-- Tabla Lista de precios -->
                               <table id="example" class="ui celler table" width="100%">
@@ -174,6 +175,18 @@
 			// }).done( function( info ){
 			// 	console.log(info);
 			// });
+    }
+
+		function query2(){
+			var opcion = "query2";
+			$.ajax({
+				method: "POST",
+				url: "guardar.php",
+				dataType: "json",
+				data: {"opcion": opcion},
+			}).done( function( info ){
+				console.log(info);
+			});
     }
 
 		function query(lista, j){

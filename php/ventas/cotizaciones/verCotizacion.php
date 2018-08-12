@@ -848,7 +848,7 @@
 					{"data": "modelo"},
 					{"data": "descripcion"},
 					{"data": "cantidad"},
-					{"data": "precioTotal"},					
+					{"data": "precioTotal"},
 					{"data": null,
 						"render": function (data) {
 							return "<label class='custom-control custom-control-sm custom-checkbox'><input name='hcambiarpedido' value='"+data.id+"' class='custom-control-input' type='checkbox'><span class='custom-control-label'></span></label>";
@@ -1241,13 +1241,13 @@
 							}
 							if(data.moneda == "usd" && (data.data.moneda == "mxn" || data.data.moneda == "mn")){
 								if(typeof(data.igi) != "undefined"){
-									$("#frmAgregarPartida #precioUnitario").val(((parseInt(data.data.precioBase) + parseInt(data.igi.igi)) / parseInt(data.tipocambio.tipocambio)).toFixed(2));
+									$("#frmAgregarPartida #precioUnitario").val(((parseInt(data.data.precioBase) + parseInt(data.igi.igi)) / parseInt(data.tipocambio.cambio_dos)).toFixed(2));
 									$("#frmAgregarPartida #cantidad").val(1);
-									$("#frmAgregarPartida #precioTotal").val(((parseInt(data.data.precioBase) + parseInt(data.igi.igi)) / parseInt(data.tipocambio.tipocambio)).toFixed(2));
+									$("#frmAgregarPartida #precioTotal").val(((parseInt(data.data.precioBase) + parseInt(data.igi.igi)) / parseInt(data.tipocambio.cambio_dos)).toFixed(2));
 								}else{
-									$("#frmAgregarPartida #precioUnitario").val(((parseInt(data.data.precioBase) + parseInt(data.data.igi)) / parseInt(data.tipocambio.tipocambio)).toFixed(2));
+									$("#frmAgregarPartida #precioUnitario").val(((parseInt(data.data.precioBase) + parseInt(data.data.igi)) / parseInt(data.tipocambio.cambio_dos)).toFixed(2));
 									$("#frmAgregarPartida #cantidad").val(1);
-									$("#frmAgregarPartida #precioTotal").val(((parseInt(data.data.precioBase) + parseInt(data.data.igi)) / parseInt(data.tipocambio.tipocambio)).toFixed(2));
+									$("#frmAgregarPartida #precioTotal").val(((parseInt(data.data.precioBase) + parseInt(data.data.igi)) / parseInt(data.tipocambio.cambio_dos)).toFixed(2));
 								}
 							}
 							if(data.moneda == "mxn" && (data.data.moneda == "mxn" || data.data.moneda == "mn")){
@@ -1263,13 +1263,13 @@
 							}
 							if(data.moneda == "mxn" && data.data.moneda == "usd"){
 								if(typeof(data.igi) != "undefined"){
-									$("#frmAgregarPartida #precioUnitario").val(((parseInt(data.data.precioBase) + parseInt(data.igi.igi)) * parseInt(data.tipocambio.tipocambio)).toFixed(2));
+									$("#frmAgregarPartida #precioUnitario").val(((parseInt(data.data.precioBase) + parseInt(data.igi.igi)) * parseInt(data.tipocambio.exchangerate)).toFixed(2));
 									$("#frmAgregarPartida #cantidad").val(1);
-									$("#frmAgregarPartida #precioTotal").val(((parseInt(data.data.precioBase) + parseInt(data.igi.igi)) * parseInt(data.tipocambio.tipocambio)).toFixed(2));
+									$("#frmAgregarPartida #precioTotal").val(((parseInt(data.data.precioBase) + parseInt(data.igi.igi)) * parseInt(data.tipocambio.exchangerate)).toFixed(2));
 								}else{
-									$("#frmAgregarPartida #precioUnitario").val(((parseInt(data.data.precioBase) + parseInt(data.data.igi)) * parseInt(data.tipocambio.tipocambio)).toFixed(2));
+									$("#frmAgregarPartida #precioUnitario").val(((parseInt(data.data.precioBase) + parseInt(data.data.igi)) * parseInt(data.tipocambio.exchangerate)).toFixed(2));
 									$("#frmAgregarPartida #cantidad").val(1);
-									$("#frmAgregarPartida #precioTotal").val(((parseInt(data.data.precioBase) + parseInt(data.data.igi)) * parseInt(data.tipocambio.tipocambio)).toFixed(2));
+									$("#frmAgregarPartida #precioTotal").val(((parseInt(data.data.precioBase) + parseInt(data.data.igi)) * parseInt(data.tipocambio.exchangerate)).toFixed(2));
 									// console.log(((parseInt(data.data.precioBase) + parseInt(data.data.igi)) * parseInt(data.tipocambio.tipocambio)).toFixed(2));
 								}
 							}
@@ -1339,13 +1339,13 @@
 								}
 								if(data.moneda == "usd" && (data.data.moneda == "mxn" || data.data.moneda == "mn")){
 									if(typeof(data.igi) != "undefined"){
-										$("#frmAgregarPartida #precioUnitario").val(((((data.data.precioBase) + parseInt(data.igi.igi))*(data.clasificacion.clasificacion)) / data.tipocambio.tipocambio).toFixed(2));
+										$("#frmAgregarPartida #precioUnitario").val(((((data.data.precioBase) + parseInt(data.igi.igi))*(data.clasificacion.clasificacion)) / data.tipocambio.cambio_dos).toFixed(2));
 										$("#frmAgregarPartida #cantidad").val(1);
-										$("#frmAgregarPartida #precioTotal").val(((((data.data.precioBase) + parseInt(data.igi.igi))*(data.clasificacion.clasificacion)) / data.tipocambio.tipocambio).toFixed(2));
+										$("#frmAgregarPartida #precioTotal").val(((((data.data.precioBase) + parseInt(data.igi.igi))*(data.clasificacion.clasificacion)) / data.tipocambio.cambio_dos).toFixed(2));
 									}else{
-										$("#frmAgregarPartida #precioUnitario").val(((((data.data.precioBase) + parseInt(data.data.igi))*(data.clasificacion.clasificacion)) / data.tipocambio.tipocambio).toFixed(2));
+										$("#frmAgregarPartida #precioUnitario").val(((((data.data.precioBase) + parseInt(data.data.igi))*(data.clasificacion.clasificacion)) / data.tipocambio.cambio_dos).toFixed(2));
 										$("#frmAgregarPartida #cantidad").val(1);
-										$("#frmAgregarPartida #precioTotal").val(((((data.data.precioBase) + parseInt(data.data.igi))*(data.clasificacion.clasificacion)) / data.tipocambio.tipocambio).toFixed(2));
+										$("#frmAgregarPartida #precioTotal").val(((((data.data.precioBase) + parseInt(data.data.igi))*(data.clasificacion.clasificacion)) / data.tipocambio.cambio_dos).toFixed(2));
 									}
 								}
 								if(data.moneda == "mxn" && (data.data.moneda == "mxn" || data.data.moneda == "mn")){
@@ -1361,13 +1361,13 @@
 								}
 								if(data.moneda == "mxn" && data.data.moneda == "usd"){
 									if(typeof(data.igi) != "undefined"){
-										$("#frmAgregarPartida #precioUnitario").val(((((data.data.precioBase) + parseInt(data.igi.igi))*(data.clasificacion.clasificacion)) * data.tipocambio.tipocambio).toFixed(2));
+										$("#frmAgregarPartida #precioUnitario").val(((((data.data.precioBase) + parseInt(data.igi.igi))*(data.clasificacion.clasificacion)) * data.tipocambio.exchangerate).toFixed(2));
 										$("#frmAgregarPartida #cantidad").val(1);
-										$("#frmAgregarPartida #precioTotal").val(((((data.data.precioBase) + parseInt(data.igi.igi))*(data.clasificacion.clasificacion)) * data.tipocambio.tipocambio).toFixed(2));
+										$("#frmAgregarPartida #precioTotal").val(((((data.data.precioBase) + parseInt(data.igi.igi))*(data.clasificacion.clasificacion)) * data.tipocambio.exchangerate).toFixed(2));
 									}else{
-										$("#frmAgregarPartida #precioUnitario").val(((((data.data.precioBase) + parseInt(data.data.igi))*(data.clasificacion.clasificacion)) * data.tipocambio.tipocambio).toFixed(2));
+										$("#frmAgregarPartida #precioUnitario").val(((((data.data.precioBase) + parseInt(data.data.igi))*(data.clasificacion.clasificacion)) * data.tipocambio.exchangerate).toFixed(2));
 										$("#frmAgregarPartida #cantidad").val(1);
-										$("#frmAgregarPartida #precioTotal").val(((((data.data.precioBase) + parseInt(data.data.igi))*(data.clasificacion.clasificacion)) * data.tipocambio.tipocambio).toFixed(2));
+										$("#frmAgregarPartida #precioTotal").val(((((data.data.precioBase) + parseInt(data.data.igi))*(data.clasificacion.clasificacion)) * data.tipocambio.exchangerate).toFixed(2));
 									}
 								}
 							}else{
@@ -1384,13 +1384,13 @@
 								}
 								if(data.moneda == "usd" && (data.data.moneda == "mxn" || data.data.moneda == "mn")){
 									if(typeof(data.igi) != "undefined"){
-										$("#frmAgregarPartida #precioUnitario").val(((((data.data.precioBase)*(data.marca.factor)+ parseInt(data.igi.igi))*(data.marca.descuento)) / data.tipocambio.tipocambio).toFixed(2));
+										$("#frmAgregarPartida #precioUnitario").val(((((data.data.precioBase)*(data.marca.factor)+ parseInt(data.igi.igi))*(data.marca.descuento)) / data.tipocambio.cambio_dos).toFixed(2));
 										$("#frmAgregarPartida #cantidad").val(1);
-										$("#frmAgregarPartida #precioTotal").val(((((data.data.precioBase)*(data.marca.factor)+ parseInt(data.igi.igi))*(data.marca.descuento)) / data.tipocambio.tipocambio).toFixed(2));
+										$("#frmAgregarPartida #precioTotal").val(((((data.data.precioBase)*(data.marca.factor)+ parseInt(data.igi.igi))*(data.marca.descuento)) / data.tipocambio.cambio_dos).toFixed(2));
 									}else{
-										$("#frmAgregarPartida #precioUnitario").val(((((data.data.precioBase)*(data.marca.factor)+ parseInt(data.data.igi))*(data.marca.descuento)) / data.tipocambio.tipocambio).toFixed(2));
+										$("#frmAgregarPartida #precioUnitario").val(((((data.data.precioBase)*(data.marca.factor)+ parseInt(data.data.igi))*(data.marca.descuento)) / data.tipocambio.cambio_dos).toFixed(2));
 										$("#frmAgregarPartida #cantidad").val(1);
-										$("#frmAgregarPartida #precioTotal").val(((((data.data.precioBase)*(data.marca.factor)+ parseInt(data.data.igi))*(data.marca.descuento)) / data.tipocambio.tipocambio).toFixed(2));
+										$("#frmAgregarPartida #precioTotal").val(((((data.data.precioBase)*(data.marca.factor)+ parseInt(data.data.igi))*(data.marca.descuento)) / data.tipocambio.cambio_dos).toFixed(2));
 									}
 								}
 								if(data.moneda == "mxn" && (data.data.moneda == "mxn" || data.data.moneda == "mn")){
@@ -1406,13 +1406,13 @@
 								}
 								if(data.moneda == "mxn" && data.data.moneda == "usd"){
 									if(typeof(data.igi) != "undefined"){
-										$("#frmAgregarPartida #precioUnitario").val(((((data.data.precioBase)*(data.marca.factor)+ parseInt(data.igi.igi))*(data.marca.descuento)) * data.tipocambio.tipocambio).toFixed(2));
+										$("#frmAgregarPartida #precioUnitario").val(((((data.data.precioBase)*(data.marca.factor)+ parseInt(data.igi.igi))*(data.marca.descuento)) * data.tipocambio.exchangerate).toFixed(2));
 										$("#frmAgregarPartida #cantidad").val(1);
-										$("#frmAgregarPartida #precioTotal").val(((((data.data.precioBase)*(data.marca.factor)+ parseInt(data.igi.igi))*(data.marca.descuento)) * data.tipocambio.tipocambio).toFixed(2));
+										$("#frmAgregarPartida #precioTotal").val(((((data.data.precioBase)*(data.marca.factor)+ parseInt(data.igi.igi))*(data.marca.descuento)) * data.tipocambio.exchangerate).toFixed(2));
 									}else{
-										$("#frmAgregarPartida #precioUnitario").val(((((data.data.precioBase)*(data.marca.factor)+ parseInt(data.data.igi))*(data.marca.descuento)) * data.tipocambio.tipocambio).toFixed(2));
+										$("#frmAgregarPartida #precioUnitario").val(((((data.data.precioBase)*(data.marca.factor)+ parseInt(data.data.igi))*(data.marca.descuento)) * data.tipocambio.exchangerate).toFixed(2));
 										$("#frmAgregarPartida #cantidad").val(1);
-										$("#frmAgregarPartida #precioTotal").val(((((data.data.precioBase)*(data.marca.factor)+ parseInt(data.data.igi))*(data.marca.descuento)) * data.tipocambio.tipocambio).toFixed(2));
+										$("#frmAgregarPartida #precioTotal").val(((((data.data.precioBase)*(data.marca.factor)+ parseInt(data.data.igi))*(data.marca.descuento)) * data.tipocambio.exchangerate).toFixed(2));
 									}
 								}
 							}

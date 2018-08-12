@@ -43,6 +43,13 @@
 			$vendedor = $_POST['vendedor'];
 			reportecomisiones($fechainicio, $fechafin, $vendedor, $conexion_usuarios);
 			break;
+
+		case 'reportemarcas':
+			$fechainicio = $_POST['fechainicio'];
+			$fechafin = $_POST['fechafin'];
+			$marca = $_POST['marca'];
+			reportemarcas($fechainicio, $fechafin, $marca, $conexion_usuarios);
+			break;
 	}
 
   function reporteventas ($fechainicio, $fechafin, $folioinicio, $foliofin, $status, $conexion_usuarios){
@@ -400,6 +407,39 @@
 					);
 					$i++;
 				}
+			}
+		}
+
+		echo json_encode($arreglo, JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_PARTIAL_OUTPUT_ON_ERROR);
+		mysqli_close($conexion_usuarios);
+	}
+
+	function reportemarcas($fechainicio, $fechafin, $marca, $conexion_usuarios){
+		$query = "SELECT cotizacionherramientas.*, contactos.nombreEmpresa FROM cotizacionherramientas INNER JOIN contactos ON contactos.id = cotizacionherramientas.cliente WHERE marca = '$marca' AND Entregado >= '$fechainicio' AND Entregado <= '$fechafin' ORDER BY Entregado";
+		$resultado = mysqli_query($conexion_usuarios, $query);
+
+		if (mysqli_num_rows($resultado) < 1) {
+			$arreglo['data'] = 0;
+		}else{
+			$i = 1;
+			while($data = mysqli_fetch_assoc($resultado)){
+				$arreglo['data'][] = array(
+					'indice' => $i,
+					'cliente' => $data['nombreEmpresa'],
+					'marca' => $data['marca'],
+					'modelo' => $data['modelo'],
+					'descripcion' => $data['descripcion'],
+					'preciounitario' => $data['precioLista'],
+					'moneda' => $data['moneda'],
+					'cantidad' => $data['cantidad'],
+					'fechapedido' => $data['pedidoFecha'],
+					'ordencompra' => $data['noDePedido'],
+					'proveedor' => $data['Proveedor'],
+					'factura' => $data['factura'],
+					'remision' => $data['remision'],
+					'fechaentregado' => $data['Entregado']
+				);
+				$i++;
 			}
 		}
 
