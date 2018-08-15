@@ -140,7 +140,7 @@
     function query_payments(lista){
 			var request = new XMLHttpRequest();
 
-			request.open('GET', apiConfig.enlace+'api/v3/cfdi33/list?year=2018&month=08&per_page=210');
+			request.open('GET', apiConfig.enlace+'api/v3/cfdi33/list?year=2018&month=08&per_page=228');
 
 			request.setRequestHeader('Content-Type', 'application/json');
 			request.setRequestHeader('F-API-KEY', apiConfig.apiKey);

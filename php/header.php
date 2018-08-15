@@ -197,8 +197,8 @@ if ($tipomenu != 4){
 										<a class="dropdown-item" href="<?php echo $ruta; ?>php/administracion/reportes/reportemarcas.php">Reporte de marcas</a>
 									</div>
 								</li>
-								<!-- <li class="nav-item"><a id="query-menu" class="nav-link" href="<?php echo $ruta; ?>php/administracion/query/query.php">Query</a>
-								</li> -->
+								<li class="nav-item"><a id="query-menu" class="nav-link" href="<?php echo $ruta; ?>php/administracion/query/query.php">Query</a>
+								</li>
 							</ul>
 						</li>
 						<li class="divider">Features</li>
